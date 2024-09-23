@@ -2,8 +2,6 @@
 
 # LADYBUG PIZZA 🐞🍕 WD55
 
--------- [Truy cập trang web]('https://ladybugpizza.vn') -------
-
 ### MÔ TẢ DỰ ÁN
 
 - **Ladybug Pizza** là một trang web bán pizza online. Trang web giúp người dùng chọn món pizza yêu thích, đặt hàng và giao hàng tận nơi.
@@ -77,12 +75,12 @@ http://localhost:8000
 ### Người đóng góp
 
 - **PH44316** - [Đỗ Hồng Quân](https://github.com/quandohong28)
-- **PH39393 - [Lê Văn Thành](https://github.com/Cactus137)
-- **PH40794 - [Nguyễn Hữu Duy](https://github.com/Huuduy2004)
-- **PH44302 - [Trần Chung Hiếu](https://github.com/hieukhocnhe)
-- **PH38029 - [Võ Hữu Tuấn](https://github.com/vohuutuan38)
-- **PH42110 - [Nguyễn Thị Huyền](https://github.com/Huyennguyen34)
-- **PH34774 - [Trần Thị Hà](https://github.com/hatt0904)
+- **PH39393** - [Lê Văn Thành](https://github.com/Cactus137)
+- **PH40794** - [Nguyễn Hữu Duy](https://github.com/Huuduy2004)
+- **PH44302** - [Trần Chung Hiếu](https://github.com/hieukhocnhe)
+- **PH38029** - [Võ Hữu Tuấn](https://github.com/vohuutuan38)
+- **PH42110** - [Nguyễn Thị Huyền](https://github.com/Huyennguyen34)
+- **PH34774** - [Trần Thị Hà](https://github.com/hatt0904)
 
 ### OSS
 
@@ -107,4 +105,6 @@ http://localhost:8000
 - **Figma**: https://www.figma.com
 - **Trello**: https://trello.com
 - **Google Meet**: https://meet.google.com
+
+<p align="center"><a href="#" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
