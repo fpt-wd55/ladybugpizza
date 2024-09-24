@@ -9,8 +9,7 @@
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
-    font-variation-settings:
-        "width" 100;
+    font-variation-settings: "width" 100;
 }
 
 .dancing-script {
@@ -43,15 +42,15 @@
 }
 
 .label-sm {
-    @apply block mb-2 text-xs font-medium text-gray-900 dark:text-white
+    @apply block mb-2 text-xs font-medium text-gray-900 dark:text-white;
 }
 
 .label-md {
-    @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white
+    @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white;
 }
 
 .label-lg {
-    @apply block mb-2 text-base font-medium text-gray-900 dark:text-white
+    @apply block mb-2 text-base font-medium text-gray-900 dark:text-white;
 }
 
 .input {
@@ -63,7 +62,7 @@
 }
 
 .input-error {
-    @apply block w-full text-red-900 border border-red-300 rounded-lg bg-red-50 dark:bg-red-700 dark:border-red-600 dark:placeholder-red-400 dark:text-white;
+    @apply block w-full text-[#D30A0A] border border-red-300 rounded-lg bg-red-50 dark:bg-red-700 dark:border-red-600 dark:placeholder-red-400 dark:text-white;
 }
 
 .text-area {
@@ -127,11 +126,11 @@
 }
 
 .button {
-    @apply text-white font-medium rounded-lg text-sm px-5 py-2;
+    @apply text-white font-medium rounded text-sm px-5 py-2;
 }
 
 .button-default {
-    @apply button bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700;
+    @apply button bg-[#D30A0A] hover:bg-[#AF0808] dark:bg-[#D30A0A] dark:hover:bg-[#AF0808];
 }
 
 .button-dark {
@@ -147,7 +146,7 @@
 }
 
 .button-red {
-    @apply button bg-red-700 hover:bg-red-800 dark:bg-red-600 dark:hover:bg-red-700;
+    @apply button bg-[#D30A0A] hover:bg-[#AF0808] dark:bg-[#D30A0A] dark:hover:bg-[#AF0808];
 }
 
 .button-yellow {
@@ -243,19 +242,19 @@
 }
 
 .thead {
-    @apply text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400
+    @apply text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400;
 }
 
 .th {
-    @apply px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white
+    @apply px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white;
 }
 
 .tr {
-    @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600
+    @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600;
 }
 
 .td {
-    @apply px-6 py-4
+    @apply px-6 py-4;
 }
 
 .icon-sm {
@@ -287,25 +286,25 @@
 }
 
 .link-sm {
-    @apply text-xs font-medium text-blue-600 dark:text-blue-500 hover:underline
+    @apply text-xs font-medium text-blue-600 dark:text-blue-500 hover:underline;
 }
 
 .link-md {
-    @apply text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline
+    @apply text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline;
 }
 
 .link-lg {
-    @apply text-base font-medium text-blue-600 dark:text-blue-500 hover:underline
+    @apply text-base font-medium text-blue-600 dark:text-blue-500 hover:underline;
 }
 
 .hr-default {
-    @apply h-px my-8 bg-gray-200 border-0 dark:bg-gray-700
+    @apply h-px my-8 bg-gray-200 border-0 dark:bg-gray-700;
 }
 
 .hr-trim {
-    @apply w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700
+    @apply w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700;
 }
 
 .hr-shape {
-    @apply w-8 h-8 mx-auto my-8 bg-gray-200 border-0 rounded md:my-12 dark:bg-gray-700
+    @apply w-8 h-8 mx-auto my-8 bg-gray-200 border-0 rounded md:my-12 dark:bg-gray-700;
 }
