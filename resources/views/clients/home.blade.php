@@ -2,6 +2,6 @@
 
 @section('content')
 
-<button class=" button-red">Hello world</button>
-    
+<button>Hello world</button>
+
 @endsection

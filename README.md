@@ -58,7 +58,13 @@ php artisan key:generate
 php artisan migrate --seed
 ```
 
-7. Chạy ứng dụng:
+7. Link storage:
+
+```bash
+php artisan storage:link
+```
+
+8. Chạy ứng dụng:
 
 ```bash
 npm run dev
@@ -66,7 +72,7 @@ npm run dev
 php artisan serve
 ```
 
-8. Truy cập trang web:
+9. Truy cập trang web:
 
 ```
 http://localhost:8000
