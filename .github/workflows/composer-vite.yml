@@ -24,6 +24,15 @@ jobs:
       with:
         php-version: '8.1' # Thay bằng phiên bản PHP bạn đang sử dụng
 
+    # Thiết lập MySQL
+    - name: Set up MySQL
+      uses: mysql-actions/setup-mysql@v2
+      with:
+        mysql-version: '8.0' # Phiên bản MySQL bạn muốn sử dụng
+        mysql-database: 'ladybugpizza' # Tên cơ sở dữ liệu
+        mysql-username: 'root' # Tên người dùng
+        mysql-password: '' # Mật khẩu (nếu có)
+
     # Cache Composer packages
     - name: Cache Composer packages
       id: composer-cache
@@ -42,7 +51,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '22.5' # Thay bằng phiên bản Node.js bạn sử dụng
+        node-version: '18.x' # Thay bằng phiên bản Node.js bạn sử dụng
 
     # Cache npm packages
     - name: Cache npm packages
@@ -69,6 +78,6 @@ jobs:
     - name: Generate Laravel key
       run: php artisan key:generate
 
-    # Chạy migration database
-    - name: Run database migrations
-      run: php artisan migrate:fresh --seed -y
+    # Chạy migration database và seed
+    - name: Run database migrations and seed
+      run: php artisan migrate:fresh --seed
