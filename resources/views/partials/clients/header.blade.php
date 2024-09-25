@@ -1,3 +1,4 @@
 <div>
-    <!-- Well begun is half done. - Aristotle -->
+    This is client header
+    <hr>
 </div>

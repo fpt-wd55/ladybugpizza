@@ -24,8 +24,11 @@
 </head>
 
 <body>
+    @include('partials.clients.header')
 
-@yield('content')
+    @yield('content')
+
+    @include('partials.clients.footer')
 
 </body>
 

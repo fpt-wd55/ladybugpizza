@@ -3,5 +3,5 @@
 @section('content')
 
 <button>Hello world</button>
-    
+
 @endsection
