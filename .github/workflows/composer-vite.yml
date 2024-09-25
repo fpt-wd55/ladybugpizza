@@ -14,26 +14,28 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ''
+          MYSQL_DATABASE: ladybugpizza
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=3
+
     steps:
-    # Bước checkout source code
     - uses: actions/checkout@v4
 
-    # Thiết lập môi trường PHP cho Composer
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.1' # Thay bằng phiên bản PHP bạn đang sử dụng
 
-    # Thiết lập MySQL
-    - name: Set up MySQL
-      uses: mysql-actions/setup-mysql@v2
-      with:
-        mysql-version: '8.0' # Phiên bản MySQL bạn muốn sử dụng
-        mysql-database: 'ladybugpizza' # Tên cơ sở dữ liệu
-        mysql-username: 'root' # Tên người dùng
-        mysql-password: '' # Mật khẩu (nếu có)
-
-    # Cache Composer packages
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v3
@@ -43,17 +45,14 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
 
-    # Cài đặt các phụ thuộc của Composer
     - name: Install Composer dependencies
       run: composer install --prefer-dist --no-progress --no-scripts --no-dev
 
-    # Thiết lập Node.js cho Vite.js
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18.x' # Thay bằng phiên bản Node.js bạn sử dụng
 
-    # Cache npm packages
     - name: Cache npm packages
       uses: actions/cache@v3
       with:
@@ -62,22 +61,24 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
 
-    # Cài đặt các gói npm
     - name: Install npm dependencies
       run: npm install
 
-    # Build assets với Vite
     - name: Build assets with Vite
       run: npm run build
 
-    # Thiết lập file .env
     - name: Copy .env.example to .env
       run: cp .env.example .env
 
-    # Tạo ứng dụng key cho Laravel
     - name: Generate Laravel key
       run: php artisan key:generate
 
     # Chạy migration database và seed
+    - name: Wait for MySQL to be ready
+      run: |
+        while ! mysqladmin ping -h127.0.0.1 --silent; do
+          sleep 1
+        done
+
     - name: Run database migrations and seed
       run: php artisan migrate:fresh --seed
