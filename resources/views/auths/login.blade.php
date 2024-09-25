@@ -11,7 +11,7 @@
                 <div class="mb-4 font-semibold text-lg uppercase">
                     Đăng nhập
                 </div>
-                <div>
+                <div class="flex ">
                     <label for="">Bạn có chưa có tài khoản?</label>
                     <a href="#" class="text-red-600">Đăng
                         ký</a>
