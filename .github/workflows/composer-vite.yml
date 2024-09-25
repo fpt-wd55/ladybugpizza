@@ -71,4 +71,4 @@ jobs:
 
     # Chạy migration database
     - name: Run database migrations
-      run: php artisan migrate:fresh --seed
+      run: php artisan migrate:fresh --seed -y
