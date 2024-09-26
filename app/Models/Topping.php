@@ -20,4 +20,12 @@ class Topping extends Model
     public function categories() {
         return $this->belongsTo(Category::class);
     }
+
+    public function carts() {
+        return $this->belongsToMany(Cart::class, 'cart_toppings');
+    }
+
+    public function orderItems() {
+        return $this->belongsToMany(OrderItem::class, 'order_item_toppings');
+    }
 }

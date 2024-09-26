@@ -6,27 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Address extends Model
+class PaymentMethod extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id',
-        'title',
-        'phone',
-        'province',
-        'district',
-        'ward',
-        'detail_address',
-        'lng',
-        'lat',
-        'is_default',
+        'name',
+        'description',
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function orders()
     {

@@ -6,30 +6,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Address extends Model
+class Conversation extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id',
-        'title',
-        'phone',
-        'province',
-        'district',
-        'ward',
-        'detail_address',
-        'lng',
-        'lat',
-        'is_default',
+        'user_id_1',
+        'user_id_2',
     ];
 
-    public function user()
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function user1()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function orders()
+    public function user2()
     {
-        return $this->hasMany(Order::class);
+        return $this->belongsTo(User::class);
     }
 }

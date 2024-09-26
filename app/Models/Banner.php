@@ -6,19 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Cart extends Model
+class Banner extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id',
-        'product_attribute_id',
-        'quantity',
-        'price',
-        'total',
+        'title',
+        'description',
+        'image',
+        'button_text',
+        'button_link',
+        'status',
     ];
-
-    public function toppings() {
-        return $this->belongsToMany(Topping::class, 'cart_toppings');
-    }
 }

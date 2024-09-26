@@ -6,21 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Address extends Model
+class Evaluation extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'user_id',
-        'title',
-        'phone',
-        'province',
-        'district',
-        'ward',
-        'detail_address',
-        'lng',
-        'lat',
-        'is_default',
+        'product_id',
+        'rating',
+        'comment',
+        'status',
     ];
 
     public function user()
@@ -28,8 +23,8 @@ class Address extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function orders()
+    public function product()
     {
-        return $this->hasMany(Order::class);
+        return $this->belongsTo(Product::class);
     }
 }
