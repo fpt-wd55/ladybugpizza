@@ -33,12 +33,12 @@ class Product extends Model
 
     public function evalutions()
     {
-        return $this->hasMany(Evalution::class);
+        return $this->hasMany(Evaluation::class);
     }
 
-    public function cartItems()
+    public function cart()
     {
-        return $this->hasMany(CartItem::class);
+        return $this->belongsToMany(Cart::class, 'product_attributes');
     }
 
     public function orderItems()

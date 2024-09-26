@@ -28,4 +28,9 @@ class Promotion extends Model
     {
         return $this->belongsToMany(User::class, 'promotion_users');
     }
+
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

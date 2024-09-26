@@ -18,7 +18,15 @@ class Cart extends Model
         'total',
     ];
 
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
     public function toppings() {
         return $this->belongsToMany(Topping::class, 'cart_toppings');
+    }
+
+    public function productAttribute() {
+        return $this->belongsTo(ProductAttribute::class);
     }
 }

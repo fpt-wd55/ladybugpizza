@@ -15,4 +15,9 @@ class Log extends Model
         'action',
         'description',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
