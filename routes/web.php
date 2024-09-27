@@ -41,7 +41,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::prefix('/')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('client.home');
     Route::get('/menu', [ProductController::class, 'menu'])->name('client.product.menu');
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('client.product.show');
@@ -74,7 +74,7 @@ Route::prefix('/auth')->group(function () {
 Route::prefix('/admin')->middleware([''])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('/users', UserController::class);
-    Route::resoure('/addresses', AddressController::class);
+    Route::resource('/addresses', AddressController::class);
     Route::resource('/products', AdminProductController::class);
     Route::resource('/orders', AdminOrderController::class);
     Route::resource('/carts', AdminCartController::class);
