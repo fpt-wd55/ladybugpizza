@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\CartController as AdminCartController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\WebController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\HomeController;
@@ -41,7 +42,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::prefix('/')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('client.home');
     Route::get('/menu', [ProductController::class, 'menu'])->name('client.product.menu');
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('client.product.show');
@@ -63,6 +64,8 @@ Route::get('/', function () {
 });
 
 Route::prefix('/auth')->group(function () {
+    Route::get('/google', [GoogleController::class, 'redirect'])->name('auth.google.redirect');
+    Route::get('/google/call-back', [GoogleController::class, 'callback'])->name('auth.google.callback');
     Route::get('/login', [WebController::class, 'login'])->name('auth.login');
     Route::get('/register', [WebController::class, 'register'])->name('auth.register');
     Route::get('/forgot-password', [WebController::class, 'forgotPassword'])->name('auth.forgot-password');
@@ -74,7 +77,7 @@ Route::prefix('/auth')->group(function () {
 Route::prefix('/admin')->middleware([''])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('/users', UserController::class);
-    Route::resoure('/addresses', AddressController::class);
+    Route::resource('/addresses', AddressController::class);
     Route::resource('/products', AdminProductController::class);
     Route::resource('/orders', AdminOrderController::class);
     Route::resource('/carts', AdminCartController::class);
