@@ -13,7 +13,7 @@
                 </div>
             </div>
             <form action="">
-                <div class="flex items-center justify-between  w-full md:grid-cols-2 gap-4">
+                <div class=" md:flex items-center justify-between  w-full md:grid-cols-2 gap-4">
                     <div class="mb-4 py-4  w-full">
                         <label class="font-medium" for="">Họ và tên </label>
                         <input type="text" class="mt-2 mb-2 input">
@@ -25,7 +25,7 @@
                         <p class="text-red-500 text-sm">Hiển thị lỗi</p>
                     </div>
                 </div>
-                <div class="flex items-center justify-between w-full md:grid-cols-2 gap-4">
+                <div class="md:flex items-center justify-between w-full md:grid-cols-2 gap-4">
                     <div class="mb-4 py-4 w-full">
                         <label class="font-medium" for="">Giới tính </label>
                         <input type="text" class="mt-2 mb-2 input">
@@ -43,7 +43,7 @@
                     <p class="text-red-500 text-sm">Hiển thị lỗi</p>
                 </div>
                 <div class="flex items-center justify-end mt-14 gap-6">
-                    <div class=" flex items-center justify-center  hover:cursor-pointer button-gray w-28">                
+                    <div class=" flex items-center justify-center  hover:cursor-pointer button-light w-28">                
                         <p class="h-[32px] text-gray-950 pt-1 ">Bỏ qua</p>
                     </div>
                     <div class=" bg-red-600 flex items-center justify-center button-red w-28">                

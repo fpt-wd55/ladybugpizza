@@ -39,4 +39,24 @@ Route::get('/recovery', function () {
 Route::get('/user-info', function () {
     return view('auths.user-info');
 });
+// page-notfound
+Route::get('403-notfound', function ()  {
+    return view('shared.errors.403');
+});
+Route::get('404-notfound', function ()  {
+    return view('shared.errors.404');
+});
+Route::get('500-notfound', function ()  {
+    return view('shared.errors.500');
+});
+Route::get('502-notfound', function ()  {
+    return view('shared.errors.502');
+});
+Route::get('503-notfound', function ()  {
+    return view('shared.errors.503');
+});
+Route::get('504-notfound', function ()  {
+    return view('shared.errors.504');
+});
+
 
