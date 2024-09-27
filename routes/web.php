@@ -61,6 +61,25 @@ Route::prefix('/')->group(function () {
     Route::get('/profile/location', [ProfileController::class, 'location'])->name('client.profile.location');
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
+
+    Route::get('/403', function ()  {
+        return view('shared.errors.403');
+    });
+    Route::get('/404', function ()  {
+        return view('shared.errors.404');
+    });
+    Route::get('/500', function ()  {
+        return view('shared.errors.500');
+    });
+    Route::get('/502', function ()  {
+        return view('shared.errors.502');
+    });
+    Route::get('/503', function ()  {
+        return view('shared.errors.503');
+    });
+    Route::get('/504', function ()  {
+        return view('shared.errors.504');
+    });
 });
 
 Route::prefix('/auth')->group(function () {
@@ -72,25 +91,6 @@ Route::prefix('/auth')->group(function () {
     Route::get('/get-otp', [WebController::class, ''])->name('auth.get-otp');
     Route::get('/recovery', [WebController::class, 'login'])->name('auth.recovery');
     Route::get('/user-info', [WebController::class, 'login'])->name('auth.user-info');
-});
-// page-notfound
-Route::get('403-notfound', function ()  {
-    return view('shared.errors.403');
-});
-Route::get('404-notfound', function ()  {
-    return view('shared.errors.404');
-});
-Route::get('500-notfound', function ()  {
-    return view('shared.errors.500');
-});
-Route::get('502-notfound', function ()  {
-    return view('shared.errors.502');
-});
-Route::get('503-notfound', function ()  {
-    return view('shared.errors.503');
-});
-Route::get('504-notfound', function ()  {
-    return view('shared.errors.504');
 });
 
 
