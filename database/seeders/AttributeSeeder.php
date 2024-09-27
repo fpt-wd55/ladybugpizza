@@ -21,7 +21,7 @@ class AttributeSeeder extends Seeder
             'Loại đế' => [
                 'Dày',
                 'Mỏng',
-            ], 
+            ],
             'Kích thước' => [
                 'S: 7 inch (18cm) - 4 miếng - 1 người',
                 'M: 9 inch (24cm) - 6 miếng - 2 người',
@@ -41,6 +41,8 @@ class AttributeSeeder extends Seeder
             $attribute = DB::table('attributes')->insertGetId([
                 'name' => $name,
                 'status' => 1,
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
             ]);
 
             foreach ($values as $value) {
@@ -48,8 +50,10 @@ class AttributeSeeder extends Seeder
                     'attribute_id' => $attribute,
                     'value' => $value,
                     'quantity' => $faker->numberBetween(0, 100),
+                    'created_at' => $faker->dateTimeThisYear(),
+                    'updated_at' => $faker->dateTimeThisYear(),
                 ]);
             }
-        } 
+        }
     }
-} 
+}

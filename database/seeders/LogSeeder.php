@@ -17,15 +17,17 @@ class LogSeeder extends Seeder
         $faker = Faker::create();
 
         $users = DB::table('users')->get();
-        
+
         foreach ($users as $user) {
             for ($i = 0; $i < 10; $i++) {
                 DB::table('logs')->insert([
                     'user_id' => $user->id,
-                    'update_type' => $faker->randomElement(['create', 'update', 'delete']),
-                    'details' => $faker->sentence,
+                    'action' => $faker->randomElement(['create', 'update', 'delete']),
+                    'description' => $faker->sentence,
+                    'created_at' => $faker->dateTimeThisYear(),
+                    'updated_at' => $faker->dateTimeThisYear(),
                 ]);
             }
         }
     }
-} 
+}

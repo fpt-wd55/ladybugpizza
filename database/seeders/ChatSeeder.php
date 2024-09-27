@@ -25,6 +25,8 @@ class ChatSeeder extends Seeder
             $conversation = DB::table('conversations')->insertGetId([
                 'user_id_1' => $user->id,
                 'user_id_2' => $admin->id,
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
             ]);
 
             for ($j = 0; $j < 10; $j++) {
@@ -35,6 +37,8 @@ class ChatSeeder extends Seeder
                     'image' => null,
                     'is_read' => true,
                     'is_typing' => false,
+                    'created_at' => $faker->dateTimeThisYear(),
+                    'updated_at' => $faker->dateTimeThisYear(),
                 ]);
             }
         }

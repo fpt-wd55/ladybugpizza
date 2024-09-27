@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('promotions', function (Blueprint $table) {
             $table->id();
-            $table->string('discount_code')->unique();
+            $table->string('code')->unique();
             $table->string('description');
             $table->string('discount_type');
             $table->bigInteger('discount_value');
@@ -21,6 +21,8 @@ return new class extends Migration
             $table->dateTime('end_date');
             $table->integer('quantity');
             $table->bigInteger('min_order_total');
+            $table->bigInteger('max_discount');
+            $table->tinyInteger('is_global')->default(2)->comment('1: global, 2: not global');
             $table->tinyInteger('status')->default(1)->comment('1: active, 2: inactive');
             $table->timestamps();
         });

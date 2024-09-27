@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->string('invoice_number');
-            $table->bigInteger('tax_amount');
             $table->foreignId('transaction_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

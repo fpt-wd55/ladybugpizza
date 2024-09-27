@@ -15,17 +15,16 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('promotion_id')->nullable()->constrained()->onDelete('set null');
-            $table->bigInteger('total_amount');
+            $table->bigInteger('amount');
             $table->foreignId('address_id')->constrained()->onDelete('cascade');
             $table->bigInteger('discount_amount')->default(0);
             $table->bigInteger('shipping_fee')->default(0);
             $table->timestamp('completed_at')->nullable();
-            $table->text('note')->nullable();
+            $table->text('notes')->nullable();
             $table->foreignId('payment_method_id')->constrained()->onDelete('cascade');
             $table->foreignId('order_status_id')->constrained()->onDelete('cascade');
-            $table->text('cancel_reason')->nullable();
-            $table->timestamp('cancel_at')->nullable(); 
-            // $table->foreignId('cancel_code')->nullable()->constrained()->onDelete('set null');
+            $table->text('canceled_reason')->nullable();
+            $table->timestamp('canceled_at')->nullable(); 
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('order_item_toppings', function (Blueprint $table) {
             $table->foreignId('order_item_id')->constrained()->onDelete('cascade');
-            $table->json('topping_ids');
+            $table->foreignId('topping_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

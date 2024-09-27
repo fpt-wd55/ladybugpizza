@@ -25,6 +25,8 @@ class MembershipSeeder extends Seeder
                 'rank' => $faker->randomElement(['Đồng', 'Bạc', 'Vàng', 'Bạch Kim', 'Kim Cương']),
                 'status' => 1,
                 'total_spent' => $faker->numberBetween(0, 2000),
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
             ]);
         }
     }

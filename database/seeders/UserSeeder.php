@@ -15,21 +15,31 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-        // php artisan make:seeder RoleSeeder
-        // php artisan make:seeder UserSeeder
-        // php artisan make:seeder AddressSeeder
-
         // create roles
         DB::table('roles')->insert([
-            ['name' => 'admin', 'parent_id' => null],
-            ['name' => 'user', 'parent_id' => null],
+            [
+                'name' => 'admin',
+                'parent_id' => null,
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
+            ],
+            [
+                'name' => 'user',
+                'parent_id' => null,
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
+            ],
             [
                 'name' => 'super_admin',
                 'parent_id' => 1,
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
             ],
             [
                 'name' => 'admin_chat',
                 'parent_id' => 1,
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
             ],
         ]);
 
@@ -48,6 +58,8 @@ class UserSeeder extends Seeder
                 'date_of_birth' => '2004-04-28',
                 'gender' => 1,
                 'status' => 1,
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
             ],
             [
                 'username' => 'blackwhilee04',
@@ -61,6 +73,8 @@ class UserSeeder extends Seeder
                 'date_of_birth' => '2004-07-13',
                 'gender' => 1,
                 'status' => 1,
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
             ],
             [
                 'username' => 'duynguyenhuu2004',
@@ -74,6 +88,8 @@ class UserSeeder extends Seeder
                 'date_of_birth' => '2004-05-20',
                 'gender' => 1,
                 'status' => 1,
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
             ],
             [
                 'username' => 'trantrunghieu422',
@@ -87,6 +103,8 @@ class UserSeeder extends Seeder
                 'date_of_birth' => '2004-04-22',
                 'gender' => 1,
                 'status' => 1,
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
             ],
             [
                 'username' => 'vohuutuan04',
@@ -100,6 +118,8 @@ class UserSeeder extends Seeder
                 'date_of_birth' => '2004-04-04',
                 'gender' => 1,
                 'status' => 1,
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
             ],
             [
                 'username' => 'nguynhuyen111',
@@ -113,6 +133,8 @@ class UserSeeder extends Seeder
                 'date_of_birth' => '2004-11-11',
                 'gender' => 2,
                 'status' => 1,
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
             ],
             [
                 'username' => 'tranthihaaaa9423',
@@ -126,6 +148,8 @@ class UserSeeder extends Seeder
                 'date_of_birth' => '2004-07-13',
                 'gender' => 2,
                 'status' => 1,
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
             ],
         ]);
         // user
@@ -142,6 +166,8 @@ class UserSeeder extends Seeder
                 'date_of_birth' => $faker->date,
                 'gender' => $faker->numberBetween(1, 3),
                 'status' => $faker->numberBetween(1, 2),
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
             ]);
         }
 
@@ -156,9 +182,11 @@ class UserSeeder extends Seeder
                 'district' => $faker->city,
                 'ward' => $faker->city,
                 'detail_address' => $faker->address,
-                'long' => $faker->longitude,
+                'lng' => $faker->longitude,
                 'lat' => $faker->latitude,
                 'is_default' => true,
+                'created_at' => $faker->dateTimeThisYear(),
+                'updated_at' => $faker->dateTimeThisYear(),
             ]);
         }
     }
