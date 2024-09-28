@@ -44,7 +44,7 @@ use Illuminate\Support\Facades\Route;
  
 Route::prefix('/')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('client.home');
-    Route::get('/menu', [ProductController::class, 'menu'])->name('client.product.menu');
+    Route::get('/menu', [ProductController::class, 'index'])->name('client.product.menu');
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('client.product.show');
     Route::post('/product/{slug}', [ProductController::class, 'addToCart'])->name('client.product.add-to-cart');
     Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
