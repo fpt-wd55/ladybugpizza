@@ -38,7 +38,7 @@
 }
 
 .card {
-    @apply block p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700;
+    @apply bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700;
 }
 
 .label-sm {
@@ -130,7 +130,7 @@
 }
 
 .button {
-    @apply text-white font-medium rounded text-sm px-5 py-2;
+    @apply text-white font-medium rounded text-sm px-5 py-3 h-[44px];
 }
 
 .button-default {

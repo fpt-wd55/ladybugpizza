@@ -1,7 +1,11 @@
 @extends('layouts.client')
 
+@section('title', 'Trang chủ')
+
 @section('content')
-
-<button>Hello world</button>
-
+    @session('success')
+    <div class="alert-success">
+        {{ session('success') }}
+    </div>
+    @endsession
 @endsection
