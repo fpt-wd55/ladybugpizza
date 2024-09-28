@@ -27,7 +27,9 @@
 <body>
     @include('partials.clients.header')
 
-    @yield('content')
+    <div class=" min-h-screen">
+        @yield('content')
+    </div>
 
     @include('partials.clients.footer')
 

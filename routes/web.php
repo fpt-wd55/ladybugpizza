@@ -22,12 +22,14 @@ use App\Http\Controllers\Admin\CartController as AdminCartController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\WebController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
+use App\Http\Controllers\ErrorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,10 +42,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+ 
 Route::prefix('/')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('client.home');
-    Route::get('/menu', [ProductController::class, 'menu'])->name('client.product.menu');
+    Route::get('/menu', [ProductController::class, 'index'])->name('client.product.menu');
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('client.product.show');
     Route::post('/product/{slug}', [ProductController::class, 'addToCart'])->name('client.product.add-to-cart');
     Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
@@ -62,14 +64,26 @@ Route::prefix('/')->group(function () {
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
 });
 
+Route::prefix('/errors')->group(function () {
+    Route::get('/404', [ErrorController::class, 'notFound'])->name('errors.404');
+    Route::get('/403', [ErrorController::class, 'forbidden'])->name('errors.403');
+    Route::get('/500', [ErrorController::class, 'internalServerError'])->name('errors.500');
+    Route::get('/502', [ErrorController::class, 'badGateway'])->name('errors.502');
+    Route::get('/503', [ErrorController::class, 'serviceUnavailable'])->name('errors.503');
+    Route::get('/504', [ErrorController::class, 'gatewayTimeout'])->name('errors.504');
+});
+
 Route::prefix('/auth')->group(function () {
+    Route::get('/google', [GoogleController::class, 'redirect'])->name('auth.google.redirect');
+    Route::get('/google/call-back', [GoogleController::class, 'callback'])->name('auth.google.callback');
     Route::get('/login', [WebController::class, 'login'])->name('auth.login');
     Route::get('/register', [WebController::class, 'register'])->name('auth.register');
     Route::get('/forgot-password', [WebController::class, 'forgotPassword'])->name('auth.forgot-password');
     Route::get('/get-otp', [WebController::class, ''])->name('auth.get-otp');
-    Route::get('/recovery', [WebController::class, 'login'])->name('auth.recovery');
-    Route::get('/user-info', [WebController::class, 'login'])->name('auth.user-info');
+    Route::get('/recovery', [WebController::class, 'recovery'])->name('auth.recovery');
+    Route::get('/user-info', [WebController::class, 'userInfo'])->name('auth.user-info');
 });
+
 
 Route::prefix('/admin')->middleware([''])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');

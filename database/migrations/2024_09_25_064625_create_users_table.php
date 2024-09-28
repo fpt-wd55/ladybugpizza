@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('username')->unique();
             $table->foreignId('role_id')->constrained()->onDelete('cascade');
-            $table->string('avatar')->nullable();
+            $table->string('avatar')->nullable()->default('user-default.png');
             $table->string('email')->unique();
             $table->string('fullname');
             $table->string('phone')->unique()->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('google_id')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->tinyInteger('gender')->nullable()->comment('1: male; 2: female; 3: other');

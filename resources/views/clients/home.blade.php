@@ -1,9 +1,16 @@
 @extends('layouts.client')
 
-@section('title','Trang chủ')
   
+@section('title', 'Trang chủ')
 
 @section('content')
+    @session('success')
+        <div class="alert-success">
+            {{ session('success') }}
+        </div>
+    @endsession
+
+<div class="md:mx-32 lg:mx-64 min-h-screen p-4 md:p-8">
 
 <div class="mx-auto px-0  ">
     <div id="default-carousel" class="relative w-full mb-[44px] md:mb-[76px] lg:mb-[64px]" data-carousel="slide">
@@ -173,4 +180,5 @@
     
   
 
+    </div>
 @endsection
