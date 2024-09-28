@@ -24,15 +24,20 @@
 </head>
 
 <body class="text-sm">
+    
     @include('partials.admins.header')
 
     @include('partials.admins.sidebar')
 
-    <div class="p-4 mt-14 sm:ml-64">
-        @yield('content')
-    </div>
+    <div class="p-4 mt-20 sm:ml-64">
 
-    @include('partials.admins.footer')
+        <div class="bg-white rounded-lg shadow p-4 min-h-screen">
+            @yield('content')
+        </div>
+
+        @include('partials.admins.footer')
+
+    </div>
 
 </body>
 
