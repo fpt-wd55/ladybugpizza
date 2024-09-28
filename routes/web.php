@@ -41,7 +41,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
- 
+
 Route::prefix('/')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('client.home');
     Route::get('/menu', [ProductController::class, 'index'])->name('client.product.menu');
@@ -62,22 +62,22 @@ Route::prefix('/')->group(function () {
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
 
-    Route::get('/403', function ()  {
+    Route::get('/403', function () {
         return view('shared.errors.403');
     });
-    Route::get('/404', function ()  {
+    Route::get('/404', function () {
         return view('shared.errors.404');
     });
-    Route::get('/500', function ()  {
+    Route::get('/500', function () {
         return view('shared.errors.500');
     });
-    Route::get('/502', function ()  {
+    Route::get('/502', function () {
         return view('shared.errors.502');
     });
-    Route::get('/503', function ()  {
+    Route::get('/503', function () {
         return view('shared.errors.503');
     });
-    Route::get('/504', function ()  {
+    Route::get('/504', function () {
         return view('shared.errors.504');
     });
 });
@@ -94,7 +94,8 @@ Route::prefix('/auth')->group(function () {
 });
 
 
-Route::prefix('/admin')->middleware([''])->group(function () {
+// Route::prefix('/admin')->middleware([''])->group(function () {
+Route::prefix('/admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('/users', UserController::class);
     Route::resource('/addresses', AddressController::class);
