@@ -6,49 +6,59 @@
 
 <div class="container w-full md:w-[920px] h-[629px] md:mx-auto my-16 p-4">
     <div class="md:grid md:grid-cols-2 gap-4 card">
-        <div class=" p-4 md:p-6 lg:p-8">
+        <div class="p-4 md:p-6 lg:p-8">
             <div class="mb-4">
                 <div class="mb-4 font-semibold text-lg uppercase">
                     Đăng ký
                 </div>
-                <div>
+                <div class="flex gap-2">
                     <label for="">Bạn đã có có tài khoản?</label>
-                    <a href="#" class="text-red-600">Đăng
+                    <a href="{{route('auth.login')}}" class="text-red-600">Đăng
                         nhập</a>
                 </div>
             </div>
-            <form action="">
+            <form action="{{route('auth.post-register')}}" method="POST">
+                @csrf
                 <div class="mb-4">
-                    <label class="font-medium" for="">Số điện thoại</label>
-                    <input type="text" class="mt-2 mb-2 input">
-                    <p class="text-red-500 text-sm">Hiển thị lỗi</p>
+                    <label class="font-medium" for="phone">Số điện thoại</label>
+                    <input type="text" name="phone" id="phone" class="mt-2 mb-2 input">
+                    @error('phone')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="mb-4">
-                    <label class="font-medium" for="">Email</label>
-                    <input type="text" class="mt-2 mb-2 input">
-                    <p class="text-red-500 text-sm">Hiển thị lỗi</p>
+                    <label class="font-medium" for="email">Email</label>
+                    <input type="text" name="email" id="email" class="mt-2 mb-2 input">
+                    @error('email')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="mb-4">
-                    <label class="font-medium" for="">Mật khẩu</label>
-                    <input type="text" class="mt-2 mb-2 input">
-                    <p class="text-red-500 text-sm">Hiển thị lỗi</p>
+                    <label class="font-medium" for="password">Mật khẩu</label>
+                    <input type="password" name="password" id="password" class="mt-2 mb-2 input">
+                    @error('password')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="mb-4">
-                    <label class="font-medium" for="">Nhập lại mật khẩu</label>
-                    <input type="text" class="mt-2 mb-2 input">
-                    <p class="text-red-500 text-sm">Hiển thị lỗi</p>
+                    <label class="font-medium" for="password_confirmation">Nhập lại mật khẩu</label>
+                    <input type="password" name="password_confirmation" id="password_confirmation" class="mt-2 mb-2 input">
+                    @error('password_confirmation')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                    @enderror
                 </div>
-                <div class="mb-11">
+                <div class="mb-8">
                     <div class="">
-                        <input type="checkbox" class="input-checkbox">
-                        <label for="" class="text-xs">Khách hàng đồng ý với</label>
-                        <a href="#" class="text-red-600 text-xs">chính sách và điều khoản</a>
+                        <input type="checkbox" name="agree" class="input-checkbox">
+                        <label for="agree" class="text-sm">Khách hàng đồng ý với</label>
+                        <a href="#" class="text-red-600 text-sm">chính sách và điều khoản</a>
                     </div>
-                    <div>
-                    </div>
+                    @error('agree')
+                        <p class="text-red-500 text-sm mt-2">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="mb-4 bg-red-600 flex items-center justify-center button-red">
-                    <button class="h-[32px] text-white">Đăng nhập</button>
+                    <button type="submit" class="h-[32px] text-white">Đăng ký</button>
                 </div>
                 <p class="mb-4 text-center text-sm">
                     Hoặc

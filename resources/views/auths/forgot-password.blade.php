@@ -21,12 +21,12 @@
                     <input type="text" class="mt-2 mb-2 input">
                     <p class="text-red-500 text-sm">Hiển thị lỗi</p>
                 </div>
-                <div class="mb-4 bg-red-600 flex items-center justify-center gap-4 button-red">                
+                <div class="mb-4 bg-red-600 flex items-center justify-center gap-4 button-red">
                     <button class="h-[32px] text-white">Khôi phục mật khẩu</button>
                 </div>
                 <div class="flex items-center justify-center gap-1">
                     <label for="">Bạn có chưa có tài khoản?</label>
-                    <a href="#" class="text-red-600 font-medium">Đăng
+                    <a href="{{route('auth.login')}}" class="text-red-600 font-medium">Đăng
                         nhập</a>
                 </div>
             </form>

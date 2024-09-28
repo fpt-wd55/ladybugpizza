@@ -11,34 +11,42 @@
                 <div class="mb-4 font-semibold text-lg uppercase">
                     Đăng nhập
                 </div>
-                <div class="flex ">
+                <div class="flex gap-2">
                     <label for="">Bạn có chưa có tài khoản?</label>
-                    <a href="#" class="text-red-600">Đăng
+                    <a href="{{route('auth.register')}}" class="text-red-600">Đăng
                         ký</a>
                 </div>
             </div>
-            <form action="">
+            <form action="{{route('auth.post-login')}}" method="POST">
+                @csrf
                 <div class="mb-4">
-                    <label class="font-medium" for="">Email</label>
-                    <input type="text" class="mt-2 mb-2 input">
-                    <p class="text-red-500 text-sm">Hiển thị lỗi</p>
+                    <label class="font-medium" for="email">Email</label>
+                    <input type="text" name="email" id="email" class="mt-2 mb-2 input">
+                    @error('email')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="mb-4">
-                    <label class="font-medium" for="">Mật khẩu</label>
-                    <input type="text" class="mt-2 mb-2 input">
-                    <p class="text-red-500 text-sm">Hiển thị lỗi</p>
+                    <label class="font-medium" for="password">Mật khẩu</label>
+                    <input type="text" name="password" id="password" class="mt-2 mb-2 input">
+                    @error('password')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="mb-11 flex justify-between">
                     <div class="flex items-center gap-1">
                         <input type="checkbox" class="input-checkbox">
-                        <label for="">Ghi nhớ mật khẩu</label>
+                        <label for="" class="text-sm">Ghi nhớ mật khẩu</label>
                     </div>
                     <div>
-                        <a href="#" class="text-red-600 hover:link">Quên mật khẩu?</a>
+                        <a href="{{route('auth.forgot-password')}}" class="text-red-600 hover:link text-sm">Quên mật khẩu?</a>
                     </div>
                 </div>
+                @if ($errors->has('error'))
+                    <p class="mb-4 py-4 bg-red-100 text-red-500 text-sm">{{$errors->first('error')}}</p>
+                @endif
                 <div class="mb-4 bg-red-600 flex items-center justify-center button-red">
-                    <button class="h-[32px] text-white">Đăng nhập</button>
+                    <button type="submit" class="h-[32px] text-white">Đăng nhập</button>
                 </div>
                 <p class="mb-4 text-center text-sm">
                     Hoặc

@@ -15,7 +15,8 @@
                     <label for="">Nhập mật khẩu mới của bạn</label>
                 </div>
             </div>
-            <form action="">
+            <form action="" method="POST">
+                @csrf
                 <div class="mb-4 py-4">
                     <label class="font-medium" for="">Mật khẩu mới </label>
                     <input type="text" class="mt-2 mb-2 input">
@@ -26,7 +27,7 @@
                     <input type="text" class="mt-2 mb-2 input">
                     <p class="text-red-500 text-sm">Hiển thị lỗi</p>
                 </div>
-                <div class="mb-4 bg-red-600 flex items-center justify-center gap-4 button-red">                
+                <div class="mb-4 bg-red-600 flex items-center justify-center gap-4 button-red">
                     <button class="h-[32px] text-white">Khôi phục mật khẩu</button>
                 </div>
             </form>
