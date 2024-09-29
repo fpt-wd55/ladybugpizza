@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WebController extends Controller
 {
@@ -35,5 +36,11 @@ class WebController extends Controller
     public function userInfo()
     {
         return view('auths.user-info');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('client.home');
     }
 }

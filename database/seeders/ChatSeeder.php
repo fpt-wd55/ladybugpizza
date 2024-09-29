@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use App\Models\Conversation;
+use App\Models\Message;
+use App\Models\User;
 use Faker\Factory as Faker;
-use Illuminate\Support\Facades\DB;
 
 class ChatSeeder extends Seeder
 {
@@ -14,31 +16,41 @@ class ChatSeeder extends Seeder
      */
     public function run(): void
     {
+        $now = Carbon::now();
         $faker = Faker::create();
 
-        $users = DB::table('users')->where('role_id', 2)->get();
-        $admins = DB::table('users')->where('role_id', 3)->get();
+        $users = User::getCustomers();
+        $admins = User::getAdmins();
+
+        // Kiểm tra xem danh sách người dùng và quản trị viên có rỗng không
+        if ($users->isEmpty() || $admins->isEmpty()) {
+            // Thoát nếu một trong hai danh sách trống
+            return;
+        }
 
         for ($i = 0; $i < 170; $i++) {
             $user = $faker->randomElement($users);
             $admin = $faker->randomElement($admins);
-            $conversation = DB::table('conversations')->insertGetId([
+            
+            // Tạo mới một cuộc hội thoại
+            $conversation = Conversation::create([
                 'user_id_1' => $user->id,
                 'user_id_2' => $admin->id,
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ]);
 
-            for ($j = 0; $j < 10; $j++) {
-                DB::table('messages')->insert([
-                    'conversation_id' => $conversation,
+            for ($j = 0; $j < 7; $j++) {
+                // Tạo mới một tin nhắn
+                Message::create([
+                    'conversation_id' => $conversation->id,
                     'sender_id' => $faker->randomElement([$user->id, $admin->id]),
                     'message' => $faker->sentence,
                     'image' => null,
                     'is_read' => true,
                     'is_typing' => false,
-                    'created_at' => $faker->dateTimeThisYear(),
-                    'updated_at' => $faker->dateTimeThisYear(),
+                    'created_at' => $now,
+                    'updated_at' => $now,
                 ]);
             }
         }

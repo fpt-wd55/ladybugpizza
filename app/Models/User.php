@@ -100,4 +100,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Log::class);
     }
+
+    public static function getCustomers()
+    {
+        return self::where('role_id', 2)->get();
+    }
+
+    // Phương thức để lấy người dùng có role_id là 3
+    public static function getAdmins()
+    {
+        return self::where('role_id', 3)->get();
+    }
 }
