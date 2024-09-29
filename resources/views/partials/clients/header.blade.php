@@ -11,8 +11,8 @@
             <div id="dropdown" class="z-10 hidden lg:hidden bg-white h-screen w-full px-8 py-4">
                 <form class="flex items-center gap-4 mb-8">
                     <input type="text" placeholder="Tìm kiếm..." class="input" />
-                    <button type="submit" class="button-red rounded-lg">
-                        @svg('tabler-search')
+                    <button type="submit" class="button-icon rounded-lg">
+                        @svg('tabler-search', 'icon-sm')
                     </button>
                 </form>
                 <div class="flex flex-col gap-8 w-full text-sm font-semibold">
@@ -76,11 +76,10 @@
                         </div>
                     </div>
                 @else
-                    <a href="{{ route('auth.login') }}" class="hidden md:inline-block button-red">
-                        @svg('tabler-login', 'md:hidden')
+                    <a href="{{ route('auth.login') }}" class="hidden md:inline-block button-icon transition">
+                        @svg('tabler-login', 'md:hidden icon-md')
                         <span class="hidden md:block">Đăng Nhập</span>
                     </a>
-                    {{-- <span class="lg:hidden">@svg('tabler-logout')</span> --}}
                 @endif
             </div>
         </nav>
