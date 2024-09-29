@@ -1,6 +1,6 @@
 @extends('layouts.client')
 
-  
+
 @section('title', 'Trang chủ')
 
 @section('content')
@@ -10,175 +10,163 @@
         </div>
     @endsession
 
-<div class="md:mx-32 lg:mx-64 min-h-screen p-4 md:p-8">
+    <div class="mx-auto px-0  ">
+        <div id="default-carousel" class="z-0 relative w-full mb-[44px] md:mb-[76px] lg:mb-[64px]" data-carousel="slide">
+            <!-- Carousel wrapper -->
+            <div class="relative h-[230px] overflow-hidden  md:h-[400px] lg:h-[650px]">
+                <!-- Item 1 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="{{ asset('storage/uploads/banners/banner.jpg') }}"
+                        class="object-cover absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                        alt="Test image">
+                </div>
+                <!-- Item 2 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="{{ asset('storage/uploads/banners/banner.jpg') }}"
+                        class=" object-cover absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                        alt="Test image">
+                </div>
+                <!-- Item 3 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="{{ asset('storage/uploads/banners/banner.jpg') }}"
+                        class="object-cover absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                        alt="Test image">
+                </div>
+                <!-- Item 4 -->
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="{{ asset('storage/uploads/banners/banner.jpg') }}"
+                        class="object-cover absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                        alt="Test image">
+                </div>
+            </div>
 
-<div class="mx-auto px-0  ">
-    <div id="default-carousel" class="relative w-full mb-[44px] md:mb-[76px] lg:mb-[64px]" data-carousel="slide">
-      <!-- Carousel wrapper -->
-      <div class="relative h-[230px] overflow-hidden  md:h-[400px] lg:h-[650px]">
-        <!-- Item 1 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-          <img src="{{ asset('storage/uploads/banners/banner.jpg') }}" class="object-cover absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Test image">
-        </div>
-        <!-- Item 2 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-          <img src="{{ asset('storage/uploads/banners/banner.jpg') }}" class=" object-cover absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Test image">
-        </div>
-        <!-- Item 3 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-          <img src="{{ asset('storage/uploads/banners/banner.jpg') }}" class="object-cover absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Test image">
-        </div>
-        <!-- Item 4 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-          <img src="{{ asset('storage/uploads/banners/banner.jpg') }}" class="object-cover absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Test image">
-        </div>
-      </div>
-      <!-- Slider indicators -->
-      <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="3"></button>
-      </div>
-      <!-- Slider controls -->
-      <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50">
-          <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-          </svg>
-          <span class="sr-only">Previous</span>
-        </span>
-      </button>
-      <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50">
-          <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-          </svg>
-          <span class="sr-only">Next</span>
-        </span>
-      </button>
-    </div>
-    <!-- end slide show -->
-    
-    <div class="h-auto mx-[16px] md:mx-8 lg:mx-20">
-      <div class="flex justify-between " >
-        <p class="pl-2 pt-[9px] label-sm  md:text-base  lg:text-xl">Sản Phẩm Nổi Bật</p>
-        <a href="" class="pr-2 pt-[9px]   label-sm md:text-base lg:text-xl">Xem thêm</a>
-      </div>
-      <div class="grid grid-cols-2 grid-rows-3 gap-5 mx-auto md:grid-cols-3 md:grid-rows-2 md:gap-5">
-        <!-- item -->
-        @foreach ($listProHome as $listPro)
-            
-        <a href="#">
+            <!-- Slider indicators -->
+            <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                <button type="button" class="indicator" aria-current="false" aria-label="Slide 0"
+                    data-carousel-slide-to="0"></button>
+                <button type="button" class="indicator" aria-current="false" aria-label="Slide 1"
+                    data-carousel-slide-to="1"></button>
+                <button type="button" class="indicator" aria-current="false" aria-label="Slide 2"
+                    data-carousel-slide-to="2"></button>
+                <button type="button" class="indicator" aria-current="false" aria-label="Slide 3"
+                    data-carousel-slide-to="3"></button>
+            </div>
 
-          <div class=" h-[280px] md:flex md:h-[140px]">
-             <div class="mb-1 h-40 md:h-32 md:mb-0">
-              <img src="{{ asset('storage/uploads/products/pizza/pizza_4_ormaggi.webp') }}" class="h-full w-full rounded-tl-sm  rounded-tr-sm object-cover" alt="">
-             </div>
-              <div class="">
-               <div class=""><p class="pl-2 label-sm md:text-sm lg:text-base">{{$listPro->name}}</p></div>
-               <div class="flex pl-2">
-                 <p class=" underline pr-1 label-sm md:text-sm lg:text-base">{{$listPro->avg_rating}}</p>
-               
-                 
-                 @for($i = 1; $i <= 5; $i++)
-                  @if($i <= $listPro->avg_rating)
-                      @svg('tabler-star-filled', 'icon-sm md:w-5 md:h-5 lg:w-6 lg:h-6 text-[#D30A0A]')
-                  @else
-                      @svg('tabler-star', 'icon-sm md:w-5 md:h-5 lg:w-6 lg:h-6 text-[#D30A0A]')
-                  @endif
-              @endfor
-                 <p class=" pl-1 label-sm md:text-sm lg:text-base">{{$listPro->quantity }}</p>
- 
-               </div>
-               <div class="pl-2">
-                 <p class="text-xs md:text-sm  font-normal h-5 md:h-10">{{$listPro->description}}</p>
-               </div>
- 
-               <div class="mt-2 md:mt-0 pl-2">
-                <span class="text-xs font-normal line-through text-[#9B9B9B]">{{number_format($listPro->price, 0, ',', '.')}}đ</span>
-                <span class="font-medium">{{number_format( $listPro->discount_price, 0, ',', '.')}}đ</span>
-               </div>
-              </div>
-            
-          </div>
-        </a>
-        @endforeach
-        <!-- end item -->
-        
- 
-        
-        </div>
-        {{-- end product --}}
-
-        <div class=" md:flex md:mt-20">
-          <div class="flex flex-col items-center mr-3">
-
-            <p class="mt-20 text-center berkshire-swash-regular text-2xl md:mt-0 md:text-4xl lg:text-6xl ">Khám Phá</p>
-        <p class="inline-block mt-1 text-center text-xl vujahday-script-regular md:text-3xl lg:text-4xl lg:mt-5">Thực đơn của chúng tôi</p>
-
-    <p class="mt-1 text-center open-sans  text-sm md:text-base md:font-normal lg:text-lg lg:mt-5 ">Discover our wood-fired Neapolitan pizzas, Belgian beers and freshly
-         made desserts that you can enjoy in our 2 locations or at home with our quick delivery service.
-    </p>
-    <a href=""><button class="mt-2 px-7 py-1 text-white text-sm bg-[#D30A0A] rounded font-semibold md:text-base md:px-8 md:py-2 lg:px-12 lg:text-lg lg:mt-5">Đặt Ngay</button></a>
-    <p class=" mt-3 text-center text-xs  open-sans md:text-base lg:text-lg">
-        Lunch service: <br>
-        11am to 3pm <br>
-        Dinner service: <br>
-        5pm to 10pm <br>
-         Please note that last order is 30 minutes before closing time
-    </p>
-          </div>
-
-      <div class="mt-3 md:max-w-[360px] md:max-h-[360px] lg:max-w-[450px] lg:max-h-[450px]">
-        <img src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}" class="h-full w-full rounded-lg object-cover" alt="">
-      </div>
-
+            <!-- Slider controls -->
+            <button type="button"
+                class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                data-carousel-prev>
+                <span
+                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50">
+                    @svg('tabler-chevron-left', 'w-4 h-4 text-white')
+                </span>
+            </button>
+            <button type="button"
+                class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                data-carousel-next>
+                <span
+                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50">
+                    @svg('tabler-chevron-right', 'w-4 h-4 text-white')
+                </span>
+            </button>
         </div>
 
+        <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
 
+            {{-- hot pizza --}}
+            <div class="mb-32">
+                <div class="flex justify-between items-center mb-4">
+                    <p class="text-lg font-semibold uppercase">Sản Phẩm Nổi Bật</p>
+                    <a href="" class="link-lg">Xem thêm</a>
+                </div>
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                    @foreach ($products as $product)
+                        <a href="{{ route('client.product.show', $product->slug) }}"
+                            class="product-card md:flex overflow-hidden">
+                            <img src="http://127.0.0.1:8000/storage/uploads/products/pizza/pizza_4_ormaggi.webp"
+                                class="flex-shrink-0 h-48 w-full md:w-1/3 md:h-full object-cover" alt="">
+                            <div class="p-2 text-sm">
+                                <p class="font-semibold mb-2 ">{{ $product->name }}</p>
+                                <div class="flex items-center gap-1 mb-2">
+                                    <p>{{ $product->avg_rating }}</p>
+                                    <div class="flex items-center gap-1">
+                                        @for ($i = 0; $i < 5; $i++)
+                                            @if ($i < $product->avg_rating)
+                                                @svg('tabler-star-filled', 'icon-sm text-red-500')
+                                            @else
+                                                @svg('tabler-star', 'icon-sm text-red-500')
+                                            @endif
+                                        @endfor
+                                    </div>
+                                    <p>({{ $product->total_rating }})</p>
+                                </div>
+                                <p class="mb-4 line-clamp-3 h-12">{{ $product->description }}</p>
+                                <div class="bottom-4 flex gap-3 items-center">
+                                    <p class="line-through text-xs text-gray-500">{{ number_format($product->price) }}đ</p>
+                                    <p class="font-semibold">{{ number_format($product->discount_price) }}đ</p>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
 
-        <div class=" md:flex mt-8 md:mt-20 md:flex-row-reverse">
-          <div class="flex flex-col items-center mr-3 md:mr-0 md:ml-3">
+            </div>
 
-        <p class="inline-block mt-1 text-center text-xl  vujahday-script-regular md:font-semibold md:text-4xl md:mb-4 lg:text-6xl lg:mt-5">Câu chuyện của chúng tôi</p>
+            {{-- kham pha thuc don --}}
+            <div class="grid grid-cols-1 lg:grid-cols-2 mb-32 gap-8">
+                <div class="flex flex-col items-center mr-3 text-center">
+                    <p class="text-center berkshire-swash-regular text-3xl lg:text-4xl mb-4">Khám
+                        Phá</p>
+                    <p class="vujahday-script-regular text-3xl lg:text-4xl mb-6">
+                        Thực đơn của chúng tôi</p>
 
-    <div class="mt-1 text-center open-sans  text-xs md:text-base md:font-normal lg:text-xl lg:mt-5 ">
-      <p class="mb-6 lg:mb-8  ">
-        Discover our wood-fired Neapolitan pizzas, Belgian beers and freshly made desserts that you can enjoy in  <a href="" class="underline">our 2 locations</a> or at home with <a href="" class="underline">our quick delivery service</a>.
-      </p>
+                    <p class="font-extralight mb-8">
+                        Khám phá các loại Pizza nướng bằng củi, bia Bỉ và các món tráng miệng mới làm mà bạn có
+                        thể thưởng thức tại 2 địa điểm của chúng tôi hoặc tại nhà với dịch vụ giao hàng nhanh chóng của
+                        chúng tôi.
+                    </p>
+                    <a href="" class="button-red uppercase mb-8">đặt ngay</a>
+                    <div class="font-extralight">
+                        <p class="font-normal">Dịch vụ bữa trưa</p>
+                        <p class="mb-4">Từ 11am đến 3pm </p>
+                        <p class="font-normal">Dịch vụ bữa tối</p>
+                        <p class="mb-4">Từ 5pm đến 10pm</p>
+                        <p class="mb-8">Xin lưu ý rằng gọi món lần cuối là 30 phút trước giờ đóng cửa</p>
+                    </div>
+                </div>
 
-      <p class=" lg:mb-5" >
-        Pizza Belga is an authentic Neapolitan pizzeria, located in the heart of Hanoi. Our pizzas are baked in a wood-burning oven and generously topped with fresh, natural and carefully selected ingredients.
-      </p>
+                <img src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
+                    class="flex-shrink-0 h-full w-full rounded-lg object-cover" alt="">
+            </div>
 
-      <p class=" ">
-        Discover more <a href="" class="underline">ABOUT US</a> here
-      </p>
-    </div>
-   
-   
-          </div>
-
-      <div class="grid grid-cols-2 grid-rows-2 gap-x-5 gap-y-3 mt-2 md:max-w-[300px] md:max-h-[300px] lg:max-w-[480px] lg:max-h-[480px]">
-        <img src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}" class="h-full w-full rounded-lg object-cover" alt="">
-        <img src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}" class="h-full w-full rounded-lg object-cover" alt="">
-        <img src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}" class="h-full w-full rounded-lg object-cover" alt="">
-        <img src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}" class="h-full w-full rounded-lg object-cover" alt="">
-      </div>
-
+            {{-- Cau chuyen cua chung toi --}}
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="grid grid-cols-2 grid-rows-2 gap-4">
+                    <img src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
+                        class="h-full w-full rounded-lg object-cover" alt="">
+                    <img src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
+                        class="h-full w-full rounded-lg object-cover" alt="">
+                    <img src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
+                        class="h-full w-full rounded-lg object-cover" alt="">
+                    <img src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
+                        class="h-full w-full rounded-lg object-cover" alt="">
+                </div>
+                <div class="text-center">
+                    <p class="text-3xl lg:text-4xl mb-4 vujahday-script-regular">Câu chuyện của chúng tôi</p>
+                    <p class="mb-6 lg:mb-8">Khám phá các loại Pizza nướng bằng củi, bia Bỉ và các món tráng
+                        miệng mới làm mà bạn có thể thưởng thức tại 2 địa điểm của chúng tôi hoặc tại nhà với dịch vụ giao
+                        hàng nhanh chóng của chúng tôi.
+                    </p>
+                    <p class=" lg:mb-5">Ladybug Pizza là một tiệm bánh Pizza đích thực, nằm ở trung tâm Hà Nội. Những chiếc
+                        bánh pizza của chúng tôi được nướng trong lò đốt củi và phủ bên trên những nguyên liệu tươi, tự
+                        nhiên và được lựa chọn cẩn thận.
+                    </p>
+                    <p>
+                        Khám phá thêm
+                        <a href="" class="link-lg uppercase">về chúng tôi</a>
+                    </p>
+                </div>
+            </div>
         </div>
-
-
-
-    </div>
-
-
-
-  </div>
-
-    
-  
-
     </div>
 @endsection

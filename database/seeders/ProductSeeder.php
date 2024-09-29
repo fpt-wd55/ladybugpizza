@@ -2,11 +2,14 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Faker\Factory as Faker;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\AttributeValue;
+use App\Models\ProductAttribute;
 
 class ProductSeeder extends Seeder
 {
@@ -15,7 +18,8 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        $now = Carbon::now();
+
         $dataProduct = [
             'banh-ngot' => [
                 'Blueberry cheesecake',
@@ -36,30 +40,30 @@ class ProductSeeder extends Seeder
             ],
             'pizza' => [
                 'Pizza Pesto Napoli',
-                'Pizza Vegetariana',
+                'Pizza Chay',
                 'Pizza Carbonara',
                 'Pizza Raffaello',
                 'Pizza Pesto Burrata',
                 'Pizza Margherita',
-                'Pizza Spicy Burrata',
-                'Pizza Chèvre Chaud',
-                'Pizza Eggplant',
+                'Pizza Burrata Cay',
+                'Pizza Phô Mai Nóng',
+                'Pizza Cà Tím',
                 'Pizza Calzone',
-                'Pizza 4 Formaggi',
-                'Pizza Tartufo',
+                'Pizza Bốn Loại Phô Mai',
+                'Pizza Nấm Truffle',
                 'Pizza Emilio',
-                'Pizza Pancetta',
+                'Pizza Thịt Xông Khói',
                 'Pizza Alice',
                 'Pizza Capricciosa',
-                'Pizza Rucola Parma',
+                'Pizza Arugula Parma',
                 'Pizza Napoletana',
                 'Pizza Margherita DOP',
-                'Pizza Française',
-                'Pizza Tartufissimo',
+                'Pizza Pháp',
+                'Pizza Nấm Truffle Hảo Hạng',
                 'Pizza Marinara',
-                'Pizza 5 Formaggi',
+                'Pizza Năm Loại Phô Mai',
                 'Pizza Sicilian',
-                'Pizza Hot Honey',
+                'Pizza Mật Ong Nóng',
             ],
             'my' => [
                 'Mỳ Ý Pesto',
@@ -102,46 +106,47 @@ class ProductSeeder extends Seeder
         ];
 
         // Create Product
-        $categories = DB::table('categories')->get();
+        $categories = Category::all();
 
         foreach ($categories as $category) {
-            $products = $dataProduct[$category->slug];
-            foreach ($products as $product) {   
+            $products = $dataProduct[$category->slug] ?? [];
+            foreach ($products as $product) {
                 $slug = Str::slug($product);
                 $price = rand(100000, 500000);
-                DB::table('products')->insert([
+                
+                // Create Product
+                $createdProduct = Product::create([
                     'name' => $product,
                     'slug' => $slug,
                     'image' => $slug . '.jpg',
                     'description' => 'Description of ' . $product,
                     'category_id' => $category->id,
                     'price' => $price,
-                    'discount_price' => rand(0, 1) ? $price - rand(50000, 10000) : null,
+                    'discount_price' => $price - rand(50000, 10000),
                     'quantity' => rand(10, 100),
                     'sku' => Str::random(10),
                     'status' => 1,
-                    'is_featured' => rand(1,2),
+                    'is_featured' => rand(1, 2),
                     'avg_rating' => rand(0, 5),
                     'total_rating' => rand(0, 100),
-                    'created_at' => $faker->dateTimeThisYear(),
-                    'updated_at' => $faker->dateTimeThisYear(),
+                    'created_at' => $now,
+                    'updated_at' => $now,
                 ]);
 
-                $product_id = DB::table('products')->where('slug', $slug)->first()->id;
-                $attributeValues = DB::table('attribute_values')->get();
-                
+                // Get Attribute Values
+                $attributeValues = AttributeValue::all();
+
                 foreach ($attributeValues as $attributeValue) {
                     $price = rand(10000, 50000);
-                    DB::table('product_attributes')->insert([
-                        'product_id' => $product_id,
+                    ProductAttribute::create([
+                        'product_id' => $createdProduct->id,
                         'attribute_value_id' => $attributeValue->id,
                         'price' => $price,
-                        'created_at' => $faker->dateTimeThisYear(),
-                        'updated_at' => $faker->dateTimeThisYear(),
+                        'created_at' => $now,
+                        'updated_at' => $now,
                     ]);
                 }
             }
-            
         }
     }
 }

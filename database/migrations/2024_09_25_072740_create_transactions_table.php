@@ -21,6 +21,7 @@ return new class extends Migration
             $table->bigInteger('amount');
             $table->tinyInteger('status')->default(0)->comment('1: success, 2: failed');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
