@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use Carbon\Carbon;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\OrderStatus;
-use Faker\Factory as Faker;
 
-class OrderStatusSeeder extends Seeder
+class RoleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,36 +16,31 @@ class OrderStatusSeeder extends Seeder
     {
         $now = Carbon::now();
 
-        $statuses = [
+        Role::insert([
             [
-                'name' => 'Cho xác nhận',
+                'name' => 'admin',
+                'parent_id' => null,
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'name' => 'Đã xác nhận',
+                'name' => 'user',
+                'parent_id' => null,
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'name' => 'Đang giao hàng',
+                'name' => 'super_admin',
+                'parent_id' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'name' => 'Đã giao hàng',
+                'name' => 'admin_chat',
+                'parent_id' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
-            [
-                'name' => 'Đã hủy',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]
-        ];
-
-        foreach ($statuses as $status) {
-            OrderStatus::create($status);
-        }
+        ]);
     }
 }

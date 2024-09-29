@@ -45,7 +45,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('/')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('client.home');
-    Route::get('/menu', [ProductController::class, 'index'])->name('client.product.menu');
+    Route::get('/menu', [ProductController::class, 'menu'])->name('client.product.menu');
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('client.product.show');
     Route::post('/product/{slug}', [ProductController::class, 'addToCart'])->name('client.product.add-to-cart');
     Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
@@ -77,6 +77,7 @@ Route::prefix('/auth')->group(function () {
     Route::get('/google', [GoogleController::class, 'redirect'])->name('auth.google.redirect');
     Route::get('/google/call-back', [GoogleController::class, 'callback'])->name('auth.google.callback');
     Route::get('/login', [WebController::class, 'login'])->name('auth.login');
+    Route::get('/logout', [WebController::class, 'logout'])->name('auth.logout');
     Route::get('/register', [WebController::class, 'register'])->name('auth.register');
     Route::get('/forgot-password', [WebController::class, 'forgotPassword'])->name('auth.forgot-password');
     Route::get('/get-otp', [WebController::class, ''])->name('auth.get-otp');

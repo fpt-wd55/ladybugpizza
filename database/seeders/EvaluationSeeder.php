@@ -2,33 +2,39 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
-use Illuminate\Support\Facades\DB;
+use App\Models\Evaluate;
+use App\Models\Evaluation;
+use App\Models\Product;
+use App\Models\User;
+use Carbon\Carbon;
 
-class EvaluateSeeder extends Seeder
+class EvaluationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
+        $now = Carbon::now();
         $faker = Faker::create();
-        $products = DB::table('products')->pluck('id')->toArray();
-        $users = DB::table('users')->pluck('id')->toArray();
+        
+        $products = Product::pluck('id')->toArray();
+        $users = User::pluck('id')->toArray();
 
         foreach ($products as $product) {
             for ($i = 0; $i < 10; $i++) {
                 $user = $faker->randomElement($users);
-                DB::table('evaluates')->insert([
+                
+                Evaluation::create([
                     'user_id' => $user,
                     'product_id' => $product,
                     'rating' => $faker->numberBetween(1, 5),
                     'comment' => $faker->sentence,
                     'status' => 1,
-                    'created_at' => $faker->dateTimeThisYear(),
-                    'updated_at' => $faker->dateTimeThisYear(),
+                    'created_at' => $now,
+                    'updated_at' => $now,
                 ]);
             }
         }

@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Topping;
 use Faker\Factory as Faker;
 
 class ToppingSeeder extends Seeder
@@ -14,7 +14,7 @@ class ToppingSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        $now = Carbon::now();
 
         $toppings = [
             'Phô mai sữa dê' => [
@@ -68,13 +68,13 @@ class ToppingSeeder extends Seeder
         ];
 
         foreach ($toppings as $name => $topping) {
-            DB::table('toppings')->insert([
+            Topping::create([
                 'name' => $name,
                 'image' => $topping['image'],
                 'price' => $topping['price'],
                 'category_id' => 3,
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ]);
         }
     }

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->text('canceled_reason')->nullable();
             $table->timestamp('canceled_at')->nullable(); 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
