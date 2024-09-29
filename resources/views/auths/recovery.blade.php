@@ -15,21 +15,35 @@
                     <label for="">Nhập mật khẩu mới của bạn</label>
                 </div>
             </div>
-            <form action="" method="POST">
+            @session('success')
+                    <div class="alert-success mt-2">
+                        {{ session('success') }}
+                    </div>
+                @endsession
+                @session('error')
+                    <div class="alert-error mt-2">
+                        {{ session('error') }}
+                    </div>
+                @endsession
+            <form action="{{route('auth.post-recovery')}}" method="POST">
                 @csrf
                 <div class="mb-4 py-4">
-                    <label class="font-medium" for="">Mật khẩu mới </label>
-                    <input type="text" class="mt-2 mb-2 input">
-                    <p class="text-red-500 text-sm">Hiển thị lỗi</p>
+                    <label class="font-medium" for="password">Mật khẩu mới </label>
+                    <input type="password" name="password" id="password" class="mt-2 mb-2 input">
+                    @error('password')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
                 <div class="mb-4 py-4">
-                    <label class="font-medium" for="">Nhập lại mật khẩu mới </label>
-                    <input type="text" class="mt-2 mb-2 input">
-                    <p class="text-red-500 text-sm">Hiển thị lỗi</p>
+                    <label class="font-medium" for="password_confirmation">Nhập lại mật khẩu mới </label>
+                    <input type="password" name="password_confirmation" id="password_confirmation" class="mt-2 mb-2 input">
+                    @error('password_confirmation')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
-                <div class="mb-4 bg-red-600 flex items-center justify-center gap-4 button-red">
-                    <button class="h-[32px] text-white">Khôi phục mật khẩu</button>
-                </div>
+                <button class="mb-4 bg-red-600 flex items-center justify-center gap-4 button-red w-full">
+                    Khôi phục mật khẩu
+                </button>
             </form>
         </div>
         <div class="hidden md:block max-h-[629px]">

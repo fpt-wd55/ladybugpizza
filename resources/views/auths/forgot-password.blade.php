@@ -15,15 +15,28 @@
                     <label for="">Nhập địa chỉ email, bạn sẽ nhận được mật khẩu một lần hoặc liên kết xác minh để xác minh tài khoản của mình</label>
                 </div>
             </div>
-            <form action="">
+            @session('success')
+                    <div class="alert-success mt-2">
+                        {{ session('success') }}
+                    </div>
+                @endsession
+                @session('error')
+                    <div class="alert-error mt-2">
+                        {{ session('error') }}
+                    </div>
+                @endsession
+            <form action="{{route('auth.post-forgot-password')}}" method="POST">
+                @csrf
                 <div class="mb-4 py-4">
-                    <label class="font-medium" for="">E-mail</label>
-                    <input type="text" class="mt-2 mb-2 input">
-                    <p class="text-red-500 text-sm">Hiển thị lỗi</p>
+                    <label class="font-medium" for="email">E-mail</label>
+                    <input type="email" name="email" id="email" class="mt-2 mb-2 input">
+                    @error('email')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
                 </div>
-                <div class="mb-4 bg-red-600 flex items-center justify-center gap-4 button-red">
-                    <button class="h-[32px] text-white">Khôi phục mật khẩu</button>
-                </div>
+                <button type="submit" class="mb-4 bg-red-600 flex items-center justify-center gap-4 button-red w-full">
+                   Khôi phục mật khẩu
+                </button>
                 <div class="flex items-center justify-center gap-1">
                     <label for="">Bạn có chưa có tài khoản?</label>
                     <a href="{{route('auth.login')}}" class="text-red-600 font-medium">Đăng

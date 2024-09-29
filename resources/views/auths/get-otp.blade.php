@@ -15,15 +15,30 @@
                     <label for="">Vui lòng nhập mã OTP được gửi về email đăng ký của bạn</label>
                 </div>
             </div>
-            <form action="">
-                <div class="mb-4 py-4">
-                    <label class="font-medium" for="">OTP</label>
-                    <input type="text" class="mt-2 mb-2 input">
-                    <p class="text-red-500 text-sm">Hiển thị lỗi</p>
+            @session('success')
+                    <div class="alert-success mt-2">
+                        {{ session('success') }}
+                    </div>
+                @endsession
+                @session('error')
+                    <div class="alert-error mt-2">
+                        {{ session('error') }}
+                    </div>
+                @endsession
+            <form action="{{route('auth.post-get-otp')}}" method="POST">
+                @csrf
+                <div class="mb-4 pt-4">
+                    <label class="font-medium" for="otp">OTP</label>
+                    <input type="text" name="otp" id="otp" class="mt-2 mb-2 input" autofocus>
+                    @error('otp')
+                        <p class="text-red-500 text-sm">{{$message}}</p>
+                    @enderror
+                    {{-- <a href="{{route('auth.forgot-password')}}" class="text-red-600 hover:link text-sm">Quên mật khẩu?</a> --}}
                 </div>
-                <div class="mb-4 bg-red-600 flex items-center justify-center gap-4 button-red">                
-                    <button class="h-[32px] text-white uppercase">Xác nhận OTP</button>
-                </div>
+                <button class="mb-4 bg-red-600 flex items-center justify-center gap-4 button-red w-full">
+                    Xác nhận OTP
+                </button>
+
             </form>
         </div>
         <div class="hidden md:block max-h-[629px]">

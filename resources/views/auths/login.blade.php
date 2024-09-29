@@ -16,6 +16,16 @@
                     <a href="{{route('auth.register')}}" class="text-red-600">Đăng
                         ký</a>
                 </div>
+                @session('success')
+                    <div class="alert-success mt-2">
+                        {{ session('success') }}
+                    </div>
+                @endsession
+                @session('error')
+                    <div class="alert-error mt-2">
+                        {{ session('error') }}
+                    </div>
+                @endsession
             </div>
             <form action="{{route('auth.post-login')}}" method="POST">
                 @csrf
@@ -28,15 +38,15 @@
                 </div>
                 <div class="mb-4">
                     <label class="font-medium" for="password">Mật khẩu</label>
-                    <input type="text" name="password" id="password" class="mt-2 mb-2 input">
+                    <input type="password" name="password" id="password" class="mt-2 mb-2 input">
                     @error('password')
                         <p class="text-red-500 text-sm">{{$message}}</p>
                     @enderror
                 </div>
                 <div class="mb-11 flex justify-between">
                     <div class="flex items-center gap-1">
-                        <input type="checkbox" class="input-checkbox">
-                        <label for="" class="text-sm">Ghi nhớ mật khẩu</label>
+                        <input type="checkbox" name="remember" id="remember" class="input-checkbox">
+                        <label for="remember" class="text-sm ms-1">Ghi nhớ mật khẩu</label>
                     </div>
                     <div>
                         <a href="{{route('auth.forgot-password')}}" class="text-red-600 hover:link text-sm">Quên mật khẩu?</a>
@@ -45,22 +55,23 @@
                 @if ($errors->has('error'))
                     <p class="mb-4 py-4 bg-red-100 text-red-500 text-sm">{{$errors->first('error')}}</p>
                 @endif
-                <div class="mb-4 bg-red-600 flex items-center justify-center button-red">
-                    <button type="submit" class="h-[32px] text-white">Đăng nhập</button>
-                </div>
+                <button type="submit" class="mb-4 bg-red-600 flex items-center justify-center button-red w-full">
+                    Đăng nhập
+                </button>
                 <p class="mb-4 text-center text-sm">
                     Hoặc
                 </p>
-                <div class="mb-4 bg-red-600 flex items-center justify-center gap-4 button-red">
+                <a href="{{route('auth.google.redirect')}}" class="mb-4 bg-red-600 flex items-center justify-center gap-4 button-red">
                     @svg('tabler-brand-google-filled')
-                    <button class="h-[32px] text-white">Đăng nhập bằng Google</button>
-                </div>
+                    Đăng nhập bằng Google
+                </a>
             </form>
         </div>
         <div class="hidden md:block max-h-[629px]">
             <img class="w-full h-full object-cover" src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}"
                 alt="">
         </div>
+
     </div>
 
 </div>

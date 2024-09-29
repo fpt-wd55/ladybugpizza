@@ -49,8 +49,8 @@
                 </div>
                 <div class="mb-8">
                     <div class="">
-                        <input type="checkbox" name="agree" class="input-checkbox">
-                        <label for="agree" class="text-sm">Khách hàng đồng ý với</label>
+                        <input type="checkbox" name="agree" id="agree" class="input-checkbox mb-1 ">
+                        <label for="agree" class="text-sm ms-1">Khách hàng đồng ý với</label>
                         <a href="#" class="text-red-600 text-sm">chính sách và điều khoản</a>
                     </div>
                     @error('agree')
@@ -69,7 +69,7 @@
                 </div>
             </form>
         </div>
-        <div class="hidden md:block max-h-[629px]">
+        <div class="hidden md:block max-h-full">
             <img class="w-full h-full object-cover" src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}"
                 alt="">
         </div>
