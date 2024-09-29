@@ -101,7 +101,7 @@ Route::prefix('/auth')->group(function () {
 });
 
 
-Route::prefix('/admin')->middleware([''])->group(function () {
+Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('/users', UserController::class);
     Route::resource('/addresses', AddressController::class);

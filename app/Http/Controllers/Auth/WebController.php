@@ -10,6 +10,7 @@ use App\Http\Requests\OtpRequest;
 use App\Http\Requests\RecoveryRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UserInfoRequest;
+use App\Mail\Otp;
 use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -62,7 +63,7 @@ class WebController extends Controller
 
         if(Auth::attempt($credentials, $remember)) {
 
-            return redirect()->route('client.home')->with('success', 'Đăng nhập thành công');
+            return redirect()->route('admin.dashboard')->with('success', 'Đăng nhập thành công');
         }
 
         return back()->with('error', 'Đăng nhập thất bại, vui lòng kiểm tra lại email hoặc mật khẩu');
@@ -71,7 +72,6 @@ class WebController extends Controller
     public function postRegister(RegisterRequest $request)
     {
         $validated = $request->validated();
-
         $request->session()->put('register', $validated);
 
         return redirect()->route('auth.user-info');
@@ -80,11 +80,8 @@ class WebController extends Controller
     public function postUserInfo(UserInfoRequest $request)
     {
         $validated = $request->validated();
-
         $register = $request->session()->get('register');
-
         $userData = array_merge($register, $validated);
-
 
         $user = User::create(array_merge($userData,[
             'username' => $this->processString($userData['fullname']),
@@ -130,7 +127,6 @@ class WebController extends Controller
         Address::create($addressData);
 
         return redirect()->route('auth.login')->with('success', 'Đăng ký thành công');
-
     }
 
     protected function processString($input) {
@@ -247,15 +243,12 @@ class WebController extends Controller
 
         Session::put('email', $request->email);
 
-
         $otpCode = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
         Session::put('otp', $otpCode);
         Session::put('otp_expiry', now()->addMinutes(10));
+        $subject = 'Mã Xác Thực OTP';
 
-        Mail::send('auths.emails.otp', ['otp' => $otpCode, 'title' => 'ĐÂY LÀ MÃ OTP CỦA BẠN:'], function ($message) use ($user) {
-            $message->to($user->email)
-                    ->subject('MÃ XÁC THỰC OTP');
-        });
+        Mail::to($user->email)->send(new Otp($otpCode, $subject));
 
         return redirect()->route('auth.get-otp')->with('success', 'Mã OTP đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư và nhập mã để tiếp tục.');
     }
@@ -265,13 +258,11 @@ class WebController extends Controller
         $otp = Session::get('otp');
         $otpExpiry = Session::get('otp_expiry');
 
-
         if ($request->otp !== $otp || now()->greaterThan($otpExpiry)) {
             return back()->withErrors(['otp' => 'OTP không chính xác hoặc đã hết hạn.']);
         }
 
         return redirect()->route('auth.recovery')->with( 'success' , 'Mã OTP của bạn đã được xác nhận, vui lòng nhập mật khẩu mới');
-
     }
 
     public function postRecovery(RecoveryRequest $request)
@@ -293,7 +284,6 @@ class WebController extends Controller
         Session::forget(['otp', 'otp_expiry', 'email']);
 
         return redirect()->route('auth.login')->with('success', 'Mật khẩu đã được cập nhật thành công!');
-
     }
 
 
