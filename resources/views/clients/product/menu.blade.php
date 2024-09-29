@@ -23,25 +23,25 @@
                 {{-- Danh mục --}}
                 <div class="mb-4 md:flex md:items-start">
                     <div class="md:flex-1">
-                        <h3 class="font-semibold mb-2 uppercase">Danh mục</h3>
+                        <h3 class="font-semibold mb-2 uppercase text-sm">Danh mục</h3>
                         <div class="space-y-2">
-                            <label class="flex items-center gap-2">
+                            <label class="flex items-center gap-2 text-sm">
                                 <input type="checkbox" class="input-checkbox" />
                                 Pizza
                             </label>
-                            <label class="flex items-center gap-2">
+                            <label class="flex items-center gap-2 text-sm">
                                 <input type="checkbox" class="input-checkbox" />
                                 Mỳ Ý
                             </label>
-                            <label class="flex items-center gap-2">
+                            <label class="flex items-center gap-2 text-sm">
                                 <input type="checkbox" class="input-checkbox" />
                                 Salat
                             </label>
-                            <label class="flex items-center gap-2">
+                            <label class="flex items-center gap-2 text-sm">
                                 <input type="checkbox" class="input-checkbox" />
                                 Đồ uống
                             </label>
-                            <label class="flex items-center gap-2">
+                            <label class="flex items-center gap-2 text-sm">
                                 <input type="checkbox" class="input-checkbox" />
                                 Gà rán
                             </label>
@@ -53,23 +53,23 @@
 
                 {{-- Đánh giá --}}
                 <div class="mb-4 ">
-                    <h3 class="font-semibold mb-2 uppercase">Đánh giá</h3>
+                    <h3 class="font-semibold mb-2 uppercase text-sm">Đánh giá</h3>
                     <div>
                         <div class="space-y-2">
-                            <label class="flex items-center">
-                                <input type="checkbox" class="input-checkbox mr-2" /> 5 sao
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" class="input-checkbox" /> 5 sao
                             </label>
-                            <label class="flex items-center">
-                                <input type="checkbox" class="input-checkbox mr-2" /> Từ 4 sao
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" class="input-checkbox" /> Từ 4 sao
                             </label>
-                            <label class="flex items-center">
-                                <input type="checkbox" class="input-checkbox mr-2" /> Từ 3 sao
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" class="input-checkbox" /> Từ 3 sao
                             </label>
-                            <label class="flex items-center">
-                                <input type="checkbox" class="input-checkbox mr-2" /> Từ 2 sao
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" class="input-checkbox" /> Từ 2 sao
                             </label>
-                            <label class="flex items-center">
-                                <input type="checkbox" class="input-checkbox mr-2" /> Từ 1 sao
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" class="input-checkbox" /> Từ 1 sao
                             </label>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
 
                 {{-- Giá --}}
                 <div class="mb-4">
-                    <h3 class="font-semibold mb-2 uppercase">Giá</h3>
+                    <h3 class="font-semibold mb-2 uppercase text-sm">Giá</h3>
                     <div class="flex items-center justify-between gap-8">
                         <input type="text" class="input text-sm" placeholder="Tối thiểu">
                         <span>-</span>
