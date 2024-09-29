@@ -27,6 +27,7 @@ use App\Http\Controllers\Auth\WebController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\OrderController;
+use App\Http\Controllers\Client\PageController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
@@ -61,6 +62,7 @@ Route::prefix('/')->group(function () {
     Route::get('/profile/location', [ProfileController::class, 'location'])->name('client.profile.location');
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
+    Route::get('/about-us', [PageController::class, 'aboutUs'])->name('about-us');
 });
 
 Route::prefix('/errors')->group(function () {

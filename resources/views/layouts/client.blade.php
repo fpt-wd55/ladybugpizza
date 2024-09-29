@@ -27,11 +27,11 @@
 <body>
     @include('partials.clients.header')
 
-    <div class=" min-h-screen">
+    <div class="">
         @yield('content')
     </div>
 
-    @include('partials.clients.footer')
+    {{-- @include('partials.clients.footer') --}}
 
 </body>
 
