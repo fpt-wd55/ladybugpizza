@@ -1,4 +1,4 @@
-<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
@@ -11,7 +11,7 @@
                 <a href="https://flowbite.com" class="flex ms-2 md:me-24">
                     <img src="{{ asset('storage/uploads/logos/logo-fill.svg') }}" class="h-11 me-3"
                         alt="Ladybug Pizza Logo" />
-                    <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">Ladybug
+                    <span class="self-center text-lg font-semibold whitespace-nowrap">Ladybug
                         Pizza</span>
                 </a>
             </div>
@@ -29,50 +29,50 @@
                     @svg('tabler-bell', 'w-6 h-6 text-gray-500')
                 </button>
                 <!-- Dropdown menu -->
-                <div class="hidden overflow-hidden z-50 my-4 max-w-sm list-none bg-white rounded divide-y divide-gray-100 shadow-lg dark:divide-gray-600 dark:bg-gray-700 text-sm"
+                <div class="hidden overflow-hidden z-50 my-4 max-w-sm list-none bg-white rounded divide-y divide-gray-100 shadow-lg text-sm"
                     id="notification-dropdown">
                     <div
-                        class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50">
                         Thông báo
                     </div>
                     <div>
                         <a href="#"
-                            class="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600">
+                            class="flex py-3 px-4 border-b hover:bg-gray-100">
                             <div class="flex-shrink-0">
                                 <img class="w-11 h-11 rounded-full"
                                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png"
                                     alt="Joseph McFall avatar">
                             </div>
                             <div class="pl-3 w-full">
-                                <div class="text-gray-500 font-normal mb-1.5 dark:text-gray-400"><span
-                                        class="font-semibold text-gray-900 dark:text-white">Joseph Mcfall</span> and
-                                    <span class="font-medium text-gray-900 dark:text-white">141 others</span> love your
+                                <div class="text-gray-500 font-normal mb-1.5"><span
+                                        class="font-semibold text-gray-900">Joseph Mcfall</span> and
+                                    <span class="font-medium text-gray-900">141 others</span> love your
                                     story. See it and view more stories.
                                 </div>
-                                <div class="text-xs font-medium text-primary-700 dark:text-primary-400">44 minutes ago
+                                <div class="text-xs font-medium text-primary-700">44 minutes ago
                                 </div>
                             </div>
                         </a>
                         <a href="#"
-                            class="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600">
+                            class="flex py-3 px-4 border-b hover:bg-gray-100">
                             <div class="flex-shrink-0">
                                 <img class="w-11 h-11 rounded-full"
                                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png"
                                     alt="Roberta Casas image">
                             </div>
                             <div class="pl-3 w-full">
-                                <div class="text-gray-500 font-normal mb-1.5 dark:text-gray-400"><span
-                                        class="font-semibold text-gray-900 dark:text-white">Leslie Livingston</span>
+                                <div class="text-gray-500 font-normal mb-1.5"><span
+                                        class="font-semibold text-gray-900">Leslie Livingston</span>
                                     mentioned you in a comment: <span
-                                        class="font-medium text-primary-700 dark:text-primary-500">@bonnie.green</span>
+                                        class="font-medium text-primary-700">@bonnie.green</span>
                                     what do you say?</div>
-                                <div class="text-xs font-medium text-primary-700 dark:text-primary-400">1 hour ago
+                                <div class="text-xs font-medium text-primary-700">1 hour ago
                                 </div>
                             </div>
                         </a>
                     </div>
                     <a href="#"
-                        class="block py-2 text-base font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-700 dark:text-white dark:hover:underline">
+                        class="block py-2 text-base font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100">
                         <div class="inline-flex items-center">
                             @svg('tabler-eye', 'w-5 h-5 me-1.5 text-gray-500')
                             Xem tất cả
@@ -86,28 +86,28 @@
                         src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
                 </button>
                 <!-- Dropdown menu -->
-                <div class="hidden z-50 my-4 w-56 list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 text-sm"
+                <div class="hidden z-50 my-4 w-56 list-none bg-white rounded divide-y divide-gray-100 shadow text-sm"
                     id="dropdown">
                     <div class="py-3 px-4">
-                        <span class="block font-semibold text-gray-900 dark:text-white">Neil sims</span>
-                        <span class="block text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
+                        <span class="block font-semibold text-gray-900">Neil sims</span>
+                        <span class="block text-gray-500 truncate">name@flowbite.com</span>
                     </div>
-                    <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
+                    <ul class="py-1 text-gray-500" aria-labelledby="dropdown">
                         <li>
                             <a href="#"
-                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">Tài
+                                class="block py-2 px-4 hover:bg-gray-100">Tài
                                 khoản</a>
                         </li>
                         <li>
                             <a href="#"
-                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">Cài
+                                class="block py-2 px-4 hover:bg-gray-100">Cài
                                 đặt</a>
                         </li>
                     </ul>
-                    <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
+                    <ul class="py-1 text-gray-500" aria-labelledby="dropdown">
                         <li>
                             <a href="#"
-                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-red-500">Đăng
+                                class="block py-2 px-4 hover:bg-gray-100 text-red-500">Đăng
                                 xuất</a>
                         </li>
                     </ul>
