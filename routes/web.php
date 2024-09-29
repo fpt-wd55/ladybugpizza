@@ -66,6 +66,7 @@ Route::prefix('/')->group(function () {
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
     Route::get('/policies',[PageController::class,'policies'])->name('client.policies');
     Route::get('/manual',[PageController::class,'manual'])->name('client.manual');
+    Route::get('/about-us',[PageController::class,'aboutUs'])->name('client.about-us');
 });
 
 Route::prefix('/errors')->group(function () {

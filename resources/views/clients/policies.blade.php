@@ -1,121 +1,115 @@
 @extends('layouts.client')
 
-  
-@section('title', 'Trang chính sách')
+@section('title', 'Chính sách')
 
 @section('content')
-    @session('success')
+    @if(session('success'))
         <div class="alert-success">
             {{ session('success') }}
         </div>
-    @endsession
+    @endif
+    <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
+        <div class="card p-4 md:p-8">
+            {{-- Chính sách giao hàng --}}
+            <section class="mb-4">
+                <h2 class="font-semibold uppercase text-sm md:text-base mb-4">CHÍNH SÁCH GIAO HÀNG</h2>
 
-    <div class=" mx-3 mt-3  card">
-        {{-- chính sách giao hàng --}}
-        <div class=" mx-4 mt-4">
+                {{-- Thông tin thu thập --}}
+                <div class="mb-4">
+                    <h3 class="font-semibold text-xs md:text-sm mb-4">1. Thông tin thu thập:</h3>
+                    <div class="text-sm ps-4 leading-loose tracking-wide">
+                        <p>Ladybug Pizza có thể thu thập thông tin cá nhân của khách hàng bao gồm: họ tên, địa chỉ, số CMND và số điện thoại di động, địa chỉ email, thông tin thẻ tín dụng, và bất kỳ thông tin nào khác nếu bạn đồng ý cung cấp. Thông tin này sẽ được thu thập khi khách hàng:</p>
+                        <ul class="list-disc ps-4">
+                            <li>Đăng nhập vào website của Ladybug Pizza;</li>
+                            <li>Tham gia các cuộc thi và chương trình khuyến mãi;</li>
+                            <li>Tham gia khảo sát theo chương trình khảo sát của Ladybug Pizza và các đối tác (nếu có);</li>
+                            <li>Gửi email đến Ladybug Pizza;</li>
+                            <li>Đăng ký thành viên của Ladybug Pizza;</li>
+                            <li>Phản hồi các yêu cầu của khách hàng;</li>
+                            <li>Đặt pizza tại các cửa hàng của Ladybug Pizza trên toàn quốc hoặc trên website của Ladybug Pizza.</li>
+                            <li>Nếu Ladybug Pizza thu thập thông tin cá nhân của bạn từ người khác, chúng tôi sẽ có các bước hợp lý để thông báo cho bạn.</li>
+                        </ul>
+                    </div>
+                </div>
 
-            <div class="">
-    
-                <p class="font-bold text-sm md:text-base lg:text-lg">CHÍNH SÁCH GIAO HÀNG</p>
-                <div class="">
-                    <p class="font-bold text-xs mt-3 md:text-sm md:mt-4 lg:text-lg">1. The Ladybugs Pizza Vietnam serves customers through</p>
-                    <p class="text-xs md:text-sm  lg:text-lg">The Ladybugs Pizza may collect personal information from customers including full name, address, ID and mobile phone number, email address, credit card details and any other information if you agree to provide us with this information. This information will appear when customers: <br>
-                        - Log in to The Ladybugs Pizza website;<br>
-                        - Enter contests and promotions;<br>
-                        - Participate in surveys according to the survey programs of The Ladybugs Pizza and any partners of The Ladybugs Pizza (if any);<br>
-                        - Send an email to The Ladybugs Pizza;<br>
-                        - Sign up for membership of The Ladybugs Pizza;<br>
-                        - Respond to customer requests;
-                        - Order pizza at The Ladybugs Pizza stores nationwide or on The Ladybugs Pizza's website;<br>
-                        If The Ladybugs Pizza collects your personal information from someone else, The Ladybugs Pizza will take reasonable steps to notify the customer.
-                    </p>
+                {{-- Mục đích sử dụng thông tin --}}
+                <div class="mb-4">
+                    <h3 class="font-semibold text-xs md:text-sm mb-4">2. Mục đích sử dụng thông tin:</h3>
+                    <div class="text-sm ps-4 leading-loose tracking-wide">
+                        <p>Ladybug Pizza có thể sử dụng thông tin cá nhân do khách hàng cung cấp để cung cấp hàng hóa và dịch vụ, thực hiện các chương trình của Ladybug Pizza và/hoặc các đối tác của chúng tôi, với điều kiện các chương trình này được thực hiện một cách công khai và minh bạch. Cụ thể, chúng tôi sẽ sử dụng thông tin cá nhân cho các mục đích sau:</p>
+                        <ul class="list-disc ps-4">
+                            <li>Quản lý thành viên của website nếu bạn đã đăng ký làm thành viên;</li>
+                            <li>Cung cấp thông tin mà khách hàng yêu cầu về công ty;</li>
+                            <li>Xử lý đơn hàng qua website;</li>
+                            <li>Định lượng số lượng khách hàng truy cập vào website;</li>
+                            <li>Thông báo giải thưởng và mua sắm;</li>
+                            <li>Phản hồi các yêu cầu cụ thể của khách hàng;</li>
+                            <li>Thông báo cho khách hàng về các thay đổi trên website;</li>
+                            <li>Quản lý các chương trình nghiên cứu thị trường;</li>
+                            <li>Gửi thông tin khuyến mãi hoặc thông tin về sản phẩm và dịch vụ mà chúng tôi cho là có lợi cho khách hàng;</li>
+                            <li>Các chương trình khác liên quan đến nội dung trên và/hoặc cung cấp các tiện ích khác cho khách hàng thông qua các chương trình của Ladybug Pizza và các đối tác.</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="">
-                    <p class="font-bold text-xs mt-3 md:text-sm md:mt-4  lg:text-lg">2. The Ladybugs Pizza's purpose in using the collected information:</p>
-                    <p class="text-xs  md:text-sm  lg:text-lg">
-                        The Ladybugs Pizza may use the personal information provided by customers and process such information to provide goods and services to customers, and to carry out programs of The Ladybugs Pizza and/or its partners provided that these programs are conducted openly and transparently. Generally, we will use such personal information in the way that customers wish, including but not limited to, for any of the following purposes: <br>
-                        - Manage website members if you have registered as a member<br>
-                        - Provide customers with any information about the company that they request;<br>
-                        - Process orders via website;<br>
-                        - Determine the number of customers visiting the website;<br>
-                        - Prize announcements and purchases;<br>
-                        - Respond to specific customer requests;<br>
-                        - Notify customers of changes on the website;<br>
-                        - Manage marketing research programs;<br>
-                        - Send customers promotions or information about products and services that we consider beneficial to customers;<br>
-                        Any other programs related to the above content and/or support, providing other utilities to customers through The Ladybugs Pizza's programs and The Ladybugs Pizza's partners.<br><br>
-                    
-                        Other information related to the use of customers' personal information when customers use our online ordering system:<br>
-                        When customers use the online ordering system, they need to answer additional information requests if they order pizza online. This information helps deliver pizza to the customer's home easily, quickly, and accurately. The online ordering system will also store information about the customer's order to help customers remember and reorder the menu for the next purchase.<br>
-                    
-                        In addition, The Ladybugs Pizza has the right to use personal information collected from the website for other purposes as follows:<br>
-                        - User setup and authentication;<br>
-                        - Open, maintain, administer and preserve customer or member accounts;<br>
-                        - Handle, preserve & respect communications;<br>
-                        - Supportor users;<br>
-                        - Upgrade the website, including meeting user needs;<br>
-                        Provide users with product and service updates, promotions and other information from The Ladybugs Pizza and its affiliates;<br>
-                        - Respond to customer questions, comments and instructions;<br>
-                        - Maintain system security & safety;<br>
-                        - Other activities related to the above activities.
-                    </p>
-                </div>
-                <div class="">
-                    <p class="font-bold text-xs mt-3 md:text-sm md:mt-4  lg:text-lg">3. Who does The Ladybugs Pizza share information with?</p>
-                    <p class="text-xs  md:text-sm  lg:text-lg">The Ladybugs Pizza will not provide any personal information of customers to third parties unrelated to The Ladybugs Pizza and will not allow any third parties to use this information to market directly to customers. The Ladybugs Pizza may use related companies to operate and maintain the website or for other purposes related to its business activities, and these companies will receive customer information to carry out the above requests of The Ladybugs Pizza. The Ladybugs Pizza has the right to share customer personal information in some cases when government agencies have information requests, serve investigation purposes or other requests as prescribed by law. <br><br>
 
-                        Personal information that customers have registered on the website may be shared with third parties of The Ladybugs Pizza:<br>
-                        - Suppliers hired by us to provide certain services such as sending mail to customers;<br>
-                        - To meet the customer's purpose when registering personal information;<br>
-                        - If the customer agrees to share this personal information;<br>
-                        - If the government requests to share this personal information;<br>
-                        - If the customer's personal information is collected by a marketing unit, it will be provided to this marketing unit for research & marketing purposes;<br>
-                    </p>
+                {{-- Chia sẻ thông tin --}}
+                <div class="mb-4">
+                    <h3 class="font-semibold text-xs md:text-sm mb-4">3. Chia sẻ thông tin:</h3>
+                    <div class="text-sm ps-4 leading-loose tracking-wide">
+                        <p class="mb-4">Ladybug Pizza sẽ không cung cấp thông tin cá nhân của khách hàng cho bên thứ ba không liên quan đến Ladybug Pizza và không cho phép bên thứ ba sử dụng thông tin này để tiếp thị trực tiếp đến khách hàng. Chúng tôi có thể sử dụng các công ty liên quan để vận hành và duy trì website hoặc cho các mục đích khác liên quan đến hoạt động kinh doanh, và các công ty này sẽ nhận thông tin khách hàng để thực hiện các yêu cầu của Ladybug Pizza. Chúng tôi có quyền chia sẻ thông tin cá nhân của khách hàng trong một số trường hợp khi cơ quan chính phủ có yêu cầu thông tin, phục vụ mục đích điều tra hoặc các yêu cầu khác theo quy định của pháp luật.</p>
+                        <p>Thông tin cá nhân mà khách hàng đã đăng ký trên website có thể được chia sẻ với các bên thứ ba của Ladybug Pizza trong các trường hợp sau:</p>
+                        <ul class="list-disc ps-4">
+                            <li>Các nhà cung cấp được chúng tôi thuê để cung cấp một số dịch vụ nhất định như gửi thư đến khách hàng;</li>
+                            <li>Để đáp ứng mục đích của khách hàng khi đăng ký thông tin cá nhân;</li>
+                            <li>Nếu khách hàng đồng ý chia sẻ thông tin cá nhân này;</li>
+                            <li>Nếu chính phủ yêu cầu chia sẻ thông tin cá nhân này;</li>
+                            <li>Nếu thông tin cá nhân của khách hàng được thu thập bởi một đơn vị tiếp thị, nó sẽ được cung cấp cho đơn vị tiếp thị này để phục vụ mục đích nghiên cứu và tiếp thị.</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-           {{-- end chính sách giao hàng --}}
-    
-    
-           {{-- chính sách bảo mật --}}
-           <div class="mt-3 mb-2 md:mb-4 md:mt-7">
-    
-            <p class="font-bold text-sm  md:text-base lg:text-lg">CHÍNH SÁCH BẢO MẬT </p>
-            <div class="">
-                <p class="font-bold text-xs mt-3 md:text-sm md:mt-4 lg:text-lg">1. The Ladybugs Pizza Vietnam serves customers through</p>
-                <p class="text-xs md:text-sm lg:text-lg">The Ladybugs Pizza may collect personal information from customers including full name, address, ID and mobile phone number, email address, credit card details and any other information if you agree to provide us with this information. This information will appear when customers: <br>
-                    - Log in to The Ladybugs Pizza website;<br>
-                    - Enter contests and promotions;<br>
-                    - Participate in surveys according to the survey programs of The Ladybugs Pizza and any partners of The Ladybugs Pizza (if any);<br>
-                    - Send an email to The Ladybugs Pizza;<br>
-                    - Sign up for membership of The Ladybugs Pizza;<br>
-                    - Respond to customer requests;<br>
-                    - Order pizza at The Ladybugs Pizza stores nationwide or on The Ladybugs Pizza's website;<br>
-                    If The Ladybugs Pizza collects your personal information from someone else, The Ladybugs Pizza will take reasonable steps to notify the customer.
-                </p>
-            </div>
-            <div class="">
-                <p class="font-bold text-xs mt-3 md:text-sm md:mt-4 lg:text-lg">2. The Ladybugs Pizza's purpose in using the collected information:</p>
-                <p class="text-xs md:text-sm lg:text-lg">
-                    The Ladybugs Pizza may use the personal information provided by customers and process such information to provide goods and services to customers, and to carry out programs of The Ladybugs Pizza and/or its partners provided that these programs are conducted openly and transparently. Generally, we will use such personal information in the way that customers wish, including but not limited to, for any of the following purposes: <br>
-                    - Manage website members if you have registered as a member<br>
-                    - Provide customers with any information about the company that they request;<br>
-                    - Process orders via website;<br>
-                    - Determine the number of customers visiting the website;<br>
-                    - Prize announcements and purchases;<br>
-                    - Respond to specific customer requests;<br>
-                    - Notify customers of changes on the website;<br>
-                    - Manage marketing research programs;<br>
-                    - Send customers promotions or information about products and services that we consider beneficial to customers;<br>
-                    Any other programs related to the above content and/or support, providing other utilities to customers through The Ladybugs Pizza's programs and The Ladybugs Pizza's partners.
-                </p>
-            </div>
-         
+
+                {{-- Bảo mật thông tin --}}
+                <div class="mb-4">
+                    <h3 class="font-semibold text-xs md:text-sm mb-4">4. Bảo mật thông tin:</h3>
+                    <div class="text-sm ps-4 leading-loose tracking-wide">
+                        <p>Ladybug Pizza sẽ thực hiện các biện pháp an ninh để bảo vệ thông tin cá nhân của khách hàng khỏi mất mát, lạm dụng hoặc thay đổi thông tin cá nhân. Chúng tôi sử dụng các biện pháp an ninh như mã hóa thông tin cá nhân, sử dụng phần mềm bảo mật, mật khẩu để bảo vệ thông tin cá nhân của khách hàng. Chúng tôi cũng yêu cầu các nhân viên của chúng tôi tuân thủ các quy định về bảo mật thông tin cá nhân của khách hàng.</p>
+                    </div>
+                </div>
+            </section>
+
+            {{-- Chính sách bảo mật --}}
+            <section class="mb-4">
+                <h2 class="font-semibold uppercase text-sm md:text-base mb-4">CHÍNH SÁCH BẢO MẬT</h2>
+
+                {{-- Thông tin thu thập --}}
+                <div class="mb-4">
+                    <h3 class="font-semibold text-xs md:text-sm mb-4">1. Thông tin thu thập:</h3>
+                    <div class="text-sm ps-4 leading-loose tracking-wide">
+                        <p>Ladybug Pizza có thể thu thập thông tin cá nhân từ khách hàng như đã mô tả trong phần chính sách giao hàng. Thông tin này sẽ được thu thập trong các trường hợp tương tự.</p>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-semibold text-xs md:text-sm mb-4">2. Mục đích sử dụng thông tin:</h3>
+                    <div class="text-sm ps-4 leading-loose tracking-wide">
+                        <p>Ladybug Pizza sẽ sử dụng thông tin cá nhân của khách hàng cho các mục đích tương tự như đã nêu trong phần chính sách giao hàng.</p>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-semibold text-xs md:text-sm mb-4">3. Chia sẻ thông tin:</h3>
+                    <div class="text-sm ps-4 leading-loose tracking-wide">
+                        <p>Thông tin cá nhân của khách hàng sẽ được chia sẻ theo chính sách bảo mật của Ladybug Pizza tương tự như trong chính sách giao hàng.</p>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-semibold text-xs md:text-sm mb-4">4. Bảo mật thông tin:</h3>
+                    <div class="text-sm ps-4 leading-loose tracking-wide">
+                        <p>Chúng tôi sẽ thực hiện các biện pháp bảo mật để bảo vệ thông tin cá nhân theo các phương pháp như đã nêu trong phần chính sách giao hàng.</p>
+                    </div>
+                </div>
+            </section>
         </div>
-           {{-- end chính sách bảo mật --}}
-        
-        </div>
-
-
     </div>
-
 @endsection
