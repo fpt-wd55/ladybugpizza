@@ -28,6 +28,7 @@ use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\PageController;
+use App\Http\Controllers\Client\PoliciesController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
@@ -43,9 +44,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::prefix('/')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('client.home');
-    Route::get('/menu', [ProductController::class, 'index'])->name('client.product.menu');
+    Route::get('/menu', [ProductController::class, 'menu'])->name('client.product.menu');
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('client.product.show');
     Route::post('/product/{slug}', [ProductController::class, 'addToCart'])->name('client.product.add-to-cart');
     Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
@@ -63,6 +65,8 @@ Route::prefix('/')->group(function () {
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
     Route::get('/about-us', [PageController::class, 'aboutUs'])->name('about-us');
+    Route::get('/policies',[PageController::class,'policies'])->name('client.policies');
+    Route::get('/manual',[PageController::class,'manual'])->name('client.manual');
 });
 
 Route::prefix('/errors')->group(function () {
@@ -78,6 +82,7 @@ Route::prefix('/auth')->group(function () {
     Route::get('/google', [GoogleController::class, 'redirect'])->name('auth.google.redirect');
     Route::get('/google/call-back', [GoogleController::class, 'callback'])->name('auth.google.callback');
     Route::get('/login', [WebController::class, 'login'])->name('auth.login');
+    Route::get('/logout', [WebController::class, 'logout'])->name('auth.logout');
     Route::get('/register', [WebController::class, 'register'])->name('auth.register');
     Route::get('/forgot-password', [WebController::class, 'forgotPassword'])->name('auth.forgot-password');
     Route::get('/get-otp', [WebController::class, ''])->name('auth.get-otp');
@@ -86,7 +91,8 @@ Route::prefix('/auth')->group(function () {
 });
 
 
-Route::prefix('/admin')->middleware([''])->group(function () {
+// Route::prefix('/admin')->middleware([''])->group(function () {
+Route::prefix('/admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('/users', UserController::class);
     Route::resource('/addresses', AddressController::class);

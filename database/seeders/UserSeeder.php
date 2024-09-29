@@ -2,10 +2,13 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Models\Role;
+use App\Models\Address;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -14,167 +17,114 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $now = Carbon::now();
         $faker = Faker::create();
-        // create roles
-        DB::table('roles')->insert([
-            [
-                'name' => 'admin',
-                'parent_id' => null,
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
-            ],
-            [
-                'name' => 'user',
-                'parent_id' => null,
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
-            ],
-            [
-                'name' => 'super_admin',
-                'parent_id' => 1,
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
-            ],
-            [
-                'name' => 'admin_chat',
-                'parent_id' => 1,
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
-            ],
-        ]);
 
-        // create users
-        // admin
-        DB::table('users')->insert([
+        $usersData = [
             [
                 'username' => 'quandohong28',
                 'role_id' => 3,
-                'avatar' => 'admin-profile.jpg',
                 'email' => 'quandohong28@gmail.com',
                 'fullname' => 'Đỗ Hồng Quân',
                 'phone' => '0362303364',
-                'password' => bcrypt('quandohong28@gmail.com'),
+                'password' => Hash::make('quandohong28@gmail.com'),
                 'google_id' => null,
                 'date_of_birth' => '2004-04-28',
                 'gender' => 1,
                 'status' => 1,
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
                 'username' => 'blackwhilee04',
                 'role_id' => 3,
-                'avatar' => 'admin-profile.jpg',
                 'email' => 'blackwhilee04@gmail.com',
                 'fullname' => 'Lê Văn Thành',
                 'phone' => '0382606012',
-                'password' => bcrypt('blackwhilee04@gmail.com'),
+                'password' => Hash::make('blackwhilee04@gmail.com'),
                 'google_id' => null,
                 'date_of_birth' => '2004-07-13',
                 'gender' => 1,
                 'status' => 1,
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
                 'username' => 'duynguyenhuu2004',
                 'role_id' => 3,
-                'avatar' => 'admin-profile.jpg',
                 'email' => 'duynguyenhuu2004@gmail.com',
-                'fullname' => 'Nguyễn Hữu Duy',
+                'fullname' => 'Nguyễn Hữu Duy',
                 'phone' => '0372881768',
-                'password' => bcrypt('duynguyenhuu2004@gmail.com'),
+                'password' => Hash::make('duynguyenhuu2004@gmail.com'),
                 'google_id' => null,
                 'date_of_birth' => '2004-05-20',
                 'gender' => 1,
                 'status' => 1,
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
                 'username' => 'trantrunghieu422',
                 'role_id' => 3,
-                'avatar' => 'admin-profile.jpg',
                 'email' => 'trantrunghieu422@gmail.com',
                 'fullname' => 'Trần Chung Hiếu',
                 'phone' => '0326239019',
-                'password' => bcrypt('trantrunghieu422@gmail.com'),
+                'password' => Hash::make('trantrunghieu422@gmail.com'),
                 'google_id' => null,
                 'date_of_birth' => '2004-04-22',
                 'gender' => 1,
                 'status' => 1,
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
                 'username' => 'vohuutuan04',
                 'role_id' => 3,
-                'avatar' => 'admin-profile.jpg',
                 'email' => 'vohuutuan04@gmail.com',
                 'fullname' => 'Võ Hữu Tuấn',
                 'phone' => '0799123089',
-                'password' => bcrypt('vohuutuan04@gmail.com'),
+                'password' => Hash::make('vohuutuan04@gmail.com'),
                 'google_id' => null,
                 'date_of_birth' => '2004-04-04',
                 'gender' => 1,
                 'status' => 1,
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
                 'username' => 'nguynhuyen111',
                 'role_id' => 3,
-                'avatar' => 'admin-profile.jpg',
                 'email' => 'nguynhuyen111@gmail.com',
                 'fullname' => 'Nguyễn Thị Huyền',
                 'phone' => '0982381200',
-                'password' => bcrypt('nguynhuyen111@gmail.com'),
+                'password' => Hash::make('nguynhuyen111@gmail.com'),
                 'google_id' => null,
                 'date_of_birth' => '2004-11-11',
                 'gender' => 2,
                 'status' => 1,
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
                 'username' => 'tranthihaaaa9423',
                 'role_id' => 3,
-                'avatar' => 'admin-profile.jpg',
                 'email' => 'tranthihaaaa9423@gmail.com',
                 'fullname' => 'Trần Thị Hà',
                 'phone' => '0395730904',
-                'password' => bcrypt('tranthihaaaa9423@gmail.com'),
+                'password' => Hash::make('tranthihaaaa9423@gmail.com'),
                 'google_id' => null,
                 'date_of_birth' => '2004-07-13',
                 'gender' => 2,
                 'status' => 1,
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
-        ]);
-        // user
-        for ($i = 0; $i <= 50; $i++) {
-            DB::table('users')->insert([
-                'username' => $faker->userName,
-                'role_id' => 2,
-                'avatar' => 'user-profile.jpg',
-                'email' => $faker->email,
-                'fullname' => $faker->name,
-                'phone' => $faker->phoneNumber,
-                'password' => bcrypt('password'),
-                'google_id' => null,
-                'date_of_birth' => $faker->date,
-                'gender' => $faker->numberBetween(1, 3),
-                'status' => $faker->numberBetween(1, 2),
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
-            ]);
-        }
+        ];
 
-        // create addresses
-        $users = DB::table('users')->get();
-        foreach ($users as $user) {
-            DB::table('addresses')->insert([
+        foreach ($usersData as $data) {
+            $user = User::create($data);
+
+            Address::create([
                 'user_id' => $user->id,
                 'title' => $faker->name,
                 'phone' => $user->phone,
@@ -185,8 +135,8 @@ class UserSeeder extends Seeder
                 'lng' => $faker->longitude,
                 'lat' => $faker->latitude,
                 'is_default' => true,
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ]);
         }
     }

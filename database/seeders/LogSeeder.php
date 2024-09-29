@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
-use Illuminate\Support\Facades\DB;
+use App\Models\Log;
+use App\Models\User;
+use Carbon\Carbon;
 
 class LogSeeder extends Seeder
 {
@@ -14,18 +15,20 @@ class LogSeeder extends Seeder
      */
     public function run(): void
     {
+        $now = Carbon::now();
+        
         $faker = Faker::create();
 
-        $users = DB::table('users')->get();
+        $users = User::all();
 
         foreach ($users as $user) {
             for ($i = 0; $i < 10; $i++) {
-                DB::table('logs')->insert([
+                Log::create([
                     'user_id' => $user->id,
                     'action' => $faker->randomElement(['create', 'update', 'delete']),
                     'description' => $faker->sentence,
-                    'created_at' => $faker->dateTimeThisYear(),
-                    'updated_at' => $faker->dateTimeThisYear(),
+                    'created_at' => $now,
+                    'updated_at' => $now,
                 ]);
             }
         }
