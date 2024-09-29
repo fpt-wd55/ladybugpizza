@@ -80,6 +80,9 @@ Route::prefix('/')->group(function () {
     Route::get('/504', function ()  {
         return view('shared.errors.504');
     });
+    Route::get('/invoice', function ()  {
+        return view('shared.invoice');
+    });
 });
 
 Route::prefix('/auth')->group(function () {
