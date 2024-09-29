@@ -64,9 +64,9 @@ Route::prefix('/')->group(function () {
     Route::get('/profile/location', [ProfileController::class, 'location'])->name('client.profile.location');
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
+    Route::get('/about-us', [PageController::class, 'aboutUs'])->name('about-us');
     Route::get('/policies',[PageController::class,'policies'])->name('client.policies');
     Route::get('/manual',[PageController::class,'manual'])->name('client.manual');
-    Route::get('/about-us',[PageController::class,'aboutUs'])->name('client.about-us');
 });
 
 Route::prefix('/errors')->group(function () {
