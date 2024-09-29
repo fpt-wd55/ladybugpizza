@@ -23,13 +23,20 @@
         rel="stylesheet">
 </head>
 
-<body>
+<body class="text-sm">
+    {{-- header --}}
     @include('partials.admins.header')
-
-    @yield('content')
-
-    @include('partials.admins.footer')
-
+    {{-- sidebar --}}
+    @include('partials.admins.sidebar')
+    
+    <div class="p-4 mt-20 sm:ml-64">
+        {{-- content --}}
+        <div class="bg-white rounded-lg shadow p-4 min-h-screen">
+            @yield('content')
+        </div>
+        {{-- footer --}}
+        @include('partials.admins.footer')
+    </div>
 </body>
 
 </html>

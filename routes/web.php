@@ -27,8 +27,11 @@ use App\Http\Controllers\Auth\WebController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\OrderController;
+use App\Http\Controllers\Client\PageController;
+use App\Http\Controllers\Client\PoliciesController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
+use App\Http\Controllers\ErrorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,37 +64,30 @@ Route::prefix('/')->group(function () {
     Route::get('/profile/location', [ProfileController::class, 'location'])->name('client.profile.location');
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
+    Route::get('/about-us', [PageController::class, 'aboutUs'])->name('about-us');
+    Route::get('/policies',[PageController::class,'policies'])->name('client.policies');
+    Route::get('/manual',[PageController::class,'manual'])->name('client.manual');
+});
 
-    Route::get('/403', function ()  {
-        return view('shared.errors.403');
-    });
-    Route::get('/404', function ()  {
-        return view('shared.errors.404');
-    });
-    Route::get('/500', function ()  {
-        return view('shared.errors.500');
-    });
-    Route::get('/502', function ()  {
-        return view('shared.errors.502');
-    });
-    Route::get('/503', function ()  {
-        return view('shared.errors.503');
-    });
-    Route::get('/504', function ()  {
-        return view('shared.errors.504');
-    });
+Route::prefix('/errors')->group(function () {
+    Route::get('/404', [ErrorController::class, 'notFound'])->name('errors.404');
+    Route::get('/403', [ErrorController::class, 'forbidden'])->name('errors.403');
+    Route::get('/500', [ErrorController::class, 'internalServerError'])->name('errors.500');
+    Route::get('/502', [ErrorController::class, 'badGateway'])->name('errors.502');
+    Route::get('/503', [ErrorController::class, 'serviceUnavailable'])->name('errors.503');
+    Route::get('/504', [ErrorController::class, 'gatewayTimeout'])->name('errors.504');
 });
 
 Route::prefix('/auth')->group(function () {
     Route::get('/google', [GoogleController::class, 'redirect'])->name('auth.google.redirect');
     Route::get('/google/call-back', [GoogleController::class, 'callback'])->name('auth.google.callback');
     Route::get('/login', [WebController::class, 'login'])->name('auth.login');
+    Route::get('/logout', [WebController::class, 'logout'])->name('auth.logout');
     Route::get('/register', [WebController::class, 'register'])->name('auth.register');
     Route::get('/forgot-password', [WebController::class, 'forgotPassword'])->name('auth.forgot-password');
     Route::get('/get-otp', [WebController::class, 'getOtp'])->name('auth.get-otp');
     Route::get('/recovery', [WebController::class, 'recovery'])->name('auth.recovery');
     Route::get('/user-info', [WebController::class, 'userInfo'])->name('auth.user-info');
-
     Route::post('/login', [WebController::class, 'postLogin'])->name('auth.post-login');
     Route::post('/register', [WebController::class, 'postRegister'])->name('auth.post-register');
     Route::post('/forgot-password', [WebController::class, 'postForgotPassword'])->name('auth.post-forgot-password');

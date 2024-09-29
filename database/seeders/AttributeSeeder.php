@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
-use Illuminate\Support\Facades\DB;
+use App\Models\Attribute;
+use App\Models\AttributeValue;
 
 class AttributeSeeder extends Seeder
 {
@@ -14,9 +16,8 @@ class AttributeSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        $now = Carbon::now();
 
-        // Pizza
         $attibutes = [
             'Loại đế' => [
                 'Dày',
@@ -38,20 +39,20 @@ class AttributeSeeder extends Seeder
         ];
 
         foreach ($attibutes as $name => $values) {
-            $attribute = DB::table('attributes')->insertGetId([
+            $attribute = Attribute::create([
                 'name' => $name,
                 'status' => 1,
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ]);
 
             foreach ($values as $value) {
-                DB::table('attribute_values')->insert([
-                    'attribute_id' => $attribute,
+                AttributeValue::create([
+                    'attribute_id' => $attribute->id,
                     'value' => $value,
-                    'quantity' => $faker->numberBetween(0, 100),
-                    'created_at' => $faker->dateTimeThisYear(),
-                    'updated_at' => $faker->dateTimeThisYear(),
+                    'quantity' => rand(0, 100),
+                    'created_at' => $now,
+                    'updated_at' => $now,
                 ]);
             }
         }

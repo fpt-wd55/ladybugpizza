@@ -15,7 +15,6 @@ use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -287,4 +286,9 @@ class WebController extends Controller
     }
 
 
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('client.home');
+    }
 }
