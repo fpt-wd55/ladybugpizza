@@ -115,8 +115,7 @@
             {{-- kham pha thuc don --}}
             <div class="grid grid-cols-1 lg:grid-cols-2 mb-32 gap-8">
                 <div class="flex flex-col items-center mr-3 text-center">
-                    <p class="text-center berkshire-swash-regular text-3xl lg:text-4xl mb-4">Khám
-                        Phá</p>
+                    <p class="text-center berkshire-swash-regular text-3xl lg:text-4xl mb-4">Khám Phá</p>
                     <p class="vujahday-script-regular text-3xl lg:text-4xl mb-6">
                         Thực đơn của chúng tôi</p>
 
@@ -152,6 +151,8 @@
                         class="h-full w-full rounded-lg object-cover" alt="">
                 </div>
                 <div class="text-center">
+                    <p class="text-center berkshire-swash-regular text-3xl lg:text-4xl mb-4">Khám Phá</p>
+
                     <p class="text-3xl lg:text-4xl mb-4 vujahday-script-regular">Câu chuyện của chúng tôi</p>
                     <p class="mb-6 lg:mb-8">Khám phá các loại Pizza nướng bằng củi, bia Bỉ và các món tráng
                         miệng mới làm mà bạn có thể thưởng thức tại 2 địa điểm của chúng tôi hoặc tại nhà với dịch vụ giao
@@ -162,7 +163,7 @@
                         nhiên và được lựa chọn cẩn thận.
                     </p>
                     <p>
-                        Khám phá thêm
+                        Tìm hiểu thêm
                         <a href="" class="link-lg uppercase">về chúng tôi</a>
                     </p>
                 </div>

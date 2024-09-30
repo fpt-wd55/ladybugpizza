@@ -31,6 +31,13 @@
     font-style: normal;
 }
 
+.quicksand {
+    font-family: "Quicksand", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
 /* flowbite components */
 
 .transition {
@@ -51,6 +58,18 @@
 
 .product-card {
     @apply bg-white border border-gray-300 rounded-lg hover:border-gray-700 transition;
+}
+
+.title {
+    @apply font-semibold uppercase mb-4;
+}
+
+.title-sm {
+    @apply font-semibold text-xs md:text-sm lg:text-base mb-4;
+}
+
+.title-lg {
+    @apply font-semibold text-lg uppercase mb-4;
 }
 
 .label-sm {

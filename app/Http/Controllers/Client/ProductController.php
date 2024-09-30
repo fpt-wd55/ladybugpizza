@@ -27,7 +27,7 @@ class ProductController extends Controller
 
     public function show()
     {
-        return view('clients.product.show');
+        return view('clients.product.detail');
     }
 
     public function addToCart()
