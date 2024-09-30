@@ -215,6 +215,9 @@ class WebController extends Controller
                         'q' => $fullAddress,
                         'format' => 'json',
                     ],
+                    'headers' => [
+                        'User-Agent' => 'YourAppName/1.0 (http://yourwebsite.com)',
+                    ],
                 ]);
             } catch (\Exception $e) {
                 dd($e->getMessage());
@@ -229,8 +232,6 @@ class WebController extends Controller
 
             return [null, null];
         }
-
-
 
     public function postForgotPassword(ForgotPasswordRequest $request)
     {

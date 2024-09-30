@@ -53,7 +53,7 @@
                     <div class="mb-8">
                         <div class="">
                             <input type="checkbox" name="agree" id="agree" class="input-checkbox mb-1"
-                                value="{{ old('agree') }}">
+                            {{ old('agree') ? 'checked' : '' }}>
                             <label for="agree" class="text-sm ms-1">Khách hàng đồng ý với</label>
                             <a href="#" class="text-red-600 text-sm">chính sách và điều khoản</a>
                         </div>
