@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('attribute_value_id')->constrained()->cascadeOnDelete();
             $table->string('price');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
