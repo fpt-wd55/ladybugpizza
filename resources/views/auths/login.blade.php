@@ -74,9 +74,6 @@
                 <img class="w-full h-full object-cover" src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}"
                     alt="">
             </div>
-
         </div>
-
     </div>
-
 @endsection
