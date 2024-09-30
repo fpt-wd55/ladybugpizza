@@ -51,10 +51,10 @@
                     </div>
                     <div class="mb-8">
                         <div class="">
-                            <input type="checkbox" name="agree" id="agree" class="input-checkbox mb-1"
-                            {{ old('agree') ? 'checked' : '' }}>
+                            <input type="checkbox" name="agree" id="agree" class="input-checkbox mb-1">
                             <label for="agree" class="text-sm ms-1">Khách hàng đồng ý với</label>
-                            <a href="#" class="text-red-600 text-sm">chính sách và điều khoản</a>
+                            <a href="{{ route('client.policies') }}" class="text-red-600 text-sm">chính sách và điều
+                                khoản</a>
                         </div>
                         @error('agree')
                             <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
