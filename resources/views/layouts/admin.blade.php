@@ -58,15 +58,12 @@
                 </li>
             </ol>
         </nav>
-        {{-- content --}}
         <div class="px-4">
             @yield('content')
         </div>
         {{-- footer --}}
         @include('partials.admins.footer')
-
     </div>
-
 </body>
 
 </html>

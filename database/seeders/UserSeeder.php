@@ -69,7 +69,7 @@ class UserSeeder extends Seeder
                 'email' => 'trantrunghieu422@gmail.com',
                 'fullname' => 'Trần Chung Hiếu',
                 'phone' => '0326239019',
-                'password' => Hash::make('trantrunghieu422@gmail.com'),
+                'password' => Hash::make('Hieucoi1qaz@'),
                 'google_id' => null,
                 'date_of_birth' => '2004-04-22',
                 'gender' => 1,
