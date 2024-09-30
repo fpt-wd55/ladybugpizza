@@ -27,9 +27,9 @@ class ProfileController extends Controller
         return view('clients.profile.membership');
     }
 
-    public function location()
+    public function address()
     {
-        return view('clients.profile.location');
+        return view('clients.profile.address');
     }
 
     public function settings()

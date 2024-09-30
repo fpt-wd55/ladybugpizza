@@ -21,4 +21,13 @@ class PageController extends Controller
     {
         return view('clients.manual');
     }
+
+    public function contact()
+    {
+        return view('clients.contact');
+    }
+
+    public function postContact()
+    {
+    }
 }
