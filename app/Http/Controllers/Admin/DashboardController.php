@@ -11,4 +11,8 @@ class DashboardController extends Controller
     {
         return view('admins.dashboard');
     }
+
+    public function components() {
+        return view('admins.components');
+    }
 }

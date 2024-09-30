@@ -86,14 +86,19 @@ Route::prefix('/auth')->group(function () {
     Route::get('/logout', [WebController::class, 'logout'])->name('auth.logout');
     Route::get('/register', [WebController::class, 'register'])->name('auth.register');
     Route::get('/forgot-password', [WebController::class, 'forgotPassword'])->name('auth.forgot-password');
-    Route::get('/get-otp', [WebController::class, ''])->name('auth.get-otp');
+    Route::get('/get-otp', [WebController::class, 'getOtp'])->name('auth.get-otp');
     Route::get('/recovery', [WebController::class, 'recovery'])->name('auth.recovery');
     Route::get('/user-info', [WebController::class, 'userInfo'])->name('auth.user-info');
+    Route::post('/login', [WebController::class, 'postLogin'])->name('auth.post-login');
+    Route::post('/register', [WebController::class, 'postRegister'])->name('auth.post-register');
+    Route::post('/forgot-password', [WebController::class, 'postForgotPassword'])->name('auth.post-forgot-password');
+    Route::post('/get-otp', [WebController::class, 'postGetOtp'])->name('auth.post-get-otp');
+    Route::post('/recovery', [WebController::class, 'postRecovery'])->name('auth.post-recovery');
+    Route::post('/user-info', [WebController::class, 'postUserInfo'])->name('auth.post-user-info');
 });
 
 
-// Route::prefix('/admin')->middleware([''])->group(function () {
-Route::prefix('/admin')->group(function () {
+Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('/users', UserController::class);
     Route::resource('/addresses', AddressController::class);
@@ -115,4 +120,5 @@ Route::prefix('/admin')->group(function () {
     Route::resource('/logs', LogController::class);
     Route::resource('/messages', MessageController::class);
     Route::resource('/conversations', ConversationController::class);
+    Route::get('/components', [DashboardController::class, 'components']);
 });

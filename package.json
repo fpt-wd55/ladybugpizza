@@ -15,6 +15,8 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
-        "@fancyapps/ui": "^5.0.36"
+        "@fancyapps/ui": "^5.0.36",
+        "apexcharts": "^3.53.0",
+        "filepond": "^4.31.4"
     }
 }

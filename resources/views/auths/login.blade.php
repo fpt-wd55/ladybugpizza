@@ -3,7 +3,7 @@
 @section('title', 'Đăng nhập')
 
 @section('content')
-<div class="container w-full md:w-[920px] h-[629px] md:mx-auto my-16 p-4 transition">
+<div class="w-full md:w-[920px] h-[629px] md:mx-auto my-16 p-4 transition">
     <div class="md:grid md:grid-cols-2 gap-4 card">
         <div class="p-4 md:p-6 lg:p-8">
             <div class="mb-4">
@@ -56,7 +56,6 @@
             <img class="w-full h-full object-cover" src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}" alt="">
         </div>
     </div>
-
 </div>
 
 @endsection
