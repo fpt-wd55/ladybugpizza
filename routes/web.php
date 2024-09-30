@@ -120,4 +120,5 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::resource('/messages', MessageController::class);
     Route::resource('/conversations', ConversationController::class);
     Route::resource('/invoices', InvoiceController::class);
+    Route::get('/components', [DashboardController::class, 'components']);
 });
