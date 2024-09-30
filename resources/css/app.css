@@ -173,6 +173,10 @@
     @apply button bg-[#D30A0A] hover:bg-[#AF0808] dark:bg-[#D30A0A] dark:hover:bg-[#AF0808];
 }
 
+.button-blue {
+    @apply button bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700;
+}
+
 .button-yellow {
     @apply button bg-yellow-700 hover:bg-yellow-800 dark:bg-yellow-600 dark:hover:bg-yellow-700;
 }
