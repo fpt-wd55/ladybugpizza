@@ -16,9 +16,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Berkshire+Swash&family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
     {{-- Vujahday Script --}}
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Berkshire+Swash&family=Dancing+Script:wght@400..700&family=Vujahday+Script&display=swap" rel="stylesheet">
+    {{-- Quick Sand --}}
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body class="open-sans">
     
     @yield('content')
 

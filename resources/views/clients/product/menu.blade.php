@@ -23,7 +23,7 @@
                 {{-- Danh mục --}}
                 <div class="mb-4 md:flex md:items-start">
                     <div class="md:flex-1">
-                        <h3 class="font-semibold mb-2 uppercase text-sm">Danh mục</h3>
+                        <p class="font-semibold mb-2 uppercase text-sm">Danh mục</p>
                         <div class="space-y-2">
                             <label class="flex items-center gap-2 text-sm">
                                 <input type="checkbox" class="input-checkbox" />

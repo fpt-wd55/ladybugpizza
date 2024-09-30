@@ -1,6 +1,6 @@
 <header class="border-b border-gray-300">
     <div class="h-auto md:mx-8 lg:mx-20">
-        <nav class="flex justify-between items-center p-4 ">
+        <nav class="flex justify-between items-center p-4">
 
             {{-- menu --}}
             <div class="lg:hidden hover:cursor-pointer" data-dropdown-toggle="dropdown"
@@ -18,7 +18,7 @@
                 <div class="flex flex-col gap-8 w-full text-sm font-semibold">
                     <a href="{{ route('client.home') }}" class="">TRANG CHỦ</a>
                     <a href="{{ route('client.product.menu') }}" class="">THỰC ĐƠN</a>
-                    <a href="#" class="">VỀ CHÚNG TÔI</a>
+                    <a href="{{ route('client.about-us') }}" class="">VỀ CHÚNG TÔI</a>
                 </div>
             </div>
 
@@ -27,9 +27,15 @@
                 <img class="w-20 h-20" src="{{ asset('storage/uploads/logos/logo-fill.png') }}" alt="">
             </a>
             <ul class="hidden lg:flex lg:items-center mx-auto">
-                <li class="mx-10 font-semibold text-base uppercase hover:text-red-500 transition"><a href="{{ route('client.home') }}">TRANG CHỦ</a></li>
-                <li class="mx-10 font-semibold text-base uppercase hover:text-red-500 transition "><a href="{{ route('client.product.menu') }}">THỰC ĐƠN</a></li>
-                <li class="mx-10 font-semibold text-base uppercase hover:text-red-500 transition "><a href="#">VỀ CHÚNG TÔI</a></li>
+                <li class="mx-10 font-semibold text-base uppercase hover:text-red-500 transition">
+                    <a href="{{ route('client.home') }}">TRANG CHỦ</a>
+                </li>
+                <li class="mx-10 font-semibold text-base uppercase hover:text-red-500 transition ">
+                    <a href="{{ route('client.product.menu') }}">THỰC ĐƠN</a>
+                </li>
+                <li class="mx-10 font-semibold text-base uppercase hover:text-red-500 transition ">
+                    <a href="#">VỀ CHÚNG TÔI</a>
+                </li>
             </ul>
             <div class="flex items-center gap-4">
 
@@ -43,36 +49,52 @@
                     </button>
 
                     <div id="dropdownAvatarName"
-                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow">
-
-                        <div class=" px-4 py-3 text-sm text-gray-900 dark:text-white">
+                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-64 font-normal">
+                        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
                             <p class="font-medium ">{{ Auth::user()->fullname }}</p>
                             <p class="truncate">{{ Auth::user()->email }}</p>
                         </div>
                         <div class="py-2">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Hồ
-                                sơ</a>
+                            <a href="{{ route('client.profile.index') }}"
+                                class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                @svg('tabler-user', 'icon-sm')
+                                Hồ sơ
+                            </a>
                         </div>
                         <div class="py-2">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Địa
-                                chỉ</a>
+                            <a href="{{ route('client.profile.address') }}"
+                                class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                @svg('tabler-location', 'icon-sm')
+                                Địa chỉ
+                            </a>
                         </div>
                         <div class="py-2">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cài
-                                đặt thông báo</a>
+                            <a href="{{ route('client.profile.settings') }}"
+                                class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                @svg('tabler-settings', 'icon-sm')
+                                Cài đặt
+                            </a>
                         </div>
                         <div class="py-2">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Tích
-                                điểm</a>
+                            <a href="{{ route('client.profile.membership') }}"
+                                class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                @svg('tabler-coin', 'icon-sm')
+                                Tích điểm
+                            </a>
                         </div>
                         <div class="py-2">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Mã
-                                giảm giá</a>
+                            <a href="{{ route('client.profile.promotion') }}"
+                                class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                @svg('tabler-tag', 'icon-sm')
+                                Mã giảm giá
+                            </a>
                         </div>
                         <div class="py-2">
                             <a href="{{ route('auth.logout') }}"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Đăng
-                                xuất</a>
+                                class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                @svg('tabler-logout', 'icon-sm')
+                                Đăng xuất
+                            </a>
                         </div>
                     </div>
                 @else

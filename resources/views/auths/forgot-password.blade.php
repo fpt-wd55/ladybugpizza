@@ -3,18 +3,16 @@
 @section('title', 'Quên mật khẩu')
 
 @section('content')
+<div class="w-full md:w-[920px] h-[629px] md:mx-auto my-16 p-4 transition">
+    <div class="md:grid md:grid-cols-2 gap-4 card">
+        <div class=" p-4 md:p-6 lg:p-8">
+            <div class="mb-4">
+                <div class="mb-4 font-semibold text-lg uppercase">
+                    Quên mật khẩu
+                </div>
+                <div class="label-md">
+                    <label for="">Nhập địa chỉ email, bạn sẽ nhận được mật khẩu một lần hoặc liên kết xác minh để xác minh tài khoản của mình</label>
 
-    <div class="container w-full md:w-[920px] h-[629px] md:mx-auto my-16 p-4">
-        <div class="md:grid md:grid-cols-2 gap-4 card">
-            <div class=" p-4 md:p-6 lg:p-8">
-                <div class="mb-4">
-                    <div class="mb-4 font-semibold text-lg uppercase">
-                        Quên mật khẩu
-                    </div>
-                    <div class="label-md">
-                        <label for="">Nhập địa chỉ email, bạn sẽ nhận được mật khẩu một lần hoặc liên
-                            kết xác minh để xác minh tài khoản của mình</label>
-                    </div>
                 </div>
                 @session('success')
                     <div class="alert-success mt-2">

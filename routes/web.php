@@ -61,12 +61,13 @@ Route::prefix('/')->group(function () {
     Route::post('/profile', [ProfileController::class, 'update'])->name('client.profile.update');
     Route::post('/profile', [ProfileController::class, 'postChangePassword'])->name('client.profile.post-change-password');
     Route::get('/profile/membership', [ProfileController::class, 'membership'])->name('client.profile.membership');
-    Route::get('/profile/location', [ProfileController::class, 'location'])->name('client.profile.location');
+    Route::get('/profile/address', [ProfileController::class, 'address'])->name('client.profile.address');
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
-    Route::get('/about-us', [PageController::class, 'aboutUs'])->name('about-us');
-    Route::get('/policies',[PageController::class,'policies'])->name('client.policies');
-    Route::get('/manual',[PageController::class,'manual'])->name('client.manual');
+    Route::get('/about-us', [PageController::class, 'aboutUs'])->name('client.about-us');
+    Route::get('/policies', [PageController::class, 'policies'])->name('client.policies');
+    Route::get('/manual', [PageController::class, 'manual'])->name('client.manual');
+    Route::get('/invoices/{slug}', [InvoiceController::class, 'show'])->name('invoices.index');
 });
 
 Route::prefix('/errors')->group(function () {
@@ -119,6 +120,5 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::resource('/logs', LogController::class);
     Route::resource('/messages', MessageController::class);
     Route::resource('/conversations', ConversationController::class);
-    Route::resource('/invoices', InvoiceController::class);
     Route::get('/components', [DashboardController::class, 'components']);
 });
