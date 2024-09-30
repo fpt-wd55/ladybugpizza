@@ -3,7 +3,6 @@
 @section('title', '404 Không tìm thấy')
 
 @section('content')
-
     <div class="bg-gray-100">
         <div class="flex items-center justify-center min-h-screen bg-gray-100">
             <div class="text-center p-2">
@@ -14,5 +13,5 @@
             </div>
         </div>
     </div>
-    
+
 @endsection
