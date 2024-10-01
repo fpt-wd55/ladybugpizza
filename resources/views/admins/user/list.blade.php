@@ -63,12 +63,16 @@
                     @foreach ($users as $user)
                         <tr class="border-b hover:bg-gray-100">
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                <img src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}" alt="Avatar"
-                                    class="w-auto h-8 mr-3 rounded">
-                                <div class="grid grid-flow-row">
-                                    <span class="text-sm">{{ $user->username }}</span>
-                                    <span class="text-sm text-gray-500">{{ $user->email }}</span>
-                                </div>
+                                <a href="{{ route('admin.users.show', $user) }}">
+                                    <img src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}" alt="Avatar"
+                                        class="w-auto h-8 mr-3 rounded">
+                                </a>
+                                <a href="{{ route('admin.users.show', $user) }}">
+                                    <div class="grid grid-flow-row">
+                                        <span class="text-sm">{{ $user->username }}</span>
+                                        <span class="text-sm text-gray-500">{{ $user->email }}</span>
+                                    </div>
+                                </a>
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $user->fullname }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $user->phone }}</td>
@@ -87,7 +91,7 @@
                                         class="inline-block w-4 h-4 mr-2 {{ $user->status == 1 ? 'bg-green-700' : 'bg-red-700' }} rounded-full">
                                     </div>
                                     {{ $user->status == 1 ? 'Hoạt động' : 'Khóa' }}
-                                </div>  
+                                </div>
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $user->username }}" data-dropdown-toggle="{{ $user->username }}-dropdown"
@@ -99,19 +103,47 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $user->username }}">
                                         <li>
-                                            <a href="{{route('admin.users.show', $user)}}" class="block py-2 px-4 hover:bg-gray-100">Chi tiết</a>
+                                            <a href="{{ route('admin.users.show', $user) }}"
+                                                class="block py-2 px-4 hover:bg-gray-100">Chi tiết</a>
                                         </li>
                                         <li>
-                                            <a href="{{route('admin.users.edit', $user)}}" class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
+                                            <a href="{{ route('admin.users.edit', $user) }}"
+                                                class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
                                         </li>
                                     </ul>
                                     <div class="py-1">
-                                        <a href="#"
-                                            class="block py-2 px-4 text-sm text-red-500 hover:bg-gray-100">Xóa</a>
+                                        <span data-modal-target="popup-modal" data-modal-toggle="popup-modal"
+                                            class="cursor-pointer block py-2 px-4 text-sm text-red-500 hover:bg-gray-100">Xóa</span>
                                     </div>
                                 </div>
                             </td>
                         </tr>
+                        <div id="popup-modal" tabindex="-1"
+                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                            <div class="relative p-4 w-full max-w-md max-h-full">
+                                <div class="relative bg-white rounded-lg shadow">
+                                    <button type="button"
+                                        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                        data-modal-hide="popup-modal">
+                                        @svg('tabler-x', 'w-4 h-4')
+                                        <span class="sr-only">Close modal</span>
+                                    </button>
+                                    <div class="p-4 md:p-5 text-center">
+                                        <div class="flex justify-center">
+                                            @svg('tabler-trash', 'w-12 h-12 text-red-600 text-center mb-2')
+                                        </div>
+                                        <h3 class="mb-5 font-normal">Bạn có chắc chắn muốn xóa người dùng này?</h3>
+                                        <button data-modal-hide="popup-modal" type="button"
+                                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                            Đồng ý
+                                        </button>
+                                        <button data-modal-hide="popup-modal" type="button"
+                                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Quay
+                                            lại</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                 </tbody>
             </table>
