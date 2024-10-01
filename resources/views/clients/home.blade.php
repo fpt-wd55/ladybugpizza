@@ -10,7 +10,7 @@
         </div>
     @endsession
 
-    <div class="mx-auto px-0  ">
+    <div class="mx-auto px-0">
         <div id="default-carousel" class="z-0 relative w-full mb-[44px] md:mb-[76px] lg:mb-[64px]" data-carousel="slide">
             <!-- Carousel wrapper -->
             <div class="relative h-[230px] overflow-hidden  md:h-[400px] lg:h-[650px]">

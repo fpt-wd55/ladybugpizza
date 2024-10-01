@@ -84,6 +84,10 @@
     @apply block mb-2 text-base font-medium text-gray-900 dark:text-white;
 }
 
+.label-peer {
+    @apply inline-flex items-center justify-center w-full px-2 py-4 text-gray-700 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-red-500 peer-checked:text-white peer-checked:bg-red-600 hover:text-gray-600 hover:bg-gray-50 transition;
+}
+
 .input {
     @apply block w-full text-sm text-gray-900 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white;
 }
