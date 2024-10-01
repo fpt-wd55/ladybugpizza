@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden p-4">
-        <div class="">
+        <div>
             <div class="grid grid-cols-2 gap-6 border-b border-gray-200 py-4  lg:grid-cols-4 xl:gap-16">
                 <div>
                     <div class="flex ">
@@ -43,11 +43,15 @@
                             <img class="h-16 w-16 rounded-lg" src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}"
                                 alt="Avatar" />
                             <div>
-                                <span
-                                    class="mb-2 inline-block rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 ">
-                                    {{ $user->username }} </span>
+                                <div class="flex ms-2">
+                                    <span class="flex items-center">@svg('tabler-circle-filled', 'w-3 h-3 text-green-500')</span>
+                                    <span
+                                        class="inline-block rounded bg-primary-100 px-1 text-xs font-medium text-primary-800 ">
+                                        {{ $user->username }}
+                                    </span>
+                                </div>
                                 <h2
-                                    class="flex items-center text-xl font-bold text-lg ms-2 leading-none text-gray-900  sm:text-2xl">
+                                    class="flex items-center text-xl font-bold ms-2 mt-2 leading-none text-gray-900  sm:text-2xl">
                                     {{ $user->fullname }} </h2>
                             </div>
                         </div>
@@ -79,6 +83,22 @@
                         <dl>
                             <dt class="font-semibold text-gray-900 ">Giới tính</dt>
                             <dd class="text-gray-500 ">Nam</dd>
+                        </dl>
+                        <dl>
+                            <dt class="font-semibold text-gray-900 ">Vai trò</dt>
+                            <dd
+                                class="me-2 mt-1.5 text-red-500 inline-flex shrink-0 items-center rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium">
+                                Admin
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="font-semibold text-gray-900 ">Trạng thái</dt>
+                            <dd class="text-gray-500 flex items-center py-1">
+                                <div
+                                    class="inline-block w-3 h-3 mr-2 {{ $user->status == 1 ? 'bg-green-700' : 'bg-red-700' }} rounded-full">
+                                </div>
+                                <span>{{ $user->status == 1 ? 'Hoạt động' : 'Khóa' }}</span>
+                            </dd>
                         </dl>
                     </div>
                 </div>
@@ -112,52 +132,7 @@
                         <dt class="text-base font-medium text-gray-500 ">Trạng thái:</dt>
                         <dd
                             class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 ">
-                            <svg class="me-1 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z">
-                                </path>
-                            </svg>
-                            In transit
-                        </dd>
-                    </dl>
-
-                    <div class="w-full sm:flex sm:w-32 sm:items-center sm:justify-end sm:gap-4">
-                        <a href="{{ route('admin.orders.show', 1) }}"
-                            class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0 md:w-auto">
-                            @svg('tabler-external-link', 'h-4 w-4 me-1.5')
-                            Chi tiết
-                        </a>
-                    </div>
-                </div> 
-                <div class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 mt-4 md:pb-5">
-                    <dl class="w-1/2 sm:w-48">
-                        <dt class="text-base font-medium text-gray-500 ">Mã đơn hàng:</dt>
-                        <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
-                            <a href="#" class="hover:underline">#FWB12546798</a>
-                        </dd>
-                    </dl>
-
-                    <dl class="w-1/2 sm:w-1/4 md:flex-1 lg:w-auto">
-                        <dt class="text-base font-medium text-gray-500 ">Ngày đặt hàng:</dt>
-                        <dd class="mt-1.5 text-base font-semibold text-gray-900 ">11.12.2023</dd>
-                    </dl>
-
-                    <dl class="w-1/2 sm:w-1/5 md:flex-1 lg:w-auto">
-                        <dt class="text-base font-medium text-gray-500 ">Đơn giá:</dt>
-                        <dd class="mt-1.5 text-base font-semibold text-gray-900 ">$499</dd>
-                    </dl>
-
-                    <dl class="w-1/2 sm:w-1/4 sm:flex-1 lg:w-auto">
-                        <dt class="text-base font-medium text-gray-500 ">Trạng thái:</dt>
-                        <dd
-                            class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 ">
-                            <svg class="me-1 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z">
-                                </path>
-                            </svg>
+                            @svg('tabler-truck', 'h-3 w-3 me-1')
                             In transit
                         </dd>
                     </dl>
@@ -192,12 +167,42 @@
                         <dt class="text-base font-medium text-gray-500 ">Trạng thái:</dt>
                         <dd
                             class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 ">
-                            <svg class="me-1 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z">
-                                </path>
-                            </svg>
+                            @svg('tabler-truck', 'h-3 w-3 me-1')
+                            In transit
+                        </dd>
+                    </dl>
+
+                    <div class="w-full sm:flex sm:w-32 sm:items-center sm:justify-end sm:gap-4">
+                        <a href="{{ route('admin.orders.show', 1) }}"
+                            class="flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0 md:w-auto">
+                            @svg('tabler-external-link', 'h-4 w-4 me-1.5')
+                            Chi tiết
+                        </a>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 mt-4 md:pb-5">
+                    <dl class="w-1/2 sm:w-48">
+                        <dt class="text-base font-medium text-gray-500 ">Mã đơn hàng:</dt>
+                        <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
+                            <a href="#" class="hover:underline">#FWB12546798</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="w-1/2 sm:w-1/4 md:flex-1 lg:w-auto">
+                        <dt class="text-base font-medium text-gray-500 ">Ngày đặt hàng:</dt>
+                        <dd class="mt-1.5 text-base font-semibold text-gray-900 ">11.12.2023</dd>
+                    </dl>
+
+                    <dl class="w-1/2 sm:w-1/5 md:flex-1 lg:w-auto">
+                        <dt class="text-base font-medium text-gray-500 ">Đơn giá:</dt>
+                        <dd class="mt-1.5 text-base font-semibold text-gray-900 ">$499</dd>
+                    </dl>
+
+                    <dl class="w-1/2 sm:w-1/4 sm:flex-1 lg:w-auto">
+                        <dt class="text-base font-medium text-gray-500 ">Trạng thái:</dt>
+                        <dd
+                            class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800 ">
+                            @svg('tabler-truck', 'h-3 w-3 me-1')
                             In transit
                         </dd>
                     </dl>
