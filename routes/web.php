@@ -101,9 +101,6 @@ Route::prefix('/auth')->group(function () {
 Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('/users', UserController::class);
-    Route::get('/user/trash', [UserController::class, 'trash'])->name('users.trash');
-    // Route::get('/user/{user}/restore', [UserController::class, 'restore'])->name('users.restore');
-    // Route::get('/user/{user}/delete', [UserController::class, 'delete'])->name('users.delete');
     Route::resource('/addresses', AddressController::class);
     Route::resource('/products', AdminProductController::class);
     Route::resource('/orders', AdminOrderController::class);
