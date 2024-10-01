@@ -46,7 +46,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $addresses = $user->addresses;
+        return view('admins.user.edit', compact('user', 'addresses'));
     }
 
     /**
