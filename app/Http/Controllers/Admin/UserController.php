@@ -46,7 +46,7 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(User $user)
-    {
+    {     
         $addresses = $user->addresses;
         return view('admins.user.edit', compact('user', 'addresses'));
     }
@@ -56,7 +56,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        
     }
 
     /**
