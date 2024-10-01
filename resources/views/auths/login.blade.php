@@ -47,11 +47,10 @@
                     <div class="mb-11 flex justify-between">
                         <div class="flex items-center gap-1">
                             <input type="checkbox" name="remember" id="remember" class="input-checkbox">
-                            <label for="remember" class="text-sm ms-1">Ghi nhớ mật khẩu</label>
+                            <label for="remember" class="text-sm ms-1">Ghi nhớ mật khẩu</label>
                         </div>
                         <div>
-                            <a href="{{ route('auth.forgot-password') }}" class="text-red-600 hover:link text-sm">Quên mật
-                                khẩu?</a>
+                            <a href="{{ route('auth.forgot-password') }}" class="text-red-600 hover:link text-sm">Quên mật khẩu?</a>
                         </div>
                     </div>
                     @if ($errors->has('error'))
