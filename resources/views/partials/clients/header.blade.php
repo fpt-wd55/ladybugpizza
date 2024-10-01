@@ -34,7 +34,7 @@
                     <a href="{{ route('client.product.menu') }}">THỰC ĐƠN</a>
                 </li>
                 <li class="mx-10 font-semibold text-base uppercase hover:text-red-500 transition ">
-                    <a href="#">VỀ CHÚNG TÔI</a>
+                    <a href="{{ route('client.about-us') }}">VỀ CHÚNG TÔI</a>
                 </li>
             </ul>
             <div class="flex items-center gap-4">

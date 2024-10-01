@@ -164,7 +164,7 @@
                     </p>
                     <p>
                         Tìm hiểu thêm
-                        <a href="" class="link-lg uppercase">về chúng tôi</a>
+                        <a href="" class="link-lg">Về chúng tôi</a>
                     </p>
                 </div>
             </div>
