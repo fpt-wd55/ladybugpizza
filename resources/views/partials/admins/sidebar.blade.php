@@ -19,7 +19,7 @@
                 </a>
             </li>
             <li>
-                <a href="#"
+                <a href="{{ route('admin.users.index') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     @svg('tabler-user', 'text-gray-500')
                     <span class="ml-3">Người dùng</span>

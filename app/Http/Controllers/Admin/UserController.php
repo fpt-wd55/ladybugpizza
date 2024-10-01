@@ -13,7 +13,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::paginate(10);
+        return view('admins.user.list', compact('users'));
     }
 
     /**
@@ -21,7 +22,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admins.user.add');
     }
 
     /**
@@ -62,5 +63,14 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    /**
+     * Display a listing of the trashed resource.
+     */
+    public function trash()
+    {
+        $users = User::onlyTrashed()->paginate(10);
+        return view('admins.user.trash', compact('users'));
     }
 }
