@@ -102,7 +102,7 @@
                                             <a href="#" class="block py-2 px-4 hover:bg-gray-100">Chi tiết</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
+                                            <a href="{{route('admin.users.edit', $user)}}" class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
                                         </li>
                                     </ul>
                                     <div class="py-1">
