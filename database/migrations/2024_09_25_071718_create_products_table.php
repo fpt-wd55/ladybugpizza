@@ -16,15 +16,15 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('image');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('price');
             $table->bigInteger('discount_price')->nullable();
-            $table->integer('quantity');
+            $table->integer('quantity')->nullable();
             $table->string('sku')->unique();
             $table->tinyInteger('status')->default(1)->comment('1: active; 2: inactive');
             $table->tinyInteger('is_featured')->default(2)->comment('1: yes; 2: no');
-            $table->float('avg_rating')->default(0);
+            $table->float('avg_rating')->default(5);
             $table->integer('total_rating')->default(0);
             $table->softDeletes();
             $table->timestamps();
