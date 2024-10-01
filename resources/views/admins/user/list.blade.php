@@ -87,7 +87,7 @@
                                         class="inline-block w-4 h-4 mr-2 {{ $user->status == 1 ? 'bg-green-700' : 'bg-red-700' }} rounded-full">
                                     </div>
                                     {{ $user->status == 1 ? 'Hoạt động' : 'Khóa' }}
-                                </div>
+                                </div>  
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $user->username }}" data-dropdown-toggle="{{ $user->username }}-dropdown"
