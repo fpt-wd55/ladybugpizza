@@ -64,6 +64,8 @@
         {{-- footer --}}
         @include('partials.admins.footer')
     </div>
+
+    @yield('scripts')
 </body>
 
 </html>
