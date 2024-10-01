@@ -3,15 +3,14 @@
 @section('title', 'Đăng nhập')
 
 @section('content')
-
-    <div class="container w-full md:w-[920px] h-[629px] md:mx-auto my-16 p-4">
-        <div class="md:grid md:grid-cols-2 gap-4 card">
+    <div class="w-full md:w-[920px] h-[629px] md:mx-auto my-16 p-4 transition">
+        <div class="md:grid md:grid-cols-2 gap-4 card overflow-hidden">
             <div class="p-4 md:p-6 lg:p-8">
                 <div class="mb-4">
                     <div class="mb-4 font-semibold text-lg uppercase">
                         Đăng nhập
                     </div>
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 text-sm">
                         <label for="">Bạn có chưa có tài khoản?</label>
                         <a href="{{ route('auth.register') }}" class="text-red-600">Đăng
                             ký</a>
