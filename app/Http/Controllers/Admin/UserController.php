@@ -58,21 +58,4 @@ class UserController extends Controller
     {
         
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
-    }
-
-    /**
-     * Display a listing of the trashed resource.
-     */
-    public function trash()
-    {
-        $users = User::onlyTrashed()->paginate(10);
-        return view('admins.user.trash', compact('users'));
-    }
 }
