@@ -84,7 +84,7 @@
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
                                 <div class="flex items-center">
                                     <div
-                                        class="inline-block w-4 h-4 mr-2 bg-{{ $user->status == 1 ? 'green' : 'red' }}-700 rounded-full">
+                                        class="inline-block w-4 h-4 mr-2 {{ $user->status == 1 ? 'bg-green-700' : 'bg-red-700' }} rounded-full">
                                     </div>
                                     {{ $user->status == 1 ? 'Hoạt động' : 'Khóa' }}
                                 </div>
@@ -99,7 +99,7 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $user->username }}">
                                         <li>
-                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Chi tiết</a>
+                                            <a href="{{route('admin.users.show', $user)}}" class="block py-2 px-4 hover:bg-gray-100">Chi tiết</a>
                                         </li>
                                         <li>
                                             <a href="{{route('admin.users.edit', $user)}}" class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>

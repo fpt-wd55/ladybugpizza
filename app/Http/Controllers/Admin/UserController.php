@@ -38,7 +38,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $addresses = $user->addresses;
+        return view('admins.user.detail', compact('user', 'addresses'));
     }
 
     /**

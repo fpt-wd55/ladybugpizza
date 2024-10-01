@@ -90,6 +90,20 @@
                     <span class="ml-3">Banner</span>
                 </a>
             </li> 
+            <li>
+                <a href="#"
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                    @svg('tabler-password-user', 'text-gray-500')
+                    <span class="ml-3">Phân quyền</span>
+                </a>
+            </li> 
+            <li>
+                <a href="#"
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                    @svg('tabler-credit-card', 'text-gray-500')
+                    <span class="ml-3">Điểm thành viên</span>
+                </a>
+            </li> 
         </ul>
     </div>
     <div
