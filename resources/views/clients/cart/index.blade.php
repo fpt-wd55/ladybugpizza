@@ -5,40 +5,6 @@
 @section('content')
     <div class="min-h-screen">
         <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
-            {{-- <div class="space-y-4 pb-12">
-                @for ($i = 0; $i < 6; $i++)
-                    <div class="product-card overflow-hidden flex justify-between pe-4 items-center">
-                        <img src="{{ asset('storage/uploads/products/pizza/pizza_tartufo.png') }}" class="img-md"
-                            alt="">
-                        <p class="font-medium">Paneer Makhani Pizza</p>
-                        <ul class="list-disc text-sm">
-                            <li>Đế mỏng, Size S</li>
-                            <li>Topping: Thịt bò, Hành tây</li>
-                        </ul>
-                        <div class="inline-flex rounded-md shadow-sm" role="group">
-                            <button type="button"
-                                class="px-2 py-1.5 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-red-500">
-                                @svg('tabler-minus', 'icon-sm')
-                            </button>
-                            <div
-                                class="px-4 py-1.5 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200">
-                                1
-                            </div>
-                            <button type="button"
-                                class="px-2 py-1.5 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-red-500">
-                                @svg('tabler-plus', 'icon-sm')
-                            </button>
-                        </div>
-                        <div>
-                            <p>300,000đ</p>
-                        </div>
-                        <button class="button-red">
-                            @svg('tabler-trash', 'icon-md')
-                        </button>
-                    </div>
-                @endfor
-            </div> --}}
-
             <div class="mb-8">
                 <p class="title">GIỎ HÀNG</p>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -46,8 +12,8 @@
                         <div class="product-card overflow-hidden">
                             <div class="w-full flex justify-between items-center pe-4">
                                 <div class="flex gap-4">
-                                    <img src="{{ asset('storage/uploads/products/pizza/pizza_tartufo.png') }}" class="img-md"
-                                        alt="">
+                                    <img src="{{ asset('storage/uploads/products/pizza/pizza_tartufo.png') }}"
+                                        class="img-md" alt="">
                                     <div class="text-left py-2">
                                         <p class="font-medium mb-4">Pizza xúc xích</p>
                                         <div class="text-sm">
@@ -95,7 +61,7 @@
                             <button type="button" class="button-red w-32">Áp dụng</button>
                         </div>
                     </div>
-                    <div class="gap-16">
+                    <div>
                         <div class="flex items-center justify-between mb-4 gap-32 text-sm">
                             <p class="">Tổng tiền sản phẩm</p>
                             <p class="font-medium">150,000đ</p>
@@ -118,11 +84,9 @@
 
                 <div class="flex items-center justify-end gap-2">
                     <a href="{{ route('client.product.menu') }}" class="button-dark">Tiếp tục mua hàng</a>
-                    <button class="button-red">Thanh toán</button>
+                    <a href="{{ route('client.cart.checkout') }}" class="button-red">Thanh toán</a>
                 </div>
             </div>
-
-
         </div>
     </div>
 @endsection
