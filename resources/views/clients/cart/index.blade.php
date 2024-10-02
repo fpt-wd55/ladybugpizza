@@ -59,7 +59,7 @@
                                 <div class="text-right">
                                     <div class="mb-4 text-sm flex items-center gap-2">
                                         <span class="line-through">320,000đ</span>
-                                        <span class="font-medium">300,000đ</span>    
+                                        <span class="font-medium">300,000đ</span>
                                     </div>
                                     <div class="inline-flex rounded-md shadow-sm" role="group">
                                         <button type="button"
@@ -84,31 +84,45 @@
                     @endfor
                 </div>
             </div>
+
+            {{-- Aplly discount code --}}
             <div class="card p-4 md:p-8 mb-12">
-                <div class="md:flex items-center justify-between gap-8">
-                    <div class="mb-4 md:mb-0">
-                        <p class="uppercase font-medium mb-4">Bạn có mã giảm giá</p>
+                <div class="lg:flex items-center justify-between gap-8 mb-8">
+                    <div class="mb-4 md:mb-8 lg:mb-0">
+                        <p class="font-medium mb-4">Bạn có mã giảm giá</p>
                         <div class="flex gap-2 items-center">
                             <input type="text" class="input">
                             <button type="button" class="button-red w-32">Áp dụng</button>
                         </div>
                     </div>
-                    <div class="flex justify-between gap-16">
-                        <div class="text-left space-y-2 text-sm font-medium">
+                    <div class="gap-16">
+                        <div class="flex items-center justify-between mb-4 gap-32 text-sm">
                             <p class="">Tổng tiền sản phẩm</p>
-                            <p class="">Phí vận chuyển</p>
-                            <p class="">Giảm giá</p>
-                            <p class="">Tổng thanh toán</p>
+                            <p class="font-medium">150,000đ</p>
                         </div>
-                        <div class="text-right text-sm font-medium space-y-2">
-                            <p class="">150,000đ</p>
-                            <p class="">15,800đ</p>
-                            <p class="">23,000đ</p>
-                            <p class="">124,000đ</p>
+                        <div class="flex items-center justify-between mb-4 gap-32 text-sm">
+                            <p class="">Phí vận chuyển</p>
+                            <p class="font-medium">150,000đ</p>
+                        </div>
+                        <div class="flex items-center justify-between mb-4 gap-32 text-sm">
+                            <p class="">Giảm giá</p>
+                            <p class="font-medium">150,000đ</p>
+                        </div>
+                        <hr class="mb-4">
+                        <div class="flex items-center justify-between mb-4 gap-32">
+                            <p class="font-medium">Tổng thanh toán</p>
+                            <p class="font-medium">150,000đ</p>
                         </div>
                     </div>
                 </div>
+
+                <div class="flex items-center justify-end gap-2">
+                    <a href="{{ route('client.product.menu') }}" class="button-dark">Tiếp tục mua hàng</a>
+                    <button class="button-red">Thanh toán</button>
+                </div>
             </div>
+
+
         </div>
     </div>
 @endsection
