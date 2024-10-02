@@ -225,7 +225,7 @@
 }
 
 .badge-light {
-    @apply badge bg-white text-gray-800;
+    @apply badge bg-gray-200 text-gray-800;
 }
 
 .badge-green {
@@ -237,7 +237,7 @@
 }
 
 .badge-yellow {
-    @apply badge bg-yellow-100 text-yellow-800;
+    @apply badge bg-yellow-200 text-yellow-700;
 }
 
 .badge-purple {
