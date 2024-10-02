@@ -13,7 +13,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::paginate(10);
+        return view('admins.user.list', compact('users'));
     }
 
     /**
@@ -21,7 +22,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admins.user.add');
     }
 
     /**
@@ -37,15 +38,17 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $addresses = $user->addresses;
+        return view('admins.user.detail', compact('user', 'addresses'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(User $user)
-    {
-        //
+    {     
+        $addresses = $user->addresses;
+        return view('admins.user.edit', compact('user', 'addresses'));
     }
 
     /**
@@ -53,7 +56,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        
     }
 
     /**
@@ -62,5 +65,14 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    /**
+     * Display a listing of the trashed resource.
+     */
+    public function trash()
+    {
+        $users = User::onlyTrashed()->paginate(10);
+        return view('admins.user.trash', compact('users'));
     }
 }

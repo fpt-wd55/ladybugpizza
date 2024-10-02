@@ -25,9 +25,17 @@ class ProductController extends Controller
         ]);
     }
 
-    public function show()
+    public function show($slug)
     {
-        return view('clients.product.detail');
+        $product = Product::where('slug', $slug)->first();
+
+        $attributes = $product->attributes()->get();
+
+        // dd($attributes);
+
+        return view('clients.product.detail', [
+            'product' => $product
+        ]);
     }
 
     public function addToCart()

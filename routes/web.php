@@ -98,7 +98,7 @@ Route::prefix('/auth')->group(function () {
 });
 
 
-Route::prefix('admin')->middleware(['admin'])->group(function () {
+Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('/users', UserController::class);
     Route::resource('/addresses', AddressController::class);
@@ -107,6 +107,7 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::resource('/carts', AdminCartController::class);
     Route::resource('/attributes', AttributeController::class);
     Route::resource('/categories', CategoryController::class);
+    Route::get('/trash',[CategoryController::class,'trash'])->name('trash.list');
     Route::resource('/toppings', ToppingController::class);
     Route::resource('/banners', BannerController::class);
     Route::resource('/promotions', PromotionController::class);
