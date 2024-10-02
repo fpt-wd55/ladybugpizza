@@ -7,7 +7,6 @@
     @session('success')
         <div class="alert-success">
             {{ session('success') }}
-            abc
         </div>
     @endsession
 

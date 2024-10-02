@@ -3,11 +3,6 @@
 @section('title', 'Chính sách')
 
 @section('content')
-    @if(session('success'))
-        <div class="alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
     <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
         <div class="card p-4 md:p-8">
             {{-- Chính sách giao hàng --}}
