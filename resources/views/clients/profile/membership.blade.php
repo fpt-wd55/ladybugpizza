@@ -11,7 +11,8 @@
             <div class="card p-4 md:p-8 w-full min-h-screen">
                 <h3 class="font-semibold uppercase mb-8">điểm hội viên</h3>
             
-                Nội dung code ở đây
+                Nội dung code ở đây abc
+                 xyz
 
             </div>
         </div>
