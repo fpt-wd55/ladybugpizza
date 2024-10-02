@@ -101,15 +101,13 @@ Route::prefix('/auth')->group(function () {
 Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('/users', UserController::class);
-    Route::get('/user/trash', [UserController::class, 'trash'])->name('users.trash');
-    // Route::get('/user/{user}/restore', [UserController::class, 'restore'])->name('users.restore');
-    // Route::get('/user/{user}/delete', [UserController::class, 'delete'])->name('users.delete');
     Route::resource('/addresses', AddressController::class);
     Route::resource('/products', AdminProductController::class);
     Route::resource('/orders', AdminOrderController::class);
     Route::resource('/carts', AdminCartController::class);
     Route::resource('/attributes', AttributeController::class);
     Route::resource('/categories', CategoryController::class);
+    Route::get('/trash',[CategoryController::class,'trash'])->name('trash.list');
     Route::resource('/toppings', ToppingController::class);
     Route::resource('/banners', BannerController::class);
     Route::resource('/promotions', PromotionController::class);
@@ -124,4 +122,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/messages', MessageController::class);
     Route::resource('/conversations', ConversationController::class);
     Route::get('/components', [DashboardController::class, 'components']);
+    Route::get('/trash-topping', [ToppingController::class, 'trashTopping'])->name('trash-topping');
+    Route::get('/resTopping/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
+    Route::delete('/forceDelete/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
 });

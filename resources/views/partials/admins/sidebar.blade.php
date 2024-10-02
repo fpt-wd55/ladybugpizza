@@ -1,7 +1,7 @@
 <aside
     class="fixed z-40 w-64 h-screen shadow-sm pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0"
     aria-label="Sidebar" id="logo-sidebar">
-    <div class="overflow-y-auto py-5 px-3 h-full bg-white">
+    <div class="overflow-y-auto py-5 px-3 h-full bg-white no-scrollbar">
         {{-- Menu sidebar --}}
         <ul class="space-y-2">
             <li>
@@ -35,7 +35,7 @@
                 </button>
                 <ul id="dropdown-pages" class="hidden py-2 space-y-2">
                     <li>
-                        <a href="#"
+                        <a href="{{route('categories.index')}}"
                             class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Danh
                             mục</a>
                     </li>
@@ -50,7 +50,7 @@
                             tính</a>
                     </li> 
                     <li>
-                        <a href="#"
+                        <a href="{{ route('toppings.index')}}"
                             class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Topping</a>
                     </li>
                 </ul>
