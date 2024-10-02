@@ -121,4 +121,7 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::resource('/messages', MessageController::class);
     Route::resource('/conversations', ConversationController::class);
     Route::get('/components', [DashboardController::class, 'components']);
+    Route::get('/trash-topping', [ToppingController::class, 'trashTopping'])->name('trash-topping');
+    Route::get('/resTopping/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
+    Route::delete('/forceDelete/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
 });
