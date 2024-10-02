@@ -53,11 +53,11 @@
 }
 
 .card {
-    @apply bg-white border border-gray-300 rounded-lg shadow dark:bg-gray-800;
+    @apply bg-white border border-gray-300 rounded-lg;
 }
 
 .product-card {
-    @apply bg-white border border-gray-300 rounded-lg hover:border-gray-700 transition;
+    @apply card hover:border-[#D30A0A] transition;
 }
 
 .title {
@@ -177,7 +177,7 @@
 }
 
 .button-dark {
-    @apply button bg-gray-800 hover:bg-gray-900;
+    @apply button bg-gray-800 border-gray-800 hover:bg-gray-900;
 }
 
 .button-light {
