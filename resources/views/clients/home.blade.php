@@ -110,10 +110,9 @@
                         </a>
                     @endforeach
                 </div>
-
             </div>
 
-            {{-- kham pha thuc don --}}
+            {{-- Khám phá thực đơn --}}
             <div class="grid grid-cols-1 lg:grid-cols-2 mb-32 gap-8">
                 <div class="flex flex-col items-center mr-3 text-center">
                     <p class="text-center berkshire-swash-regular text-3xl lg:text-4xl mb-4">Khám Phá</p>
