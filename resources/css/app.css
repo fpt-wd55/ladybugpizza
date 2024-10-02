@@ -101,7 +101,7 @@
 }
 
 .text-area {
-    @apply block w-full text-gray-900 border border-gray-300 rounded-lg bg-gray-50;
+    @apply block w-full text-gray-900 border border-gray-300 rounded-lg;
 }
 
 .select {

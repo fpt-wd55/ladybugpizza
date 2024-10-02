@@ -15,7 +15,10 @@
                         <img class="img-circle img-lg"
                             src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}"
                             alt="">
-                        <button class="button-red">Chọn ảnh</button>
+                        <input type="file" id="avatar" class="hidden">
+                        <label for="avatar" class="button-red cursor-pointer">
+                            Chọn ảnh
+                        </label>
                     </div>
 
                     <div class="col-span-2">
@@ -26,7 +29,7 @@
                             @method('PUT')
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Tên tài khoản:</label>
-                                <p class="text-sm text-center">quandohong28</p>
+                                <span class="badge-red">quandohong28</sp>
                             </div>
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Họ và tên:</label>
@@ -106,7 +109,7 @@
                                 bạn có
                                 thể khôi phục lại bất kỳ lúc nào</p>
                             <p class="text-sm mb-4">Chúng tôi sẽ yêu cầu mật khẩu để xác nhận hành động này</p>
-                            <div class="mb-6 flex justify-center">
+                            <div class="mb-6 flex justify-end">
                                 <button type="submit" class="button-red">
                                     @svg('tabler-lock', 'icon-sm me-2')
                                     Huỷ kích hoạt
