@@ -5,7 +5,7 @@
 
 @section('content')
     <div class="mx-auto px-0">
-        <div id="default-carousel" class="z-0 relative w-full mb-[44px] md:mb-[76px] lg:mb-[64px]" data-carousel="slide">
+        {{-- <div id="default-carousel" class="z-0 relative w-full mb-[44px] md:mb-[76px] lg:mb-[64px]" data-carousel="slide">
             <!-- Carousel wrapper -->
             <div class="relative h-[230px] overflow-hidden  md:h-[400px] lg:h-[650px]">
                 <!-- Item 1 -->
@@ -63,7 +63,7 @@
                     @svg('tabler-chevron-right', 'w-4 h-4 text-white')
                 </span>
             </button>
-        </div>
+        </div> --}}
 
         <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
 

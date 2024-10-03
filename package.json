@@ -16,7 +16,10 @@
     },
     "dependencies": {
         "@fancyapps/ui": "^5.0.36",
+        "algoliasearch": "^5.7.0",
         "apexcharts": "^3.53.0",
-        "filepond": "^4.31.4"
+        "filepond": "^4.31.4",
+        "instantsearch.css": "^8.5.1",
+        "instantsearch.js": "^4.74.2"
     }
 }

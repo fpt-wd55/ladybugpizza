@@ -35,7 +35,7 @@
                 </button>
                 <ul id="dropdown-pages" class="hidden py-2 space-y-2">
                     <li>
-                        <a href="{{route('categories.index')}}"
+                        <a href="#"
                             class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Danh
                             mục</a>
                     </li>
@@ -50,7 +50,7 @@
                             tính</a>
                     </li> 
                     <li>
-                        <a href="{{ route('toppings.index')}}"
+                        <a href="#"
                             class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Topping</a>
                     </li>
                 </ul>
