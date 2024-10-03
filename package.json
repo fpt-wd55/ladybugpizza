@@ -17,6 +17,8 @@
     "dependencies": {
         "@fancyapps/ui": "^5.0.36",
         "apexcharts": "^3.53.0",
-        "filepond": "^4.31.4"
+        "filepond": "^4.31.4",
+        "laravel-echo": "^1.16.1",
+        "pusher-js": "^8.3.0"
     }
 }

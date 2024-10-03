@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,13 @@ use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
+});
+
+Broadcast::channel('admin-notifications', function($user){
+    try {
+        return $user->isAdmin();
+    } catch (\Exception $e) {
+        Log::error('Broadcast Channel Error: ' . $e->getMessage());
+        return false;
+    }
 });

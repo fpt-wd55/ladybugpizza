@@ -28,7 +28,7 @@ class ForgotPasswordRequest extends FormRequest
 
     public function messages():array {
         return [
-            'email.required' => 'Vui lòng nhập email của bạn',
+            'email.required' => 'Email không được để trống',
             'email.email' => 'Email không đúng định dạng',
             'email.exists' => 'Email không tồn tại trong hệ thống',
         ];
