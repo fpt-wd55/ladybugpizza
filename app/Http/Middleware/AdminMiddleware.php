@@ -19,6 +19,10 @@ class AdminMiddleware
         if (Auth::check()) {
             $user = Auth::user();
 
+            if($user->status == 2) {
+                return back()->with('error', 'Tài khoản của bạn đã bị vô hiệu hóa!');
+            }
+
             if ($user->role_id == 1 || $user->role->parent_id == 1) {
                 return $next($request);
             }
