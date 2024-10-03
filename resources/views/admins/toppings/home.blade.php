@@ -4,7 +4,7 @@
 @section('content')
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="overflow-x-auto ">
-            <div class="mb-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+            <div class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 @if (session('message'))
                     <div class="alert alert-success">
                         {{ session('message') }}
@@ -24,6 +24,7 @@
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
+                        <th scope="col" class="px-4 py-3">STT</th>
                         <th scope="col" class="px-4 py-3">Tên</th>
                         <th scope="col" class="px-4 py-3">Ảnh</th>
                         <th scope="col" class="px-4 py-3">Giá</th>
@@ -34,20 +35,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($listToppings as $listTp)
+                    @forelse ($listToppings as $listTp)
                         <tr class="border-b hover:bg-gray-100">
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ ($listToppings->currentPage() - 1) * $listToppings->perPage() + $loop->iteration }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $listTp->name }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                <img src="{{ asset('/storage/' . $listTp->image) }}" class="img-sm mt-2 img-circle object-cover" alt="">
+                                <img src="{{ asset('/storage/' . $listTp->image) }}" class="img-sm img-circle object-cover" alt="">
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $listTp->price }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
                                 @foreach ($categories as $cateName)
-                                    <span>
-                                        @if ($cateName->id == $listTp->category_id)
-                                            {{ $cateName->name }}
-                                        @endif
-                                    </span>
+                                    @if ($cateName->id == $listTp->category_id)
+                                        <span>{{ $cateName->name }}</span>
+                                    @endif
                                 @endforeach
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
@@ -60,7 +60,7 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $listTp->name }}">
                                         <li>
-                                            <a href="{{ route('toppings.edit', $listTp) }}"
+                                            <a href="{{ route('toppings.edit', $listTp->id) }}"
                                                 class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
                                         </li>
                                     </ul>
@@ -76,9 +76,13 @@
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center py-4">Trống</td> <!-- Hiển thị "Trống" nếu không có dữ liệu -->
+                        </tr>
+                    @endforelse
                 </tbody>
-            </table>
+            </table>            
             <div class="p-4">
                 {{ $listToppings->links() }}
             </div>
