@@ -5,7 +5,7 @@
 
         <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
             <div class="w-full md:w-1/2">
-              
+
                 <form class="flex items-center">
                     <label for="simple-search" class="sr-only">Search</label>
                     <div class="relative w-full">
@@ -25,7 +25,7 @@
             </div>
             <div
                 class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-               
+
                 <div class="flex items-center space-x-3 w-full md:w-auto">
                     <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
                         class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
@@ -45,7 +45,7 @@
                                 all</a>
                         </div>
                     </div>
-                    
+
                     <div id="filterDropdown" class="z-10 hidden w-48 p-3 bg-white rounded-lg shadow">
                         <h6 class="mb-3 text-sm font-medium text-gray-900 ">Choose brand</h6>
                         <ul class="space-y-2 text-sm" aria-labelledby="filterDropdownButton">
@@ -98,82 +98,64 @@
                 </thead>
                 <tbody>
 
+                    @forelse ($deletedCategories as $key => $item)
+                        <tr class="border-b">
+                            <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
+                                {{ ($deletedCategories->currentPage() - 1) * $deletedCategories->perPage() + $key + 1 }}
+                            </th>
+                            <td class="px-4 py-3">{{ $item->name }}</td>
+                            <td class="px-4 py-3">{{ $item->slug }}</td>
+                            <td class="px-4 py-3"><img src="{{ Storage::url($item->image) }}" alt=""
+                                    class="w-14 h-14 rounded-full object-cover"></td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center">
+                                    <label for="status-toggle" class="inline-flex relative items-center cursor-pointer">
+                                        <input type="checkbox" id="status-toggle" class="sr-only peer"
+                                            {{ $item->status == 1 ? 'checked' : '' }} disabled>
+                                        <div
+                                            class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                                        </div>
 
-                    <tr class="border-b">
-                        <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">Apple
-                            iMac 20&#34;</th>
-                        <td class="px-4 py-3">PC</td>
-                        <td class="px-4 py-3">Apple</td>
-                        <td class="px-4 py-3">200</td>
-                        <td class="px-4 py-3">
-                            <div class="flex items-center">
-                                <label for="status-toggle" class="inline-flex relative items-center cursor-pointer">
-                                    <input type="checkbox" id="status-toggle" class="sr-only peer">
-                                    <div
-                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-                                    </div>
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="pt-4 py-3 px-4 flex items-center mt-2 gap-1 ">
+                                <form action="{{ route('admin.trash.cateRestore', $item->id) }}" method="POST"
+                                    onsubmit="return confirm('Bạn có chắc muốn khôi phục danh mục này không?');">
+                                    @csrf
+                                    <button
+                                        class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
+                                        type="submit" title="Restore">
+                                        @svg('tabler-restore')
+                                    </button>
+                                </form>
 
-                                </label>
-                            </div>
-                        </td>
-                        <td class="px-4 py-3 flex items-center ">
-                            <a href="">
-                                <button
-                                    class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
-                                    type="button" title="Restore">
-                                    @svg('tabler-restore')
-                                </button>
-                            </a>
 
-                            <a href="">
-                                <button
-                                    class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-red-500 transition-colors duration-300 rounded-lg focus:outline-none"
-                                    type="button">
-                                    @svg('tabler-trash-x-filled')
-                                </button>
-                            </a>
+                                <form action="{{ route('admin.trash.cateDelete', $item->id) }}" method="POST"
+                                    onsubmit="return confirm('Bạn có chắc muốn xóa vĩnh viễn danh mục này không?');">
+                                    @csrf
+                                    <button
+                                        class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-red-500 transition-colors duration-300 rounded-lg focus:outline-none"
+                                        type="submit" title="Delete">
+                                        @svg('tabler-trash-x-filled')
+                                    </button>
+                                </form>
 
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-base">( Dữ liệu trống )</td>
+                        </tr>
+                    @endforelse
 
-                    <tr class="border-b">
-                        <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">Apple
-                            iMac 20&#34;</th>
-                        <td class="px-4 py-3">PC</td>
-                        <td class="px-4 py-3">Apple</td>
-                        <td class="px-4 py-3">200</td>
-                        <td class="px-4 py-3">
-                            <div class="flex items-center">
-                                <label for="status-toggle-1" class="inline-flex relative items-center cursor-pointer">
-                                    <input type="checkbox" id="status-toggle-1" class="sr-only peer">
-                                    <div
-                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-                                    </div>
 
-                                </label>
-                            </div>
-                        </td>
-                        <td class="px-4 py-3 flex items-center ">
-                            <a href="">
-                                <button
-                                    class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
-                                    type="button" title="Restore">
-                                    @svg('tabler-restore')
-                                </button>
-                            </a>
-
-                            <a href="">
-                                <button
-                                    class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-red-500 transition-colors duration-300 rounded-lg focus:outline-none"
-                                    type="button">
-                                    @svg('tabler-trash-x-filled')
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
 
                 </tbody>
             </table>
+            <div class="p-4">
+                {{ $deletedCategories->links() }}
+            </div>
         </div>
     </div>
 @endsection

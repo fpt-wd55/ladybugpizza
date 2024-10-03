@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryEditRequest;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -13,7 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admins.category.list');
+        $category = Category::paginate(10);
+        return view('admins.category.list', compact('category'));
     }
 
     /**
@@ -27,9 +30,14 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        $category = $request->all();
+        $category['status'] = $request->has('status') ? 1 : 2;
+
+        Category::create($category);
+
+        return redirect()->route('admin.categories.index')->with('message', 'thêm thành công');
     }
 
     /**
@@ -45,16 +53,21 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('admins.category.edit');
-        
+       
+        return view('admins.category.edit',compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryEditRequest $request, Category $category)
     {
-        //
+        $cate = $request->all();
+        $cate['status'] = $request->has('status') ? 1 : 2;
+
+       $category->update($cate);
+       return redirect()->route('admin.categories.index')->with('message', 'sửa thành công');
+
     }
 
     /**
@@ -62,11 +75,41 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        // dd($category);
+        // $id = Category::query()->findOrFail($id);
+        $id = $category['id'];
+
+        Category::destroy($id);
+
+        return redirect()->back()->with('message', 'Xóa thành công');
     }
 
-    public function trash(Category $category)
+    public function trashList(Category $category)
     {
-        return view('admins.category.trash');
+        $deletedCategories = Category::onlyTrashed()->paginate(10);
+
+        return view('admins.category.trash', compact('deletedCategories'));
+    }
+
+    public function trashRestore(String $id)
+    {
+        $restoreCate = Category::withTrashed()->find($id);
+
+        if ($restoreCate) {
+
+            $restoreCate->restore();
+            return redirect()->back()->with('success', 'Danh mục đã được khôi phục thành công');
+        }
+    }
+
+    public function trashForce(String $id)
+    {
+        $forceCategories = Category::withTrashed()->find($id);
+
+        if ($forceCategories) {
+
+            $forceCategories->forceDelete();
+            return redirect()->back()->with('success', 'Danh mục đã xóa vĩnh viễn');
+        }
     }
 }
