@@ -71,7 +71,7 @@
             <div class="mb-32">
                 <div class="flex justify-between items-center mb-4">
                     <p class="text-lg font-semibold uppercase">Sản Phẩm Nổi Bật</p>
-                    <a href="" class="link-lg">Xem thêm</a>
+                    <a href="{{ route('client.product.menu') }}" class="link-lg">Xem thêm</a>
                 </div>
                 <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
                     @foreach ($products as $product)
@@ -117,7 +117,7 @@
                         thể thưởng thức tại 2 địa điểm của chúng tôi hoặc tại nhà với dịch vụ giao hàng nhanh chóng của
                         chúng tôi.
                     </p>
-                    <a href="" class="button-red uppercase mb-8">đặt ngay</a>
+                    <a href="{{ route('client.product.menu') }}" class="button-red uppercase mb-8">đặt ngay</a>
                     <div class="font-extralight">
                         <p class="font-normal">Dịch vụ bữa trưa</p>
                         <p class="mb-4">Từ 11am đến 3pm </p>
@@ -157,7 +157,7 @@
                     </p>
                     <p>
                         Tìm hiểu thêm
-                        <a href="" class="link-lg">Về chúng tôi</a>
+                        <a href="{{ route('client.about-us') }}" class="link-lg">Về chúng tôi</a>
                     </p>
                 </div>
             </div>

@@ -368,3 +368,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+html {
+    @apply no-scrollbar;
+}
