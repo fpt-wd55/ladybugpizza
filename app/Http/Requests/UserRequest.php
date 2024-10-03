@@ -39,6 +39,7 @@ class UserRequest extends FormRequest
             'ward' => 'required',
             'detail_address' => 'required|string|max:255',
             'gender' => 'required',
+            'status' => 'nullable|boolean',
         ];
     }
 
@@ -58,6 +59,7 @@ class UserRequest extends FormRequest
             'district' => 'sometimes|required|integer',
             'ward' => 'sometimes|required|integer',
             'detail_address' => 'sometimes|required|string|max:255',
+            'status' => 'sometimes|boolean',
         ];
     }
 
