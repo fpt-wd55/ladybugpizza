@@ -1,7 +1,6 @@
-<header class="border-b border-gray-300">
+<header class="border-b border-gray-300 bg-white px-4">
     <div class="h-auto md:mx-8 lg:mx-20">
-        <nav class="flex justify-between items-center p-4">
-
+        <nav class="flex justify-between items-center ">
             {{-- menu --}}
             <div class="lg:hidden hover:cursor-pointer" data-dropdown-toggle="dropdown"
                 data-dropdown-toggle="dropdownDistance" data-dropdown-offset-distance="35">
@@ -27,14 +26,14 @@
                 <img class="w-20 h-20" src="{{ asset('storage/uploads/logos/logo-fill.png') }}" alt="">
             </a>
             <ul class="hidden lg:flex lg:items-center mx-auto">
-                <li class="mx-10 font-semibold text-base uppercase hover:text-red-500 transition">
+                <li class="mx-10 font-semibold text-sm uppercase hover:text-red-500 transition">
                     <a href="{{ route('client.home') }}">TRANG CHỦ</a>
                 </li>
-                <li class="mx-10 font-semibold text-base uppercase hover:text-red-500 transition ">
+                <li class="mx-10 font-semibold text-sm uppercase hover:text-red-500 transition ">
                     <a href="{{ route('client.product.menu') }}">THỰC ĐƠN</a>
                 </li>
-                <li class="mx-10 font-semibold text-base uppercase hover:text-red-500 transition ">
-                    <a href="#">VỀ CHÚNG TÔI</a>
+                <li class="mx-10 font-semibold text-sm uppercase hover:text-red-500 transition ">
+                    <a href="{{ route('client.about-us') }}">VỀ CHÚNG TÔI</a>
                 </li>
             </ul>
             <div class="flex items-center gap-4">
@@ -98,8 +97,8 @@
                         </div>
                     </div>
                 @else
-                    <a href="{{ route('auth.login') }}" class="hidden md:inline-block button-icon transition">
-                        @svg('tabler-login', 'md:hidden icon-md')
+                    <a href="{{ route('auth.login') }}" class="hidden button-red transition">
+                        @svg('tabler-login', 'md:me-2 icon-md')
                         <span class="hidden md:block">Đăng Nhập</span>
                     </a>
                 @endif

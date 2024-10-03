@@ -4,13 +4,7 @@
 @section('title', 'Trang chủ')
 
 @section('content')
-    @session('success')
-        <div class="alert-success">
-            {{ session('success') }}
-        </div>
-    @endsession
-
-    <div class="mx-auto px-0  ">
+    <div class="mx-auto px-0">
         <div id="default-carousel" class="z-0 relative w-full mb-[44px] md:mb-[76px] lg:mb-[64px]" data-carousel="slide">
             <!-- Carousel wrapper -->
             <div class="relative h-[230px] overflow-hidden  md:h-[400px] lg:h-[650px]">
@@ -109,10 +103,9 @@
                         </a>
                     @endforeach
                 </div>
-
             </div>
 
-            {{-- kham pha thuc don --}}
+            {{-- Khám phá thực đơn --}}
             <div class="grid grid-cols-1 lg:grid-cols-2 mb-32 gap-8">
                 <div class="flex flex-col items-center mr-3 text-center">
                     <p class="text-center berkshire-swash-regular text-3xl lg:text-4xl mb-4">Khám Phá</p>
@@ -164,7 +157,7 @@
                     </p>
                     <p>
                         Tìm hiểu thêm
-                        <a href="" class="link-lg uppercase">về chúng tôi</a>
+                        <a href="" class="link-lg">Về chúng tôi</a>
                     </p>
                 </div>
             </div>

@@ -67,6 +67,7 @@ Route::prefix('/')->group(function () {
     Route::get('/about-us', [PageController::class, 'aboutUs'])->name('client.about-us');
     Route::get('/policies', [PageController::class, 'policies'])->name('client.policies');
     Route::get('/manual', [PageController::class, 'manual'])->name('client.manual');
+    Route::get('/contact',[PageController::class,'contact'])->name('client.contact');
     Route::get('/invoices/{slug}', [InvoiceController::class, 'show'])->name('invoices.index');
 });
 
@@ -98,8 +99,8 @@ Route::prefix('/auth')->group(function () {
 });
 
 
-Route::prefix('admin')->middleware(['admin'])->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('/users', UserController::class);
     Route::resource('/addresses', AddressController::class);
     Route::resource('/products', AdminProductController::class);
@@ -107,6 +108,7 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::resource('/carts', AdminCartController::class);
     Route::resource('/attributes', AttributeController::class);
     Route::resource('/categories', CategoryController::class);
+    Route::get('/trash',[CategoryController::class,'trash'])->name('trash.list');
     Route::resource('/toppings', ToppingController::class);
     Route::resource('/banners', BannerController::class);
     Route::resource('/promotions', PromotionController::class);

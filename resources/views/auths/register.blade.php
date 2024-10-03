@@ -10,7 +10,7 @@
                     <div class="mb-4 font-semibold text-lg uppercase">
                         Đăng ký
                     </div>
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 text-sm">
                         <label for="">Bạn đã có có tài khoản?</label>
                         <a href="{{ route('auth.login') }}" class="text-red-600">Đăng
                             nhập</a>

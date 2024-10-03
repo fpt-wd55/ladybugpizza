@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::paginate(10);
+        return view('admins.user.list', compact('users'));
     }
 
     /**
@@ -21,15 +23,15 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admins.user.add');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $data = $request->all(); 
     }
 
     /**
@@ -37,15 +39,17 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $addresses = $user->addresses;
+        return view('admins.user.detail', compact('user', 'addresses'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(User $user)
-    {
-        //
+    {     
+        $addresses = $user->addresses;
+        return view('admins.user.edit', compact('user', 'addresses'));
     }
 
     /**
@@ -53,14 +57,6 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
+        
     }
 }

@@ -8,7 +8,7 @@
                     <span class="sr-only">Open sidebar</span>
                     @svg('tabler-baseline-density-medium', 'w-6 h-6 text-gray-500')
                 </button>
-                <a href="https://flowbite.com" class="flex ms-2 md:me-24">
+                <a href="{{ route('admin.dashboard') }}" class="flex ms-2 md:me-24">
                     <img src="{{ asset('storage/uploads/logos/logo-fill.svg') }}" class="h-11 me-3"
                         alt="Ladybug Pizza Logo" />
                     <span class="self-center text-lg font-semibold whitespace-nowrap">Ladybug
@@ -31,13 +31,11 @@
                 <!-- Dropdown menu -->
                 <div class="hidden overflow-hidden z-50 my-4 max-w-sm list-none bg-white rounded divide-y divide-gray-100 shadow-lg text-sm"
                     id="notification-dropdown">
-                    <div
-                        class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50">
+                    <div class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50">
                         Thông báo
                     </div>
                     <div>
-                        <a href="#"
-                            class="flex py-3 px-4 border-b hover:bg-gray-100">
+                        <a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
                             <div class="flex-shrink-0">
                                 <img class="w-11 h-11 rounded-full"
                                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png"
@@ -53,8 +51,7 @@
                                 </div>
                             </div>
                         </a>
-                        <a href="#"
-                            class="flex py-3 px-4 border-b hover:bg-gray-100">
+                        <a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
                             <div class="flex-shrink-0">
                                 <img class="w-11 h-11 rounded-full"
                                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png"
@@ -94,20 +91,17 @@
                     </div>
                     <ul class="py-1 text-gray-500" aria-labelledby="dropdown">
                         <li>
-                            <a href="#"
-                                class="block py-2 px-4 hover:bg-gray-100">Tài
+                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Tài
                                 khoản</a>
                         </li>
                         <li>
-                            <a href="#"
-                                class="block py-2 px-4 hover:bg-gray-100">Cài
+                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Cài
                                 đặt</a>
                         </li>
                     </ul>
                     <ul class="py-1 text-gray-500" aria-labelledby="dropdown">
                         <li>
-                            <a href="#"
-                                class="block py-2 px-4 hover:bg-gray-100 text-red-500">Đăng
+                            <a href="#" class="block py-2 px-4 hover:bg-gray-100 text-red-500">Đăng
                                 xuất</a>
                         </li>
                     </ul>
