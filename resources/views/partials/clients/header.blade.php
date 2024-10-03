@@ -37,37 +37,36 @@
                 </li>
             </ul>
             <div class="flex items-center gap-4">
-                @if (Auth::user())
-                    <a href="#" data-modal-target="searchModal" data-modal-toggle="searchModal"
-                        class="hidden md:inline-block">@svg('tabler-search')</a>
+                <a href="#" data-modal-target="searchModal" data-modal-toggle="searchModal"
+                    class="hidden md:inline-block">@svg('tabler-search')</a>
 
-                    {{-- Search Modal --}}
-                    <div id="searchModal" tabindex="-1" aria-hidden="true"
-                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                        <div class="relative p-4 w-full max-w-2xl max-h-full">
-                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                <div
-                                    class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                                    <p class="font-semibold text-gray-900 dark:text-white">
-                                        Tìm kiếm
-                                    </p>
-                                    <button type="button"
-                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                        data-modal-hide="searchModal">
-                                        @svg('tabler-x', 'icon-sm')
-                                    </button>
-                                </div>
-                                
-                                <div class="p-4 md:p-8">
-                                    <div class="ais-InstantSearch">
-                                        <div id="searchbox"></div>
-                                        <div id="hits"></div>
-                                    </div>
+                {{-- Search Modal --}}
+                <div id="searchModal" tabindex="-1" aria-hidden="true"
+                    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                    <div class="relative p-4 w-full max-w-2xl max-h-full">
+                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                            <div
+                                class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                <p class="font-semibold text-gray-900 dark:text-white">
+                                    Tìm kiếm
+                                </p>
+                                <button type="button"
+                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                    data-modal-hide="searchModal">
+                                    @svg('tabler-x', 'icon-sm')
+                                </button>
+                            </div>
+
+                            <div class="p-4 md:p-8">
+                                <div class="ais-InstantSearch transition">
+                                    <div id="searchbox"></div>
+                                    <div id="hits"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                </div>
+                @if (Auth::user())
                     <a href="{{ route('client.cart.index') }}"> @svg('tabler-heart')</a>
                     <a href="{{ route('client.cart.index') }}"> @svg('tabler-shopping-bag')</a>
                     <a href="{{ route('client.order.index') }}"> @svg('tabler-truck-delivery')</a>

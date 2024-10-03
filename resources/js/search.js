@@ -27,7 +27,7 @@ search.addWidgets([
 		templates: {
 			item: (hit, { html, components }) => html
 				`<div class="product-card hover:text-red-600 hover:cursor-pointer mb-4 overflow-hidden">
-					<a href="{!! route('client.product.show', ${hit.slug}) !!}" class="flex items-center text-sm">
+					<a href="product/${hit.slug}" class="flex items-center text-sm">
 						<div class="hit-image flex-shrink-0">
 							<img src="http://127.0.0.1:8000/storage/uploads/products/pizza/pizza_pesto_burrata.jpeg" alt="${hit.name}" class="img-md object-cover" />
 						</div>
