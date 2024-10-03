@@ -89,7 +89,7 @@
 }
 
 .input {
-    @apply block w-full text-sm text-gray-900 border py-2 border-gray-300 rounded-lg;
+    @apply block w-full text-sm text-gray-900 border py-2 border-gray-300 rounded-lg focus:ring-0 focus:border-[#D30A0A] transition;
 }
 
 .input-success {
@@ -168,6 +168,10 @@
     @apply text-white font-medium rounded-lg text-sm px-5 py-2 flex items-center justify-center;
 }
 
+.button-toggle {
+    @apply relative w-11 h-6 bg-gray-200 dark:peer-focus:ring-blue-800 rounded-full dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600;
+}
+
 .button-icon {
     @apply text-white bg-[#D30A0A] hover:bg-[#AF0808] font-medium rounded-lg text-sm px-3 py-2.5 flex items-center justify-center gap-2;
 }
@@ -221,7 +225,7 @@
 }
 
 .badge-light {
-    @apply badge bg-white text-gray-800;
+    @apply badge bg-gray-200 text-gray-800;
 }
 
 .badge-green {
@@ -233,7 +237,7 @@
 }
 
 .badge-yellow {
-    @apply badge bg-yellow-100 text-yellow-800;
+    @apply badge bg-yellow-200 text-yellow-700;
 }
 
 .badge-purple {
@@ -363,4 +367,8 @@
 .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+}
+
+html {
+    @apply no-scrollbar;
 }

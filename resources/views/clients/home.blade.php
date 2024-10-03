@@ -5,7 +5,7 @@
 
 @section('content')
     <div class="mx-auto px-0">
-        <div id="default-carousel" class="z-0 relative w-full mb-[44px] md:mb-[76px] lg:mb-[64px]" data-carousel="slide">
+        {{-- <div id="default-carousel" class="z-0 relative w-full mb-[44px] md:mb-[76px] lg:mb-[64px]" data-carousel="slide">
             <!-- Carousel wrapper -->
             <div class="relative h-[230px] overflow-hidden  md:h-[400px] lg:h-[650px]">
                 <!-- Item 1 -->
@@ -63,7 +63,7 @@
                     @svg('tabler-chevron-right', 'w-4 h-4 text-white')
                 </span>
             </button>
-        </div>
+        </div> --}}
 
         <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
 
@@ -71,7 +71,7 @@
             <div class="mb-32">
                 <div class="flex justify-between items-center mb-4">
                     <p class="text-lg font-semibold uppercase">Sản Phẩm Nổi Bật</p>
-                    <a href="" class="link-lg">Xem thêm</a>
+                    <a href="{{ route('client.product.menu') }}" class="link-lg">Xem thêm</a>
                 </div>
                 <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
                     @foreach ($products as $product)
@@ -117,7 +117,7 @@
                         thể thưởng thức tại 2 địa điểm của chúng tôi hoặc tại nhà với dịch vụ giao hàng nhanh chóng của
                         chúng tôi.
                     </p>
-                    <a href="" class="button-red uppercase mb-8">đặt ngay</a>
+                    <a href="{{ route('client.product.menu') }}" class="button-red uppercase mb-8">đặt ngay</a>
                     <div class="font-extralight">
                         <p class="font-normal">Dịch vụ bữa trưa</p>
                         <p class="mb-4">Từ 11am đến 3pm </p>
@@ -157,7 +157,7 @@
                     </p>
                     <p>
                         Tìm hiểu thêm
-                        <a href="" class="link-lg">Về chúng tôi</a>
+                        <a href="{{ route('client.about-us') }}" class="link-lg">Về chúng tôi</a>
                     </p>
                 </div>
             </div>

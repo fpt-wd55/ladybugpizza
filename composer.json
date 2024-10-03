@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "algolia/scout-extended": "^3.1",
         "blade-ui-kit/blade-icons": "^1.7",
         "consoletvs/charts": "^6.7",
         "diglactic/laravel-breadcrumbs": "^9.0",
@@ -21,6 +22,7 @@
         "spatie/laravel-activitylog": "^4.8"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.14",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
