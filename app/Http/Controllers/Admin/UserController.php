@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -28,9 +29,9 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $data = $request->all(); 
     }
 
     /**
@@ -57,22 +58,5 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
-    }
-
-    /**
-     * Display a listing of the trashed resource.
-     */
-    public function trash()
-    {
-        $users = User::onlyTrashed()->paginate(10);
-        return view('admins.user.trash', compact('users'));
     }
 }

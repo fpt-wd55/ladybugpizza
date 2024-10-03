@@ -100,7 +100,7 @@ Route::prefix('/auth')->group(function () {
 
 
 Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('/users', UserController::class);
     Route::resource('/addresses', AddressController::class);
     Route::resource('/products', AdminProductController::class);

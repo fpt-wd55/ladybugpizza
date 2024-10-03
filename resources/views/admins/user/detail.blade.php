@@ -65,10 +65,6 @@
                                 @svg('tabler-map-pin-filled', 'h-5 w-5 text-gray-400 me-1')
                                 2 Miles Drive, NJ 071, New York, United States of America
                             </dd>
-                            <dd class="flex items-center mt-2 gap-1 text-gray-500 ">
-                                @svg('tabler-circle-dot', 'h-5 w-5 text-gray-400 me-1')
-                                9th St. PATH Station, New York, United States of America
-                            </dd>
                         </dl>
                     </div>
                     <div class="space-y-4">

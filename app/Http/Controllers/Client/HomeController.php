@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function index()
-    {
+    { 
         $products = Product::where('is_featured', 2)
             ->where('category_id', 3)
             ->limit(6)
