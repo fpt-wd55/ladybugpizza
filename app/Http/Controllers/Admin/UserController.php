@@ -31,7 +31,11 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $data = $request->all(); 
+        $validatedData = $request->validated();
+
+        dd($validatedData);
+
+        
     }
 
     /**
