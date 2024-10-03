@@ -5,7 +5,7 @@
         {{-- Menu sidebar --}}
         <ul class="space-y-2">
             <li>
-                <a href="#"
+                <a href="{{route('admin.dashboard')}}"
                     class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     @svg('tabler-chart-pie', 'text-gray-500')
                     <span class="ml-3">Thống kê</span>
