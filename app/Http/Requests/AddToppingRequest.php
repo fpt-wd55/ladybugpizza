@@ -24,7 +24,7 @@ class AddToppingRequest extends FormRequest
         return [
             'name' => 'required',
             'image' => 'required|mimes:jpeg,png,jpg,gif,bmp,svg,webp',
-            'price' => 'required|numeric|min:1000|',
+            'price' => 'required|numeric|min:0|',
             'category_id' => 'required',
         ];
     }
@@ -35,7 +35,7 @@ class AddToppingRequest extends FormRequest
             'image.mimes' => 'Ảnh không đúng định dạng',
             'price.required' => 'Giá không được để trống',
             'price.numeric' => 'Giá phải là một số',
-            'price.min' => 'Giá không thể dưới 1000',
+            'price.min' => 'Giá không thể dưới 0 đồng',
             'category_id' => 'Danh mục không được bỏ trống',
         ];
     }
