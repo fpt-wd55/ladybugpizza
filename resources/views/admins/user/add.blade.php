@@ -34,7 +34,7 @@
                             </div>
                             <div>
                                 <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Mật khẩu</label>
-                                <input type="password" name="password" id="password" placeholder="•••••••••••••"
+                                <input type="password" name="password" id="password" placeholder="Mật khẩu"
                                     value="{{ old('password') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('password')
@@ -130,7 +130,7 @@
                                 <label for="status" class="block mb-4 text-sm font-medium text-gray-900 ">Trạng
                                     thái</label>
                                 <label class="inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" name="status" class="sr-only peer"
+                                    <input type="checkbox" name="status" class="sr-only peer" value="1"
                                         {{ old('status') ? 'checked' : '' }}>
                                     <div
                                         class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
