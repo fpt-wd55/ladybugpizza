@@ -3,7 +3,7 @@
 @section('title', 'Liên hệ')
 
 @section('content')
-    <div class="w-full md:w-[920px] h-[690px] md:mx-auto my-16 p-4 transition">
+    <div class="w-full md:w-[920px] h-[780px] md:mx-auto my-16 p-4 transition">
         <div class="md:grid md:grid-cols-2 gap-4 card overflow-hidden">
             <div class="p-4 md:p-6 lg:p-8">
                 <div class="mb-4">
@@ -21,7 +21,7 @@
                         </div>
                     @endsession
                 </div>
-                <form action="{{route('client.post-contact')}}" method="POST">
+                <form action="{{ route('client.post-contact') }}" method="POST">
                     @csrf
                     <div class="mb-4">
                         <label class="font-medium" for="fullname">Họ và tên</label>
