@@ -68,6 +68,7 @@ Route::prefix('/')->group(function () {
     Route::get('/policies', [PageController::class, 'policies'])->name('client.policies');
     Route::get('/manual', [PageController::class, 'manual'])->name('client.manual');
     Route::get('/contact',[PageController::class,'contact'])->name('client.contact');
+    Route::post('/contact',[PageController::class,'postContact'])->name('client.post-contact');
     Route::get('/invoices/{slug}', [InvoiceController::class, 'show'])->name('invoices.index');
 });
 

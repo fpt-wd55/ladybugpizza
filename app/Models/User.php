@@ -111,4 +111,8 @@ class User extends Authenticatable
     {
         return self::where('role_id', 3)->get();
     }
+
+    public function isAdmin() {
+        return $this->role_id == 3;
+    }
 }
