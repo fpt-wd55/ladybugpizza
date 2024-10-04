@@ -21,26 +21,27 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+      
+        $categoryId = $this->route('category') ? $this->route('category')->id : null;
+       
         return [
-            'name' => 'required|string|max:255|unique:categories,name',
-            'slug' => 'required|string|unique:categories,slug|max:255',
-            
-            
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+               
+                'unique:categories,name,' . $categoryId,
+            ],
         ];
     }
 
     public function messages(): array
     {
         return [
-        'name.required' => 'Tên sản danh mục là bắt buộc.',
-        'name.string' => 'Yêu cầu giá trị của name phải là một chuỗi',
-        'name.unique' => 'Tên danh mục đã tồn tại.',
-        'name.max' => 'Tên danh mục tối đa 255 ký tự.',
-        'slug.required' => 'Slug là bắt buộc.',
-        'slug.string' => 'Yêu cầu giá trị của slug phải là một chuỗi',
-        'slug.unique' => 'Slug đã tồn tại.',
-        'slug.max' => 'Slug tối đa 255 ký tự.',
-     
+            'name.required' => 'Tên sản danh mục là bắt buộc.',
+            'name.string' => 'Yêu cầu giá trị của name phải là một chuỗi',
+            'name.unique' => 'Tên danh mục đã tồn tại.',
+            'name.max' => 'Tên danh mục tối đa 255 ký tự.',
         ];
     }
 }

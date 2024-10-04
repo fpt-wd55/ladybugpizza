@@ -71,7 +71,7 @@
 
                                         <li>
                                             <a href="{{ route('admin.categories.edit', $item) }}"
-                                                class="block py-2 px-4 hover:bg-gray-100">Edit</a>
+                                                class="block py-2 px-4 hover:bg-gray-100">Chỉnh sửa</a>
                                         </li>
                                     </ul>
                                     <div class="py-1">
