@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\CartController as AdminCartController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\WebController;
@@ -67,6 +68,8 @@ Route::prefix('/')->group(function () {
     Route::get('/about-us', [PageController::class, 'aboutUs'])->name('client.about-us');
     Route::get('/policies', [PageController::class, 'policies'])->name('client.policies');
     Route::get('/manual', [PageController::class, 'manual'])->name('client.manual');
+    Route::get('/contact',[PageController::class,'contact'])->name('client.contact');
+    Route::post('/contact',[PageController::class,'postContact'])->name('client.post-contact');
     Route::get('/invoices/{slug}', [InvoiceController::class, 'show'])->name('invoices.index');
 });
 
@@ -98,8 +101,8 @@ Route::prefix('/auth')->group(function () {
 });
 
 
-Route::prefix('admin')->middleware(['admin'])->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('/users', UserController::class);
     Route::resource('/addresses', AddressController::class);
     Route::resource('/products', AdminProductController::class);
@@ -107,6 +110,10 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::resource('/carts', AdminCartController::class);
     Route::resource('/attributes', AttributeController::class);
     Route::resource('/categories', CategoryController::class);
+    Route::get('/trash',[CategoryController::class,'trashList'])->name('trash.listcate');
+    Route::post('/trash/{id}',[CategoryController::class,'trashRestore'])->name('trash.cateRestore');
+    Route::post('/{id}',[CategoryController::class,'trashForce'])->name('trash.cateDelete');
+    Route::post('/trash/delete-all',[CategoryController::class,'deleteAllSoftDeleted'])->name('trash.cateDeleteAll');
     Route::resource('/toppings', ToppingController::class);
     Route::resource('/banners', BannerController::class);
     Route::resource('/promotions', PromotionController::class);
@@ -115,10 +122,16 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::resource('/payment-methods', PaymentMethodController::class);
     Route::resource('/transactions', TransactionController::class);
     Route::resource('/evaluations', EvaluationController::class);
+    Route::resource('/shippings', ShippingController::class);
     Route::resource('/roles', RoleController::class);
     Route::resource('/pages', AdminPageController::class);
     Route::resource('/logs', LogController::class);
     Route::resource('/messages', MessageController::class);
     Route::resource('/conversations', ConversationController::class);
     Route::get('/components', [DashboardController::class, 'components']);
+    Route::get('/trash-topping', [ToppingController::class, 'trashTopping'])->name('trash-topping');
+    Route::get('/resTopping/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
+    Route::delete('/forceDelete/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
+    Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
+    Route::get('/invoices/{slug}', [InvoiceController::class, 'show'])->name('invoices.show');
 });

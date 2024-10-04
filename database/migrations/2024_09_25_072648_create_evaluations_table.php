@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('rating');
             $table->text('comment');  
             $table->tinyInteger('status')->default(0)->comment('1: active, 2: inactive');
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 

@@ -11,15 +11,12 @@
                     @svg('tabler-filter', 'icon-md')
                     Bộ lọc
                 </p>
-
                 {{-- Tìm kiếm --}}
                 <form class="mb-4">
                     <input type="text" placeholder="Tìm kiếm..." class="input mb-4" />
                     <button class="button-red w-full">Tìm kiếm</button>
                 </form>
-
                 <hr class="hr-default" />
-
                 {{-- Danh mục --}}
                 <div class="mb-4 md:flex md:items-start">
                     <div class="md:flex-1">
@@ -48,9 +45,7 @@
                         </div>
                     </div>
                 </div>
-
                 <hr class="hr-default" />
-
                 {{-- Đánh giá --}}
                 <div class="mb-4 ">
                     <h3 class="font-semibold mb-2 uppercase text-sm">Đánh giá</h3>
@@ -74,9 +69,7 @@
                         </div>
                     </div>
                 </div>
-
                 <hr class="hr-default" />
-
                 {{-- Giá --}}
                 <div class="mb-4">
                     <h3 class="font-semibold mb-2 uppercase text-sm">Giá</h3>
