@@ -30,14 +30,15 @@
                         <th scope="col" class="px-4 py-3">STT</th>
                         <th scope="col" class="px-4 py-3">Tên danh mục</th>
                         <th scope="col" class="px-4 py-3">Slug</th>
-                      
+
                         <th scope="col" class="px-4 py-3">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
-                            <span class="sr-only">Actions</span>
+                            <span class="sr-only">Hành động</span>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
+                    {{-- item --}}
                     @forelse ($category as $key => $item)
                         <tr class="border-b">
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
@@ -45,19 +46,16 @@
                             </th>
                             <td class="px-4 py-3">{{ $item->name }}</td>
                             <td class="px-4 py-3">{{ $item->slug }}</td>
-                           
-                            <td class="px-4 py-3">
-                                <div class="flex items-center">
-                                    <label for="{{ $item->name }}"
-                                        class="inline-flex relative items-center cursor-pointer">
-                                        <input type="checkbox" id="{{ $item->name }}" class="sr-only peer"
-                                            {{ $item->status == 1 ? 'checked' : '' }} disabled>
-                                        <div
-                                            class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-                                        </div>
 
-                                    </label>
+                            <td class="px-4 py-3">
+                               
+                                <div class="flex items-center">
+                                    <div
+                                        class="inline-block indicator {{ $item->status == 1 ? 'bg-green-700' : 'bg-red-700' }}">
+                                    </div>
+                                    {{ $item->status == 1 ? 'Hoạt động' : 'Khóa' }}
                                 </div>
+                            
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $item->name }}-dropdown-button"
@@ -77,22 +75,57 @@
                                         </li>
                                     </ul>
                                     <div class="py-1">
-                                        <form action="{{ route('admin.categories.destroy', $item) }}" method="POST"
-                                            onsubmit="return confirm('Bạn muốn xóa không ?')">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit"
-                                                class="block w-full text-left py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Delete</button>
-                                        </form>
+                                        <a href="#" data-modal-target="delete-modal-{{ $item->id }}"
+                                            data-modal-toggle="delete-modal-{{ $item->id }}"
+                                            class="cursor-pointer block py-2 px-4 text-sm text-red-500 hover:bg-gray-100">Xóa</a>
                                     </div>
                                 </div>
                             </td>
                         </tr>
-                        @empty
+                        {{-- start modal --}}
+                        <div id="delete-modal-{{ $item->id }}" tabindex="-1"
+                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                            <div class="relative p-4 w-full max-w-md max-h-full">
+                                <div class="relative bg-white rounded-lg shadow">
+                                    <button type="button"
+                                        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                        data-modal-hide="delete-modal-{{ $item->id }}">
+                                        @svg('tabler-x', 'w-4 h-4')
+                                        <span class="sr-only">Close modal</span>
+                                    </button>
+                                    <div class="p-4 md:p-5 text-center">
+                                        <div class="flex justify-center">
+                                            @svg('tabler-trash', 'w-12 h-12 text-red-600 text-center mb-2')
+                                        </div>
+                                        <h3 class="mb-5 font-normal">Bạn có muốn xóa Danh mục này không?</h3>
+
+                                        <form action="{{ route('admin.categories.destroy', $item->id) }}" method="POST">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button  type="submit"
+                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"> Xóa
+                                            </button>
+                                        </form>
+
+                                        <button data-modal-hide="delete-modal-{{ $item->id }}" type="button"
+                                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">No,
+                                            cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- end modal --}}
+                    @empty
                         <tr>
-                            <td colspan="6" class="text-center py-4 text-base">( Dữ liệu trống )</td>
+                            <td colspan="6" class="text-center py-4 text-base">
+                                <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                                    @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                                    <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p> 
+                                </div>
+                            </td>
                         </tr>
                     @endforelse
+                    {{-- end item --}}
 
 
 

@@ -106,10 +106,11 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/orders', AdminOrderController::class);
     Route::resource('/carts', AdminCartController::class);
     Route::resource('/attributes', AttributeController::class);
-    Route::resource('/categories', CategoryController::class);
     Route::get('/trash',[CategoryController::class,'trashList'])->name('trash.listcate');
     Route::post('/trash/{id}',[CategoryController::class,'trashRestore'])->name('trash.cateRestore');
     Route::post('/{id}',[CategoryController::class,'trashForce'])->name('trash.cateDelete');
+    Route::post('/trash/delete-all',[CategoryController::class,'deleteAllSoftDeleted'])->name('trash.cateDeleteAll');
+    Route::resource('/categories', CategoryController::class);
     Route::resource('/toppings', ToppingController::class);
     Route::resource('/banners', BannerController::class);
     Route::resource('/promotions', PromotionController::class);

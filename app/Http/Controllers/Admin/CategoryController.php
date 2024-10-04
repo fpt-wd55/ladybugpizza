@@ -53,8 +53,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-       
-        return view('admins.category.edit',compact('category'));
+
+        return view('admins.category.edit', compact('category'));
     }
 
     /**
@@ -65,9 +65,8 @@ class CategoryController extends Controller
         $cate = $request->all();
         $cate['status'] = $request->has('status') ? 1 : 2;
 
-       $category->update($cate);
-       return redirect()->route('admin.categories.index')->with('message', 'sửa thành công');
-
+        $category->update($cate);
+        return redirect()->route('admin.categories.index')->with('message', 'sửa thành công');
     }
 
     /**
@@ -111,5 +110,14 @@ class CategoryController extends Controller
             $forceCategories->forceDelete();
             return redirect()->back()->with('success', 'Danh mục đã xóa vĩnh viễn');
         }
+    }
+
+
+    public function deleteAllSoftDeleted()
+    {
+        
+        Category::onlyTrashed()->forceDelete();
+
+        return redirect()->route('admin.trash.listcate')->with('success', 'Đã xóa tất cả các danh mục đã bị xóa vĩnh viễn.');
     }
 }
