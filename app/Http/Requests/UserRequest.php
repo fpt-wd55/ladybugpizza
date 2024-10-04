@@ -70,8 +70,8 @@ class UserRequest extends FormRequest
     public function messages()
     {
         return [
-            'username.required' => 'Tên người dùng là bắt buộc.',
-            'username.max' => 'Tên người dùng quá dài.',
+            'username.required' => 'Tên tài khoản là bắt buộc.',
+            'username.max' => 'Tên tài khoản quá dài.',
             'fullname.required' => 'Họ và tên là bắt buộc.',
             'fullname.max' => 'Họ và tên không hợp lệ.',
             'email.required' => 'Email là bắt buộc.',
