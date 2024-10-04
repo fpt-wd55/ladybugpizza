@@ -34,7 +34,7 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         $slug = $this->slug($request->name);
-        
+
         Category::create([
             'name' => $request->name,
             'slug' => $slug,
@@ -66,9 +66,9 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, Category $category)
     {
-       
+
         $slug = $this->slug($request->name);
-        
+
         $category->update([
             'name' => $request->name,
             'slug' => $slug,
