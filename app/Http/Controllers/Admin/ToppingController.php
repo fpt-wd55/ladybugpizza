@@ -79,8 +79,8 @@ class ToppingController extends Controller
     public function trashTopping()
     {
         $categories = Category::all();
-        $listToppings = Topping::onlyTrashed()->latest('id')->paginate(10);
-        return view('admins.toppings.trash', compact('categories', 'listToppings'));
+        $listTopping = Topping::onlyTrashed()->latest('id')->paginate(10);
+        return view('admins.toppings.trash', compact('categories', 'listTopping'));
     }
     // khôi phục
     public function resTopping($id)

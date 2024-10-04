@@ -10,12 +10,11 @@
                     <label for="name" class="label-lg">Tên</label>
                     <input type="text" name="name" class="input h-10" value="{{ old('name') }}" />
                     @error('name')
-                        <span style="color: red">{{ $message }}</span>
+                        <span class="text-red">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="w-full mb-5">
                     <label for="image" class="label-lg">Ảnh</label>
-                    {{-- input thieu name hqua toi copy input để css thieus nhớ ra r --}}
                     <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none " type="file" name="image">
                     @error('image')
                         <span style="color: red">{{ $message }}</span>
