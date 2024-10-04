@@ -9,7 +9,7 @@
             @include('clients.profile.sidebar')
 
             <div class="card p-4 md:p-8 w-full min-h-screen">
-                <h3 class="font-semibold uppercase mb-8">điểm hội viên</h3>
+                <h3 class="font-semibold uppercase mb-8">Điểm hội viên</h3>
 
                 {{-- Điểm hội viên --}}
                 <div class="flex flex-col md:flex-row items-center gap-8 mb-8">
