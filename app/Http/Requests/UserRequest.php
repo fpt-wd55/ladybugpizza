@@ -33,7 +33,7 @@ class UserRequest extends FormRequest
             'avatar' => 'required|mimes:jpeg,png,jpg,gif,bmp,svg,webp|max:2048',
             'date_of_birth' => 'required|date|before:today',
             'roleSelect' => 'required|integer',
-            'permissionSelect' => 'nullable|integer', 
+            'permissionSelect' => 'nullable|integer',
             'province' => 'required',
             'district' => 'required',
             'ward' => 'required',
@@ -46,19 +46,16 @@ class UserRequest extends FormRequest
     private function rulesForUpdate()
     {
         return [
-            'username' => 'sometimes|required|string|max:255',
+            'username' => 'sometimes|required|string|max:255|unique:users,username,' . $this->user->id,
             'fullname' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|email',
+            'email' => 'sometimes|required|email|unique:users,email,' . $this->user->id,
             'phone' => 'sometimes|required|string|max:255',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'date_of_birth' => 'sometimes|required|date',
             'roleSelect' => 'sometimes|required|integer',
             'permissionSelect' => 'nullable|integer',
-            'password' => 'sometimes|required|string|min:8', 
-            'province' => 'sometimes|required|integer',
-            'district' => 'sometimes|required|integer',
-            'ward' => 'sometimes|required|integer',
-            'detail_address' => 'sometimes|required|string|max:255',
+            'new_password' => 'nullable|min:8|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&]).{8,}$/',
+            'gender' => 'required',
             'status' => 'sometimes|boolean',
         ];
     }
@@ -102,6 +99,8 @@ class UserRequest extends FormRequest
             'detail_address.max' => 'Địa chỉ chi tiết quá dài.',
             'gender.required' => 'Vui lòng chọn giới tính.',
             'permissionSelect.required' => 'Vui lòng chọn quyền hạn.',
+            'new_password.min' => 'Mật khẩu mới phải có ít nhất 8 ký tự.',
+            'new_password.regex' => 'Mật khẩu mới phải chứa ít nhất một chữ hoa, một chữ số và một ký tự đặc biệt.',
         ];
     }
 }

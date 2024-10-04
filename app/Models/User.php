@@ -67,7 +67,8 @@ class User extends Authenticatable
         return $this->belongsTo(Membership::class);
     }
 
-    public function cart() {
+    public function cart()
+    {
         return $this->hasOne(Cart::class);
     }
 
@@ -112,6 +113,10 @@ class User extends Authenticatable
         return self::where('role_id', 3)->get();
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+      
     public function isAdmin() {
         return $this->role_id == 3;
     }
