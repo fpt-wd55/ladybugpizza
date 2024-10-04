@@ -15,4 +15,8 @@ class InvoiceController extends Controller
     {
         return view('shared.invoice');
     }
+
+    public function index() {
+        
+    }
 }

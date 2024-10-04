@@ -175,11 +175,10 @@
                                                         </div>
                                                         <div class="flex items-center space-x-4 mt-5">
                                                             <span data-modal-hide="default-modal"
-                                                                class="text-white bg-gray-500 hover:bg-gray-600 focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer">
+                                                                class="button-dark cursor-pointer">
                                                                 Quay lại
                                                             </span>
-                                                            <button type="submit"
-                                                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                            <button type="submit" class="button-blue">
                                                                 Cập nhật
                                                             </button>
                                                         </div>
@@ -299,11 +298,11 @@
                                                     </div>
                                                     <div class="flex items-center space-x-4 mt-5">
                                                         <span data-modal-hide="add-address"
-                                                            class="text-white bg-gray-500 hover:bg-gray-600 focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer">
+                                                            class="button-dark cursor-pointer">
                                                             Quay lại
                                                         </span>
                                                         <button type="submit"
-                                                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                            class="button-blue">
                                                             Cập nhật
                                                         </button>
                                                     </div>
@@ -339,7 +338,7 @@
                         <dl>
                             <dt class="font-semibold text-gray-900 ">Vai trò</dt>
                             <dd
-                                class="me-2 mt-1.5 {{ $user->role_id == 1 ? 'text-blue-500' : 'text-red-500' }} inline-flex shrink-0 items-center rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium">
+                                class="me-2 mt-1.5 {{ $user->role_id == 2 ? 'text-blue-500 bg-blue-100' : 'text-red-500 bg-yellow-100' }} inline-flex shrink-0 items-center rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium">
                                 {{ $user->role_id == 2 ? 'Khách hàng' : 'Quản trị viên' }}
                             </dd>
                             @if ($user->role->parent_id == 1)
@@ -363,7 +362,7 @@
                 <a href="{{ route('admin.users.edit', $user) }}"
                     class="inline-flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:ring-0 sm:w-auto">
                     @svg('tabler-edit', 'h-5 w-5 text-white me-2')
-                    Cập nhật người dùng
+                    Cập nhật tài khoản
                 </a>
             </div>
             <div class="rounded-lg border border-gray-200 bg-gray-50 p-4   md:p-8">

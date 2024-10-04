@@ -72,9 +72,9 @@ class UserController extends Controller
             // Xu ly upload anh
             $avatar->storeAs('public/uploads/avatars', $avatar_name);
 
-            return redirect()->route('admin.users.index')->with('success', 'Thêm mới người dùng thành công');
+            return redirect()->route('admin.users.index')->with('success', 'Thêm mới tài khoản thành công');
         } else {
-            return redirect()->route('admin.users.index')->with('error', 'Thêm mới người dùng thất bại');
+            return redirect()->route('admin.users.index')->with('error', 'Thêm mới tài khoản thất bại');
         }
     }
 
@@ -84,7 +84,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $addresses = $user->addresses;
-        $orders = $user->orders()->paginate(10);
+        $orders = $user->orders()->paginate(5);
         $evaluations = $user->evaluations;
         $favorites = null;
 
@@ -159,14 +159,14 @@ class UserController extends Controller
                     try {
                         unlink(storage_path('app/public/uploads/avatars/' . $old_avatar));
                     } catch (\Throwable $th) {
-                        return redirect()->route('admin.users.edit', $user->id)->with('error', 'Cập nhật người dùng thành công');
+                        return redirect()->route('admin.users.edit', $user->id)->with('error', 'Cập nhật tài khoản thành công');
                     }
                 }
             }
 
-            return redirect()->route('admin.users.edit', $user->id)->with('success', 'Cập nhật người dùng thành công');
+            return redirect()->route('admin.users.edit', $user->id)->with('success', 'Cập nhật tài khoản thành công');
         } else {
-            return redirect()->route('admin.users.edit', $user->id)->with('error', 'Cập nhật người dùng thất bại');
+            return redirect()->route('admin.users.edit', $user->id)->with('error', 'Cập nhật tài khoản thất bại');
         }
     }
 }

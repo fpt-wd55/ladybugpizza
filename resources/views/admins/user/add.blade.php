@@ -2,7 +2,7 @@
 @section('content')
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="p-4 mx-auto">
-            <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm người dùng</h3>
+            <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm tài khoản</h3>
             <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
@@ -264,12 +264,12 @@
                 </div>
                 <div class="flex items-center space-x-4 mt-5">
                     <a href="{{ route('admin.users.index') }}"
-                        class="text-white bg-gray-500 hover:bg-gray-600 focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                        class="button-dark">
                         Quay lại
                     </a>
                     <button type="submit"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                        Thêm người dùng
+                        class="button-blue">
+                        Thêm tài khoản
                     </button>
                 </div>
             </form>
