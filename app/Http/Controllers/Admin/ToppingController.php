@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AddToppingRequest;
+use App\Http\Requests\ToppingRequest;
 use App\Http\Requests\UpdateToppingRequest;
 use App\Models\Category;
 use App\Models\Topping;
@@ -16,7 +16,7 @@ class ToppingController extends Controller
     {
         $categories = Category::all();
         $toppings = Topping::latest('id')->paginate(10);
-        return view('admins.toppings.home', compact('toppings', 'categories'));
+        return view('admins.toppings.index', compact('toppings', 'categories'));
     }
 
     public function create()
@@ -25,7 +25,7 @@ class ToppingController extends Controller
         return view('admins.toppings.add', compact('categories'));
     }
 
-    public function store(AddToppingRequest $request)
+    public function store(ToppingRequest $request)
     {
         // dd($request->all());
         $data = $request->except('image');

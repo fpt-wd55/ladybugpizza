@@ -7,7 +7,7 @@
             <div
                 class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 @if (session('message'))
-                    <div class="alert alert-success">
+                    <div class="button bg-green-400">
                         {{ session('message') }}
                     </div>
                 @endif
@@ -103,7 +103,7 @@
                                         </form>
 
                                         <button data-modal-hide="delete-modal-{{ $topping->id }}" type="button"
-                                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Không , hủy bỏ</button>
+                                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Không</button>
                                     </div>
                                 </div>
                             </div>

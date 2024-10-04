@@ -10,7 +10,7 @@
             <div class="flex justify-between gap-2">
                 <div class="w-full h-10 mb-5">
                     <label for="name" class="label-lg">Tên</label>
-                    <input type="text" name="name" class="input" value="{{ $editTopping->name }}" />
+                    <input type="text" name="name" class="input mb-2" value="{{ $editTopping->name }}" />
                     @error('name')
                         <span style="color: red">{{ $message }}</span>
                     @enderror
@@ -18,10 +18,8 @@
                 <div class="w-full h-10 mb-5">
                     <label class="label-lg">Ảnh</label>
                     <div class="">
-                        {{-- // input kh co name --}}
-                        {{-- name="image" --}}
                         <input
-                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
+                            class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
                             type="file" name="image">
                         <img src="{{ asset('/storage/' . $editTopping->image) }}"
                             class="img-sm mt-2 img-circle object-cover" alt="">
@@ -34,19 +32,19 @@
             <div class="flex justify-between gap-2 mt-20 mb-20">
                 <div class="w-full h-10 mb-5">
                     <label for="price" class="label-lg">Giá</label>
-                    <input type="text" name="price" class="input" value="{{ $editTopping->price }}" />
+                    <input type="text" name="price" class="input mb-2" value="{{ $editTopping->price }}" />
                     @error('price')
                         <span style="color: red">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="w-full h-10 mb-5">
                     <label for="category_id" class="label-lg">Danh mục</label>
-                    <select class="select w-full" name="category_id">
+                    <select class="select w-full mb-2" name="category_id">
                         <option value="">Chọn</option>
-                        @foreach ($categories as $cateName)
-                            <option value="{{ $cateName->id }}"
-                                {{ $cateName->id == $editTopping->category_id ? 'selected' : '' }}>
-                                {{ $cateName->name }}</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}"
+                                {{ $category->id == $editTopping->category_id ? 'selected' : '' }}>
+                                {{ $category->name }}</option>
                         @endforeach
                     </select>
                     @error('category_id')

@@ -4,14 +4,13 @@
 @section('content')
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="overflow-x-auto">
-            <div class="flex justify-end mr-4 my-4">
-                <div class="flex justify-end gap-4">
-                    @if (session('message'))
-                        <div class="alert alert-success">
-                            {{ session('message') }}
-                        </div>
-                    @endif
-                </div>
+            <div
+                class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+                @if (session('message'))
+                    <div class="button bg-green-400">
+                        {{ session('message') }}
+                    </div>
+                @endif
                 <div
                     class="mb-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                     <a href="{{ route('admin.toppings.index') }}" class="button-green">Quay
@@ -80,7 +79,7 @@
                         <td colspan="6" class="text-center py-4 text-base">
                             <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
                                 @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
-                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p> 
+                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
                             </div>
                         </td>
                         <!-- Hiển thị "Trống" nếu không có dữ liệu -->
