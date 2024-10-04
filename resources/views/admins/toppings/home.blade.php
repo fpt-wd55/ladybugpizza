@@ -10,12 +10,12 @@
                         {{ session('message') }}
                     </div>
                 @endif
-                <a href="{{ route('toppings.create') }}"
+                <a href="{{ route('admin.categories.create  ') }}"
                     class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-0">
                     @svg('tabler-plus', 'w-5 h-5 mr-2')
                     Thêm Topping
                 </a>
-                <a href="{{ route('trash-topping') }}"
+                <a href="{{ route('admin.trash-topping') }}"
                     class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-red-700 hover:bg-red-800 focus:ring-0">
                     @svg('tabler-trash', 'w-5 h-5 mr-2')
                     Thùng rác
@@ -60,12 +60,12 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $listTp->name }}">
                                         <li>
-                                            <a href="{{ route('toppings.edit', $listTp->id) }}"
+                                            <a href="{{ route('admin.toppings.edit', $listTp->id) }}"
                                                 class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
                                         </li>
                                     </ul>
                                     <div class="py-1">
-                                        <form action="{{ route('toppings.destroy', $listTp->id) }}" method="post">
+                                        <form action="{{ route('admin.toppings.destroy', $listTp->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button onclick="return confirm('Bạn có muốn xóa không?')"
