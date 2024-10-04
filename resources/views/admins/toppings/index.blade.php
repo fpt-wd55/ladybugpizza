@@ -31,7 +31,7 @@
                         <th scope="col" class="px-4 py-3">Giá</th>
                         <th scope="col" class="px-4 py-3">Danh mục</th>
                         <th scope="col" class="px-4 py-3">
-                            <span class="sr-only">Actions</span>
+                            <span class="sr-only">Hành động</span>
                         </th>
                     </tr>
                 </thead>
