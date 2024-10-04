@@ -37,7 +37,7 @@
                         <a href="{{route('admin.categories.index')}}"
                             class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Danh
                             mục</a>
-                    </li>
+                    </li> 
                     <li>
                         <a href="{{ route('admin.products.index') }}"
                             class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Sản
