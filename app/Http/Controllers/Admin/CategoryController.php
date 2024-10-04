@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryEditRequest;
-use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\CategoryEditRequest;
 
 class CategoryController extends Controller
 {
@@ -32,10 +33,13 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $category = $request->all();
-        $category['status'] = $request->has('status') ? 1 : 2;
+        $slug = $this->slug($request->name);
 
-        Category::create($category);
+        Category::create([
+            'name' => $request->name,
+            'slug' => $slug,
+            'status' => $request->status ? 1 : 2,
+        ]);
 
         return redirect()->route('admin.categories.index')->with('message', 'thêm thành công');
     }
@@ -60,12 +64,16 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CategoryEditRequest $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
-        $cate = $request->all();
-        $cate['status'] = $request->has('status') ? 1 : 2;
 
-        $category->update($cate);
+        $slug = $this->slug($request->name);
+
+        $category->update([
+            'name' => $request->name,
+            'slug' => $slug,
+            'status' => $request->status ? 1 : 2,
+        ]);
         return redirect()->route('admin.categories.index')->with('message', 'sửa thành công');
     }
 
@@ -81,6 +89,11 @@ class CategoryController extends Controller
         Category::destroy($id);
 
         return redirect()->back()->with('message', 'Xóa thành công');
+    }
+
+    public function slug($name)
+    {
+        return Str::slug($name);
     }
 
     public function trashList(Category $category)
@@ -115,7 +128,7 @@ class CategoryController extends Controller
 
     public function deleteAllSoftDeleted()
     {
-        
+
         Category::onlyTrashed()->forceDelete();
 
         return redirect()->route('admin.trash.listcate')->with('success', 'Đã xóa tất cả các danh mục đã bị xóa vĩnh viễn.');

@@ -30,7 +30,6 @@
                         <th scope="col" class="px-4 py-3">STT</th>
                         <th scope="col" class="px-4 py-3">Tên danh mục</th>
                         <th scope="col" class="px-4 py-3">Slug</th>
-
                         <th scope="col" class="px-4 py-3">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Hành động</span>
@@ -71,7 +70,7 @@
 
                                         <li>
                                             <a href="{{ route('admin.categories.edit', $item) }}"
-                                                class="block py-2 px-4 hover:bg-gray-100">Edit</a>
+                                                class="block py-2 px-4 hover:bg-gray-100">Chỉnh sử</a>
                                         </li>
                                     </ul>
                                     <div class="py-1">
