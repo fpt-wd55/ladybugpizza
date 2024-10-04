@@ -7,6 +7,7 @@
             <div class="grid gap-4 mb-4 sm:grid-cols-2">
 
                 <div>
+
                     <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Tên danh mục</label>
                     <input type="text" name="name" id="name" value="{{old('name')}}" 
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
@@ -31,7 +32,6 @@
 
                 <div class="">
                     <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Trạng thái</label>
-
                     <div class="flex items-center">
                         <label for="status-toggle" class="inline-flex relative items-center cursor-pointer">
                             <input type="checkbox" id="status-toggle" name="status" class="sr-only peer" value="1">

@@ -10,7 +10,7 @@
                 <p class="text-2xl md:text-4xl font-medium text-gray-500 mb-4">Lỗi máy chủ nội bộ</p>
                 <p class="text-sm md:text-xl font-medium text-gray-500 mb-8">Vui lòng thử lại sau hoặc vui lòng liên hệ với
                     chúng tôi nếu vấn đề vẫn tiếp diễn</p>
-                <a href="{{ route('client.home') }}" class="button-red">Trang chủ</a>
+                <a href="{{ route('client.home') }}" class="w- button-red">Trang chủ</a>
             </div>
         </div>
     </div>

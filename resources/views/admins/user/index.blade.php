@@ -24,10 +24,10 @@
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 <a href="{{ route('admin.users.create') }}"
-                    class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-0">
+                    class="button-blue">
                     @svg('tabler-plus', 'w-5 h-5 mr-2')
-                    Thêm người dùng
-                </a> 
+                    Thêm tài khoản
+                </a>
                 <button type="button"
                     class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
                     @svg('tabler-file-export', 'w-4 h-4 mr-2')
@@ -39,10 +39,10 @@
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-4 py-3">Người dùng</th>
+                        <th scope="col" class="px-4 py-3">Tài khoản</th>
                         <th scope="col" class="px-4 py-3">Họ và tên</th>
                         <th scope="col" class="px-4 py-3">Số điện thoại</th>
-                        <th scope="col" class="px-4 py-3">Giới tính</th>
+                        <th scope="col" class="px-4 py-3">Vai trò </th>
                         <th scope="col" class="px-4 py-3">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Actions</span>
@@ -67,13 +67,10 @@
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $user->fullname }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $user->phone }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                @if ($user->gender == 1)
-                                    Nam
-                                @elseif ($user->gender == 2)
-                                    Nữ
-                                @else
-                                    Khác
-                                @endif
+                                <span
+                                    class="me-2 mt-1.5 {{ $user->role_id == 2 ? 'text-blue-500 bg-blue-100' : 'text-red-500 bg-yellow-100' }} inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium">
+                                    {{ $user->role_id == 2 ? 'Khách hàng' : 'Quản trị viên' }}
+                                </span>
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
                                 <div class="flex items-center">
@@ -103,7 +100,7 @@
                                     </ul>
                                 </div>
                             </td>
-                        </tr> 
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
