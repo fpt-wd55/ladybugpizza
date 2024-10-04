@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="container">
-        <form action="{{ route('toppings.store') }}" class="w-full" method="post" enctype="multipart/form-data">
+        <form action="{{ route('admin.toppings.store') }}" class="w-full" method="post" enctype="multipart/form-data">
             @csrf
             <div class="flex justify-between gap-2">
                 <div class="w-full mb-5">
@@ -15,7 +15,8 @@
                 </div>
                 <div class="w-full mb-5">
                     <label for="image" class="label-lg">Ảnh</label>
-                    <input type="file" name="image" class="input h-10" />
+                    {{-- input thieu name hqua toi copy input để css thieus nhớ ra r --}}
+                    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none " type="file" name="image">
                     @error('image')
                         <span style="color: red">{{ $message }}</span>
                     @enderror
@@ -46,7 +47,7 @@
                 class="mb-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 <button
                     class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-0">Thêm</button>
-                <a href="{{ route('toppings.index') }}"
+                <a href="{{ route('admin.toppings.index') }}"
                     class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-0">Quay
                     lại</a>
             </div>

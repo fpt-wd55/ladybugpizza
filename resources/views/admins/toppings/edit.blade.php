@@ -3,7 +3,8 @@
 
 @section('content')
     <div class="">
-        <form action="{{ route('toppings.update', $editTopping) }}" class="w-full" method="post" enctype="multipart/form-data">
+        <form action="{{ route('admin.toppings.update', $editTopping) }}" class="w-full" method="post"
+            enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="flex justify-between gap-2">
@@ -15,9 +16,13 @@
                     @enderror
                 </div>
                 <div class="w-full h-10 mb-5">
-                    <label for="image" class="label-lg">Ảnh</label>
+                    <label class="label-lg">Ảnh</label>
                     <div class="">
-                        <input type="file" name="image" class="input" />
+                        {{-- // input kh co name --}}
+                        {{-- name="image" --}}
+                        <input
+                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
+                            type="file" name="image">
                         <img src="{{ asset('/storage/' . $editTopping->image) }}"
                             class="img-sm mt-2 img-circle object-cover" alt="">
                     </div>
@@ -51,9 +56,7 @@
             </div>
             <div
                 class="mb-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <button
-                    class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-0">Cập
-                    Nhật</button>
+                <button class="button-blue">Cập Nhật</button>
                 {{-- <a href="{{ route('toppings.index') }}"
                     class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-0">Quay
                     lại</a> --}}

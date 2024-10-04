@@ -14,8 +14,7 @@
                 </div>
                 <div
                     class="mb-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                    <a href="{{ route('toppings.index') }}"
-                        class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-0">Quay
+                    <a href="{{ route('admin.toppings.index') }}" class="button-green">Quay
                         lại</a>
                 </div>
             </div>
@@ -35,7 +34,8 @@
                 <tbody>
                     @forelse ($listToppings as $listTp)
                         <tr class="border-b hover:bg-gray-100">
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ ($listToppings->currentPage() - 1) * $listToppings->perPage() + $loop->iteration }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                                {{ ($listToppings->currentPage() - 1) * $listToppings->perPage() + $loop->iteration }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $listTp->name }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
                                 <img src="{{ asset('/storage/' . $listTp->image) }}" class="img-sm img-circle object-cover"
@@ -59,12 +59,13 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $listTp->name }}">
                                         <li>
-                                            <a href="{{ route('resTopping', $listTp->id) }}"
+                                            <a href="{{ route('admin.resTopping', $listTp->id) }}"
                                                 class="block py-2 px-4 hover:bg-gray-100">Khôi Phục</a>
                                         </li>
                                     </ul>
                                     <div class="py-1">
-                                        <form action="{{ route('forceDelete-Toppings', $listTp->id) }}" method="post">
+                                        <form action="{{ route('admin.forceDelete-Toppings', $listTp->id) }}"
+                                            method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button onclick="return confirm('Bạn chắc chắn muốn xóa vĩnh viễn chứ?')"
@@ -76,10 +77,13 @@
                             </td>
                         </tr>
                     @empty
-                        <tr>
-                            <td colspan="5" class="text-center py-4 text-2xl">Trống</td>
-                            <!-- Hiển thị "Trống" nếu không có dữ liệu -->
-                        </tr>
+                        <td colspan="6" class="text-center py-4 text-base">
+                            <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                                @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p> 
+                            </div>
+                        </td>
+                        <!-- Hiển thị "Trống" nếu không có dữ liệu -->
                     @endforelse
                 </tbody>
             </table>
