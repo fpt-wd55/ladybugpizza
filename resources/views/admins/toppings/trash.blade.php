@@ -4,18 +4,16 @@
 @section('content')
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="overflow-x-auto">
-            <div class="flex justify-end mr-4 my-4">
-                <div class="flex justify-end gap-4">
-                    @if (session('message'))
-                        <div class="alert alert-success">
-                            {{ session('message') }}
-                        </div>
-                    @endif
-                </div>
+            <div
+                class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+                @if (session('message'))
+                    <div class="button bg-green-400">
+                        {{ session('message') }}
+                    </div>
+                @endif
                 <div
                     class="mb-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                    <a href="{{ route('toppings.index') }}"
-                        class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-0">Quay
+                    <a href="{{ route('admin.toppings.index') }}" class="button-green">Quay
                         lại</a>
                 </div>
             </div>
@@ -33,38 +31,40 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($listToppings as $listTp)
+                    @forelse ($listTopping as $topping)
                         <tr class="border-b hover:bg-gray-100">
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ ($listToppings->currentPage() - 1) * $listToppings->perPage() + $loop->iteration }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $listTp->name }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                                {{ ($listTopping->currentPage() - 1) * $listTopping->perPage() + $loop->iteration }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $topping->name }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                <img src="{{ asset('/storage/' . $listTp->image) }}" class="img-sm img-circle object-cover"
+                                <img src="{{ asset('/storage/' . $topping->image) }}" class="img-sm img-circle object-cover"
                                     alt="">
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $listTp->price }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ number_format($topping->price) }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
-                                @foreach ($categories as $cateName)
-                                    @if ($cateName->id == $listTp->category_id)
-                                        <span>{{ $cateName->name }}</span>
+                                @foreach ($categories as $category)
+                                    @if ($category->id == $topping->category_id)
+                                        <span>{{ $category->name }}</span>
                                     @endif
                                 @endforeach
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
-                                <button id="{{ $listTp->name }}" data-dropdown-toggle="{{ $listTp->name }}-dropdown"
+                                <button id="{{ $topping->name }}" data-dropdown-toggle="{{ $topping->name }}-dropdown"
                                     class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
                                     type="button">
                                     @svg('tabler-dots', 'w-5 h-5')
                                 </button>
-                                <div id="{{ $listTp->name }}-dropdown"
+                                <div id="{{ $topping->name }}-dropdown"
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
-                                    <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $listTp->name }}">
+                                    <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $topping->name }}">
                                         <li>
-                                            <a href="{{ route('resTopping', $listTp->id) }}"
+                                            <a href="{{ route('admin.resTopping', $topping->id) }}"
                                                 class="block py-2 px-4 hover:bg-gray-100">Khôi Phục</a>
                                         </li>
                                     </ul>
                                     <div class="py-1">
-                                        <form action="{{ route('forceDelete-Toppings', $listTp->id) }}" method="post">
+                                        <form action="{{ route('admin.forceDelete-Toppings', $topping->id) }}"
+                                            method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button onclick="return confirm('Bạn chắc chắn muốn xóa vĩnh viễn chứ?')"
@@ -76,15 +76,18 @@
                             </td>
                         </tr>
                     @empty
-                        <tr>
-                            <td colspan="5" class="text-center py-4 text-2xl">Trống</td>
-                            <!-- Hiển thị "Trống" nếu không có dữ liệu -->
-                        </tr>
+                        <td colspan="6" class="text-center py-4 text-base">
+                            <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                                @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                            </div>
+                        </td>
+                        <!-- Hiển thị "Trống" nếu không có dữ liệu -->
                     @endforelse
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $listToppings->links() }}
+                {{ $listTopping->links() }}
             </div>
         </div>
     </div>

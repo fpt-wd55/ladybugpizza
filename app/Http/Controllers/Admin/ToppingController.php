@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AddToppingRequest;
+use App\Http\Requests\ToppingRequest;
 use App\Http\Requests\UpdateToppingRequest;
 use App\Models\Category;
 use App\Models\Topping;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ToppingController extends Controller
 {
     public function index()
     {
         $categories = Category::all();
-        $listToppings = Topping::latest('id')->paginate(10);
-        return view('admins.toppings.home', compact('listToppings', 'categories'));
+        $toppings = Topping::latest('id')->paginate(10);
+        return view('admins.toppings.index', compact('toppings', 'categories'));
     }
 
     public function create()
@@ -24,7 +25,7 @@ class ToppingController extends Controller
         return view('admins.toppings.add', compact('categories'));
     }
 
-    public function store(AddToppingRequest $request)
+    public function store(ToppingRequest $request)
     {
         // dd($request->all());
         $data = $request->except('image');
@@ -34,7 +35,7 @@ class ToppingController extends Controller
             $data['image'] = $path_image;
         }
         Topping::query()->create($data);
-        return redirect()->route('toppings.index')->with('message', 'Thêm Topping thành công');
+        return redirect()->route('admin.toppings.index')->with('message', 'Thêm Topping thành công');
     }
     public function show(Topping $topping)
     {
@@ -50,23 +51,24 @@ class ToppingController extends Controller
     }
     public function update(UpdateToppingRequest $request, Topping $topping)
     {
+        // dd($request->all());
         $data = $request->except('image');
         $old_image = $topping->image; // giữ lại ảnh cũ
-        $data['image'] = $old_image;
+        
         // nếu chọn ảnh mới 
         if ($request->hasFile('image')) {
+            if(Storage::exists($old_image)){
+                Storage::delete($old_image);
+            }
             $path_image = $request->file('image')->store('uploads/toppings');
             $data['image'] = $path_image;
+        }else{
+            $data['image'] = $old_image; // dữ lại ảnh cũ 
         }
         $topping->update($data);
-        // if ($request->hasFile('image')) {
-        //     if (file_exists('storage/' . $old_image)) {
-        //         unlink('storage/' . $old_image);
-        //     }
-        // }
-        return redirect()->route('toppings.index')->with('message', 'Sửa thành công');
+        if ($request->hasFile('image')) 
+        return redirect()->route('admin.toppings.index')->with('message', 'Sửa thành công');
     }
-
     // xóa mềm dữ liệu
     public function destroy(Topping $topping)
     {
@@ -77,8 +79,8 @@ class ToppingController extends Controller
     public function trashTopping()
     {
         $categories = Category::all();
-        $listToppings = Topping::onlyTrashed()->latest('id')->paginate(10);
-        return view('admins.toppings.trash', compact('categories', 'listToppings'));
+        $listTopping = Topping::onlyTrashed()->latest('id')->paginate(10);
+        return view('admins.toppings.trash', compact('categories', 'listTopping'));
     }
     // khôi phục
     public function resTopping($id)
