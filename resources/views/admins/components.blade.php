@@ -14,13 +14,13 @@
                     <button id="dropdownDefault" data-dropdown-toggle="dropdown"
                         class="mb-4 sm:mb-0 mr-4 inline-flex items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-0 font-medium rounded-lg text-sm px-4 py-2.5"
                         type="button">
-                        Filter by status
+                        Lọc theo trạng thái
                         @svg('tabler-chevron-down', 'w-4 h-4 ml-2')
                     </button>
                     <!-- Dropdown menu -->
                     <div id="dropdown" class="z-10 hidden w-56 p-3 bg-white rounded-lg shadow">
                         <h6 class="mb-3 text-sm font-medium text-gray-900">
-                            Category
+                            Danh mục
                         </h6>
                         <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
                             <li class="flex items-center">
@@ -28,7 +28,7 @@
                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0" />
 
                                 <label for="apple" class="ml-2 text-sm font-medium text-gray-900">
-                                    Completed (56)
+                                    Hoàn thành(56)
                                 </label>
                             </li>
 
@@ -37,7 +37,7 @@
                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0" />
 
                                 <label for="fitbit" class="ml-2 text-sm font-medium text-gray-900">
-                                    Cancelled (56)
+                                    Đã hủy(56)
                                 </label>
                             </li>
 
@@ -46,7 +46,7 @@
                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0" />
 
                                 <label for="dell" class="ml-2 text-sm font-medium text-gray-900">
-                                    In progress (56)
+                                    Đang tiến hành (56)
                                 </label>
                             </li>
 
