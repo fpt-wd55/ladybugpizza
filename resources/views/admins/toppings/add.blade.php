@@ -36,7 +36,9 @@
                     <select class="w-full h-10 mb-2 select" name="category_id" id="">
                         <option value="">Chọn</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }} {{ old('category_id') }}">{{ $category->name }}</option>
+                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
                         @endforeach
                     </select>
                     @error('category_id')
