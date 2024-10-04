@@ -3,67 +3,17 @@
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
 
 
-        <div class="flex flex-col md:flex-row items-center justify-end space-y-3 md:space-y-0 md:space-x-4 p-4">
-           
+        <div class="flex flex-col md:flex-row items-center justify-end space-y-3 md:space-y-0 md:space-x-4 px-4">
+
             <div
                 class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
 
                 <div class="flex items-center space-x-3 w-full md:w-auto">
-                    <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
-                        class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
-                        type="button">    
-                        @svg('tabler-chevron-down', 'w-5 h-5 mr-2')
-                        Actions
-                    </button>
-                    <div id="actionsDropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
-                        @if ($deletedCategories->count() > 0)
-                        <ul class="py-1 text-sm text-gray-700" aria-labelledby="actionsDropdownButton">
-                          
-                                <button type="button"  data-modal-target="deleteAll-modal-1"
-                                            data-modal-toggle="deleteAll-modal-1" 
-                                            class="block py-2 px-4 hover:bg-gray-100">Xóa toàn bộ </button>
-                           
-                        </ul>
-                        @endif
-                       
-                    </div>
-                 
-                    {{-- start modal restoreAll --}}
-                    <div id="deleteAll-modal-1" tabindex="-1"
-                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                        <div class="relative p-4 w-full max-w-md max-h-full">
-                            <div class="relative bg-white rounded-lg shadow">
-                                <button type="button"
-                                    class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-                                    data-modal-hide="deleteAll-modal-1">
-                                    @svg('tabler-x', 'w-4 h-4')
-                                    <span class="sr-only">Close modal</span>
-                                </button>
-                                <div class="p-4 md:p-5 text-center">
-                                    <div class="flex justify-center">
-                                        @svg('tabler-arrow-back-up-double', 'w-12 h-12 text-green-600 text-center mb-2 ')
-                                    </div>
-                                    <h3 class="mb-5 font-normal">Bạn có muốn xóa toàn bộ Danh mục này không?</h3>
 
-                                    <form action="{{ route('admin.trash.cateDeleteAll') }}" method="POST">
-                                        @method('POST')
-                                        @csrf
-                                        
-                                        <button type="submit"
-                                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"> Có
-                                        </button>
-                                    </form>
+                    <a href="{{ route('admin.categories.index') }}">
+                        <button type="button" class="rounded-lg button-blue">Trở Lại</button>
+                    </a>
 
-                                    <button data-modal-hide="deleteAll-modal-1" type="button"
-                                        class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Không,
-                                        trở lại</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                  
-                    {{-- end modal restoreAll--}}
-                   
                 </div>
             </div>
         </div>
@@ -79,17 +29,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                {{-- item Category --}}
-                
+                    {{-- item Category --}}
+
                     @forelse ($deletedCategories as $key => $item)
-                   
                         <tr class="border-b">
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
                                 {{ ($deletedCategories->currentPage() - 1) * $deletedCategories->perPage() + $key + 1 }}
                             </th>
                             <td class="px-4 py-3">{{ $item->name }}</td>
                             <td class="px-4 py-3">{{ $item->slug }}</td>
-                          
+
                             <td class="px-4 py-3">
                                 <div class="flex items-center">
                                     <div
@@ -101,23 +50,25 @@
                             <td class="pt-4 py-3 px-4 flex items-center mt-0 ">
                                 <a href="#" data-modal-target="restore-modal-{{ $item->id }}"
                                     data-modal-toggle="restore-modal-{{ $item->id }}"
-                                    class="cursor-pointer block px-1 text-sm  text-gray-500 hover:text-green-500 " title="Restore">
-                                   
+                                    class="cursor-pointer block px-1 text-sm  text-gray-500 hover:text-green-500 "
+                                    title="Restore">
+
                                     @svg('tabler-restore')
                                 </a>
-                                
+
 
                                 <a href="#" data-modal-target="delete-modal-{{ $item->id }}"
                                     data-modal-toggle="delete-modal-{{ $item->id }}"
-                                    class="cursor-pointer block px-1 text-sm  text-gray-500 hover:text-red-500 " title="Delete">
-                                     @svg('tabler-trash-x-filled')
+                                    class="cursor-pointer block px-1 text-sm  text-gray-500 hover:text-red-500 "
+                                    title="Delete">
+                                    @svg('tabler-trash-x-filled')
                                 </a>
-                               
+
 
                             </td>
                         </tr>
-                         {{-- start modal restore --}}
-                         <div id="restore-modal-{{ $item->id }}" tabindex="-1"
+                        {{-- start modal restore --}}
+                        <div id="restore-modal-{{ $item->id }}" tabindex="-1"
                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                             <div class="relative p-4 w-full max-w-md max-h-full">
                                 <div class="relative bg-white rounded-lg shadow">
@@ -130,13 +81,14 @@
                                     <div class="p-4 md:p-5 text-center">
                                         <div class="flex justify-center">
                                             @svg('tabler-arrow-back-up-double', 'w-12 h-12 text-green-600 text-center mb-2 ')
-                                        </div> 
+                                        </div>
                                         <h3 class="mb-5 font-normal">Bạn có muốn khôi phục Danh mục này không?</h3>
 
                                         <form action="{{ route('admin.trash.cateRestore', $item->id) }}" method="POST">
                                             @csrf
-                                            <button  type="submit"
-                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"> Có
+                                            <button type="submit"
+                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                Có
                                             </button>
                                         </form>
 
@@ -147,10 +99,10 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- end modal restore--}}
+                        {{-- end modal restore --}}
 
-                         {{-- start modal delete --}}
-                         <div id="delete-modal-{{ $item->id }}" tabindex="-1"
+                        {{-- start modal delete --}}
+                        <div id="delete-modal-{{ $item->id }}" tabindex="-1"
                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                             <div class="relative p-4 w-full max-w-md max-h-full">
                                 <div class="relative bg-white rounded-lg shadow">
@@ -168,8 +120,9 @@
 
                                         <form action="{{ route('admin.trash.cateDelete', $item->id) }}" method="POST">
                                             @csrf
-                                            <button  type="submit"
-                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"> Xóa
+                                            <button type="submit"
+                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                Xóa
                                             </button>
                                         </form>
 
@@ -180,18 +133,18 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- end modal delete--}}
-                        @empty
+                        {{-- end modal delete --}}
+                    @empty
                         <tr>
                             <td colspan="6" class="text-center py-4 text-base ">
                                 <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
                                     @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
-                                    <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p> 
+                                    <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
                                 </div>
                             </td>
                         </tr>
                     @endforelse
-                {{-- end item Category --}}
+                    {{-- end item Category --}}
                 </tbody>
             </table>
             <div class="p-4">
