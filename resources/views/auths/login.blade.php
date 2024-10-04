@@ -3,15 +3,14 @@
 @section('title', 'Đăng nhập')
 
 @section('content')
-
-    <div class="container w-full md:w-[920px] h-[629px] md:mx-auto my-16 p-4">
-        <div class="md:grid md:grid-cols-2 gap-4 card">
+    <div class="w-full md:w-[920px] h-[629px] md:mx-auto my-16 p-4 transition">
+        <div class="md:grid md:grid-cols-2 gap-4 card overflow-hidden">
             <div class="p-4 md:p-6 lg:p-8">
                 <div class="mb-4">
                     <div class="mb-4 font-semibold text-lg uppercase">
                         Đăng nhập
                     </div>
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 text-sm">
                         <label for="">Bạn có chưa có tài khoản?</label>
                         <a href="{{ route('auth.register') }}" class="text-red-600">Đăng
                             ký</a>
@@ -50,7 +49,8 @@
                             <label for="remember" class="text-sm ms-1">Ghi nhớ mật khẩu</label>
                         </div>
                         <div>
-                            <a href="{{ route('auth.forgot-password') }}" class="text-red-600 hover:link text-sm">Quên mật khẩu?</a>
+                            <a href="{{ route('auth.forgot-password') }}" class="text-red-600 hover:link text-sm">Quên mật
+                                khẩu?</a>
                         </div>
                     </div>
                     @if ($errors->has('error'))
@@ -71,7 +71,7 @@
             </div>
             <div class="hidden md:block max-h-[629px]">
                 <img class="w-full h-full object-cover" src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}"
-                    alt="">
+                    alt="Ảnh sản phẩm">
             </div>
         </div>
     </div>

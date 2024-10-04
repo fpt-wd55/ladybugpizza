@@ -20,9 +20,9 @@ class AdminMiddleware
             $user = Auth::user();
 
             if ($user->role_id != 2 || $user->role->parent_id == 1) {
+
                 return $next($request);
             }
-
             return redirect()->route('client.home')->with('success', 'Đăng nhập thành công!');
         }
 

@@ -67,6 +67,8 @@ Route::prefix('/')->group(function () {
     Route::get('/about-us', [PageController::class, 'aboutUs'])->name('client.about-us');
     Route::get('/policies', [PageController::class, 'policies'])->name('client.policies');
     Route::get('/manual', [PageController::class, 'manual'])->name('client.manual');
+    Route::get('/contact',[PageController::class,'contact'])->name('client.contact');
+    Route::post('/contact',[PageController::class,'postContact'])->name('client.post-contact');
     Route::get('/invoices/{slug}', [InvoiceController::class, 'show'])->name('invoices.index');
 });
 
@@ -107,6 +109,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/carts', AdminCartController::class);
     Route::resource('/attributes', AttributeController::class);
     Route::resource('/categories', CategoryController::class);
+    Route::get('/trash',[CategoryController::class,'trash'])->name('trash.list');
     Route::resource('/toppings', ToppingController::class);
     Route::resource('/banners', BannerController::class);
     Route::resource('/promotions', PromotionController::class);
@@ -121,4 +124,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/messages', MessageController::class);
     Route::resource('/conversations', ConversationController::class);
     Route::get('/components', [DashboardController::class, 'components']);
+    Route::get('/trash-topping', [ToppingController::class, 'trashTopping'])->name('trash-topping');
+    Route::get('/resTopping/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
+    Route::delete('/forceDelete/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
 });

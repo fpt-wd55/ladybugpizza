@@ -13,7 +13,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('admins.category.list');
     }
 
     /**
@@ -21,7 +21,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admins.category.add');
     }
 
     /**
@@ -45,7 +45,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('admins.category.edit');
+        
     }
 
     /**
@@ -62,5 +63,10 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+    }
+
+    public function trash(Category $category)
+    {
+        return view('admins.category.trash');
     }
 }

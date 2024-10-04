@@ -126,7 +126,7 @@ class ProductSeeder extends Seeder
                     'quantity' => rand(10, 100),
                     'sku' => Str::random(10),
                     'status' => 1,
-                    'is_featured' => rand(1, 2),
+                    'is_featured' => rand(0, 1),
                     'avg_rating' => rand(0, 5),
                     'total_rating' => rand(0, 100),
                     'created_at' => $now,

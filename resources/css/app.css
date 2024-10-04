@@ -53,11 +53,11 @@
 }
 
 .card {
-    @apply bg-white border border-gray-300 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700;
+    @apply bg-white border border-gray-300 rounded-lg;
 }
 
 .product-card {
-    @apply bg-white border border-gray-300 rounded-lg hover:border-gray-700 transition;
+    @apply card hover:border-[#D30A0A] transition;
 }
 
 .title {
@@ -73,43 +73,47 @@
 }
 
 .label-sm {
-    @apply block mb-2 text-xs font-medium text-gray-900 dark:text-white;
+    @apply block mb-2 text-xs font-medium text-gray-900;
 }
 
 .label-md {
-    @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white;
+    @apply block mb-2 text-sm font-medium text-gray-900;
 }
 
 .label-lg {
-    @apply block mb-2 text-base font-medium text-gray-900 dark:text-white;
+    @apply block mb-2 text-base font-medium text-gray-900;
+}
+
+.label-peer {
+    @apply inline-flex items-center justify-center w-full px-2 py-4 text-gray-700 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-red-500 peer-checked:text-white peer-checked:bg-red-600 hover:text-gray-600 hover:bg-gray-50 transition;
 }
 
 .input {
-    @apply block w-full text-sm text-gray-900 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white;
+    @apply block w-full text-sm text-gray-900 border py-2 border-gray-300 rounded-lg focus:ring-0 focus:border-[#D30A0A] transition;
 }
 
 .input-success {
-    @apply block w-full text-sm text-green-900 border border-green-300 rounded-lg bg-green-50 dark:bg-green-700 dark:border-green-600 dark:placeholder-green-400 dark:text-white;
+    @apply block w-full text-sm text-green-900 border border-green-300 rounded-lg bg-green-50;
 }
 
 .input-error {
-    @apply block w-full text-sm text-[#D30A0A] border border-red-300 rounded-lg bg-red-50 dark:bg-red-700 dark:border-red-600 dark:placeholder-red-400 dark:text-white;
+    @apply block w-full text-sm text-[#D30A0A] border border-red-300 rounded-lg bg-red-50;
 }
 
 .text-area {
-    @apply block w-full text-gray-900 border border-gray-300 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white;
+    @apply block w-full text-gray-900 border border-gray-300 rounded-lg;
 }
 
 .select {
-    @apply bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white;
+    @apply bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full;
 }
 
 .input-checkbox {
-    @apply w-4 h-4 text-[#D30A0A] bg-gray-100 border-gray-300 rounded focus:ring-0 focus:ring-offset-0 dark:bg-gray-700 dark:border-gray-600 hover:cursor-pointer;
+    @apply w-4 h-4 text-[#D30A0A] bg-gray-100 border-gray-300 rounded focus:ring-0 focus:ring-offset-0;
 }
 
 .input-radio {
-    @apply w-4 h-4 text-[#D30A0A] bg-gray-100 border-gray-300  focus:ring-0 focus:ring-offset-0 dark:bg-gray-700 dark:border-gray-600 hover:cursor-pointer;
+    @apply w-4 h-4 text-[#D30A0A] bg-gray-100 border-gray-300 focus:ring-0 focus:ring-offset-0;
 }
 
 .img-circle {
@@ -161,7 +165,11 @@
 }
 
 .button {
-    @apply text-white font-medium rounded-lg text-sm px-5 py-3 h-[44px] flex items-center justify-center;
+    @apply text-white font-medium rounded-lg text-sm px-5 py-2 flex items-center justify-center;
+}
+
+.button-toggle {
+    @apply relative w-11 h-6 bg-gray-200 dark:peer-focus:ring-blue-800 rounded-full dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600;
 }
 
 .button-icon {
@@ -169,39 +177,39 @@
 }
 
 .button-default {
-    @apply button bg-[#D30A0A] hover:bg-[#AF0808] dark:bg-[#D30A0A] dark:hover:bg-[#AF0808];
+    @apply button bg-[#D30A0A] hover:bg-[#AF0808];
 }
 
 .button-dark {
-    @apply button bg-gray-800 hover:bg-gray-900 dark:bg-gray-800 dark:hover:bg-gray-700;
+    @apply button bg-gray-800 border-gray-800 hover:bg-gray-900;
 }
 
 .button-light {
-    @apply button bg-white border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600;
+    @apply button bg-white border border-gray-300 hover:bg-gray-100;
 }
 
 .button-green {
-    @apply button bg-green-700 hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700;
+    @apply button bg-green-700 hover:bg-green-800;
 }
 
 .button-gray {
-    @apply button bg-[#9B9B9B] hover:bg-[#8a8a8a] dark:bg-[#9B9B9B] dark:hover:bg-[#8a8a8a];
+    @apply button bg-[#9B9B9B] hover:bg-[#8a8a8a];
 }
 
 .button-red {
-    @apply button bg-[#D30A0A] hover:bg-[#AF0808] dark:bg-[#D30A0A] dark:hover:bg-[#AF0808];
+    @apply button bg-[#D30A0A] hover:bg-[#AF0808];
 }
 
 .button-blue {
-    @apply button bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700;
+    @apply button bg-blue-700 hover:bg-blue-800;
 }
 
 .button-yellow {
-    @apply button bg-yellow-700 hover:bg-yellow-800 dark:bg-yellow-600 dark:hover:bg-yellow-700;
+    @apply button bg-yellow-700 hover:bg-yellow-800;
 }
 
 .button-purple {
-    @apply button bg-purple-700 hover:bg-purple-800 dark:bg-purple-600 dark:hover:bg-purple-700;
+    @apply button bg-purple-700 hover:bg-purple-800;
 }
 
 .badge {
@@ -209,47 +217,47 @@
 }
 
 .badge-default {
-    @apply badge bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300;
+    @apply badge bg-blue-100 text-blue-800;
 }
 
 .badge-dark {
-    @apply badge bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300;
+    @apply badge bg-gray-100 text-gray-800;
 }
 
 .badge-light {
-    @apply badge bg-white text-gray-800 dark:bg-gray-800 dark:text-white;
+    @apply badge bg-gray-200 text-gray-800;
 }
 
 .badge-green {
-    @apply badge bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300;
+    @apply badge bg-green-100 text-green-800;
 }
 
 .badge-red {
-    @apply badge bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300;
+    @apply badge bg-red-100 text-red-800;
 }
 
 .badge-yellow {
-    @apply badge bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300;
+    @apply badge bg-yellow-200 text-yellow-700;
 }
 
 .badge-purple {
-    @apply badge bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300;
+    @apply badge bg-purple-100 text-purple-800;
 }
 
 .badge-pink {
-    @apply badge bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-300;
+    @apply badge bg-pink-100 text-pink-800;
 }
 
 .badge-indigo {
-    @apply badge bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300;
+    @apply badge bg-indigo-100 text-indigo-800;
 }
 
 .badge-icon {
-    @apply badge inline-flex items-center justify-center w-6 h-6 text-sm font-semibold text-gray-800 bg-gray-100 dark:bg-gray-700 dark:text-gray-300;
+    @apply badge inline-flex items-center justify-center w-6 h-6 text-sm font-semibold text-gray-800 bg-gray-100;
 }
 
 .badge-noti {
-    @apply absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900;
+    @apply absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2;
 }
 
 .alert {
@@ -257,23 +265,23 @@
 }
 
 .alert-info {
-    @apply alert text-blue-800 bg-blue-50 dark:text-blue-400;
+    @apply alert text-blue-800 bg-blue-50;
 }
 
 .alert-success {
-    @apply alert text-green-800 bg-green-50 dark:text-green-400;
+    @apply alert text-green-800 bg-green-50;
 }
 
 .alert-warning {
-    @apply alert text-yellow-800 bg-yellow-50 dark:text-yellow-400;
+    @apply alert text-yellow-800 bg-yellow-50;
 }
 
 .alert-error {
-    @apply alert text-red-800 bg-red-50 dark:text-red-400;
+    @apply alert text-red-800 bg-red-50;
 }
 
 .alert-default {
-    @apply alert text-gray-800 bg-gray-50 dark:text-gray-400;
+    @apply alert text-gray-800 bg-gray-50;
 }
 
 .card-table {
@@ -281,19 +289,19 @@
 }
 
 .table {
-    @apply w-full text-sm text-left text-gray-500 dark:text-gray-400;
+    @apply w-full text-sm text-left text-gray-500;
 }
 
 .thead {
-    @apply text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400;
+    @apply text-xs text-gray-700 uppercase bg-gray-50;
 }
 
 .th {
-    @apply px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white;
+    @apply px-6 py-4 font-medium text-gray-900 whitespace-nowrap;
 }
 
 .tr {
-    @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600;
+    @apply bg-white border-b hover:bg-gray-50;
 }
 
 .td {
@@ -341,15 +349,15 @@
 }
 
 .hr-default {
-    @apply h-px my-8 bg-gray-200 border-0 dark:bg-gray-700;
+    @apply h-px my-8 bg-gray-200 border-0;
 }
 
 .hr-trim {
-    @apply w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700;
+    @apply w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10;
 }
 
 .hr-shape {
-    @apply w-8 h-8 mx-auto my-8 bg-gray-200 border-0 rounded md:my-12 dark:bg-gray-700;
+    @apply w-8 h-8 mx-auto my-8 bg-gray-200 border-0 rounded md:my-12;
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -359,4 +367,8 @@
 .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+}
+
+html {
+    @apply no-scrollbar;
 }

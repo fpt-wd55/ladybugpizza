@@ -82,6 +82,13 @@ class WebController extends Controller
         $register = $request->session()->get('register');
         $userData = array_merge($register, $validated);
 
+        if($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $name = $file->getClientOriginalName();
+            $file->move('uploads/avatars', $name);
+            $userData['avatar'] = $name;
+        }
+
         $user = User::create(array_merge($userData,[
             'username' => $this->processString($userData['fullname']),
             'role_id' => 2,
