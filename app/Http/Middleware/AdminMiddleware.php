@@ -19,7 +19,7 @@ class AdminMiddleware
         if (Auth::check()) {
             $user = Auth::user();
 
-            if ($user->role_id == 1 || $user->role->parent_id == 1) {
+            if ($user->role_id != 2 || $user->role->parent_id == 1) {
                 return $next($request);
             }
 

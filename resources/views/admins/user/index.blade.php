@@ -42,7 +42,7 @@
                         <th scope="col" class="px-4 py-3">Người dùng</th>
                         <th scope="col" class="px-4 py-3">Họ và tên</th>
                         <th scope="col" class="px-4 py-3">Số điện thoại</th>
-                        <th scope="col" class="px-4 py-3">Giới tính</th>
+                        <th scope="col" class="px-4 py-3">Vai trò (Tach thanh 2 muc User va Client)</th>
                         <th scope="col" class="px-4 py-3">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Actions</span>
