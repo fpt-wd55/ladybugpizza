@@ -33,7 +33,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $slug = $this->slug($request->name);
+        $slug = $this->createSlug($request->name);
 
         Category::create([
             'name' => $request->name,
@@ -67,7 +67,7 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, Category $category)
     {
 
-        $slug = $this->slug($request->name);
+        $slug = $this->createSlug($request->name);
 
         $category->update([
             'name' => $request->name,
@@ -91,10 +91,10 @@ class CategoryController extends Controller
         return redirect()->back()->with('message', 'Xóa thành công');
     }
 
-    public function slug($name)
-    {
-        return Str::slug($name);
-    }
+    // public function slug($name)
+    // {
+    //     return Str::slug($name);
+    // }
 
     public function trashList(Category $category)
     {

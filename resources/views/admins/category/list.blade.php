@@ -70,7 +70,7 @@
 
                                         <li>
                                             <a href="{{ route('admin.categories.edit', $item) }}"
-                                                class="block py-2 px-4 hover:bg-gray-100">Chỉnh sử</a>
+                                                class="block py-2 px-4 hover:bg-gray-100">Chỉnh sửa</a>
                                         </li>
                                     </ul>
                                     <div class="py-1">
@@ -107,8 +107,8 @@
                                         </form>
 
                                         <button data-modal-hide="delete-modal-{{ $item->id }}" type="button"
-                                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">No,
-                                            cancel</button>
+                                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Không,
+                                            trở lại</button>
                                     </div>
                                 </div>
                             </div>
