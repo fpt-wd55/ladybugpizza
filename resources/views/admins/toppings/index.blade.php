@@ -42,7 +42,7 @@
                                 {{ ($toppings->currentPage() - 1) * $toppings->perPage() + $loop->iteration }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $topping->name }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                <img src="{{ asset('/storage/' . $topping->image) }}" class="img-sm img-circle object-cover"
+                                <img src="{{ asset('storage/uploads/toppings/' . $topping->image) }}" class="img-sm img-circle object-cover"
                                     alt="">
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ number_format($topping->price) }}đ</td>
@@ -53,7 +53,7 @@
                                     @endif
                                 @endforeach
                             </td>
-                         
+
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $topping->id }}" data-dropdown-toggle="{{ $topping->id }}-dropdown"
                                     class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"

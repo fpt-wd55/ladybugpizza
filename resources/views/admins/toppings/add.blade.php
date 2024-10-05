@@ -48,7 +48,7 @@
             </div>
             <div
                 class="mb-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <button class="button-blue">Thêm</button>
+                <button class="button-blue" type="submit">Thêm</button>
                 <a href="{{ route('admin.toppings.index') }}" class="button-green">Quay lại</a>
             </div>
         </form>
