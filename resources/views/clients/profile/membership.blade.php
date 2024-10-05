@@ -16,13 +16,14 @@
                     <img src="{{ asset('storage/uploads/ranks/gold.svg') }}" alt="" class="img-md">
                     <div class="w-full">
                         <div class="flex items-center justify-between mb-1">
-                            <p class="uppercase font-semibold text-yellow-300">vàng</p>
-                            <p class="text-sm font-medium">3850 Điểm</p>
+                            <p class="uppercase font-semibold text-yellow-300"></p>
+                            <p class="text-sm font-medium">{{ $currentPoints }} Điểm</p>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
                             <div class="bg-red-500 h-2 rounded-full" style="width: 45%"></div>
                         </div>
-                        <p class="text-sm">Tích thêm 534 điểm nữa để nâng cấp lên thành viên Kim cương</p>
+                        <p class="text-sm">Tích thêm {{ $pointsToNextRank }} điểm nữa để nâng cấp lên thành viên Kim cương
+                        </p>
                     </div>
                 </div>
 
