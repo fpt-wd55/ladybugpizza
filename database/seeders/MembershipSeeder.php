@@ -25,7 +25,7 @@ class MembershipSeeder extends Seeder
             Membership::create([
                 'user_id' => $user->id,
                 'points' => $faker->numberBetween(0, 1000),
-                'rank' => $faker->randomElement(['Đồng', 'Bạc', 'Vàng', 'Bạch Kim', 'Kim Cương']),
+                'rank' => $faker->randomElement(['Đồng', 'Bạc', 'Vàng','Kim Cương']),
                 'status' => 1,
                 'total_spent' => $faker->numberBetween(0, 2000),
                 'created_at' => $now,
