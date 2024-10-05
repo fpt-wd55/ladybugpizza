@@ -72,7 +72,7 @@
                     <a href="{{ route('client.order.index') }}"> @svg('tabler-truck-delivery')</a>
 
                     <button class="hover:cursor-pointer">
-                        <img data-dropdown-toggle="userDropdown" class="img-circle w-8 h-8"
+                        <img data-dropdown-toggle="userDropdown" class="img-circle w-8 h-8 object-cover"
                             src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}">
                     </button>
 
