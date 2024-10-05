@@ -53,7 +53,6 @@
                                     @endif
                                 @endforeach
                             </td>
-
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $topping->id }}" data-dropdown-toggle="{{ $topping->id }}-dropdown"
                                     class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
