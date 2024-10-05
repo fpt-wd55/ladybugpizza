@@ -15,7 +15,6 @@ use App\Http\Controllers\Admin\OrderStatusController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\PromotionController;
-use App\Http\Controllers\Admin\RoleController; 
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\CartController as AdminCartController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
@@ -126,7 +125,6 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/transactions', TransactionController::class);
     Route::resource('/evaluations', EvaluationController::class);
     Route::resource('/shippings', ShippingController::class);
-    Route::resource('/roles', RoleController::class);
     Route::resource('/pages', AdminPageController::class);
     Route::resource('/logs', LogController::class);
     Route::resource('/messages', MessageController::class);
