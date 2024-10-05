@@ -33,6 +33,8 @@ class DatabaseSeeder extends Seeder
             // ShippingSeeder::class,
             TransactionSeeder::class,
             InvoiceSeeder::class,
+            ComboDetailSeeder::class,
+            FavoriteSeeder::class,
         ]); 
     }
 }
