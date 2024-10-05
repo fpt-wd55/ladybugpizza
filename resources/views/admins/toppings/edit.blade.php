@@ -55,9 +55,9 @@
             <div
                 class="mb-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 <button class="button-blue">Cập Nhật</button>
-                {{-- <a href="{{ route('toppings.index') }}"
+                <a href="{{ route('admin.toppings.index') }}"
                     class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-0">Quay
-                    lại</a> --}}
+                    lại</a>
             </div>
         </form>
     </div>
