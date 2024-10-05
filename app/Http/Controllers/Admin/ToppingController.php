@@ -64,7 +64,7 @@ class ToppingController extends Controller
 
         if ($topping->update($data)) {
             if ($request->hasFile('image')) {
-                $topping_image->storeAs('uploads/toppings', $topping_name);
+                $topping_image->storeAs('uploads/toppings', $topping_name); 
                 // xóa ảnh cũ
                 if ($old_image != null) {
                     unlink(storage_path('app/public/uploads/toppings/' . $old_image));
