@@ -19,10 +19,5 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('admin-notifications', function($user){
-    try {
-        return $user->isAdmin();
-    } catch (\Exception $e) {
-        Log::error('Broadcast Channel Error: ' . $e->getMessage());
-        return false;
-    }
+    return $user->isAdmin();
 });

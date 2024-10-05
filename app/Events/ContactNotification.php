@@ -21,7 +21,6 @@ class ContactNotification implements ShouldBroadcast
     public $notification;
     public function __construct($notification)
     {
-        Log::info('Notification Event Fired:', [$notification]);
         $this->notification = $notification;
     }
 
