@@ -85,7 +85,7 @@ class WebController extends Controller
         if($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $name = $file->getClientOriginalName();
-            $file->move('uploads/avatars', $name);
+            $file->move('storage/uploads/avatars', $name);
             $userData['avatar'] = $name;
         }
 

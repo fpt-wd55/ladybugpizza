@@ -12,7 +12,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3">
 
                     <div class="col-span-1 flex flex-col items-center mb-8 gap-4">
-                        <img class="img-circle img-lg"
+                        <img class="img-circle img-lg object-cover"
                             src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}"
                             alt="">
                         <input type="file" id="avatar" class="hidden">

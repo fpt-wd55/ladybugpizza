@@ -135,3 +135,4 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
     Route::get('/invoices/{slug}', [InvoiceController::class, 'show'])->name('invoices.show');
 });
+// 
