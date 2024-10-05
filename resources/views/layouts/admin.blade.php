@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ asset('favicon.svg') }}" type="image/x-icon">
     <title>@yield('title')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +33,7 @@
     @include('partials.admins.sidebar')
 
     <div class="mt-20 sm:ml-64">
-        {{-- breadcrumb --}} 
+        {{-- breadcrumb --}}
         @include('partials.admins.breadcrumb')
         <div class="px-4">
             @yield('content')

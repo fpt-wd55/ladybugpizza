@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('title', 'Chi tiết tài khoản')
 @section('content')
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden p-4">
         <div>
