@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -15,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(10);
-        return view('admins.user.list', compact('users'));
+        return view('admins.user.index', compact('users'));
     }
 
     /**
@@ -23,7 +25,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admins.user.add');
+        $permissions = Role::where('id', '>', 2)->get();
+        return view('admins.user.add', compact('permissions'));
     }
 
     /**
@@ -45,9 +48,11 @@ class UserController extends Controller
         }
 
         // Xu ly hinh anh
-        $avatar = $request->file('avatar');
-        $avatar_name = time() . '_' . pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $avatar->getClientOriginalExtension();
-        $validatedData['avatar'] = $avatar_name;
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $avatar_name = time() . '_' . pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $avatar->getClientOriginalExtension();
+            $validatedData['avatar'] = $avatar_name;
+        }
 
         $data = [
             'username' => trim($validatedData['username']),
@@ -67,9 +72,9 @@ class UserController extends Controller
             // Xu ly upload anh
             $avatar->storeAs('public/uploads/avatars', $avatar_name);
 
-            return redirect()->route('admin.users.index')->with('success', 'Thêm mới người dùng thành công');
+            return redirect()->route('admin.users.index')->with('success', 'Thêm mới tài khoản thành công');
         } else {
-            return redirect()->route('admin.users.index')->with('error', 'Thêm mới người dùng thất bại');
+            return redirect()->route('admin.users.index')->with('error', 'Thêm mới tài khoản thất bại');
         }
     }
 
@@ -79,9 +84,13 @@ class UserController extends Controller
     public function show(User $user)
     {
         $addresses = $user->addresses;
-        $orders = $user->orders;
+        $orders = $user->orders()->paginate(5);
         $evaluations = $user->evaluations;
         $favorites = null;
+
+        // foreach ($orders as $order) {
+        //     $order->created_at = Carbon::parse($order->created_at)->format('Y-m-d');
+        // }
 
         return view('admins.user.detail', compact('user', 'addresses', 'orders', 'evaluations', 'favorites'));
     }
@@ -91,12 +100,73 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $addresses = $user->addresses;
-        return view('admins.user.edit', compact('user', 'addresses'));
+        $permissions = Role::where('id', '>', 2)->get();
+        return view('admins.user.edit', compact('user', 'permissions'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user) {}
+    public function update(UserRequest $request, User $user)
+    {
+        $validatedData = $request->validated();
+
+        // Kiem tra role_id
+        if ($validatedData['roleSelect'] == 1) {
+            $role_id = $validatedData['permissionSelect'];
+        } else {
+            $role_id = $validatedData['roleSelect'];
+        }
+        // Kiem tra trang thai (Status)
+        if (!isset($validatedData['status'])) {
+            $validatedData['status'] = 0;
+        }
+
+        // Xu ly hinh anh
+        $validatedData['avatar'] = $user->avatar;
+        $old_avatar = $user->avatar;
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $avatar_name = time() . '_' . pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $avatar->getClientOriginalExtension();
+            $validatedData['avatar'] = $avatar_name;
+        }
+
+        // Kiem tra nhap mat khau moi
+        if (isset($validatedData['new_password'])) {
+            $validatedData['new_password'] = bcrypt($validatedData['new_password']);
+        }
+
+        $data = [
+            'username' => $user->username,
+            'fullname' => trim($validatedData['fullname']),
+            'email' => trim($validatedData['email']),
+            'phone' => trim($validatedData['phone']),
+            'password' => bcrypt(trim($validatedData['new_password'])),
+            'google_id' => null,
+            'role_id' => $role_id,
+            'avatar' => $validatedData['avatar'],
+            'date_of_birth' => $validatedData['date_of_birth'],
+            'gender' => $validatedData['gender'],
+            'status' => $validatedData['status'],
+        ];
+
+        if ($user->update($data)) {
+            // Xu ly upload anh va xoa anh cu
+            if ($request->hasFile('avatar')) {
+                $avatar->storeAs('public/uploads/avatars', $avatar_name);
+                // if has file old avatar and old avatar is not default
+                if ($old_avatar != 'user-default.png' && $old_avatar != null) {
+                    try {
+                        unlink(storage_path('app/public/uploads/avatars/' . $old_avatar));
+                    } catch (\Throwable $th) {
+                        return redirect()->route('admin.users.edit', $user->id)->with('error', 'Cập nhật tài khoản thành công');
+                    }
+                }
+            }
+
+            return redirect()->route('admin.users.edit', $user->id)->with('success', 'Cập nhật tài khoản thành công');
+        } else {
+            return redirect()->route('admin.users.edit', $user->id)->with('error', 'Cập nhật tài khoản thất bại');
+        }
+    }
 }

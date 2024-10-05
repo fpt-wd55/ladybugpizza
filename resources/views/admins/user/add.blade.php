@@ -2,7 +2,7 @@
 @section('content')
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="p-4 mx-auto">
-            <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm người dùng</h3>
+            <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm tài khoản</h3>
             <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
@@ -159,8 +159,8 @@
                                         <input id="userRole" type="radio" value="2" name="roleSelect"
                                             {{ old('roleSelect') == 2 ? 'checked' : '' }}
                                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0 focus:outline-none">
-                                        <label for="userRole" class="ms-2 text-sm font-medium text-gray-900">Người
-                                            dùng</label>
+                                        <label for="userRole" class="ms-2 text-sm font-medium text-gray-900">Khách
+                                            hàng</label>
                                     </div>
                                 </div>
                                 @error('roleSelect')
@@ -175,10 +175,11 @@
                                 <select name="permissionSelect"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
                                     <option selected disabled>Phân quyền</option>
-                                    <option value="3" {{ old('permissionSelect') == 3 ? 'selected' : '' }}>Admin 1
-                                    </option>
-                                    <option value="4" {{ old('permissionSelect') == 4 ? 'selected' : '' }}>Admin 2
-                                    </option>
+                                    @foreach ($permissions as $permission)
+                                        <option value="{{ $permission->id }}"
+                                            {{ old('permissionSelect') == $permission->id ? 'selected' : '' }}>{{ $permission->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 @error('permissionSelect')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -250,9 +251,8 @@
                         </div>
                     </div>
                     <div class="sm:col-span-2">
-                        <label for="detail_address" class="block mb-2 text-sm font-medium text-gray-900 ">Địa chỉ chi
-                            tiết</label>
-                        <input type="text" name="detail_address" id="detail_address" placeholder="Địa chỉ chi tiết"
+                        <label for="detail_address" class="block mb-2 text-sm font-medium text-gray-900 ">Địa chỉ</label>
+                        <input type="text" name="detail_address" id="detail_address" placeholder="Địa chỉ"
                             value="{{ old('detail_address') }}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                         @error('detail_address')
@@ -264,12 +264,12 @@
                 </div>
                 <div class="flex items-center space-x-4 mt-5">
                     <a href="{{ route('admin.users.index') }}"
-                        class="text-white bg-gray-500 hover:bg-gray-600 focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                        class="button-dark">
                         Quay lại
                     </a>
                     <button type="submit"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                        Thêm người dùng
+                        class="button-blue">
+                        Thêm tài khoản
                     </button>
                 </div>
             </form>

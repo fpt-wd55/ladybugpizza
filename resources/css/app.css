@@ -181,7 +181,7 @@
 }
 
 .button-dark {
-    @apply button bg-gray-800 border-gray-800 hover:bg-gray-900;
+    @apply button border-gray-800 bg-gray-500 hover:bg-gray-600;
 }
 
 .button-light {
