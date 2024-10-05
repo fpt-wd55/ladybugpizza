@@ -31,22 +31,22 @@
                     <p class="title">Các câu hỏi hường gặp (FAQ)</p>
 
                     <div class="card p-4">
-                        @for ($i = 1; $i < 5; $i++)
+                        @foreach ($faqs as $index => $faq)
                             <div class="border-b border-gray-300 mb-4">
-                                <button onclick="toggleAccordion({{ $i }})"
+                                <button onclick="toggleAccordion({{ $index }})"
                                     class="w-full flex justify-between items-center py-4">
-                                    <span class="font-medium">{{ $i }}. Điểm hội viên là gì</span>
+                                    <span class="font-medium">{{ $index + 1 }}. {{ $faq['question'] }} </span>
                                     <span id="icon-1" class="transition">
                                         @svg('tabler-plus', 'icon-sm')
                                     </span>
                                 </button>
-                                <div id="content-{{ $i }}" class="max-h-0 overflow-hidden transition">
+                                <div id="content-{{ $index }}" class="max-h-0 overflow-hidden transition">
                                     <div class="pb-4 text-sm">
-                                        Điểm hội viên là abc xyz
+                                        {{ $faq['answer'] }}
                                     </div>
                                 </div>
                             </div>
-                        @endfor
+                        @endforeach
                     </div>
                 </div>
 

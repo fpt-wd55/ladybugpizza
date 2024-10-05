@@ -61,7 +61,7 @@ class ProfileController extends Controller
             'answer' => 'Điểm tích lũy của bạn sẽ được cập nhật ngay lập tức sau khi giao dịch hoàn tất. Bạn có thể kiểm tra trong tài khoản của mình.'
             ],
     ];
-        return view('clients.profile.membership');
+        return view('clients.profile.membership',compact('faqs'));
     }
 
     public function address()
