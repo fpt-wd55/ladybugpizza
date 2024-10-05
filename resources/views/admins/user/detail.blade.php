@@ -67,7 +67,7 @@
                             @foreach ($addresses as $address)
                                 <dd class="flex items-center mt-2 gap-1 text-gray-500">
                                     @svg('tabler-map-pin-filled', 'h-5 w-5 text-gray-400 me-1')
-                                    {{ $address->detail_address, $address->ward, $address->district, $address->province }}
+                                    {{ $address->detail_address . ', ' . $address->ward . ', ' . $address->district . ', ' . $address->province }}
                                     <button data-modal-target="default-modal" data-modal-toggle="default-modal">
                                         @svg('tabler-pencil', 'h-5 w-5 text-blue-400 mx-1')
                                     </button>
@@ -301,8 +301,7 @@
                                                             class="button-dark cursor-pointer">
                                                             Quay lại
                                                         </span>
-                                                        <button type="submit"
-                                                            class="button-blue">
+                                                        <button type="submit" class="button-blue">
                                                             Cập nhật
                                                         </button>
                                                     </div>
