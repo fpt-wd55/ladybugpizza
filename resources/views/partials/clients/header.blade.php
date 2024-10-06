@@ -1,29 +1,10 @@
-<header class="border-b border-gray-300 bg-white px-4">
+<header class="border-b border-gray-300 bg-white px-4 py-2 sticky top-0 z-40">
     <div class="h-auto md:mx-8 lg:mx-20">
-        <nav class="flex justify-between items-center ">
-            {{-- menu --}}
-            <div class="lg:hidden hover:cursor-pointer" data-dropdown-toggle="dropdown"
-                data-dropdown-toggle="dropdownDistance" data-dropdown-offset-distance="35">
-                @svg('tabler-menu-2')
-            </div>
-
-            <div id="dropdown" class="z-10 hidden lg:hidden bg-white h-screen w-full px-8 py-4">
-                <form class="flex items-center gap-4 mb-8">
-                    <input type="text" placeholder="Tìm kiếm..." class="input" />
-                    <button type="submit" class="button-icon rounded-lg">
-                        @svg('tabler-search', 'icon-sm')
-                    </button>
-                </form>
-                <div class="flex flex-col gap-8 w-full text-sm font-semibold">
-                    <a href="{{ route('client.home') }}" class="">TRANG CHỦ</a>
-                    <a href="{{ route('client.product.menu') }}" class="">THỰC ĐƠN</a>
-                    <a href="{{ route('client.about-us') }}" class="">VỀ CHÚNG TÔI</a>
-                </div>
-            </div>
+        <nav class="flex justify-between items-center">
 
             {{-- Logo --}}
             <a href="{{ route('client.home') }}" class="md:flex md:items-center">
-                <img class="w-20 h-20" src="{{ asset('storage/uploads/logos/logo-fill.png') }}" alt="">
+                <img class="h-12 md:h-20" src="{{ asset('storage/uploads/logos/logo-fill.png') }}" alt="">
             </a>
             <ul class="hidden lg:flex lg:items-center mx-auto">
                 <li class="mx-10 font-semibold text-sm uppercase hover:text-red-500 transition">

@@ -1,4 +1,4 @@
-<footer class="border-t p-4 md:px-8 lg:px-24 md:py-4">
+<footer class="border-t p-4 md:px-8 lg:px-24 md:py-4 mb-16 lg:mb-0">
 
     <div class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center">
         <div class="flex flex-col items-center justify-center md:items-start">

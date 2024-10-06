@@ -7,9 +7,7 @@
     <div class="mx-auto px-0">
 
         {{-- carousel --}}
-
-
-        <div class="md:mx-24 lg:mx-32 min-h-screen p-4 pt-0 md:p-8 transition">
+        <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
 
             <div id="default-carousel" class="relative w-full mb-24" data-carousel="slide">
                 <!-- Carousel wrapper -->
