@@ -1,12 +1,14 @@
 @extends('layouts.admin')
+@section('title', 'Danh mục | Thùng rác')
 @section('content')
+    {{ Breadcrumbs::render('admin.trash.listcate') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div
             class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3 p-4">
             <a href="{{ route('admin.categories.index') }}">
                 <button type="button" class="button-dark">Quay Lại</button>
             </a>
-        </div> 
+        </div>
         <div class="overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-gray-700 uppercase bg-gray-50">
