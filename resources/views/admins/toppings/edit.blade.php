@@ -3,6 +3,18 @@
 
 @section('content')
     <div class="">
+        <div class="flex justify-end">
+            @if (session('message'))
+                <div class="button bg-green-400">
+                    {{ session('message') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="button-dark">
+                    {{ session('error') }}
+                </div>
+            @endif
+        </div>
         <form action="{{ route('admin.toppings.update', $editTopping) }}" class="w-full" method="post"
             enctype="multipart/form-data">
             @csrf

@@ -20,9 +20,9 @@ class ProfileController extends Controller
     public function postChangePassword(Request $request)
     {
 
-    }
-
-    public function membership()
+    } 
+      
+      public function membership()
 {
     // 1. Điểm và rank
     $points = 2850;
@@ -84,7 +84,7 @@ class ProfileController extends Controller
       ],
       [
           'question' => 'Tôi có thể chuyển điểm cho người khác không?',
-          'answer' => 'Hiện tại, chương trình không cho phép chuyển nhượng điểm giữa các tài khoản.'
+'answer' => 'Hiện tại, chương trình không cho phép chuyển nhượng điểm giữa các tài khoản.'
       ],
       [
           'question' => 'Chương trình tích điểm có thay đổi không?',
@@ -113,7 +113,6 @@ class ProfileController extends Controller
         'faqs' => $faqs
     ]);
 }
-
     
 
     public function address()
