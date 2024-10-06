@@ -10,14 +10,16 @@
                         </a>
                     </li>
                 @else
-                    <li class="inline-flex items-center">
-                        {{ $breadcrumb->title }}
-                    </li> 
+                    <li>
+                        <div class="flex items-center">
+                            <p class="ms-1 text-sm font-medium text-gray-500 hover:text-primary-600">
+                                {{ $breadcrumb->title }}
+                            </p>
+                        </div>
+                    </li>
                 @endif
                 @unless ($loop->last)
-                    <li class="text-gray-500 px-2">
-                        /
-                    </li>
+                    @svg('tabler-chevron-right', 'h-4 w-4 text-gray-400 me-2')
                 @endif
                 @endforeach
             </ol>
