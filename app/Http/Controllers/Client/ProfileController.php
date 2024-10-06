@@ -55,7 +55,7 @@ class ProfileController extends Controller
         break;
       }
     }
-    // 5. Ở hạng cao nhất thì không có rank tiếp theo
+    // 5.Hnagj cao nhất thì không có hạng tiếp theo
     if ($currentRank['rank'] === 'Kim cương') {
       $nextPoints = 0;
       $progress = 100;
@@ -64,7 +64,7 @@ class ProfileController extends Controller
     $faqs = [
       [
         'question' => 'Điểm tích lũy là gì?',
-        'answer' => 'Điểm tích lũy là một hệ thống thưởng mà khách hàng nhận được khi thực hiện giao dịch mua hàng. Điểm này có thể được sử dụng để đổi quà hoặc voucher trong tương lai.'
+        'answer' => 'Điểm tích lũy là một hệ thống thưởng mà khách hàng nhận được khi thực hiện giao dịch mua hàng. Điểm này có thể được sử dụng để đổi  voucher trong lần mua hàng tiếp theo.'
       ],
       [
         'question' => 'Làm thế nào để tôi có thể tích điểm?',
@@ -76,7 +76,7 @@ class ProfileController extends Controller
       ],
       [
         'question' => 'Tôi có thể sử dụng điểm tích lũy như thế nào?',
-        'answer' => 'Bạn có thể sử dụng điểm để đổi voucher.'
+        'answer' => 'Bạn có thể sử dụng điểm để đổi voucher tại cửa hàng  hoặc mua online của chúng tôi .'
       ],
       [
         'question' => 'Tôi có thể kiểm tra số điểm của mình ở đâu?',
