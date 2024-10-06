@@ -100,6 +100,7 @@
                             </div>
                         </form>
 
+
                         {{-- Form inactive account --}}
                         <form action="#" class="mb-8">
                             @csrf
@@ -110,12 +111,49 @@
                                 thể khôi phục lại bất kỳ lúc nào</p>
                             <p class="text-sm mb-4">Chúng tôi sẽ yêu cầu mật khẩu để xác nhận hành động này</p>
                             <div class="mb-6 flex justify-end">
-                                <button type="submit" class="button-red">
+                                <button type="submit" class="button-red" data-modal-target="addAddressModal"
+                                    data-modal-toggle="addAddressModal">
                                     @svg('tabler-lock', 'icon-sm me-2')
                                     Huỷ kích hoạt
                                 </button>
                             </div>
                         </form>
+                        {{-- Modal nhập mật khẩu xác nhận hủy kích hoạt --}}
+                        <div id="addAddressModal" tabindex="-1" aria-hidden="true"
+                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+                            <div class="relative p-4 w-full max-w-2xl h-auto">
+                                <div class="relative p-4 bg-white rounded-lg shadow sm:p-5">
+                                    <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5">
+                                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                            Nhập mật khẩu xác nhận hủy kích hoạt tài khoản
+                                        </h3>
+                                        <button type="button"
+                                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                            data-modal-toggle="addAddressModal">
+                                            @svg('tabler-x', 'icon-sm')
+                                        </button>
+                                    </div>
+                                    <form action="#">
+                                        <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                                            <div class="col-span-2">
+                                                <label for="name"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nhập mật khẩu</label>
+                                                <input type="password" name="name" id="name" value=""
+                                                    class="input" placeholder="">
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <button type="submit" class="button-red">
+                                                Xác nhận
+                                            </button>
+                                            <button type="button" class="button-dark">
+                                                Huỷ
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
