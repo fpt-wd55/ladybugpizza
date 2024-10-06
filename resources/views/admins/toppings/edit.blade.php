@@ -1,7 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Sửa Topping')
+@section('title', 'Topping | Chỉnh sửa')
 
 @section('content')
+    {{ Breadcrumbs::render('admin.toppings.edit', $editTopping) }}
     <div class="">
         <div class="flex justify-end">
             @if (session('message'))
