@@ -10,26 +10,23 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     public function menu(Request $request)
-    {
-        $categories = Category::all();
+{
+    $categories = Category::all();
 
-        $products = [];
+    $search = $request->input('search');
 
-        foreach ($categories as $category) {
-            $products[$category->name] = $category->products()->paginate(6); // Phân trang cho sản phẩm trong danh mục
-        }
+    $categoryId = $request->input('category');
 
-        // $search = $request->input('search');
+    $products = Product::when($categoryId, function ($query) use ($categoryId) {
+        return $query->where('category_id', $categoryId);
+    })
+    ->when($search, function ($query) use ($search) {
+        return $query->where('name', 'like', '%' . $search . '%');
+    })->paginate(6);
 
-        // if ($search) {
-        //     $products = Product::where('name', 'like', "%$search%")->paginate(6);
-        // }
+    return view('clients.product.menu', compact('categories', 'products'));
+}
 
-        return view('clients.product.menu', [
-            'categories' => $categories,
-            'products' => $products
-        ]);
-    }
 
     public function show($slug)
     {

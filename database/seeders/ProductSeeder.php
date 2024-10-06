@@ -21,7 +21,7 @@ class ProductSeeder extends Seeder
         $now = Carbon::now();
 
         $dataProduct = [
-            'banh-ngot' => [
+            'cake' => [
                 'Bánh Mỳ Bơ Tỏi',
                 'Bánh Phô Mai Việt Quất',
                 'Bánh Sừng Bò Bơ Nguyên Chất',
@@ -64,7 +64,7 @@ class ProductSeeder extends Seeder
                 'Pizza Sicilian',
                 'Pizza Mật Ong Nóng',
             ],
-            'my' => [
+            'pasta' => [
                 'Pasta Bolognese',
                 'Pasta Carbonara',
                 'Pasta Xốt Pesto Genovese',
@@ -72,7 +72,7 @@ class ProductSeeder extends Seeder
                 'Pasta Nấm Hương Shiitake',
                 'Pasta Tôm Cay',
             ],
-            'nuoc-ngot' => [
+            'soft' => [
                 'Coca Classic Lon 330ml',
                 'Coca Zero Lon 330ml',
                 'Coca Light Lon 330ml',
@@ -81,7 +81,7 @@ class ProductSeeder extends Seeder
                 'Soda Schweppes Lon 330ml',
                 'Mountain Dew Chai Nhỏ 250ml',
             ],
-            'ga' => [
+            'chicken' => [
                 'Cánh gà nướng',
                 'Gà không xương sốt cay',
                 'Gà không xương mắm tỏi',
@@ -101,7 +101,8 @@ class ProductSeeder extends Seeder
                 'Gia Đình Vui Vẻ - Cả Nhà Cùng Vui',
                 'Cặp Đôi Yêu Thương - Ăn Là Phải Có Đôi',
                 'Năng Lượng Ngập Tràn - Đầy Đủ Chất',
-                'Ăn Vặt Cuối Tuần - Nhâm Nhi Cả Ngày'
+                'Ăn Vặt Cuối Tuần - Nhâm Nhi Cả Ngày',
+                'Mua 1 Tặng 1 - Tiết Kiệm Nhân Đôi'
             ]
         ];
 
