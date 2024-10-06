@@ -1,7 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Danh sách Topping')
+@section('title', 'Topping')
 
 @section('content')
+    {{ Breadcrumbs::render('admin.toppings.index') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="overflow-x-auto ">
             <div
