@@ -32,7 +32,6 @@ class ProfileController extends Controller
         ['min' => 3001, 'max' => 10000, 'rank' => 'Vàng', 'img' => 'storage/uploads/ranks/gold.svg'],
         ['min' => 10001, 'max' => PHP_INT_MAX, 'rank' => 'Kim cương', 'img' => 'storage/uploads/ranks/diamond.svg']
     ];
-    
     // 2. Tính rank dựa theo điểm
     $currentRank = null;
     foreach ($ranks as $rank) {
@@ -41,15 +40,12 @@ class ProfileController extends Controller
             break;
         }
     }
-
     // 3. Kiểm tra rank
     if (!$currentRank) {
         return response()->json(['error' => 'Rank không tìm thấy'], 404);
     }
-
     // 4. Tính số điểm cần có cho rank tiếp theo và progress bar
     $nextPoints = max(0, $currentRank['max'] - $points);
-    //tính trên progress 
     $progress = ($points - $currentRank['min']) / ($currentRank['max'] - $currentRank['min']) * 100;
      // 5. Tìm rank tiếp theo
      $nextRank = null;
@@ -59,7 +55,6 @@ class ProfileController extends Controller
              break;
          }
      } 
-
     // 5. Ở hạng cao nhất thì không có rank tiếp theo
     if ($currentRank['rank'] === 'Kim cương') {
         $nextPoints = 0;
@@ -101,15 +96,13 @@ class ProfileController extends Controller
       ],
       [
           'question' => 'Có cách nào để tôi có thể tăng tốc độ tích điểm không?',
-          'answer' => 'Bạn có thể tăng tốc độ tích điểm bằng cách tham gia các chương trình khuyến mãi và sự kiện đặc biệt mà chúng tôi tổ chức.'
+          'answer' => 'Bạn có thể tăng tốc độ tích điểm bằng cách mua sắm nhiều bên chúng tôi.'
       ],
       [
           'question' => 'Tôi có thể lấy lại điểm đã sử dụng không?',
           'answer' => 'Một khi bạn đã sử dụng điểm để đổi quà hoặc voucher, điểm đó sẽ không được hoàn lại.'
       ]
   ];
-  
-
     return view('clients.profile.membership', [
         'rank' => $currentRank['rank'],
         'points' => $points,
