@@ -12,9 +12,9 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3">
 
                     <div class="col-span-1 flex flex-col items-center mb-8 gap-4">
-                        <img class="img-circle img-lg object-cover"
+                        {{-- <img class="img-circle img-lg object-cover"
                             src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}"
-                            alt="">
+                            alt=""> --}}
                         <input type="file" id="avatar" class="hidden">
                         <label for="avatar" class="button-red cursor-pointer">
                             Chọn ảnh
@@ -29,52 +29,59 @@
                             @method('PUT')
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Tên tài khoản:</label>
-                                <span class="badge-red">{{ $users->username}}</span>
+                                <span class="badge-red">{{ $users->username }}</span>
                             </div>
-                            
+
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Họ và tên:</label>
-                                <!-- Thêm thuộc tính name -->
-                                <input type="text" class="input" name="fullname" value="{{ old('fullname', $users->fullname) }}">
+
+                                <input type="text" class="input" name="fullname"
+                                    value="{{ old('fullname', $users->fullname) }}">
                             </div>
-                            
+
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Email:</label>
-                                <!-- Thêm thuộc tính name -->
-                                <input type="email" class="input" name="email" value="{{ old('email', $users->email) }}">
+
+                                <input type="email" class="input" name="email"
+                                    value="{{ old('email', $users->email) }}">
                             </div>
-                            
+
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Số điện thoại:</label>
-                                <!-- Thêm thuộc tính name -->
-                                <input type="text" class="input" name="phone" value="{{ old('phone', $users->phone) }}">
+
+                                <input type="text" class="input" name="phone"
+                                    value="{{ old('phone', $users->phone) }}">
                             </div>
-                            
+
                             <div class="mb-6 flex items-center gap-8">
                                 <p class="text-sm font w-32 font-medium">Giới tính:</p>
                                 <div class="flex items-center gap-4 text-sm">
                                     <label for="male">
-                                        <!-- Thêm checked nếu giá trị đã chọn -->
-                                        <input type="radio" name="gender" value="male" id="male" class="input-radio" {{ $users->gender == 'male' ? 'checked' : '' }}>
+
+                                        <input type="radio" name="gender" value="male" id="male"
+                                            class="input-radio" {{ $users->gender == 'male' ? 'checked' : '' }}>
                                         Nam
                                     </label>
                                     <label for="female">
-                                        <input type="radio" name="gender" value="female" id="female" class="input-radio" {{ $users->gender == 'female' ? 'checked' : '' }}>
+                                        <input type="radio" name="gender" value="female" id="female"
+                                            class="input-radio" {{ $users->gender == 'female' ? 'checked' : '' }}>
                                         Nữ
                                     </label>
                                     <label for="other">
-                                        <input type="radio" name="gender" value="other" id="other" class="input-radio" {{ $users->gender == 'other' ? 'checked' : '' }}>
+                                        <input type="radio" name="gender" value="other" id="other"
+                                            class="input-radio" {{ $users->gender == 'other' ? 'checked' : '' }}>
                                         Khác
                                     </label>
                                 </div>
                             </div>
-                            
+
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font-medium w-32">Ngày sinh:</label>
-                                <!-- Thêm thuộc tính name -->
-                                <input type="date" class="input" name="date_of_birth" value="{{ old('date_of_birth', $users->date_of_birth) }}">
+
+                                <input type="date" class="input" name="date_of_birth"
+                                    value="{{ old('date_of_birth', $users->date_of_birth) }}">
                             </div>
-                            
+
                             <div class="mb-6 flex justify-end">
                                 <button type="submit" class="button-red">
                                     @svg('tabler-cloud-upload', 'icon-sm me-2')
@@ -82,7 +89,7 @@
                                 </button>
                             </div>
                         </form>
-                        
+
 
                         {{-- Change password form --}}
                         <form action="#" class="mb-8">
