@@ -40,7 +40,7 @@
                 <div class="w-full h-10 mb-5">
                     <label for="category_id" class="label-lg">Danh mục</label>
                     <select class="select w-full mb-2" name="category_id">
-                        <option value="">Chọn</option>
+                        <option value="">Chọn </option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}"
                                 {{ $category->id == $editTopping->category_id ? 'selected' : '' }}>

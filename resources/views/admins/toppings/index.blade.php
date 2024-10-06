@@ -7,8 +7,8 @@
             <div
                 class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 @if (session('message'))
-                    <div class="button bg-green-400">
-                        {{ session('message') }}
+                    <div class="button bg-green-300">
+                        {{ session('message') }} 
                     </div>
                 @endif
                 <a href="{{ route('admin.toppings.create') }}"
@@ -22,8 +22,8 @@
                     Thùng rác
                 </a>
             </div>
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-gray-700 uppercase bg-gray-50">
+            <table class="w-full text-sm text-left text-gray-500 ">
+                <thead class="text-gray-700 uppercase bg-gray-50 ">
                     <tr>
                         <th scope="col" class="px-4 py-3">STT</th>
                         <th scope="col" class="px-4 py-3">Tên</th>
