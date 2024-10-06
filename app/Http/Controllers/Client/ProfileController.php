@@ -1,20 +1,45 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+  namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+  use App\Http\Controllers\Controller;
+  use App\Http\Requests\ContactRequest;
+  use Illuminate\Http\Request;
+  use Illuminate\Support\Facades\Auth; 
 
-class ProfileController extends Controller
-{
+  class ProfileController extends Controller
+  {
     public function index()
     {
-        return view('clients.profile.index');
+        $users = Auth::user();
+        return view('clients.profile.index', compact('users'));
     }
+  
 
-    public function update(Request $request)
+    public function postUpdate(ContactRequest $request, $id)
     {
+      $data = $request->all([
+        'fullname',
+        'email',
+        'phone',
+        'date_of_birth',
 
+      ]);
+    $users = Auth::user();
+
+ 
+    $users->fullname = $data['fullname'];
+    $users->email = $data['email'];
+    $users->phone = $data['phone'];
+    $users->date_of_birth = $data['date_of_birth'];
+
+   
+    $users->save();
+
+   
+    return redirect()->route('clients.profile.index');
+    
+      
     }
 
     public function postChangePassword(Request $request)
