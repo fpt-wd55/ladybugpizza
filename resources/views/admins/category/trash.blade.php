@@ -1,22 +1,12 @@
 @extends('layouts.admin')
 @section('content')
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
-
-
-        <div class="flex flex-col md:flex-row items-center justify-end space-y-3 md:space-y-0 md:space-x-4 px-4">
-
-            <div
-                class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-
-                <div class="flex items-center space-x-3 w-full md:w-auto">
-
-                    <a href="{{ route('admin.categories.index') }}">
-                        <button type="button" class="rounded-lg button-blue">Trở Lại</button>
-                    </a>
-
-                </div>
-            </div>
-        </div>
+        <div
+            class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3 p-4">
+            <a href="{{ route('admin.categories.index') }}">
+                <button type="button" class="button-dark">Quay Lại</button>
+            </a>
+        </div> 
         <div class="overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-gray-700 uppercase bg-gray-50">
