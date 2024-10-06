@@ -1,5 +1,7 @@
 @extends('layouts.admin')
+@section('title', 'Danh mục')
 @section('content')
+    {{ Breadcrumbs::render('admin.categories.index') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div
             class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3 p-4">
@@ -44,14 +46,14 @@
                             <td class="px-4 py-3">{{ $item->slug }}</td>
 
                             <td class="px-4 py-3">
-                               
+
                                 <div class="flex items-center">
                                     <div
                                         class="inline-block indicator {{ $item->status == 1 ? 'bg-green-700' : 'bg-red-700' }}">
                                     </div>
                                     {{ $item->status == 1 ? 'Hoạt động' : 'Khóa' }}
                                 </div>
-                            
+
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $item->name }}-dropdown-button"
@@ -98,8 +100,9 @@
                                         <form action="{{ route('admin.categories.destroy', $item->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button  type="submit"
-                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"> Xóa
+                                            <button type="submit"
+                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                Xóa
                                             </button>
                                         </form>
 
@@ -116,7 +119,7 @@
                             <td colspan="6" class="text-center py-4 text-base">
                                 <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
                                     @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
-                                    <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p> 
+                                    <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
                                 </div>
                             </td>
                         </tr>

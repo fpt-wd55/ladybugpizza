@@ -29,3 +29,29 @@ Breadcrumbs::for('admin.users.show', function (BreadcrumbTrail $trail, $user) {
     $trail->push('Chi tiết', route('admin.users.show', $user));
 });
 
+// Danh mục
+
+Breadcrumbs::for('admin.categories.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Danh mục', route('admin.categories.index'));
+});
+
+Breadcrumbs::for('admin.categories.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.categories.index');
+    $trail->push('Thêm mới', route('admin.categories.create'));
+});
+
+Breadcrumbs::for('admin.categories.edit', function (BreadcrumbTrail $trail, $category) {
+    $trail->parent('admin.categories.index');
+    $trail->push('Chỉnh sửa', route('admin.categories.edit', $category));
+});
+
+Breadcrumbs::for('admin.trash.listcate', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.categories.index');
+    $trail->push('Thùng rác', route('admin.trash.listcate'));
+});
+
+
+
+
+// Topping
