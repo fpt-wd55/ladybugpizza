@@ -8,42 +8,38 @@
                 class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 @if (session('message'))
                     <div class="button bg-green-400">
-                        {{ session('message') }} 
+                        {{ session('message') }}
                     </div>
                 @endif
-                <a href="{{ route('admin.promotions.create') }}"
-                    class="button-blue">
+                <a href="{{ route('admin.promotions.create') }}" class="button-blue">
                     @svg('tabler-plus', 'w-5 h-5 mr-2')
                     Thêm mới mã giảm giá
                 </a>
             </div>
-            <table class="w-full   text-gray-500 ">
-                <thead class="text-gray-700 uppercase bg-gray-50 ">
+            <table class="w-full text-sm text-left text-gray-500">
+                <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="px-4 py-3">STT</th>
-                        <th scope="col" class="px-4 py-3">Mã giảm giá</th>
-                        <th scope="col" class="px-4 py-3">Mô tả</th>
+                        <th scope="col" class="px-4 py-3">Tên mã giảm giá</th>
                         <th scope="col" class="px-4 py-3">Loại giảm giá</th>
                         <th scope="col" class="px-4 py-3">Giá trị giảm giá</th>
-                        <th scope="col" class="px-4 py-3">Ngày bắt đầu</th>
-                        <th scope="col" class="px-4 py-3">Ngày kết thúc</th>
                         <th scope="col" class="px-4 py-3">Số lượng</th>
                         <th scope="col" class="px-4 py-3">
-                            <span class="sr-only">Hành động </span>
+                            <span class="sr-only">Hành động</span>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($promotions as $promotion)
-                        <tr class="border-b hover:bg-gray-100">     
-                            <td></td>  
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $promotion->code }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $promotion->description }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $promotion->discount_type }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $promotion->discount_value }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $promotion->start_date }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $promotion->end_date }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $promotion->quantity }}</td>
+                        <tr class="border-b hover:bg-gray-100">
+                            <!-- Tính toán STT dựa trên trang hiện tại -->
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                                {{ ($promotions->currentPage() - 1) * $promotions->perPage() + $loop->iteration }}</td>
+                            </td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->code }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->discount_type }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->discount_value }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->quantity }}</td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $promotion->id }}" data-dropdown-toggle="{{ $promotion->id }}-dropdown"
                                     class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
@@ -54,8 +50,8 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $promotion->id }}">
                                         <li>
-                                            <a href="{{ route('admin.promotions.edit', $promotion) }}"
-                                                class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
+                                            <a href="{{ route('admin.promotions.show', $promotion) }}"
+                                                class="block py-2 px-4 hover:bg-gray-100">Chi tiết</a>
                                         </li>
                                     </ul>
                                     <div class="py-1">
@@ -83,11 +79,13 @@
                                         </div>
                                         <h3 class="mb-5 font-normal">Bạn có muốn xóa promotion này không?</h3>
 
-                                        <form action="{{ route('admin.promotions.destroy', $promotion->id) }}" method="POST">
+                                        <form action="{{ route('admin.promotions.destroy', $promotion->id) }}"
+                                            method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button  type="submit"
-                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"> Xóa
+                                            <button type="submit"
+                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                Xóa
                                             </button>
                                         </form>
 
@@ -99,19 +97,20 @@
                         </div>
                         {{-- end modal --}}
                     @empty
-                    <td colspan="6" class="text-center py-4 text-base">
-                        <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
-                            @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
-                            <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p> 
-                        </div>
-                    </td>
-                    <!-- Hiển thị "Trống" nếu không có dữ liệu -->
+                        <td colspan="6" class="text-center py-4 text-base">
+                            <div class="flex flex-col items-center justify-center p-6 rounded-lg bg-white w-full h-80">
+                                @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                            </div>
+                        </td>
                     @endforelse
                 </tbody>
             </table>
-            {{-- <div class="p-4">
+
+            <div class="p-4">
                 {{ $promotions->links() }}
-            </div> --}}
+            </div>
+
         </div>
     </div>
 @endsection
