@@ -20,7 +20,7 @@
                             <p class="text-sm font-medium">{{ $points }} Điểm</p>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
-                            <div class="bg-red-500 h-2 rounded-full" style="{{ $progress }}%"></div>
+                            <div class="bg-red-500 h-2 rounded-full" style="width:{{ $progress }}%"></div>
                         </div>
                         <p class="text-sm">Tích thêm {{ $nextPoints }} điểm nữa để nâng cấp lên thành viên
                             {{ $nextRank }}</p>

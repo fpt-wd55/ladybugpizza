@@ -48,11 +48,9 @@ class ProfileController extends Controller
     }
 
     // 4. Tính số điểm cần có cho rank tiếp theo và progress bar
-    //tính điểm ko âm
     $nextPoints = max(0, $currentRank['max'] - $points);
     //tính trên progress 
     $progress = ($points - $currentRank['min']) / ($currentRank['max'] - $currentRank['min']) * 100;
-
      // 5. Tìm rank tiếp theo
      $nextRank = null;
      foreach ($ranks as $rank) {
@@ -67,8 +65,6 @@ class ProfileController extends Controller
         $nextPoints = 0;
         $progress = 100;
     }
-  
-
     // 6. Kiểm tra FAQ
     $faqs = [
       [
