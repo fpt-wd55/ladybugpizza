@@ -13,16 +13,16 @@
 
                 {{-- Điểm hội viên --}}
                 <div class="flex flex-col md:flex-row items-center gap-8 mb-8">
-                    <img src="{{ asset('storage/uploads/ranks/gold.svg') }}" alt="" class="img-md">
+                    <img src="{{ $img }}" alt="{{ strtolower($rank) }}" class="img-md">
                     <div class="w-full">
                         <div class="flex items-center justify-between mb-1">
-                            <p class="uppercase font-semibold text-yellow-300"></p>
-                            <p class="text-sm font-medium">{{ $currentPoints }} Điểm</p>
+                            <p class="uppercase font-semibold text-yellow-300">{{ strtolower($rank) }}</p>
+                            <p class="text-sm font-medium">{{ $points }} Điểm</p>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
-                            <div class="bg-red-500 h-2 rounded-full" style="width: 45%"></div>
+                            <div class="bg-red-500 h-2 rounded-full" style="{{ $progress }}%"></div>
                         </div>
-                        <p class="text-sm">Tích thêm {{ $pointsToNextRank }} điểm nữa để nâng cấp lên thành viên Kim cương
+                        <p class="text-sm">Tích thêm {{ $nextPoints }} điểm nữa để nâng cấp lên thành viên ....
                         </p>
                     </div>
                 </div>

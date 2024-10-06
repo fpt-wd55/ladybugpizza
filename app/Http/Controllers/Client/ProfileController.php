@@ -23,7 +23,37 @@ class ProfileController extends Controller
     }
 
     public function membership()
-    {
+    {   
+        //1. function điểm và rank
+      $points = 1850;
+      $ranks =[
+       [ 'min' => '0','max' => '1000', 'rank' => 'bronze'],
+       [ 'min' => '1001','max' => '3000', 'rank' => 'silver'],
+       [ 'min' => '3001','max' => '10000', 'rank' => 'gold'],
+       [ 'min' => '10001','max' => PHP_INT_MAX, 'rank' => 'diamond']
+       ];
+     //2.Tính rank dựa theo điểm
+     $currentRank = null;
+       foreach ($ranks as $rank) {
+           if ($points >= $rank['min'] && $points <= $rank['max']) {
+               $currentRank = $rank;
+               break;
+           }
+       }
+      // 3. Kiểm tra rank
+       if (!$currentRank) {
+      return response()->json(['error' => 'Rank không tìm thấy'], 404);
+       }
+     // 4. Tính số điểm cần có cho rank tiếp theo và progress bar
+     $nextPoints = $currentRank['max'] - $points;
+     $progress = ($points - $currentRank['min']) / ($currentRank['max'] - $currentRank['min']) * 100;
+     //5.Ở hạng co nhất thì khong có rank tiếp theo 
+        if ($currentRank['rank'] === 'Kim cương') {
+      $nextPoints = 0;
+      $progress = 100;
+       }
+       $img = asset('storage/uploads/ranks/' . strtolower($currentRank['rank']) . '.svg');
+       //6.Kiểm tra rnak tiếp theo
         $faqs = [
             [
             'question' => 'Điểm tích lũy là gì?',
@@ -31,9 +61,6 @@ class ProfileController extends Controller
             ],
             ['question' => 'Làm thế nào để tôi có thể tích điểm?',
               'answer'=> 'Bạn có thể tích điểm khi thực hiện giao dịch mua sắm tại cửa hàng hoặc trên trang web của chúng tôi. Mỗi đồng bạn chi tiêu sẽ được quy đổi thành điểm.'
-            ],
-            ['question' => 'Điểm tích lũy có hết hạn không?',
-              'answer'=> 'Vô hạn'
             ],
             ['question' => 'Điểm tích lũy có hết hạn không?',
               'answer'=> 'Điểm không hết hạn'
@@ -61,7 +88,15 @@ class ProfileController extends Controller
             'answer' => 'Điểm tích lũy của bạn sẽ được cập nhật ngay lập tức sau khi giao dịch hoàn tất. Bạn có thể kiểm tra trong tài khoản của mình.'
             ],
     ];
-        return view('clients.profile.membership',compact('faqs'));
+    return view('clients.profile.membership', [
+      'rank' => $currentRank['rank'],
+      'points' => $currentRank['max'],
+      'nextPoints' => $nextPoints,
+      'progress' => $progress,
+      'img' => $img,
+      'faqs' => $faqs
+  ]);
+        
     }
 
     public function address()
