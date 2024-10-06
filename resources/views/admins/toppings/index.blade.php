@@ -7,7 +7,7 @@
             <div
                 class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 @if (session('message'))
-                    <div class="button bg-green-300">
+                    <div class="button bg-green-400">
                         {{ session('message') }} 
                     </div>
                 @endif
