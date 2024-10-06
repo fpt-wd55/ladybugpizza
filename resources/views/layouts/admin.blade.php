@@ -32,8 +32,6 @@
     @include('partials.admins.sidebar')
 
     <div class="mt-20 sm:ml-64">
-        {{-- breadcrumb --}} 
-        @include('partials.admins.breadcrumb')
         <div class="px-4">
             @yield('content')
         </div>

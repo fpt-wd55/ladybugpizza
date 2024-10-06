@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+    {{ Breadcrumbs::render('admin.dashboard') }}
     <div class="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
         <!-- Main widget -->
         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6">
@@ -648,5 +649,5 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 @endsection
