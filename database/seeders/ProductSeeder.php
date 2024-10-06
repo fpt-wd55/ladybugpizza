@@ -111,16 +111,16 @@ class ProductSeeder extends Seeder
 
         foreach ($categories as $category) {
             $products = $dataProduct[$category->slug] ?? [];
+
             foreach ($products as $product) {
-                $slug = Str::slug($product);
                 $price = rand(100000, 500000);
 
                 // Create Product
                 $createdProduct = Product::create([
                     'name' => $product,
-                    'slug' => $slug,
-                    'image' => $slug . '.jpeg',
-                    'description' => 'Description of ' . $product,
+                    'slug' => Str::slug($product),
+                    'image' => Str::slug($product) . '.jpeg',
+                    'description' => "Description of $product",
                     'category_id' => $category->id,
                     'price' => $price,
                     'discount_price' => $price - rand(50000, 10000),

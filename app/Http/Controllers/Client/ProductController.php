@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Topping;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -34,10 +35,14 @@ class ProductController extends Controller
 
         $attributes = $product->attributes()->get();
 
-        // dd($attributes);
+        $toppings = Topping::where('category_id', $product->category->id)->get();
+
+        // dd($toppings);
 
         return view('clients.product.detail', [
-            'product' => $product
+            'product' => $product,
+            'attributes' => $attributes,
+            'toppings' => $toppings
         ]);
     }
 

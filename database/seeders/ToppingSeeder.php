@@ -36,12 +36,12 @@ class ToppingSeeder extends Seeder
             'Húng quế'
         ];
 
-        foreach ($toppings as $name => $topping) {
+        foreach ($toppings as $topping) {
             Topping::create([
-                'name' => $name,
-                'image' => Str::slug($topping) . '.jpg',
+                'name' => $topping,
+                'image' => Str::slug($topping) . '.jpeg',
                 'price' => rand(10, 50) * 1000,
-                'category_id' => 3,
+                'category_id' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
