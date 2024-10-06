@@ -5,12 +5,9 @@
 @section('content')
     <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
         <div class="lg:flex">
-
             @include('clients.profile.sidebar')
-
             <div class="card p-4 md:p-8 w-full min-h-screen">
                 <h3 class="font-semibold uppercase mb-8">Điểm hội viên</h3>
-
                 {{-- Điểm hội viên --}}
                 <div class="flex flex-col md:flex-row items-center gap-8 mb-8">
                     <img src="{{ asset($img) }}" alt="" class="img-md">
@@ -26,19 +23,15 @@
                             {{ $nextRank }}</p>
                     </div>
                 </div>
-
                 {{-- faq --}}
                 <div>
                     <p class="title">Các câu hỏi hường gặp (FAQ)</p>
-
                     <div class="card p-4">
                         @foreach ($faqs as $index => $faq)
                             <div class="border-b border-gray-300 mb-4">
                                 <button onclick="toggleAccordion({{ $index }})"
                                     class="w-full flex justify-between items-center py-4">
-
                                     <span class="font-medium">{{ $index + 1 }}. {{ $faq['question'] }}</span>
-
                                     <span id="icon-1" class="transition">
                                         @svg('tabler-plus', 'icon-sm')
                                     </span>
