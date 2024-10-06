@@ -53,9 +53,9 @@ class ToppingRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Tên không được bỏ trống',
+            'name.required' => 'Tên không được bỏ trống',   
             'image.mimes' => 'Ảnh không đúng định dạng',
-            'price.required' => 'Giá không được để trống',
+            'price.required' => 'Giá không được bỏ trống',
             'price.numeric' => 'Giá phải là một số',
             'price.min' => 'Giá không thể dưới 0 đồng',
             'category_id' => 'Danh mục không được bỏ trống',
