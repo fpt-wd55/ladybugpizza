@@ -13,7 +13,8 @@ class PromotionController extends Controller
      */
     public function index()
     {
-        //
+        $promotions = Promotion::all();
+        return view('admins.promotions.index',compact('promotions'));
     }
 
     /**
