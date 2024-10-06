@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('title', 'Tài khoản')
 @section('content')
     {{ Breadcrumbs::render('admin.dashboard') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">

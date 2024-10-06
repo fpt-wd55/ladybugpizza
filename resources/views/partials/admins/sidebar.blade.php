@@ -34,10 +34,10 @@
                 </button>
                 <ul id="dropdown-pages" class="hidden py-2 space-y-2">
                     <li>
-                        <a href="{{ route('admin.categories.index') }}"
+                        <a href="{{route('admin.categories.index')}}"
                             class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Danh
                             mục</a>
-                    </li>
+                    </li> 
                     <li>
                         <a href="{{ route('admin.products.index') }}"
                             class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Sản
@@ -49,7 +49,7 @@
                             tính</a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.toppings.index') }}"
+                        <a href="{{ route('admin.toppings.index')}}"
                             class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Topping</a>
                     </li>
                 </ul>
@@ -88,14 +88,7 @@
                     @svg('tabler-slideshow', 'text-gray-500')
                     <span class="ml-3">Banner</span>
                 </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.roles.index') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
-                    @svg('tabler-password-user', 'text-gray-500')
-                    <span class="ml-3">Phân quyền</span>
-                </a>
-            </li>
+            </li> 
             <li>
                 <a href="{{ route('admin.memberships.index') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">

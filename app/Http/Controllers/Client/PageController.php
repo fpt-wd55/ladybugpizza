@@ -48,7 +48,6 @@ class PageController extends Controller
         ]);
 
         event(new ContactNotification($notification));
-        Log::info('Notification sent:', ['notification' => $notification]);
 
         $contactData = [
             'fullname' => $request->fullname,
