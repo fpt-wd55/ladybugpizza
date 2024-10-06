@@ -64,4 +64,11 @@ class BannerController extends Controller
     {
         //
     }
+
+    public function trashList(Banner $banner)
+    {
+        $deleteBanner = Banner::onlyTrashed()->paginate(10);
+
+        return view('admins.banner.trash',compact('deleteBanner'));
+    }
 }

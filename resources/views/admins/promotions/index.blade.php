@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Danh sách Topping')
+@section('title', 'Danh sách mã giảm giá')
 
 @section('content')
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
@@ -11,78 +11,69 @@
                         {{ session('message') }} 
                     </div>
                 @endif
-                <a href="{{ route('admin.toppings.create') }}"
+                <a href="{{ route('admin.promotions.create') }}"
                     class="button-blue">
                     @svg('tabler-plus', 'w-5 h-5 mr-2')
-                    Thêm Topping
-                </a>
-                <a href="{{ route('admin.trash-topping') }}"
-                    class="button-red">
-                    @svg('tabler-trash', 'w-5 h-5 mr-2')
-                    Thùng rác
+                    Thêm mới mã giảm giá
                 </a>
             </div>
-            <table class="w-full text-sm text-left text-gray-500 ">
+            <table class="w-full   text-gray-500 ">
                 <thead class="text-gray-700 uppercase bg-gray-50 ">
                     <tr>
                         <th scope="col" class="px-4 py-3">STT</th>
-                        <th scope="col" class="px-4 py-3">Tên</th>
-                        <th scope="col" class="px-4 py-3">Ảnh</th>
-                        <th scope="col" class="px-4 py-3">Giá</th>
-                        <th scope="col" class="px-4 py-3">Danh mục</th>
+                        <th scope="col" class="px-4 py-3">Mã giảm giá</th>
+                        <th scope="col" class="px-4 py-3">Mô tả</th>
+                        <th scope="col" class="px-4 py-3">Loại giảm giá</th>
+                        <th scope="col" class="px-4 py-3">Giá trị giảm giá</th>
+                        <th scope="col" class="px-4 py-3">Ngày bắt đầu</th>
+                        <th scope="col" class="px-4 py-3">Ngày kết thúc</th>
+                        <th scope="col" class="px-4 py-3">Số lượng</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Hành động </span>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($toppings as $topping)
-                        <tr class="border-b hover:bg-gray-100">
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
-                                {{ ($toppings->currentPage() - 1) * $toppings->perPage() + $loop->iteration }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $topping->name }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                <img src="{{ asset('storage/uploads/toppings/' . $topping->image) }}" class="img-sm img-circle object-cover"
-                                    alt="">
-                            </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ number_format($topping->price) }}đ</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
-                                @foreach ($categories as $category)
-                                    @if ($category->id == $topping->category_id)
-                                        <span>{{ $category->name }}</span>
-                                    @endif
-                                @endforeach
-                            </td>
+                    @forelse ($promotions as $promotion)
+                        <tr class="border-b hover:bg-gray-100">     
+                            <td></td>  
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $promotion->code }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $promotion->description }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $promotion->discount_type }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $promotion->discount_value }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $promotion->start_date }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $promotion->end_date }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $promotion->quantity }}</td>
                             <td class="px-4 py-3 flex items-center justify-end">
-                                <button id="{{ $topping->id }}" data-dropdown-toggle="{{ $topping->id }}-dropdown"
+                                <button id="{{ $promotion->id }}" data-dropdown-toggle="{{ $promotion->id }}-dropdown"
                                     class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
                                     type="button">
                                     @svg('tabler-dots', 'w-5 h-5')
                                 </button>
-                                <div id="{{ $topping->id }}-dropdown"
+                                <div id="{{ $promotion->id }}-dropdown"
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
-                                    <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $topping->id }}">
+                                    <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $promotion->id }}">
                                         <li>
-                                            <a href="{{ route('admin.toppings.edit', $topping) }}"
+                                            <a href="{{ route('admin.promotions.edit', $promotion) }}"
                                                 class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
                                         </li>
                                     </ul>
                                     <div class="py-1">
-                                        <a href="#" data-modal-target="delete-modal-{{ $topping->id }}"
-                                            data-modal-toggle="delete-modal-{{ $topping->id }}"
+                                        <a href="#" data-modal-target="delete-modal-{{ $promotion->id }}"
+                                            data-modal-toggle="delete-modal-{{ $promotion->id }}"
                                             class="cursor-pointer block py-2 px-4 text-sm text-red-500 hover:bg-gray-100">Xóa</a>
                                     </div>
                                 </div>
                             </td>
                         </tr>
                         {{-- start modal --}}
-                        <div id="delete-modal-{{ $topping->id }}" tabindex="-1"
+                        <div id="delete-modal-{{ $promotion->id }}" tabindex="-1"
                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                             <div class="relative p-4 w-full max-w-md max-h-full">
                                 <div class="relative bg-white rounded-lg shadow">
                                     <button type="button"
                                         class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-                                        data-modal-hide="delete-modal-{{ $topping->id }}">
+                                        data-modal-hide="delete-modal-{{ $promotion->id }}">
                                         @svg('tabler-x', 'w-4 h-4')
                                         <span class="sr-only">Close modal</span>
                                     </button>
@@ -90,9 +81,9 @@
                                         <div class="flex justify-center">
                                             @svg('tabler-trash', 'w-12 h-12 text-red-600 text-center mb-2')
                                         </div>
-                                        <h3 class="mb-5 font-normal">Bạn có muốn xóa Topping này không?</h3>
+                                        <h3 class="mb-5 font-normal">Bạn có muốn xóa promotion này không?</h3>
 
-                                        <form action="{{ route('admin.toppings.destroy', $topping->id) }}" method="POST">
+                                        <form action="{{ route('admin.promotions.destroy', $promotion->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button  type="submit"
@@ -100,7 +91,7 @@
                                             </button>
                                         </form>
 
-                                        <button data-modal-hide="delete-modal-{{ $topping->id }}" type="button"
+                                        <button data-modal-hide="delete-modal-{{ $promotion->id }}" type="button"
                                             class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Không</button>
                                     </div>
                                 </div>
@@ -118,9 +109,9 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="p-4">
-                {{ $toppings->links() }}
-            </div>
+            {{-- <div class="p-4">
+                {{ $promotions->links() }}
+            </div> --}}
         </div>
     </div>
 @endsection

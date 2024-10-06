@@ -36,7 +36,9 @@
                             <div class="border-b border-gray-300 mb-4">
                                 <button onclick="toggleAccordion({{ $index }})"
                                     class="w-full flex justify-between items-center py-4">
+
                                     <span class="font-medium">{{ $index + 1 }}. {{ $faq['question'] }}</span>
+
                                     <span id="icon-1" class="transition">
                                         @svg('tabler-plus', 'icon-sm')
                                     </span>
