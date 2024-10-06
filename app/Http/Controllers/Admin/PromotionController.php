@@ -13,7 +13,8 @@ class PromotionController extends Controller
      */
     public function index()
     {
-        //
+        $promotions = Promotion::latest('id')->paginate(10);
+        return view('admins.promotions.index',compact('promotions'));
     }
 
     /**
@@ -21,7 +22,7 @@ class PromotionController extends Controller
      */
     public function create()
     {
-        //
+        return view('admins.promotions.add');
     }
 
     /**
@@ -29,7 +30,7 @@ class PromotionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

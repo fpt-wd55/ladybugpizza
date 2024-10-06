@@ -89,14 +89,9 @@ class CategoryController extends Controller
         Category::destroy($id);
 
         return redirect()->back()->with('message', 'Xóa thành công');
-    }
+    } 
 
-    // public function slug($name)
-    // {
-    //     return Str::slug($name);
-    // }
-
-    public function trashList(Category $category)
+    public function trashCategory()
     {
         $deletedCategories = Category::onlyTrashed()->paginate(10);
 
@@ -123,14 +118,5 @@ class CategoryController extends Controller
             $forceCategories->forceDelete();
             return redirect()->back()->with('success', 'Danh mục đã xóa vĩnh viễn');
         }
-    }
-
-
-    public function deleteAllSoftDeleted()
-    {
-
-        Category::onlyTrashed()->forceDelete();
-
-        return redirect()->route('admin.trash.listcate')->with('success', 'Đã xóa tất cả các danh mục đã bị xóa vĩnh viễn.');
-    }
+    } 
 }

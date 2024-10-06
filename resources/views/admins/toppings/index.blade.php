@@ -1,14 +1,15 @@
 @extends('layouts.admin')
-@section('title', 'Danh sách Topping')
+@section('title', 'Topping')
 
 @section('content')
+    {{ Breadcrumbs::render('admin.toppings.index') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="overflow-x-auto ">
             <div
                 class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 @if (session('message'))
                     <div class="button bg-green-400">
-                        {{ session('message') }}
+                        {{ session('message') }} 
                     </div>
                 @endif
                 <a href="{{ route('admin.toppings.create') }}"
@@ -22,8 +23,8 @@
                     Thùng rác
                 </a>
             </div>
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-gray-700 uppercase bg-gray-50">
+            <table class="w-full text-sm text-left text-gray-500 ">
+                <thead class="text-gray-700 uppercase bg-gray-50 ">
                     <tr>
                         <th scope="col" class="px-4 py-3">STT</th>
                         <th scope="col" class="px-4 py-3">Tên</th>
@@ -53,7 +54,6 @@
                                     @endif
                                 @endforeach
                             </td>
-
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $topping->id }}" data-dropdown-toggle="{{ $topping->id }}-dropdown"
                                     class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"

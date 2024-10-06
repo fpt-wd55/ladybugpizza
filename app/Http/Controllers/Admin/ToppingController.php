@@ -32,7 +32,7 @@ class ToppingController extends Controller
             $topping_image = $request->file('image');
             $topping_name = 'topping_' . pathinfo($topping_image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $topping_image->getClientOriginalExtension();
             $data['image'] = $topping_name;
-            $topping_image->storeAs('public/uploads/toppings', $topping_name);
+            $topping_image->storeAs('uploads/toppings', $topping_name);
         }
         Topping::query()->create($data);
         return redirect()->route('admin.toppings.index')->with('message', 'Thêm Topping thành công');
@@ -64,7 +64,7 @@ class ToppingController extends Controller
 
         if ($topping->update($data)) {
             if ($request->hasFile('image')) {
-                $topping_image->storeAs('public/uploads/toppings', $topping_name);
+                $topping_image->storeAs('uploads/toppings', $topping_name); 
                 // xóa ảnh cũ
                 if ($old_image != null) {
                     unlink(storage_path('app/public/uploads/toppings/' . $old_image));

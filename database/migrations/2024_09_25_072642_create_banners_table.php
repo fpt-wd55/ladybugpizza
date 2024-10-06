@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('url')->nullable();
             $table->integer('is_local_page')->default(1)->comment('1: local page, 2: external page');
             $table->tinyInteger('status')->default(1)->comment('1: active, 2: inactive');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

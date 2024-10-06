@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ToppingRequest extends FormRequest
+class PromotionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,27 +33,34 @@ class ToppingRequest extends FormRequest
     public function rulesForCreate(): array
     {
         return [
-            'name' => 'required',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,bmp,svg,webp',
-            'price' => 'required|numeric|min:0|',
-            'category_id' => 'required',
+            'code' => 'required',
+            'discription' => 'required',
+            'discount_type' => 'required',
+            'discount_value' => 'required',
+            'start_date' => ['required', 'date', 'before_or_equal:end_date'],
+            'end_date' => ['required', 'date', 'after_or_equal:start_date'],
+            'quantity' => 'required',
+            'min_order_total' => 'required|min>max_discount',
+            'max_discount' => 'required',
         ];
     }
 
     public function rulesForUpdate(): array
     {
         return [
-            'name' => 'required',
-            'image' => 'mimes:jpeg,png,jpg,gif,bmp,svg,webp',
-            'price' => 'required|numeric|min:0|',
-            'category_id' => 'required',
+            'code' => 'required',
+            'discription' => 'required',
+            'discount_type' => 'required',
+            'discount_value' => 'required',
+            'start_date' => ['required', 'date', 'before_or_equal:end_date'],
+            'end_date' => ['required', 'date', 'after_or_equal:start_date'],
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Tên không được bỏ trống',   
+            'name.required' => 'Tên không được bỏ trống',
             'image.mimes' => 'Ảnh không đúng định dạng',
             'price.required' => 'Giá không được bỏ trống',
             'price.numeric' => 'Giá phải là một số',
