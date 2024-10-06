@@ -12,9 +12,9 @@
                     Bộ lọc
                 </p>
                 {{-- Tìm kiếm --}}
-                <form class="mb-4">
-                    <input type="text" placeholder="Tìm kiếm..." class="input mb-4" />
-                    <button class="button-red w-full">Tìm kiếm</button>
+                <form class="mb-4" action="{{ route('client.product.menu') }}">
+                    <input type="text" name="search" placeholder="Tìm kiếm..." class="input mb-4" />
+                    <button type="submit" class="button-red w-full">Tìm kiếm</button>
                 </form>
                 <hr class="hr-default" />
                 {{-- Danh mục --}}
@@ -22,26 +22,12 @@
                     <div class="md:flex-1">
                         <p class="font-semibold mb-2 uppercase text-sm">Danh mục</p>
                         <div class="space-y-2">
-                            <label class="flex items-center gap-2 text-sm">
-                                <input type="checkbox" class="input-checkbox" />
-                                Pizza
-                            </label>
-                            <label class="flex items-center gap-2 text-sm">
-                                <input type="checkbox" class="input-checkbox" />
-                                Mỳ Ý
-                            </label>
-                            <label class="flex items-center gap-2 text-sm">
-                                <input type="checkbox" class="input-checkbox" />
-                                Salat
-                            </label>
-                            <label class="flex items-center gap-2 text-sm">
-                                <input type="checkbox" class="input-checkbox" />
-                                Đồ uống
-                            </label>
-                            <label class="flex items-center gap-2 text-sm">
-                                <input type="checkbox" class="input-checkbox" />
-                                Gà rán
-                            </label>
+                            @foreach ($categories as $category)
+                                <label class="flex items-center gap-2 text-sm">
+                                    <input name="{{ $category->slug }}" type="checkbox" class="input-checkbox" />
+                                    {{ $category->name }}
+                                </label>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -89,7 +75,7 @@
                 <div class="mb-8">
                     <p class="font-semibold uppercase mb-4">Combo</p>
                     <a href="" class="product-card flex overflow-hidden relative">
-                        <img src="http://127.0.0.1:8000/storage/uploads/products/pizza/pizza_4_ormaggi.webp"
+                        <img src="{{ asset('storage/uploads/products/combo/combo.jpeg') }}"
                             class="flex-shrink-0 h-60 w-1/2 object-cover" alt="">
                         <div class="p-4">
                             <p class="font-semibold mb-2 text-sm md:text-base">Combo 2 Pizza + Pepsi - Ăn thả ga - Giá siêu
@@ -113,9 +99,12 @@
                         <p class="font-semibold uppercase mb-4">{{ ucfirst($categoryName) }}</p>
                         <div class="grid grid-cols-2 lg:grid-cols-2 gap-4 mb-4">
                             @foreach ($items as $product)
+                                @php
+                                    $folder = $product->category->slug . '/';
+                                @endphp
                                 <a href="{{ route('client.product.show', $product->slug) }}"
                                     class="product-card md:flex overflow-hidden">
-                                    <img src="http://127.0.0.1:8000/storage/uploads/products/pizza/pizza_4_ormaggi.webp"
+                                    <img src="{{ asset('storage/uploads/products/' . $folder . $product->image) }}"
                                         class="flex-shrink-0 h-48 w-full md:w-1/3 md:h-full object-cover" alt="">
                                     <div class="p-2 text-sm">
                                         <p class="font-semibold mb-2 ">{{ $product->name }}</p>
@@ -123,11 +112,7 @@
                                             <p>{{ $product->avg_rating }}</p>
                                             <div class="flex items-center gap-1">
                                                 @for ($i = 0; $i < 5; $i++)
-                                                    @if ($i < $product->avg_rating)
-                                                        @svg('tabler-star-filled', 'icon-sm text-red-500')
-                                                    @else
-                                                        @svg('tabler-star', 'icon-sm text-red-500')
-                                                    @endif
+                                                    @svg($i < $product->avg_rating ? 'tabler-star-filled' : 'tabler-star', 'icon-sm text-red-500')
                                                 @endfor
                                             </div>
                                             <p>({{ $product->avg_rating }})</p>
