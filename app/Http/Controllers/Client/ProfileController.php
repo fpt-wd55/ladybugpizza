@@ -3,23 +3,66 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ContactRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 
 class ProfileController extends Controller
 {
   public function index()
   {
-    return view('clients.profile.index');
+    $users = Auth::user();
+    return view('clients.profile.index', compact('users'));
   }
 
-  public function update(Request $request)
-  {
+  public function postUpdate(Request $request, $id)
+{
+    $request->validate([
+        'fullname' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'phone' => 'nullable|string|max:20',
+        'gender' => 'nullable|string',
+        'date_of_birth' => 'nullable|date',
+    ]);
 
-  }
+    $user = User::findOrFail($id); // Tìm người dùng theo ID
+
+    // Cập nhật thông tin người dùng
+    $user->fullname = $request->fullname;
+    $user->email = $request->email;
+    $user->phone = $request->phone;
+    $user->date_of_birth = $request->date_of_birth;
+
+    // Lưu thông tin
+    $user->save();
+
+    return redirect()->route('client.profile.index');
+}
+
 
   public function postChangePassword(Request $request)
   {
+    // Xác thực dữ liệu
+    $request->validate([
+      'current_password' => 'required',
+      'new_password' => 'required|min:8|confirmed', // 'confirmed' sẽ kiểm tra mật khẩu khớp với new_password_confirmation
+  ]);
 
+  $user = Auth::user(); // Lấy người dùng hiện tại
+
+  // Kiểm tra mật khẩu hiện tại có đúng không
+  if (!Hash::check($request->current_password, $user->password)) {
+      return back()->withErrors(['current_password' => 'Mật khẩu hiện tại không chính xác.']);
+  }
+
+  // Cập nhật mật khẩu mới
+  $user->password = Hash::make($request->new_password);
+  $user->save();
+
+  return redirect()->back()->with('success', 'Mật khẩu đã được thay đổi thành công.');
   }
 
   public function membership()
