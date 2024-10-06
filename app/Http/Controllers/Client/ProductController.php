@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function menu()
+    public function menu(Request $request)
     {
         $categories = Category::all();
 
@@ -18,6 +18,12 @@ class ProductController extends Controller
         foreach ($categories as $category) {
             $products[$category->name] = $category->products()->paginate(6); // Phân trang cho sản phẩm trong danh mục
         }
+
+        // $search = $request->input('search');
+
+        // if ($search) {
+        //     $products = Product::where('name', 'like', "%$search%")->paginate(6);
+        // }
 
         return view('clients.product.menu', [
             'categories' => $categories,
