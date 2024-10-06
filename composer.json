@@ -44,10 +44,7 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        },
-        "files": [
-            "routes/breadcrumbs.php"
-        ]
+        }
     },
     "scripts": {
         "post-autoload-dump": [
