@@ -29,7 +29,7 @@ search.addWidgets([
 				`<div class="product-card hover:text-red-600 hover:cursor-pointer mb-4 overflow-hidden">
 					<a href="product/${hit.slug}" class="flex items-center text-sm">
 						<div class="hit-image flex-shrink-0">
-							<img src="http://127.0.0.1:8000/storage/uploads/products/pizza/pizza_pesto_burrata.jpeg" alt="${hit.name}" class="img-md object-cover" />
+							<img src="{{ asset('storage/uploads/products/ . $product->image') }}" alt="${hit.name}" class="img-md object-cover" />
 						</div>
 						<div class="p-4">
 							<div class="hit-name font-medium text-base">${components.Highlight({ hit, attribute: "name" })}</div>

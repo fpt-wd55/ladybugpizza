@@ -1,6 +1,7 @@
 @extends('layouts.admin')
-@section('title', 'Cập nhật tài khoản')
+@section('title', 'Tài khoản | Chỉnh sửa')
 @section('content')
+    {{ Breadcrumbs::render('admin.users.edit', $user) }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="p-4 mx-auto">
             <h3 class="mb-4 text-lg font-bold text-gray-900 ">Cập nhật tài khoản</h3>
@@ -210,12 +211,10 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-4 mt-5">
-                    <a href="{{ route('admin.users.index') }}"
-                        class="button-dark">
+                    <a href="{{ route('admin.users.index') }}" class="button-dark">
                         Quay lại
                     </a>
-                    <button type="submit"
-                        class="button-blue">
+                    <button type="submit" class="button-blue">
                         Cập nhật tài khoản
                     </button>
                 </div>
