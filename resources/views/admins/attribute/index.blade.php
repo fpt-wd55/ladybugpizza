@@ -12,7 +12,7 @@
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <a href="{{ route('admin.users.create') }}" class="button-blue">
+                <a href="{{ route('admin.attributes.create') }}" class="button-blue">
                     @svg('tabler-plus', 'w-5 h-5 mr-2')
                     Thêm thuộc tính
                 </a>
