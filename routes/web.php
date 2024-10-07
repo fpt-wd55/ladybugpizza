@@ -109,6 +109,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/carts', AdminCartController::class);
     Route::resource('/attributes', AttributeController::class);
     Route::resource('/toppings', ToppingController::class);
+    Route::resource('/banners', BannerController::class);
     Route::get('/trash-topping', [ToppingController::class, 'trashTopping'])->name('trash-topping');
     Route::get('/resTopping/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
     Route::delete('/forceDelete/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
@@ -117,8 +118,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::post('/trash/{id}',[CategoryController::class,'trashRestore'])->name('trash.cateRestore');
     Route::post('/{id}',[CategoryController::class,'trashForce'])->name('trash.cateDelete');
     Route::post('/trash/delete-all',[CategoryController::class,'deleteAllSoftDeleted'])->name('trash.cateDeleteAll');
-    Route::resource('/banners', BannerController::class);
-    Route::get('/trash',[BannerController::class,'trashList'])->name('trash.listBanner');
+    Route::get('/trash-banner',[BannerController::class,'trashList'])->name('trash.listBanner');
     Route::resource('/promotions', PromotionController::class);
     Route::resource('/memberships', MembershipController::class);
     Route::resource('/order-statuses', OrderStatusController::class);
