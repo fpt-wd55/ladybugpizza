@@ -77,8 +77,7 @@
                                         <div class="flex justify-center">
                                             @svg('tabler-trash', 'w-12 h-12 text-red-600 text-center mb-2')
                                         </div>
-                                        <h3 class="mb-5 font-normal">Bạn có muốn xóa promotion này không?</h3>
-
+                                        <h3 class="mb-5 font-normal">Bạn có muốn xóa mã giảm giá này không?</h3>
                                         <form action="{{ route('admin.promotions.destroy', $promotion->id) }}"
                                             method="POST">
                                             @method('DELETE')
