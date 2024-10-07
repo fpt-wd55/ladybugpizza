@@ -60,10 +60,11 @@
 
             {{-- Is Global --}}
             <div class="mb-4">
-                <label class="label-lg">Áp dụng toàn cầu:</label>
-                <span class="text-md text-gray-500">{{ $promotion->is_global ? 'Có' : 'Không' }}</span>
+                <label class="label-lg">Đối tượng áp dụng:</label>
+                <span class="text-md text-gray-500">
+                    {{ $promotion->is_global == '2' ? 'Tất cả' : 'Thành viên' }}
+                </span>
             </div>
-
             {{-- Status --}}
             <div class="mb-4">
                 <label class="label-lg">Trạng thái:</label>
