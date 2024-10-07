@@ -13,7 +13,12 @@ class AttributeController extends Controller
      */
     public function index()
     {
-        //
+        $attributes = Attribute::paginate(10);
+        foreach ($attributes as $attribute) {
+            $attribute->values = $attribute->values;
+        }
+        // dd($attributes);
+        return view('admins.attribute.index', compact('attributes'));
     }
 
     /**
