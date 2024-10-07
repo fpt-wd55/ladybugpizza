@@ -37,8 +37,12 @@
                 <tbody>
                     @forelse ($attributes as $attribute)
                         <tr class="border-b hover:bg-gray-100">
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $loop->iteration }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $attribute->name }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap font-medium">
+                                {{ $loop->iteration }}
+                            </td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap font-medium">
+                                {{ $attribute->name }}
+                            </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap"></td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $attribute->id }}" data-dropdown-toggle="{{ $attribute->id }}-dropdown"
@@ -108,7 +112,7 @@
                                 <td class="px-4 py-2 text-gray-900 whitespace-nowrap">--- <span
                                         class="ms-1">{{ $value->value }}</span>
                                 </td>
-                                <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $value->quantity }}</td>
+                                <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $value->quantity ?? '0' }}</td>
                                 <td class="px-4 py-2 text-gray-900 whitespace-nowrap"></td>
                             </tr>
                         @endforeach

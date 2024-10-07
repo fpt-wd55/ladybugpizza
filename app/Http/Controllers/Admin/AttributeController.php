@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AttributeRequest;
 use App\Models\Attribute;
+use App\Models\AttributeValue;
 use Illuminate\Http\Request;
 
 class AttributeController extends Controller
@@ -41,7 +42,7 @@ class AttributeController extends Controller
         foreach ($request->stocks as $key => $value) {
             $rules["stocks.{$key}.attribute_value"] = 'required';
             $rules["stocks.{$key}.attribute_quantity"] = 'nullable|numeric';
-        } 
+        }
 
         $messages = [
             'attribute_name.required' => 'Vui lòng nhập tên thuộc tính',
@@ -52,23 +53,28 @@ class AttributeController extends Controller
 
         $request->validate($rules, $messages);
 
-        dd($request->all());
+        // dd($request->all());
 
-        // $product = Product::create(["name" => $request->name]);
-        // foreach ($request->stocks as $key => $value) {
-        //     $product->stocks()->create($value);
-        // }
+        $attribute = Attribute::create(
+            [
+                "name" => $request->attribute_name,
+                "status" => 1
+            ]
+        );
 
-        // return redirect()->back()->with(['success' => 'Product created successfully.']);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Attribute $attribute)
-    {
-        //
-    }
+        if (!$attribute) {
+            // Vietnamese error message
+            return redirect()->back()->with(['error' => 'Có lỗi xảy ra, vui lòng thử lại.']);
+        }
+        foreach ($request->stocks as $key => $value) {
+            AttributeValue::create([
+                'attribute_id' => $attribute->id,
+                'value' => $value['attribute_value'],
+                'quantity' => $value['attribute_quantity'] ?? null,
+            ]);
+        }
+        return redirect()->route('admin.attributes.index')->with(['success' => 'Thêm thuộc tính thành công']);
+    } 
 
     /**
      * Show the form for editing the specified resource.
