@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BannerRequest;
 use App\Models\Banner;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,7 @@ class BannerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BannerRequest $request)
     {
     //    dd($request->all());
         if ($request->hasFile('image')) {
@@ -83,7 +84,11 @@ class BannerController extends Controller
      */
     public function destroy(Banner $banner)
     {
-        //
+        $id = $banner['id'];
+
+        Banner::destroy($id);
+
+        return redirect()->back()->with('message', 'Xóa thành công');
     }
 
     public function trashList(Banner $banner)
