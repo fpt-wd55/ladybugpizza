@@ -29,7 +29,7 @@
                 <div class="h-44">
                     <img src="{{ asset('storage/uploads/banners/' . $item->image) }}" class="w-full h-full object-cover rounded-t-lg" alt="">
                 </div>
-                <div class="p-3 mb-2 h-28">
+                <div class="p-3 mb-2 h-24">
                    
                     <span class="  md:text-sm break-all badge-default">{{$item->url}}</span>
                 </div>
@@ -37,11 +37,11 @@
                     <div class="flex items-center">
                         <p class="text-xs md:text-sm font-medium ml-2">Page : </p>
                        @if ($item->is_local_page == 1)  
-                       <span class="text-xs lg:text-sm bg-green-100 ml-2 text-green-600 font-medium px-3 py-1 rounded-lg border border-green-200">
+                       <span class="text-xs lg:text-sm bg-green-100 ml-1 text-green-600 font-medium px-3 py-1 rounded-lg border border-green-200">
                            Local Page
                          </span>
                        @else  
-                       <span class="text-xs lg:text-sm bg-green-100 ml-2 text-blue-600 font-medium px-3 py-1 rounded-lg border border-blue-200">
+                       <span class="text-xs lg:text-sm bg-green-100 ml-1 text-blue-600 font-medium px-3 py-1 rounded-lg border border-blue-200">
                          External Page
                        </span>
                        @endif
@@ -49,11 +49,11 @@
                     <div class="flex items-center ">
                         <p class="text-xs md:text-sm font-medium">Trạng thái :   </p>
                         @if ($item->status == 1)       
-                        <span class="text-xs lg:text-sm bg-green-100 ml-1 lg:ml-2 text-green-600 font-medium px-3 py-1 rounded-lg border border-green-200">
+                        <span class="text-xs lg:text-sm bg-green-100 ml-1  text-green-600 font-medium px-3 py-1 rounded-lg border border-green-200">
                             Active
                           </span>
                         @else               
-                        <span class="text-xs lg:text-sm bg-green-100 ml-1 lg:ml-2 text-red-600 font-medium px-3 py-1 rounded-lg border border-red-200">
+                        <span class="text-xs lg:text-sm bg-green-100 ml-1  text-red-600 font-medium px-3 py-1 rounded-lg border border-red-200">
                           Inactive
                         </span>
                         @endif
@@ -65,10 +65,50 @@
                         <a href="" class=""><button class="w-32 md:w-24 lg:w-32 button-blue">Sửa</button></a>
                     </div>
                     <div class="">
-                        <a href="" class=""><button class="w-32 md:w-24 lg:w-32 button-red">Xóa</button></a>
+                        <a href="#" data-modal-target="deleteBanner-modal-{{ $item->id }}"
+                                  data-modal-toggle="deleteBanner-modal-{{ $item->id }}" class="w-32 md:w-24 lg:w-32 button-red">
+                                  Xóa
+                        </a>
                     </div>
                 </div>
                </div>
+                {{-- start modal delete--}}
+                <div id="deleteBanner-modal-{{ $item->id }}" tabindex="-1"
+                    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                    <div class="relative p-4 w-full max-w-md max-h-full">
+                        <div class="relative bg-white rounded-lg shadow">
+                            <button type="button"
+                                class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                data-modal-hide="deleteBanner-modal-{{ $item->id }}">
+                                @svg('tabler-x', 'w-4 h-4')
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                            <div class="p-4 md:p-5 text-center">
+                                <div class="flex justify-center">
+                                    @svg('tabler-trash', 'w-12 h-12 text-red-600 text-center mb-2')
+                                </div>
+                                <h3 class="mb-5 font-normal">Bạn có muốn xóa Banner này không?</h3>
+                                <div class=" flex justify-center">
+
+                                    <form action="{{ route('admin.banners.destroy', $item->id) }}" method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button  type="submit"
+                                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"> Xóa
+                                        </button>
+                                    </form>
+    
+                                    <button data-modal-hide="deleteBanner-modal-{{ $item->id }}" type="button"
+                                        class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Không,
+                                        trở lại</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- end modal delete--}}
+
                 {{-- end card --}}
                 @empty
                     
