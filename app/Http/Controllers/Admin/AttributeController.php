@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AttributeRequest;
 use App\Models\Attribute;
 use Illuminate\Http\Request;
 
@@ -35,7 +36,30 @@ class AttributeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = ["attribute_name" => "required", "stocks.*" => "required"];
+
+        foreach ($request->stocks as $key => $value) {
+            $rules["stocks.{$key}.attribute_value"] = 'required';
+            $rules["stocks.{$key}.attribute_quantity"] = 'nullable|numeric';
+        } 
+
+        $messages = [
+            'attribute_name.required' => 'Vui lòng nhập tên thuộc tính',
+            'stocks.*.required' => 'Vui lòng nhập giá trị thuộc tính cho sản phẩm',
+            'stocks.*.attribute_value.required' => 'Vui lòng nhập giá trị thuộc tính cho sản phẩm',
+            'stocks.*.attribute_quantity.numeric' => 'Giá trị không hợp lệ',
+        ];
+
+        $request->validate($rules, $messages);
+
+        dd($request->all());
+
+        // $product = Product::create(["name" => $request->name]);
+        // foreach ($request->stocks as $key => $value) {
+        //     $product->stocks()->create($value);
+        // }
+
+        // return redirect()->back()->with(['success' => 'Product created successfully.']);
     }
 
     /**
