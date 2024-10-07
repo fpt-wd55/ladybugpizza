@@ -1,26 +1,82 @@
 <?php
 
 namespace App\Http\Controllers\Client;
-
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 
 class ProfileController extends Controller
 {
   public function index()
   {
-    return view('clients.profile.index');
+    $users = Auth::user();
+    return view('clients.profile.index', compact('users'));
   }
 
-  public function update(Request $request)
+  public function postUpdate(Request $request, $id)
   {
+    $request->validate([
+      'fullname' => 'required|string|max:255',
+      'email' => 'required|email|max:255',
+      'phone' => 'nullable|string|max:20',
+      'gender' => 'nullable|string',
+      'date_of_birth' => 'nullable|date',
+    ]);
 
+    $user = User::findOrFail($id);
+    $gender = null;
+    if ($request->gender == 'male') {
+      $gender = 1;
+    } elseif ($request->gender == 'female') {
+      $gender = 2;
+    } elseif ($request->gender == 'other') {
+      $gender = 3;
+    }
+
+    $user->fullname = $request->fullname;
+    $user->email = $request->email;
+    $user->phone = $request->phone;
+    $user->date_of_birth = $request->date_of_birth;
+    $user->gender = $gender;
+    $user->save();
+
+    return redirect()->route('client.profile.index');
   }
 
-  public function postChangePassword(Request $request)
+
+  public function postChangePassword(Request $request, $id)
   {
+    $request->validate([
+      'current_password' => ['required', 'min:8'],
+      'new_password' => ['required', 'min:8', 'confirmed'],
+    ], [
+      'current_password.required' => 'Vui lòng nhập mật khẩu cũ.',
+      'current_password.min' => 'Mật khẩu cũ phải có ít nhất 8 ký tự.',
+      'new_password.required' => 'Vui lòng nhập mật khẩu mới.',
+      'new_password.min' => 'Mật khẩu mới phải có ít nhất 8 ký tự.',
+      'new_password.confirmed' => 'Mật khẩu nhập lại không khớp.',
+    ]);
 
+
+    $users = User::find($id);
+
+    // Kiểm tra mật khẩu cũ
+    if (!Hash::check($request->current_password, $users->password)) {
+      return back()->withErrors(['current_password' => 'Mật khẩu hiện tại không đúng']);
+    }
+
+    // Cập nhật mật khẩu mới
+    $users->password = Hash::make($request->new_password);
+    $users->save();
+
+    return redirect()->back()->with('success', 'Mật khẩu đã được thay đổi thành công.');
   }
+
+
+
 
   public function membership()
   {

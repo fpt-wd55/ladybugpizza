@@ -22,50 +22,50 @@
                     </div>
 
                     <div class="col-span-2">
-
                         {{-- update info form --}}
-                        <form action="#" class="mb-8">
+                        <form action="{{ route('client.profile.update', $users->id) }}" class="mb-8" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Tên tài khoản:</label>
-                                <span class="badge-red">quandohong28</sp>
+                                <span class="badge-red">{{ $users->username }}</sp>
                             </div>
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Họ và tên:</label>
-                                <input type="text" class="input">
+                                <input type="text" class="input" name="fullname" value="{{ $users->fullname }}">
                             </div>
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Email:</label>
-                                <input type="text" class="input">
+                                <input type="text" class="input" name="email" value="{{ $users->email }}">
                             </div>
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Số điện thoại:</label>
-                                <input type="text" class="input">
+                                <input type="text" class="input" name="phone" value="{{ $users->phone }}">
                             </div>
                             <div class="mb-6 flex items-center gap-8">
                                 <p class="text-sm font w-32 font-medium">Giới tính:</p>
                                 <div class="flex items-center gap-4 text-sm">
                                     <label for="male">
                                         <input type="radio" name="gender" value="male" id="male"
-                                            class="input-radio">
+                                            class="input-radio" {{ $users->gender == 1 ? 'checked' : '' }}>
                                         Nam
                                     </label>
                                     <label for="female">
                                         <input type="radio" name="gender" value="female" id="female"
-                                            class="input-radio">
+                                            class="input-radio" {{ $users->gender == 2 ? 'checked' : '' }}>
                                         Nữ
                                     </label>
                                     <label for="other">
                                         <input type="radio" name="gender" value="other" id="other"
-                                            class="input-radio">
+                                            class="input-radio" {{ $users->gender == 3 ? 'checked' : '' }}>
                                         Khác
                                     </label>
                                 </div>
                             </div>
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font-medium w-32">Ngày sinh:</label>
-                                <input type="date" class="input">
+                                <input type="date" class="input" name="date_of_birth"
+                                    value="{{ $users->date_of_birth }}">
                             </div>
                             <div class="mb-6 flex justify-end">
                                 <button type="submit" class="button-red">
@@ -76,21 +76,37 @@
                         </form>
 
                         {{-- Change password form --}}
-                        <form action="#" class="mb-8">
+                        <form action="{{ route('client.profile.post-change-password', $users->id) }}" class="mb-8"
+                            method="POST">
                             @csrf
                             @method('PUT')
                             <p class="title">ĐỔI MẬT KHẨU</p>
-                            <div class="mb-6 flex items-center gap-8">
-                                <label class="text-sm font w-32 font-medium">Mật khẩu cũ:</label>
-                                <input type="password" class="input">
+                            <div class="mb-6 flex flex-col gap-2">
+                                <div class="flex items-center gap-8">
+                                    <label class="text-sm font w-32 font-medium">Mật khẩu cũ:</label>
+                                    <input type="password" class="input" name="current_password">
+                                </div>
+                                @error('current_password')
+                                    <p class="text-red-500 text-sm ">{{ $message }}</p>
+                                @enderror
                             </div>
+                            <div class="mb-6 flex flex-col gap-2">
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Mật khẩu mới:</label>
-                                <input type="password" class="input">
+                                <input type="password" class="input" name="new_password"> 
                             </div>
+                            @error('new_password')
+                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="mb-6 flex flex-col gap-2">
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Nhập lại mật khẩu:</label>
-                                <input type="password" class="input">
+                                <input type="password" class="input" name="new_password_confirmation">
+                            </div>
+                                @error('new_password_confirmation')
+                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="mb-6 flex justify-end">
                                 <button type="submit" class="button-red">
@@ -133,13 +149,19 @@
                                             @svg('tabler-x', 'icon-sm')
                                         </button>
                                     </div>
-                                    <form action="#">
+                                    <form action="{{ route('account.deactivate', $users->id) }}" method="POST">
+                                        @csrf
+                                         @method('PUT')
                                         <div class="grid gap-4 mb-4 sm:grid-cols-2">
                                             <div class="col-span-2">
                                                 <label for="name"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nhập mật khẩu</label>
-                                                <input type="password" name="name" id="name" value=""
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nhập
+                                                    mật khẩu</label>
+                                                <input type="password" name="password" id="name" value=""
                                                     class="input" placeholder="">
+                                                    @error('password')
+                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                @enderror
                                             </div>
                                         </div>
                                         <div class="flex items-center space-x-4">

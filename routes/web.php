@@ -58,8 +58,8 @@ Route::prefix('/')->group(function () {
     Route::post('/order/{order}/cancel}', [OrderController::class, 'postCancel'])->name('client.order.cancel');
     Route::post('/order/{order}/rate}', [OrderController::class, 'postRate'])->name('client.order.rate');
     Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile.index');
-    Route::post('/profile', [ProfileController::class, 'update'])->name('client.profile.update');
-    Route::post('/profile', [ProfileController::class, 'postChangePassword'])->name('client.profile.post-change-password');
+    Route::put('/profile/{id}', [ProfileController::class, 'postUpdate'])->name('client.profile.update');
+    Route::put('/profile/change-password/{id}', [ProfileController::class, 'postChangePassword'])->name('client.profile.post-change-password');
     Route::get('/profile/membership', [ProfileController::class, 'membership'])->name('client.profile.membership');
     Route::get('/profile/address', [ProfileController::class, 'address'])->name('client.profile.address');
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
@@ -97,6 +97,7 @@ Route::prefix('/auth')->group(function () {
     Route::post('/get-otp', [WebController::class, 'postGetOtp'])->name('auth.post-get-otp');
     Route::post('/recovery', [WebController::class, 'postRecovery'])->name('auth.post-recovery');
     Route::post('/user-info', [WebController::class, 'postUserInfo'])->name('auth.post-user-info');
+    Route::put('/deactivate-account/{id}', [WebController::class, 'deactivateAccount'])->name('account.deactivate');
 });
 
 
