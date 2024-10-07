@@ -81,7 +81,7 @@
                         <span style="color: red ">{{ $message }}</span>
                     @enderror
                 </div>
-                
+
             </div>
             {{-- status --}}
             <div>
@@ -98,17 +98,19 @@
             </div>
             {{-- is_global --}}
             <div>
-                <label for="is_global" class="label-lg">Áp dụng cho</label>
+                <label for="is_global" class="label-lg">Đối tượng áp dụng</label>
                 <select name="is_global" class="input h-10 mb-2">
                     <option value="">Chọn</option>
-                    <option value="2" {{ old('is_global') == '2' ? 'selected' : '' }}>Tất cả</option>
-                    <option value="1" {{ old('is_global') == '1' ? 'selected' : '' }}>Thành viên</option>
+                    <option value="2" {{ old('is_global', $promotion->is_global ?? '') == '2' ? 'selected' : '' }}>Tất
+                        cả</option>
+                    <option value="1" {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>
+                        Thành viên</option>
                 </select>
                 @error('is_global')
                     <span style="color: red ">{{ $message }}</span>
                 @enderror
             </div>
-            
+
             <div
                 class="mb-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 <button class="button-blue" type="submit">Thêm</button>
