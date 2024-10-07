@@ -1,7 +1,6 @@
-<header class="border-b border-gray-300 bg-white px-4 py-2 sticky top-0 z-40">
+<header class="border-b border-gray-300 bg-white px-4 py-2 sticky top-0 z-40 text-gray-700">
     <div class="h-auto md:mx-8 lg:mx-20">
         <nav class="flex justify-between items-center">
-
             {{-- Logo --}}
             <a href="{{ route('client.home') }}" class="md:flex md:items-center">
                 <img class="h-12 md:h-20" src="{{ asset('storage/uploads/logos/logo-fill.png') }}" alt="">
@@ -74,7 +73,7 @@
                             </a>
                         </div>
                         <div class="py-2">
-                            <a href="{{ route('auth.logout') }}"
+                            <a href="#" data-modal-target="logoutModal" data-modal-toggle="logoutModal"
                                 class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                 @svg('tabler-logout', 'icon-sm')
                                 Đăng xuất
@@ -90,4 +89,38 @@
             </div>
         </nav>
     </div>
+
+
 </header>
+
+{{-- logout Modal --}}
+<div id="logoutModal" tabindex="-1" aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-2xl h-auto">
+        <div class="relative p-4 bg-white rounded-lg shadow sm:p-5">
+            <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5">
+                <h3 class="font-semibold text-gray-900 dark:text-white">
+                    Đăng xuất
+                </h3>
+                <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    data-modal-toggle="logoutModal">
+                    @svg('tabler-x', 'icon-sm')
+                </button>
+            </div>
+            <div class="flex flex-col text-sm items-center justify-center gap-4 mb-8">
+                <div>@svg('tabler-alert-triangle', 'icon-2xl text-red-500')</div>
+                <p>Bạn có thực sự muốn đăng xuất</p>
+                <p>Bạn sẽ phải đăng nhập để có thể sử dụng một số chức năng</p>
+            </div>
+            <div class="flex items-center gap-4 justify-center">
+                <a href="{{ route('auth.logout') }}" class="button-red">
+                    Đăng xuất
+                </a>
+                <button type="button" class="button-dark">
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

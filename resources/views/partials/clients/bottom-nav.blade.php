@@ -15,21 +15,21 @@
             @svg('tabler-search', 'icon-md mb-1')
             <span class="text-xs">Tìm kiếm</span>
         </button>
-        <button data-drawer-target="drawer-right-example" data-drawer-show="drawer-right-example"
-            data-drawer-placement="right" aria-controls="drawer-right-example"
+        <button data-drawer-target="menu" data-drawer-show="menu" data-drawer-hide="menu"
+            data-drawer-placement="right" aria-controls="menu"
             class="inline-flex flex-col items-center justify-center text-gray-800 px-5 hover:text-red-600 trasition">
             @svg('tabler-menu', 'icon-md mb-1')
             <span class="text-xs">Menu</span>
         </button>
 
-        <div id="drawer-right-example"
+        <div id="menu"
             class="fixed bottom-16 right-0 z-10 mt-16 p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800"
             tabindex="-1" aria-labelledby="drawer-right-label">
             <h5 id="drawer-right-label"
                 class="inline-flex items-center mb-4 text-sm text-gray-7">
                 Menu
             </h5>
-            <button type="button" data-drawer-hide="drawer-right-example" aria-controls="drawer-right-example"
+            <button type="button" data-drawer-hide="menu" aria-controls="menu"
                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
                 @svg('tabler-x', 'icon-sm')
             </button>
