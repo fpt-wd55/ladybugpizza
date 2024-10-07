@@ -20,7 +20,7 @@ search.addWidgets([
 		},
 	}),
 	configure({
-		hitsPerPage: 10,
+		hitsPerPage: 3,
 	}),
 	hits({
 		container: "#hits",
