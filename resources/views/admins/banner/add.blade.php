@@ -2,15 +2,16 @@
 @section('content')
     <div class="p-4 mx-auto">
         <h3 class="mb-4 text-lg font-bold text-gray-900 ">Banner</h3>
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="{{route('admin.banners.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 mb-4 sm:grid-cols-2">
 
                 <div>
 
                     <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Ảnh banner</label>
-                    <input type="text" name="name" id="name" value=""
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                    <input
+                        class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
+                        type="file" name="image">
 
                     {{-- @error('name')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Lỗi! </span>
@@ -21,7 +22,7 @@
                 <div>
 
                     <label for="url" class="block mb-2 text-base font-medium text-gray-900 ">Url</label>
-                    <input type="text" name="url" id="name" value=""
+                    <input type="text" name="url" id="name" value="{{old('url')}}"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
 
                     {{-- @error('name')
@@ -33,11 +34,18 @@
                 <div class="">
                     <label for="url" class="block mb-2 text-base font-medium text-gray-900 ">Local Page</label>
 
-                    <input id="draft" class="peer/draft" type="radio" name="status" checked />
-                    <label for="draft" class="peer-checked/draft:text-sky-500">Local Page</label>
-    
-                    <input id="published" class="peer/published" type="radio" name="status" />
-                    <label for="published" class="peer-checked/published:text-sky-500">External Page</label>
+                    <div class=" mb-4">
+                        <input id="option1" type="radio" name="is_local_page" class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300  rounded-full" value="1">
+                        <label for="option1" class="ml-2 text-base cursor-pointer">
+                            Local Page
+                        </label>
+                    </div>
+                    <div class="">
+                        <input id="option2" type="radio" name="is_local_page" class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300  rounded-full" value="">
+                        <label for="option2" class="ml-2 text-base cursor-pointer">
+                            External Page
+                        </label>
+                    </div>
                 </div>
 
 
@@ -56,7 +64,7 @@
 
                 </div>
             </div>
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-4 mt-7">
                 <button type="submit" class=" rounded-lg button-blue">
                     Lưu
                 </button>

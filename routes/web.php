@@ -109,10 +109,12 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/carts', AdminCartController::class);
     Route::resource('/attributes', AttributeController::class);
     Route::resource('/toppings', ToppingController::class);
+    Route::resource('/banners', BannerController::class);
     Route::get('/trash-topping', [ToppingController::class, 'trashTopping'])->name('trash-topping');
     Route::get('/restore-topping/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
     Route::delete('/delete-topping/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
     Route::resource('/categories', CategoryController::class);
+    Route::get('/trash-banner',[BannerController::class,'trashList'])->name('trash.listBanner');
     Route::get('/trash-category', [CategoryController::class, 'trashCategory'])->name('trash.listcate');
     Route::post('/restore-category/{id}', [CategoryController::class, 'trashRestore'])->name('trash.cateRestore');
     Route::post('/delete-category/{id}', [CategoryController::class, 'trashForce'])->name('trash.cateDelete');
