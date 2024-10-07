@@ -71,5 +71,7 @@ return [
 
     // Generator
     'generator-class' => Diglactic\Breadcrumbs\Generator::class,
+    //partials.admins.breadcrumb
+    'view' => 'partials/admins/breadcrumb',
 
 ];

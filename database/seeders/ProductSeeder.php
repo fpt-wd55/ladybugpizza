@@ -21,68 +21,67 @@ class ProductSeeder extends Seeder
         $now = Carbon::now();
 
         $dataProduct = [
-            'banh-ngot' => [
-                'Blueberry cheesecake',
+            'cake' => [
+                'Bánh Mỳ Bơ Tỏi',
+                'Bánh Phô Mai Việt Quất',
+                'Bánh Sừng Bò Bơ Nguyên Chất',
+                'Bánh Sừng Bò Chocolate',
+                'Bánh Sừng Bò Hạnh Nhân',
+                'Pain Suisse Thuỵ Sĩ',
+                'Tart Chocolate',
                 'Tiramisu',
-                'Croissant pur beurre',
-                'Pain au Chocolat',
-                'Pain Suisse',
-                'Almond Croissant',
-                'Pizza Nutella',
-                'Chocolate Tar',
             ],
             'salad' => [
-                'Bufala Caprese Salad',
-                'Goat cheese Salad',
+                'Salad Phô Mai Sữa Trâu',
+                'Salad Phô Mai Sữa Dê',
                 'Beetroot Salad',
                 'Burrata Salad',
-                'Garlic bread platter',
             ],
             'pizza' => [
-                'Pizza Pesto Napoli',
+                'Pizza Hải sản Pesto Xanh',
                 'Pizza Chay',
                 'Pizza Carbonara',
                 'Pizza Raffaello',
                 'Pizza Pesto Burrata',
                 'Pizza Margherita',
                 'Pizza Burrata Cay',
-                'Pizza Phô Mai Nóng',
                 'Pizza Cà Tím',
-                'Pizza Calzone',
-                'Pizza Bốn Loại Phô Mai',
+                'Pizza Gập Calzone',
+                'Pizza 4 Cheese',
                 'Pizza Nấm Truffle',
                 'Pizza Emilio',
-                'Pizza Thịt Xông Khói',
-                'Pizza Alice',
+                'Pizza Thịt Ba Chỉ Xông Khói',
+                'Pizza Xúc Xích Đức',
                 'Pizza Capricciosa',
-                'Pizza Arugula Parma',
-                'Pizza Napoletana',
+                'Pizza Dăm Bông Parma',
+                'Pizza Napoli Loại 1',
+                'Pizza Napoli Loại 2',
                 'Pizza Margherita DOP',
                 'Pizza Pháp',
                 'Pizza Nấm Truffle Hảo Hạng',
                 'Pizza Marinara',
-                'Pizza Năm Loại Phô Mai',
+                'Pizza 5 Cheese',
                 'Pizza Sicilian',
                 'Pizza Mật Ong Nóng',
             ],
-            'my' => [
-                'Mỳ Ý Pesto',
-                'Mỳ Ý Cay Hải Sản',
-                'Mỳ Ý Bò Bằm',
-                'Mỳ Ý Gà Cay',
-                'Mỳ Ý Tôm Sốt Kem',
-                'Mỳ Ý Dăm Bông',
+            'pasta' => [
+                'Pasta Bolognese',
+                'Pasta Carbonara',
+                'Pasta Xốt Pesto Genovese',
+                'Pasta Xốt Pesto',
+                'Pasta Nấm Hương Shiitake',
+                'Pasta Tôm Cay',
             ],
-            'nuoc-ngot' => [
-                'Coca Classic',
-                'Coca Zero',
-                'Coca Light',
-                'Pepsi',
-                'Fanta',
-                'Soda Schweppes',
-                'Mountain Dew',
+            'soft' => [
+                'Coca Classic Lon 330ml',
+                'Coca Zero Lon 330ml',
+                'Coca Light Lon 330ml',
+                'Pepsi Chai Nhỏ 250ml',
+                'Fanta Lon 330ml',
+                'Soda Schweppes Lon 330ml',
+                'Mountain Dew Chai Nhỏ 250ml',
             ],
-            'ga' => [
+            'chicken' => [
                 'Cánh gà nướng',
                 'Gà không xương sốt cay',
                 'Gà không xương mắm tỏi',
@@ -92,16 +91,18 @@ class ProductSeeder extends Seeder
                 'Gà nướng mật ong',
             ],
             'combo' => [
-                'Combo 1',
-                'Combo 2',
-                'Combo 3',
-                'Combo 4',
-                'Combo 5',
-                'Combo 6',
-                'Combo 7',
-                'Combo 8',
-                'Combo 9',
-                'Combo 10',
+                'Combo 2 Pizza + Pepsi - Ăn thả ga - Giá siêu rẻ',
+                'Combo Sương Sương',
+                'Ăn Hết Menu Không Lo Mập Ú',
+                'Dành Cho Người Ăn Kiêng',
+                'Ăn Một Mình Nhưng Phải Đủ Món',
+                'Pizza Slay',
+                'Combo Siêu To Khổng Lồ',
+                'Gia Đình Vui Vẻ - Cả Nhà Cùng Vui',
+                'Cặp Đôi Yêu Thương - Ăn Là Phải Có Đôi',
+                'Năng Lượng Ngập Tràn - Đầy Đủ Chất',
+                'Ăn Vặt Cuối Tuần - Nhâm Nhi Cả Ngày',
+                'Mua 1 Tặng 1 - Tiết Kiệm Nhân Đôi'
             ]
         ];
 
@@ -110,16 +111,16 @@ class ProductSeeder extends Seeder
 
         foreach ($categories as $category) {
             $products = $dataProduct[$category->slug] ?? [];
+
             foreach ($products as $product) {
-                $slug = Str::slug($product);
                 $price = rand(100000, 500000);
-                
+
                 // Create Product
                 $createdProduct = Product::create([
                     'name' => $product,
-                    'slug' => $slug,
-                    'image' => $slug . '.jpg',
-                    'description' => 'Description of ' . $product,
+                    'slug' => Str::slug($product),
+                    'image' => Str::slug($product) . '.jpeg',
+                    'description' => "Description of $product",
                     'category_id' => $category->id,
                     'price' => $price,
                     'discount_price' => $price - rand(50000, 10000),

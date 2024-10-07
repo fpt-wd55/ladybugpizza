@@ -13,7 +13,7 @@ class BannerController extends Controller
      */
     public function index()
     {
-        //
+        return view('admins.banner.list');
     }
 
     /**
@@ -21,7 +21,8 @@ class BannerController extends Controller
      */
     public function create()
     {
-        //
+        return view('admins.banner.add');
+        
     }
 
     /**
@@ -62,5 +63,12 @@ class BannerController extends Controller
     public function destroy(Banner $banner)
     {
         //
+    }
+
+    public function trashList(Banner $banner)
+    {
+        $deleteBanner = Banner::onlyTrashed()->paginate(10);
+
+        return view('admins.banner.trash',compact('deleteBanner'));
     }
 }

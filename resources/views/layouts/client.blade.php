@@ -33,6 +33,8 @@
         @yield('content')
     </div>
 
+    @include('partials.clients.bottom-nav')
+
     @include('partials.clients.footer')
 
 </body>
