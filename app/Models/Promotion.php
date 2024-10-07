@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Promotion extends Model
 {
@@ -18,7 +17,7 @@ class Promotion extends Model
         'start_date',
         'end_date',
         'quantity',
-        'min_order_value',
+        'min_order_total',
         'max_discount',
         'is_global',
         'status',

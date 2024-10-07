@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PromotionRequest;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class PromotionController extends Controller
     public function index()
     {
         $promotions = Promotion::latest('id')->paginate(10);
-        return view('admins.promotions.index',compact('promotions'));
+        return view('admins.promotions.index', compact('promotions'));
     }
 
     /**
@@ -28,9 +29,12 @@ class PromotionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        
+    public function store(PromotionRequest $request)
+    {   
+        $data = $request->all();
+        dd($data);
+        Promotion::query()->create($data);
+        return redirect()->route('admin.promotions.index')->with('message', 'Thêm mã giảm giá thành công');
     }
 
     /**
@@ -38,7 +42,8 @@ class PromotionController extends Controller
      */
     public function show(Promotion $promotion)
     {
-        //
+        $data = $promotion->all();
+        return view('admins.promotions.detail',compact('promotion','data'));
     }
 
     /**
@@ -46,7 +51,7 @@ class PromotionController extends Controller
      */
     public function edit(Promotion $promotion)
     {
-        //
+        return view('admins.promotions.edit', compact('promotion'));
     }
 
     /**
@@ -62,6 +67,7 @@ class PromotionController extends Controller
      */
     public function destroy(Promotion $promotion)
     {
-        //
+        $promotion->delete();
+        return view('admins.promotions.index')->with('message','Xóa thành công');
     }
 }

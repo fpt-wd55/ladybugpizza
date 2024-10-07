@@ -40,7 +40,7 @@ class PromotionRequest extends FormRequest
             'start_date' => ['required', 'date', 'before_or_equal:end_date'],
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
             'quantity' => 'required',
-            'min_order_total' => 'required|min>max_discount',
+            'min_order_total' => 'required',
             'max_discount' => 'required',
         ];
     }
@@ -54,19 +54,25 @@ class PromotionRequest extends FormRequest
             'discount_value' => 'required',
             'start_date' => ['required', 'date', 'before_or_equal:end_date'],
             'end_date' => ['required', 'date', 'after_or_equal:start_date'],
+            'quantity' => 'required',
+            'min_order_total' => 'required',
+            'max_discount' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Tên không được bỏ trống',
-            'image.mimes' => 'Ảnh không đúng định dạng',
-            'price.required' => 'Giá không được bỏ trống',
-            'price.numeric' => 'Giá phải là một số',
-            'price.min' => 'Giá không thể dưới 0 đồng',
-            'category_id' => 'Danh mục không được bỏ trống',
-            'image.required' => 'Ảnh không được bỏ trống',
+            'code.required' => "Tên mã giảm giá không được bỏ trống",
+            'description.required' => "Bạn cần mô tả cho mã giảm giá này",
+            'discount_type.required' => "Loại mã giảm giá không được bỏ trống",
+            'discount_value.required' => "Bạn cần chọn giá trị giảm giá",
+            'start_date.required' => 'Ngày bắt đầu là bắt buộc',
+            'start_date.date' => 'Ngày bắt đầu phải là một ngày hợp lệ',
+            'start_date.before_or_equal' => 'Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc',
+            'end_date.required' => 'Ngày kết thúc là bắt buộc',
+            'end_date.date' => 'Ngày kết thúc phải là một ngày hợp lệ',
+            'end_date.after_or_equal' => 'Ngày kết thúc phải lớn hơn hoặc bằng ngày bắt đầu',
         ];
     }
 }
