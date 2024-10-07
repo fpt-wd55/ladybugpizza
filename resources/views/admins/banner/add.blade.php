@@ -45,7 +45,7 @@
                         </div>
                         <div class="">
                             <input id="" type="radio" name="is_local_page"
-                                class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300  rounded-full transition" value="">
+                                class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300  rounded-full transition" value="2">
                             <label for="" class="ml-2 text-base cursor-pointer">
                                 External Page
                             </label>
@@ -77,7 +77,7 @@
                 <button type="submit" class=" rounded-lg button-blue">
                     Lưu
                 </button>
-                <a href="">
+                <a href="{{route('admin.banners.index')}}">
                     <button type="button" class="rounded-lg button-green">Quay Lại</button>
                 </a>
             </div>

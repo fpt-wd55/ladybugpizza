@@ -48,7 +48,7 @@ class BannerController extends Controller
         Banner::create([
             'image' => $banner_name,
             'url' => $request->url,
-            'is_local_page' => $request->is_local_page ? 1 : 2,
+            'is_local_page' => $request->is_local_page,
             'status' => $request->status ? 1 : 2,
         ]);
 
@@ -96,5 +96,30 @@ class BannerController extends Controller
         $deleteBanner = Banner::onlyTrashed()->paginate(10);
 
         return view('admins.banner.trash',compact('deleteBanner'));
+    }
+    // xóa cứng
+    public function trashForce(String $id)
+    {
+        $banner = Banner::withTrashed()->find($id);
+        $old_banner = $banner->image;
+        // dd($old_banner);
+        $filePath = storage_path('app/public/uploads/banners/' . $old_banner);
+        if ($old_banner != null && file_exists($filePath)) {
+            unlink($filePath);
+        }
+        $banner->forceDelete();
+        return back()->with('message', 'Đã xóa vĩnh viễn !');
+    }
+
+    // khôi phục
+    public function trashRestore(String $id)
+    {
+        $restoreBanner = Banner::withTrashed()->find($id);
+
+        if ($restoreBanner) {
+
+            $restoreBanner->restore();
+            return redirect()->back()->with('success', 'Danh mục đã được khôi phục thành công');
+        }
     }
 }
