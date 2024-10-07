@@ -30,9 +30,10 @@ class PromotionController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(PromotionRequest $request)
-    {   
+    {    
+        // dd($request->all());
         $data = $request->all();
-        dd($data);
+        // dd($data);
         Promotion::query()->create($data);
         return redirect()->route('admin.promotions.index')->with('message', 'Thêm mã giảm giá thành công');
     }

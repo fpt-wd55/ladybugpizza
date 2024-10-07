@@ -66,7 +66,7 @@
                 </div>
                 {{-- min_order_total --}}
                 <div>
-                    <label for=" min_order_total" class="label-lg">Đơn hàng tối thiểu</label>
+                    <label for=" min_order_total" class="label-lg">Đơn hàng tối thiểu (VNĐ)</label>
                     <input type="text" name="min_order_total" class="input h-10 mb-2"
                         value="{{ old('min_order_total') }}" />
                     @error('min_order_total')
@@ -75,7 +75,7 @@
                 </div>
                 {{-- max_discount --}}
                 <div>
-                    <label for="max_discount" class="label-lg">Giảm tối đa</label>
+                    <label for="max_discount" class="label-lg">Giảm tối đa (VNĐ)</label>
                     <input type="text" name="max_discount" class="input h-10 mb-2" value="{{ old('max_discount') }}" />
                     @error('max_discount')
                         <span style="color: red ">{{ $message }}</span>
@@ -87,8 +87,9 @@
             <div>
                 <label for="status" class="label-lg">Trạng thái</label>
                 <select name="status" class="input h-10 mb-2">
-                    <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Hoạt động</option>
-                    <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Không hoạt động
+                    <option value="">Chọn</option>
+                    <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Hoạt động</option>
+                    <option value="2" {{ old('status') == '2' ? 'selected' : '' }}>Không hoạt động
                     </option>
                 </select>
                 @error('status')
@@ -97,13 +98,17 @@
             </div>
             {{-- is_global --}}
             <div>
-                <label for="is_global" class="label-lg">Áp dụng toàn cầu</label>
-                <input type="checkbox" name="is_global" class="input-checkbox" value="1"
-                    {{ old('is_global') ? 'checked' : '' }} />
+                <label for="is_global" class="label-lg">Áp dụng cho</label>
+                <select name="is_global" class="input h-10 mb-2">
+                    <option value="">Chọn</option>
+                    <option value="2" {{ old('is_global') == '2' ? 'selected' : '' }}>Tất cả</option>
+                    <option value="1" {{ old('is_global') == '1' ? 'selected' : '' }}>Thành viên</option>
+                </select>
                 @error('is_global')
                     <span style="color: red ">{{ $message }}</span>
                 @enderror
             </div>
+            
             <div
                 class="mb-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 <button class="button-blue" type="submit">Thêm</button>
