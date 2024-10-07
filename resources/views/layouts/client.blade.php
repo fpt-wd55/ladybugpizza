@@ -37,6 +37,17 @@
 
     @include('partials.clients.footer')
 
+    {{-- Float button --}}
+
+    <div class="fixed bottom-16 lg:bottom-0 right-0 p-4">
+        <button class="bg-red-600 border border-white text-white rounded-full w-10 h-10 flex items-center justify-center mb-4">
+            @svg('tabler-message', 'icon-sm')
+        </button>
+        <button id="back-to-top" class="bg-gray-800 text-white rounded-full w-10 h-10 flex items-center justify-center">
+            @svg('tabler-arrow-up', 'icon-sm')
+        </button>
+    </div>
+
     {{-- Search Modal --}}
     <div id="searchModal" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -62,6 +73,18 @@
             </div>
         </div>
     </div>
+
+    {{-- Back to top --}}
+    <script>
+        const backToTopButton = document.getElementById('back-to-top');
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            })
+        })
+    </script>
 
 </body>
 
