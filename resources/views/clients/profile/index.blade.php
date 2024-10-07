@@ -27,7 +27,7 @@
                         <form action="{{ route('client.profile.post-update') }}" method="POST" class="mb-8">
                             @csrf
                             @method('PUT')
-                            <div class="mb-6 flex items-center gap-8">
+                            <div class="mb-6 flex items-center">
                                 <label class="text-sm font w-32 font-medium">Tên tài khoản:</label>
                                 <span class="badge-red">quandohong28</sp>
                             </div>
@@ -43,7 +43,7 @@
                                 <label class="text-sm font w-32 font-medium">Số điện thoại:</label>
                                 <input type="text" class="input">
                             </div>
-                            <div class="mb-6 flex items-center gap-8">
+                            <div class="mb-6 flex items-center">
                                 <p class="text-sm font w-32 font-medium">Giới tính:</p>
                                 <div class="flex items-center gap-4 text-sm">
                                     <label for="male">
