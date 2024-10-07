@@ -39,7 +39,7 @@
 
     {{-- Float button --}}
 
-    <div class="fixed bottom-16 lg:bottom-0 right-0 p-4">
+    <div class="fixed bottom-16 lg:bottom-8 right-0 lg:right-8 p-4">
         <button class="bg-red-600 border border-white text-white rounded-full w-10 h-10 flex items-center justify-center mb-4">
             @svg('tabler-message', 'icon-sm')
         </button>
