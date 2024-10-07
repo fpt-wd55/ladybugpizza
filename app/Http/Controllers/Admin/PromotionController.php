@@ -68,6 +68,6 @@ class PromotionController extends Controller
     public function destroy(Promotion $promotion)
     {
         $promotion->delete();
-        return view('admins.promotions.index')->with('message','Xóa thành công');
+        return back()->with('message','Xóa thành công');
     }
 }
