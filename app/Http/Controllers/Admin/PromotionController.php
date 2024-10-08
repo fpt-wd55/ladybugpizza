@@ -14,7 +14,9 @@ class PromotionController extends Controller
      */
     public function index()
     {
-        $promotions = Promotion::latest('id')->paginate(10);
+        $promotions = Promotion::query()
+        ->orderBy('quantity', 'desc') 
+        ->paginate(10); 
         return view('admins.promotions.index', compact('promotions'));
     }
 
@@ -50,7 +52,11 @@ class PromotionController extends Controller
      */
     public function edit(Promotion $promotion)
     {
-        return view('admins.promotions.edit', compact('promotion'));
+        $editPromotion = Promotion::all();
+        //  neu the thi ay cai nay` ve
+        return view('admins.promotions.edit',[
+            'editPromotion' => $promotion,
+        ]);
     }
 
     /**
