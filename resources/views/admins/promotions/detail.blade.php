@@ -37,25 +37,25 @@
             {{-- End Date --}}
             <div class="mb-4">
                 <label class="label-lg">Ngày kết thúc:</label>
-                <span class="text-md">{{ \Carbon\Carbon::parse($promotion->end_date)->format('d/m/Y H:i') }}</span>
+                <span class="text-md text-gray-500">{{ \Carbon\Carbon::parse($promotion->end_date)->format('d/m/Y H:i') }}</span>
             </div>
 
             {{-- Quantity --}}
             <div class="mb-4">
                 <label class="label-lg">Số lượng:</label>
-                <span class="text-md">{{ $promotion->quantity }}</span>
+                <span class="text-md text-gray-500">{{ $promotion->quantity }}</span>
             </div>
 
             {{-- Min Order Total --}}
             <div class="mb-4">
                 <label class="label-lg">Đơn hàng tối thiểu:</label>
-                <span class="text-md">{{ $promotion->min_order_total }}</span>
+                <span class="text-md text-gray-500">{{ $promotion->min_order_total }}</span>
             </div>
 
             {{-- Max Discount --}}
             <div class="mb-4">
                 <label class="label-lg">Giảm tối đa:</label>
-                <span class="text-md">{{ $promotion->max_discount }}</span>
+                <span class="text-md text-gray-500">{{ $promotion->max_discount }}</span>
             </div>
 
             {{-- Is Global --}}
@@ -68,7 +68,7 @@
             {{-- Status --}}
             <div class="mb-4">
                 <label class="label-lg">Trạng thái:</label>
-                <span class="text-md text-gray-500">{{ $promotion->status === 'active' ? 'Hoạt động' : 'Không hoạt động' }}</span>
+                <span class="text-md text-gray-500">{{ $promotion->status == '1' ? 'Hoạt động' : 'Không hoạt động' }}</span>
             </div>
         </div>
 
