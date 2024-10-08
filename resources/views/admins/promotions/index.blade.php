@@ -37,7 +37,13 @@
                                 {{ ($promotions->currentPage() - 1) * $promotions->perPage() + $loop->iteration }}</td>
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->code }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->discount_type }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                                @if ($promotion->discount_type == 'percent')
+                                    Giảm theo %
+                                @elseif ($promotion->discount_type == 'amount')
+                                    Giảm theo số tiền
+                                @endif
+                            </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->discount_value }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->quantity }}</td>
                             <td class="px-4 py-3 flex items-center justify-end">

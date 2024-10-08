@@ -15,9 +15,9 @@ class PromotionController extends Controller
     public function index()
     {
         $promotions = Promotion::query()
-        ->orderBy('quantity', 'desc') // Sort by quantity in descending order
-        ->orderBy('end_date', 'asc') // Sort by end date in ascending order (expired promotions last)
-        ->paginate(10); // Adjust pagination as needed
+        ->orderBy('quantity', 'desc') 
+        ->orderBy('end_date', 'asc')
+        ->paginate(10); 
         return view('admins.promotions.index', compact('promotions'));
     }
 

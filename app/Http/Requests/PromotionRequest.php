@@ -31,21 +31,30 @@ class PromotionRequest extends FormRequest
     }
 
     public function rulesForCreate(): array
-    {
-        return [
-            'code' => 'required',
-            'description' => 'required',
-            'discount_type' => 'required',
-            'discount_value' => 'required',
-            'start_date' => ['required', 'before_or_equal:end_date'],
-            'end_date' => ['required', 'after_or_equal:start_date'],
-            'quantity' => 'required',
-            'min_order_total' => 'nullable|numeric',
-            'max_discount' => 'nullable|numeric ',
-            'status' => 'required', 
-            'is_global' => 'required', 
-        ];
-    }
+{
+    return [
+        'code' => 'required',
+        'description' => 'required',
+        'discount_type' => 'required',
+        'discount_value' => [
+            'required',
+            'numeric', 
+            function ($attribute, $value, $fail) {
+                if ($this->input('discount_type') === 'percent' && $value > 100) {
+                    $fail('Giá trị giảm giá không được lớn hơn 100% khi loại giảm giá là phần trăm.');
+                }
+            }
+        ],
+        'start_date' => ['required', 'before_or_equal:end_date'],
+        'end_date' => ['required', 'after_or_equal:start_date'],
+        'quantity' => 'required|integer|min:1',
+        'min_order_total' => 'nullable|numeric',
+        'max_discount' => 'nullable|numeric',
+        'status' => 'required',
+        'is_global' => 'required',
+    ];
+}
+
 
     public function rulesForUpdate(): array
     {
@@ -53,14 +62,22 @@ class PromotionRequest extends FormRequest
             'code' => 'required',
             'description' => 'required',
             'discount_type' => 'required',
-            'discount_value' => 'required',
-            'start_date' => ['required', 'date', 'before_or_equal:end_date'],
-            'end_date' => ['required', 'date', 'after_or_equal:start_date'],
-            'quantity' => 'required',
+            'discount_value' => [
+                'required',
+                'numeric', 
+                function ($attribute, $value, $fail) {
+                    if ($this->input('discount_type') === 'percent' && $value > 100) {
+                        $fail('Giá trị giảm giá không được lớn hơn 100% khi loại giảm giá là phần trăm.');
+                    }
+                }
+            ],
+            'start_date' => ['required', 'before_or_equal:end_date'],
+            'end_date' => ['required', 'after_or_equal:start_date'],
+            'quantity' => 'required|integer|min:1',
             'min_order_total' => 'nullable|numeric',
-            'max_discount' => 'nullable|numeric ',
-            'status' => 'required',  
-            'is_global' => 'required', 
+            'max_discount' => 'nullable|numeric',
+            'status' => 'required',
+            'is_global' => 'required',
         ];
     }
 
@@ -72,10 +89,10 @@ class PromotionRequest extends FormRequest
             'discount_type.required' => "Loại mã giảm giá không được bỏ trống",
             'discount_value.required' => "Bạn cần chọn giá trị giảm giá",
             'discount_value.regex' => "Giá trị giảm giá không hợp lệ, phải là số hoặc phần trăm",
-            'start_date.required' => 'Ngày bắt đầu là bắt buộc',
+            'start_date.required' => 'Vui lòng nhập ngày bắt đầu',
             'start_date.date' => 'Ngày bắt đầu phải là một ngày hợp lệ',
             'start_date.before_or_equal' => 'Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc',
-            'end_date.required' => 'Ngày kết thúc là bắt buộc',
+            'end_date.required' => 'Vui lòng nhập ngày kết thúc',
             'end_date.date' => 'Ngày kết thúc phải là một ngày hợp lệ',
             'end_date.after_or_equal' => 'Ngày kết thúc phải lớn hơn hoặc bằng ngày bắt đầu',
             'quantity.required' => 'Số lượng không được bỏ trống',

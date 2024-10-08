@@ -9,7 +9,6 @@
                 <label class="label-lg">Mã giảm giá:</label>
                 <span class="text-md text-gray-500">{{ $promotion->code }}</span>
             </div>
-
             {{-- Description --}}
             <div class="mb-4">
                 <label class="label-lg">Mô tả:</label>
@@ -19,7 +18,13 @@
             {{-- Discount Type --}}
             <div class="mb-4">
                 <label class="label-lg">Loại giảm giá:</label>
-                <span class="text-md text-gray-500">{{ $promotion->discount_type }}</span>
+                <span class="text-md text-gray-500">
+                    @if ($promotion->discount_type === 'percent')
+                        Giảm theo %
+                    @elseif ($promotion->discount_type === 'amount')
+                        Giảm theo số tiền
+                    @endif
+                </span>
             </div>
 
             {{-- Discount Value --}}
@@ -31,13 +36,15 @@
             {{-- Start Date --}}
             <div class="mb-4">
                 <label class="label-lg">Ngày bắt đầu:</label>
-                <span class="text-md text-gray-500">{{ \Carbon\Carbon::parse($promotion->start_date)->format('d/m/Y H:i') }}</span>
+                <span
+                    class="text-md text-gray-500">{{ \Carbon\Carbon::parse($promotion->start_date)->format('d/m/Y H:i') }}</span>
             </div>
 
             {{-- End Date --}}
             <div class="mb-4">
                 <label class="label-lg">Ngày kết thúc:</label>
-                <span class="text-md text-gray-500">{{ \Carbon\Carbon::parse($promotion->end_date)->format('d/m/Y H:i') }}</span>
+                <span
+                    class="text-md text-gray-500">{{ \Carbon\Carbon::parse($promotion->end_date)->format('d/m/Y H:i') }}</span>
             </div>
 
             {{-- Quantity --}}
