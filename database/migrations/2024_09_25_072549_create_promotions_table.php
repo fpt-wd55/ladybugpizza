@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('description');
-            $table->string('discount_type');
+            $table->tinyInteger('discount_type')->default(1)->comment('1: percent, 2: amount');
             $table->bigInteger('discount_value');
             $table->dateTime('start_date');
             $table->dateTime('end_date');

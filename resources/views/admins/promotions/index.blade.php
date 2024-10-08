@@ -38,9 +38,9 @@
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->code }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
-                                @if ($promotion->discount_type == 'percent')
+                                @if ($promotion->discount_type == '1')
                                     Giảm theo %
-                                @elseif ($promotion->discount_type == 'amount')
+                                @elseif ($promotion->discount_type == '2')
                                     Giảm theo số tiền
                                 @endif
                             </td>

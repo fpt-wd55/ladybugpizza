@@ -27,9 +27,9 @@
                     <label for="discount_type" class="label-lg">Loại giảm giá</label>
                     <select class="w-full h-10 mb-2 select" name="discount_type" id="discount_type">
                         <option value="">Chọn</option>
-                        <option value="percent" {{ old('discount_type') == 'percent' ? 'selected' : '' }}>Giảm giá theo %
+                        <option value="1" {{ old('discount_type') == '1' ? 'selected' : '' }}>Giảm giá theo %
                         </option>
-                        <option value="amount" {{ old('discount_type') == 'amount' ? 'selected' : '' }}>Giảm giá theo số
+                        <option value="2" {{ old('discount_type') == '2' ? 'selected' : '' }}>Giảm giá theo số
                             tiền</option>
                     </select>
                     @error('discount_type')
