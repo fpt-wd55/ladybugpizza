@@ -29,40 +29,23 @@
                 <div class="h-44">
                     <img src="{{ asset('storage/uploads/banners/' . $item->image) }}" class="w-full h-full object-cover rounded-t-lg" alt="">
                 </div>
-                <div class="p-3 mb-2 h-24">
+                <div class="p-3 mb-2 h-20">
                    
                     <span class="  md:text-sm break-all badge-default">{{$item->url}}</span>
                 </div>
-                <div class="flex justify-around  mb-5">
-                    <div class="flex items-center">
-                        <p class="text-xs md:text-sm font-medium ml-2">Page : </p>
-                       @if ($item->is_local_page == 1)  
-                       <span class="text-xs lg:text-sm bg-green-100 ml-1 text-green-600 font-medium px-3 py-1 rounded-lg border border-green-200">
-                           Local Page
-                         </span>
-                       @else  
-                       <span class="text-xs lg:text-sm bg-green-100 ml-1 text-blue-600 font-medium px-3 py-1 rounded-lg border border-blue-200">
-                         External Page
-                       </span>
-                       @endif
-                    </div>
+                <div class="flex justify-around  mb-3">
+                    
                     <div class="flex items-center ">
-                        <p class="text-xs md:text-sm font-medium">Trạng thái :   </p>
-                        @if ($item->status == 1)       
-                        <span class="text-xs lg:text-sm bg-green-100 ml-1  text-green-600 font-medium px-3 py-1 rounded-lg border border-green-200">
-                            Active
-                          </span>
-                        @else               
-                        <span class="text-xs lg:text-sm bg-green-100 ml-1  text-red-600 font-medium px-3 py-1 rounded-lg border border-red-200">
-                          Inactive
-                        </span>
-                        @endif
+                        <div
+                        class="inline-block indicator {{ $item->status == 1 ? 'bg-green-700' : 'bg-red-700' }}">
+                    </div>
+                    {{ $item->status == 1 ? 'Hoạt động' : 'Khóa' }}
                           
                     </div>
                 </div>
                 <div class="flex mb-5 justify-around">
                     <div class="">
-                        <a href="" class=""><button class="w-32 md:w-24 lg:w-32 button-blue">Sửa</button></a>
+                        <a href="" class=""><button class="w-32 md:w-24 lg:w-32 button-blue"> Sửa  @svg('tabler-edit','<w-5></w-5> h-5')</button></a>
                     </div>
                     <div class="">
                         <a href="#" data-modal-target="deleteBanner-modal-{{ $item->id }}"
