@@ -8,7 +8,7 @@
             @include('clients.profile.sidebar')
 
             <div class="card p-4 md:p-8 w-full min-h-screen">
-                <h3 class="font-semibold uppercase mb-8">hồ sơ của tôi</h3>
+                <h3 class="font-semibold uppercase mb-8">Hồ sơ của tôi</h3>
                 <div class="grid grid-cols-1 lg:grid-cols-3">
 
                     <div class="col-span-1 flex flex-col items-center mb-8 gap-4">
@@ -137,7 +137,8 @@
                                         <div class="grid gap-4 mb-4 sm:grid-cols-2">
                                             <div class="col-span-2">
                                                 <label for="name"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nhập mật khẩu</label>
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nhập
+                                                    mật khẩu</label>
                                                 <input type="password" name="name" id="name" value=""
                                                     class="input" placeholder="">
                                             </div>

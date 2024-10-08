@@ -9,7 +9,7 @@
             @include('clients.profile.sidebar')
 
             <div class="card p-4 md:p-8 w-full min-h-screen">
-                <h3 class="font-semibold uppercase mb-8">mã giảm giá</h3>
+                <h3 class="font-semibold uppercase mb-8">Mã giảm giá</h3>
 
                 {{-- tabs --}}
                 <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 mb-4">
@@ -23,7 +23,7 @@
                         <li class="me-2">
                             <a href="{{ route('client.profile.promotion', ['tab' => 'redeem-code']) }}"
                                 class="inline-block px-4 pb-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Đổi
-                                mã giảm giá</a>
+                                Mã giảm giá</a>
                         </li>
                     </ul>
                 </div>

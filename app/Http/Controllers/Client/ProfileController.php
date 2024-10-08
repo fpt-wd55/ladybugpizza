@@ -40,7 +40,7 @@ class ProfileController extends Controller
         break;
       }
     }
-    // 3. Kiểm tra rank
+    // 3. Kiểm tra rank hiện tại của người dùng
     if (!$currentRank) {
       return response()->json(['error' => 'Rank không tìm thấy'], 404);
     }
@@ -60,15 +60,15 @@ class ProfileController extends Controller
       $nextPoints = 0;
       $progress = 100;
     }
-    // 6. Kiểm tra FAQ
+    // 6. Các câu hỏi FAQ thường gặp
     $faqs = [
       [
         'question' => 'Điểm tích lũy là gì?',
-        'answer' => 'Điểm tích lũy là một hệ thống thưởng mà khách hàng nhận được khi thực hiện giao dịch mua hàng. Điểm này có thể được sử dụng để đổi quà hoặc voucher trong tương lai.'
+        'answer' => 'Điểm tích lũy là một hệ thống thưởng mà khách hàng nhận được khi thực hiện giao dịch mua hàng. Điểm này có thể được sử dụng để đổi quà hoặc voucher cho lần mua tiếp theo'
       ],
       [
         'question' => 'Làm thế nào để tôi có thể tích điểm?',
-        'answer' => 'Bạn có thể tích điểm khi thực hiện giao dịch mua sắm tại cửa hàng hoặc trên trang web của chúng tôi. Mỗi đồng bạn chi tiêu sẽ được quy đổi thành điểm.'
+        'answer' => 'Bạn có thể tích điểm khi thực hiện giao dịch mua tại cửa hàng hoặc trên trang web của chúng tôi. Mỗi đồng bạn chi tiêu sẽ được quy đổi thành điểm.'
       ],
       [
         'question' => 'Điểm tích lũy có hết hạn không?',
