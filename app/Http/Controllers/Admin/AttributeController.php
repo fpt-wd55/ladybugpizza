@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AttributeRequest;
 use App\Models\Attribute;
+use App\Models\AttributeValue;
 use Illuminate\Http\Request;
 
 class AttributeController extends Controller
@@ -13,7 +15,12 @@ class AttributeController extends Controller
      */
     public function index()
     {
-        //
+        $attributes = Attribute::paginate(10);
+        foreach ($attributes as $attribute) {
+            $attribute->values = $attribute->values;
+        }
+        // dd($attributes);
+        return view('admins.attribute.index', compact('attributes'));
     }
 
     /**
@@ -22,6 +29,7 @@ class AttributeController extends Controller
     public function create()
     {
         //
+        return view('admins.attribute.add');
     }
 
     /**
@@ -29,16 +37,44 @@ class AttributeController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $rules = ["attribute_name" => "required", "stocks.*" => "required"];
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Attribute $attribute)
-    {
-        //
-    }
+        foreach ($request->stocks as $key => $value) {
+            $rules["stocks.{$key}.attribute_value"] = 'required';
+            $rules["stocks.{$key}.attribute_quantity"] = 'nullable|numeric';
+        }
+
+        $messages = [
+            'attribute_name.required' => 'Vui lòng nhập tên thuộc tính',
+            'stocks.*.required' => 'Vui lòng nhập giá trị thuộc tính cho sản phẩm',
+            'stocks.*.attribute_value.required' => 'Vui lòng nhập giá trị thuộc tính cho sản phẩm',
+            'stocks.*.attribute_quantity.numeric' => 'Giá trị không hợp lệ',
+        ];
+
+        $request->validate($rules, $messages);
+
+        // dd($request->all());
+
+        $attribute = Attribute::create(
+            [
+                "name" => $request->attribute_name,
+                "status" => 1
+            ]
+        );
+
+        if (!$attribute) {
+            // Vietnamese error message
+            return redirect()->back()->with(['error' => 'Có lỗi xảy ra, vui lòng thử lại.']);
+        }
+        foreach ($request->stocks as $key => $value) {
+            AttributeValue::create([
+                'attribute_id' => $attribute->id,
+                'value' => $value['attribute_value'],
+                'quantity' => $value['attribute_quantity'] ?? null,
+            ]);
+        }
+        return redirect()->route('admin.attributes.index')->with(['success' => 'Thêm thuộc tính thành công']);
+    } 
 
     /**
      * Show the form for editing the specified resource.

@@ -1,7 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Thùng rác')
+@section('title', 'Topping | Thùng rác')
 
 @section('content')
+    {{ Breadcrumbs::render('admin.trash-topping') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="overflow-x-auto">
             <div

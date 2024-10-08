@@ -1,5 +1,7 @@
 @extends('layouts.admin')
+@section('title', 'Danh mục | Thêm mới')
 @section('content')
+    {{ Breadcrumbs::render('admin.categories.create') }}
     <div class="p-4 mx-auto">
         <h3 class="mb-4 text-lg font-bold text-gray-900 ">Category</h3>
         <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data">

@@ -1,6 +1,7 @@
 @extends('layouts.admin')
-@section('title', 'Chi tiết tài khoản')
+@section('title', 'Người dùng | Chi tiết')
 @section('content')
+    {{ Breadcrumbs::render('admin.users.show', $user) }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden p-4">
         <div>
             <div class="grid grid-cols-2 gap-6 border-b border-gray-200 py-4  lg:grid-cols-4 xl:gap-16">

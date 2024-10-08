@@ -1,6 +1,7 @@
 @extends('layouts.admin')
-@section('title', 'Thêm tài khoản')
+@section('title', 'Tài khoản | Thêm mới')
 @section('content')
+    {{ Breadcrumbs::render('admin.users.create') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="p-4 mx-auto">
             <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm tài khoản</h3>
@@ -178,7 +179,8 @@
                                     <option selected disabled>Phân quyền</option>
                                     @foreach ($permissions as $permission)
                                         <option value="{{ $permission->id }}"
-                                            {{ old('permissionSelect') == $permission->id ? 'selected' : '' }}>{{ $permission->name }}
+                                            {{ old('permissionSelect') == $permission->id ? 'selected' : '' }}>
+                                            {{ $permission->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -264,12 +266,10 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-4 mt-5">
-                    <a href="{{ route('admin.users.index') }}"
-                        class="button-dark">
+                    <a href="{{ route('admin.users.index') }}" class="button-dark">
                         Quay lại
                     </a>
-                    <button type="submit"
-                        class="button-blue">
+                    <button type="submit" class="button-blue">
                         Thêm tài khoản
                     </button>
                 </div>

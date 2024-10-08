@@ -24,10 +24,10 @@
                     <div class="col-span-2">
 
                         {{-- update info form --}}
-                        <form action="#" class="mb-8">
+                        <form action="{{ route('client.profile.post-update') }}" method="POST" class="mb-8">
                             @csrf
                             @method('PUT')
-                            <div class="mb-6 flex items-center gap-8">
+                            <div class="mb-6 flex items-center">
                                 <label class="text-sm font w-32 font-medium">Tên tài khoản:</label>
                                 <span class="badge-red">quandohong28</sp>
                             </div>
@@ -43,7 +43,7 @@
                                 <label class="text-sm font w-32 font-medium">Số điện thoại:</label>
                                 <input type="text" class="input">
                             </div>
-                            <div class="mb-6 flex items-center gap-8">
+                            <div class="mb-6 flex items-center">
                                 <p class="text-sm font w-32 font-medium">Giới tính:</p>
                                 <div class="flex items-center gap-4 text-sm">
                                     <label for="male">
@@ -76,7 +76,7 @@
                         </form>
 
                         {{-- Change password form --}}
-                        <form action="#" class="mb-8">
+                        <form action="{{ route('client.profile.post-change-password') }}" method="POST" class="mb-8">
                             @csrf
                             @method('PUT')
                             <p class="title">ĐỔI MẬT KHẨU</p>
@@ -102,42 +102,44 @@
 
 
                         {{-- Form inactive account --}}
-                        <form action="#" class="mb-8">
-                            @csrf
-                            @method('PUT')
-                            <p class="title">KHOÁ TÀI KHOẢN</p>
-                            <p class="text-sm mb-4">Tài khoản của bạn sẽ bị khoá nhưng thông tin của bạn vẫn được lưu trữ,
-                                bạn có
-                                thể khôi phục lại bất kỳ lúc nào</p>
+                        <div class="mb-8">
+                            <p class="title">HUỶ KÍCH HOẠT TÀI KHOẢN</p>
+                            <p class="text-sm mb-4">Tài khoản của bạn sẽ bị vô hiệu hoá nhưng thông tin của bạn vẫn được lưu
+                                trữ, bạn có thể khôi phục lại bất kỳ lúc nào</p>
                             <p class="text-sm mb-4">Chúng tôi sẽ yêu cầu mật khẩu để xác nhận hành động này</p>
                             <div class="mb-6 flex justify-end">
-                                <button type="submit" class="button-red" data-modal-target="addAddressModal"
-                                    data-modal-toggle="addAddressModal">
+                                <button type="submit" class="button-red" data-modal-target="inactiveModal"
+                                    data-modal-toggle="inactiveModal">
                                     @svg('tabler-lock', 'icon-sm me-2')
                                     Huỷ kích hoạt
                                 </button>
                             </div>
-                        </form>
-                        {{-- Modal nhập mật khẩu xác nhận hủy kích hoạt --}}
-                        <div id="addAddressModal" tabindex="-1" aria-hidden="true"
+                        </div>
+
+                        {{-- Inactive Modal --}}
+                        <div id="inactiveModal" tabindex="-1" aria-hidden="true"
                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
                             <div class="relative p-4 w-full max-w-2xl h-auto">
                                 <div class="relative p-4 bg-white rounded-lg shadow sm:p-5">
                                     <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5">
                                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                            Nhập mật khẩu xác nhận hủy kích hoạt tài khoản
+                                            Hủy kích hoạt tài khoản
                                         </h3>
                                         <button type="button"
                                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                            data-modal-toggle="addAddressModal">
+                                            data-modal-toggle="inactiveModal">
                                             @svg('tabler-x', 'icon-sm')
                                         </button>
                                     </div>
-                                    <form action="#">
+                                    <p class="text-sm mb-8">Bạn cần nhập mật khẩu để xác nhận hành vi của mình</p>
+                                    <form action="{{ route('client.profile.post-inactive') }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
                                         <div class="grid gap-4 mb-4 sm:grid-cols-2">
                                             <div class="col-span-2">
                                                 <label for="name"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nhập mật khẩu</label>
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mật
+                                                    khẩu</label>
                                                 <input type="password" name="name" id="name" value=""
                                                     class="input" placeholder="">
                                             </div>
@@ -146,7 +148,7 @@
                                             <button type="submit" class="button-red">
                                                 Xác nhận
                                             </button>
-                                            <button type="button" class="button-dark">
+                                            <button type="button" class="button-dark" data-modal-hide="inactiveModal">
                                                 Huỷ
                                             </button>
                                         </div>
