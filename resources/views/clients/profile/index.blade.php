@@ -14,7 +14,7 @@
                     <div class="col-span-1 flex flex-col items-center mb-8 gap-4">
                         <img loading="lazy" class="img-circle img-lg object-cover"
                             src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}"
-                            alt="">
+                            alt=""> --}}
                         <input type="file" id="avatar" class="hidden">
                         <label for="avatar" class="button-red cursor-pointer">
                             Chọn ảnh
@@ -24,49 +24,63 @@
                     <div class="col-span-2">
 
                         {{-- update info form --}}
-                        <form action="{{ route('client.profile.post-update') }}" method="POST" class="mb-8">
+                        <form action="{{ route('client.profile.postUpdate', $users->id) }}" class="mb-8" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="mb-6 flex items-center">
                                 <label class="text-sm font w-32 font-medium">Tên tài khoản:</label>
-                                <span class="badge-red">quandohong28</sp>
+                                <span class="badge-red">{{ $users->username }}</span>
                             </div>
+
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Họ và tên:</label>
-                                <input type="text" class="input">
+
+                                <input type="text" class="input" name="fullname"
+                                    value="{{ old('fullname', $users->fullname) }}">
                             </div>
+
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Email:</label>
-                                <input type="text" class="input">
+
+                                <input type="email" class="input" name="email"
+                                    value="{{ old('email', $users->email) }}">
                             </div>
+
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Số điện thoại:</label>
-                                <input type="text" class="input">
+
+                                <input type="text" class="input" name="phone"
+                                    value="{{ old('phone', $users->phone) }}">
                             </div>
                             <div class="mb-6 flex items-center">
                                 <p class="text-sm font w-32 font-medium">Giới tính:</p>
                                 <div class="flex items-center gap-4 text-sm">
                                     <label for="male">
+
                                         <input type="radio" name="gender" value="male" id="male"
-                                            class="input-radio">
+                                            class="input-radio" {{ $users->gender == 'male' ? 'checked' : '' }}>
                                         Nam
                                     </label>
                                     <label for="female">
                                         <input type="radio" name="gender" value="female" id="female"
-                                            class="input-radio">
+                                            class="input-radio" {{ $users->gender == 'female' ? 'checked' : '' }}>
                                         Nữ
                                     </label>
                                     <label for="other">
                                         <input type="radio" name="gender" value="other" id="other"
-                                            class="input-radio">
+                                            class="input-radio" {{ $users->gender == 'other' ? 'checked' : '' }}>
                                         Khác
                                     </label>
                                 </div>
                             </div>
+
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font-medium w-32">Ngày sinh:</label>
-                                <input type="date" class="input">
+
+                                <input type="date" class="input" name="date_of_birth"
+                                    value="{{ old('date_of_birth', $users->date_of_birth) }}">
                             </div>
+
                             <div class="mb-6 flex justify-end">
                                 <button type="submit" class="button-red">
                                     @svg('tabler-cloud-upload', 'icon-sm me-2')
@@ -74,6 +88,7 @@
                                 </button>
                             </div>
                         </form>
+
 
                         {{-- Change password form --}}
                         <form action="{{ route('client.profile.post-change-password') }}" method="POST" class="mb-8">
@@ -114,8 +129,6 @@
                                     Huỷ kích hoạt
                                 </button>
                             </div>
-                        </div>
-
                         {{-- Inactive Modal --}}
                         <div id="inactiveModal" tabindex="-1" aria-hidden="true"
                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">

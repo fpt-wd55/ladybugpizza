@@ -97,6 +97,7 @@ Route::prefix('/auth')->group(function () {
     Route::post('/get-otp', [WebController::class, 'postGetOtp'])->name('auth.post-get-otp');
     Route::post('/recovery', [WebController::class, 'postRecovery'])->name('auth.post-recovery');
     Route::post('/user-info', [WebController::class, 'postUserInfo'])->name('auth.post-user-info');
+    
 });
 
 
