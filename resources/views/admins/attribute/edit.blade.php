@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Thuộc tính | Cập nhật thuộc tính')
 @section('content')
-    {{-- {{ Breadcrumbs::render('admin.users.create') }} --}}
+    {{ Breadcrumbs::render('admin.attributes.edit', $attribute) }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="p-4 mx-auto">
             <h3 class="mb-4 text-lg font-bold text-gray-900 ">Cập nhật thuộc tính</h3>
@@ -98,7 +98,7 @@
                             <th class="px-6 py-2 text-end"></th>
                         </tr>
                     </thead>
-                    <tbody> 
+                    <tbody>
                         <tr>
                             <td class="border px-4 py-2" colspan="3">
                                 <div class="grid grid-cols-1 gap-3 md:grid-cols-6">
