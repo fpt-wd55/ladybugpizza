@@ -88,14 +88,7 @@
                     @svg('tabler-slideshow', 'text-gray-500')
                     <span class="ml-3">Banner</span>
                 </a>
-            </li> 
-            <li>
-                <a href="{{ route('admin.memberships.index') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
-                    @svg('tabler-credit-card', 'text-gray-500')
-                    <span class="ml-3">Điểm thành viên</span>
-                </a>
-            </li>
+            </li>  
         </ul>
     </div>
     <div class="flex absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full bg-white z-20">
