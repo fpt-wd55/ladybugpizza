@@ -87,7 +87,8 @@
                         Tiện ích
                     </div>
                     <div class="grid grid-cols-3 gap-4 p-4">
-                        <a href="{{ route('admin.dashboard') }}" class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
+                        <a href="{{ route('admin.dashboard') }}"
+                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
                             @svg('tabler-chart-pie', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Thống kê</div>
                         </a>
@@ -95,45 +96,60 @@
                             @svg('tabler-moneybag', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Doanh thu</div>
                         </a>
-                        <a href="{{ route('admin.users.index') }}" class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
+                        <a href="{{ route('admin.users.index') }}"
+                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
                             @svg('tabler-user', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Tài khoản</div>
                         </a>
-                        <a href="{{route('admin.categories.index')}}" class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
+                        <a href="{{ route('admin.categories.index') }}"
+                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
                             @svg('tabler-category', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Danh mục</div>
                         </a>
-                        <a href="{{ route('admin.products.index') }}" class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
+                        <a href="{{ route('admin.products.index') }}"
+                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
                             @svg('tabler-pizza', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Sản phẩm</div>
                         </a>
-                        <a href="{{ route('admin.attributes.index') }}" class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
+                        <a href="{{ route('admin.attributes.index') }}"
+                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
                             @svg('tabler-sort-deacending-small-big', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Thuộc tính</div>
                         </a>
-                        <a href="{{ route('admin.toppings.index')}}" class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
+                        <a href="{{ route('admin.toppings.index') }}"
+                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
                             @svg('tabler-egg', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Topping</div>
                         </a>
-                        <a href="{{ route('admin.orders.index') }}" class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
+                        <a href="{{ route('admin.orders.index') }}"
+                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
                             @svg('tabler-package', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Đơn hàng</div>
                         </a>
-                        <a href="{{ route('admin.invoices.index') }}" class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
+                        <a href="{{ route('admin.invoices.index') }}"
+                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
                             @svg('tabler-file-invoice', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Hóa đơn</div>
                         </a>
-                        <a href="{{ route('admin.shippings.index') }}" class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
+                        <a href="{{ route('admin.shippings.index') }}"
+                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
                             @svg('tabler-truck-delivery', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Giao hàng</div>
                         </a>
-                        <a href="{{ route('admin.promotions.index') }}" class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
+                        <a href="{{ route('admin.promotions.index') }}"
+                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
                             @svg('tabler-discount-2', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Mã giảm giá</div>
                         </a>
-                        <a href="{{ route('admin.banners.index') }}" class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
+                        <a href="{{ route('admin.banners.index') }}"
+                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
                             @svg('tabler-slideshow', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Banner</div>
+                        </a>
+                        <a href="{{ route('admin.memberships.index') }}"
+                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
+                            @svg('tabler-slideshow', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
+                            <div class="text-sm text-gray-900 ">Điểm thành viên</div>
                         </a>
                     </div>
                 </div>
