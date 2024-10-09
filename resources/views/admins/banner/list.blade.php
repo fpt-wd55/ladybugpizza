@@ -27,7 +27,7 @@
                 {{-- start card --}}
                <div class="card bg-slate-500 h-auto">
                 <div class="h-44">
-                    <img src="{{ asset('storage/uploads/banners/' . $item->image) }}" class="w-full h-full object-cover rounded-t-lg" alt="">
+                    <img loading="lazy" src="{{ asset('storage/uploads/banners/' . $item->image) }}" class="w-full h-full object-cover rounded-t-lg" alt="">
                 </div>
                 <div class="p-3 mb-2 h-20">
                    

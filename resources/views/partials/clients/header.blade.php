@@ -3,7 +3,7 @@
         <nav class="flex justify-between items-center">
             {{-- Logo --}}
             <a href="{{ route('client.home') }}" class="md:flex md:items-center">
-                <img class="h-12 md:h-20" src="{{ asset('storage/uploads/logos/logo-fill.png') }}" alt="">
+                <img loading="lazy" class="h-12 md:h-20" src="{{ asset('storage/uploads/logos/logo-fill.png') }}" alt="">
             </a>
             <ul class="hidden lg:flex lg:items-center mx-auto">
                 <li class="mx-10 font-semibold text-sm uppercase hover:text-red-500 transition">
@@ -26,7 +26,7 @@
                     <a href="{{ route('client.order.index') }}"> @svg('tabler-truck-delivery')</a>
 
                     <button class="hover:cursor-pointer">
-                        <img data-dropdown-toggle="userDropdown" class="img-circle w-8 h-8 object-cover"
+                        <img loading="lazy" data-dropdown-toggle="userDropdown" class="img-circle w-8 h-8 object-cover"
                             src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}">
                     </button>
 

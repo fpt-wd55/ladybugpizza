@@ -14,27 +14,27 @@
                 <div class="relative h-56 overflow-hidden rounded-lg md:h-96 lg:h-[520px] transition">
                     <!-- Item 1 -->
                     <div class="hidden transition duration-700" data-carousel-item>
-                        <img src="{{ asset('storage/uploads/banners/banner.jpg') }}"
+                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
                             class="absolute block w-full h-full object-cover" alt="...">
                     </div>
                     <!-- Item 2 -->
                     <div class="hidden transition duration-700" data-carousel-item>
-                        <img src="{{ asset('storage/uploads/banners/banner.jpg') }}"
+                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
                             class="absolute block w-full h-full object-cover" alt="...">
                     </div>
                     <!-- Item 3 -->
                     <div class="hidden transition duration-700" data-carousel-item>
-                        <img src="{{ asset('storage/uploads/banners/banner.jpg') }}"
+                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
                             class="absolute block w-full h-full object-cover" alt="...">
                     </div>
                     <!-- Item 4 -->
                     <div class="hidden transition duration-700" data-carousel-item>
-                        <img src="{{ asset('storage/uploads/banners/banner.jpg') }}"
+                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
                             class="absolute block w-full h-full object-cover" alt="...">
                     </div>
                     <!-- Item 5 -->
                     <div class="hidden transition duration-700" data-carousel-item>
-                        <img src="{{ asset('storage/uploads/banners/banner.jpg') }}"
+                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
                             class="absolute block w-full h-full object-cover" alt="...">
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                     @foreach ($products as $product)
                         <a href="{{ route('client.product.show', $product->slug) }}"
                             class="product-card md:flex overflow-hidden">
-                            <img src="{{ asset('storage/uploads/products/pizza/' . $product->image) }}"
+                            <img loading="lazy" src="{{ asset('storage/uploads/products/pizza/' . $product->image) }}"
                                 class="flex-shrink-0 h-48 w-full md:w-1/3 md:h-full object-cover" alt="">
                             <div class="p-2 text-sm">
                                 <p class="font-semibold mb-2 ">{{ $product->name }}</p>
@@ -132,20 +132,20 @@
                     </div>
                 </div>
 
-                <img src="{{ asset('storage/uploads/products/pizza/pizza-5-cheese.jpeg') }}"
+                <img loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza-5-cheese.jpeg') }}"
                     class="flex-shrink-0 h-full w-full rounded-lg object-cover" alt="">
             </div>
 
             {{-- Cau chuyen cua chung toi --}}
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="grid grid-cols-2 grid-rows-2 gap-4">
-                    <img src="{{ asset('storage/uploads/products/pizza/pizza-margherita.jpeg') }}"
+                    <img loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza-margherita.jpeg') }}"
                         class="h-full w-full rounded-lg object-cover" alt="">
-                    <img src="{{ asset('storage/uploads/products/pizza/pizza-4-cheese.jpeg') }}"
+                    <img loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza-4-cheese.jpeg') }}"
                         class="h-full w-full rounded-lg object-cover" alt="">
-                    <img src="{{ asset('storage/uploads/products/pizza/pizza-burrata-cay.jpeg') }}"
+                    <img loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza-burrata-cay.jpeg') }}"
                         class="h-full w-full rounded-lg object-cover" alt="">
-                    <img src="{{ asset('storage/uploads/products/pizza/pizza-ca-hoi.jpg') }}"
+                    <img loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza-ca-hoi.jpg') }}"
                         class="h-full w-full rounded-lg object-cover" alt="">
                 </div>
                 <div class="text-center">

@@ -54,7 +54,7 @@
                         <div class="grid grid-cols-2 ">
 
                             <div class="">
-                                <img src="{{ asset('storage/uploads/banners/' . $item->image) }}"
+                                <img loading="lazy" src="{{ asset('storage/uploads/banners/' . $item->image) }}"
                                     class="md:w-52 md:h-20 lg:w-80 lg:h-[170px] rounded-lg object-cover" alt="">
                             </div>
 

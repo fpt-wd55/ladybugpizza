@@ -9,7 +9,7 @@
                     @svg('tabler-baseline-density-medium', 'w-6 h-6 text-gray-500')
                 </button>
                 <a href="{{ route('admin.dashboard') }}" class="flex ms-2 md:me-24">
-                    <img src="{{ asset('storage/uploads/logos/logo-fill.svg') }}" class="h-11 me-3"
+                    <img loading="lazy" src="{{ asset('storage/uploads/logos/logo-fill.svg') }}" class="h-11 me-3"
                         alt="Ladybug Pizza Logo" />
                     <span class="self-center text-lg font-semibold whitespace-nowrap">Ladybug
                         Pizza</span>
@@ -37,7 +37,7 @@
                     <div>
                         <a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
                             <div class="flex-shrink-0">
-                                <img class="w-11 h-11 rounded-full"
+                                <img loading="lazy" class="w-11 h-11 rounded-full"
                                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png"
                                     alt="Joseph McFall avatar">
                             </div>
@@ -53,7 +53,7 @@
                         </a>
                         <a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
                             <div class="flex-shrink-0">
-                                <img class="w-11 h-11 rounded-full"
+                                <img loading="lazy" class="w-11 h-11 rounded-full"
                                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png"
                                     alt="Roberta Casas image">
                             </div>
@@ -79,7 +79,7 @@
                 <button type="button" class="flex mx-3 bg-gray-800 rounded-full md:mr-0 ring-0 focus:ring-0"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                     <span class="sr-only">Open user menu</span>
-                    <img class="w-8 h-8 rounded-full"
+                    <img loading="lazy" class="w-8 h-8 rounded-full"
                         src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
                 </button>
                 <!-- Dropdown menu -->

@@ -11,7 +11,7 @@
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 sm:grid-cols-12">
-                            <img class="w-20 h-20 rounded-full"
+                            <img loading="lazy" class="w-20 h-20 rounded-full"
                                 src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}">
                             <div class="flex items-center justify-center w-full col-span-5">
                                 <label for="dropzone-file"
