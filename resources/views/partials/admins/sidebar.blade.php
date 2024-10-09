@@ -23,7 +23,7 @@
                     @svg('tabler-user', 'text-gray-500')
                     <span class="ml-3">Tài khoản</span>
                 </a>
-            </li> 
+            </li>
             <li>
                 <button type="button"
                     class="flex items-center p-2 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100"
@@ -34,10 +34,10 @@
                 </button>
                 <ul id="dropdown-pages" class="hidden py-2 space-y-2">
                     <li>
-                        <a href="{{route('admin.categories.index')}}"
+                        <a href="{{ route('admin.categories.index') }}"
                             class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Danh
                             mục</a>
-                    </li> 
+                    </li>
                     <li>
                         <a href="{{ route('admin.products.index') }}"
                             class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Sản
@@ -49,7 +49,7 @@
                             tính</a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.toppings.index')}}"
+                        <a href="{{ route('admin.toppings.index') }}"
                             class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Topping</a>
                     </li>
                 </ul>
@@ -83,12 +83,19 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('admin.memberships.index') }}"
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                    @svg('tabler-credit-card', 'text-gray-500')
+                    <span class="ml-3">Điểm thành viên</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('admin.banners.index') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     @svg('tabler-slideshow', 'text-gray-500')
                     <span class="ml-3">Banner</span>
                 </a>
-            </li>  
+            </li>
         </ul>
     </div>
     <div class="flex absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full bg-white z-20">
