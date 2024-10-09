@@ -72,7 +72,7 @@
                                             <h3 class="mb-5 font-normal">Bạn có muốn Khôi phục thuộc tính này không?</h3>
 
                                             <div class="flex justify-center items-center">
-                                                <form action="{{ route('admin.restore-attribute', $attribute) }}"
+                                                <form action="{{ route('admin.restore-attribute', $attribute->id) }}"
                                                     method="post">
                                                     @csrf
                                                     <button type="submit"
@@ -109,7 +109,7 @@
                                             </h3>
 
                                             <div class="flex justify-center items-center">
-                                                <form action="{{ route('admin.delete-attribute', $attribute) }}"
+                                                <form action="{{ route('admin.delete-attribute', $attribute->id) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
