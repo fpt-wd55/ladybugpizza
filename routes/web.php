@@ -58,8 +58,9 @@ Route::prefix('/')->group(function () {
     Route::post('/order/{order}/cancel}', [OrderController::class, 'postCancel'])->name('client.order.cancel');
     Route::post('/order/{order}/rate}', [OrderController::class, 'postRate'])->name('client.order.rate');
     Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile.index');
-    Route::post('/profile', [ProfileController::class, 'update'])->name('client.profile.update');
-    Route::post('/profile', [ProfileController::class, 'postChangePassword'])->name('client.profile.post-change-password');
+    Route::post('/profile/update', [ProfileController::class, 'postUpdate'])->name('client.profile.post-update');
+    Route::post('/profile/change-password', [ProfileController::class, 'postChangePassword'])->name('client.profile.post-change-password');
+    Route::post('/profile/inactive', [ProfileController::class, 'postInactive'])->name('client.profile.post-inactive');
     Route::get('/profile/membership', [ProfileController::class, 'membership'])->name('client.profile.membership');
     Route::get('/profile/address', [ProfileController::class, 'address'])->name('client.profile.address');
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
@@ -69,7 +70,6 @@ Route::prefix('/')->group(function () {
     Route::get('/manual', [PageController::class, 'manual'])->name('client.manual');
     Route::get('/contact', [PageController::class, 'contact'])->name('client.contact');
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
-    Route::get('/invoices/{slug}', [InvoiceController::class, 'show'])->name('invoices.index');
 });
 
 Route::prefix('/errors')->group(function () {
@@ -108,21 +108,25 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/orders', AdminOrderController::class);
     Route::resource('/carts', AdminCartController::class);
     Route::resource('/attributes', AttributeController::class);
+    Route::get('/trash-attributes', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');
+    Route::post('/restore-attribute/{id}', [AttributeController::class, 'restoreAttribute'])->name('restore-attribute');
+    Route::delete('/delete-attribute/{id}', [AttributeController::class, 'deleteAttribute'])->name('delete-attribute');
+        
     Route::resource('/toppings', ToppingController::class);
     Route::resource('/banners', BannerController::class);
     Route::get('/trash-topping', [ToppingController::class, 'trashTopping'])->name('trash-topping');
     Route::get('/restore-topping/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
     Route::delete('/delete-topping/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
     Route::resource('/categories', CategoryController::class);
-    Route::get('/trash-banner',[BannerController::class,'trashList'])->name('trash.listBanner');
+    Route::post('/delete-banner/{id}', [BannerController::class, 'trashForce'])->name('trash.bannerDelete');
+    Route::post('/restore-banner/{id}', [BannerController::class, 'trashRestore'])->name('trash.bannerRestore');
+    Route::get('/trash-banner', [BannerController::class, 'trashList'])->name('trash.listBanner');
     Route::get('/trash-category', [CategoryController::class, 'trashCategory'])->name('trash.listcate');
     Route::post('/restore-category/{id}', [CategoryController::class, 'trashRestore'])->name('trash.cateRestore');
     Route::post('/delete-category/{id}', [CategoryController::class, 'trashForce'])->name('trash.cateDelete');
-
     Route::resource('/banners', BannerController::class);
     Route::get('/trash-promotions', [BannerController::class, 'trashList'])->name('trash.listBanner');
     Route::resource('/promotions', PromotionController::class);
-  
     Route::resource('/memberships', MembershipController::class);
     Route::resource('/order-statuses', OrderStatusController::class);
     Route::resource('/payment-methods', PaymentMethodController::class);
@@ -135,6 +139,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/conversations', ConversationController::class);
     Route::get('/components', [DashboardController::class, 'components']);
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
-    Route::get('/invoices/{slug}', [InvoiceController::class, 'show'])->name('invoices.show');
 });
-// 
+
+// Cai nay dung chung luon
+Route::get('/invoices/{slug}', [InvoiceController::class, 'show'])->name('invoices.show');

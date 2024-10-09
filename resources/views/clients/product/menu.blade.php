@@ -82,7 +82,7 @@
                 <div class="mb-8">
                     <p class="font-semibold uppercase mb-4">Combo</p>
                     <a href="" class="product-card flex overflow-hidden relative">
-                        <img src="{{ asset('storage/uploads/products/combo/combo.jpeg') }}"
+                        <img loading="lazy" src="{{ asset('storage/uploads/products/combo/combo.jpeg') }}"
                             class="flex-shrink-0 h-60 w-1/2 object-cover" alt="">
                         <div class="p-4">
                             <p class="font-semibold mb-2 text-sm md:text-base">Combo 2 Pizza + Pepsi - Ăn thả ga - Giá siêu
@@ -107,7 +107,7 @@
                         @foreach ($products as $product)
                             <a href="{{ route('client.product.show', $product->slug) }}"
                                 class="product-card md:flex overflow-hidden">
-                                <img src="{{ asset('storage/uploads/products/' . $product->category->slug . '/' . $product->image) }}"
+                                <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->category->slug . '/' . $product->image) }}"
                                     class="flex-shrink-0 h-48 w-full md:w-1/3 md:h-full object-cover"
                                     alt="{{ $product->image }}">
                                 <div class="p-2 text-sm">

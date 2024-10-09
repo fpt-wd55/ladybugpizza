@@ -9,16 +9,14 @@
                 class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 @if (session('message'))
                     <div class="button bg-green-400">
-                        {{ session('message') }} 
+                        {{ session('message') }}
                     </div>
                 @endif
-                <a href="{{ route('admin.toppings.create') }}"
-                    class="button-blue">
+                <a href="{{ route('admin.toppings.create') }}" class="button-blue">
                     @svg('tabler-plus', 'w-5 h-5 mr-2')
                     Thêm Topping
                 </a>
-                <a href="{{ route('admin.trash-topping') }}"
-                    class="button-red">
+                <a href="{{ route('admin.trash-topping') }}" class="button-red">
                     @svg('tabler-trash', 'w-5 h-5 mr-2')
                     Thùng rác
                 </a>
@@ -43,10 +41,11 @@
                                 {{ ($toppings->currentPage() - 1) * $toppings->perPage() + $loop->iteration }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $topping->name }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                <img src="{{ asset('storage/uploads/toppings/' . $topping->image) }}" class="img-sm img-circle object-cover"
-                                    alt="">
+                                <img loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}"
+                                    class="img-sm img-circle object-cover" alt="">
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ number_format($topping->price) }}đ</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ number_format($topping->price) }}đ
+                            </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
                                 @foreach ($categories as $category)
                                     @if ($category->id == $topping->category_id)
@@ -96,8 +95,9 @@
                                         <form action="{{ route('admin.toppings.destroy', $topping->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button  type="submit"
-                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"> Xóa
+                                            <button type="submit"
+                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                Xóa
                                             </button>
                                         </form>
 
@@ -109,13 +109,13 @@
                         </div>
                         {{-- end modal --}}
                     @empty
-                    <td colspan="6" class="text-center py-4 text-base">
-                        <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
-                            @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
-                            <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p> 
-                        </div>
-                    </td>
-                    <!-- Hiển thị "Trống" nếu không có dữ liệu -->
+                        <td colspan="6" class="text-center py-4 text-base">
+                            <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                                @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                            </div>
+                        </td>
+                        <!-- Hiển thị "Trống" nếu không có dữ liệu -->
                     @endforelse
                 </tbody>
             </table>

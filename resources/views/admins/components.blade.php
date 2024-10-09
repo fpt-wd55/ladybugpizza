@@ -570,7 +570,7 @@
                         </td>
                         <th scope="row"
                             class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap ">
-                            <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
+                            <img loading="lazy" src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
                                 alt="iMac Front Image" class="w-auto h-8 mr-3">
                             Apple iMac 27&#34;
                         </th>
@@ -616,7 +616,7 @@
                         </td>
                         <th scope="row"
                             class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap ">
-                            <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
+                            <img loading="lazy" src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
                                 alt="iMac Front Image" class="w-auto h-8 mr-3">
                             Apple iMac 20&#34;
                         </th>
@@ -662,7 +662,7 @@
                         </td>
                         <th scope="row"
                             class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap ">
-                            <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/devices/apple-iphone-14.png"
+                            <img loading="lazy" src="https://flowbite.s3.amazonaws.com/blocks/application-ui/devices/apple-iphone-14.png"
                                 alt="iMac Front Image" class="w-auto h-8 mr-3">
                             Apple iPhone 14
                         </th>
@@ -707,7 +707,7 @@
                         </td>
                         <th scope="row"
                             class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap ">
-                            <img src="https://flowbite.s3.amazonaws.com/blocks/application-ui/devices/apple-ipad-air.png"
+                            <img loading="lazy" src="https://flowbite.s3.amazonaws.com/blocks/application-ui/devices/apple-ipad-air.png"
                                 alt="iMac Front Image" class="w-auto h-8 mr-3">
                             Apple iPad Air
                         </th>

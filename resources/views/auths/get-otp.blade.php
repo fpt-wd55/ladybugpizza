@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="hidden md:block max-h-[629px]">
-                <img class="w-full h-full object-cover" src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}"
+                <img loading="lazy" class="w-full h-full object-cover" src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}"
                     alt="">
             </div>
         </div>

@@ -24,7 +24,7 @@ class RegisterRequest extends FormRequest
         return [
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|min:7|max:11|unique:users,phone',
-            'password' => 'required|min:8|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&]).{8,}$/',
+            'password' => 'required|min:8|max:255|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&]).{8,}$/',
             'password_confirmation' => 'same:password',
             'agree' => 'accepted'
         ];
@@ -40,6 +40,7 @@ class RegisterRequest extends FormRequest
             'phone.unique' => 'Số điện thoại đã tồn tại trong hệ thống',
             'password.required' => 'Mật khẩu không được để trống',
             'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự',
+            'password.max' => 'Mật khẩu tối đa là 255 ký tự',
             'password.regex' => 'Mật khẩu phải chứa ít nhất 1 ký tự viết hoa, 1 ký tự số và 1 ký tự đặc biệt',
             'password_confirmation.same' => 'Nhập lại mật khẩu không trùng khớp',
             'agree.accepted' => 'Bạn cần đồng ý với các chính sách và điều khoản',

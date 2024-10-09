@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Thuộc tính | Thêm thuộc tính')
 @section('content')
-    {{ Breadcrumbs::render('admin.users.create') }}
+    {{ Breadcrumbs::render('admin.attributes.create') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="p-4 mx-auto">
             <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm thuộc tính</h3>
@@ -54,11 +54,11 @@
                                                     </div>
                                                     <div class="md:col-span-2">
                                                         <input type="number"
-                                                            name="stocks[{{ $key }}][attribute_quatity]"
+                                                            name="stocks[{{ $key }}][attribute_quantity]"
                                                             placeholder="Số lượng"
-                                                            value="{{ $stock['attribute_quatity'] ?? '' }}"
+                                                            value="{{ $stock['attribute_quantity'] ?? '' }}"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                                                        @error("stocks.{$key}.attribute_quatity")
+                                                        @error("stocks.{$key}.attribute_quantity")
                                                             <p class="mt-2 text-sm text-red-600 ">
                                                                 {{ $message }}
                                                             </p>
@@ -84,7 +84,7 @@
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                                 </div>
                                                 <div class="md:col-span-2">
-                                                    <input type="number" name="stocks[0][attribute_quatity]"
+                                                    <input type="number" name="stocks[0][attribute_quantity]"
                                                         placeholder="Số lượng"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                                 </div>
@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-4 mt-5">
-                    <a href="{{ route('admin.users.index') }}" class="button-dark">
+                    <a href="{{ route('admin.attributes.index') }}" class="button-dark">
                         Quay lại
                     </a>
                     <button type="submit" class="button-blue">
@@ -132,7 +132,7 @@
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 </div>
                                 <div class="md:col-span-2">
-                                    <input type="number" name="stocks[${i}][attribute_quatity]"
+                                    <input type="number" name="stocks[${i}][attribute_quantity]"
                                         placeholder="Số lượng"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 </div>

@@ -38,7 +38,7 @@
                                 {{ ($listTopping->currentPage() - 1) * $listTopping->perPage() + $loop->iteration }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $topping->name }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                <img src="{{ asset('storage/uploads/toppings/' . $topping->image) }}" class="img-sm img-circle object-cover"
+                                <img loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}" class="img-sm img-circle object-cover"
                                     alt="">
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ number_format($topping->price) }}đ</td>
