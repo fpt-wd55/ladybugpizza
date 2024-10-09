@@ -6,18 +6,7 @@
             @csrf
             <div class="grid gap-4 mb-4 sm:grid-cols-2">
 
-                <div>
-
-                    <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Ảnh banner</label>
-                    <input
-                        class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
-                        type="file" name="image" value="">
-
-                    @error('image')
-                        <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Lỗi! </span>
-                            {{ $message }}</p>
-                    @enderror
-                </div>
+               
 
                 <div>
 
@@ -32,7 +21,7 @@
                 </div>
 
                 <div class="">
-                    <label for="url" class="block mb-2 text-base font-medium text-gray-900 ">Local Page</label>
+                    <label for="url" class="block mb-3 text-base font-medium text-gray-900 ">Đường dẫn trang</label>
                     <div class="flex gap-x-3">
 
                         <div class=" mb-4">
@@ -40,14 +29,14 @@
                                 class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300  rounded-full transition"
                                 value="1">
                             <label for="" class="ml-2 text-base cursor-pointer">
-                                Local Page
+                                Trang cục bộ
                             </label>
                         </div>
                         <div class="">
                             <input id="" type="radio" name="is_local_page"
                                 class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300  rounded-full transition" value="2">
                             <label for="" class="ml-2 text-base cursor-pointer">
-                                External Page
+                                Trang ngoài
                             </label>
                         </div>
                     </div>
@@ -57,10 +46,26 @@
                     @enderror
                 </div>
 
-
+                <div>
+                    <label for="name" class="block mb-2 text-base font-medium text-gray-900">Ảnh banner</label>
+                    <input
+                        class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+                        type="file" name="image" value="" id="imageInput" accept="image/*" onchange="previewImage(event)">
+                
+                    @error('image')
+                        <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Lỗi! </span>
+                            {{ $message }}</p>
+                    @enderror
+                    <div class="mt-2">
+                        <div id="imagePreview" class="h-auto overflow-hidden relative rounded-md shadow-lg" style="display: none;">
+                                <img loading="lazy" id="currentImage" class="w-full h-full object-cover rounded-md transform transition-all duration-500"
+                                    alt="Banner image">
+                        </div>
+                    </div>
+                </div>
 
                 <div class="">
-                    <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Trạng thái</label>
+                    <label for="name" class="block mb-3 mt-1 text-base font-medium text-gray-900 ">Trạng thái</label>
                     <div class="flex items-center">
                         <label for="status-toggle" class="inline-flex relative items-center cursor-pointer">
                             <input type="checkbox" id="status-toggle" name="status" class="sr-only peer" value="1">
@@ -83,4 +88,29 @@
             </div>
         </form>
     </div>
+@endsection
+
+
+@section('scripts')
+<script>
+    
+    function previewImage(event) {
+        var imageInput = document.getElementById('imageInput');
+        var imagePreview = document.getElementById('imagePreview');
+        var currentImage = document.getElementById('currentImage');
+
+        if (imageInput.files && imageInput.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                currentImage.src = e.target.result;
+                imagePreview.style.display = 'block'; 
+            }
+
+            reader.readAsDataURL(imageInput.files[0]);
+        } else {
+            imagePreview.style.display = 'none';
+        }
+    }
+</script>
 @endsection

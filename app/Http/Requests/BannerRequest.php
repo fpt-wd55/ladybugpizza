@@ -22,10 +22,29 @@ class BannerRequest extends FormRequest
     public function rules(): array
     {
       
-   
-       
+        if ($this->isMethod('post')) {
+            return $this->forCreate();
+        } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
+            return $this->forUpdate();
+        }
+
+        return [];
+    }
+
+
+    public function forCreate(): array
+    {
         return [
             'image' => ['required','mimes:jpeg,png,jpg,gif,bmp,svg,webp'],
+            'url' => ['required','string'],
+            'is_local_page' => ['required'],
+        ];
+    }
+
+    public function forUpdate(): array
+    {
+        return [
+           'image' => ['mimes:jpeg,png,jpg,gif,bmp,svg,webp'],
             'url' => ['required','string'],
             'is_local_page' => ['required'],
         ];

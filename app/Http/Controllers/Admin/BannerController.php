@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\BannerRequest;
 use App\Models\Banner;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\BannerRequest;
+use Illuminate\Support\Facades\Storage;
 
 class BannerController extends Controller
 {
@@ -68,15 +69,38 @@ class BannerController extends Controller
      */
     public function edit(Banner $banner)
     {
-        //
+        return view('admins.banner.edit',compact('banner'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Banner $banner)
+    public function update(BannerRequest $request, Banner $banner)
     {
-        //
+        $data = $request->except('image');
+        $old_image = $banner->image;
+        // nếu chọn ảnh mới  
+        if ($request->hasFile('image')) {
+            $banner_image = $request->file('image');
+            $banner_name = 'topping_' . pathinfo($banner_image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $banner_image->getClientOriginalExtension();
+            $data['image'] = $banner_name;
+        } else {
+            $data['image'] = $old_image;
+        }
+
+        $data['status'] = $request->status ? 1 : 2;
+
+        if ($banner->update($data)) {
+            if ($request->hasFile('image')) {
+                $banner_image->storeAs('public/uploads/banners', $banner_name); 
+                // xóa ảnh cũ
+                if ($old_image != null && Storage::exists('public/uploads/banners/' . $old_image)) {
+                    unlink(storage_path('app/public/uploads/banners/' . $old_image));
+                }
+            }
+            return redirect()->route('admin.banners.index')->with('message', 'Cập nhật thành công');
+        }
+       
     }
 
     /**
