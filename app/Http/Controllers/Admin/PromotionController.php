@@ -52,8 +52,6 @@ class PromotionController extends Controller
      */
     public function edit(Promotion $promotion)
     {
-        $editPromotion = Promotion::all();
-        //  neu the thi ay cai nay` ve
         return view('admins.promotions.edit',[
             'editPromotion' => $promotion,
         ]);
@@ -62,9 +60,12 @@ class PromotionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Promotion $promotion)
+    public function update(PromotionRequest $request , Promotion $promotion)
     {
-        //
+        $data = $request->all();
+        $promotion->update($data);
+        return redirect()->route('admin.promotions.index')->with('message', 'Cập nhật mã giảm giá thành công');
+
     }
 
     /**
