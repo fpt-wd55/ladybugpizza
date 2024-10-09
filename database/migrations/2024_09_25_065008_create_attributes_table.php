@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->tinyInteger('status')->default(1)->comment('1:active; 2: inactive');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
