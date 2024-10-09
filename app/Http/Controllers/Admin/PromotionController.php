@@ -65,7 +65,6 @@ class PromotionController extends Controller
         $data = $request->all();
         $promotion->update($data);
         return redirect()->route('admin.promotions.index')->with('message', 'Cập nhật mã giảm giá thành công');
-
     }
 
     /**

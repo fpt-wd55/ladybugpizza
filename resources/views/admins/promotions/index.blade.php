@@ -111,7 +111,6 @@
                     @endforelse
                 </tbody>
             </table>
-
             <div class="p-4">
                 {{ $promotions->links() }}
             </div>
