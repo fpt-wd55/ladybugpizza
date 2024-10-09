@@ -114,9 +114,7 @@
                                dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                         <option value="">Chọn</option>
                         <option value="2" {{ old('is_global', $promotion->is_global ?? '') == '2' ? 'selected' : '' }}>Tất cả</option>
-                        <option value="1" {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>Thành viên</option>
-                        
-                      
+                        <option value="1" {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>Thành viên</option>                   
                     </select>
                     
                     @error('is_global')

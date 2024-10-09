@@ -5,7 +5,7 @@
     <div class="container">
         {{-- Code --}}
         <div class="mb-10 gap-2">
-            <label class="text-3xl">Tên mã giảm giá:</label>
+            <label class="text-3xl">Tên mã giảm giá: </label>
             <span class="text-3xl text-gray-500">{{ $promotion->code }}</span>
         </div>
         <div class="grid grid-cols-3 gap-4">
