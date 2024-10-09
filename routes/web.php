@@ -108,6 +108,11 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/orders', AdminOrderController::class);
     Route::resource('/carts', AdminCartController::class);
     Route::resource('/attributes', AttributeController::class);
+    Route::get('/trash-attributes', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');
+    Route::post('/restore-attribute/{attribute}', [AttributeController::class, 'restoreAttribute'])->name('restore-attribute');
+    Route::delete('/delete-attribute/{attribute}', [AttributeController::class, 'deleteAttribute'])->name('delete-attribute');
+    Route::delete('/attributes/remove-value/{value}', [AttributeController::class, 'removeValue'])->name('attributes.remove-value');
+
     Route::resource('/toppings', ToppingController::class);
     Route::get('/trash-topping', [ToppingController::class, 'trashTopping'])->name('trash-topping');
     Route::get('/restore-topping/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
