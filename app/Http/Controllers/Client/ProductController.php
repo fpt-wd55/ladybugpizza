@@ -5,25 +5,29 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Topping;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function menu()
-    {
-        $categories = Category::all();
+    public function menu(Request $request)
+{
+    $categories = Category::all();
 
-        $products = [];
+    $search = $request->input('search');
 
-        foreach ($categories as $category) {
-            $products[$category->name] = $category->products()->paginate(6); // Phân trang cho sản phẩm trong danh mục
-        }
+    $categoryId = $request->input('category');
 
-        return view('clients.product.menu', [
-            'categories' => $categories,
-            'products' => $products
-        ]);
-    }
+    $products = Product::when($categoryId, function ($query) use ($categoryId) {
+        return $query->where('category_id', $categoryId);
+    })
+    ->when($search, function ($query) use ($search) {
+        return $query->where('name', 'like', '%' . $search . '%');
+    })->paginate(6);
+
+    return view('clients.product.menu', compact('categories', 'products'));
+}
+
 
     public function show($slug)
     {
@@ -31,10 +35,14 @@ class ProductController extends Controller
 
         $attributes = $product->attributes()->get();
 
-        // dd($attributes);
+        $toppings = Topping::where('category_id', $product->category->id)->get();
+
+        // dd($toppings);
 
         return view('clients.product.detail', [
-            'product' => $product
+            'product' => $product,
+            'attributes' => $attributes,
+            'toppings' => $toppings
         ]);
     }
 

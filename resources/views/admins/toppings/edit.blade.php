@@ -1,8 +1,21 @@
 @extends('layouts.admin')
-@section('title', 'Sửa Topping')
+@section('title', 'Topping | Chỉnh sửa')
 
 @section('content')
+    {{ Breadcrumbs::render('admin.toppings.edit', $editTopping) }}
     <div class="">
+        <div class="flex justify-end">
+            @if (session('message'))
+                <div class="button bg-green-400">
+                    {{ session('message') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="button-dark">
+                    {{ session('error') }}
+                </div>
+            @endif
+        </div>
         <form action="{{ route('admin.toppings.update', $editTopping) }}" class="w-full" method="post"
             enctype="multipart/form-data">
             @csrf
@@ -21,7 +34,7 @@
                         <input
                             class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
                             type="file" name="image">
-                        <img src="{{ asset('storage/uploads/toppings/' . $editTopping->image) }}"
+                        <img loading="lazy" src="{{ asset('storage/uploads/toppings/' . $editTopping->image) }}"
                             class="img-sm mt-2 img-circle object-cover" alt="">
                     </div>
                     @error('image')
@@ -40,7 +53,7 @@
                 <div class="w-full h-10 mb-5">
                     <label for="category_id" class="label-lg">Danh mục</label>
                     <select class="select w-full mb-2" name="category_id">
-                        <option value="">Chọn</option>
+                        <option value="">Chọn </option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}"
                                 {{ $category->id == $editTopping->category_id ? 'selected' : '' }}>

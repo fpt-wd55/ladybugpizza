@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('attribute_id')->constrained()->cascadeOnDelete();
             $table->string('value');
-            $table->integer('quantity');
+            $table->integer('quantity')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
