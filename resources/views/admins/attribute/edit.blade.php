@@ -21,64 +21,120 @@
                             </p>
                         @enderror
                     </div>
-                    <div>
-                        <table id="example" class="table-auto w-full rounded-md table-add-more">
-                            <thead>
-                                <tr class="border">
-                                    <th colspan="2" class="px-4 py-2 text-start text-base font-medium">Thêm giá trị</th>
-                                    <th class="px-6 py-2 text-end">
-                                        <a href="#" class="font-medium text-blue-600 hover:underline btn-add-more">+
-                                            Thêm mới</a>
-                                    </th>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500">
+                            <thead class="text-gray-700 uppercase bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-4 py-3">Danh sách giá trị</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @php
-                                    $key = 0;
-                                @endphp
-                                @if (request()->old('stocks'))
-                                    @foreach (request()->old('stocks') as $key => $stock)
-                                        <tr>
-                                            <td class="border px-4 py-2" colspan="3">
-                                                <div class="grid grid-cols-1 gap-3 md:grid-cols-6">
-                                                    <div class="md:col-span-3">
-                                                        <input type="text"
-                                                            name="stocks[{{ $key }}][attribute_value]"
-                                                            placeholder="Tên giá trị"
-                                                            value="{{ $stock['attribute_value'] ?? '' }}"
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                                                        @error("stocks.{$key}.attribute_value")
-                                                            <p class="mt-2 text-sm text-red-600 ">
-                                                                {{ $message }}
-                                                            </p>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="md:col-span-2">
-                                                        <input type="number"
-                                                            name="stocks[{{ $key }}][attribute_quantity]"
-                                                            placeholder="Số lượng"
-                                                            value="{{ $stock['attribute_quantity'] ?? '' }}"
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                                                        @error("stocks.{$key}.attribute_quantity")
-                                                            <p class="mt-2 text-sm text-red-600 ">
-                                                                {{ $message }}
-                                                            </p>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="md:col-span-1">
-                                                        <button type="button"
-                                                            class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 btn-add-more-rm w-full">
-                                                            Xóa giá trị
-                                                        </button>
-                                                    </div>
+                            <tbody data-accordion="open">
+                                @forelse ($attribute->values as $value)
+                                    <tr class="border-b">
+                                        <td class="border px-4 py-2" colspan="3">
+                                            <div class="grid grid-cols-1 gap-3 md:grid-cols-6">
+                                                <input type="hidden" name="old_stocks[{{ $value->id }}][id]"
+                                                    value="{{ $value->id }}">
+                                                <div class="md:col-span-3">
+                                                    <input type="text" name="old_stocks[{{ $value->id }}][value]"
+                                                        placeholder="Tên giá trị" value="{{ $value->value }}"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                                    @error("old_stocks.{$value->id}.value")
+                                                        <p class="mt-2 text-sm text-red-600 ">
+                                                            {{ $message }}
+                                                        </p>
+                                                    @enderror
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endif
+                                                <div class="md:col-span-2">
+                                                    <input type="number" name="old_stocks[{{ $value->id }}][quantity]"
+                                                        placeholder="Số lượng" value="{{ $value->quantity }}"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                                    @error("old_stocks.{$value->id}.quantity")
+                                                        <p class="mt-2 text-sm text-red-600 ">
+                                                            {{ $message }}
+                                                        </p>
+                                                    @enderror
+                                                </div>
+                                                <div class="md:col-span-1 flex items-center">
+                                                    <button
+                                                        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 btn-add-more-rm w-full">
+                                                        Xóa giá trị
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <!-- Hiển thị "Trống" nếu không có dữ liệu -->
+                                    <td colspan="6" class="text-center py-4 text-base">
+                                        <div
+                                            class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                                            @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                                            <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                                        </div>
+                                    </td>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div class="my-5">
+                    <table id="example" class="table-auto w-full rounded-md table-add-more">
+                        <thead>
+                            <tr class="border">
+                                <th colspan="2" class="px-4 py-2 text-start text-base font-medium">Thêm giá trị</th>
+                                <th class="px-6 py-2 text-end">
+                                    <a href="#" class="font-medium text-blue-600 hover:underline btn-add-more">+
+                                        Thêm mới</a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $key = 0;
+                            @endphp
+                            @if (request()->old('stocks'))
+                                @foreach (request()->old('stocks') as $key => $stock)
+                                    <tr>
+                                        <td class="border px-4 py-2" colspan="3">
+                                            <div class="grid grid-cols-1 gap-3 md:grid-cols-6">
+                                                <div class="md:col-span-3">
+                                                    <input type="text"
+                                                        name="stocks[{{ $key }}][attribute_value]"
+                                                        placeholder="Tên giá trị"
+                                                        value="{{ $stock['attribute_value'] ?? '' }}"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                                    @error("stocks.{$key}.attribute_value")
+                                                        <p class="mt-2 text-sm text-red-600 ">
+                                                            {{ $message }}
+                                                        </p>
+                                                    @enderror
+                                                </div>
+                                                <div class="md:col-span-2">
+                                                    <input type="number"
+                                                        name="stocks[{{ $key }}][attribute_quantity]"
+                                                        placeholder="Số lượng"
+                                                        value="{{ $stock['attribute_quantity'] ?? '' }}"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                                    @error("stocks.{$key}.attribute_quantity")
+                                                        <p class="mt-2 text-sm text-red-600 ">
+                                                            {{ $message }}
+                                                        </p>
+                                                    @enderror
+                                                </div>
+                                                <div class="md:col-span-1">
+                                                    <button type="button"
+                                                        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 btn-add-more-rm w-full">
+                                                        Xóa giá trị
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        </tbody>
+                    </table>
                 </div>
                 <div class="flex items-center space-x-4 mt-5">
                     <a href="{{ route('admin.attributes.index') }}" class="button-dark">
@@ -192,7 +248,7 @@
                         @endforelse
                     </tbody>
                 </table>
-            </div>
+            </div> 
         </div>
     </div>
 @endsection
