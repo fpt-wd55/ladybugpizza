@@ -1,4 +1,4 @@
-<div class="animate-slide-out-right absolute right-4 top-20 z-50">
+<div class="animate-slide-out-right fixed right-4 top-20 z-50">
     @if (session('success'))
         <div id="toast-success"
             class="flex items-center w-full max-w-sm p-4 mb-4 text-gray-500 bg-white rounded-lg shadow " role="alert">
@@ -38,3 +38,16 @@
         </div>
     @endif
 </div>
+<script>
+    // setTimeout to remove the toast notification after 5 seconds
+    setTimeout(() => {
+        const toastSuccess = document.getElementById('toast-success');
+        const toastDanger = document.getElementById('toast-danger');
+        if (toastSuccess) {
+            toastSuccess.remove();
+        }
+        if (toastDanger) {
+            toastDanger.remove();
+        }
+    }, 5000);
+</script>
