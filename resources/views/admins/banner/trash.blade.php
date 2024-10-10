@@ -28,22 +28,22 @@
                         class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
                         <li class="">
                             @if ($item->is_local_page == 1)
-                                <span class="text-xs inline-block p-2 text-blue-600 rounded-ss-lg bg-blue-100 ">
-                                    Local Page
+                                <span class="text-xs inline-block p-2 border border-gray-300 text-blue-600 rounded-ss-lg bg-blue-100 ">
+                                    Trang cục bộ
                                 </span>
                             @else
-                                <span class="text-xs inline-block p-2 text-red-600 rounded-ss-lg bg-red-100 ">
-                                    External Page
+                                <span class="text-xs inline-block p-2 text-red-600 border border-gray-300 rounded-ss-lg bg-red-100 ">
+                                    trang bên ngoài
                                 </span>
                             @endif
                         </li>
                         <li class="">
                             @if ($item->status == 1)
-                                <span class="text-xs inline-block p-2 text-green-600  bg-green-100 ">
+                                <span class="text-xs inline-block p-2 border border-gray-300 text-green-600  bg-green-100 ">
                                     Hoạt động
                                 </span>
                             @else
-                                <span class="text-xs inline-block p-2 text-red-600  bg-red-100 ">
+                                <span class="text-xs inline-block p-2 border border-gray-300 text-red-600  bg-red-100 ">
                                     Khóa
                                 </span>
                             @endif
@@ -53,9 +53,9 @@
                     <div class="h-auto">
                         <div class="grid grid-cols-2 ">
 
-                            <div class="">
+                            <div class="overflow-hidden">
                                 <img loading="lazy" src="{{ asset('storage/uploads/banners/' . $item->image) }}"
-                                    class="md:w-52 md:h-20 lg:w-80 lg:h-[170px] rounded-lg object-cover" alt="">
+                                    class="md:w-52 md:h-20 lg:w-80 lg:h-[170px] rounded-b-lg object-cover hover:scale-125 transition" alt="">
                             </div>
 
                             <div class="m-1">
@@ -157,7 +157,7 @@
                 {{-- end item --}}
             @empty
 
-                <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                <div class="col-span-2 flex flex-col  items-center justify-center  p-6 rounded-lg bg-white w-full h-96">
                     @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
                     <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
                 </div>
@@ -167,6 +167,9 @@
 
 
 
+        </div>
+        <div class="p-4">
+            {{ $deleteBanner->links() }}
         </div>
 
     </div>
