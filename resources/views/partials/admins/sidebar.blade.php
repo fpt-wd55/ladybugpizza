@@ -112,20 +112,5 @@
                 </a>
             </li>
         </ul>
-    </div>
-    <div class="flex absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full bg-white z-20">
-        <a href="#"
-            class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
-            @svg('tabler-logout', 'w-6 h-6 text-red-500')
-        </a>
-        <a href="#" data-tooltip-target="tooltip-settings"
-            class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
-            @svg('tabler-settings', 'w-6 h-6')
-        </a>
-        <div id="tooltip-settings" role="tooltip"
-            class="inline-block absolute invisible z-10 py-2 px-3 text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip">
-            Settings page
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
-    </div>
+    </div> 
 </aside>
