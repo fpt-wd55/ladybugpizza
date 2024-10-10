@@ -1,7 +1,10 @@
 @extends('layouts.admin')
+@section('title', 'Banner | Thêm mới')
 @section('content')
+<x-toast-notification />
+{{ Breadcrumbs::render('admin.banners.create') }}
     <div class="p-4 mx-auto">
-        <h3 class="mb-4 text-lg font-bold text-gray-900 ">Banner</h3>
+      
         <form action="{{ route('admin.banners.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid gap-4 mb-4 sm:grid-cols-2">

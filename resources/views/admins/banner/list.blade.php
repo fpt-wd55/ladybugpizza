@@ -1,8 +1,10 @@
 @extends('layouts.admin')
+@section('title', 'Banner')
 @section('content')
-
+{{ Breadcrumbs::render('admin.banners.index') }}
+<x-toast-notification />
 <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
-        <h3 class="text-lg font-bold text-gray-900 ">Banner</h3>
+     
         <div
             class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3 p-4">
             <a href="{{route('admin.banners.create')}}"
