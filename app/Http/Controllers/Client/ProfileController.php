@@ -1,13 +1,11 @@
 <?php
 
-  namespace App\Http\Controllers\Client;
-
-  use App\Http\Controllers\Controller;
-  use App\Http\Requests\ContactRequest;
-  use Illuminate\Http\Request;
-  use App\Models\User;
-  use Illuminate\Support\Facades\Auth; 
-  use Illuminate\Support\Facades\Hash;
+namespace App\Http\Controllers\Client;
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 class ProfileController extends Controller
