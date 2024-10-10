@@ -13,8 +13,7 @@
 
                     <div class="col-span-1 flex flex-col items-center mb-8 gap-4">
                         <img loading="lazy" class="img-circle img-lg object-cover"
-                            src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}"
-                            alt=""> --}}
+                            src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}" alt="">
                         <input type="file" id="avatar" class="hidden">
                         <label for="avatar" class="button-red cursor-pointer">
                             Chọn ảnh
