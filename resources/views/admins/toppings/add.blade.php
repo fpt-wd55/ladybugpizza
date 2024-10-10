@@ -3,6 +3,7 @@
 
 @section('content')
     {{ Breadcrumbs::render('admin.toppings.create') }}
+    <x-toast-notification />
     <div class="container">
         <form action="{{ route('admin.toppings.store') }}" class="w-full" method="post" enctype="multipart/form-data">
             @csrf
