@@ -2,7 +2,6 @@
 @section('title', 'Thuộc tính | Cập nhật thuộc tính')
 @section('content')
     {{ Breadcrumbs::render('admin.attributes.edit', $attribute) }}
-    <x-toast-notification />
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="p-4 mx-auto">
             <h3 class="mb-4 text-lg font-bold text-gray-900 ">Cập nhật thuộc tính</h3>

@@ -2,7 +2,6 @@
 @section('title', 'Danh mục | Thùng rác')
 @section('content')
     {{ Breadcrumbs::render('admin.trash.listcate') }}
-    <x-toast-notification />
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div
             class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3 p-4">

@@ -2,7 +2,6 @@
 @section('title', 'Tài khoản | Thêm mới')
 @section('content')
     {{ Breadcrumbs::render('admin.users.create') }}
-    <x-toast-notification />
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="p-4 mx-auto">
             <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm tài khoản</h3>

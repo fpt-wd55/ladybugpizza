@@ -3,7 +3,6 @@
 
 @section('content')
     {{ Breadcrumbs::render('admin.trash-topping') }}
-    <x-toast-notification />
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="overflow-x-auto">
             <div
