@@ -34,15 +34,9 @@ class BannerController extends Controller
      */
     public function store(BannerRequest $request)
     {
-    //    dd($request->all());
-        if ($request->hasFile('image')) {
-            // Lấy file hình ảnh từ request
+        if ($request->hasFile('image')) {   
             $banner_image = $request->file('image');
-    
-            // Tạo tên cho hình ảnh với cấu trúc: 'topping_' + tên gốc của file (không bao gồm phần mở rộng) + phần mở rộng gốc của file
             $banner_name = 'banner_' . pathinfo($banner_image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $banner_image->getClientOriginalExtension();
-    
-            // Lưu hình ảnh vào thư mục 'uploads/toppings' với tên đã tạo
             $banner_image->storeAs('public/uploads/banners', $banner_name);
         }
 
@@ -56,25 +50,16 @@ class BannerController extends Controller
         return redirect()->route('admin.banners.index')->with('message', 'thêm thành công');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Banner $banner)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Banner $banner)
     {
         return view('admins.banner.edit',compact('banner'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(BannerRequest $request, Banner $banner)
     {
         $data = $request->except('image');
