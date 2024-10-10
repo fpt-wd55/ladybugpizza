@@ -16,7 +16,7 @@
                                 src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}">
                             <div class="flex items-center justify-center w-full col-span-5">
                                 <label for="dropzone-file"
-                                    class="flex flex-col items-center justify-center w-full h-20 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                    class="flex flex-col items-center justify-center w-full h-20 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                     <div class="flex flex-col items-center justify-center">
                                         @svg('tabler-cloud-upload', 'w-8 h-8 text-gray-400 mb-2')
                                         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
