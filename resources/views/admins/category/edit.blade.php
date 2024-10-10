@@ -1,7 +1,8 @@
 @extends('layouts.admin')
+@section('title', 'Danh mục | Chỉnh sửa')
 @section('content')
-    <div class="p-4 mx-auto">
-
+    {{ Breadcrumbs::render('admin.categories.edit', $category) }}
+    <div class="p-4 mx-auto"> 
         <form action="{{ route('admin.categories.update', $category) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')

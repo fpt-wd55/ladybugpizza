@@ -1,7 +1,8 @@
 @extends('layouts.admin')
-@section('title', 'Sửa Topping')
+@section('title', 'Topping | Chỉnh sửa')
 
 @section('content')
+    {{ Breadcrumbs::render('admin.toppings.edit', $editTopping) }}
     <div class="">
         <div class="flex justify-end">
             @if (session('message'))
@@ -33,7 +34,7 @@
                         <input
                             class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
                             type="file" name="image">
-                        <img src="{{ asset('storage/uploads/toppings/' . $editTopping->image) }}"
+                        <img loading="lazy" src="{{ asset('storage/uploads/toppings/' . $editTopping->image) }}"
                             class="img-sm mt-2 img-circle object-cover" alt="">
                     </div>
                     @error('image')

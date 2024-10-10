@@ -1,6 +1,7 @@
 @extends('layouts.admin')
-@section('title', 'Chi tiết tài khoản')
+@section('title', 'Người dùng | Chi tiết')
 @section('content')
+    {{ Breadcrumbs::render('admin.users.show', $user) }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden p-4">
         <div>
             <div class="grid grid-cols-2 gap-6 border-b border-gray-200 py-4  lg:grid-cols-4 xl:gap-16">
@@ -43,7 +44,7 @@
                 <div class="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
                     <div class="space-y-4">
                         <div class="flex space-x-4">
-                            <img class="h-16 w-16 rounded-lg" src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}"
+                            <img loading="lazy" class="h-16 w-16 rounded-lg" src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}"
                                 alt="Avatar" />
                             <div>
                                 <div class="flex ms-2">

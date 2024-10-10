@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+    {{ Breadcrumbs::render('admin.dashboard') }}
     <div class="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
         <!-- Main widget -->
         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6">
@@ -104,7 +105,7 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center min-w-0">
-                                    <img class="flex-shrink-0 w-10 h-10"
+                                    <img loading="lazy" class="flex-shrink-0 w-10 h-10"
                                         src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png"
                                         alt="imac image">
                                     <div class="ml-3">
@@ -126,7 +127,7 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center min-w-0">
-                                    <img class="flex-shrink-0 w-10 h-10"
+                                    <img loading="lazy" class="flex-shrink-0 w-10 h-10"
                                         src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png"
                                         alt="imac image">
                                     <div class="ml-3">
@@ -148,7 +149,7 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center min-w-0">
-                                    <img class="flex-shrink-0 w-10 h-10"
+                                    <img loading="lazy" class="flex-shrink-0 w-10 h-10"
                                         src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png"
                                         alt="watch image">
                                     <div class="ml-3">
@@ -170,7 +171,7 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center min-w-0">
-                                    <img class="flex-shrink-0 w-10 h-10"
+                                    <img loading="lazy" class="flex-shrink-0 w-10 h-10"
                                         src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png"
                                         alt="ipad image">
                                     <div class="ml-3">
@@ -192,7 +193,7 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center min-w-0">
-                                    <img class="flex-shrink-0 w-10 h-10"
+                                    <img loading="lazy" class="flex-shrink-0 w-10 h-10"
                                         src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png"
                                         alt="imac image">
                                     <div class="ml-3">
@@ -218,7 +219,7 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-shrink-0">
-                                    <img class="w-8 h-8 rounded-full"
+                                    <img loading="lazy" class="w-8 h-8 rounded-full"
                                         src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png"
                                         alt="Neil image">
                                 </div>
@@ -238,7 +239,7 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-shrink-0">
-                                    <img class="w-8 h-8 rounded-full"
+                                    <img loading="lazy" class="w-8 h-8 rounded-full"
                                         src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png"
                                         alt="Neil image">
                                 </div>
@@ -258,7 +259,7 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-shrink-0">
-                                    <img class="w-8 h-8 rounded-full"
+                                    <img loading="lazy" class="w-8 h-8 rounded-full"
                                         src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png"
                                         alt="Neil image">
                                 </div>
@@ -278,7 +279,7 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-shrink-0">
-                                    <img class="w-8 h-8 rounded-full"
+                                    <img loading="lazy" class="w-8 h-8 rounded-full"
                                         src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png"
                                         alt="Neil image">
                                 </div>
@@ -298,7 +299,7 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-shrink-0">
-                                    <img class="w-8 h-8 rounded-full"
+                                    <img loading="lazy" class="w-8 h-8 rounded-full"
                                         src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png"
                                         alt="Neil image">
                                 </div>
@@ -446,7 +447,7 @@
                     <footer class="flex items-center justify-between mb-2">
                         <div class="flex items-center">
                             <p class="inline-flex items-center mr-3 text-sm font-semibold text-gray-900">
-                                <img class="w-6 h-6 mr-2 rounded-full"
+                                <img loading="lazy" class="w-6 h-6 mr-2 rounded-full"
                                     src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"alt="Michael Gough">Michael
                                 Gough
                             </p>

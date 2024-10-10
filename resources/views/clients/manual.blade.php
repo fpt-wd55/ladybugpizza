@@ -21,7 +21,7 @@
                     </ul>
                 </div>
                 <div class="w-full lg:w-2/3 mx-auto mb-4">
-                    <img src="{{ asset('storage/uploads/banners/banner.jpg') }}" alt=""
+                    <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}" alt=""
                         class="object-cover w-full h-full rounded-md mb-2">
                     <p class="text-center italic text-sm">Mô tả hình ảnh</p>
                 </div>
@@ -42,7 +42,7 @@
                     </ul>
                 </div>
                 <div class="w-full lg:w-2/3 mx-auto mb-4">
-                    <img src="{{ asset('storage/uploads/banners/banner.jpg') }}" alt=""
+                    <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}" alt=""
                         class="object-cover w-full h-full rounded-md mb-2">
                     <p class="text-center italic text-sm">Mô tả hình ảnh</p>
                 </div>
@@ -70,7 +70,7 @@
                     </ul>
                 </div>
                 <div class="w-full lg:w-2/3 mx-auto mb-4">
-                    <img src="{{ asset('storage/uploads/banners/banner.jpg') }}" alt=""
+                    <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}" alt=""
                         class="object-cover w-full h-full rounded-md mb-2">
                     <p class="text-center italic text-sm">Mô tả hình ảnh</p>
                 </div>

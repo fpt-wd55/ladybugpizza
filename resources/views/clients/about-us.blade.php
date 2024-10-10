@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="w-full">
-        <img class=" w-full object-cover" src=" {{ asset('storage/uploads/banners/banner.jpg') }}" alt="">
+        <img loading="lazy" class=" w-full object-cover" src=" {{ asset('storage/uploads/banners/banner.jpg') }}" alt="">
     </div>
     <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
         <div class="w-full">
@@ -61,13 +61,13 @@
         </div>
 
         <div class="grid grid-cols-2 mt-10 gap-4 md:gap-8">
-            <img class="rounded-md" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
+            <img loading="lazy" class="rounded-md" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
                 alt="">
-            <img class="rounded-md" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
+            <img loading="lazy" class="rounded-md" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
                 alt="">
-            <img class="rounded-md" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
+            <img loading="lazy" class="rounded-md" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
                 alt="">
-            <img class="rounded-md" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
+            <img loading="lazy" class="rounded-md" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
                 alt="">
         </div>
     </div>

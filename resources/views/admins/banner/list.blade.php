@@ -6,17 +6,17 @@
         <div
             class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3 p-4">
             <a href="{{route('admin.banners.create')}}"
-                class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-0">
+                class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-blue-700 hover:bg-blue-800 ">
                 @svg('tabler-plus', 'w-5 h-5 mr-2')
                 Thêm banner
             </a>
             <a href="{{route('admin.trash.listBanner')}}"
-                class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-red-700 hover:bg-red-800 focus:ring-0">
+                class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-red-700 hover:bg-red-800 ">
                 @svg('tabler-trash', 'w-5 h-5 mr-2')
                 Thùng rác
             </a>
             <a href=""
-                class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
+                class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10">
                 @svg('tabler-rotate-clockwise', 'w-4 h-4 mr-2')
                 Làm mới
             </a>
@@ -79,7 +79,7 @@
                                         @method('DELETE')
                                         @csrf
                                         <button  type="submit"
-                                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"> Xóa
+                                            class="text-white bg-red-600 hover:bg-red-800  focus:outline-none  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"> Xóa
                                         </button>
                                     </form>
     
