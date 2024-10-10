@@ -7,11 +7,6 @@
         <div class="overflow-x-auto">
             <div
                 class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                @if (session('message'))
-                    <div class="button bg-green-400">
-                        {{ session('message') }}
-                    </div>
-                @endif
                 <div
                     class="mb-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                     <a href="{{ route('admin.toppings.index') }}" class="button-green">Quay
@@ -38,7 +33,7 @@
                                 {{ ($listTopping->currentPage() - 1) * $listTopping->perPage() + $loop->iteration }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $topping->name }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                <img src="{{ asset('storage/uploads/toppings/' . $topping->image) }}" class="img-sm img-circle object-cover"
+                                <img loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}" class="img-sm img-circle object-cover"
                                     alt="">
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ number_format($topping->price) }}đ</td>

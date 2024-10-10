@@ -3,69 +3,74 @@
 
 @section('title', 'Trang chủ')
 
-@section('content') 
+@section('content')
     <div class="mx-auto px-0">
-        {{-- <div id="default-carousel" class="z-0 relative w-full mb-[44px] md:mb-[76px] lg:mb-[64px]" data-carousel="slide">
-            <!-- Carousel wrapper -->
-            <div class="relative h-[230px] overflow-hidden  md:h-[400px] lg:h-[650px]">
-                <!-- Item 1 -->
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="{{ asset('storage/uploads/banners/banner.jpg') }}"
-                        class="object-cover absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                        alt="Test image">
-                </div>
-                <!-- Item 2 -->
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="{{ asset('storage/uploads/banners/banner.jpg') }}"
-                        class=" object-cover absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                        alt="Test image">
-                </div>
-                <!-- Item 3 -->
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="{{ asset('storage/uploads/banners/banner.jpg') }}"
-                        class="object-cover absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                        alt="Test image">
-                </div>
-                <!-- Item 4 -->
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="{{ asset('storage/uploads/banners/banner.jpg') }}"
-                        class="object-cover absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                        alt="Test image">
-                </div>
-            </div>
 
-            <!-- Slider indicators -->
-            <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                <button type="button" class="indicator" aria-current="false" aria-label="Slide 0"
-                    data-carousel-slide-to="0"></button>
-                <button type="button" class="indicator" aria-current="false" aria-label="Slide 1"
-                    data-carousel-slide-to="1"></button>
-                <button type="button" class="indicator" aria-current="false" aria-label="Slide 2"
-                    data-carousel-slide-to="2"></button>
-                <button type="button" class="indicator" aria-current="false" aria-label="Slide 3"
-                    data-carousel-slide-to="3"></button>
-            </div>
-
-            <!-- Slider controls -->
-            <button type="button"
-                class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                data-carousel-prev>
-                <span
-                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50">
-                    @svg('tabler-chevron-left', 'w-4 h-4 text-white')
-                </span>
-            </button>
-            <button type="button"
-                class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                data-carousel-next>
-                <span
-                    class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50">
-                    @svg('tabler-chevron-right', 'w-4 h-4 text-white')
-                </span>
-            </button>
-        </div> --}}
-
+        {{-- carousel --}}
         <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
+
+            <div id="default-carousel" class="relative w-full mb-24" data-carousel="slide">
+                <!-- Carousel wrapper -->
+                <div class="relative h-56 overflow-hidden rounded-lg md:h-96 lg:h-[520px] transition">
+                    <!-- Item 1 -->
+                    <div class="hidden transition duration-700" data-carousel-item>
+                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
+                            class="absolute block w-full h-full object-cover" alt="...">
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="hidden transition duration-700" data-carousel-item>
+                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
+                            class="absolute block w-full h-full object-cover" alt="...">
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="hidden transition duration-700" data-carousel-item>
+                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
+                            class="absolute block w-full h-full object-cover" alt="...">
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="hidden transition duration-700" data-carousel-item>
+                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
+                            class="absolute block w-full h-full object-cover" alt="...">
+                    </div>
+                    <!-- Item 5 -->
+                    <div class="hidden transition duration-700" data-carousel-item>
+                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
+                            class="absolute block w-full h-full object-cover" alt="...">
+                    </div>
+                </div>
+                <!-- Slider indicators -->
+                <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+                    <button type="button" class="indicator" aria-current="true" aria-label="Slide 1"
+                        data-carousel-slide-to="0"></button>
+                    <button type="button" class="indicator" aria-current="false" aria-label="Slide 2"
+                        data-carousel-slide-to="1"></button>
+                    <button type="button" class="indicator" aria-current="false" aria-label="Slide 3"
+                        data-carousel-slide-to="2"></button>
+                    <button type="button" class="indicator" aria-current="false" aria-label="Slide 4"
+                        data-carousel-slide-to="3"></button>
+                    <button type="button" class="indicator" aria-current="false" aria-label="Slide 5"
+                        data-carousel-slide-to="4"></button>
+                </div>
+                <!-- Slider controls -->
+                <button type="button"
+                    class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                    data-carousel-prev>
+                    <span
+                        class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 text-white">
+                        @svg('tabler-chevron-left', 'icon-sm')
+                    </span>
+                </button>
+                <button type="button"
+                    class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                    data-carousel-next>
+                    <span
+                        class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 text-white">
+                        @svg('tabler-chevron-right', 'icon-sm')
+                    </span>
+                </button>
+            </div>
+
+
 
             {{-- hot pizza --}}
             <div class="mb-32">
@@ -77,7 +82,7 @@
                     @foreach ($products as $product)
                         <a href="{{ route('client.product.show', $product->slug) }}"
                             class="product-card md:flex overflow-hidden">
-                            <img src="http://127.0.0.1:8000/storage/uploads/products/pizza/pizza_4_ormaggi.webp"
+                            <img loading="lazy" src="{{ asset('storage/uploads/products/pizza/' . $product->image) }}"
                                 class="flex-shrink-0 h-48 w-full md:w-1/3 md:h-full object-cover" alt="">
                             <div class="p-2 text-sm">
                                 <p class="font-semibold mb-2 ">{{ $product->name }}</p>
@@ -127,20 +132,20 @@
                     </div>
                 </div>
 
-                <img src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
+                <img loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza-5-cheese.jpeg') }}"
                     class="flex-shrink-0 h-full w-full rounded-lg object-cover" alt="">
             </div>
 
             {{-- Cau chuyen cua chung toi --}}
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="grid grid-cols-2 grid-rows-2 gap-4">
-                    <img src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
+                    <img loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza-margherita.jpeg') }}"
                         class="h-full w-full rounded-lg object-cover" alt="">
-                    <img src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
+                    <img loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza-4-cheese.jpeg') }}"
                         class="h-full w-full rounded-lg object-cover" alt="">
-                    <img src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
+                    <img loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza-burrata-cay.jpeg') }}"
                         class="h-full w-full rounded-lg object-cover" alt="">
-                    <img src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
+                    <img loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza-ca-hoi.jpg') }}"
                         class="h-full w-full rounded-lg object-cover" alt="">
                 </div>
                 <div class="text-center">

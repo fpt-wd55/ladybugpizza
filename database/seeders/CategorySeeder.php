@@ -27,7 +27,7 @@ class CategorySeeder extends Seeder
             ],
             [
                 'name' => 'Bánh ngọt',
-                'slug' => 'banh-ngot',
+                'slug' => 'cake',
                 'status' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -41,21 +41,21 @@ class CategorySeeder extends Seeder
             ],
             [
                 'name' => 'Mỳ',
-                'slug' => 'my',
+                'slug' => 'pasta',
                 'status' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
                 'name' => 'Nước ngọt',
-                'slug' => 'nuoc-ngot',
+                'slug' => 'soft',
                 'status' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
                 'name' => 'Gà',
-                'slug' => 'ga',
+                'slug' => 'chicken',
                 'status' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,

@@ -35,7 +35,7 @@ class ToppingController extends Controller
             $topping_image->storeAs('uploads/toppings', $topping_name);
         }
         Topping::query()->create($data);
-        return redirect()->route('admin.toppings.index')->with('message', 'Thêm Topping thành công');
+        return redirect()->route('admin.toppings.index')->with('success', 'Thêm Topping thành công');
     }
     public function show(Topping $topping)
     {
@@ -70,7 +70,7 @@ class ToppingController extends Controller
                     unlink(storage_path('app/public/uploads/toppings/' . $old_image));
                 }
             }
-            return redirect()->route('admin.toppings.edit', $topping->id)->with('message', 'Cập nhật thành công');
+            return redirect()->route('admin.toppings.edit', $topping->id)->with('success', 'Cập nhật thành công');
         }
         return redirect()->route('admin.toppings.edit', $topping->id)->with('error', 'Cập nhật thất bại');
     }
@@ -78,7 +78,7 @@ class ToppingController extends Controller
     public function destroy(Topping $topping)
     {
         $topping->delete();
-        return back()->with('message', 'Xóa thành công');
+        return back()->with('success', 'Xóa thành công');
     }
     // thùng rác
     public function trashTopping()
@@ -93,7 +93,7 @@ class ToppingController extends Controller
         $topping = Topping::withTrashed()->find($id);
         $topping->restore();
 
-        return back()->with('message', 'Khôi phục thành công');
+        return back()->with('success', 'Khôi phục thành công');
     }
     // xóa vĩnh viễn
     public function forceDestroy($id)
@@ -105,6 +105,6 @@ class ToppingController extends Controller
             unlink(storage_path('app/public/uploads/toppings/' . $old_image));
         }
         $topping->forceDelete();
-        return back()->with('message', 'Đã xóa vĩnh viễn !');
+        return back()->with('success', 'Đã xóa vĩnh viễn!');
     }
 }
