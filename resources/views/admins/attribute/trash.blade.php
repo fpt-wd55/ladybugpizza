@@ -2,6 +2,7 @@
 @section('title', 'Thuộc tính - Thùng rác')
 @section('content')
     {{ Breadcrumbs::render('admin.trash-attributes') }}
+    <x-toast-notification />
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div
             class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">

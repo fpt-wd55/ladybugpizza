@@ -35,22 +35,18 @@ class CategoryController extends Controller
     {
         $slug = $this->createSlug($request->name);
 
-        Category::create([
+        $category = Category::create([
             'name' => $request->name,
             'slug' => $slug,
             'status' => $request->status ? 1 : 2,
         ]);
 
-        return redirect()->route('admin.categories.index')->with('message', 'thêm thành công');
-    }
+        if ($category) {
+            return redirect()->route('admin.categories.index')->with('success', 'Thêm danh mục thành công');
+        } 
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
-    {
-        //
-    }
+        return redirect()->back()->with('error', 'Thêm danh mục thất bại');
+    } 
 
     /**
      * Show the form for editing the specified resource.
@@ -74,7 +70,7 @@ class CategoryController extends Controller
             'slug' => $slug,
             'status' => $request->status ? 1 : 2,
         ]);
-        return redirect()->route('admin.categories.index')->with('message', 'sửa thành công');
+        return redirect()->route('admin.categories.index')->with('success', 'Cập nhật danh mục thành công');
     }
 
     /**
@@ -88,7 +84,7 @@ class CategoryController extends Controller
 
         Category::destroy($id);
 
-        return redirect()->back()->with('message', 'Xóa thành công');
+        return redirect()->back()->with('success', 'Xóa danh mục thành công');
     } 
 
     public function trashCategory()
