@@ -2,7 +2,6 @@
 @section('title', 'Danh mục | Chỉnh sửa')
 @section('content')
     {{ Breadcrumbs::render('admin.categories.edit', $category) }}
-    <x-toast-notification />
     <div class="p-4 mx-auto"> 
         <form action="{{ route('admin.categories.update', $category) }}" method="POST" enctype="multipart/form-data">
             @csrf
