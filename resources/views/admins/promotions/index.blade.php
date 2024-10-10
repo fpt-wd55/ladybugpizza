@@ -37,7 +37,13 @@
                                 {{ ($promotions->currentPage() - 1) * $promotions->perPage() + $loop->iteration }}</td>
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->code }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->discount_type }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                                @if ($promotion->discount_type == '1')
+                                    Giảm theo %
+                                @elseif ($promotion->discount_type == '2')
+                                    Giảm theo số tiền
+                                @endif
+                            </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->discount_value }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->quantity }}</td>
                             <td class="px-4 py-3 flex items-center justify-end">
@@ -77,8 +83,7 @@
                                         <div class="flex justify-center">
                                             @svg('tabler-trash', 'w-12 h-12 text-red-600 text-center mb-2')
                                         </div>
-                                        <h3 class="mb-5 font-normal">Bạn có muốn xóa promotion này không?</h3>
-
+                                        <h3 class="mb-5 font-normal">Bạn có muốn xóa mã giảm giá này không?</h3>
                                         <form action="{{ route('admin.promotions.destroy', $promotion->id) }}"
                                             method="POST">
                                             @method('DELETE')
@@ -106,7 +111,6 @@
                     @endforelse
                 </tbody>
             </table>
-
             <div class="p-4">
                 {{ $promotions->links() }}
             </div>

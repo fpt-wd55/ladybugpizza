@@ -9,8 +9,8 @@
 
             {{-- Product detail --}}
             <div class="col-span-5 md:col-span-2 md:flex md:gap-8 lg:block mb-8">
-                <img src="{{ asset('storage/uploads/products/pizza/pizza_francaise.jpeg') }}" alt="{{ $product->name }}"
-                    class="w-full md:w-80 md:h-80 object-cover rounded-lg mb-8" />
+                <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->category->slug . '/' . $product->image) }}"
+                    alt="{{ $product->name }}" class="w-full md:w-80 md:h-80 object-cover rounded-lg mb-8" />
                 <div>
                     <p class="text-xl md:text-2xl uppercase mb-4 font-medium">{{ $product->name }}</p>
                     <div class="flex items-center gap-2 mb-2">
@@ -96,21 +96,21 @@
                         Bổ sung topping
                     </p>
                     <div class="grid grid-cols-2 gap-4">
-                        @for ($i = 0; $i < 12; $i++)
+                        @foreach ($toppings as $topping)
                             <div>
-                                <input type="checkbox" name="toppings" value="topping-{{ $i }}"
-                                    id="topping-{{ $i }}" class="peer hidden">
-                                <label for="topping-{{ $i }}"
+                                <input type="checkbox" name="toppings" value="{{ $topping->id }}" id="{{ $topping->id }}"
+                                    class="peer hidden">
+                                <label for="{{ $topping->id }}"
                                     class="w-full text-gray-700 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-red-600 peer-checked:text-red-600 hover:text-gray-600 hover:bg-gray-50 transition p-2 flex justify-start gap-2 md:gap-4 items-center overflow-hidden">
-                                    <img src="https://bizweb.dktcdn.net/100/004/714/products/pho-mai-mozzarella-bao-soi-uc-1kg-1.png?v=1589527368207"
+                                    <img loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}"
                                         class="flex-shrink-0 w-16 h-16 object-cover rounded-lg" alt="">
                                     <div class="text-sm">
-                                        <p class="font-semibold mb-2 ">Phô mai sợi</p>
-                                        <p>+ 50,000đ</p>
+                                        <p class="font-semibold mb-2 ">{{ $topping->name }}</p>
+                                        <p>{{ number_format($topping->price) }} đ</p>
                                     </div>
                                 </label>
                             </div>
-                        @endfor
+                        @endforeach
                     </div>
                 </div>
 
@@ -124,7 +124,7 @@
             <div class="mb-4">
                 {{-- info --}}
                 <div class="flex items-center gap-4 mb-4">
-                    <img src="{{ asset('storage/uploads/avatars/user-default.png') }}" class="img-circle img-sm"
+                    <img loading="lazy" src="{{ asset('storage/uploads/avatars/user-default.png') }}" class="img-circle img-sm"
                         alt="">
                     <div>
                         <p class="mb-1 text-sm font-medium">Đỗ Hồng Quân</p>
@@ -145,7 +145,7 @@
                         culpa harum nihil minus? Quibusdam enim at error saepe.</p>
                     <div class="flex items-center gap-4 w-full overflow-hidden">
                         @for ($i = 0; $i < 4; $i++)
-                            <img src="{{ asset('storage/uploads/products/cake/chocolate_tar.jpeg') }}"
+                            <img loading="lazy" src="{{ asset('storage/uploads/products/cake/chocolate_tar.jpeg') }}"
                                 class="rounded-lg img-md" alt="">
                         @endfor
                     </div>

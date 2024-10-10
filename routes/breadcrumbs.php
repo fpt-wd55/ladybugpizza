@@ -70,3 +70,24 @@ Breadcrumbs::for('admin.trash-topping', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.toppings.index');
     $trail->push('Thùng rác', route('admin.trash-topping'));
 });
+
+// Thuộc tính
+Breadcrumbs::for('admin.attributes.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Thuộc tính', route('admin.attributes.index'));
+});
+
+Breadcrumbs::for('admin.attributes.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.attributes.index');
+    $trail->push('Thêm mới', route('admin.attributes.create'));
+});
+
+Breadcrumbs::for('admin.attributes.edit', function (BreadcrumbTrail $trail, $attribute) {
+    $trail->parent('admin.attributes.index');
+    $trail->push('Chỉnh sửa', route('admin.attributes.edit', $attribute));
+});
+
+Breadcrumbs::for('admin.trash-attributes', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.attributes.index');
+    $trail->push('Thùng rác', route('admin.trash-attributes'));
+});

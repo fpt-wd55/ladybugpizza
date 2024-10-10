@@ -1,8 +1,8 @@
-<footer class="border-t p-4 md:px-8 lg:px-24 md:py-4">
+<footer class="border-t p-4 md:px-8 lg:px-24 md:py-4 mb-16 lg:mb-0">
 
     <div class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center">
         <div class="flex flex-col items-center justify-center md:items-start">
-            <img class="w-20 " src="{{ asset('storage/uploads/logos/logo-fill.png') }}" alt="logo">
+            <img loading="lazy" class="w-20 " src="{{ asset('storage/uploads/logos/logo-fill.png') }}" alt="logo">
             <p class="uppercase font-semibold mb-4 text-sm">Kết nối với chúng tôi</p>
             <div class="flex items-center gap-4">
                 <a href="#" target="_blank" class="hover:text-red-500 transition">@svg('tabler-brand-facebook')</a>

@@ -34,39 +34,72 @@ class PromotionRequest extends FormRequest
     {
         return [
             'code' => 'required',
-            'discription' => 'required',
-            'discount_type' => 'required',
-            'discount_value' => 'required',
-            'start_date' => ['required', 'date', 'before_or_equal:end_date'],
-            'end_date' => ['required', 'date', 'after_or_equal:start_date'],
-            'quantity' => 'required',
-            'min_order_total' => 'required|min>max_discount',
-            'max_discount' => 'required',
+            'description' => 'required',
+            'discount_type' => 'required|numeric|in:1,2',
+            'discount_value' => [
+                'required',
+                'numeric',
+                function ($attribute, $value, $fail) {
+                    if ($this->input('discount_type') === '1' && $value > 100) {
+                        $fail('Giá trị giảm giá không được lớn hơn 100% khi loại giảm giá là phần trăm');
+                    }
+                }
+            ],
+            'start_date' => ['required', 'before_or_equal:end_date'],
+            'end_date' => ['required', 'after_or_equal:start_date'],
+            'quantity' => 'required|integer|min:1',
+            'min_order_total' => 'nullable|numeric',
+            'max_discount' => 'nullable|numeric',
+            'status' => 'required',
+            'is_global' => 'required',
         ];
     }
+
 
     public function rulesForUpdate(): array
     {
         return [
             'code' => 'required',
-            'discription' => 'required',
-            'discount_type' => 'required',
-            'discount_value' => 'required',
-            'start_date' => ['required', 'date', 'before_or_equal:end_date'],
-            'end_date' => ['required', 'date', 'after_or_equal:start_date'],
+            'description' => 'required',
+            'discount_type' => 'required|numeric|in:1,2',
+            'discount_value' => [
+                'required',
+                'numeric',
+                function ($attribute, $value, $fail) {
+                    if ($this->input('discount_type') === '1' && $value > 100) {
+                        $fail('Giá trị giảm giá không được lớn hơn 100% khi loại giảm giá là phần trăm');
+                    }
+                }
+            ],
+            'start_date' => ['required', 'before_or_equal:end_date'],
+            'end_date' => ['required', 'after_or_equal:start_date'],
+            'quantity' => 'required|integer|min:1',
+            'min_order_total' => 'nullable|numeric',
+            'max_discount' => 'nullable|numeric',
+            'status' => 'required',
+            'is_global' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Tên không được bỏ trống',
-            'image.mimes' => 'Ảnh không đúng định dạng',
-            'price.required' => 'Giá không được bỏ trống',
-            'price.numeric' => 'Giá phải là một số',
-            'price.min' => 'Giá không thể dưới 0 đồng',
-            'category_id' => 'Danh mục không được bỏ trống',
-            'image.required' => 'Ảnh không được bỏ trống',
+            'code.required' => "Bạn cần nhập tên cho mã giảm giá",
+            'description.required' => "Bạn cần nhập mô tả cho mã giảm giá",
+            'discount_type.required' => "Bạn cần chọn loại giảm giá",
+            'discount_value.required' => "Bạn cần nhập giá trị giảm giá",
+            'discount_value.numeric' => "Giá trị giảm giá không thể là chữ",
+            'start_date.required' => 'Bạn cần nhập ngày bắt đầu cho mã giảm giá',
+            'start_date.date' => 'Ngày bắt đầu phải là một ngày hợp lệ',
+            'start_date.before_or_equal' => 'Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc',
+            'end_date.required' => 'Bạn cần nhập ngày kết thúc cho mã giảm giá',
+            'end_date.date' => 'Ngày kết thúc phải là một ngày hợp lệ',
+            'end_date.after_or_equal' => 'Ngày kết thúc phải lớn hơn hoặc bằng ngày bắt đầu',
+            'quantity.required' => 'Bạn cần nhập số lượng cho mã giảm giá',
+            'min_order_total.numeric' => 'Giá trị nhập không thể là chữ',
+            'max_discount.numeric' => 'Giá trị nhập không thể là chữ ',
+            'status.required' => 'Bạn cần chọn trạng thái cho mã giảm giá',
+            'is_global.required' => 'Bạn cần chọn đối tượng áp dụng cho mã giảm giá',
         ];
     }
 }

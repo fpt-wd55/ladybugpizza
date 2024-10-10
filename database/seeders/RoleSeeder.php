@@ -18,25 +18,25 @@ class RoleSeeder extends Seeder
 
         Role::insert([
             [
-                'name' => 'admin',
+                'name' => 'Quản trị viên',
                 'parent_id' => null,
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'name' => 'user',
+                'name' => 'Khách hàng',
                 'parent_id' => null,
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'name' => 'super_admin',
+                'name' => 'Quản lý',
                 'parent_id' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'name' => 'admin_chat',
+                'name' => 'Nhân viên hỗ trợ',
                 'parent_id' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,

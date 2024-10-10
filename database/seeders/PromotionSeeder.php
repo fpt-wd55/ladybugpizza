@@ -22,10 +22,8 @@ class PromotionSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             $code = $faker->unique()->word;
             $description = $faker->sentence;
-            $discount_type = $faker->randomElement(['percent', 'fixed']);
-            $discount_value = $discount_type == 'percent' ? rand(1, 100) : rand(50000, 100000);
-            $start_date = $faker->dateTimeBetween('-1 month', 'now');
-            $end_date = $faker->dateTimeBetween('now', '+1 month');
+            $discount_type = rand(1, 2);
+            $discount_value = $discount_type == 1 ? rand(1, 100) : rand(50000, 100000);
             $quantity = rand(1, 100);
             $min_order_total = rand(100000, 500000);
             $max_discount = rand(100000, 500000);
@@ -40,8 +38,8 @@ class PromotionSeeder extends Seeder
                 'description' => $description,
                 'discount_type' => $discount_type,
                 'discount_value' => $discount_value,
-                'start_date' => $start_date,
-                'end_date' => $end_date,
+                'start_date' => $now,
+                'end_date' => $now->addDays(90),
                 'quantity' => $quantity,
                 'min_order_total' => $min_order_total,
                 'max_discount' => $max_discount,
