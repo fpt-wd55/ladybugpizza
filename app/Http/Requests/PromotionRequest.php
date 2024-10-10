@@ -33,12 +33,12 @@ class PromotionRequest extends FormRequest
     public function rulesForCreate(): array
     {
         return [
-            'code' => 'required',
+            'code' => 'required|max:10',
             'description' => 'required',
             'discount_type' => 'required|numeric|in:1,2',
             'discount_value' => [
                 'required',
-                'numeric',
+                'integer',
                 function ($attribute, $value, $fail) {
                     if ($this->input('discount_type') === '1' && $value > 100) {
                         $fail('Giá trị giảm giá không được lớn hơn 100% khi loại giảm giá là phần trăm');
@@ -50,7 +50,6 @@ class PromotionRequest extends FormRequest
             'quantity' => 'required|integer|min:1',
             'min_order_total' => 'nullable|numeric',
             'max_discount' => 'nullable|numeric',
-            'status' => 'required',
             'is_global' => 'required',
         ];
     }
@@ -59,15 +58,15 @@ class PromotionRequest extends FormRequest
     public function rulesForUpdate(): array
     {
         return [
-            'code' => 'required',
+            'code' => 'required|max:10',
             'description' => 'required',
             'discount_type' => 'required|numeric|in:1,2',
             'discount_value' => [
                 'required',
-                'numeric',
+                'integer',
                 function ($attribute, $value, $fail) {
                     if ($this->input('discount_type') === '1' && $value > 100) {
-                        $fail('Giá trị giảm giá không được lớn hơn 100% khi loại giảm giá là phần trăm');
+                        $fail('Giá trị giảm giá không được lớn hơn 100%');
                     }
                 }
             ],
@@ -76,7 +75,6 @@ class PromotionRequest extends FormRequest
             'quantity' => 'required|integer|min:1',
             'min_order_total' => 'nullable|numeric',
             'max_discount' => 'nullable|numeric',
-            'status' => 'required',
             'is_global' => 'required',
         ];
     }
@@ -85,10 +83,11 @@ class PromotionRequest extends FormRequest
     {
         return [
             'code.required' => "Bạn cần nhập tên cho mã giảm giá",
+            'code.max' => "Tên mã giảm giá không thể quá 10 kí tự",
             'description.required' => "Bạn cần nhập mô tả cho mã giảm giá",
             'discount_type.required' => "Bạn cần chọn loại giảm giá",
             'discount_value.required' => "Bạn cần nhập giá trị giảm giá",
-            'discount_value.numeric' => "Giá trị giảm giá không thể là chữ",
+            'discount_value.integer' => "Giá trị giảm giá không hợp lệ",
             'start_date.required' => 'Bạn cần nhập ngày bắt đầu cho mã giảm giá',
             'start_date.date' => 'Ngày bắt đầu phải là một ngày hợp lệ',
             'start_date.before_or_equal' => 'Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc',
@@ -96,9 +95,9 @@ class PromotionRequest extends FormRequest
             'end_date.date' => 'Ngày kết thúc phải là một ngày hợp lệ',
             'end_date.after_or_equal' => 'Ngày kết thúc phải lớn hơn hoặc bằng ngày bắt đầu',
             'quantity.required' => 'Bạn cần nhập số lượng cho mã giảm giá',
+            'quantity.min' => 'Số lượng tối thiểu phải là 1',
             'min_order_total.numeric' => 'Giá trị nhập không thể là chữ',
             'max_discount.numeric' => 'Giá trị nhập không thể là chữ ',
-            'status.required' => 'Bạn cần chọn trạng thái cho mã giảm giá',
             'is_global.required' => 'Bạn cần chọn đối tượng áp dụng cho mã giảm giá',
         ];
     }

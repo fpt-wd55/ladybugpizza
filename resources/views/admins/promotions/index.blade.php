@@ -68,6 +68,9 @@
                                         </li>
                                     </ul>
                                     <div class="py-1">
+                                        <a href="{{ route('admin.promotions.edit', $promotion->id) }}" class="cursor-pointer block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Sửa</a>
+                                    </div>
+                                    <div class="py-1">
                                         <a href="#" data-modal-target="delete-modal-{{ $promotion->id }}"
                                             data-modal-toggle="delete-modal-{{ $promotion->id }}"
                                             class="cursor-pointer block py-2 px-4 text-sm text-red-500 hover:bg-gray-100">Xóa</a>

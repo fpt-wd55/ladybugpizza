@@ -120,7 +120,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::post('/delete-category/{id}', [CategoryController::class, 'trashForce'])->name('trash.cateDelete');
 
     Route::resource('/banners', BannerController::class);
-    Route::get('/trash-promotions', [BannerController::class, 'trashList'])->name('trash.listBanner');
+    Route::get('/trash-banner', [BannerController::class, 'trashList'])->name('trash.listBanner');
     Route::resource('/promotions', PromotionController::class);
   
     Route::resource('/memberships', MembershipController::class);

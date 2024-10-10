@@ -33,14 +33,12 @@
             {{-- Start Date --}}
             <div class="mb-4">
                 <label class="label-lg">Ngày bắt đầu:</label>
-                <span
-                    class="text-md text-gray-500">{{ \Carbon\Carbon::parse($promotion->start_date)->format('d/m/Y H:i') }}</span>
+                <span class="text-md text-gray-500">{{ \Carbon\Carbon::parse($promotion->start_date)->format('d/m/Y H:i') }}</span>
             </div>
             {{-- End Date --}}
             <div class="mb-4">
                 <label class="label-lg">Ngày kết thúc:</label>
-                <span
-                    class="text-md text-gray-500">{{ \Carbon\Carbon::parse($promotion->end_date)->format('d/m/Y H:i') }}</span>
+                <span class="text-md text-gray-500">{{ \Carbon\Carbon::parse($promotion->end_date)->format('d/m/Y H:i') }}</span>
             </div>
             {{-- Quantity --}}
             <div class="mb-4">
@@ -66,8 +64,13 @@
             </div>
             {{-- Status --}}
             <div class="mb-4">
-                <label class="label-lg">Trạng thái:</label>
-                <span class="text-md text-gray-500">{{ $promotion->status == '1' ? 'Hoạt động' : 'Không hoạt động' }}</span>
+                <label class="label-lg">Hoạt động:</label>
+                <div class="flex items-center">
+                    <input type="checkbox" id="status-toggle" name="status" class="sr-only peer"
+                    {{ $promotion->status == 1 ? 'checked' : '' }} value="1">
+                    <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-all"></div>
+                    <div class="w-5 h-5 bg-white rounded-full shadow-md absolute transform peer-checked:translate-x-5 transition-all"></div>
+                </div>
             </div>
         </div>
         <div class="mt-6 flex justify-end gap-2">
