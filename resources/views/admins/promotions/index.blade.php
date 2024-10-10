@@ -44,8 +44,15 @@
                                     Giảm theo số tiền
                                 @endif
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->discount_value }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->quantity }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                                @if ($promotion->discount_type == '1')
+                                    {{ number_format($promotion->discount_value) }}%
+                                @elseif ($promotion->discount_type == '2')
+                                    {{ number_format($promotion->discount_value) }}
+                                @endif
+                            </td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ number_format($promotion->quantity) }}
+                            </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $promotion->id }}" data-dropdown-toggle="{{ $promotion->id }}-dropdown"
                                     class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
@@ -114,7 +121,6 @@
             <div class="p-4">
                 {{ $promotions->links() }}
             </div>
-
         </div>
     </div>
 @endsection
