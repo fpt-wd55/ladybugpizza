@@ -1,5 +1,8 @@
 @extends('layouts.admin')
+@section('title', 'Banner | Thùng rác')
 @section('content')
+<x-toast-notification />
+{{ Breadcrumbs::render('admin.trash.listBanner') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
 
 

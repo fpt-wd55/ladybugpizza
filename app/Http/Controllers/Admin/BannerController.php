@@ -47,7 +47,7 @@ class BannerController extends Controller
             'status' => $request->status ? 1 : 2,
         ]);
 
-        return redirect()->route('admin.banners.index')->with('message', 'thêm thành công');
+        return redirect()->route('admin.banners.index')->with('success', 'thêm thành công');
     }
 
     public function show(Banner $banner)
@@ -83,7 +83,7 @@ class BannerController extends Controller
                     unlink(storage_path('app/public/uploads/banners/' . $old_image));
                 }
             }
-            return redirect()->route('admin.banners.index')->with('message', 'Cập nhật thành công');
+            return redirect()->route('admin.banners.index')->with('success', 'Cập nhật thành công');
         }
        
     }
@@ -97,7 +97,7 @@ class BannerController extends Controller
 
         Banner::destroy($id);
 
-        return redirect()->back()->with('message', 'Xóa thành công');
+        return redirect()->back()->with('success', 'Xóa thành công');
     }
 
     public function trashList(Banner $banner)
@@ -117,7 +117,7 @@ class BannerController extends Controller
             unlink($filePath);
         }
         $banner->forceDelete();
-        return back()->with('message', 'Đã xóa vĩnh viễn !');
+        return back()->with('success', 'Đã xóa vĩnh viễn !');
     }
 
     // khôi phục

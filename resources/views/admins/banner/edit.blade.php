@@ -1,5 +1,8 @@
 @extends('layouts.admin')
+@section('title', 'Banner | Chỉnh sửa')
 @section('content')
+<x-toast-notification />
+{{ Breadcrumbs::render('admin.banners.edit',$banner) }}
     <div class="p-4 mx-auto">
         <h3 class="mb-4 text-lg font-bold text-gray-900 ">Banner</h3>
         <form action="{{ route('admin.banners.update', $banner) }}" method="POST" enctype="multipart/form-data">
