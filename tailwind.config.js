@@ -15,7 +15,7 @@ module.exports = {
                 },
             },
             animation: {
-                "slide-out-right": "slideOutRight 0.5s ease-in-out forwards",
+                "slide-out-right": "slideOutRight 0.7s ease-in-out forwards",
             },
         },
     },
