@@ -5,7 +5,9 @@
   use App\Http\Controllers\Controller;
   use App\Http\Requests\ContactRequest;
   use Illuminate\Http\Request;
+  use App\Models\User;
   use Illuminate\Support\Facades\Auth; 
+  use Illuminate\Support\Facades\Hash;
 
 
 class ProfileController extends Controller
@@ -42,10 +44,38 @@ class ProfileController extends Controller
     
       
     }
+  
+  public function postUpdate(Request $request, $id)
+{
+    $request->validate([
+        'fullname' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'phone' => 'nullable|string|max:20',
+        'gender' => 'nullable|string',
+        'date_of_birth' => 'nullable|date',
+    ]);
+
+    $user = User::findOrFail($id); // Tìm người dùng theo ID
+
+    // Cập nhật thông tin người dùng
+    $user->fullname = $request->fullname;
+    $user->email = $request->email;
+    $user->phone = $request->phone;
+    $user->date_of_birth = $request->date_of_birth;
+
+    // Lưu thông tin
+    $user->save();
+
+    return redirect()->route('client.profile.index');
+}
 
 	public function postChangePassword(Request $request)
-	{
-	}
+  {
+    // Xác thực dữ liệu
+    $request->validate([
+      'current_password' => 'required',
+      'new_password' => 'required|min:8|confirmed', // 'confirmed' sẽ kiểm tra mật khẩu khớp với new_password_confirmation
+  ]);
 
 	public function postInactive(Request $request)
 	{

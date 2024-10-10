@@ -34,23 +34,17 @@
 
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Họ và tên:</label>
-
-                                <input type="text" class="input" name="fullname"
-                                    value="{{ old('fullname', $users->fullname) }}">
+                                <input type="text" class="input" name="fullname" value="{{ $users->fullname }}">
                             </div>
 
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Email:</label>
-
-                                <input type="email" class="input" name="email"
-                                    value="{{ old('email', $users->email) }}">
+                                <input type="text" class="input" name="email" value="{{ $users->email }}">
                             </div>
 
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Số điện thoại:</label>
-
-                                <input type="text" class="input" name="phone"
-                                    value="{{ old('phone', $users->phone) }}">
+                                <input type="text" class="input" name="phone" value="{{ $users->phone}}">
                             </div>
                             <div class="mb-6 flex items-center">
                                 <p class="text-sm font w-32 font-medium">Giới tính:</p>
@@ -76,9 +70,7 @@
 
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font-medium w-32">Ngày sinh:</label>
-
-                                <input type="date" class="input" name="date_of_birth"
-                                    value="{{ old('date_of_birth', $users->date_of_birth) }}">
+                                <input type="date" class="input" name="date_of_birth" value="{{ $users->date_of_birth}}">
                             </div>
 
                             <div class="mb-6 flex justify-end">
@@ -97,15 +89,15 @@
                             <p class="title">ĐỔI MẬT KHẨU</p>
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Mật khẩu cũ:</label>
-                                <input type="password" class="input">
+                                <input type="password" class="input" name="current_password" required>
                             </div>
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Mật khẩu mới:</label>
-                                <input type="password" class="input">
+                                <input type="password" class="input" name="new_password" required>
                             </div>
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Nhập lại mật khẩu:</label>
-                                <input type="password" class="input">
+                                <input type="password" class="input" name="new_password_confirmation" required>
                             </div>
                             <div class="mb-6 flex justify-end">
                                 <button type="submit" class="button-red">
