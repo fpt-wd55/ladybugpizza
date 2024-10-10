@@ -159,7 +159,7 @@ class UserController extends Controller
                     try {
                         unlink(storage_path('app/public/uploads/avatars/' . $old_avatar));
                     } catch (\Throwable $th) {
-                        return redirect()->route('admin.users.edit', $user->id)->with('error', 'Cập nhật tài khoản thành công');
+                        return redirect()->route('admin.users.edit', $user->id)->with('success', 'Cập nhật tài khoản thành công');
                     }
                 }
             }

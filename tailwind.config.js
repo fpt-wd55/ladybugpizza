@@ -7,11 +7,21 @@ module.exports = {
         "./node_modules/flowbite/**/*.js",
     ],
     theme: {
-        extend: {},
+        extend: {
+            keyframes: {
+                slideOutRight: {
+                    "0%": { transform: "translateX(100%)" },
+                    "100%": { transform: "translateX(-2px)" },
+                },
+            },
+            animation: {
+                "slide-out-right": "slideOutRight 0.5s ease-in-out forwards",
+            },
+        },
     },
     plugins: [
         require("flowbite/plugin")({
             charts: true,
-        }), 
+        }),
     ],
 };

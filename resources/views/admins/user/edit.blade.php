@@ -2,6 +2,7 @@
 @section('title', 'Tài khoản | Chỉnh sửa')
 @section('content')
     {{ Breadcrumbs::render('admin.users.edit', $user) }}
+    <x-toast-notification />
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="p-4 mx-auto">
             <h3 class="mb-4 text-lg font-bold text-gray-900 ">Cập nhật tài khoản</h3>
