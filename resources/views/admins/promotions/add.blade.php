@@ -91,19 +91,21 @@
             <div class="grid grid-cols-2 gap-2">
                 {{-- status --}}
                 <div>
-                    <label for="status" class="label-lg">Trạng thái <span class="text-red-500">*</span></label>
-                    <select name="status"  class="mb-2 block w-full text-sm text-gray-500 
-                    bg-transparent border-0 border-b-2 border-gray-200 appearance-none 
-                    dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                        <option value="">Chọn</option>
-                        <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Hoạt động</option>
-                        <option value="2" {{ old('status') == '2' ? 'selected' : '' }}>Không hoạt động
-                        </option>
-                    </select>
+                    <label for="name" class="block mb-2 text-base font-medium text-gray-900">Hoạt động</label>
+                    <div class="flex justify-start">
+                        <label for="status-toggle" class="inline-flex relative items-center cursor-pointer">
+                            <input type="checkbox" id="status-toggle" name="status" class="sr-only peer" 
+                            {{ old('status', 0) ? 'checked' : '' }}>                        
+                            <div
+                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                            </div>
+                        </label>
+                    </div>
                     @error('status')
                         <span style="color: red ">{{ $message }}</span>
                     @enderror
                 </div>
+                
                 {{-- is_global --}}
                 <div>
                     <label for="is_global" class="label-lg">Đối tượng áp dụng <span class="text-red-500">*</span></label>
@@ -114,7 +116,10 @@
                                dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                         <option value="">Chọn</option>
                         <option value="2" {{ old('is_global', $promotion->is_global ?? '') == '2' ? 'selected' : '' }}>Tất cả</option>
-                        <option value="1" {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>Thành viên</option>                   
+                        <option value="1" {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>Rank đồng</option>                   
+                        <option value="1" {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>Rank bạc</option>                   
+                        <option value="1" {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>Rank vàng</option>                   
+                        <option value="1" {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>Rank kim cương</option>                   
                     </select>
                     
                     @error('is_global')
