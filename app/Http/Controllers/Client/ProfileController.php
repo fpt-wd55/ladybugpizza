@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Client;
+
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,73 +12,70 @@ use Illuminate\Support\Facades\Hash;
 class ProfileController extends Controller
 {
 	public function index()
-    {
-        $users = Auth::user();
-        return view('clients.profile.index', compact('users'));
-    }
-  
+	{
+		$users = Auth::user();
+		return view('clients.profile.index', compact('users'));
+	}
 
-    public function postUpdate(ContactRequest $request, $id)
-    {
-      $data = $request->all([
-        'fullname',
-        'email',
-        'phone',
-        'date_of_birth',
 
-      ]);
-    $users = Auth::user();
+	public function postUpdate(ContactRequest $request, $id)
+	{
+		$data = $request->all([
+			'fullname',
+			'email',
+			'phone',
+			'date_of_birth',
 
- 
-    $users->fullname = $data['fullname'];
-    $users->email = $data['email'];
-    $users->phone = $data['phone'];
-    $users->date_of_birth = $data['date_of_birth'];
+		]);
+		$users = Auth::user();
 
-   
-    $users->save();
 
-   
-    return redirect()->route('clients.profile.index');
-    
-      
-    }
-  
-  public function postUpdate(Request $request, $id)
-{
-    $request->validate([
-        'fullname' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
-        'phone' => 'nullable|string|max:20',
-        'gender' => 'nullable|string',
-        'date_of_birth' => 'nullable|date',
-    ]);
+		$users->fullname = $data['fullname'];
+		$users->email = $data['email'];
+		$users->phone = $data['phone'];
+		$users->date_of_birth = $data['date_of_birth'];
 
-    $user = User::findOrFail($id); // Tìm người dùng theo ID
 
-    // Cập nhật thông tin người dùng
-    $user->fullname = $request->fullname;
-    $user->email = $request->email;
-    $user->phone = $request->phone;
-    $user->date_of_birth = $request->date_of_birth;
+		$users->save();
 
-    // Lưu thông tin
-    $user->save();
 
-    return redirect()->route('client.profile.index');
-}
+		return redirect()->route('clients.profile.index');
+	}
+
+	public function postUpdate(Request $request, $id)
+	{
+		$request->validate([
+			'fullname' => 'required|string|max:255',
+			'email' => 'required|email|max:255',
+			'phone' => 'nullable|string|max:20',
+			'gender' => 'nullable|string',
+			'date_of_birth' => 'nullable|date',
+		]);
+
+		$user = User::findOrFail($id); // Tìm người dùng theo ID
+
+		// Cập nhật thông tin người dùng
+		$user->fullname = $request->fullname;
+		$user->email = $request->email;
+		$user->phone = $request->phone;
+		$user->date_of_birth = $request->date_of_birth;
+
+		// Lưu thông tin
+		$user->save();
+
+		return redirect()->route('client.profile.index');
+	}
 
 	public function postChangePassword(Request $request)
-  {
-    // Xác thực dữ liệu
-    $request->validate([
-      'current_password' => 'required',
-      'new_password' => 'required|min:8|confirmed', // 'confirmed' sẽ kiểm tra mật khẩu khớp với new_password_confirmation
-  ]);
-
-	public function postInactive(Request $request)
 	{
+		// Xác thực dữ liệu
+		$request->validate([
+			'current_password' => 'required',
+			'new_password' => 'required|min:8|confirmed', // 'confirmed' sẽ kiểm tra mật khẩu khớp với new_password_confirmation
+		]);
 	}
+
+	public function postInactive(Request $request) {}
 
 	public function membership()
 	{
@@ -187,15 +185,9 @@ class ProfileController extends Controller
 		return view('clients.profile.promotion');
 	}
 
-	public function updateLocation(Request $request)
-	{
-	}
+	public function updateLocation(Request $request) {}
 
-	public function storeLocation(Request $request)
-	{
-	}
+	public function storeLocation(Request $request) {}
 
-	public function destroyLocation(Request $request)
-	{
-	}
+	public function destroyLocation(Request $request) {}
 }
