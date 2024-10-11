@@ -1,29 +1,75 @@
 @extends('layouts.admin')
 @section('title', 'Điểm thành viên | chi tiết')
 @section('content')
-{{ Breadcrumbs::render('admin.memberships.edit') }}
+{{ Breadcrumbs::render('admin.memberships.edit',$membership) }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
-        <div
-            class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3 p-4">
-            <a href="{{ route('admin.categories.create') }}"
-                class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-0">
-                @svg('tabler-plus', 'w-5 h-5 mr-2')
-                Thêm danh mục
-            </a>
-            <a href="{{ route('admin.trash.listcate') }}"
-                class="flex items-center justify-center px-4 py-2 text-sm text-white rounded-lg bg-red-700 hover:bg-red-800 focus:ring-0">
-                @svg('tabler-trash', 'w-5 h-5 mr-2')
-                Thùng rác
-            </a>
-            <a href="{{ route('admin.categories.index') }}"
-                class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
-                @svg('tabler-rotate-clockwise', 'w-4 h-4 mr-2')
-                Làm mới
-            </a>
-        </div>
+       
 
         <div class="overflow-x-auto">
             
+            <div>
+                <div class="grid grid-cols-2 gap-6 border-b border-gray-200 py-4  lg:grid-cols-4 xl:gap-16">
+                  {{-- rank --}}
+                </div>
+                <div class="py-4 md:py-8">
+                    <div class="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
+                        <div class="space-y-4">
+                            <div class="flex space-x-4">
+                                <img loading="lazy" class="border-2 border-[#D30A0A] img-circle w-20 h-20 ml-2 rounded" src="{{ asset('storage/uploads/avatars/'. $membership->user->avatar) }}"
+                                    alt="Avatar" />
+                                <div>
+                                    <div class="flex ms-2">
+                                        <span
+                                            class="flex items-center text-green-500">@svg('tabler-circle-filled', 'w-3 h-3')</span>
+                                        <span
+                                            class="inline-block rounded bg-primary-100 px-1 text-xs font-medium text-primary-800 ">
+                                           
+                                        </span>
+                                    </div>
+                                    <h2
+                                        class="flex items-center text-xl font-bold ms-2 mt-2 leading-none text-gray-900  sm:text-2xl">
+                                        </h2>
+                                </div>
+                            </div>
+                            <dl class="">
+                                <dt class="font-semibold text-gray-900 ">Email</dt>
+                                <dd class="text-gray-500 "></dd>
+                            </dl>
+                           
+                        </div>
+                        <div class="space-y-4">
+                            <dl>
+                                <dt class="font-semibold text-gray-900 ">Số điện thoại</dt>
+                                <dd class="text-gray-500 "></dd>
+                            </dl>
+                            <dl>
+                                <dt class="font-semibold text-gray-900 ">Ngày sinh</dt>
+                                <dd class="text-gray-500 "></dd>
+                            </dl>
+                            <dl>
+                                <dt class="font-semibold text-gray-900 ">Giới tính</dt>
+                                <dd class="text-gray-500 ">
+                                  
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt class="font-semibold text-gray-900 ">Vai trò</dt>
+                              
+                            </dl>
+                            <dl>
+                                <dt class="font-semibold text-gray-900 ">Trạng thái</dt>
+                               
+                            </dl>
+                        </div>
+                    </div>
+                    <a href=""
+                        class="inline-flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:ring-0 sm:w-auto">
+                        @svg('tabler-edit', 'h-5 w-5 text-white me-2')
+                        Cập nhật 
+                    </a>
+                </div>
+                
+            </div>
         </div>
     </div>
 @endsection

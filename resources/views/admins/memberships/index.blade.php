@@ -26,10 +26,10 @@
                    <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap mt-3">
                        <a href="">
                            <img loading="lazy" src="{{ asset('storage/uploads/avatars/'. $membership->user->avatar) }}" alt="Avatar"
-                               class="img-circle w-10 h-10 mr-3 rounded">
+                               class="border-2 border-[#D30A0A] img-circle w-12 h-12 mr-3 rounded">
                        </a>
-                       <a href="">
-                           <div class="grid grid-flow-row">
+                       <a href="" class="">
+                           <div class="grid grid-flow-row hover:text-[#D30A0A]">
                                <span class="text-sm">{{$membership->user->username}}</span>
                                <span class="text-sm text-gray-500">{{$membership->user->email}}</span>
                            </div>
@@ -51,16 +51,16 @@
                        </div>
                    </td>
                    <td class="px-4 py-3 flex items-center justify-end">
-                       <button id="1" data-dropdown-toggle="1-dropdown"
+                       <button id="{{$membership->id}}" data-dropdown-toggle="{{$membership->id}}-dropdown"
                            class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
                            type="button">
                            @svg('tabler-dots', 'w-5 h-5')
                        </button>
-                       <div id="1-dropdown"
+                       <div id="{{$membership->id}}-dropdown"
                            class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
-                           <ul class="py-1 text-sm text-gray-700" aria-labelledby="1">
+                           <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{$membership->id}}">
                                <li>
-                                   <a href=""
+                                   <a href="{{route('admin.memberships.edit',$membership)}}"
                                        class="block py-2 px-4 hover:bg-gray-100">Chi tiết</a>
                                </li>
                              
