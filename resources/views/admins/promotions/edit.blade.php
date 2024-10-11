@@ -93,8 +93,17 @@
                 {{-- status --}}
                 <div>
                     <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Hoạt động</label>
+                    {{-- <div class="flex items-center">
+                        <input type="checkbox" id="status-toggle" name="status" class="sr-only peer"
+                            @checked($editPromotion->status == 1)>
+                        <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 transition-all"></div>
+                        <div
+                            class="w-5 h-5 bg-white rounded-full shadow-md absolute transform peer-checked:translate-x-5 transition-all">
+                        </div>
+                    </div> --}}
                     <div class="flex items-center">
                         <label for="status-toggle" class="inline-flex relative items-center cursor-pointer">
+                            <input type="hidden" name="status" value="2">
                             <input type="checkbox" id="status-toggle" name="status" class="sr-only peer"
                                 {{ $editPromotion->status == 1 ? 'checked' : '' }} value="1">
                             <div

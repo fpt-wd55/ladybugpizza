@@ -15,8 +15,8 @@ class PromotionController extends Controller
     public function index()
     {
         $promotions = Promotion::query()
-        ->orderBy('quantity', 'desc') 
-        ->paginate(10); 
+            ->orderBy('quantity', 'desc')
+            ->paginate(10);
         return view('admins.promotions.index', compact('promotions'));
     }
 
@@ -32,7 +32,7 @@ class PromotionController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(PromotionRequest $request)
-    {    
+    {
         $data = $request->all();
         Promotion::query()->create($data);
         return redirect()->route('admin.promotions.index')->with('message', 'Thêm mã giảm giá thành công');
@@ -44,7 +44,7 @@ class PromotionController extends Controller
     public function show(Promotion $promotion)
     {
         $data = $promotion->all();
-        return view('admins.promotions.detail',compact('promotion','data'));
+        return view('admins.promotions.detail', compact('promotion', 'data'));
     }
 
     /**
@@ -52,7 +52,7 @@ class PromotionController extends Controller
      */
     public function edit(Promotion $promotion)
     {
-        return view('admins.promotions.edit',[
+        return view('admins.promotions.edit', [
             'editPromotion' => $promotion,
         ]);
     }
@@ -60,9 +60,18 @@ class PromotionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PromotionRequest $request , Promotion $promotion)
+    public function update(PromotionRequest $request, Promotion $promotion)
     {
         $data = $request->all();
+
+        // if (isset($data['status'])) {
+        //     if ($data['status'] == 'on') {
+        //         $data['status'] = 1;
+        //     }
+        // } else {
+        //     $data['status'] = 2;
+        // }
+
         $promotion->update($data);
         return redirect()->route('admin.promotions.index')->with('message', 'Cập nhật mã giảm giá thành công');
     }
@@ -73,6 +82,6 @@ class PromotionController extends Controller
     public function destroy(Promotion $promotion)
     {
         $promotion->delete();
-        return back()->with('message','Xóa thành công');
+        return back()->with('message', 'Xóa thành công');
     }
 }

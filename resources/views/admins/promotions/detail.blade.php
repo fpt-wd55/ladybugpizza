@@ -76,10 +76,11 @@
                 <label class="font-semibold">Hoạt động:</label>
                 <div class="flex items-center">
                     <input type="checkbox" id="status-toggle" name="status" class="sr-only peer"
-                        {{ $promotion->status == 1 ? 'checked' : '' }}>
-                    <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-500 transition-all"></div>
+                        @checked($promotion->status == 1)>
+                    <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 transition-all"></div>
                     <div
-                        class="w-5 h-5 bg-white rounded-full shadow-md absolute transform peer-checked:translate-x-5 transition-all"></div>
+                        class="w-5 h-5 bg-white rounded-full shadow-md absolute transform peer-checked:translate-x-5 transition-all">
+                    </div>
                 </div>
             </div>
         </div>
