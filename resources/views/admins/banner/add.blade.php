@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Banner | Thêm mới')
 @section('content')
-<x-toast-notification />
 {{ Breadcrumbs::render('admin.banners.create') }}
     <div class="p-4 mx-auto">
       

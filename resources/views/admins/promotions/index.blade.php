@@ -48,7 +48,7 @@
                                 @if ($promotion->discount_type == '1')
                                     {{ number_format($promotion->discount_value) }}%
                                 @elseif ($promotion->discount_type == '2')
-                                    {{ number_format($promotion->discount_value) }}
+                                    {{ number_format($promotion->discount_value) }}đ
                                 @endif
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ number_format($promotion->quantity) }}
