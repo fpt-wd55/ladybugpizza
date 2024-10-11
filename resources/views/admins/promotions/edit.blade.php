@@ -93,13 +93,24 @@
                 {{-- status --}}
                 <div>
                     <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Hoạt động</label>
-                    <div class="flex items-center">
+                    {{-- <div class="flex items-center">
                         <input type="checkbox" id="status-toggle" name="status" class="sr-only peer"
                             @checked($editPromotion->status == 1)>
                         <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 transition-all"></div>
                         <div
                             class="w-5 h-5 bg-white rounded-full shadow-md absolute transform peer-checked:translate-x-5 transition-all">
                         </div>
+                    </div> --}}
+                    <div class="flex items-center">
+                        <label for="status-toggle" class="inline-flex relative items-center cursor-pointer">
+                            <input type="hidden" name="status" value="2">
+                            <input type="checkbox" id="status-toggle" name="status" class="sr-only peer"
+                                {{ $editPromotion->status == 1 ? 'checked' : '' }} value="1">
+                            <div
+                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                            </div>
+
+                        </label>
                     </div>
                     @error('status')
                         <span style="color: red ">{{ $message }}</span>
