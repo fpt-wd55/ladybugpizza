@@ -5,10 +5,8 @@
 
 @section('content')
     <div class="mx-auto px-0">
-
         {{-- carousel --}}
         <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
-
             <div id="default-carousel" class="relative w-full mb-24" data-carousel="slide">
                 <!-- Carousel wrapper -->
                 <div class="relative h-56 overflow-hidden rounded-lg md:h-96 lg:h-[520px] transition">
@@ -49,9 +47,6 @@
                     </span>
                 </button>
             </div>
-
-
-
             {{-- hot pizza --}}
             <div class="mb-32">
                 <div class="flex justify-between items-center mb-4">
