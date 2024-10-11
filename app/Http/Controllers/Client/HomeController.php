@@ -20,8 +20,6 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        dd($banners);
-
         return view('clients.home', [
             'products' => $products,
             'banners' => $banners

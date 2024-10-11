@@ -11,26 +11,20 @@
                 <!-- Carousel wrapper -->
                 <div class="relative h-56 overflow-hidden rounded-lg md:h-96 lg:h-[520px] transition">
                     <!-- Item 1 -->
-                    @foreach ($banners as $item)
+                    @foreach ($banners as $banner)
+                        <link rel="preload" href="{{ asset('storage/uploads/banners/' . $banner->image) }}" as="image">
                         <div class="hidden transition duration-700" data-carousel-item>
-                            <img loading="lazy" src="{{ asset('storage/uploads/banners/' . $item->image) }}"
-                                class="absolute block w-full h-full object-cover" alt="Banner Image">
+                            <img src="{{ asset('storage/uploads/banners/' . $banner->image) }}"
+                                class="absolute block w-full h-full object-cover" alt="{{ $banner->image }}">
                         </div>
                     @endforeach
                 </div>
                 <!-- Slider indicators -->
-                <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                    
-                    <button type="button" class="indicator" aria-current="true" aria-label="Slide 1"
-                        data-carousel-slide-to="0"></button>
-                    <button type="button" class="indicator" aria-current="false" aria-label="Slide 2"
-                        data-carousel-slide-to="1"></button>
-                    <button type="button" class="indicator" aria-current="false" aria-label="Slide 3"
-                        data-carousel-slide-to="2"></button>
-                    <button type="button" class="indicator" aria-current="false" aria-label="Slide 4"
-                        data-carousel-slide-to="3"></button>
-                    <button type="button" class="indicator" aria-current="false" aria-label="Slide 5"
-                        data-carousel-slide-to="4"></button>
+                <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2">
+                    @foreach ($banners as $index => $banner)
+                        <button type="button" class="indicator" aria-current="true"
+                            data-carousel-slide-to="{{ $index }}"></button>
+                    @endforeach
                 </div>
                 <!-- Slider controls -->
                 <button type="button"

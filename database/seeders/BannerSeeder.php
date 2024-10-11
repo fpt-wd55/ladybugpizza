@@ -17,7 +17,7 @@ class BannerSeeder extends Seeder
     {
         $now = Carbon::now();
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 8; $i++) {
             Banner::create([
                 'image' => 'banner_' . $i . '.jpg',
                 'url' => 'https://www.google.com',
