@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ContactRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,33 +16,8 @@ class ProfileController extends Controller
 	{
 		$users = Auth::user();
 		return view('clients.profile.index', compact('users'));
-	}
-
-
-	public function postUpdate(ContactRequest $request, $id)
-	{
-		$data = $request->all([
-			'fullname',
-			'email',
-			'phone',
-			'date_of_birth',
-
-		]);
-		$users = Auth::user();
-
-
-		$users->fullname = $data['fullname'];
-		$users->email = $data['email'];
-		$users->phone = $data['phone'];
-		$users->date_of_birth = $data['date_of_birth'];
-
-
-		$users->save();
-
-
-		return redirect()->route('clients.profile.index');
-	}
-
+	} 
+	
 	public function postUpdate(Request $request, $id)
 	{
 		$request->validate([
