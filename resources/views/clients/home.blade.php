@@ -13,30 +13,12 @@
                 <!-- Carousel wrapper -->
                 <div class="relative h-56 overflow-hidden rounded-lg md:h-96 lg:h-[520px] transition">
                     <!-- Item 1 -->
-                    <div class="hidden transition duration-700" data-carousel-item>
-                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
-                            class="absolute block w-full h-full object-cover" alt="...">
-                    </div>
-                    <!-- Item 2 -->
-                    <div class="hidden transition duration-700" data-carousel-item>
-                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
-                            class="absolute block w-full h-full object-cover" alt="...">
-                    </div>
-                    <!-- Item 3 -->
-                    <div class="hidden transition duration-700" data-carousel-item>
-                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
-                            class="absolute block w-full h-full object-cover" alt="...">
-                    </div>
-                    <!-- Item 4 -->
-                    <div class="hidden transition duration-700" data-carousel-item>
-                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
-                            class="absolute block w-full h-full object-cover" alt="...">
-                    </div>
-                    <!-- Item 5 -->
-                    <div class="hidden transition duration-700" data-carousel-item>
-                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
-                            class="absolute block w-full h-full object-cover" alt="...">
-                    </div>
+                    @foreach ($banners as $item)
+                        <div class="hidden transition duration-700" data-carousel-item>
+                            <img loading="lazy" src="{{ asset('storage/uploads/banners/' . $item->image) }}"
+                                class="absolute block w-full h-full object-cover" alt="Banner Image">
+                        </div>
+                    @endforeach
                 </div>
                 <!-- Slider indicators -->
                 <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
@@ -55,16 +37,14 @@
                 <button type="button"
                     class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
                     data-carousel-prev>
-                    <span
-                        class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 text-white">
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 text-white">
                         @svg('tabler-chevron-left', 'icon-sm')
                     </span>
                 </button>
                 <button type="button"
                     class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
                     data-carousel-next>
-                    <span
-                        class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 text-white">
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 text-white">
                         @svg('tabler-chevron-right', 'icon-sm')
                     </span>
                 </button>
