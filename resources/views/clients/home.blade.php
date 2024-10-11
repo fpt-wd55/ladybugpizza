@@ -40,9 +40,6 @@
                 </button>
             </div>
 
-            {{-- Danh mục --}}
-            @include('clients.categories')
-
             
             {{-- hot pizza --}}
             <div class="mb-32">

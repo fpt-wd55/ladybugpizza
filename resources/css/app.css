@@ -3,6 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global HTML */
+
+html {
+    scroll-behavior: smooth;
+}
+
 /* google fonts */
 .open-sans {
     font-family: "Open Sans", sans-serif;
