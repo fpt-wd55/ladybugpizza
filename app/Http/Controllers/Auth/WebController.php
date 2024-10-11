@@ -299,4 +299,15 @@ class WebController extends Controller
         Auth::logout();
         return redirect()->route('client.home');
     }
+    public function deactivateAccount(Request $request){
+        $user = Auth::user();
+        if (!Hash::check($request->input('password'), $user->password)) {
+            return redirect()->back()->withErrors(['password' => 'Mật khẩu không chính xác']);
+        }
+        $user->status = 2;
+        $user->save();
+        Auth::logout();
+        return redirect('/');
+
+    }
 }

@@ -51,6 +51,7 @@ class PromotionRequest extends FormRequest
             'min_order_total' => 'nullable|numeric',
             'max_discount' => 'nullable|numeric',
             'is_global' => 'required',
+            'status' => 'nullable',
         ];
     }
 
@@ -76,6 +77,7 @@ class PromotionRequest extends FormRequest
             'min_order_total' => 'nullable|numeric',
             'max_discount' => 'nullable|numeric',
             'is_global' => 'required',
+            'status' => 'nullable',
         ];
     }
 

@@ -13,8 +13,7 @@
 
                     <div class="col-span-1 flex flex-col items-center mb-8 gap-4">
                         <img loading="lazy" class="img-circle img-lg object-cover"
-                            src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}"
-                            alt=""> --}}
+                            src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}" alt="">
                         <input type="file" id="avatar" class="hidden">
                         <label for="avatar" class="button-red cursor-pointer">
                             Chọn ảnh
@@ -22,7 +21,6 @@
                     </div>
 
                     <div class="col-span-2">
-
                         {{-- update info form --}}
                         <form action="{{ route('client.profile.postUpdate', $users->id) }}" class="mb-8" method="POST">
                             @csrf
@@ -44,7 +42,7 @@
 
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Số điện thoại:</label>
-                                <input type="text" class="input" name="phone" value="{{ $users->phone}}">
+                                <input type="text" class="input" name="phone" value="{{ $users->phone }}">
                             </div>
                             <div class="mb-6 flex items-center">
                                 <p class="text-sm font w-32 font-medium">Giới tính:</p>
@@ -52,17 +50,17 @@
                                     <label for="male">
 
                                         <input type="radio" name="gender" value="male" id="male"
-                                            class="input-radio" {{ $users->gender == 'male' ? 'checked' : '' }}>
+                                            class="input-radio" {{ $users->gender == 1 ? 'checked' : '' }}>
                                         Nam
                                     </label>
                                     <label for="female">
                                         <input type="radio" name="gender" value="female" id="female"
-                                            class="input-radio" {{ $users->gender == 'female' ? 'checked' : '' }}>
+                                            class="input-radio" {{ $users->gender == 2 ? 'checked' : '' }}>
                                         Nữ
                                     </label>
                                     <label for="other">
                                         <input type="radio" name="gender" value="other" id="other"
-                                            class="input-radio" {{ $users->gender == 'other' ? 'checked' : '' }}>
+                                            class="input-radio" {{ $users->gender == 3 ? 'checked' : '' }}>
                                         Khác
                                     </label>
                                 </div>
@@ -83,21 +81,37 @@
 
 
                         {{-- Change password form --}}
-                        <form action="{{ route('client.profile.post-change-password') }}" method="POST" class="mb-8">
+                        <form action="{{ route('client.profile.post-change-password', $users->id) }}" class="mb-8"
+                            method="POST">
                             @csrf
                             @method('PUT')
                             <p class="title">ĐỔI MẬT KHẨU</p>
-                            <div class="mb-6 flex items-center gap-8">
-                                <label class="text-sm font w-32 font-medium">Mật khẩu cũ:</label>
-                                <input type="password" class="input" name="current_password" required>
+                            <div class="mb-6 flex flex-col gap-2">
+                                <div class="flex items-center gap-8">
+                                    <label class="text-sm font w-32 font-medium">Mật khẩu cũ:</label>
+                                    <input type="password" class="input" name="current_password">
+                                </div>
+                                @error('current_password')
+                                    <p class="text-red-500 text-sm ">{{ $message }}</p>
+                                @enderror
                             </div>
+                            <div class="mb-6 flex flex-col gap-2">
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Mật khẩu mới:</label>
-                                <input type="password" class="input" name="new_password" required>
+                                <input type="password" class="input" name="new_password"> 
                             </div>
+                            @error('new_password')
+                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                            @enderror
+                            </div>
+                            <div class="mb-6 flex flex-col gap-2">
                             <div class="mb-6 flex items-center gap-8">
                                 <label class="text-sm font w-32 font-medium">Nhập lại mật khẩu:</label>
-                                <input type="password" class="input" name="new_password_confirmation" required>
+                                <input type="password" class="input" name="new_password_confirmation">
+                            </div>
+                                @error('new_password_confirmation')
+                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="mb-6 flex justify-end">
                                 <button type="submit" class="button-red">
@@ -136,17 +150,19 @@
                                             @svg('tabler-x', 'icon-sm')
                                         </button>
                                     </div>
-                                    <p class="text-sm mb-8">Bạn cần nhập mật khẩu để xác nhận hành vi của mình</p>
-                                    <form action="{{ route('client.profile.post-inactive') }}" method="POST">
+                                    <form action="{{ route('account.deactivate', $users->id) }}" method="POST">
                                         @csrf
-                                        @method('PUT')
+                                         @method('PUT')
                                         <div class="grid gap-4 mb-4 sm:grid-cols-2">
                                             <div class="col-span-2">
                                                 <label for="name"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mật
-                                                    khẩu</label>
-                                                <input type="password" name="name" id="name" value=""
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nhập
+                                                    mật khẩu</label>
+                                                <input type="password" name="password" id="name" value=""
                                                     class="input" placeholder="">
+                                                    @error('password')
+                                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                                @enderror
                                             </div>
                                         </div>
                                         <div class="flex items-center space-x-4">
