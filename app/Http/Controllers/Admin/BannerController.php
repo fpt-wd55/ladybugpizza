@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\BannerRequest;
 use App\Models\Banner;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\BannerRequest;
+use Illuminate\Support\Facades\Storage;
 
 class BannerController extends Controller
 {
@@ -16,7 +17,7 @@ class BannerController extends Controller
     {
         $banners = Banner::orderBy('status', 'asc')->paginate(6);
 
-        return view('admins.banner.list',compact('banners'));
+        return view('admins.banner.list', compact('banners'));
     }
 
     /**
@@ -25,7 +26,7 @@ class BannerController extends Controller
     public function create()
     {
         return view('admins.banner.add');
-        
+
     }
 
     /**
@@ -33,50 +34,58 @@ class BannerController extends Controller
      */
     public function store(BannerRequest $request)
     {
-    //    dd($request->all());
         if ($request->hasFile('image')) {
-            // Lấy file hình ảnh từ request
             $banner_image = $request->file('image');
-    
-            // Tạo tên cho hình ảnh với cấu trúc: 'topping_' + tên gốc của file (không bao gồm phần mở rộng) + phần mở rộng gốc của file
             $banner_name = 'banner_' . pathinfo($banner_image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $banner_image->getClientOriginalExtension();
-    
-            // Lưu hình ảnh vào thư mục 'uploads/toppings' với tên đã tạo
             $banner_image->storeAs('public/uploads/banners', $banner_name);
         }
 
         Banner::create([
             'image' => $banner_name,
             'url' => $request->url,
-            'is_local_page' => $request->is_local_page ? 1 : 2,
+            'is_local_page' => $request->is_local_page,
             'status' => $request->status ? 1 : 2,
         ]);
 
-        return redirect()->route('admin.banners.index')->with('message', 'thêm thành công');
+        return redirect()->route('admin.banners.index')->with('success', 'thêm thành công');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Banner $banner)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Banner $banner)
     {
-        //
+        return view('admins.banner.edit', compact('banner'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Banner $banner)
+    public function update(BannerRequest $request, Banner $banner)
     {
-        //
+        $data = $request->except('image');
+        $old_image = $banner->image;
+        // nếu chọn ảnh mới  
+        if ($request->hasFile('image')) {
+            $banner_image = $request->file('image');
+            $banner_name = 'topping_' . pathinfo($banner_image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $banner_image->getClientOriginalExtension();
+            $data['image'] = $banner_name;
+        } else {
+            $data['image'] = $old_image;
+        }
+
+        $data['status'] = $request->status ? 1 : 2;
+
+        if ($banner->update($data)) {
+            if ($request->hasFile('image')) {
+                $banner_image->storeAs('public/uploads/banners', $banner_name);
+                // xóa ảnh cũ
+                if ($old_image != null && Storage::exists('public/uploads/banners/' . $old_image)) {
+                    unlink(storage_path('app/public/uploads/banners/' . $old_image));
+                }
+            }
+            return redirect()->route('admin.banners.index')->with('success', 'Cập nhật thành công');
+        }
+
     }
 
     /**
@@ -88,13 +97,38 @@ class BannerController extends Controller
 
         Banner::destroy($id);
 
-        return redirect()->back()->with('message', 'Xóa thành công');
+        return redirect()->back()->with('success', 'Xóa thành công');
     }
 
     public function trashList(Banner $banner)
     {
         $deleteBanner = Banner::onlyTrashed()->paginate(10);
 
-        return view('admins.banner.trash',compact('deleteBanner'));
+        return view('admins.banner.trash', compact('deleteBanner'));
+    }
+    // xóa cứng
+    public function trashForce(string $id)
+    {
+        $banner = Banner::withTrashed()->find($id);
+        $old_banner = $banner->image;
+        // dd($old_banner);
+        $filePath = storage_path('app/public/uploads/banners/' . $old_banner);
+        if ($old_banner != null && file_exists($filePath)) {
+            unlink($filePath);
+        }
+        $banner->forceDelete();
+        return back()->with('success', 'Đã xóa vĩnh viễn !');
+    }
+
+    // khôi phục
+    public function trashRestore(string $id)
+    {
+        $restoreBanner = Banner::withTrashed()->find($id);
+
+        if ($restoreBanner) {
+
+            $restoreBanner->restore();
+            return redirect()->back()->with('success', 'Danh mục đã được khôi phục thành công');
+        }
     }
 }

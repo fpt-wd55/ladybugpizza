@@ -12,7 +12,7 @@
                     <h3 class="font-semibold uppercase mb-8">Điểm hội viên</h3>
                     {{-- Điểm hội viên --}}
                     <div class="flex flex-col md:flex-row items-center gap-8 mb-8">
-                        <img src="{{ asset($img) }}" alt="" class="img-md">
+                        <img loading="lazy" src="{{ asset($img) }}" alt="" class="img-md">
                         <div class="w-full">
                             <div class="flex items-center justify-between mb-1">
                                 <p class="uppercase font-semibold text-yellow-300">{{ $rank }}</p>

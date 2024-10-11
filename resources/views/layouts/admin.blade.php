@@ -34,6 +34,9 @@
 
     <div class="mt-20 sm:ml-64">
         <div class="px-4">
+            {{-- Toast notification --}}
+            @include('partials.admins.toast-notification')
+            {{-- Content --}}
             @yield('content')
         </div>
         {{-- footer --}}

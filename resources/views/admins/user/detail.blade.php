@@ -44,7 +44,7 @@
                 <div class="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
                     <div class="space-y-4">
                         <div class="flex space-x-4">
-                            <img class="h-16 w-16 rounded-lg" src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}"
+                            <img loading="lazy" class="h-16 w-16 rounded-lg" src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}"
                                 alt="Avatar" />
                             <div>
                                 <div class="flex ms-2">

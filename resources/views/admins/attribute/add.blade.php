@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Thuộc tính | Thêm thuộc tính')
 @section('content')
-    {{ Breadcrumbs::render('admin.users.create') }}
+    {{ Breadcrumbs::render('admin.attributes.create') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="p-4 mx-auto">
             <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm thuộc tính</h3>

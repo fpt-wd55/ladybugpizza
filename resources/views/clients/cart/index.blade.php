@@ -12,7 +12,7 @@
                         <div class="product-card overflow-hidden">
                             <div class="w-full flex justify-between items-center pe-4">
                                 <div class="flex gap-4">
-                                    <img src="{{ asset('storage/uploads/products/pizza/pizza_tartufo.png') }}"
+                                    <img loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza_tartufo.png') }}"
                                         class="img-md" alt="">
                                     <div class="text-left py-2">
                                         <p class="font-medium mb-4">Pizza xúc xích</p>

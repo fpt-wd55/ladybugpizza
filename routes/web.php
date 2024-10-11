@@ -104,27 +104,34 @@ Route::prefix('/auth')->group(function () {
 
 Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    // User
     Route::resource('/users', UserController::class);
     Route::resource('/addresses', AddressController::class);
     Route::resource('/products', AdminProductController::class);
     Route::resource('/orders', AdminOrderController::class);
     Route::resource('/carts', AdminCartController::class);
+    // Attribute
     Route::resource('/attributes', AttributeController::class);
+    Route::get('/trash-attributes', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');
+    Route::post('/restore-attribute/{id}', [AttributeController::class, 'restoreAttribute'])->name('restore-attribute');
+    Route::delete('/delete-attribute/{id}', [AttributeController::class, 'deleteAttribute'])->name('delete-attribute');
+    // Topping
     Route::resource('/toppings', ToppingController::class);
-    Route::resource('/banners', BannerController::class);
     Route::get('/trash-topping', [ToppingController::class, 'trashTopping'])->name('trash-topping');
     Route::get('/restore-topping/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
     Route::delete('/delete-topping/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
+    // Categories
     Route::resource('/categories', CategoryController::class);
-    Route::get('/trash-banner', [BannerController::class, 'trashList'])->name('trash.listBanner');
     Route::get('/trash-category', [CategoryController::class, 'trashCategory'])->name('trash.listcate');
     Route::post('/restore-category/{id}', [CategoryController::class, 'trashRestore'])->name('trash.cateRestore');
     Route::post('/delete-category/{id}', [CategoryController::class, 'trashForce'])->name('trash.cateDelete');
-
+    // Banner
     Route::resource('/banners', BannerController::class);
-    Route::get('/trash-promotions', [BannerController::class, 'trashList'])->name('trash.listBanner');
+    Route::post('/delete-banner/{id}', [BannerController::class, 'trashForce'])->name('trash.bannerDelete');
+    Route::post('/restore-banner/{id}', [BannerController::class, 'trashRestore'])->name('trash.bannerRestore');
+    Route::get('/trash-banner', [BannerController::class, 'trashList'])->name('trash.listBanner');
+    // Promotion
     Route::resource('/promotions', PromotionController::class);
-
     Route::resource('/memberships', MembershipController::class);
     Route::resource('/order-statuses', OrderStatusController::class);
     Route::resource('/payment-methods', PaymentMethodController::class);
