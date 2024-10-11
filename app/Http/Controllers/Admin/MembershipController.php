@@ -74,8 +74,8 @@ class MembershipController extends Controller
      */
     public function edit(Membership $membership)
     {
-    
-        return view('admins.memberships.detail');
+        $user = $membership->user();
+        return view('admins.memberships.edit',compact('membership','user'));
     }
 
     /**
