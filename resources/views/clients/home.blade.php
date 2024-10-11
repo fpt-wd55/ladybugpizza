@@ -6,11 +6,9 @@
 @section('content')
     <div class="mx-auto px-0">
         <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
-            
-            @include('clients.categories')
-            
+                        
             {{-- carousel --}}
-            <div id="default-carousel" class="relative w-full mb-24" data-carousel="slide">
+            <div id="default-carousel" class="relative w-full mb-8 md:mb-12" data-carousel="slide">
                 <div class="relative h-56 overflow-hidden rounded-lg md:h-96 lg:h-[520px] transition">
                     @foreach ($banners as $banner)
                         <link rel="preload" href="{{ asset('storage/uploads/banners/' . $banner->image) }}" as="image">
@@ -41,6 +39,10 @@
                     </span>
                 </button>
             </div>
+
+            {{-- Danh mục --}}
+            @include('clients.categories')
+
             
             {{-- hot pizza --}}
             <div class="mb-32">
