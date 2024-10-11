@@ -19,7 +19,7 @@
                                 <p class="text-sm font-medium">{{ $points }} Điểm</p>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
-                                <div class="bg-red-500 h-2 rounded-full" style="width:{{ $progress }}%"></div>
+                                <div class="bg-red-500 h-2 rounded-full" style="width: {{ $progress }}%;"></div>
                             </div>
                             <p class="text-sm">Tích thêm {{ $nextPoints }} điểm nữa để nâng cấp lên thành viên
                                 {{ $nextRank }}
@@ -36,7 +36,8 @@
                             <div class="border-b border-gray-300 mb-4">
                                 <button onclick="toggleAccordion({{ $index }})"
                                     class="w-full flex justify-between items-center py-4">
-                                    <span class="font-normal text-sm text-left">{{ $index + 1 }}. {{ $faq['question'] }}</span>
+                                    <span class="font-normal text-sm text-left">{{ $index + 1 }}.
+                                        {{ $faq['question'] }}</span>
                                     <span id="icon-1" class="transition">
                                         @svg('tabler-plus', 'icon-sm')
                                     </span>

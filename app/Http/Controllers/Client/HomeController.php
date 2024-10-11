@@ -19,11 +19,12 @@ class HomeController extends Controller
         $banners = Banner::where('status', 1)
             ->orderBy('created_at', 'desc')
             ->get();
+
+        dd($banners);
+
         return view('clients.home', [
             'products' => $products,
             'banners' => $banners
-
         ]);
     }
-
 }
