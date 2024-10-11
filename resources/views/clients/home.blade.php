@@ -5,12 +5,13 @@
 
 @section('content')
     <div class="mx-auto px-0">
-        {{-- carousel --}}
         <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
+            
+            @include('clients.categories')
+            
+            {{-- carousel --}}
             <div id="default-carousel" class="relative w-full mb-24" data-carousel="slide">
-                <!-- Carousel wrapper -->
                 <div class="relative h-56 overflow-hidden rounded-lg md:h-96 lg:h-[520px] transition">
-                    <!-- Item 1 -->
                     @foreach ($banners as $banner)
                         <link rel="preload" href="{{ asset('storage/uploads/banners/' . $banner->image) }}" as="image">
                         <div class="hidden transition duration-700" data-carousel-item>
@@ -19,14 +20,12 @@
                         </div>
                     @endforeach
                 </div>
-                <!-- Slider indicators -->
                 <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2">
                     @foreach ($banners as $index => $banner)
                         <button type="button" class="indicator" aria-current="true"
                             data-carousel-slide-to="{{ $index }}"></button>
                     @endforeach
                 </div>
-                <!-- Slider controls -->
                 <button type="button"
                     class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
                     data-carousel-prev>
@@ -42,6 +41,7 @@
                     </span>
                 </button>
             </div>
+            
             {{-- hot pizza --}}
             <div class="mb-32">
                 <div class="flex justify-between items-center mb-4">
