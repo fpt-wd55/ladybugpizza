@@ -91,7 +91,7 @@
                             class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
                             @svg('tabler-chart-pie', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Thống kê</div>
-                        </a> 
+                        </a>
                         <a href="{{ route('admin.users.index') }}"
                             class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
                             @svg('tabler-user', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
@@ -117,8 +117,7 @@
                             @svg('tabler-pizza', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Sản phẩm</div>
                         </a>
-                        <a href="#"
-                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
+                        <a href="#" class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
                             @svg('tabler-pizza', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Combo</div>
                         </a>
@@ -131,11 +130,6 @@
                             class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
                             @svg('tabler-package', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
                             <div class="text-sm text-gray-900 ">Đơn hàng</div>
-                        </a>
-                        <a href="{{ route('admin.invoices.index') }}"
-                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
-                            @svg('tabler-file-invoice', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
-                            <div class="text-sm text-gray-900 ">Hóa đơn</div>
                         </a>
                         <a href="{{ route('admin.shippings.index') }}"
                             class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
@@ -158,7 +152,7 @@
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                     <span class="sr-only">Open user menu</span>
                     <img loading="lazy" class="w-8 h-8 rounded-full"
-                        src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                        src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}">
                 </button>
                 <!-- User Dropdown menu -->
                 <div class="hidden z-50 my-4 w-56 list-none bg-white rounded divide-y divide-gray-100 shadow text-sm"
