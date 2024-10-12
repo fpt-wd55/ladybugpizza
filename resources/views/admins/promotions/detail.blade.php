@@ -56,13 +56,13 @@
             {{-- Min Order Total --}}
             <div class="flex justify-between bg-blue-50 p-4 rounded-lg shadow-sm">
                 <label class="font-semibold">Đơn hàng tối thiểu:</label>
-                <span class="text-gray-800">{{ $promotion->min_order_total }}</span>
+                <span class="text-gray-800">{{ number_format($promotion->min_order_total )}}</span>
             </div>
 
             {{-- Max Discount --}}
             <div class="flex justify-between bg-blue-50 p-4 rounded-lg shadow-sm">
                 <label class="font-semibold">Giảm tối đa:</label>
-                <span class="text-gray-800">{{ $promotion->max_discount }}</span>
+                <span class="text-gray-800">{{  number_format($promotion->max_discount ) }}</span>
             </div>
 
             {{-- Is Global --}}

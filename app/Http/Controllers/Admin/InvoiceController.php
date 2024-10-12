@@ -13,7 +13,7 @@ class InvoiceController extends Controller
      */
     
     public function index() {
-        $invoices = Invoice::all();
+        $invoices = Invoice::latest('id')->paginate(10);
         return view('admins.invoice.index', compact('invoices'));
     }
     public function show()
