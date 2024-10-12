@@ -12,7 +12,8 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3">
 
                     <div class="col-span-1 flex flex-col items-center mb-8 gap-4">
-                        <form action="{{ route('client.profile.post-update') }}" class="mb-8" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('client.profile.post-update') }}" class="mb-8" method="POST"
+                            enctype="multipart/form-data">
                             {{-- update info form --}}
 
                             @csrf

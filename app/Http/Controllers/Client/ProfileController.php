@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressRequest;
-use App\Http\Requests\ContactRequest;
-use App\Models\User;
+use App\Http\Requests\ChangeRequest;
+use App\Http\Requests\InactiveRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,27 +18,17 @@ class ProfileController extends Controller
 		$user = Auth::user();
 		return view('clients.profile.index', compact('user'));
 	}
-
-	public function postUpdate(Request $request, $id)
+	
+	public function postUpdate(UpdateUserRequest $request)
 	{
-		$request->validate([
-			'fullname' => 'required|string|max:255',
-			'email' => 'required|email|max:255',
-			'phone' => 'nullable|string|max:20',
-			'gender' => 'nullable|string',
-			'date_of_birth' => 'nullable|date',
-			'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-		]);
-
 		$user = Auth::user();
-		if ($request->hasFile('avatar')) {
-			$file = $request->file('avatar');
-			$name = $file->getClientOriginalName();
-			$file->move('storage/uploads/avatars', $name);
-			$user['avatar'] = $name;
-		}
-
-
+		if($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $name = $file->getClientOriginalName();
+            $file->move('storage/uploads/avatars', $name);
+            $user['avatar'] = $name;
+        }
+    
 		$gender = null;
 		if ($request->gender == 'male') {
 			$gender = 1;
@@ -46,10 +37,6 @@ class ProfileController extends Controller
 		} elseif ($request->gender == 'other') {
 			$gender = 3;
 		}
-
-		$user = User::findOrFail($id); // Tìm người dùng theo ID
-
-		// Cập nhật thông tin người dùng
 		$user->fullname = $request->fullname;
 		$user->email = $request->email;
 		$user->phone = $request->phone;
@@ -60,8 +47,6 @@ class ProfileController extends Controller
 		return redirect()->route('client.profile.index');
 	}
 
-
-
 	public function postChangePassword(ChangeRequest $request)
 	{
 		$user = Auth::user();
@@ -69,14 +54,10 @@ class ProfileController extends Controller
 		if (!Hash::check($request->current_password, $user->password)) {
 			return back()->withErrors(['current_password' => 'Mật khẩu hiện tại không đúng']);
 		}
+
 		$user->password = Hash::make($request->new_password);
 		$user->save();
 		return redirect()->back()->with('success', 'Mật khẩu đã được thay đổi thành công.');
-
-		// Lưu thông tin
-		$user->save();
-
-		return redirect()->route('client.profile.index');
 	}
 
 	public function postInactive(InactiveRequest $request)
