@@ -4,25 +4,21 @@
 @section('content')
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="overflow-x-auto ">
-            <div
+            {{-- <div
                 class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 @if (session('message'))
                     <div class="button bg-green-400">
                         {{ session('message') }}
                     </div>
                 @endif
-                {{-- <a href="{{ route('admin.orders.create') }}" class="button-blue">
-                    @svg('tabler-plus', 'w-5 h-5 mr-2')
-                    Thêm mới mã giảm giá
-                </a> --}}
-            </div>
+            </div> --}}
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-4 py-3">STT</th>
-                        <th scope="col" class="px-4 py-3">Tên người dùng</th>
-                        <th scope="col" class="px-4 py-3">Mã giảm giá</th>
-                        <th scope="col" class="px-4 py-3">Địa chỉ</th>
+                        {{-- <th scope="col" class="px-4 py-3">STT</th> --}}
+                        <th scope="col" class="px-4 py-3">Đơn hàng</th>
+                        <th scope="col" class="px-4 py-3">Số hóa đơn</th>
+                        <th scope="col" class="px-4 py-3">Mã giao dịch</th>
                         <th scope="col" class="px-4 py-3">Tổng số tiền</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Hành động</span>
@@ -30,23 +26,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($orders as $order)
+                    @forelse ($invoices as $invoice)
                         <tr class="border-b hover:bg-gray-100">
                             <!-- Tính toán STT dựa trên trang hiện tại -->
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                            {{-- <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
                                 {{ ($orders->currentPage() - 1) * $orders->perPage() + $loop->iteration }}</td>
-                            </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $order->user->fullname }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                            </td> --}}
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $invoice->order_id }}</td>
+                            {{-- <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
                                 @isset($order->promotion->code)
                                     {{ $order->promotion->code }}
                                 @else
                                     Không 
                                 @endisset
-                            </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $order->address->detail_address   }}</td>
+                            </td> --}}
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $invoice->invoice_number }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $order->amount}}</td>
-                            <td class="px-4 py-3 flex items-center justify-end">
+                            {{-- <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $order->id }}" data-dropdown-toggle="{{ $order->id }}-dropdown"
                                     class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
                                     type="button">
@@ -61,7 +57,7 @@
                                         </li>
                                     </ul>                                  
                                 </div>
-                            </td>
+                            </td> --}}
                         </tr>
                     @empty
                         <td colspan="6" class="text-center py-4 text-base">
@@ -74,7 +70,7 @@
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $orders->links() }}
+                {{-- {{ $orders->links() }} --}}
             </div>
         </div>
     </div>
