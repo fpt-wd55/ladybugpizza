@@ -49,7 +49,8 @@ Route::prefix('/')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('client.home');
     Route::get('/menu', [ProductController::class, 'menu'])->name('client.product.menu');
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('client.product.show');
-    Route::post('/product/{slug}', [ProductController::class, 'addToCart'])->name('client.product.add-to-cart');
+    Route::post('/product/favorite/{slug}', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
+    Route::post('/product/cart/{slug}', [ProductController::class, 'addToCart'])->name('client.product.add-to-cart');
     Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
     Route::get('/checkout', [CartController::class, 'checkout'])->name('client.cart.checkout');
     Route::post('/checkout', [CartController::class, 'postCheckout'])->name('client.cart.post-checkout');
