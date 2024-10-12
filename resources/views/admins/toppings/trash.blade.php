@@ -7,11 +7,6 @@
         <div class="overflow-x-auto">
             <div
                 class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                @if (session('message'))
-                    <div class="button bg-green-400">
-                        {{ session('message') }}
-                    </div>
-                @endif
                 <div
                     class="mb-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                     <a href="{{ route('admin.toppings.index') }}" class="button-green">Quay

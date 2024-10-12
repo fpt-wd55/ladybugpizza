@@ -1,13 +1,16 @@
-import { liteClient as algoliasearch } from 'algoliasearch/lite';
-import instantsearch from 'instantsearch.js';
-import { configure, hits, searchBox } from 'instantsearch.js/es/widgets';
+import { liteClient as algoliasearch } from 'algoliasearch/lite'
+import instantsearch from 'instantsearch.js'
+import { configure, hits, searchBox } from 'instantsearch.js/es/widgets'
 
-const searchClient = algoliasearch('U3YBE7MWDD', 'f1a2f54730610b8c4b54bc7f65b481aa');
+const searchClient = algoliasearch('U3YBE7MWDD', 'f1a2f54730610b8c4b54bc7f65b481aa')
 
 const search = instantsearch({
 	indexName: 'products',
 	searchClient,
-});
+	future: {
+		preserveSharedStateOnUnmount: true
+	},
+})
 
 search.addWidgets([
 	searchBox({
@@ -47,6 +50,6 @@ search.addWidgets([
 			root: 'grid gap-4 grid-cols-1',
 		},
 	}),
-]);
+])
 
-export default search;
+export default search

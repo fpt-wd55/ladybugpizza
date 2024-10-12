@@ -17,8 +17,7 @@
                 </li>
             </ul>
             <div class="flex items-center gap-4">
-                <button data-modal-target="searchModal" data-modal-toggle="searchModal"
-                    class="hidden md:inline-block">@svg('tabler-search')</button>
+                <button data-modal-target="searchModal" data-modal-toggle="searchModal" class="hidden md:inline-block">@svg('tabler-search')</button>
 
                 @if (Auth::user())
                     <a href="{{ route('client.cart.index') }}"> @svg('tabler-heart')</a>
@@ -26,55 +25,47 @@
                     <a href="{{ route('client.order.index') }}"> @svg('tabler-truck-delivery')</a>
 
                     <button class="hover:cursor-pointer">
-                        <img loading="lazy" data-dropdown-toggle="userDropdown" class="img-circle w-8 h-8 object-cover"
-                            src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}">
+                        <img loading="lazy" data-dropdown-toggle="userDropdown" class="img-circle w-8 h-8 object-cover" src="{{ Auth::user()->avatar() }}">
                     </button>
 
                     {{-- User dropdown --}}
-                    <div id="userDropdown"
-                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-64 font-normal">
+                    <div id="userDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-64 font-normal">
                         <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
                             <p class="font-medium ">{{ Auth::user()->fullname }}</p>
                             <p class="truncate">{{ Auth::user()->email }}</p>
                         </div>
                         <div class="py-2">
-                            <a href="{{ route('client.profile.index') }}"
-                                class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <a href="{{ route('client.profile.index') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                 @svg('tabler-user', 'icon-sm')
                                 Hồ sơ
                             </a>
                         </div>
                         <div class="py-2">
-                            <a href="{{ route('client.profile.address') }}"
-                                class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <a href="{{ route('client.profile.address') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                 @svg('tabler-location', 'icon-sm')
                                 Địa chỉ
                             </a>
                         </div>
                         <div class="py-2">
-                            <a href="{{ route('client.profile.settings') }}"
-                                class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <a href="{{ route('client.profile.settings') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                 @svg('tabler-settings', 'icon-sm')
                                 Cài đặt
                             </a>
                         </div>
                         <div class="py-2">
-                            <a href="{{ route('client.profile.membership') }}"
-                                class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <a href="{{ route('client.profile.membership') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                 @svg('tabler-coin', 'icon-sm')
                                 Tích điểm
                             </a>
                         </div>
                         <div class="py-2">
-                            <a href="{{ route('client.profile.promotion') }}"
-                                class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <a href="{{ route('client.profile.promotion') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                 @svg('tabler-tag', 'icon-sm')
                                 Mã giảm giá
                             </a>
                         </div>
                         <div class="py-2">
-                            <a href="#" data-modal-target="logoutModal" data-modal-toggle="logoutModal"
-                                class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            <a href="#" data-modal-target="logoutModal" data-modal-toggle="logoutModal" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                 @svg('tabler-logout', 'icon-sm')
                                 Đăng xuất
                             </a>
@@ -94,17 +85,14 @@
 </header>
 
 {{-- logout Modal --}}
-<div id="logoutModal" tabindex="-1" aria-hidden="true"
-    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+<div id="logoutModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
     <div class="relative p-4 w-full max-w-2xl h-auto">
         <div class="relative p-4 bg-white rounded-lg shadow sm:p-5">
             <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5">
                 <h3 class="font-semibold text-gray-900 dark:text-white">
                     Đăng xuất
                 </h3>
-                <button type="button"
-                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                    data-modal-toggle="logoutModal">
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="logoutModal">
                     @svg('tabler-x', 'icon-sm')
                 </button>
             </div>

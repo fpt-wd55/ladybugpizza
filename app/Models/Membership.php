@@ -8,18 +8,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Membership extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
         'user_id',
         'points',
-        'rank',
+        'rank_id',
         'status',
         'total_spent',
     ];
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function rank()
+    {
+        return $this->belongsTo(MembershipRank::class);
     }
 }

@@ -25,7 +25,6 @@
                 </div>
                 {{-- discount_type --}}
                 <div>
-                    {{--  bayh ong cho 1: percent 2: amount lam nhu hom trc la xong sau lai db --}}
                     <label for="discount_type" class="label-lg">Loại giảm giá <span class="text-red-500">*</span></label>
                     <select class="w-full h-10 mb-2 select" name="discount_type" id="discount_type">
                         <option value="">Chọn</option>
@@ -93,15 +92,26 @@
             <div class="grid grid-cols-2 gap-2">
                 {{-- status --}}
                 <div>
-                    <label for="status" class="label-lg">Trạng thái <span class="text-red-500">*</span></label>
-                    <select name="status"  class="mb-2 block w-full text-sm text-gray-500 
-                    bg-transparent border-0 border-b-2 border-gray-200 appearance-none 
-                    dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                        <option value="">Chọn</option>
-                        <option value="1" {{ old('status',$editPromotion->status) == '1' ? 'selected' : '' }}>Hoạt động</option>
-                        <option value="2" {{ old('status',$editPromotion->status) == '2' ? 'selected' : '' }}>Không hoạt động
-                        </option>
-                    </select>
+                    <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Hoạt động</label>
+                    {{-- <div class="flex items-center">
+                        <input type="checkbox" id="status-toggle" name="status" class="sr-only peer"
+                            @checked($editPromotion->status == 1)>
+                        <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 transition-all"></div>
+                        <div
+                            class="w-5 h-5 bg-white rounded-full shadow-md absolute transform peer-checked:translate-x-5 transition-all">
+                        </div>
+                    </div> --}}
+                    <div class="flex items-center">
+                        <label for="status-toggle" class="inline-flex relative items-center cursor-pointer">
+                            <input type="hidden" name="status" value="2">
+                            <input type="checkbox" id="status-toggle" name="status" class="sr-only peer"
+                                {{ $editPromotion->status == 1 ? 'checked' : '' }} value="1">
+                            <div
+                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                            </div>
+
+                        </label>
+                    </div>
                     @error('status')
                         <span style="color: red ">{{ $message }}</span>
                     @enderror
@@ -128,7 +138,7 @@
             </div>
             <div
                 class="mt-14 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <a href="{{  route('admin.promotions.show', $editPromotion) }}" class="button-green">Quay lại</a>
+                <a href="{{  route('admin.promotions.index') }}" class="button-green">Quay lại</a>
                 <button class="button-blue" type="submit">Cập nhập</button>
             </div>
         </form>
