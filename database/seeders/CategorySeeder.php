@@ -3,10 +3,8 @@
 namespace Database\Seeders;
 
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Faker\Factory as Faker;
 
 class CategorySeeder extends Seeder
 {
@@ -22,12 +20,14 @@ class CategorySeeder extends Seeder
                 'name' => 'Pizza',
                 'slug' => 'pizza',
                 'status' => 1,
+                'image' => 'pizza.png',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
                 'name' => 'Bánh ngọt',
                 'slug' => 'cake',
+                'image' => 'cake.png',
                 'status' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -35,6 +35,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Salad',
                 'slug' => 'salad',
+                'image' => 'salad.png',
                 'status' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -42,6 +43,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Mỳ',
                 'slug' => 'pasta',
+                'image' => 'pasta.png',
                 'status' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -49,6 +51,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Nước ngọt',
                 'slug' => 'soft',
+                'image' => 'soft.png',
                 'status' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -56,6 +59,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Gà',
                 'slug' => 'chicken',
+                'image' => 'chicken.png',
                 'status' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
@@ -63,6 +67,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Combo',
                 'slug' => 'combo',
+                'image' => 'combo.png',
                 'status' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,

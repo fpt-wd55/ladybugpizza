@@ -5,73 +5,45 @@
 
 @section('content')
     <div class="mx-auto px-0">
-
-        {{-- carousel --}}
         <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
-
-            <div id="default-carousel" class="relative w-full mb-24" data-carousel="slide">
-                <!-- Carousel wrapper -->
+                        
+            {{-- carousel --}}
+            <div id="default-carousel" class="relative w-full mb-8 md:mb-12" data-carousel="slide">
                 <div class="relative h-56 overflow-hidden rounded-lg md:h-96 lg:h-[520px] transition">
-                    <!-- Item 1 -->
-                    <div class="hidden transition duration-700" data-carousel-item>
-                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
-                            class="absolute block w-full h-full object-cover" alt="...">
-                    </div>
-                    <!-- Item 2 -->
-                    <div class="hidden transition duration-700" data-carousel-item>
-                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
-                            class="absolute block w-full h-full object-cover" alt="...">
-                    </div>
-                    <!-- Item 3 -->
-                    <div class="hidden transition duration-700" data-carousel-item>
-                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
-                            class="absolute block w-full h-full object-cover" alt="...">
-                    </div>
-                    <!-- Item 4 -->
-                    <div class="hidden transition duration-700" data-carousel-item>
-                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
-                            class="absolute block w-full h-full object-cover" alt="...">
-                    </div>
-                    <!-- Item 5 -->
-                    <div class="hidden transition duration-700" data-carousel-item>
-                        <img loading="lazy" src="{{ asset('storage/uploads/banners/banner.jpg') }}"
-                            class="absolute block w-full h-full object-cover" alt="...">
-                    </div>
+                    @foreach ($banners as $banner)
+                        <link rel="preload" href="{{ asset('storage/uploads/banners/' . $banner->image) }}" as="image">
+                        <div class="hidden transition duration-700" data-carousel-item>
+                            <img src="{{ asset('storage/uploads/banners/' . $banner->image) }}"
+                                class="absolute block w-full h-full object-cover" alt="{{ $banner->image }}">
+                        </div>
+                    @endforeach
                 </div>
-                <!-- Slider indicators -->
-                <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                    <button type="button" class="indicator" aria-current="true" aria-label="Slide 1"
-                        data-carousel-slide-to="0"></button>
-                    <button type="button" class="indicator" aria-current="false" aria-label="Slide 2"
-                        data-carousel-slide-to="1"></button>
-                    <button type="button" class="indicator" aria-current="false" aria-label="Slide 3"
-                        data-carousel-slide-to="2"></button>
-                    <button type="button" class="indicator" aria-current="false" aria-label="Slide 4"
-                        data-carousel-slide-to="3"></button>
-                    <button type="button" class="indicator" aria-current="false" aria-label="Slide 5"
-                        data-carousel-slide-to="4"></button>
+                <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2">
+                    @foreach ($banners as $index => $banner)
+                        <button type="button" class="indicator" aria-current="true"
+                            data-carousel-slide-to="{{ $index }}"></button>
+                    @endforeach
                 </div>
-                <!-- Slider controls -->
                 <button type="button"
                     class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
                     data-carousel-prev>
-                    <span
-                        class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 text-white">
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 text-white">
                         @svg('tabler-chevron-left', 'icon-sm')
                     </span>
                 </button>
                 <button type="button"
                     class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
                     data-carousel-next>
-                    <span
-                        class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 text-white">
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 text-white">
                         @svg('tabler-chevron-right', 'icon-sm')
                     </span>
                 </button>
             </div>
 
+            {{-- Danh mục --}}
+            @include('clients.categories')
 
-
+            
             {{-- hot pizza --}}
             <div class="mb-32">
                 <div class="flex justify-between items-center mb-4">

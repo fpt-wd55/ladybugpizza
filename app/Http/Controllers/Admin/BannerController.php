@@ -17,7 +17,7 @@ class BannerController extends Controller
     {
         $banners = Banner::orderBy('status', 'asc')->paginate(6);
 
-        return view('admins.banner.list',compact('banners'));
+        return view('admins.banner.list', compact('banners'));
     }
 
     /**
@@ -26,7 +26,7 @@ class BannerController extends Controller
     public function create()
     {
         return view('admins.banner.add');
-        
+
     }
 
     /**
@@ -34,7 +34,7 @@ class BannerController extends Controller
      */
     public function store(BannerRequest $request)
     {
-        if ($request->hasFile('image')) {   
+        if ($request->hasFile('image')) {
             $banner_image = $request->file('image');
             $banner_name = 'banner_' . pathinfo($banner_image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $banner_image->getClientOriginalExtension();
             $banner_image->storeAs('public/uploads/banners', $banner_name);
@@ -57,7 +57,7 @@ class BannerController extends Controller
 
     public function edit(Banner $banner)
     {
-        return view('admins.banner.edit',compact('banner'));
+        return view('admins.banner.edit', compact('banner'));
     }
 
     public function update(BannerRequest $request, Banner $banner)
@@ -77,7 +77,7 @@ class BannerController extends Controller
 
         if ($banner->update($data)) {
             if ($request->hasFile('image')) {
-                $banner_image->storeAs('public/uploads/banners', $banner_name); 
+                $banner_image->storeAs('public/uploads/banners', $banner_name);
                 // xóa ảnh cũ
                 if ($old_image != null && Storage::exists('public/uploads/banners/' . $old_image)) {
                     unlink(storage_path('app/public/uploads/banners/' . $old_image));
@@ -85,7 +85,7 @@ class BannerController extends Controller
             }
             return redirect()->route('admin.banners.index')->with('success', 'Cập nhật thành công');
         }
-       
+
     }
 
     /**
@@ -104,10 +104,10 @@ class BannerController extends Controller
     {
         $deleteBanner = Banner::onlyTrashed()->paginate(10);
 
-        return view('admins.banner.trash',compact('deleteBanner'));
+        return view('admins.banner.trash', compact('deleteBanner'));
     }
     // xóa cứng
-    public function trashForce(String $id)
+    public function trashForce(string $id)
     {
         $banner = Banner::withTrashed()->find($id);
         $old_banner = $banner->image;
@@ -121,7 +121,7 @@ class BannerController extends Controller
     }
 
     // khôi phục
-    public function trashRestore(String $id)
+    public function trashRestore(string $id)
     {
         $restoreBanner = Banner::withTrashed()->find($id);
 
