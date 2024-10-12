@@ -1,54 +1,89 @@
 <?php
 
-  namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Client;
 
-  use App\Http\Controllers\Controller;
-  use App\Http\Requests\ContactRequest;
-  use Illuminate\Http\Request;
-  use Illuminate\Support\Facades\Auth; 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangeRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class ProfileController extends Controller
 {
 	public function index()
-    {
-        $users = Auth::user();
-        return view('clients.profile.index', compact('users'));
-    }
-  
-
-    public function postUpdate(ContactRequest $request, $id)
-    {
-      $data = $request->all([
-        'fullname',
-        'email',
-        'phone',
-        'date_of_birth',
-
-      ]);
-    $users = Auth::user();
-
- 
-    $users->fullname = $data['fullname'];
-    $users->email = $data['email'];
-    $users->phone = $data['phone'];
-    $users->date_of_birth = $data['date_of_birth'];
-
-   
-    $users->save();
-
-   
-    return redirect()->route('clients.profile.index');
-    
-      
-    }
-
-	public function postChangePassword(Request $request)
 	{
+		$user = Auth::user();
+		return view('clients.profile.index', compact('user'));
+	}
+	public function postUpdate(Request $request)
+	{
+		$request->validate([
+			'fullname' => 'required|string|max:255',
+			'email' => 'required|email|max:255',
+			'phone' => 'nullable|string|max:20',
+			'gender' => 'nullable|string',
+			'date_of_birth' => 'nullable|date',
+			'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+		]);
+	
+		$user = Auth::user();
+		if($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $name = $file->getClientOriginalName();
+            $file->move('storage/uploads/avatars', $name);
+            $user['avatar'] = $name;
+        }
+		
+	
+		$gender = null;
+		if ($request->gender == 'male') {
+			$gender = 1;
+		} elseif ($request->gender == 'female') {
+			$gender = 2;
+		} elseif ($request->gender == 'other') {
+			$gender = 3;
+		}
+	
+		$user->fullname = $request->fullname;
+		$user->email = $request->email;
+		$user->phone = $request->phone;
+		$user->date_of_birth = $request->date_of_birth;
+		$user->gender = $gender;
+	
+		$user->save();
+		return redirect()->route('client.profile.index');
+	}
+
+
+
+	public function postChangePassword(ChangeRequest $request)
+	{
+		$user = Auth::user();
+		
+		if (!Hash::check($request->current_password, $user->password)) {
+			return back()->withErrors(['current_password' => 'Mật khẩu hiện tại không đúng']);
+		}
+		$user->password = Hash::make($request->new_password);
+		$user->save();
+		return redirect()->back()->with('success', 'Mật khẩu đã được thay đổi thành công.');
 	}
 
 	public function postInactive(Request $request)
 	{
+		$request->validate([
+			'password' => 'required|string|min:8', 
+		]);
+		$user = Auth::user();
+		if (!Hash::check($request->input('password'), $user->password)) {
+			return redirect()->back()->withErrors(['password' => 'Mật khẩu không chính xác']);
+		}
+		$user->status = 2;
+		$user->save();
+		Auth::logout();
+		return redirect('/');
 	}
 
 	public function membership()
