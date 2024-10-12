@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,7 +16,8 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::latest('id')->paginate(10);
-        return view('admins.order.index',compact('orders'));
+        $invoices = Invoice::all();
+        return view('admins.order.index',compact('orders','invoices'));
     }
 
     /**

@@ -4,6 +4,9 @@
 @section('content')
     <div class="mx-10">
         <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Chi tiết hóa đơn</h2>
+        <div>
+            <a href="" class="button-default ms-auto text-gray-800">Xem hóa đơn</a>
+        </div>
         <div class="space-y-4">
             {{--  --}}
             <div class="flex justify-between bg-blue-50 p-4 rounded-lg shadow-sm">
@@ -62,19 +65,27 @@
             {{-- --}}
             <div class="flex justify-between bg-blue-50 p-4 rounded-lg shadow-sm">
                 <label class="font-semibold">Lí do hủy bỏ</label>
-                <span class="text-gray-800">{{ $orders->canceled_reason}}</span>
+                <span class="text-gray-800">
+                    @isset( $orders->canceled_reason)
+                        {{  $orders->canceled_reason }}
+                    @else
+                    @endisset
+                </span>
             </div>
             {{-- --}}
-           {{-- --}}
-           <div class="flex justify-between bg-blue-50 p-4 rounded-lg shadow-sm">
-            <label class="font-semibold">Thời gian hủy bỏ</label>
-            <span class="text-gray-800">{{ $orders->canceled_at}}</span>
-        </div>
+            <div class="flex justify-between bg-blue-50 p-4 rounded-lg shadow-sm">
+                <label class="font-semibold">Thời gian hủy bỏ</label>
+                <span class="text-gray-800">{{ $orders->canceled_at }}</span>
+            </div>
+            {{--  --}}
+            <div class="flex justify-between bg-blue-50 p-4 rounded-lg shadow-sm">
+                <label class="font-semibold">Thời gian đặt hàng</label>
+                <span class="text-gray-800">{{ $orders->created_at }}</span>
+            </div>
         </div>
 
         <div class="mt-8 flex justify-end gap-4">
-            <a href="">Hủy đơn hàng</a>
-            <a href="" class="button-default text-gray-800">Xem hóa đơn</a>
+            <a href="" class="button-dark">Hủy đơn hàng</a>
             <a href="{{ route('admin.orders.index') }}" class="button-green">Quay lại</a>
         </div>
     </div>
