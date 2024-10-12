@@ -44,8 +44,8 @@
                 <div class="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
                     <div class="space-y-4">
                         <div class="flex space-x-4">
-                            <img loading="lazy" class="h-16 w-16 rounded-lg" src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}"
-                                alt="Avatar" />
+                            <img loading="lazy" class="h-16 w-16 rounded-lg"
+                                src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}" alt="Avatar" />
                             <div>
                                 <div class="flex ms-2">
                                     <span
@@ -360,15 +360,20 @@
                         </dl>
                     </div>
                 </div>
-                <a href="{{ route('admin.users.edit', $user) }}"
-                    class="inline-flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:ring-0 sm:w-auto">
-                    @svg('tabler-edit', 'h-5 w-5 text-white me-2')
-                    Cập nhật tài khoản
-                </a>
+                <div class="flex items-start">
+                    <a href="{{ url()->previous() }}" class="button-dark me-2">
+                        @svg('tabler-arrow-back-up', 'h-5 w-5 text-white me-2')
+                        Quay lại
+                    </a>
+                    <a href="{{ route('admin.users.edit', $user) }}" class="button-blue me-2">
+                        @svg('tabler-edit', 'h-5 w-5 text-white me-2')
+                        Cập nhật tài khoản
+                    </a>
+                </div>
             </div>
             <div class="rounded-lg border border-gray-200 bg-gray-50 p-4   md:p-8">
                 <h3 class="text-xl font-semibold text-gray-900 ">Danh sách đơn hàng</h3>
-                @foreach ($orders as $order)
+                @forelse ($orders as $order)
                     <div class="flex flex-wrap items-center gap-y-4 border-b border-gray-200 pb-4 mt-4 md:pb-5">
                         <dl class="w-1/2 sm:w-48">
                             <dt class="text-base font-medium text-gray-500 ">Mã đơn hàng:</dt>
@@ -408,7 +413,14 @@
                             </a>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <dl class="w-1/2 sm:w-1/4 sm:flex-1 lg:w-auto">
+                        <div class="flex flex-col items-center justify-center p-6 rounded-lg w-full h-80">
+                            @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                            <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                        </div>
+                    </dl>
+                @endforelse
                 <div class="py-4">
                     {{ $orders->links() }}
                 </div>
