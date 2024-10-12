@@ -51,12 +51,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @forelse ($users as $user)
                         <tr class="border-b hover:bg-gray-100">
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap ">
                                 <a href="{{ route('admin.users.show', $user) }}">
-                                    <img loading="lazy" src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}" alt="Avatar"
-                                        class="w-auto h-8 mr-3 rounded">
+                                    <img loading="lazy" src="{{ Auth::user()->avatar() }}"
+                                        alt="Avatar" class="w-auto h-8 mr-3 rounded">
                                 </a>
                                 <a href="{{ route('admin.users.show', $user) }}">
                                     <div class="grid grid-flow-row">
@@ -102,12 +102,19 @@
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <div class="p-4">
-                {{ $users->links() }}
+                        @empty
+                            <td colspan="6" class="text-center py-4 text-base">
+                                <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                                    @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                                    <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                                </div>
+                            </td>
+                        @endforelse
+                    </tbody>
+                </table>
+                <div class="p-4">
+                    {{ $users->links() }}
+                </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection

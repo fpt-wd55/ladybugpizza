@@ -22,17 +22,18 @@ class ChangeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'current_password' => ['required', 'min:8'],
-			'new_password' => ['required', 'min:8', 'confirmed'],
+            'current_password' => 'required|min:8|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&]).{8,}$/',
+            'new_password' => 'same:password'
         ];
     }
-    public function messages():array {
-        return[
-            'current_password.required' => 'Vui lòng nhập mật khẩu.',
-			'current_password.min' => 'Mật khẩu cũ phải có ít nhất 8 ký tự.',
-			'new_password.required' => 'Vui lòng nhập mật khẩu mới.',
-			'new_password.min' => 'Mật khẩu mới phải có ít nhất 8 ký tự.',
-			'new_password.confirmed' => 'Mật khẩu nhập lại không khớp.',
+    public function messages(): array
+    {
+        return [
+            'current_password.required' => 'Mật khẩu không được để trống',
+            'current_password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
+            'new_password.required' => 'Vui lòng nhập mật khẩu mới.',
+            'new_password.regex' => 'Mật khẩu phải chứa ít nhất 1 ký tự viết hoa, 1 ký tự số và 1 ký tự đặc biệt',
+            'new_password.same' => 'Nhập lại mật khẩu không trùng khớp'
         ];
     }
 }

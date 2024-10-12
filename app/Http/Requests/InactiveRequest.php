@@ -11,7 +11,7 @@ class InactiveRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,16 @@ class InactiveRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'password' => 'required|string|min:8',
         ];
     }
+
+    public function messages():array {
+        return[
+            'password.required' => 'Vui lòng nhập mật khẩu.',
+			'password.min' => 'Mật khẩu cũ phải có ít nhất 8 ký tự.',
+        ];
+    }
+
+    
 }

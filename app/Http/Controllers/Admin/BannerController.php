@@ -36,7 +36,7 @@ class BannerController extends Controller
     {
         if ($request->hasFile('image')) {
             $banner_image = $request->file('image');
-            $banner_name = 'banner_' . pathinfo($banner_image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $banner_image->getClientOriginalExtension();
+            $banner_name ='banner_'.time() . pathinfo($banner_image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $banner_image->getClientOriginalExtension();
             $banner_image->storeAs('public/uploads/banners', $banner_name);
         }
 
