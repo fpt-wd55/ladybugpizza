@@ -55,7 +55,7 @@
                         <tr class="border-b hover:bg-gray-100">
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap ">
                                 <a href="{{ route('admin.users.show', $user) }}">
-                                    <img loading="lazy" src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}"
+                                    <img loading="lazy" src="{{ Auth::user()->avatar() }}"
                                         alt="Avatar" class="w-auto h-8 mr-3 rounded">
                                 </a>
                                 <a href="{{ route('admin.users.show', $user) }}">
