@@ -11,12 +11,13 @@ class InvoiceController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
+    public function index() {
+        $invoices = Invoice::all();
+        return view('admins.invoice.index', compact('invoices'));
+    }
     public function show()
     {
         return view('shared.invoice');
-    }
-
-    public function index() {
-        
     }
 }
