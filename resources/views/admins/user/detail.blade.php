@@ -45,7 +45,7 @@
                     <div class="space-y-4">
                         <div class="flex space-x-4">
                             <img loading="lazy" class="h-16 w-16 rounded-lg"
-                                src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}" alt="Avatar" />
+                                src="{{ Auth::user()->avatar() }}" alt="Avatar" />
                             <div>
                                 <div class="flex ms-2">
                                     <span
