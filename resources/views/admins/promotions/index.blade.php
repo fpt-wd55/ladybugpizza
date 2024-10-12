@@ -63,8 +63,9 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $promotion->id }}">
                                         <li>
-                                            <a href="{{ route('admin.promotions.show', $promotion) }}"
-                                                class="block py-2 px-4 hover:bg-gray-100">Chi tiết</a>
+                                            <a href="#"
+                                                class="block py-2 px-4 hover:bg-gray-100" data-modal-target="detail-modal-{{ $promotion->id }}"
+                                                data-modal-toggle="detail-modal-{{ $promotion->id }}">Chi tiết </a>
                                         </li>
                                     </ul>
                                     <div class="py-1">
@@ -78,7 +79,7 @@
                                 </div>
                             </td>
                         </tr>
-                        {{-- start modal --}}
+                        {{-- delete modal--}}
                         <div id="delete-modal-{{ $promotion->id }}" tabindex="-1"
                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                             <div class="relative p-4 w-full max-w-md max-h-full">
@@ -110,7 +111,105 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- end modal --}}
+                        {{-- end delete modal --}}
+                        {{-- detail modal--}}
+                        <div id="detail-modal-{{ $promotion->id }}" tabindex="-1"
+                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                            <div class="relative p-4 w-full max-w-md max-h-full">
+                                <div class="relative bg-white rounded-lg shadow">
+                                    <button type="button"
+                                        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                        data-modal-hide="detail-modal-{{ $promotion->id }}">
+                                        @svg('tabler-x', 'w-4 h-4')
+                                        <span class="sr-only">Close modal</span>
+                                    </button>
+                                    <div class="p-4 md:p-5 text-center">                                    
+                                        <h3 class="mb-5 text-2xl font-semibold">Chi tiết mã giảm giá</h3>    
+                                        <div class="space-y-4 text-">
+                                            {{-- Code --}}
+                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
+                                                <label class="font-semibold">Tên mã giảm giá:</label>
+                                                <span class="text-gray-800">{{ $promotion->code }}</span>
+                                            </div>
+                                
+                                            {{-- Description --}}
+                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
+                                                <label class="font-semibold">Mô tả:</label>
+                                                <span class="text-gray-800">{{ $promotion->description }}</span>
+                                            </div>
+                                
+                                            {{-- Discount Type --}}
+                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
+                                                <label class="font-semibold">Loại giảm giá:</label>
+                                                <span class="text-gray-800">
+                                                    @if ($promotion->discount_type == '1')
+                                                        Giảm theo %
+                                                    @elseif ($promotion->discount_type == '2')
+                                                        Giảm theo số tiền
+                                                    @endif
+                                                </span>
+                                            </div>
+                                
+                                            {{-- Discount Value --}}
+                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
+                                                <label class="font-semibold">Giá trị giảm giá:</label>
+                                                <span class="text-gray-800">{{ $promotion->discount_value }}</span>
+                                            </div>
+                                
+                                            {{-- Start Date --}}
+                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
+                                                <label class="font-semibold">Ngày bắt đầu:</label>
+                                                <span class="text-gray-800">{{ \Carbon\Carbon::parse($promotion->start_date)->format('d/m/Y H:i') }}</span>
+                                            </div>
+                                
+                                            {{-- End Date --}}
+                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
+                                                <label class="font-semibold">Ngày kết thúc:</label>
+                                                <span class="text-gray-800">{{ \Carbon\Carbon::parse($promotion->end_date)->format('d/m/Y H:i') }}</span>
+                                            </div>
+                                
+                                            {{-- Quantity --}}
+                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
+                                                <label class="font-semibold">Số lượng:</label>
+                                                <span class="text-gray-800">{{ $promotion->quantity }}</span>
+                                            </div>
+                                
+                                            {{-- Min Order Total --}}
+                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
+                                                <label class="font-semibold">Đơn hàng tối thiểu:</label>
+                                                <span class="text-gray-800">{{ $promotion->min_order_total }}</span>
+                                            </div>
+                                
+                                            {{-- Max Discount --}}
+                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
+                                                <label class="font-semibold">Giảm tối đa:</label>
+                                                <span class="text-gray-800">{{ $promotion->max_discount }}</span>
+                                            </div>
+                                
+                                            {{-- Is Global --}}
+                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
+                                                <label class="font-semibold">Đối tượng áp dụng:</label>
+                                                <span class="text-gray-800">{{ $promotion->is_global == '2' ? 'Tất cả' : 'Thành viên' }}</span>
+                                            </div>
+                                
+                                            {{-- Status --}}
+                                            <div class="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-sm">
+                                                <label class="font-semibold">Hoạt động:</label>
+                                                <div class="flex items-center">
+                                                    <input type="checkbox" id="status-toggle" name="status" class="sr-only peer"
+                                                        @checked($promotion->status == 1)>
+                                                    <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 transition-all"></div>
+                                                    <div
+                                                        class="w-5 h-5 bg-white rounded-full shadow-md absolute transform peer-checked:translate-x-5 transition-all">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- end detail modal --}}
                     @empty
                         <td colspan="6" class="text-center py-4 text-base">
                             <div class="flex flex-col items-center justify-center p-6 rounded-lg bg-white w-full h-80">
