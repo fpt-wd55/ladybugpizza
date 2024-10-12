@@ -59,9 +59,9 @@ Route::prefix('/')->group(function () {
     Route::post('/order/{order}/cancel}', [OrderController::class, 'postCancel'])->name('client.order.cancel');
     Route::post('/order/{order}/rate}', [OrderController::class, 'postRate'])->name('client.order.rate');
     Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile.index');
-    Route::post('/profile/update', [ProfileController::class, 'postUpdate'])->name('client.profile.post-update');
-    Route::post('/profile/change-password', [ProfileController::class, 'postChangePassword'])->name('client.profile.post-change-password');
-    Route::post('/profile/inactive', [ProfileController::class, 'postInactive'])->name('client.profile.post-inactive');
+    Route::put('/profile/update', [ProfileController::class, 'postUpdate'])->name('client.profile.post-update');
+    Route::put('/profile/change-password', [ProfileController::class, 'postChangePassword'])->name('client.profile.post-change-password');
+    Route::put('/profile/inactive', [ProfileController::class, 'postInactive'])->name('client.profile.post-inactive');
     Route::get('/profile/membership', [ProfileController::class, 'membership'])->name('client.profile.membership');
     Route::get('/profile/address', [ProfileController::class, 'address'])->name('client.profile.address');
     Route::get('/profile/address/add', [ProfileController::class, 'addLocation'])->name('client.profile.add-location');

@@ -14,9 +14,9 @@ class ProfileController extends Controller
 {
 	public function index()
 	{
-		$users = Auth::user();
-		return view('clients.profile.index', compact('users'));
-	} 
+		$user = Auth::user();
+		return view('clients.profile.index', compact('user'));
+	}
 	
 	public function postUpdate(Request $request, $id)
 	{
@@ -26,6 +26,27 @@ class ProfileController extends Controller
 			'phone' => 'nullable|string|max:20',
 			'gender' => 'nullable|string',
 			'date_of_birth' => 'nullable|date',
+			'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+		]);
+	
+		$user = Auth::user();
+		if($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $name = $file->getClientOriginalName();
+            $file->move('storage/uploads/avatars', $name);
+            $user['avatar'] = $name;
+        }
+		
+	
+		$gender = null;
+		if ($request->gender == 'male') {
+			$gender = 1;
+		} elseif ($request->gender == 'female') {
+			$gender = 2;
+		} elseif ($request->gender == 'other') {
+			$gender = 3;
+		}
+	
 		]);
 
 		$user = User::findOrFail($id); // Tìm người dùng theo ID
@@ -35,6 +56,24 @@ class ProfileController extends Controller
 		$user->email = $request->email;
 		$user->phone = $request->phone;
 		$user->date_of_birth = $request->date_of_birth;
+		$user->gender = $gender;
+	
+		$user->save();
+		return redirect()->route('client.profile.index');
+	}
+
+
+
+	public function postChangePassword(ChangeRequest $request)
+	{
+		$user = Auth::user();
+		
+		if (!Hash::check($request->current_password, $user->password)) {
+			return back()->withErrors(['current_password' => 'Mật khẩu hiện tại không đúng']);
+		}
+		$user->password = Hash::make($request->new_password);
+		$user->save();
+		return redirect()->back()->with('success', 'Mật khẩu đã được thay đổi thành công.');
 
 		// Lưu thông tin
 		$user->save();
@@ -42,16 +81,17 @@ class ProfileController extends Controller
 		return redirect()->route('client.profile.index');
 	}
 
-	public function postChangePassword(Request $request)
+	public function postInactive(InactiveRequest $request)
 	{
-		// Xác thực dữ liệu
-		$request->validate([
-			'current_password' => 'required',
-			'new_password' => 'required|min:8|confirmed', // 'confirmed' sẽ kiểm tra mật khẩu khớp với new_password_confirmation
-		]);
+		$user = Auth::user();
+		if (!Hash::check($request->input('password'), $user->password)) {
+			return redirect()->back()->withErrors(['password' => 'Mật khẩu không chính xác']);
+		}
+		$user->status = 2;
+		$user->save();
+		Auth::logout();
+		return redirect('/');
 	}
-
-	public function postInactive(Request $request) {}
 
 	public function membership()
 	{
