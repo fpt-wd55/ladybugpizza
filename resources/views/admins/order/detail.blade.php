@@ -12,7 +12,7 @@
             </div>
             {{--  --}}
             <div class="flex justify-between bg-blue-50 p-4 rounded-lg shadow-sm">
-                <label class="font-semibold">Mã giảm giá:</label>
+                <label class="font-semibold">Mã giảm giá</label>
                 @isset($orders->promotion->code)
                     {{ $orders->promotion->code }}
                 @else
@@ -46,7 +46,7 @@
             </div>
             {{--  --}}
             <div class="flex justify-between bg-blue-50 p-4 rounded-lg shadow-sm">
-                <label class="font-semibold w-20">Ghi chú</label>
+                <label class="font-semibold">Ghi chú</label>
                 <span class="text-gray-800">{{ $orders->notes }}</span>
             </div>
             {{-- --}}
@@ -55,29 +55,21 @@
                 <span class="text-gray-800">{{ $orders->paymentMethod->name }}</span>
             </div>
             {{-- --}}
-            {{-- <div class="flex justify-between bg-blue-50 p-4 rounded-lg shadow-sm">
-                <label class="font-semibold">Giảm tối đa:</label>
-                <span class="text-gray-800">{{  number_format($promotion->max_discount ) }}</span>
-            </div> --}}
-
-            {{-- Is Global --}}
-            {{-- <div class="flex justify-between bg-blue-50 p-4 rounded-lg shadow-sm">
-                <label class="font-semibold">Đối tượng áp dụng:</label>
-                <span class="text-gray-800">{{ $promotion->is_global == '2' ? 'Tất cả' : 'Thành viên' }}</span>
-            </div> --}}
-
-            {{-- Status --}}
-            {{-- <div class="flex justify-between items-center bg-blue-50 p-4 rounded-lg shadow-sm">
-                <label class="font-semibold">Hoạt động:</label>
-                <div class="flex items-center">
-                    <input type="checkbox" id="status-toggle" name="status" class="sr-only peer"
-                        @checked($promotion->status == 1)>
-                    <div class="w-11 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 transition-all"></div>
-                    <div
-                        class="w-5 h-5 bg-white rounded-full shadow-md absolute transform peer-checked:translate-x-5 transition-all">
-                    </div>
-                </div>
-            </div> --}}
+            <div class="flex justify-between bg-blue-50 p-4 rounded-lg shadow-sm">
+                <label class="font-semibold">Trạng thái đơn hàng</label>
+                <span class="text-gray-800">{{ $orders->orderStatus->name }}</span>
+            </div>
+            {{-- --}}
+            <div class="flex justify-between bg-blue-50 p-4 rounded-lg shadow-sm">
+                <label class="font-semibold">Lí do hủy bỏ</label>
+                <span class="text-gray-800">{{ $orders->canceled_reason}}</span>
+            </div>
+            {{-- --}}
+           {{-- --}}
+           <div class="flex justify-between bg-blue-50 p-4 rounded-lg shadow-sm">
+            <label class="font-semibold">Thời gian hủy bỏ</label>
+            <span class="text-gray-800">{{ $orders->canceled_at}}</span>
+        </div>
         </div>
 
         <div class="mt-8 flex justify-end gap-4">
