@@ -20,6 +20,7 @@ class Promotion extends Model
         'min_order_total',
         'max_discount',
         'is_global',
+        'rank_id',
         'status',
     ];
 

@@ -22,7 +22,8 @@ return new class extends Migration
             $table->integer('quantity');
             $table->integer('min_order_total')->nullable();
             $table->integer('max_discount')->nullable();
-            $table->tinyInteger('is_global')->default(2)->comment('1: global, 2: not global');
+            $table->tinyInteger('is_global')->default(2)->comment('1: Tất cả , 2: Không phải tất cả');
+            $table->foreignId('rank_id')->nullable()->constrained('membership_ranks');
             $table->tinyInteger('status')->default(1)->comment('1: active, 2: inactive');
             $table->timestamps();
         });

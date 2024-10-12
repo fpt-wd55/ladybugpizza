@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ChatSeeder::class,
             AttributeSeeder::class,
             CategorySeeder::class,
+            MembershipRankSeeder::class,
             MembershipSeeder::class,
             OrderStatusSeeder::class,
             ProductSeeder::class,
