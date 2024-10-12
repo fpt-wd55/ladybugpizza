@@ -46,8 +46,6 @@ class ProfileController extends Controller
 		} elseif ($request->gender == 'other') {
 			$gender = 3;
 		}
-	
-		]);
 
 		$user = User::findOrFail($id); // Tìm người dùng theo ID
 
