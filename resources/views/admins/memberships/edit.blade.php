@@ -62,6 +62,7 @@
                         </div>
                     </div>
                 </div>
+                {{-- end điểm hội viên --}}
                 <div class="py-4 md:py-8 px-3">
                     <div class="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
                         <div class="space-y-4">
@@ -170,7 +171,53 @@
                     </a>
 
                 </div>
-
+                {{-- lịch sử tiêu dùng của khách hàng --}}
+               
+                    <div class="lg:flex">
+                        <div class="card p-4 md:p-8 w-full min-h-screen">
+                            <h3 class="font-semibold text-lg uppercase mb-8">Lịch Sử </h3>
+            
+                            {{-- tabs --}}
+                            <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 mb-4">
+                                <ul class="flex flex-wrap -mb-px">
+                                    <li class="me-2">
+                                        <a href="#"
+                                            class="inline-block px-4 pb-2 text-red-600 border-b-2 border-red-600 rounded-t-lg"
+                                            aria-current="page">Tất cả lịch sử</a>
+                                    </li>
+                                    <li class="me-2">
+                                        <a href="#"
+                                            class="inline-block px-4 pb-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
+                                            Đã nhận</a>
+                                    </li>
+                                    <li class="me-2">
+                                        <a href="#"
+                                            class="inline-block px-4 pb-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
+                                            Đã dùng</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+                                @for ($i = 0; $i < 5; $i++)
+                                    <div class="product-card p-4 flex items-start items-center justify-between">
+                                        <div class="text-sm space-y-2">
+                                            <p class="font-medium">
+                                                <span class="uppercase me-2">AOHDJRNF</span>
+                                                <span class="badge-yellow inline-flex items-center">450 @svg('tabler-coins', 'icon-sm ms-2')</span>
+                                            </p>
+                                            <p>Giảm 20% cho đơn tối thiểu 300,000đ</p>
+                                            <p>Thời Gian :<span class="font-medium"> 25-07-2024</span></p>
+                                        </div>
+                                        <div>
+                                           <p class="text-[#D30A0A] text-lg font-semibold">+100</p>
+                                        </div>
+                                    </div>
+                                @endfor
+                            </div>
+                        </div>
+                    </div>
+                
+                {{-- end lịch sử tiêu dùng của khách hàng --}}
             </div>
         </div>
     </div>
