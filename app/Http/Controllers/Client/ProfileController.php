@@ -16,8 +16,8 @@ class ProfileController extends Controller
 	{
 		$users = Auth::user();
 		return view('clients.profile.index', compact('users'));
-	} 
-	
+	}
+
 	public function postUpdate(Request $request, $id)
 	{
 		$request->validate([
@@ -30,7 +30,6 @@ class ProfileController extends Controller
 
 		$user = User::findOrFail($id); // Tìm người dùng theo ID
 
-		// Cập nhật thông tin người dùng
 		$user->fullname = $request->fullname;
 		$user->email = $request->email;
 		$user->phone = $request->phone;
