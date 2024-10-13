@@ -122,6 +122,20 @@ Breadcrumbs::for('admin.memberships.edit', function (BreadcrumbTrail $trail, $me
     $trail->parent('admin.memberships.index');
     $trail->push('Chi tiết', route('admin.memberships.edit', $membership));
 });
+// Mã giảm giá
+Breadcrumbs::for('admin.promotions.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Mã giảm giá', route('admin.promotions.index'));
+});
+Breadcrumbs::for('admin.promotions.edit', function (BreadcrumbTrail $trail, $promotion) {
+    $trail->parent('admin.promotions.index');
+    $trail->push('Chỉnh sửa', route('admin.promotions.edit', $promotion));
+});
+// Đơn hàng
+Breadcrumbs::for('admin.orders.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Đơn hàng', route('admin.promotions.index'));
+});
 
 // Product
 Breadcrumbs::for('admin.products.index', function (BreadcrumbTrail $trail) {
