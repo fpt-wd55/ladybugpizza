@@ -7,7 +7,7 @@
                     <img alt="" class="img-sm" loading="lazy" src="{{ asset('storage/uploads/logo/logo.svg') }}">
                 </a>
 
-                <div class="hidden lg:flex items-center gap-4">
+                <div class="hidden items-center gap-4 lg:flex">
                     <li class="text-xs font-medium uppercase transition hover:text-red-500">
                         <a href="{{ route('client.home') }}">TRANG CHỦ</a>
                     </li>
