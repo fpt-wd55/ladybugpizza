@@ -108,9 +108,13 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     // User
     Route::resource('/users', UserController::class);
     Route::resource('/addresses', AddressController::class);
-    Route::resource('/products', AdminProductController::class);
     Route::resource('/orders', AdminOrderController::class);
     Route::resource('/carts', AdminCartController::class);
+    // Product
+    Route::resource('/products', AdminProductController::class);
+    Route::get('/trash-products', [AdminProductController::class, 'trashProduct'])->name('trash-products');
+    Route::post('/restore-product/{id}', [AdminProductController::class, 'restore'])->name('restore-product');
+    Route::delete('/delete-product/{id}', [AdminProductController::class, 'forceDelete'])->name('delete-product');
     // Attribute
     Route::resource('/attributes', AttributeController::class);
     Route::get('/trash-attributes', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');
