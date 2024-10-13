@@ -16,8 +16,8 @@ class ProfileController extends Controller
 	{
 		$users = Auth::user();
 		return view('clients.profile.index', compact('users'));
-	} 
-	
+	}
+
 	public function postUpdate(Request $request, $id)
 	{
 		$request->validate([
@@ -36,7 +36,6 @@ class ProfileController extends Controller
 		$user->phone = $request->phone;
 		$user->date_of_birth = $request->date_of_birth;
 
-		// Lưu thông tin
 		$user->save();
 
 		return redirect()->route('client.profile.index');
