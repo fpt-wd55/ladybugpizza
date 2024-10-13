@@ -2,6 +2,7 @@
 @section('title', 'Danh sách mã giảm giá')
 
 @section('content')
+{{Breadcrumbs::render('admin.promotions.index')}}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="overflow-x-auto ">
             <div

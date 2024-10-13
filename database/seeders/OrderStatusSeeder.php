@@ -18,7 +18,7 @@ class OrderStatusSeeder extends Seeder
 
         $statuses = [
             [
-                'name' => 'Cho xác nhận',
+                'name' => 'Ch xác nhận',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],

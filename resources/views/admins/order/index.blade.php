@@ -2,26 +2,14 @@
 @section('title', 'Danh sách mã giảm giá')
 
 @section('content')
+{{Breadcrumbs::render('admin.orders.index')}}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="overflow-x-auto ">
-            {{-- <div
-                class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                @if (session('message'))
-                    <div class="button bg-green-400">
-                        {{ session('message') }}
-                    </div>
-                @endif --}}
-            {{-- <a href="{{ route('admin.orders.create') }}" class="button-blue">
-                    @svg('tabler-plus', 'w-5 h-5 mr-2')
-                    Thêm mới mã giảm giá
-                </a> --}}
-            {{-- </div> --}}
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="px-4 py-3">STT</th>
                         <th scope="col" class="px-4 py-3">Tên người dùng</th>
-                        <th scope="col" class="px-4 py-3">Mã giảm giá</th>
                         <th scope="col" class="px-4 py-3">Địa chỉ</th>
                         <th scope="col" class="px-4 py-3">Tổng số tiền</th>
                         <th scope="col" class="px-4 py-3">Trạng thái</th>
@@ -39,15 +27,22 @@
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $order->user->fullname }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
-                                @isset($order->promotion->code)
-                                    {{ $order->promotion->code }}
-                                @else
-                                    Không
-                                @endisset
+                                <p>{{ $order->address->detail_address }}</p>
+                                <p>{{ $order->address->ward .', '.$order->address->district . ', '.$order->address->province }}</p>
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $order->address->detail_address }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{number_format( $order->amount) }}đ</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $order->orderStatus->name }}</td>
+                            <td class="px-4 py-2 whitespace-nowrap">
+                                    <button class="px-4 py-2 text-white font-semibold w-32 rounded-xl
+                                    {{
+                                    $order->orderStatus->name === 'Cho xác nhận' ? 'bg-yellow-500 hover:bg-yellow-600' :
+                                    ($order->orderStatus->name === 'Đã xác nhận' ? 'bg-blue-500 hover:bg-blue-600' :
+                                    ($order->orderStatus->name === 'Đang giao hàng' ? 'bg-orange-500 hover:bg-orange-600' :
+                                    ($order->orderStatus->name === 'Đã giao hàng' ? 'bg-green-600 hover:bg-green-700' :
+                                    ($order->orderStatus->name === 'Đã hủy' ? 'bg-red-600 hover:bg-red-700' : 'bg-gray-500 hover:bg-gray-600'))))
+                                    }}">
+                                    {{ $order->orderStatus->name }}
+                                </button>
+                            </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $order->id }}" data-dropdown-toggle="{{ $order->id }}-dropdown"
                                     class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
@@ -78,9 +73,9 @@
                                         @svg('tabler-x', 'w-4 h-4')
                                         <span class="sr-only">Close modal</span>
                                     </button>
-                                    <div class="p-4 md:p-5 text-center">
+                                    <div class="p-4 md:p-5">
                                         <h3 class="mb-5 text-2xl font-semibold">Chi tiết đơn hàng</h3>
-                                        <div class="space-y-4 text-">
+                                        <div class="space-y-4">
                                             {{-- user_id --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                                 <label class="font-semibold">Tên người dùng</label>
@@ -125,7 +120,7 @@
                                             {{-- ghi chú --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                                 <label class="font-semibold">Ghi chú</label>
-                                                <span class="text-gray-800">{{ $order->notes }}</span>
+                                                <p class="text-gray-800 text-right w-4/5">{{ $order->notes }}</p>
                                             </div>
                                             {{-- hình thức thanh toán --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
@@ -140,6 +135,7 @@
                                             {{-- Lí do hủy bỏ --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                                 <label class="font-semibold">Lí do hủy bỏ</label>
+                                                
                                                 <span class="text-gray-800">
                                                     @isset($order->canceled_reason)
                                                         {{ $order->canceled_reason }}
