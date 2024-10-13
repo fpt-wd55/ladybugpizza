@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\ContactRequest;
+use App\Models\Address;
 use App\Models\User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use dvhcvn;
 
 class ProfileController extends Controller
 {
@@ -16,8 +19,8 @@ class ProfileController extends Controller
 	{
 		$users = Auth::user();
 		return view('clients.profile.index', compact('users'));
-	} 
-	
+	}
+
 	public function postUpdate(Request $request, $id)
 	{
 		$request->validate([
@@ -148,7 +151,9 @@ class ProfileController extends Controller
 
 	public function address()
 	{
-		return view('clients.profile.address.index');
+        $user = Auth::user();
+        $addresses = Address::where('user_id', $user->id)->with('user')->paginate(6);
+		return view('clients.profile.address.index', compact('addresses'));
 	}
 
 	public function settings()
@@ -164,13 +169,10 @@ class ProfileController extends Controller
         return view('clients.profile.address.add');
     }
 
-	public function updateLocation(Request $request)
-	{
-	}
-
 	public function storeLocation(AddressRequest $request)
 	{
         $data = $request->all();
+
 
         $addressData = [
             'user_id' => Auth()->user()->id,
@@ -181,6 +183,8 @@ class ProfileController extends Controller
             'detail_address' => $data['address'],
             'title' => $data['title'],
         ];
+        dd($addressData);
+        
 
         $addressNames = $this->getAddressNamesByCodes(
             $addressData['provinceCode'],
@@ -209,65 +213,8 @@ class ProfileController extends Controller
         $addressData['lat'] = $lat;
         Address::create($addressData);
 
-        return redirect()->route('clients.profile.address')->with('success', 'Thêm địa chỉ thành công');
+        return redirect()->route('client.profile.address')->with('success', 'Thêm địa chỉ thành công');
 	}
-
-    private function getAddressNamesByCodes($provinceCode, $districtCode, $wardCode)
-        {
-            $response = file_get_contents("https://provinces.open-api.vn/api/");
-            $provinces = json_decode($response, true);
-            $provinceName = null;
-
-            foreach ($provinces as $province) {
-                if ($province['code'] == $provinceCode) {
-                    $provinceName = $province['name'];
-                    break;
-                }
-            }
-
-            $response = file_get_contents("https://provinces.open-api.vn/api/p/{$provinceCode}?depth=2");
-            $districts = json_decode($response, true);
-
-            if (!is_array($districts)) {
-                return ['province' => $provinceName, 'district' => null, 'ward' => null];
-            }
-
-            $districtName = null;
-
-            if (isset($districts['districts']) && is_array($districts['districts'])) {
-                foreach ($districts['districts'] as $district) {
-                    if (isset($district['code']) && $district['code'] == $districtCode) {
-                        $districtName = $district['name'];
-                        break;
-                    }
-                }
-            }
-
-            $response = file_get_contents("https://provinces.open-api.vn/api/d/{$districtCode}?depth=2");
-            $wards = json_decode($response, true);
-
-            if (!is_array($wards)) {
-                return ['province' => $provinceName, 'district' => $districtName, 'ward' => null];
-            }
-
-            $wardName = null;
-
-            if (isset($wards['wards']) && is_array($wards['wards'])) {
-                foreach ($wards['wards'] as $ward) {
-                    if (isset($ward['code']) && $ward['code'] == $wardCode) {
-                        $wardName = $ward['name'];
-                        break;
-                    }
-                }
-            }
-
-            return [
-                'province' => $provinceName,
-                'district' => $districtName,
-                'ward' => $wardName,
-            ];
-        }
-
 
         protected function convertAddressToCoordinates($fullAddress) {
             $client = new Client();
@@ -276,9 +223,6 @@ class ProfileController extends Controller
                     'query' => [
                         'q' => $fullAddress,
                         'format' => 'json',
-                    ],
-                    'headers' => [
-                        'User-Agent' => 'YourAppName/1.0 (http://yourwebsite.com)',
                     ],
                 ]);
             } catch (\Exception $e) {
@@ -294,6 +238,16 @@ class ProfileController extends Controller
 
             return [null, null];
         }
+
+    public function editLocation(Address $address){
+        // dd($address);
+        return view('clients.profile.address.edit', compact('address'));
+    }
+
+    public function updateLocation(AddressRequest $request)
+    {
+
+    }
 
 	public function destroyLocation(Request $request)
 	{
