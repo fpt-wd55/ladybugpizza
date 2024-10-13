@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
+use function Ramsey\Uuid\v1;
+
 class ProductController extends Controller
 {
     /**
@@ -13,7 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::paginate(10);
+        return view('admins.product.index', compact('products'));
     }
 
     /**
@@ -27,17 +30,14 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(Request $request) {}
 
     /**
      * Display the specified resource.
      */
     public function show(Product $product)
     {
-        //
+        return view('admins.product.detail', compact('product'));
     }
 
     /**
@@ -45,7 +45,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('admins.product.edit', compact('product'));
     }
 
     /**
