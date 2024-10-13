@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use App\Models\OrderStatus;
 use Faker\Factory as Faker;
+use Illuminate\Support\Str;
 
 class OrderStatusSeeder extends Seeder
 {
@@ -18,27 +19,44 @@ class OrderStatusSeeder extends Seeder
 
         $statuses = [
             [
-                'name' => 'Ch xác nhận',
+                'name' => 'Chờ xác nhận',
+                'slug' => 'waiting',
+                'color' => 'yellow',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
                 'name' => 'Đã xác nhận',
+                'slug' => 'confirmed',
+                'color' => 'blue',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'name' => 'Đang tìm tài xế',
+                'slug' => 'finding_driver',
+                'color' => 'gray',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
                 'name' => 'Đang giao hàng',
+                'slug' => 'shipping',
+                'color' => 'gray',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'name' => 'Đã giao hàng',
+                'name' => 'Hoàn thành',
+                'slug' => 'completed',
+                'color' => 'green',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
                 'name' => 'Đã hủy',
+                'slug' => 'cancelled',
+                'color' => 'red',
                 'created_at' => $now,
                 'updated_at' => $now,
             ]

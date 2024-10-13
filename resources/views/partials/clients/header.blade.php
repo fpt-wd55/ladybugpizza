@@ -20,7 +20,7 @@
                 <button class="hidden md:inline-block" data-modal-target="searchModal" data-modal-toggle="searchModal">@svg('tabler-search', 'icon-md')</button>
 
                 @if (Auth::user())
-                    <a href="#"> @svg('tabler-heart', 'icon-md')</a>
+                    <a href="#" data-modal-target="favoriteProductModal" data-modal-toggle="favoriteProductModal"> @svg('tabler-heart', 'icon-md')</a>
                     <a href="{{ route('client.cart.index') }}"> @svg('tabler-shopping-bag', 'icon-md')</a>
                     <a href="{{ route('client.order.index') }}"> @svg('tabler-truck-delivery', 'icon-md')</a>
 
@@ -83,7 +83,50 @@
 
 </header>
 
-{{-- logout Modal --}}
+{{-- Search Modal --}}
+<div aria-hidden="true" class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0" id="searchModal" tabindex="-1">
+    <div class="relative max-h-full w-full max-w-2xl p-4">
+        <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
+            <div class="flex items-center justify-between rounded-t border-b p-4 dark:border-gray-600 md:p-5">
+                <p class="font-semibold text-gray-900 dark:text-white">
+                    Tìm kiếm
+                </p>
+                <button class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="searchModal" type="button">
+                    @svg('tabler-x', 'icon-sm')
+                </button>
+            </div>
+
+            <div class="p-4 md:p-8">
+                <div class="ais-InstantSearch transition">
+                    <div id="searchbox"></div>
+                    <div id="hits"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Favorite Product Modal --}}
+<div aria-hidden="true" class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0" id="favoriteProductModal" tabindex="-1">
+    <div class="relative max-h-full w-full max-w-2xl p-4">
+        <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
+            <div class="flex items-center justify-between rounded-t border-b p-4 dark:border-gray-600 md:p-5">
+                <p class="font-semibold text-gray-900 dark:text-white">
+                    Sản phẩm yêu thích của tôi
+                </p>
+                <button class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="favoriteProductModal" type="button">
+                    @svg('tabler-x', 'icon-sm')
+                </button>
+            </div>
+
+            <div class="p-4 md:p-8">
+                Nội dung code ở đây
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Logout Modal --}}
 <div aria-hidden="true" class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full" id="logoutModal" tabindex="-1">
     <div class="relative h-auto w-full max-w-2xl p-4">
         <div class="relative rounded-lg bg-white p-4 shadow sm:p-5">
@@ -105,7 +148,7 @@
                     Đăng xuất
                 </a>
                 <button class="button-dark" type="button">
-                    Đóng
+                    Huỷ
                 </button>
             </div>
         </div>

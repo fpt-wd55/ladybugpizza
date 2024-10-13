@@ -13,7 +13,7 @@
 
 </head>
 
-<body class="open-sans text-sm">
+<body class="open-sans">
     @include('partials.clients.header')
 
     <div class="">
@@ -33,29 +33,6 @@
         <button class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 text-white" id="back-to-top">
             @svg('tabler-arrow-up', 'icon-sm')
         </button>
-    </div>
-
-    {{-- Search Modal --}}
-    <div aria-hidden="true" class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0" id="searchModal" tabindex="-1">
-        <div class="relative max-h-full w-full max-w-2xl p-4">
-            <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
-                <div class="flex items-center justify-between rounded-t border-b p-4 dark:border-gray-600 md:p-5">
-                    <p class="font-semibold text-gray-900 dark:text-white">
-                        Tìm kiếm
-                    </p>
-                    <button class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="searchModal" type="button">
-                        @svg('tabler-x', 'icon-sm')
-                    </button>
-                </div>
-
-                <div class="p-4 md:p-8">
-                    <div class="ais-InstantSearch transition">
-                        <div id="searchbox"></div>
-                        <div id="hits"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     {{-- Back to top --}}

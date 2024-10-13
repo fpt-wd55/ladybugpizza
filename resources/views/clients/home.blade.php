@@ -10,7 +10,7 @@
         <div class="text-center py-8 mt-12">
             <p class="vujahday-script-regular text-6xl text-center mb-6">Ladybug Pizza</p>
             <p class="uppercase text-gray-500 mb-12">Ngon đến từng miếng, đậm vị yêu thương</p>
-            @include('clients.categories')
+            @include('partials.clients.categories')
         </div>
 
         <div>
