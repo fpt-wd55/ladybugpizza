@@ -74,7 +74,7 @@ class ProductSeeder extends Seeder
             ],
             'soft' => [
                 'Coca Classic Lon 320ml',
-                'Coca Light Lon 330ml',
+                'Coca Light Lon 320ml',
                 'Coca Plus Fiber Lon 320ml',
                 'Coca Zero Lon 320ml',
                 'Fanta Hương Cam Lon 320ml',

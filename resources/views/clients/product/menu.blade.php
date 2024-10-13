@@ -9,6 +9,13 @@
             {{-- Sản phẩm --}}
             <div class="col-span-3">
 
+                {{-- Categories --}}
+                <div class="text-center py-8 mt-12">
+                    <p class="vujahday-script-regular text-6xl text-center mb-6">Menu</p>
+                    <p class="uppercase text-gray-500 mb-12">Ngon đến từng miếng, đậm vị yêu thương</p>
+                    @include('clients.categories')
+                </div>
+
                 {{-- combo --}}
                 <div class="mb-8">
                     {{-- <p class="font-semibold uppercase mb-4">Combo</p> --}}
@@ -34,19 +41,6 @@
                     </div>
                 </div>
 
-                {{-- Categories --}}
-                <div class="grid grid-cols-3 gap-4 md:gap-8 mb-4 md:mb-8 py-8">
-                    @foreach ($categories as $category)
-                        @if ($category->id == 7)
-                            @continue
-                        @endif
-                        <a href="{{ route('client.product.menu') . '#' . $category->slug }}" class="flex flex-col items-center justify-center">
-                            <img src="{{ asset('storage/uploads/categories/' . $category->image) }}" class="w-20 h-20 md:w-24 md:h-24 object-cover hover:transform hover:scale-110 transition-transform mb-2" alt="">
-                            <p class="font-normal md:text-sm text-xs">{{ $category->name }}</p>
-                        </a>
-                    @endforeach
-                </div>
-
                 {{-- products --}}
                 <div class="mb-8">
                     @foreach ($categories as $category)
@@ -60,7 +54,7 @@
                             @foreach ($products as $product)
                                 @if ($product->category_id == $category->id)
                                     <a href="{{ route('client.product.show', $product->slug) }}" class="product-card md:flex overflow-hidden">
-                                        <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->category->slug . '/' . $product->image) }}" class="flex-shrink-0 h-48 w-full md:w-1/3 md:h-full object-cover" alt="{{ $product->image }}">
+                                        <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}" class="flex-shrink-0 h-48 w-full md:w-1/3 md:h-full object-cover" alt="{{ $product->image }}">
                                         <div class="p-2 text-sm">
                                             <p class="font-semibold mb-2 ">{{ $product->name }}</p>
                                             <div class="flex items-center gap-1 mb-2">

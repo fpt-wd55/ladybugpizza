@@ -2,9 +2,9 @@
     <div class="h-auto md:mx-8 lg:mx-20">
         <nav class="flex justify-between items-center">
             {{-- Logo --}}
-            <a href="{{ route('client.home') }}" class="md:flex md:items-center">
-                <img loading="lazy" class="h-12 md:h-20" src="{{ asset('favicon.svg') }}" alt="">
-            </a>
+            <!-- <a href="{{ route('client.home') }}" class="md:flex md:items-center">
+                <img loading="lazy" class="img-sm" src="{{ asset('storage/uploads/logo/logo.svg') }}" alt="">
+            </a> -->
             <ul class="flex items-center gap-4">
                 <li class="text-xs uppercase hover:text-red-500 transition">
                     <a href="{{ route('client.home') }}">TRANG CHỦ</a>
@@ -20,61 +20,61 @@
                 <button data-modal-target="searchModal" data-modal-toggle="searchModal" class="hidden md:inline-block">@svg('tabler-search', 'icon-md')</button>
 
                 @if (Auth::user())
-                    <a href="{{ route('client.cart.index') }}"> @svg('tabler-heart', 'icon-md')</a>
-                    <a href="{{ route('client.cart.index') }}"> @svg('tabler-shopping-bag', 'icon-md')</a>
-                    <a href="{{ route('client.order.index') }}"> @svg('tabler-truck-delivery', 'icon-md')</a>
+                <a href="{{ route('client.cart.index') }}"> @svg('tabler-heart', 'icon-md')</a>
+                <a href="{{ route('client.cart.index') }}"> @svg('tabler-shopping-bag', 'icon-md')</a>
+                <a href="{{ route('client.order.index') }}"> @svg('tabler-truck-delivery', 'icon-md')</a>
 
-                    <button class="hover:cursor-pointer">
-                        <img loading="lazy" data-dropdown-toggle="userDropdown" class="img-circle w-8 h-8 object-cover" src="{{ Auth::user()->avatar() }}">
-                    </button>
+                <button class="hover:cursor-pointer">
+                    <img loading="lazy" data-dropdown-toggle="userDropdown" class="img-circle w-8 h-8 object-cover" src="{{ Auth::user()->avatar() }}">
+                </button>
 
-                    {{-- User dropdown --}}
-                    <div id="userDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-64 font-normal">
-                        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                            <p class="font-medium ">{{ Auth::user()->fullname }}</p>
-                            <p class="truncate">{{ Auth::user()->email }}</p>
-                        </div>
-                        <div class="py-2">
-                            <a href="{{ route('client.profile.index') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                @svg('tabler-user', 'icon-sm')
-                                Hồ sơ
-                            </a>
-                        </div>
-                        <div class="py-2">
-                            <a href="{{ route('client.profile.address') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                @svg('tabler-location', 'icon-sm')
-                                Địa chỉ
-                            </a>
-                        </div>
-                        <div class="py-2">
-                            <a href="{{ route('client.profile.settings') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                @svg('tabler-settings', 'icon-sm')
-                                Cài đặt
-                            </a>
-                        </div>
-                        <div class="py-2">
-                            <a href="{{ route('client.profile.membership') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                @svg('tabler-coin', 'icon-sm')
-                                Tích điểm
-                            </a>
-                        </div>
-                        <div class="py-2">
-                            <a href="{{ route('client.profile.promotion') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                @svg('tabler-tag', 'icon-sm')
-                                Mã giảm giá
-                            </a>
-                        </div>
-                        <div class="py-2">
-                            <a href="#" data-modal-target="logoutModal" data-modal-toggle="logoutModal" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                @svg('tabler-logout', 'icon-sm')
-                                Đăng xuất
-                            </a>
-                        </div>
+                {{-- User dropdown --}}
+                <div id="userDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-64 font-normal">
+                    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                        <p class="font-medium ">{{ Auth::user()->fullname }}</p>
+                        <p class="truncate">{{ Auth::user()->email }}</p>
                     </div>
+                    <div class="py-2">
+                        <a href="{{ route('client.profile.index') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            @svg('tabler-user', 'icon-sm')
+                            Hồ sơ
+                        </a>
+                    </div>
+                    <div class="py-2">
+                        <a href="{{ route('client.profile.address') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            @svg('tabler-location', 'icon-sm')
+                            Địa chỉ
+                        </a>
+                    </div>
+                    <div class="py-2">
+                        <a href="{{ route('client.profile.settings') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            @svg('tabler-settings', 'icon-sm')
+                            Cài đặt
+                        </a>
+                    </div>
+                    <div class="py-2">
+                        <a href="{{ route('client.profile.membership') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            @svg('tabler-coin', 'icon-sm')
+                            Tích điểm
+                        </a>
+                    </div>
+                    <div class="py-2">
+                        <a href="{{ route('client.profile.promotion') }}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            @svg('tabler-tag', 'icon-sm')
+                            Mã giảm giá
+                        </a>
+                    </div>
+                    <div class="py-2">
+                        <a href="#" data-modal-target="logoutModal" data-modal-toggle="logoutModal" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            @svg('tabler-logout', 'icon-sm')
+                            Đăng xuất
+                        </a>
+                    </div>
+                </div>
                 @else
-                    <a href="{{ route('auth.login') }}" class="">
-                        @svg('tabler-login', 'md:me-2 icon-md')
-                    </a>
+                <a href="{{ route('auth.login') }}" class="">
+                    @svg('tabler-login', 'md:me-2 icon-md')
+                </a>
                 @endif
             </div>
         </nav>
