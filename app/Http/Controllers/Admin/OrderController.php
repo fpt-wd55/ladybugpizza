@@ -35,7 +35,10 @@ class OrderController extends Controller
     {
         //
     }
-
+    public function invoices(){
+        $invoices = Invoice::all();
+        return view('admins.order.detail',compact('invoices'));
+    }
     /**
      * Display the specified resource.
      */
