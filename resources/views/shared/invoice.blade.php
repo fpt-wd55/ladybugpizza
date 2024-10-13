@@ -23,17 +23,16 @@
                     </div>
                 </div>
                 <div class="text-right">
-                    <p class="title">đỗ hồng quân</p>
+                    <p class="title">{{$user->fullname}}</p>
                     <div class="text-sm md:text-base">
-                        <p>Số 4 ngách 132/66/2 Nguyên Xá</p>
-                        <p>Bắc Từ Liêm, Hà Nội</p>
-                        <p>Việt Nam, 50000</p>
-                        <p>quandohong28@gmail.com</p>
+                        <p>{{$order->address->detail_address}}</p>
+                        <p>{{$order->address->ward.', '.$order->address->district.', '.$order->address->province}}</p>
+                        <p>{{$user->email}}</p>
                     </div>
                 </div>
             </div>
             <div class="mb-4 md:md-8">
-                <p class="title">hoá đơn số INV/001/15</p>
+                <p class="title">hoá đơn số {{$invoice->invoice_number}}</p>
             </div>
             <div class="">
                 <table class="w-full">
@@ -47,7 +46,7 @@
                         </tr>
                     </thead>
                     <tbody class=>
-                        @for ($i = 0; $i < 5; $i++)
+                        @foreach ($orderItems as $item )
                             <tr class="border-b">
                                 <td class="text-left py-4 text-sm md:text-base">1</td>
                                 <td class="text-left py-4 text-sm md:text-base">
@@ -55,11 +54,11 @@
                                     <p class="font-light">Đế mỏng, Size S</p>
                                     <p class="font-light">Topping: Thịt bò, Hành tây</p>
                                 </td>
-                                <td class="text-right py-4 text-sm md:text-base">2</td>
-                                <td class="text-right py-4 text-sm md:text-base">200,000đ</td>
-                                <td class="text-right py-4 text-sm md:text-base">400,000đ</td>
+                                <td class="text-right py-4 text-sm md:text-base">{{ $item->quantity }}</td>
+                                <td class="text-right py-4 text-sm md:text-base">{{ number_format($item->price )}}đ</td>
+                                <td class="text-right py-4 text-sm md:text-base">{{ number_format($item->quantity*$item->price) }}đ</td>
                             </tr>
-                        @endfor
+                        @endforeach
                     </tbody>
                 </table>
                 <div class="text-right">
@@ -69,15 +68,15 @@
                     </div>
                     <div class="flex justify-end items-center gap-4 border-b py-2">
                         <p class="font-semibold text-xs md:text-sm lg:text-base">Phí vận chuyển</p>
-                        <p class="text-right py-4 text-sm md:text-base">1,600,000đ</p>
+                        <p class="text-right py-4 text-sm md:text-base">{{ number_format($order->shipping_fee)}}đ</p>
                     </div>
                     <div class="flex justify-end items-center gap-4 border-b py-2">
                         <p class="font-semibold text-xs md:text-sm lg:text-base">Giảm giá</p>
-                        <p class="text-right py-4 text-sm md:text-base">1,600,000đ</p>
+                        <p class="text-right py-4 text-sm md:text-base">{{ number_format(($order->discount_amount) ? $order->discount_amount : '0')}}đ</p>
                     </div>
                     <div class="flex justify-end items-center gap-4 border-b py-2">
                         <p class="font-semibold uppercase">Tổng thanh toán</p>
-                        <p class="text-right py-4 text-sm md:text-base">1,600,000đ</p>
+                        <p class="text-right py-4 text-sm md:text-base">{{ number_format($order->amount)}}đ</p>
                     </div>
                 </div>
                 <p class="text-center mt-6">Cảm ơn bạn rất nhiều đã đặt hàng tại Ladybug Pizza.Chúng tôi mong được gặp lại

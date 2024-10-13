@@ -4,18 +4,18 @@
 @section('content')
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="overflow-x-auto ">
-            <div
+            {{-- <div
                 class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 @if (session('message'))
                     <div class="button bg-green-400">
                         {{ session('message') }}
                     </div>
-                @endif
-                {{-- <a href="{{ route('admin.orders.create') }}" class="button-blue">
+                @endif --}}
+            {{-- <a href="{{ route('admin.orders.create') }}" class="button-blue">
                     @svg('tabler-plus', 'w-5 h-5 mr-2')
                     Thêm mới mã giảm giá
                 </a> --}}
-            </div>
+            {{-- </div> --}}
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
@@ -24,6 +24,7 @@
                         <th scope="col" class="px-4 py-3">Mã giảm giá</th>
                         <th scope="col" class="px-4 py-3">Địa chỉ</th>
                         <th scope="col" class="px-4 py-3">Tổng số tiền</th>
+                        <th scope="col" class="px-4 py-3">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Hành động</span>
                         </th>
@@ -45,7 +46,8 @@
                                 @endisset
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $order->address->detail_address }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $order->amount }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{number_format( $order->amount) }}đ</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $order->orderStatus->name }}</td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $order->id }}" data-dropdown-toggle="{{ $order->id }}-dropdown"
                                     class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
@@ -77,7 +79,7 @@
                                         <span class="sr-only">Close modal</span>
                                     </button>
                                     <div class="p-4 md:p-5 text-center">
-                                        <h3 class="mb-5 text-2xl font-semibold">Chi tiết hóa đơn</h3>
+                                        <h3 class="mb-5 text-2xl font-semibold">Chi tiết đơn hàng</h3>
                                         <div class="space-y-4 text-">
                                             {{-- user_id --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
@@ -98,7 +100,7 @@
                                             {{-- Tổng số tiền --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                                 <label class="font-semibold">Tổng số tiền</label>
-                                                <span class="text-gray-800">{{ $order->amount }}</span>
+                                                <span class="text-gray-800">{{number_format( $order->amount) }}đ</span>
                                             </div>
                                             {{-- Địa chỉ --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
@@ -108,12 +110,12 @@
                                             {{-- Giá tri giảm giá --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                                 <label class="font-semibold">Giá trị giảm giá</label>
-                                                <span class="text-gray-800">{{ $order->discount_amount }}</span>
+                                                <span class="text-gray-800">{{ number_format($order->discount_amount) }}đ</span>
                                             </div>
                                             {{-- phí giao hàng --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                                 <label class="font-semibold">Phí giao hàng</label>
-                                                <span class="text-gray-800">{{ $order->shipping_fee }}</span>
+                                                <span class="text-gray-800">{{ number_format($order->shipping_fee) }}đ</span>
                                             </div>
                                             {{-- hoàn thành --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
@@ -155,12 +157,22 @@
                                                 <label class="font-semibold">Thời gian đặt hàng</label>
                                                 <span class="text-gray-800">{{ $order->created_at }}</span>
                                             </div>
+                                            <div class="flex justify-center">
+                                                @if ($order->invoice)
+                                                    <a href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
+                                                        <button class="mt-4 button-red">Xem hóa đơn</button>
+                                                    </a>
+                                                @else
+                                                    <p>Hóa đơn không có sẵn</p>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         {{-- end order modal --}}
+                        {{--  --}}
                     @empty
                         <td colspan="6" class="text-center py-4 text-base">
                             <div class="flex flex-col items-center justify-center p-6 rounded-lg bg-white w-full h-80">

@@ -154,4 +154,4 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
 });
 
 // Cai nay dung chung luon
-Route::get('/invoices/{slug}', [InvoiceController::class, 'show'])->name('invoices.show');
+Route::get('/invoices/{invoiceNumber}', [InvoiceController::class, 'show'])->name('invoices.show');
