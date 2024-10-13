@@ -97,7 +97,7 @@
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $users->links() }}
+                {{ $users->onEachSide(3)->links() }}
             </div>
         </div>
     </div>
