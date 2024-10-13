@@ -63,4 +63,26 @@ class ProductController extends Controller
     {
         //
     }
+
+    /**
+     * Display a listing of the trashed resources.
+     */
+    public function trash() {}
+
+    /**
+     * Restore the specified resource from storage.
+     */
+    public function restore($id)
+
+    {
+        //
+    }
+
+    /**
+     * Force delete the specified resource from storage.
+     */
+    public function forceDelete($id)
+    {
+        //
+    }
 }
