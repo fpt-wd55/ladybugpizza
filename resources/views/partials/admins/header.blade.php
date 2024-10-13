@@ -9,9 +9,8 @@
                     @svg('tabler-baseline-density-medium', 'w-6 h-6 text-gray-500')
                 </button>
                 <a href="{{ route('admin.dashboard') }}" class="flex ms-2 md:me-24">
-                    <img loading="lazy" src="{{ asset('storage/uploads/logos/logo-fill.svg') }}" class="h-11 me-3"
-                        alt="Ladybug Pizza Logo" />
-                    <span class="self-center text-lg font-semibold whitespace-nowrap">Ladybug
+                    <img loading="lazy" src="{{ asset('storage/uploads/logos/logo-fill.svg') }}" class="h-11 me-3"/>
+                    <span class="hidden md:block self-center text-lg font-semibold whitespace-nowrap">Ladybug
                         Pizza</span>
                 </a>
             </div>
