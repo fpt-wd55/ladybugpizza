@@ -41,8 +41,8 @@
                                 <span class="badge-light">24/06/2024</span>
                             </div>
                             <div class="text-right">
-                                <p class="font-light text-gray-600 line-through">300,000đ</p>
-                                <p class="text-base font-medium">300,000đ</p>
+                                <p class="font-light text-sm text-gray-600 line-through">325,000đ</p>
+                                <p class="text-base font-medium">248,000đ</p>
                             </div>
                         </div>
                         <div class="flex items-center justify-end gap-4">

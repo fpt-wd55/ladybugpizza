@@ -6,21 +6,43 @@
                 <a class="md:flex md:items-center" href="{{ route('client.home') }}">
                     <img alt="" class="img-sm" loading="lazy" src="{{ asset('storage/uploads/logo/logo.svg') }}">
                 </a>
-                <li class="text-xs uppercase transition hover:text-red-500">
-                    <a href="{{ route('client.home') }}">TRANG CHỦ</a>
-                </li>
-                <li class="text-xs uppercase transition hover:text-red-500">
-                    <a href="{{ route('client.product.menu') }}">THỰC ĐƠN</a>
-                </li>
-                <li class="text-xs uppercase transition hover:text-red-500">
-                    <a href="{{ route('client.about-us') }}">VỀ CHÚNG TÔI</a>
-                </li>
+
+                <div class="hidden lg:flex items-center gap-4">
+                    <li class="text-xs font-medium uppercase transition hover:text-red-500">
+                        <a href="{{ route('client.home') }}">TRANG CHỦ</a>
+                    </li>
+                    <li class="text-xs font-medium uppercase transition hover:text-red-500">
+                        <a href="{{ route('client.product.menu') }}">THỰC ĐƠN</a>
+                    </li>
+                    <li class="text-xs font-medium uppercase transition hover:text-red-500">
+                        <span class="flex items-center gap-1 hover:cursor-pointer" data-dropdown-toggle="aboutUsDropdown">
+                            GIỚI THIỆU
+                            @svg('tabler-chevron-down', 'w-4')
+                        </span>
+                    </li>
+
+                    {{-- About us dropdown --}}
+                    <div class="z-10 hidden w-64 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow" id="aboutUsDropdown">
+                        <div class="py-2">
+                            <a class="flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase transition hover:bg-gray-100 hover:text-red-500" href="{{ route('client.about-us') }}">Về chúng tôi</a>
+                        </div>
+                        <div class="py-2">
+                            <a class="flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase transition hover:bg-gray-100 hover:text-red-500" href="{{ route('client.contact') }}">Liên hệ</a>
+                        </div>
+                        <div class="py-2">
+                            <a class="flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase transition hover:bg-gray-100 hover:text-red-500" href="{{ route('client.manual') }}">Hướng dẫn mua hàng</a>
+                        </div>
+                        <div class="py-2">
+                            <a class="flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase transition hover:bg-gray-100 hover:text-red-500" href="{{ route('client.policies') }}">Chính sách và điều khoản</a>
+                        </div>
+                    </div>
+                </div>
             </ul>
             <div class="flex items-center gap-4">
                 <button class="hidden md:inline-block" data-modal-target="searchModal" data-modal-toggle="searchModal">@svg('tabler-search', 'icon-md')</button>
 
                 @if (Auth::user())
-                    <a href="#" data-modal-target="favoriteProductModal" data-modal-toggle="favoriteProductModal"> @svg('tabler-heart', 'icon-md')</a>
+                    <a data-modal-target="favoriteProductModal" data-modal-toggle="favoriteProductModal" href="#"> @svg('tabler-heart', 'icon-md')</a>
                     <a href="{{ route('client.cart.index') }}"> @svg('tabler-shopping-bag', 'icon-md')</a>
                     <a href="{{ route('client.order.index') }}"> @svg('tabler-truck-delivery', 'icon-md')</a>
 
