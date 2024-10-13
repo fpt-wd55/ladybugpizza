@@ -16,8 +16,8 @@ class ProfileController extends Controller
 	{
 		$users = Auth::user();
 		return view('clients.profile.index', compact('users'));
-	} 
-	
+	}
+
 	public function postUpdate(Request $request, $id)
 	{
 		$request->validate([
@@ -28,7 +28,7 @@ class ProfileController extends Controller
 			'date_of_birth' => 'nullable|date',
 		]);
 
-		$user = User::findOrFail($id); // Tìm người dùng theo ID
+		$user = User::findOrFail($id);
 
 		// Cập nhật thông tin người dùng
 		$user->fullname = $request->fullname;
