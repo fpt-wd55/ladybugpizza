@@ -122,3 +122,24 @@ Breadcrumbs::for('admin.memberships.edit', function (BreadcrumbTrail $trail, $me
     $trail->parent('admin.memberships.index');
     $trail->push('Chi tiết', route('admin.memberships.edit', $membership));
 });
+
+// Product
+Breadcrumbs::for('admin.products.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Sản phẩm', route('admin.products.index'));
+});
+
+Breadcrumbs::for('admin.products.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.products.index');
+    $trail->push('Thêm mới', route('admin.products.create'));
+});
+
+Breadcrumbs::for('admin.products.edit', function (BreadcrumbTrail $trail, $product) {
+    $trail->parent('admin.products.index');
+    $trail->push('Chỉnh sửa', route('admin.products.edit', $product));
+});
+
+Breadcrumbs::for('admin.products.show', function (BreadcrumbTrail $trail, $product) {
+    $trail->parent('admin.products.index');
+    $trail->push('Chi tiết', route('admin.products.show', $product));
+}); 
