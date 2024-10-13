@@ -81,7 +81,6 @@ class ProductSeeder extends Seeder
                 'Fanta Hương Nho Lon 320ml',
                 'Fanta Hương Soda Kem Lon 320ml',
                 'Fanta Hương Xá Xị Lon 320ml',
-                'Fanta Hương Xá Xị Lon 320ml',
                 'Fuzetea Trà Bí Đao Lon 320ml',
                 'Pepsi Nitro Draft Coca Lon 320ml',
                 'Pepsi Nitro Draft Vanilla Lon 320ml',
