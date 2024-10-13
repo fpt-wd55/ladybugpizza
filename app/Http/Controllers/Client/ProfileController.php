@@ -153,7 +153,7 @@ class ProfileController extends Controller
 				'answer' => 'Một khi bạn đã sử dụng điểm để đổi voucher, điểm đó sẽ không được hoàn lại.'
 			]
 		];
-		return view('clients.profile.membership', [
+		return view('clients.profile.membership.index', [
 			'rank' => $currentRank['rank'],
 			'points' => $points,
 			'nextPoints' => $nextPoints,
@@ -162,6 +162,10 @@ class ProfileController extends Controller
 			'img' => $currentRank['img'],
 			'faqs' => $faqs
 		]);
+	}
+
+	public function membershipHistory() {
+		return view('clients.profile.membership.history');
 	}
 
 
