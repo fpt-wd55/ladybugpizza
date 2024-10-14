@@ -5,6 +5,26 @@
 {{ Breadcrumbs::render('admin.orders.index') }}
 
 <div class="mt-5 bg-white shadow sm:rounded-lg overflow-hidden">
+<div
+            class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
+            <div class="flex items-center flex-1 space-x-4">
+                <h2 class="font-medium text-gray-700 text-base">
+                    Đơn hàng
+                </h2>
+            </div>
+            <div
+                class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+                {{-- <a href="#" class="button-red">
+                    @svg('tabler-trash', 'w-5 h-5 mr-2')
+                    Thùng rác
+                </a> --}}
+                <button type="button"
+                    class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
+                    @svg('tabler-file-export', 'w-4 h-4 mr-2')
+                    Xuất dữ liệu
+                </button>
+            </div>
+        </div> 
     <div class="p-4 border-b bg-gray-50">
         <!-- Các tab điều hướng -->
         <ul class="flex space-x-4">
@@ -82,7 +102,7 @@
                                 }}">
                                 {{ $order->orderStatus->name }}
                             </button>
-                        </td>
+                        </td> 
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $order->id }}" data-dropdown-toggle="{{ $order->id }}-dropdown"
                                     class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
@@ -135,7 +155,7 @@
                                             {{-- Tổng số tiền --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                                 <label class="font-semibold">Tổng số tiền</label>
-                                                <span class="text-gray-800">{{number_format( $order->amount) }}đ</span>
+                                                <span class="text-gray-800">{{ number_format($order->amount) }}đ</span>
                                             </div>
                                             {{-- Địa chỉ --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
@@ -145,12 +165,14 @@
                                             {{-- Giá tri giảm giá --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                                 <label class="font-semibold">Giá trị giảm giá</label>
-                                                <span class="text-gray-800">{{ number_format($order->discount_amount) }}đ</span>
+                                                <span
+                                                    class="text-gray-800">{{ number_format($order->discount_amount) }}đ</span>
                                             </div>
                                             {{-- phí giao hàng --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                                 <label class="font-semibold">Phí giao hàng</label>
-                                                <span class="text-gray-800">{{ number_format($order->shipping_fee) }}đ</span>
+                                                <span
+                                                    class="text-gray-800">{{ number_format($order->shipping_fee) }}đ</span>
                                             </div>
                                             {{-- hoàn thành --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
@@ -175,7 +197,7 @@
                                             {{-- Lí do hủy bỏ --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                                 <label class="font-semibold">Lí do hủy bỏ</label>
-                                                
+
                                                 <span class="text-gray-800">
                                                     @isset($order->canceled_reason)
                                                         {{ $order->canceled_reason }}
@@ -195,7 +217,8 @@
                                             </div>
                                             <div class="flex justify-center">
                                                 @if ($order->invoice)
-                                                    <a href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
+                                                    <a
+                                                        href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
                                                         <button class="mt-4 button-red">Xem hóa đơn</button>
                                                     </a>
                                                 @else
@@ -220,7 +243,7 @@
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $orders->links() }}
+                {{ $orders->onEachSide(1)->links() }}
             </div>
         </div>
     </div>

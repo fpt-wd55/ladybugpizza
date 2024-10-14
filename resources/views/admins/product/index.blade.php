@@ -1,22 +1,22 @@
 @extends('layouts.admin')
-@section('title', 'Thuộc tính')
+@section('title', 'Sản phẩm')
 @section('content')
-    {{ Breadcrumbs::render('admin.attributes.index') }}
+    {{ Breadcrumbs::render('admin.products.index') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div
             class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
             <div class="flex items-center flex-1 space-x-4">
                 <h2 class="font-medium text-gray-700 text-base">
-                    Thuộc tính
+                    Sản phẩm
                 </h2>
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <a href="{{ route('admin.attributes.create') }}" class="button-blue">
+                <a href="{{ route('admin.users.create') }}" class="button-blue">
                     @svg('tabler-plus', 'w-5 h-5 mr-2')
-                    Thêm thuộc tính
+                    Thêm sản phẩm
                 </a>
-                <a href="{{ route('admin.trash-attributes') }}" class="button-red">
+                <a href="#" class="button-red">
                     @svg('tabler-trash', 'w-5 h-5 mr-2')
                     Thùng rác
                 </a>
@@ -31,56 +31,74 @@
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-4 py-3 hidden md:block">STT</th>
-                        <th scope="col" class="px-4 py-3">Thuộc tính</th>
+                        <th scope="col" class="px-4 py-3">Sản phẩm</th>
+                        <th scope="col" class="px-4 py-3">Giá</th>
+                        <th scope="col" class="px-4 py-3">Khuyến mãi</th>
                         <th scope="col" class="px-4 py-3">Số lượng</th>
+                        <th scope="col" class="px-4 py-3">Danh mục</th>
+                        <th scope="col" class="px-4 py-3">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Hành động</span>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($attributes as $attribute)
+                    @forelse ($products as $product)
                         <tr class="border-b hover:bg-gray-100">
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap font-medium hidden md:block">
-                                {{ ($attributes->currentpage() - 1) * $attributes->perpage() + $loop->index + 1 }}
+                            <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap ">
+                                <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
+                                    class="w-auto h-8 mr-3 rounded">
+                                {{ $product->name }}
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap font-medium">
-                                <span class="flex items-center">
-                                    {{ $attribute->name }}
-                                </span>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ number_format($product->price) }}đ
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap"></td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
+                                {{ number_format($product->discount_price) }}đ
+                            </td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
+                                {{ $product->quantity }}
+                            </td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
+                                {{ $product->category->name }}
+                            </td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
+                                <div class="flex items-center">
+                                    <div
+                                        class="inline-block indicator {{ $product->status == 1 ? 'bg-green-700' : 'bg-red-700' }}">
+                                    </div>
+                                    {{ $product->status == 1 ? 'Hoạt động' : 'Khóa' }}
+                                </div>
+                            </td>
                             <td class="px-4 py-3 flex items-center justify-end">
-                                <button id="{{ $attribute->id }}" data-dropdown-toggle="{{ $attribute->id }}-dropdown"
+                                <button id="{{ $product->sku }}" data-dropdown-toggle="{{ $product->sku }}-dropdown"
                                     class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
                                     type="button">
                                     @svg('tabler-dots', 'w-5 h-5')
                                 </button>
-                                <div id="{{ $attribute->id }}-dropdown"
+                                <div id="{{ $product->sku }}-dropdown"
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
-                                    <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $attribute->id }}">
+                                    <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $product->sku }}">
                                         <li>
-                                            <a href="{{ route('admin.attributes.edit', $attribute) }}"
-                                                class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
+                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Chi tiết</a>
                                         </li>
-                                    </ul>
-                                    <ul class="py-1 text-sm text-gray-700">
                                         <li>
-                                            <span data-modal-target="delete-modal-{{ $attribute->id }}"
-                                                data-modal-toggle="delete-modal-{{ $attribute->id }}"
+                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
+                                        </li>
+                                        <li>
+                                            <span data-modal-target="delete-modal-{{ $product->sku }}"
+                                                data-modal-toggle="delete-modal-{{ $product->sku }}"
                                                 class="cursor-pointer block py-2 px-4 text-sm text-red-500 hover:bg-gray-100">Xóa</span>
                                         </li>
                                     </ul>
                                 </div>
                                 {{-- Modal xác nhận xóa --}}
-                                <div id="delete-modal-{{ $attribute->id }}" tabindex="-1"
+                                <div id="delete-modal-{{ $product->sku }}" tabindex="-1"
                                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                     <div class="relative p-4 w-full max-w-md max-h-full">
                                         <div class="relative bg-white rounded-lg shadow">
                                             <button type="button"
                                                 class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-                                                data-modal-hide="delete-modal-{{ $attribute->id }}">
+                                                data-modal-hide="delete-modal-{{ $product->sku }}">
                                                 @svg('tabler-x', 'w-4 h-4')
                                                 <span class="sr-only">Close modal</span>
                                             </button>
@@ -88,11 +106,10 @@
                                                 <div class="flex justify-center">
                                                     @svg('tabler-trash', 'w-12 h-12 text-red-600 text-center mb-2')
                                                 </div>
-                                                <h3 class="mb-5 font-normal">Bạn có muốn xóa Thuộc tính này không?</h3>
+                                                <h3 class="mb-5 font-normal">Bạn có muốn xóa sản phẩm này không?</h3>
 
                                                 <div class="flex justify-center items-center">
-                                                    <form action="{{ route('admin.attributes.destroy', $attribute) }}"
-                                                        method="POST">
+                                                    <form action="#" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"
@@ -101,7 +118,7 @@
                                                         </button>
                                                     </form>
 
-                                                    <button data-modal-hide="delete-modal-{{ $attribute->id }}"
+                                                    <button data-modal-hide="delete-modal-{{ $product->sku }}"
                                                         type="button"
                                                         class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-0">
                                                         Không
@@ -113,20 +130,7 @@
                                 </div>
                             </td>
                         </tr>
-                        {{-- Giá trị thuộc tính --}}
-                        @foreach ($attribute->values as $value)
-                            <tr class="border-b">
-                                <td class="px-4 py-2 text-gray-900 whitespace-nowrap hidden md:block"></td>
-                                <td class="px-4 py-2 text-gray-900 whitespace-nowrap">--- <span
-                                        class="ms-1">{{ $value->value }}</span>
-                                </td>
-                                <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $value->quantity ?? '0' }}
-                                </td>
-                                <td class="px-4 py-2 text-gray-900 whitespace-nowrap"></td>
-                            </tr>
-                        @endforeach
                     @empty
-                        <!-- Hiển thị "Trống" nếu không có dữ liệu -->
                         <td colspan="6" class="text-center py-4 text-base">
                             <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
                                 @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
@@ -137,7 +141,7 @@
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $attributes->onEachSide(1)->links() }}
+                {{ $products->onEachSide(1)->links() }}
             </div>
         </div>
     </div>

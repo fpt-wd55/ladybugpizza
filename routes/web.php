@@ -63,6 +63,7 @@ Route::prefix('/')->group(function () {
     Route::put('/profile/change-password', [ProfileController::class, 'postChangePassword'])->name('client.profile.post-change-password');
     Route::put('/profile/inactive', [ProfileController::class, 'postInactive'])->name('client.profile.post-inactive');
     Route::get('/profile/membership', [ProfileController::class, 'membership'])->name('client.profile.membership');
+    Route::get('/profile/membership/history', [ProfileController::class, 'membershipHistory'])->name('client.profile.membership-history');
     Route::get('/profile/address', [ProfileController::class, 'address'])->name('client.profile.address');
     Route::get('/profile/address/add', [ProfileController::class, 'addLocation'])->name('client.profile.add-location');
     Route::post('/profile/address', [ProfileController::class, 'storeLocation'])->name('client.profile.post-location');
@@ -108,9 +109,13 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     // User
     Route::resource('/users', UserController::class);
     Route::resource('/addresses', AddressController::class);
-    Route::resource('/products', AdminProductController::class);
     Route::resource('/orders', AdminOrderController::class);
     Route::resource('/carts', AdminCartController::class);
+    // Product
+    Route::resource('/products', AdminProductController::class);
+    Route::get('/trash-products', [AdminProductController::class, 'trashProduct'])->name('trash-products');
+    Route::post('/restore-product/{id}', [AdminProductController::class, 'restore'])->name('restore-product');
+    Route::delete('/delete-product/{id}', [AdminProductController::class, 'forceDelete'])->name('delete-product');
     // Attribute
     Route::resource('/attributes', AttributeController::class);
     Route::get('/trash-attributes', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');

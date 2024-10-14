@@ -6,22 +6,9 @@
         <div
             class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
             <div class="flex items-center flex-1 space-x-4">
-                <h5>
-                    <span class="text-gray-500">Tổng số tài khoản:</span>
-                    <span class="">{{ count($users) }}</span>
-                </h5>
-                <h5>
-                    <span class="text-gray-500">Tài khoản hoạt động:</span>
-                    <span class="">
-                        @php
-                            $active = 0;
-                            foreach ($users as $user) {
-                                $user->status == 1 ? $active++ : '';
-                            }
-                            echo $active;
-                        @endphp
-                    </span>
-                </h5>
+                <h2 class="font-medium text-gray-700 text-base">
+                    Tài khoản
+                </h2>
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
@@ -32,7 +19,7 @@
                 <button type="button"
                     class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
                     @svg('tabler-file-export', 'w-4 h-4 mr-2')
-                    Export
+                    Xuất dữ liệu
                 </button>
             </div>
         </div>
@@ -46,7 +33,7 @@
                         <th scope="col" class="px-4 py-3">Vai trò </th>
                         <th scope="col" class="px-4 py-3">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
-                            <span class="sr-only">Actions</span>
+                            <span class="sr-only">Hành động</span>
                         </th>
                     </tr>
                 </thead>
@@ -55,8 +42,8 @@
                         <tr class="border-b hover:bg-gray-100">
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap ">
                                 <a href="{{ route('admin.users.show', $user) }}">
-                                    <img loading="lazy" src="{{ Auth::user()->avatar() }}"
-                                        alt="Avatar" class="w-auto h-8 mr-3 rounded">
+                                    <img loading="lazy" src="{{ Auth::user()->avatar() }}" alt="Avatar"
+                                        class="w-auto h-8 mr-3 rounded">
                                 </a>
                                 <a href="{{ route('admin.users.show', $user) }}">
                                     <div class="grid grid-flow-row">
@@ -102,19 +89,19 @@
                                 </div>
                             </td>
                         </tr>
-                        @empty
-                            <td colspan="6" class="text-center py-4 text-base">
-                                <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
-                                    @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
-                                    <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
-                                </div>
-                            </td>
-                        @endforelse
-                    </tbody>
-                </table>
-                <div class="p-4">
-                    {{ $users->links() }}
-                </div>
+                    @empty
+                        <td colspan="6" class="text-center py-4 text-base">
+                            <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                                @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                            </div>
+                        </td>
+                    @endforelse
+                </tbody>
+            </table>
+            <div class="p-4">
+                {{ $users->onEachSide(1)->links() }}
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
