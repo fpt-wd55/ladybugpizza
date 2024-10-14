@@ -6,16 +6,30 @@
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="overflow-x-auto ">
             <div
-                class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <a href="{{ route('admin.toppings.create') }}" class="button-blue">
-                    @svg('tabler-plus', 'w-5 h-5 mr-2')
-                    Thêm Topping
-                </a>
-                <a href="{{ route('admin.trash-topping') }}" class="button-red">
-                    @svg('tabler-trash', 'w-5 h-5 mr-2')
-                    Thùng rác
-                </a>
+                class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
+                <div class="flex items-center flex-1 space-x-4">
+                    <h2 class="font-medium text-gray-700 text-base">
+                        Topping
+                    </h2>
+                </div>
+                <div
+                    class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+                    <a href="{{ route('admin.toppings.create') }}" class="button-blue">
+                        @svg('tabler-plus', 'w-5 h-5 mr-2')
+                        Thêm Topping
+                    </a>
+                    <a href="{{ route('admin.trash-topping') }}" class="button-red">
+                        @svg('tabler-trash', 'w-5 h-5 mr-2')
+                        Thùng rác
+                    </a>
+                    <button type="button"
+                        class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
+                        @svg('tabler-file-export', 'w-4 h-4 mr-2')
+                        Xuất dữ liệu
+                    </button>
+                </div>
             </div>
+
             <table class="w-full text-sm text-left text-gray-500 ">
                 <thead class="text-gray-700 uppercase bg-gray-50 ">
                     <tr>
@@ -115,7 +129,7 @@
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $toppings->links() }}
+                {{ $toppings->onEachSide(1)->links() }}
             </div>
         </div>
     </div>

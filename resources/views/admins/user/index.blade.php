@@ -6,6 +6,9 @@
         <div
             class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
             <div class="flex items-center flex-1 space-x-4">
+                <h2 class="font-medium text-gray-700 text-base">
+                    Tài khoản
+                </h2>
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
@@ -16,7 +19,7 @@
                 <button type="button"
                     class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
                     @svg('tabler-file-export', 'w-4 h-4 mr-2')
-                    Export
+                    Xuất dữ liệu
                 </button>
             </div>
         </div>
@@ -97,7 +100,7 @@
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $users->onEachSide(3)->links() }}
+                {{ $users->onEachSide(1)->links() }}
             </div>
         </div>
     </div>

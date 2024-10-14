@@ -153,7 +153,7 @@
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $attributes->links() }}
+                {{ $attributes->onEachSide(1)->links() }}
             </div>
         </div>
     </div>

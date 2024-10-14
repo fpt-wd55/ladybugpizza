@@ -1,22 +1,31 @@
 @extends('layouts.admin')
-@section('title', 'Danh sách mã giảm giá')
+@section('title', 'Mã giảm giá')
 
 @section('content')
-{{Breadcrumbs::render('admin.promotions.index')}}
+    {{ Breadcrumbs::render('admin.promotions.index') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="overflow-x-auto ">
             <div
-                class="mr-4 my-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                @if (session('message'))
-                    <div class="button bg-green-400">
-                        {{ session('message') }}
-                    </div>
-                @endif
-                <a href="{{ route('admin.promotions.create') }}" class="button-blue">
-                    @svg('tabler-plus', 'w-5 h-5 mr-2')
-                    Thêm mới mã giảm giá
-                </a>
+                class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
+                <div class="flex items-center flex-1 space-x-4">
+                    <h2 class="font-medium text-gray-700 text-base">
+                        Mã giảm giá 
+                    </h2>
+                </div>
+                <div
+                    class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+                    <a href="{{ route('admin.promotions.create') }}" class="button-blue">
+                        @svg('tabler-plus', 'w-5 h-5 mr-2')
+                        Thêm mới mã giảm giá
+                    </a>
+                    <button type="button"
+                        class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
+                        @svg('tabler-file-export', 'w-4 h-4 mr-2')
+                        Xuất dữ liệu
+                    </button>
+                </div>
             </div>
+
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
@@ -119,7 +128,8 @@
                         <div id="detail-modal-{{ $promotion->id }}" tabindex="-1" aria-hidden="true"
                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
                             <div class="relative p-4 w-full max-w-2xl h-auto">
-                                <div class="relative p-4 bg-white rounded-lg shadow sm:p-5 h-[480px] overflow-y-auto no-scrollbar">
+                                <div
+                                    class="relative p-4 bg-white rounded-lg shadow sm:p-5 h-[480px] overflow-y-auto no-scrollbar">
                                     <button type="button"
                                         class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
                                         data-modal-hide="detail-modal-{{ $promotion->id }}">
@@ -230,7 +240,7 @@
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $promotions->links() }}
+                {{ $promotions->onEachSide(1)->links() }}
             </div>
         </div>
     </div>
