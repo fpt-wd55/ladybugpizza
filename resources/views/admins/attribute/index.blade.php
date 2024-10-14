@@ -47,7 +47,7 @@
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap font-medium">
                                 <span class="flex items-center">
-                                    {{ $attribute->name }}
+                                    {{ $attribute->name }} ({{ $attribute->category->name }})
                                 </span>
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap"></td>
