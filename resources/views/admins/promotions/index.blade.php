@@ -9,7 +9,7 @@
                 class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
                 <div class="flex items-center flex-1 space-x-4">
                     <h2 class="font-medium text-gray-700 text-base">
-                        Mã giảm giá 
+                        Mã giảm giá
                     </h2>
                 </div>
                 <div
@@ -166,7 +166,13 @@
                                             {{-- Discount Value --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                                 <label class="font-semibold">Giá trị giảm giá:</label>
-                                                <span class="text-gray-800">{{ $promotion->discount_value }}</span>
+                                                <span class="text-gray-800">
+                                                    @if ($promotion->discount_type == '1')
+                                                        {{ number_format($promotion->discount_value) }}%
+                                                    @elseif ($promotion->discount_type == '2')
+                                                        {{ number_format($promotion->discount_value) }}đ
+                                                    @endif
+                                                </span>
                                             </div>
 
                                             {{-- Start Date --}}
@@ -192,13 +198,15 @@
                                             {{-- Min Order Total --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                                 <label class="font-semibold">Đơn hàng tối thiểu:</label>
-                                                <span class="text-gray-800">{{ $promotion->min_order_total }}</span>
+                                                <span
+                                                    class="text-gray-800">{{ number_format($promotion->min_order_total) }}đ</span>
                                             </div>
 
                                             {{-- Max Discount --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                                 <label class="font-semibold">Giảm tối đa:</label>
-                                                <span class="text-gray-800">{{ $promotion->max_discount }}</span>
+                                                <span
+                                                    class="text-gray-800">{{ number_format($promotion->max_discount) }}đ</span>
                                             </div>
 
                                             {{-- Is Global --}}
