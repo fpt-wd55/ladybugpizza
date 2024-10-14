@@ -33,7 +33,6 @@
 
                     <div class="col-span-2">
 
-
                         <div class="mb-6 flex items-center">
                             <label class="text-sm font w-32 font-medium">Tên tài khoản:</label>
                             <span class="badge-red" name="username">{{ $user->username }}</span>
