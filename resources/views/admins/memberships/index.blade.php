@@ -24,16 +24,15 @@
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-xs md:text-sm">Tài khoản</th>
-                        <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-xs md:text-sm ">Họ và tên</th>
-                        <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-center text-xs md:text-sm">Thứ hạng
-                        </th>
-                        <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-xs md:text-sm">Trạng thái</th>
+                        <th scope="col" class="px-0 py-0 lg:py-3 text-xs md:text-sm ">Họ và tên</th>
+                        <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-center text-xs md:text-sm">Thứ hạng</th>
+                        <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-center text-xs md:text-sm">Trạng thái</th>
                         <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-xs md:text-sm">
                             <span class="sr-only">Actions</span>
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody> 
                     {{-- star item --}}
                     @forelse ($memberships as $membership)
                         {{-- @dd($membership) --}}
@@ -100,8 +99,6 @@
                         </tr>
                     @endforelse
                     {{-- end item --}}
-
-
                 </tbody>
             </table>
             <div class="p-4">

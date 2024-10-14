@@ -17,19 +17,19 @@
                                     @php
                                        switch ($rank) {
                                             case 'Đồng':
-                                                echo ' text-[#C67746]'; // màu chữ nâu và nền vàng nhạt
+                                                echo ' text-[#C67746]'; 
                                                 break;
                                             case 'Bạc':
-                                                echo 'text-gray-500'; // màu chữ xám và nền xanh nhạt
+                                                echo 'text-gray-500';
                                                 break;
                                             case 'Vàng':
-                                                echo 'text-yellow-300'; // màu chữ vàng đậm và nền vàng nhạt
+                                                echo 'text-yellow-300';
                                                 break;
                                             case 'Kim Cương':
-                                                echo 'text-blue-400'; // màu chữ xanh đậm và nền xanh nhạt
+                                                echo 'text-blue-400';
                                                 break;
                                             default:
-                                                echo 'text-gray-100'; // mặc định
+                                                echo 'text-gray-100'; 
                                                 break;
                                                      } 
                                     @endphp ">{{ $rank }}</p>
@@ -40,25 +40,24 @@
                                  @php
                                 switch ($rank) {
                                     case 'Đồng':
-                                        echo ' bg-[#C67746]'; // màu chữ nâu và nền vàng nhạt
+                                        echo ' bg-[#C67746]'; 
                                         break;
                                     case 'Bạc':
-                                        echo 'bg-gray-500'; // màu chữ xám và nền xanh nhạt
+                                        echo 'bg-gray-500'; 
                                         break;
                                     case 'Vàng':
-                                        echo 'bg-yellow-300'; // màu chữ vàng đậm và nền vàng nhạt
+                                        echo 'bg-yellow-300'; 
                                         break;
                                     case 'Kim Cương':
-                                        echo 'bg-blue-400'; // màu chữ xanh đậm và nền xanh nhạt
+                                        echo 'bg-blue-400'; 
                                         break;
                                     default:
-                                        echo 'bg-gray-100'; // mặc định
+                                        echo 'bg-gray-100'; 
                                         break;
                                               }
                                     @endphp h-2 rounded-full"
                                     style="width:{{ $progress }}%"></div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -135,48 +134,44 @@
                                     @php
                                         switch ($rank) {
                                             case 'Đồng':
-                                                echo 'text-[#3B3030] bg-[#C67746]'; // màu chữ nâu và nền vàng nhạt
+                                                echo 'text-[#3B3030] bg-[#C67746]';
                                                 break;
                                             case 'Bạc':
-                                                echo 'text-gray-700 bg-[#DFE1DE]'; // màu chữ xám và nền xanh nhạt
+                                                echo 'text-gray-700 bg-[#DFE1DE]'; 
                                                 break;
                                             case 'Vàng':
-                                                echo 'text-yellow-700 bg-yellow-300'; // màu chữ vàng đậm và nền vàng nhạt
+                                                echo 'text-yellow-700 bg-yellow-300';
                                                 break;
                                             case 'Kim Cương':
-                                                echo 'text-blue-700 bg-blue-200'; // màu chữ xanh đậm và nền xanh nhạt
+                                                echo 'text-blue-700 bg-blue-200';
                                                 break;
                                             default:
-                                                echo 'text-gray-500 bg-gray-100'; // mặc định
+                                                echo 'text-gray-500 bg-gray-100';
                                                 break;
                                                      } 
                                         @endphp">
                                     {{ $rank }}
                                 </dd>
                             </dl>
-
-
                         </div>
                     </div>
-                    <a href="{{ route('admin.memberships.index') }}"
-                        class=" inline-flex w-full items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:ring-0 sm:w-auto">
-                        @svg('tabler-arrow-back-up', 'h-5 w-5 text-white me-2')
-                        Quay lại
-                    </a>
-                    
-                    <a href="{{ route('admin.users.show', $membership->user_id) }}"
-                        class=" inline-flex w-full items-center justify-center rounded-lg bg-[#D30A0A] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#AF0808] focus:ring-0 sm:w-auto">
-                        @svg('tabler-user-edit', 'h-5 w-5 text-white me-2')
-                        Thông tin khách hàng
-                    </a>
-
+                    <div class="flex gap-x-2">
+                        <a href="{{ route('admin.memberships.index') }}"
+                            class=" inline-flex w-full items-center justify-center rounded-lg bg-blue-600 px-3 py-2 md:px-5 md:py-2.5 text-xs md:text-sm font-medium text-white hover:bg-blue-800 focus:ring-0 sm:w-auto">
+                            @svg('tabler-arrow-back-up', 'h-5 w-5 text-white me-2')
+                            Quay lại
+                        </a>
+                        <a href="{{ route('admin.users.show', $membership->user_id) }}"
+                            class=" inline-flex w-full items-center justify-center rounded-lg bg-[#D30A0A] px-3 py-2 md:px-5 md:py-2.5 text-xs md:text-sm font-medium text-white hover:bg-[#AF0808] focus:ring-0 sm:w-auto">
+                            @svg('tabler-user-edit', 'h-5 w-5 text-white me-2')
+                            Thông tin khách hàng
+                        </a>
+                    </div>
                 </div>
                 {{-- lịch sử tiêu dùng của khách hàng --}}
-               
                     <div class="lg:flex">
                         <div class="card p-4 md:p-8 w-full min-h-screen">
                             <h3 class="font-semibold text-lg uppercase mb-8">Lịch Sử </h3>
-            
                             {{-- tabs --}}
                             <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 mb-4">
                                 <ul class="flex flex-wrap -mb-px">
@@ -199,7 +194,7 @@
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                                 @for ($i = 0; $i < 5; $i++)
-                                    <div class="product-card p-4 flex items-start items-center justify-between">
+                                    <div class="product-card p-4 flex items-center justify-between">
                                         <div class="text-sm space-y-2">
                                             <p class="font-medium">
                                                 <span class="uppercase me-2">AOHDJRNF</span>
@@ -216,7 +211,6 @@
                             </div>
                         </div>
                     </div>
-                
                 {{-- end lịch sử tiêu dùng của khách hàng --}}
             </div>
         </div>
