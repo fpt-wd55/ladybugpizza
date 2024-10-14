@@ -59,10 +59,11 @@ Route::prefix('/')->group(function () {
     Route::post('/order/{order}/cancel}', [OrderController::class, 'postCancel'])->name('client.order.cancel');
     Route::post('/order/{order}/rate}', [OrderController::class, 'postRate'])->name('client.order.rate');
     Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile.index');
-    Route::post('/profile/update', [ProfileController::class, 'postUpdate'])->name('client.profile.post-update');
-    Route::post('/profile/change-password', [ProfileController::class, 'postChangePassword'])->name('client.profile.post-change-password');
-    Route::post('/profile/inactive', [ProfileController::class, 'postInactive'])->name('client.profile.post-inactive');
+    Route::put('/profile/update', [ProfileController::class, 'postUpdate'])->name('client.profile.post-update');
+    Route::put('/profile/change-password', [ProfileController::class, 'postChangePassword'])->name('client.profile.post-change-password');
+    Route::put('/profile/inactive', [ProfileController::class, 'postInactive'])->name('client.profile.post-inactive');
     Route::get('/profile/membership', [ProfileController::class, 'membership'])->name('client.profile.membership');
+    Route::get('/profile/membership/history', [ProfileController::class, 'membershipHistory'])->name('client.profile.membership-history');
     Route::get('/profile/address', [ProfileController::class, 'address'])->name('client.profile.address');
     Route::get('/profile/address/add', [ProfileController::class, 'addLocation'])->name('client.profile.add-location');
     Route::post('/profile/address', [ProfileController::class, 'storeLocation'])->name('client.profile.post-location');
@@ -108,9 +109,13 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     // User
     Route::resource('/users', UserController::class);
     Route::resource('/addresses', AddressController::class);
-    Route::resource('/products', AdminProductController::class);
     Route::resource('/orders', AdminOrderController::class);
     Route::resource('/carts', AdminCartController::class);
+    // Product
+    Route::resource('/products', AdminProductController::class);
+    Route::get('/trash-products', [AdminProductController::class, 'trashProduct'])->name('trash-products');
+    Route::post('/restore-product/{id}', [AdminProductController::class, 'restore'])->name('restore-product');
+    Route::delete('/delete-product/{id}', [AdminProductController::class, 'forceDelete'])->name('delete-product');
     // Attribute
     Route::resource('/attributes', AttributeController::class);
     Route::get('/trash-attributes', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');
@@ -150,4 +155,4 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
 });
 
 // Cai nay dung chung luon
-Route::get('/invoices/{slug}', [InvoiceController::class, 'show'])->name('invoices.show');
+Route::get('/invoices/{invoiceNumber}', [InvoiceController::class, 'show'])->name('invoices.show');

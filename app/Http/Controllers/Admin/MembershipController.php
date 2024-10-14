@@ -53,10 +53,10 @@ class MembershipController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Membership $membership) {}
+    public function show(Membership $membership)
+    {
+
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -83,9 +83,13 @@ class MembershipController extends Controller
             // Nếu không có rank tiếp theo (đang ở rank cao nhất)
             $progress = 100;
         }
+
+
         // 5. Lấy thông tin rank hiện tại
         $img = $currentRank->icon;
         $rank = $currentRank->name;
+
+        // Trả về view với dữ liệu của thành viên, rank, và progress
         return view('admins.memberships.edit', compact('membership', 'progress', 'img', 'rank'));
     }
 

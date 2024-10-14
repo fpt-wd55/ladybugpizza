@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Invoice;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -13,7 +15,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::latest('id')->paginate(10);
+        $invoices = Invoice::all();
+        return view('admins.order.index',compact('orders','invoices'));
     }
 
     /**
@@ -31,13 +35,17 @@ class OrderController extends Controller
     {
         //
     }
-
+    public function invoices(){
+        $invoices = Invoice::all();
+        return view('admins.order.detail',compact('invoices'));
+    }
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        $orders = Order::find($id);
+        return view('admins.order.detail',compact('orders'));
     }
 
     /**
