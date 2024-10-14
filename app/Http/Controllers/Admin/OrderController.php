@@ -13,12 +13,26 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::latest('id')->paginate(10);
+        $status = $request->get('status'); // Lấy trạng thái từ query parameter
+
+        if($status){
+            $orders = Order::when($status, function ($query, $status) {
+                return $query->whereHas('orderStatus', function ($q) use ($status) {
+                    $q->where('name', $status);
+                });
+            })->latest('id')->paginate(10);
+        }else{
+            // Query dựa theo trạng thái, nếu không có thì lấy tất cả đơn hàng
+            $orders = Order::latest('id')->paginate(10);
+        }
+
         $invoices = Invoice::all();
-        return view('admins.order.index',compact('orders','invoices'));
+        return view('admins.order.index', compact('orders','invoices'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.

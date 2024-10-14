@@ -1,48 +1,88 @@
 @extends('layouts.admin')
-@section('title', 'Danh sách mã giảm giá')
+@section('title', 'Danh sách đơn hàng')
 
 @section('content')
-{{Breadcrumbs::render('admin.orders.index')}}
-    <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
-        <div class="overflow-x-auto ">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-gray-700 uppercase bg-gray-50">
-                    <tr>
-                        <th scope="col" class="px-4 py-3">STT</th>
-                        <th scope="col" class="px-4 py-3">Tên người dùng</th>
-                        <th scope="col" class="px-4 py-3">Địa chỉ</th>
-                        <th scope="col" class="px-4 py-3">Tổng số tiền</th>
-                        <th scope="col" class="px-4 py-3">Trạng thái</th>
-                        <th scope="col" class="px-4 py-3">
-                            <span class="sr-only">Hành động</span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($orders as $order)
-                        <tr class="border-b hover:bg-gray-100">
-                            <!-- Tính toán STT dựa trên trang hiện tại -->
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
-                                {{ ($orders->currentPage() - 1) * $orders->perPage() + $loop->iteration }}</td>
-                            </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $order->user->fullname }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
-                                <p>{{ $order->address->detail_address }}</p>
-                                <p>{{ $order->address->ward .', '.$order->address->district . ', '.$order->address->province }}</p>
-                            </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{number_format( $order->amount) }}đ</td>
-                            <td class="px-4 py-2 whitespace-nowrap">
-                                    <button class="px-4 py-2 text-white font-semibold w-32 rounded-xl
-                                    {{
-                                    $order->orderStatus->name === 'Cho xác nhận' ? 'bg-yellow-500 hover:bg-yellow-600' :
-                                    ($order->orderStatus->name === 'Đã xác nhận' ? 'bg-blue-500 hover:bg-blue-600' :
-                                    ($order->orderStatus->name === 'Đang giao hàng' ? 'bg-orange-500 hover:bg-orange-600' :
-                                    ($order->orderStatus->name === 'Đã giao hàng' ? 'bg-green-600 hover:bg-green-700' :
-                                    ($order->orderStatus->name === 'Đã hủy' ? 'bg-red-600 hover:bg-red-700' : 'bg-gray-500 hover:bg-gray-600'))))
-                                    }}">
-                                    {{ $order->orderStatus->name }}
-                                </button>
-                            </td>
+{{ Breadcrumbs::render('admin.orders.index') }}
+
+<div class="mt-5 bg-white shadow sm:rounded-lg overflow-hidden">
+    <div class="p-4 border-b bg-gray-50">
+        <!-- Các tab điều hướng -->
+        <ul class="flex space-x-4">
+            <li>
+                <a href="{{ route('admin.orders.index') }}"
+                    class="px-4 py-2 border-b-2 {{ request('status') ? 'border-transparent text-gray-500' : 'border-red-600 font-semibold text-red-600' }}">
+                    Tất cả
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.orders.index', ['status' => 'Đã giao hàng']) }}"
+                    class="px-4 py-2 border-b-2 {{ request('status') === 'Đã giao hàng' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
+                    Đã giao hàng
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.orders.index', ['status' => 'Cho xác nhận']) }}"
+                    class="px-4 py-2 border-b-2 {{ request('status') === 'Cho xác nhận' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
+                    Chờ xác nhận
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.orders.index', ['status' => 'Đã xác nhận']) }}"
+                    class="px-4 py-2 border-b-2 {{ request('status') === 'Đã xác nhận' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
+                    Đã xác nhận
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.orders.index', ['status' => 'Đang giao hàng']) }}"
+                    class="px-4 py-2 border-b-2 {{ request('status') === 'Đang giao hàng' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
+                    Đang giao hàng
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.orders.index', ['status' => 'Đã hủy']) }}"
+                    class="px-4 py-2 border-b-2 {{ request('status') === 'Đã hủy' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
+                    Đã hủy
+                </a>
+            </li>
+        </ul>
+    </div>
+    {{--  --}}
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-500">
+            <thead class="bg-gray-50 text-gray-700 uppercase">
+                <tr>
+                    <th class="px-4 py-3">STT</th>
+                    <th class="px-4 py-3">Tên người dùng</th>
+                    <th class="px-4 py-3">Địa chỉ</th>
+                    <th class="px-4 py-3">Tổng số tiền</th>
+                    <th class="px-4 py-3">Trạng thái</th>
+                    <th scope="col" class="px-4 py-3">
+                        <span class="sr-only">Hành động</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($orders as $order)
+                    <tr class="border-b hover:bg-gray-100">
+                        <td class="px-4 py-2">{{ ($orders->currentPage() - 1) * $orders->perPage() + $loop->iteration }}</td>
+                        <td class="px-4 py-2">{{ $order->user->fullname }}</td>
+                        <td class="px-4 py-2">
+                            <p>{{ $order->address->detail_address }}</p>
+                            <p>{{ $order->address->ward }}, {{ $order->address->district }}, {{ $order->address->province }}</p>
+                        </td>
+                        <td class="px-4 py-2">{{ number_format($order->amount) }}đ</td>
+                        <td class="px-4 py-2">
+                            <button class="px-4 py-2 text-white rounded-xl w-36
+                                {{
+                                    $order->orderStatus->name === 'Cho xác nhận' ? 'bg-yellow-500' :
+                                    ($order->orderStatus->name === 'Đã xác nhận' ? 'bg-blue-500' :
+                                    ($order->orderStatus->name === 'Đang giao hàng' ? 'bg-orange-500' :
+                                    ($order->orderStatus->name === 'Đã giao hàng' ? 'bg-green-600' :
+                                    ($order->orderStatus->name === 'Đã hủy' ? 'bg-slate-600' : 'bg-gray-500'))))
+                                }}">
+                                {{ $order->orderStatus->name }}
+                            </button>
+                        </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $order->id }}" data-dropdown-toggle="{{ $order->id }}-dropdown"
                                     class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
