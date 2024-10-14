@@ -32,11 +32,10 @@
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="px-4 py-3">Sản phẩm</th>
-                        <th scope="col" class="px-4 py-3">Giá</th>
-                        <th scope="col" class="px-4 py-3">Khuyến mãi</th>
-                        <th scope="col" class="px-4 py-3">Số lượng</th>
-                        <th scope="col" class="px-4 py-3">Danh mục</th>
-                        <th scope="col" class="px-4 py-3">Trạng thái</th>
+                        <th scope="col" class="px-4 py-3 text-center">Giá</th>
+                        <th scope="col" class="px-4 py-3 text-center">Số lượng</th>
+                        <th scope="col" class="px-4 py-3 text-center">Danh mục</th>
+                        <th scope="col" class="px-4 py-3 text-center">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Hành động</span>
                         </th>
@@ -48,26 +47,34 @@
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap ">
                                 <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
                                     class="w-auto h-8 mr-3 rounded">
-                                {{ $product->name }}
+                                <div class="grid grid-flow-row">
+                                    <span class="text-sm">{{ $product->name }}</span>
+                                    <div class="flex items-center gap-1">
+                                        <p>{{ round($product->avg_rating, 1) }}</p>
+                                        <div class="flex items-center gap-1">
+                                            @svg('tabler-star-filled', 'icon-sm text-red-500')
+                                        </div>
+                                        <p>({{ $product->total_rating }})</p>
+                                    </div>
+                                </div>
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ number_format($product->price) }}đ
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
+                                <div class="grid grid-flow-row">
+                                    <span class="text-sm line-through">{{ number_format($product->price) }}đ</span>
+                                    <span class="text-sm">
+                                        {{ number_format($product->discount_price) }}đ
+                                    </span>
+                                </div>
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                {{ number_format($product->discount_price) }}đ
-                            </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
                                 {{ $product->quantity }}
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
                                 {{ $product->category->name }}
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                <div class="flex items-center">
-                                    <div
-                                        class="inline-block indicator {{ $product->status == 1 ? 'bg-green-700' : 'bg-red-700' }}">
-                                    </div>
-                                    {{ $product->status == 1 ? 'Hoạt động' : 'Khóa' }}
-                                </div>
+                            <td
+                                class="px-4 py-2 text-gray-900 whitespace-nowrap text-center font-medium {{ $product->status == 1 ? 'text-green-700' : 'text-red-700' }}">
+                                {{ $product->status == 1 ? 'Hoạt động' : 'Khóa' }}
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $product->sku }}" data-dropdown-toggle="{{ $product->sku }}-dropdown"

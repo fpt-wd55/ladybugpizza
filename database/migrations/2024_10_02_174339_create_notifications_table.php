@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('message');
             $table->text('type')->default('info');
-            $table->tinyInteger('is_read')->default(0)->comment('0: unread; 1: read');
+            $table->integer('is_read')->default(0)->comment('0: unread; 1: read');
             $table->timestamps();
         });
     }
