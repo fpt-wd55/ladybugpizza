@@ -52,7 +52,13 @@
                                     <div class="flex items-center gap-1">
                                         <p>{{ round($product->avg_rating, 1) }}</p>
                                         <div class="flex items-center gap-1">
-                                            @svg('tabler-star-filled', 'icon-sm text-red-500')
+                                            @for ($i = 0; $i < 5; $i++)
+                                                @if ($i < $product->avg_rating)
+                                                    @svg('tabler-star-filled', 'icon-sm text-red-500')
+                                                @else
+                                                    @svg('tabler-star', 'icon-sm text-red-500')
+                                                @endif
+                                            @endfor
                                         </div>
                                         <p>({{ $product->total_rating }})</p>
                                     </div>
@@ -67,7 +73,7 @@
                                 </div>
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
-                                {{ $product->quantity }}
+                                {{ $product->quantity == 0 ? 'Hết hàng' : $product->quantity }}
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
                                 {{ $product->category->name }}
