@@ -18,7 +18,6 @@ class AttributeSeeder extends Seeder
     public function run(): void
     {
         $now = Carbon::now();
-        $categories = Category::all();
         $attibutes = [
             'Loại đế' => [
                 'Dày',
@@ -43,7 +42,7 @@ class AttributeSeeder extends Seeder
             $attribute = Attribute::create([
                 'name' => $name,
                 'status' => 1,
-                'category_id' => $categories->random()->id,
+                'category_id' => rand(1, 7),
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
