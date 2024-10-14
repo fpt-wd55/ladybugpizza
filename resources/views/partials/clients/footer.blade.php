@@ -1,37 +1,41 @@
-<footer class="border-t p-4 md:px-8 lg:px-24 md:py-4 mb-16 lg:mb-0">
+@php
+    $categories = \App\Models\Category::all();
+@endphp
 
-    <div class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center">
-        <div class="flex flex-col items-center justify-center md:items-start">
-            <img loading="lazy" class="w-20 " src="{{ asset('storage/uploads/logos/logo-fill.png') }}" alt="logo">
-            <p class="uppercase font-semibold mb-4 text-sm">Kết nối với chúng tôi</p>
-            <div class="flex items-center gap-4">
-                <a href="#" target="_blank" class="hover:text-red-500 transition">@svg('tabler-brand-facebook')</a>
-                <a href="#" target="_blank" class="hover:text-red-500 transition">@svg('tabler-brand-instagram')</a>
-                <a href="#" target="_blank" class="hover:text-red-500 transition">@svg('tabler-brand-twitter')</a>
-            </div>
+<footer class="mb-16 border-t p-4 md:px-8 md:py-4 lg:mb-0 lg:px-24">
+
+    <div class="grid grid-cols-1 items-start gap-8 py-4 md:grid-cols-2 lg:grid-cols-3">
+        <div class="flex flex-col items-start justify-center">
+            <img alt="logo" class="mb-4 w-16" loading="lazy" src="{{ asset('storage/uploads/logo/logo.svg') }}">
+            <p class="text-lg font-semibold">Ladybug Pizza</p>
         </div>
         <div>
             <ul class="space-y-4">
-                <li><a href="{{ route('client.home') }}"
-                        class="uppercase hover:text-red-500 transition text-sm font-semibold">trang chủ</a></li>
-                <li><a href="{{ route('client.product.menu') }}"
-                        class="uppercase hover:text-red-500 transition text-sm font-semibold">thực đơn</a></li>
-                <li><a href="{{ route('client.about-us') }}"
-                        class="uppercase hover:text-red-500 transition text-sm font-semibold">về chúng tôi</a></li>
+                <li><a class="text-sm font-medium uppercase transition hover:text-red-500" href="{{ route('client.product.menu') }}">THỰC ĐƠN</a></li>
+                <div class="grid grid-cols-2 gap-4">
+                    @foreach ($categories as $category)
+                        <li><a class="text-sm transition hover:text-red-500" href="{{ route('client.product.menu') . '#' . $category->slug }}">{{ $category->name }}</a></li>
+                    @endforeach
+                </div>
             </ul>
         </div>
         <div>
             <ul class="space-y-4">
-                <li><a href="{{ route('client.contact') }}"
-                        class="uppercase hover:text-red-500 transition text-sm font-semibold">liên hệ</a>
-                </li>
-                <li><a href="{{ route('client.manual') }}"
-                        class="uppercase hover:text-red-500 transition text-sm font-semibold">hướng dẫn mua hàng</a>
-                </li>
-                <li><a href="{{ route('client.policies') }}"
-                        class="uppercase hover:text-red-500 transition text-sm font-semibold">chính sách và điều
-                        khoản</a></li>
+                <li><a class="text-sm font-medium uppercase transition hover:text-red-500" href="{{ route('client.product.menu') }}">GIỚI THIỆU</a></li>
+                <li><a class="text-sm transition hover:text-red-500" href="{{ route('client.about-us') }}">Về chúng tôi</a></li>
+                <li><a class="text-sm transition hover:text-red-500" href="{{ route('client.contact') }}">Liên hệ</a></li>
+                <li><a class="text-sm transition hover:text-red-500" href="{{ route('client.manual') }}">Hướng dẫn mua hàng</a></li>
+                <li><a class="text-sm transition hover:text-red-500" href="{{ route('client.policies') }}">Chính sách và điều khoản</a></li>
             </ul>
+        </div>
+    </div>
+    <hr>
+    <div class="flex items-center justify-between pt-4">
+        <p class="text-center text-sm">© 2021 Ladybug Pizza. All rights reserved.</p>
+        <div class="flex items-center gap-4">
+            <a class="transition hover:text-red-500" href="#" target="_blank">@svg('tabler-brand-facebook', 'icon-md')</a>
+            <a class="transition hover:text-red-500" href="#" target="_blank">@svg('tabler-brand-instagram', 'icon-md')</a>
+            <a class="transition hover:text-red-500" href="#" target="_blank">@svg('tabler-brand-twitter', 'icon-md')</a>
         </div>
     </div>
 </footer>

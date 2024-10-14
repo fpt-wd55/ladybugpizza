@@ -31,6 +31,25 @@ class MembershipController extends Controller
             // Gán rank cho mỗi membership
             $membership->rank_name = $currentRank->name;
             $membership->rank_img = $currentRank->icon;
+        } 
+        // Gán màu cho từng rank
+        foreach ($memberships as $membership) {
+            switch ($membership->rank_name) {
+                case 'Đồng':
+                    $membership->rank_color = 'text-[#C67746]';
+                    break;
+                case 'Bạc':
+                    $membership->rank_color = 'text-gray-500';
+                    break;
+                case 'Vàng':
+                    $membership->rank_color = 'text-yellow-300';
+                    break;
+                case 'Kim Cương':
+                    $membership->rank_color = 'text-blue-400';
+                    break;
+                default:
+                    $membership->rank_color = 'text-gray-100';
+            }
         }
         // Trả về view với dữ liệu memberships
         return view('admins.memberships.index', compact('memberships'));
@@ -53,9 +72,6 @@ class MembershipController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Membership $membership) {}
 
     /**
@@ -83,9 +99,13 @@ class MembershipController extends Controller
             // Nếu không có rank tiếp theo (đang ở rank cao nhất)
             $progress = 100;
         }
+
+
         // 5. Lấy thông tin rank hiện tại
         $img = $currentRank->icon;
         $rank = $currentRank->name;
+
+        // Trả về view với dữ liệu của thành viên, rank, và progress
         return view('admins.memberships.edit', compact('membership', 'progress', 'img', 'rank'));
     }
 

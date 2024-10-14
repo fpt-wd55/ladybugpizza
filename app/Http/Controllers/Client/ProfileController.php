@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressRequest;
-use App\Http\Requests\ContactRequest;
-use App\Models\User;
+use App\Http\Requests\ChangeRequest;
+use App\Http\Requests\InactiveRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -14,44 +15,62 @@ class ProfileController extends Controller
 {
 	public function index()
 	{
-		$users = Auth::user();
-		return view('clients.profile.index', compact('users'));
-	} 
+		$user = Auth::user();
+		return view('clients.profile.index', compact('user'));
+	}
 	
-	public function postUpdate(Request $request, $id)
+	public function postUpdate(UpdateUserRequest $request)
 	{
-		$request->validate([
-			'fullname' => 'required|string|max:255',
-			'email' => 'required|email|max:255',
-			'phone' => 'nullable|string|max:20',
-			'gender' => 'nullable|string',
-			'date_of_birth' => 'nullable|date',
-		]);
-
-		$user = User::findOrFail($id); // Tìm người dùng theo ID
-
-		// Cập nhật thông tin người dùng
+		$user = Auth::user();
+		if($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $name = $file->getClientOriginalName();
+            $file->move('storage/uploads/avatars', $name);
+            $user['avatar'] = $name;
+        }
+    
+		$gender = null;
+		if ($request->gender == 'male') {
+			$gender = 1;
+		} elseif ($request->gender == 'female') {
+			$gender = 2;
+		} elseif ($request->gender == 'other') {
+			$gender = 3;
+		}
 		$user->fullname = $request->fullname;
 		$user->email = $request->email;
 		$user->phone = $request->phone;
 		$user->date_of_birth = $request->date_of_birth;
+		$user->gender = $gender;
 
-		// Lưu thông tin
 		$user->save();
-
 		return redirect()->route('client.profile.index');
 	}
 
-	public function postChangePassword(Request $request)
+	public function postChangePassword(ChangeRequest $request)
 	{
-		// Xác thực dữ liệu
-		$request->validate([
-			'current_password' => 'required',
-			'new_password' => 'required|min:8|confirmed', // 'confirmed' sẽ kiểm tra mật khẩu khớp với new_password_confirmation
-		]);
+		$user = Auth::user();
+
+		if (!Hash::check($request->current_password, $user->password)) {
+			return back()->withErrors(['current_password' => 'Mật khẩu hiện tại không đúng']);
+		}
+
+		$user->password = Hash::make($request->new_password);
+		$user->save();
+		return redirect()->back()->with('success', 'Mật khẩu đã được thay đổi thành công.');
 	}
 
-	public function postInactive(Request $request) {}
+	public function postInactive(InactiveRequest $request)
+	{
+		$user = Auth::user();
+		if (!Hash::check($request->input('password'), $user->password)) {
+			return redirect()->back()->withErrors(['password' => 'Mật khẩu không chính xác']);
+		}
+		$user->status = 2;
+		$user->save();
+		Auth::logout();
+		return redirect('/');
+	}
 
 	public function membership()
 	{
@@ -134,7 +153,7 @@ class ProfileController extends Controller
 				'answer' => 'Một khi bạn đã sử dụng điểm để đổi voucher, điểm đó sẽ không được hoàn lại.'
 			]
 		];
-		return view('clients.profile.membership', [
+		return view('clients.profile.membership.index', [
 			'rank' => $currentRank['rank'],
 			'points' => $points,
 			'nextPoints' => $nextPoints,
@@ -143,6 +162,10 @@ class ProfileController extends Controller
 			'img' => $currentRank['img'],
 			'faqs' => $faqs
 		]);
+	}
+
+	public function membershipHistory() {
+		return view('clients.profile.membership.history');
 	}
 
 
@@ -160,142 +183,140 @@ class ProfileController extends Controller
 	{
 		return view('clients.profile.promotion');
 	}
-    public function addLocation() {
-        return view('clients.profile.address.add');
-    }
-
-	public function updateLocation(Request $request)
+	public function addLocation()
 	{
+		return view('clients.profile.address.add');
 	}
+
+	public function updateLocation(Request $request) {}
 
 	public function storeLocation(AddressRequest $request)
 	{
-        $data = $request->all();
+		$data = $request->all();
 
-        $addressData = [
-            'user_id' => Auth()->user()->id,
-            'phone' => Auth()->user()->phone,
-            'provinceCode' => $data['province'],
-            'districtCode' => $data['district'],
-            'wardCode' => $data['ward'],
-            'detail_address' => $data['address'],
-            'title' => $data['title'],
-        ];
+		$addressData = [
+			'user_id' => Auth()->user()->id,
+			'phone' => Auth()->user()->phone,
+			'provinceCode' => $data['province'],
+			'districtCode' => $data['district'],
+			'wardCode' => $data['ward'],
+			'detail_address' => $data['address'],
+			'title' => $data['title'],
+		];
 
-        $addressNames = $this->getAddressNamesByCodes(
-            $addressData['provinceCode'],
-            $addressData['districtCode'],
-            $addressData['wardCode']
-        );
+		$addressNames = $this->getAddressNamesByCodes(
+			$addressData['provinceCode'],
+			$addressData['districtCode'],
+			$addressData['wardCode']
+		);
 
-        if (is_null($addressNames['province']) || is_null($addressNames['district']) || is_null($addressNames['ward'])) {
-            return back()->withErrors(['address' => 'Không thể tìm thấy tên cho mã địa chỉ.']);
-        }
+		if (is_null($addressNames['province']) || is_null($addressNames['district']) || is_null($addressNames['ward'])) {
+			return back()->withErrors(['address' => 'Không thể tìm thấy tên cho mã địa chỉ.']);
+		}
 
-        $addressData['province'] = $addressNames['province'];
-        $addressData['district'] = $addressNames['district'];
-        $addressData['ward'] = $addressNames['ward'];
+		$addressData['province'] = $addressNames['province'];
+		$addressData['district'] = $addressNames['district'];
+		$addressData['ward'] = $addressNames['ward'];
 
-        $fullAddress = implode(', ', [
-            $addressData['detail_address'],
-            $addressData['ward'],
-            $addressData['district'],
-            $addressData['province'],
-        ]);
+		$fullAddress = implode(', ', [
+			$addressData['detail_address'],
+			$addressData['ward'],
+			$addressData['district'],
+			$addressData['province'],
+		]);
 
-        [$lng, $lat] = $this->convertAddressToCoordinates($fullAddress);
+		[$lng, $lat] = $this->convertAddressToCoordinates($fullAddress);
 
-        $addressData['lng'] = $lng;
-        $addressData['lat'] = $lat;
-        Address::create($addressData);
+		$addressData['lng'] = $lng;
+		$addressData['lat'] = $lat;
+		Address::create($addressData);
 
-        return redirect()->route('clients.profile.address')->with('success', 'Thêm địa chỉ thành công');
+		return redirect()->route('clients.profile.address')->with('success', 'Thêm địa chỉ thành công');
 	}
 
-    private function getAddressNamesByCodes($provinceCode, $districtCode, $wardCode)
-        {
-            $response = file_get_contents("https://provinces.open-api.vn/api/");
-            $provinces = json_decode($response, true);
-            $provinceName = null;
-
-            foreach ($provinces as $province) {
-                if ($province['code'] == $provinceCode) {
-                    $provinceName = $province['name'];
-                    break;
-                }
-            }
-
-            $response = file_get_contents("https://provinces.open-api.vn/api/p/{$provinceCode}?depth=2");
-            $districts = json_decode($response, true);
-
-            if (!is_array($districts)) {
-                return ['province' => $provinceName, 'district' => null, 'ward' => null];
-            }
-
-            $districtName = null;
-
-            if (isset($districts['districts']) && is_array($districts['districts'])) {
-                foreach ($districts['districts'] as $district) {
-                    if (isset($district['code']) && $district['code'] == $districtCode) {
-                        $districtName = $district['name'];
-                        break;
-                    }
-                }
-            }
-
-            $response = file_get_contents("https://provinces.open-api.vn/api/d/{$districtCode}?depth=2");
-            $wards = json_decode($response, true);
-
-            if (!is_array($wards)) {
-                return ['province' => $provinceName, 'district' => $districtName, 'ward' => null];
-            }
-
-            $wardName = null;
-
-            if (isset($wards['wards']) && is_array($wards['wards'])) {
-                foreach ($wards['wards'] as $ward) {
-                    if (isset($ward['code']) && $ward['code'] == $wardCode) {
-                        $wardName = $ward['name'];
-                        break;
-                    }
-                }
-            }
-
-            return [
-                'province' => $provinceName,
-                'district' => $districtName,
-                'ward' => $wardName,
-            ];
-        }
-
-
-        protected function convertAddressToCoordinates($fullAddress) {
-            $client = new Client();
-            try {
-                $response = $client->get('https://nominatim.openstreetmap.org/search', [
-                    'query' => [
-                        'q' => $fullAddress,
-                        'format' => 'json',
-                    ],
-                    'headers' => [
-                        'User-Agent' => 'YourAppName/1.0 (http://yourwebsite.com)',
-                    ],
-                ]);
-            } catch (\Exception $e) {
-                dd($e->getMessage());
-            }
-
-            $data = json_decode($response->getBody(), true);
-
-            if (isset($data[0])) {
-                $location = $data[0];
-                return [$location['lon'], $location['lat']];
-            }
-
-            return [null, null];
-        }
-
-	public function destroyLocation(Request $request)
+	private function getAddressNamesByCodes($provinceCode, $districtCode, $wardCode)
 	{
+		$response = file_get_contents("https://provinces.open-api.vn/api/");
+		$provinces = json_decode($response, true);
+		$provinceName = null;
+
+		foreach ($provinces as $province) {
+			if ($province['code'] == $provinceCode) {
+				$provinceName = $province['name'];
+				break;
+			}
+		}
+
+		$response = file_get_contents("https://provinces.open-api.vn/api/p/{$provinceCode}?depth=2");
+		$districts = json_decode($response, true);
+
+		if (!is_array($districts)) {
+			return ['province' => $provinceName, 'district' => null, 'ward' => null];
+		}
+
+		$districtName = null;
+
+		if (isset($districts['districts']) && is_array($districts['districts'])) {
+			foreach ($districts['districts'] as $district) {
+				if (isset($district['code']) && $district['code'] == $districtCode) {
+					$districtName = $district['name'];
+					break;
+				}
+			}
+		}
+
+		$response = file_get_contents("https://provinces.open-api.vn/api/d/{$districtCode}?depth=2");
+		$wards = json_decode($response, true);
+
+		if (!is_array($wards)) {
+			return ['province' => $provinceName, 'district' => $districtName, 'ward' => null];
+		}
+
+		$wardName = null;
+
+		if (isset($wards['wards']) && is_array($wards['wards'])) {
+			foreach ($wards['wards'] as $ward) {
+				if (isset($ward['code']) && $ward['code'] == $wardCode) {
+					$wardName = $ward['name'];
+					break;
+				}
+			}
+		}
+
+		return [
+			'province' => $provinceName,
+			'district' => $districtName,
+			'ward' => $wardName,
+		];
 	}
+
+
+	protected function convertAddressToCoordinates($fullAddress)
+	{
+		$client = new Client();
+		try {
+			$response = $client->get('https://nominatim.openstreetmap.org/search', [
+				'query' => [
+					'q' => $fullAddress,
+					'format' => 'json',
+				],
+				'headers' => [
+					'User-Agent' => 'YourAppName/1.0 (http://yourwebsite.com)',
+				],
+			]);
+		} catch (\Exception $e) {
+			dd($e->getMessage());
+		}
+
+		$data = json_decode($response->getBody(), true);
+
+		if (isset($data[0])) {
+			$location = $data[0];
+			return [$location['lon'], $location['lat']];
+		}
+
+		return [null, null];
+	}
+
+	public function destroyLocation(Request $request) {}
 }

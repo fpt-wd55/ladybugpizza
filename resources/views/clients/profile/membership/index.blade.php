@@ -3,23 +3,29 @@
 @section('title', 'Điểm hội viên')
 
 @section('content')
-    <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
+    <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
         <div class="lg:flex">
             @include('clients.profile.sidebar')
 
             <div>
-                <div class="card p-4 md:p-8 w-full mb-8">
-                    <h3 class="font-semibold uppercase mb-8">Điểm hội viên</h3>
+                <div class="card mb-8 w-full p-4 md:p-8">
+                    <div class="flex items-start justify-between">
+                        <h3 class="mb-8 font-semibold uppercase">Điểm hội viên</h3>
+                        <a class="button-red" href="{{ route('client.profile.membership-history') }}">
+                            @svg('tabler-history', 'icon-md md:me-2')
+                            <span class="hidden md:inline-flex">Lịch sử sử dụng điểm</span>
+                        </a>
+                    </div>
                     {{-- Điểm hội viên --}}
-                    <div class="flex flex-col md:flex-row items-center gap-8 mb-8">
-                        <img loading="lazy" src="{{ asset($img) }}" alt="" class="img-md">
+                    <div class="mb-8 flex flex-col items-center gap-8 md:flex-row">
+                        <img alt="" class="img-md" loading="lazy" src="{{ asset($img) }}">
                         <div class="w-full">
-                            <div class="flex items-center justify-between mb-1">
-                                <p class="uppercase font-semibold text-yellow-300">{{ $rank }}</p>
+                            <div class="mb-1 flex items-center justify-between">
+                                <p class="font-semibold uppercase text-yellow-300">{{ $rank }}</p>
                                 <p class="text-sm font-medium">{{ $points }} Điểm</p>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
-                                <div class="bg-red-500 h-2 rounded-full" style="width: {{ $progress }}%;"></div>
+                            <div class="mb-2 h-2 w-full rounded-full bg-gray-200">
+                                <div class="h-2 rounded-full bg-red-500" style="width: {{ $progress ?? '0' }}%;"></div>
                             </div>
                             <p class="text-sm">Tích thêm {{ $nextPoints }} điểm nữa để nâng cấp lên thành viên
                                 {{ $nextRank }}
@@ -33,16 +39,15 @@
                     <div class="card p-4 md:p-8">
                         <p class="title">Các câu hỏi hường gặp (FAQ)</p>
                         @foreach ($faqs as $index => $faq)
-                            <div class="border-b border-gray-300 mb-4">
-                                <button onclick="toggleAccordion({{ $index }})"
-                                    class="w-full flex justify-between items-center py-4">
-                                    <span class="font-normal text-sm text-left">{{ $index + 1 }}.
+                            <div class="mb-4 border-b border-gray-300">
+                                <button class="flex w-full items-center justify-between py-4" onclick="toggleAccordion({{ $index }})">
+                                    <span class="text-left text-sm font-normal">{{ $index + 1 }}.
                                         {{ $faq['question'] }}</span>
-                                    <span id="icon-1" class="transition">
+                                    <span class="transition" id="icon-1">
                                         @svg('tabler-plus', 'icon-sm')
                                     </span>
                                 </button>
-                                <div id="content-{{ $index }}" class="max-h-0 overflow-hidden transition">
+                                <div class="max-h-0 overflow-hidden transition" id="content-{{ $index }}">
                                     <div class="pb-4 text-sm">
                                         {{ $faq['answer'] }}
                                     </div>
