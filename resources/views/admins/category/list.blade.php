@@ -23,12 +23,11 @@
         </div>
 
         <div class="overflow-x-auto">
-            <table class="w-full text-sm text-left text-gray-500">
+            <table class="w-full text-sm text-left ">
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="px-4 py-3">STT</th>
                         <th scope="col" class="px-4 py-3">Tên danh mục</th>
-                        <th scope="col" class="px-4 py-3">Slug</th>
                         <th scope="col" class="px-4 py-3">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Hành động</span>
@@ -43,8 +42,6 @@
                                 {{ ($category->currentPage() - 1) * $category->perPage() + $key + 1 }}
                             </th>
                             <td class="px-4 py-3">{{ $item->name }}</td>
-                            <td class="px-4 py-3">{{ $item->slug }}</td>
-
                             <td class="px-4 py-3">
 
                                 <div class="flex items-center">

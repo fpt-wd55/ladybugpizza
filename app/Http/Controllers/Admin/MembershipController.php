@@ -53,9 +53,6 @@ class MembershipController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Membership $membership)
     {
 
@@ -87,6 +84,7 @@ class MembershipController extends Controller
             $progress = 100;
         }
 
+
         // 5. Lấy thông tin rank hiện tại
         $img = $currentRank->icon;
         $rank = $currentRank->name;
@@ -115,11 +113,8 @@ class MembershipController extends Controller
 
     public function updateStatus(Request $request, Membership $membership)
     {
-
         $membership->status = $request->status ? 1 : 2;
         $membership->save();
-
         return redirect()->back()->with('success', 'Cập nhật trạng thái thành công!');
     }
-
 }
