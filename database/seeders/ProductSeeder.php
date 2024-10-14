@@ -132,7 +132,7 @@ class ProductSeeder extends Seeder
                     'discount_price' => $price - rand(50000, 10000),
                     'quantity' => rand(10, 100),
                     'sku' => Str::random(10),
-                    'status' => rand(1, 4),
+                    'status' => rand(1, 2),
                     'is_featured' => rand(0, 1),
                     'avg_rating' => rand(1, 5),
                     'total_rating' => rand(0, 100),
