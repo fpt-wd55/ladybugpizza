@@ -32,7 +32,6 @@ class PageController extends Controller
     public function contact()
     {
         $user = auth()->user();
-
         return view('clients.contact', compact('user'));
     }
 
