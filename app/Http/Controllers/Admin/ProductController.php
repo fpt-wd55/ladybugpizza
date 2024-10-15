@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use Auth;
 use Illuminate\Http\Request;
+use App\Models\Favorite;
 
 use function Ramsey\Uuid\v1;
 
@@ -32,6 +34,17 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    public function store(Request $request)
+    {
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Product $product)
+    {
+        return view('admins.product.detail', compact('product'));
+}
     public function store(Request $request) {
         dd($request->all());
     }
@@ -63,13 +76,14 @@ class ProductController extends Controller
     /**
      * Display a listing of the trashed resources.
      */
-    public function trash() {}
+    public function trash()
+    {
+    }
 
     /**
      * Restore the specified resource from storage.
      */
     public function restore($id)
-
     {
         //
     }
@@ -80,5 +94,12 @@ class ProductController extends Controller
     public function forceDelete($id)
     {
         //
+    }
+    public function favorites()
+    {
+        $favorites = Favorite::where('user_id', Auth::id())
+            ->with('product')
+            ->get();
+        return view('partials.clients', compact('favorites'));
     }
 }

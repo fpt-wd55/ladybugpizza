@@ -151,7 +151,7 @@
 @php
     use App\Models\Favorite;
     $favorites = Favorite::where('user_id', Auth::id())->with('product')->get();
-@endphp
+@endphp 
 {{-- Favorite Product Modal --}}
 <div aria-hidden="true"
     class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0"
