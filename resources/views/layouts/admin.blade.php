@@ -24,6 +24,19 @@
         rel="stylesheet">
     {{-- ApexCharts Script --}}
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    {{-- TinyMCE --}}
+    <script src="https://cdn.tiny.cloud/1/46tw1u77hj3s6r7nihhrey5e41ssxp7s4zwurwbiyk3ohblk/tinymce/7/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#wysiwygeditor',
+            language: 'vi',
+            menubar: false,
+            statusbar: false,
+            plugins: 'fullscreen lists link',
+            toolbar: 'undo redo | blocks | bold italic underline strikethrough removeformat link | alignleft aligncenter alignright | bullist numlist | fullscreen'
+        });
+    </script>
 </head>
 
 <body class="text-sm">

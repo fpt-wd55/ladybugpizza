@@ -378,3 +378,19 @@ html {
 html {
     @apply no-scrollbar;
 }
+
+.tox-tinymce {
+    border: 0 !important;
+}
+
+.tox-editor-header {
+    box-shadow: none !important;
+}
+.tox-sidebar-wrap:hover {
+    box-shadow: none !important;
+    border: 0 !important;
+}
+
+.tox .tox-edit-area::before {
+    border: 0 !important;
+}
