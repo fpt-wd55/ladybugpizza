@@ -14,7 +14,6 @@ class Membership extends Model
         'user_id',
         'points',
         'rank_id',
-        'status',
         'total_spent',
     ];
 
