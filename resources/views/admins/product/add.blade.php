@@ -5,7 +5,7 @@
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="p-4 mx-auto">
             <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm sản phẩm</h3>
-            <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
                     <div class="sm:col-span-2">
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="sm:col-span-2">
-                        <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                        <div class="grid gap-4 mb-4 sm:grid-cols-3">
                             <div>
                                 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên sản
                                     phẩm</label>
@@ -67,27 +67,6 @@
                                     </p>
                                 @enderror
                             </div>
-                            {{-- <div class="flex items-center">
-                                <label class="inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" name="is_featured" class="sr-only peer" value="1"
-                                        {{ old('is_featured') ? 'checked' : '' }}>
-                                    <div
-                                        class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
-                                    </div>
-                                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Sản phẩm nổi
-                                        bật</span>
-                                </label>
-                                @error('is_featured')
-                                    <p class="mt-2 text-sm text-red-600 ">
-                                        {{ $message }}
-                                    </p>
-                                @enderror
-                            </div> --}}
-                        </div>
-                    </div>
-
-                    <div class="sm:col-span-2">
-                        <div class="grid gap-4 mb-4 sm:grid-cols-3">
                             <div>
                                 <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 ">Danh
                                     mục</label>
@@ -107,6 +86,10 @@
                                     </p>
                                 @enderror
                             </div>
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <div class="grid gap-4 mb-4 sm:grid-cols-3">
                             <div>
                                 <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số
                                     lượng</label>
@@ -185,74 +168,7 @@
                         <label for="description" class="block mb-2 text-sm font-medium text-gray-900 ">Mô tả sản
                             phẩm</label>
                         <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50">
-                            <div class="flex items-center justify-between px-3 py-2 border-b">
-                                <div
-                                    class="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse">
-                                    <div class="flex items-center space-x-1 rtl:space-x-reverse sm:pe-4">
-                                        <button type="button"
-                                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
-                                            @svg('tabler-bold', 'w-4 h-4 text-gray-500 ')
-                                            <span class="sr-only">In đậm</span>
-                                        </button>
-                                        <button type="button"
-                                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
-                                            @svg('tabler-italic', 'w-4 h-4 text-gray-500 ')
-                                            <span class="sr-only">In nghiêng</span>
-                                        </button>
-                                        <button type="button"
-                                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
-                                            @svg('tabler-underline', 'w-4 h-4 text-gray-500 ')
-                                            <span class="sr-only">Gạch chân</span>
-                                        </button>
-                                        <button type="button"
-                                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
-                                            @svg('tabler-strikethrough', 'w-4 h-4 text-gray-500 ')
-                                            <span class="sr-only">Gạch ngang</span>
-                                        </button>
-                                        <button type="button"
-                                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
-                                            @svg('tabler-link', 'w-4 h-4 text-gray-500 ')
-                                            <span class="sr-only">Link</span>
-                                        </button>
-                                    </div>
-                                    <div class="flex items-center space-x-1 rtl:space-x-reverse sm:pe-4">
-                                        <button type="button"
-                                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
-                                            @svg('tabler-parking', 'w-4 h-4 text-gray-500 ')
-                                            <span class="sr-only">P</span>
-                                        </button>
-                                        <button type="button"
-                                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
-                                            @svg('tabler-h-1', 'w-4 h-4 text-gray-500 ')
-                                            <span class="sr-only">H1</span>
-                                        </button>
-                                        <button type="button"
-                                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
-                                            @svg('tabler-h-2', 'w-4 h-4 text-gray-500 ')
-                                            <span class="sr-only">H2</span>
-                                        </button>
-                                        <button type="button"
-                                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
-                                            @svg('tabler-h-3', 'w-4 h-4 text-gray-500 ')
-                                            <span class="sr-only">H3</span>
-                                        </button>
-                                        <button type="button"
-                                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
-                                            @svg('tabler-list', 'w-4 h-4 text-gray-500 ')
-                                            <span class="sr-only">List</span>
-                                        </button>
-                                        <button type="button"
-                                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100">
-                                            @svg('tabler-list-numbers', 'w-4 h-4 text-gray-500 ')
-                                            <span class="sr-only">List number</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="px-4 py-2 bg-white rounded-b-lg">
-                                <textarea id="description" rows="10" name="description"
-                                    class="block w-full px-0 text-sm text-gray-800 bg-white border-0 focus:ring-0"></textarea>
-                            </div>
+                            <textarea id="wysiwygeditor" name="description"></textarea>
                         </div>
                         @error('description')
                             <p class="mt-2 text-sm text-red-600 ">
@@ -260,6 +176,7 @@
                             </p>
                         @enderror
                     </div>
+
                 </div>
                 <div class="flex items-center space-x-4 mt-5">
                     <a href="{{ route('admin.products.index') }}" class="button-dark">
@@ -273,9 +190,3 @@
         </div>
     </div>
 @endsection
-
-{{-- 
-status is_featured  
-5   
-
---}}
