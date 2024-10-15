@@ -16,10 +16,15 @@
                     @svg('tabler-plus', 'w-5 h-5 mr-2')
                     Thêm thuộc tính
                 </a>
-                <a href="{{route('admin.trash-attributes')}}" class="button-red">
+                <a href="{{ route('admin.trash-attributes') }}" class="button-red">
                     @svg('tabler-trash', 'w-5 h-5 mr-2')
                     Thùng rác
                 </a>
+                <button type="button"
+                    class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
+                    @svg('tabler-file-export', 'w-4 h-4 mr-2')
+                    Xuất dữ liệu
+                </button>
             </div>
         </div>
         <div class="overflow-x-auto">
@@ -42,7 +47,7 @@
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap font-medium">
                                 <span class="flex items-center">
-                                    {{ $attribute->name }}
+                                    {{ $attribute->name }} ({{ $attribute->category->name }})
                                 </span>
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap"></td>
@@ -86,7 +91,8 @@
                                                 <h3 class="mb-5 font-normal">Bạn có muốn xóa Thuộc tính này không?</h3>
 
                                                 <div class="flex justify-center items-center">
-                                                    <form action="{{route('admin.attributes.destroy', $attribute)}}" method="POST">
+                                                    <form action="{{ route('admin.attributes.destroy', $attribute) }}"
+                                                        method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"
@@ -131,7 +137,7 @@
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $attributes->links() }}
+                {{ $attributes->onEachSide(1)->links() }}
             </div>
         </div>
     </div>

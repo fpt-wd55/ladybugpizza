@@ -2,6 +2,7 @@
 @section('title', 'Sửa mã giảm giá')
 
 @section('content')
+{{Breadcrumbs::render('admin.promotions.edit',$editPromotion)}}
     <div class="container">
         <form action="{{ route('admin.promotions.update',$editPromotion->id) }}" class="w-full" method="post" enctype="multipart/form-data">
             @csrf
