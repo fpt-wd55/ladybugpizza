@@ -12,12 +12,7 @@
                     Đơn hàng
                 </h2>
             </div>
-            <div
-                class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                {{-- <a href="#" class="button-red">
-                    @svg('tabler-trash', 'w-5 h-5 mr-2')
-                    Thùng rác
-                </a> --}}
+            <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 <button type="button"
                     class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
                     @svg('tabler-file-export', 'w-4 h-4 mr-2')
@@ -96,17 +91,11 @@
                             <td class="px-4 py-2">
                                 <button
                                     class="px-4 py-2 text-white rounded-xl w-36
-                                {{ $order->orderStatus->name === 'Cho xác nhận'
-                                    ? 'bg-yellow-500'
-                                    : ($order->orderStatus->name === 'Đã xác nhận'
-                                        ? 'bg-blue-500'
-                                        : ($order->orderStatus->name === 'Đang giao hàng'
-                                            ? 'bg-orange-500'
-                                            : ($order->orderStatus->name === 'Đã giao hàng'
-                                                ? 'bg-green-600'
-                                                : ($order->orderStatus->name === 'Đã hủy'
-                                                    ? 'bg-slate-600'
-                                                    : 'bg-gray-500')))) }}">
+                                {{ $order->orderStatus->name === 'Cho xác nhận'? 'bg-yellow-500' : 
+                                        ($order->orderStatus->name === 'Đã xác nhận'? 'bg-blue-500': 
+                                        ($order->orderStatus->name === 'Đang giao hàng' ? 'bg-orange-500' : 
+                                        ($order->orderStatus->name === 'Đã giao hàng'? 'bg-green-600': 
+                                        ($order->orderStatus->name === 'Đã hủy'? 'bg-slate-600': 'bg-gray-500')))) }}">
                                     {{ $order->orderStatus->name }}
                                 </button>
                             </td>
@@ -250,8 +239,8 @@
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $orders->onEachSide(1)->links() }}
-            </div>
+                {{ $orders->onEachSide(1)->appends(request()->query())->links() }}
+            </div>            
         </div>
     </div>
 @endsection
