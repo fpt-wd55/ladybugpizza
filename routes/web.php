@@ -74,6 +74,7 @@ Route::prefix('/')->group(function () {
     Route::get('/manual', [PageController::class, 'manual'])->name('client.manual');
     Route::get('/contact', [PageController::class, 'contact'])->name('client.contact');
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
+    Route::get('/favorites', [ProductController::class, 'favorites'])->name('client.product.favorites');
 });
 
 Route::prefix('/errors')->group(function () {
