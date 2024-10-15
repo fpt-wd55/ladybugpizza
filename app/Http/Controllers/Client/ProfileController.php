@@ -46,7 +46,6 @@ class ProfileController extends Controller
             $file->move('storage/uploads/avatars', $name);
             $user['avatar'] = $name;
         }
-
 		$gender = null;
 		if ($request->gender == 'male') {
 			$gender = 1;
