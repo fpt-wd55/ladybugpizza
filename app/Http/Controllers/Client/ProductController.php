@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Topping;
 use Illuminate\Http\Request;
+use App\Models\Favorite;
 
 class ProductController extends Controller
 {
@@ -45,5 +46,12 @@ class ProductController extends Controller
 
     public function addToCart()
     {
+    }
+    public function favorites()
+    {
+        $favorites = Favorite::where('user_id', Auth::id())
+            ->with('product')
+            ->get();
+        return view('partials.clients', compact('favorites'));
     }
 }

@@ -67,7 +67,7 @@ Route::prefix('/')->group(function () {
     Route::get('/profile/address', [ProfileController::class, 'address'])->name('client.profile.address');
     Route::get('/profile/address/add', [ProfileController::class, 'addLocation'])->name('client.profile.add-location');
     Route::post('/profile/address', [ProfileController::class, 'storeLocation'])->name('client.profile.post-location');
-    Route::get('/profile/address/edit/{address}',[ProfileController::class,'editLocation'])->name('client.profile.edit-location');
+    Route::get('/profile/address/edit/{address}', [ProfileController::class, 'editLocation'])->name('client.profile.edit-location');
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
     Route::get('/about-us', [PageController::class, 'aboutUs'])->name('client.about-us');
@@ -75,6 +75,7 @@ Route::prefix('/')->group(function () {
     Route::get('/manual', [PageController::class, 'manual'])->name('client.manual');
     Route::get('/contact', [PageController::class, 'contact'])->name('client.contact');
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
+    Route::get('/favorites', [ProductController::class, 'favorites'])->name('client.product.favorites');
 });
 
 Route::prefix('/errors')->group(function () {
