@@ -32,7 +32,6 @@ class PageController extends Controller
     public function contact()
     {
         $user = auth()->user();
-
         return view('clients.contact', compact('user'));
     }
 
@@ -62,6 +61,5 @@ class PageController extends Controller
         Mail::to($contactData['email'])->send(new ThankYou($contactData));
 
         return back()->with('success', 'Gửi thông tin thành công');
-
     }
 }

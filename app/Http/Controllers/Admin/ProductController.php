@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use Auth;
 use Illuminate\Http\Request;
@@ -26,7 +27,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::where('status', 1)->get();
+        return view('admins.product.add', compact('categories'));
     }
 
     /**
@@ -42,6 +44,9 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         return view('admins.product.detail', compact('product'));
+}
+    public function store(Request $request) {
+        dd($request->all());
     }
 
     /**

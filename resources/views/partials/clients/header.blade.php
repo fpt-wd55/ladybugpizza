@@ -151,11 +151,56 @@
 @php
     use App\Models\Favorite;
     $favorites = Favorite::where('user_id', Auth::id())->with('product')->get();
-@endphp
+@endphp 
+{{-- Favorite Product Modal --}}
+<div aria-hidden="true"
+    class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0"
+    id="favoriteProductModal" tabindex="-1">
+    <div class="relative max-h-full w-full max-w-2xl p-4">
+        <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
+            <div class="flex items-center justify-between rounded-t border-b p-4 dark:border-gray-600 md:p-5">
+                <p class="font-semibold text-gray-900 dark:text-white">Sản phẩm yêu thích của tôi</p>
+                <button
+                    class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                    data-modal-hide="favoriteProductModal" type="button">
+                    @svg('tabler-x', 'icon-sm')
+                </button>
+            </div>
 
-got
-
-
+            <div class="p-4 md:p-8">
+                <div class="mb-8 grid grid-cols-2 gap-4 lg:mb-16 lg:grid-cols-2">
+                    @foreach ($favorites as $favorite)
+                        <a class="product-card overflow-hidden md:flex"
+                            href="{{ route('client.product.show', $favorite->product->slug) }}">
+                            <img alt="{{ $favorite->product->image }}"
+                                class="h-48 w-full flex-shrink-0 object-cover md:h-full md:w-1/3" loading="lazy"
+                                src="{{ asset('storage/uploads/products/' . $favorite->product->image) }}">
+                            <div class="p-2 text-sm">
+                                <p class="mb-2 font-semibold">{{ $favorite->product->name }}</p>
+                                <div class="mb-2 flex items-center gap-1">
+                                    <p>{{ $favorite->product->avg_rating }}</p>
+                                    <div class="flex items-center gap-1">
+                                        @for ($i = 0; $i < 5; $i++)
+                                            @svg($i < $favorite->product->avg_rating ? 'tabler-star-filled' : 'tabler-star', 'icon-sm text-red-500')
+                                        @endfor
+                                    </div>
+                                    <p>({{ $favorite->product->avg_rating }})</p>
+                                </div>
+                                <p class="mb-4 line-clamp-3 h-12">{{ $favorite->product->description }}</p>
+                                <div class="bottom-4 flex items-center gap-3">
+                                    <p class="text-xs text-gray-500 line-through">
+                                        {{ number_format($favorite->product->price) }}đ</p>
+                                    <p class="font-semibold">{{ number_format($favorite->product->discount_price) }}đ
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{-- Logout Modal --}}
 <div aria-hidden="true"

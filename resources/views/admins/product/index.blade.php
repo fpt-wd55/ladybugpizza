@@ -12,7 +12,7 @@
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <a href="{{ route('admin.users.create') }}" class="button-blue">
+                <a href="{{ route('admin.products.create') }}" class="button-blue">
                     @svg('tabler-plus', 'w-5 h-5 mr-2')
                     Thêm sản phẩm
                 </a>
@@ -51,7 +51,7 @@
                                     <span class="text-sm">{{ $product->name }}</span>
                                     <div class="flex items-center gap-1">
                                         <p>{{ round($product->avg_rating, 1) }}</p>
-                                        <div class="flex items-center gap-1">
+                                        <div class="flex items-center gap-0.3">
                                             @for ($i = 0; $i < 5; $i++)
                                                 @if ($i < $product->avg_rating)
                                                     @svg('tabler-star-filled', 'icon-sm text-red-500')
@@ -73,7 +73,10 @@
                                 </div>
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
-                                {{ $product->quantity == 0 ? 'Hết hàng' : $product->quantity }}
+                                <span
+                                    class="{{ $product->quantity == 0 ? 'text-red-500 bg-yellow-100 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium' : '' }}">
+                                    {{ $product->quantity == 0 ? 'Hết hàng' : $product->quantity }}
+                                </span>
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
                                 {{ $product->category->name }}
@@ -92,10 +95,16 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $product->sku }}">
                                         <li>
-                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Chi tiết</a>
+                                            <a href="{{ route('client.product.show', $product->slug) }}"
+                                                class="block py-2 px-4 hover:bg-gray-100">Xem</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
+                                            <a href="#"
+                                                class="block py-2 px-4 hover:bg-gray-100">Đánh giá</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('admin.products.edit', $product) }}"
+                                                class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
                                         </li>
                                         <li>
                                             <span data-modal-target="delete-modal-{{ $product->sku }}"
@@ -122,7 +131,8 @@
                                                 <h3 class="mb-5 font-normal">Bạn có muốn xóa sản phẩm này không?</h3>
 
                                                 <div class="flex justify-center items-center">
-                                                    <form action="#" method="POST">
+                                                    <form action="{{ route('admin.products.destroy', $product) }}"
+                                                        method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"

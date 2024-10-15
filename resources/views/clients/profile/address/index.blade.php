@@ -8,7 +8,7 @@
 
             @include('clients.profile.sidebar')
 
-            <div class="card p-4 md:p-8 w-full min-h-screen">
+            <div class="card p-4 md:p-8 w-full flex flex-col min-h-screen">
                 <div class="flex items-start justify-between mb-8">
                     <h3 class="font-semibold uppercase ">địa chỉ</h3>
                     <a class="button-red" href="{{ route('client.profile.add-location') }}">
@@ -17,36 +17,32 @@
                     </a>
                 </div>
 
-                <div>
-                    @for ($i = 0; $i < 3; $i++)
+                <div class="flex-grow">
+                    @foreach ($addresses as $address)
                         <div class="card p-4 mb-4 flex justify-between">
                             <div>
                                 <div class="flex items-center gap-4 mb-2">
-                                    <p class="font-medium">Nhà riêng</p>
-                                    @if ($i == 0)
+                                    <p class="font-medium">{{ $address->title }}</p>
+                                    @if ($address->is_default == 1)
                                         <span class="badge-red">Mặc định</span>
                                     @endif
                                 </div>
                                 <div class="text-sm">
-                                    <p>Đỗ Hồng Quân</p>
-                                    <p>0362303364</p>
-                                    <p class="line-clamp-2">Số 7, Ngõ 126/14 Mễ Trì Hạ Phường Mễ Trì, Quận Nam Từ Liêm, Hà
-                                        Nội
+                                    <p>{{ $address->user->fullname }}</p>
+                                    <p>{{ $address->phone }}</p>
+                                    <p class="line-clamp-2">{{ $address->detail_address }}, {{ $address->ward }},
+                                        {{ $address->district }}, {{ $address->province }}
                                     </p>
                                 </div>
                             </div>
                             <div class="text-right flex flex-col md:flex-row gap-4 items-center justify-center">
-                                <a href="#" class="link-md" data-modal-target="editAddressModal-{{ $i }}"
-                                    data-modal-toggle="editAddressModal-{{ $i }}">Sửa</a>
-                                <a href="#" class="link-md"
-                                    data-modal-target="deleteAddressModal-{{ $i }}"
-                                    data-modal-toggle="deleteAddressModal-{{ $i }}">@svg('tabler-trash', 'icon-md')</a>
-
+                                <a href="{{ route('client.profile.edit-location', $address) }}" class="link-md">Sửa</a>
+                                <a href="#" class="link-md">@svg('tabler-trash', 'icon-md')</a>
                             </div>
                         </div>
 
                         {{-- edit adress Modal --}}
-                        <div id="editAddressModal-{{ $i }}" tabindex="-1" aria-hidden="true"
+                        {{-- <div id="editAddressModal-{{ $i }}" tabindex="-1" aria-hidden="true"
                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
                             <div class="relative p-4 w-full max-w-2xl h-auto">
                                 <div class="relative p-4 bg-white rounded-lg shadow sm:p-5">
@@ -100,18 +96,17 @@
                                             <button data-modal-hide="editAddressModal" type="submit" class="button-red">
                                                 Thêm mới
                                             </button>
-                                            <button data-modal-hide="editAddressModal" type="button"
-                                                class="button-dark">
+                                            <button data-modal-hide="editAddressModal" type="button" class="button-dark">
                                                 Huỷ
                                             </button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- delete confirm Modal --}}
-                        <div id="deleteAddressModal-{{ $i }}" tabindex="-1" aria-hidden="true"
+                        {{-- <div id="deleteAddressModal-{{ $i }}" tabindex="-1" aria-hidden="true"
                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
                             <div class="relative p-4 w-full max-w-2xl h-auto">
                                 <div class="relative p-4 bg-white rounded-lg shadow sm:p-5">
@@ -139,8 +134,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @endfor
+                        </div> --}}
+                    @endforeach
+                </div>
+                <div class="p-1">
+                    {{ $addresses->links() }}
                 </div>
             </div>
         </div>
