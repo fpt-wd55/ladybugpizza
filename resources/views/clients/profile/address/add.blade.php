@@ -22,7 +22,7 @@
                 <div>
                     <label for="province" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tỉnh/Thành
                         phố:*</label>
-                    <select name="province" id="province" class="input" onchange="getProvinces(event)">
+                    <select name="province" id="province" class="input">
                         <option value="">Chọn tỉnh/thành phố</option>
                     </select>
                     @error('province')
@@ -32,7 +32,7 @@
                 <div>
                     <label for="district"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quận/Huyện:*</label>
-                    <select name="district" id="district" class="input" onchange="getDistricts(event)">
+                    <select name="district" id="district" class="input">
                         <option value="">Chọn quận/huyện</option>
                     </select>
                     @error('district')

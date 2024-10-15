@@ -4,17 +4,35 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressRequest;
+use App\Http\Requests\ContactRequest;
+use App\Models\Address;
+use App\Models\User;
+use GuzzleHttp\Client;
 use App\Http\Requests\ChangeRequest;
 use App\Http\Requests\InactiveRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use dvhcvn;
 
 class ProfileController extends Controller
 {
 	public function index()
 	{
+		$users = Auth::user();
+		return view('clients.profile.index', compact('users'));
+	}
+
+	public function postUpdate(Request $request, $id)
+	{
+		$request->validate([
+			'fullname' => 'required|string|max:255',
+			'email' => 'required|email|max:255',
+			'phone' => 'nullable|string|max:20',
+			'gender' => 'nullable|string',
+			'date_of_birth' => 'nullable|date',
+		]);
 		$user = Auth::user();
 		return view('clients.profile.index', compact('user'));
 	}
@@ -171,7 +189,9 @@ class ProfileController extends Controller
 
 	public function address()
 	{
-		return view('clients.profile.address.index');
+        $user = Auth::user();
+        $addresses = Address::where('user_id', $user->id)->with('user')->paginate(6);
+		return view('clients.profile.address.index', compact('addresses'));
 	}
 
 	public function settings()
@@ -183,10 +203,9 @@ class ProfileController extends Controller
 	{
 		return view('clients.profile.promotion');
 	}
-	public function addLocation()
-	{
-		return view('clients.profile.address.add');
-	}
+    public function addLocation() {
+        return view('clients.profile.address.add');
+    }
 
 	public function updateLocation(Request $request) {}
 
@@ -231,8 +250,40 @@ class ProfileController extends Controller
 		$addressData['lat'] = $lat;
 		Address::create($addressData);
 
-		return redirect()->route('clients.profile.address')->with('success', 'Thêm địa chỉ thành công');
+        return redirect()->route('client.profile.address')->with('success', 'Thêm địa chỉ thành công');
 	}
+
+        protected function convertAddressToCoordinates($fullAddress) {
+            $client = new Client();
+            try {
+                $response = $client->get('https://nominatim.openstreetmap.org/search', [
+                    'query' => [
+                        'q' => $fullAddress,
+                        'format' => 'json',
+                    ],
+                ]);
+            } catch (\Exception $e) {
+                dd($e->getMessage());
+            }
+
+            $data = json_decode($response->getBody(), true);
+
+            if (isset($data[0])) {
+                $location = $data[0];
+                return [$location['lon'], $location['lat']];
+            }
+
+            return [null, null];
+        }
+
+    public function editLocation(Address $address){
+        return view('clients.profile.address.edit', compact('address'));
+    }
+
+    public function updateLocation(AddressRequest $request)
+    {
+
+    }
 
 	private function getAddressNamesByCodes($provinceCode, $districtCode, $wardCode)
 	{
@@ -318,4 +369,3 @@ class ProfileController extends Controller
 		return [null, null];
 	}
 	public function destroyLocation(Request $request) {}
-}
