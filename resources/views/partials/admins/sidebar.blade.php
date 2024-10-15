@@ -72,24 +72,12 @@
                 </ul>
             </li>
             <li>
-                <button type="button"
-                    class="flex items-center p-2 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100"
-                    aria-controls="dropdown-order" data-collapse-toggle="dropdown-order">
+                <a href="{{ route('admin.orders.index') }}"
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                     @svg('tabler-package', 'text-gray-500')
-                    <span class="flex-1 ml-3 text-left whitespace-nowrap">Đơn hàng</span>
-                    @svg('tabler-chevron-down', 'w-4 h-4 text-gray-500')
-                </button>
-                <ul id="dropdown-order" class="hidden py-2 space-y-2">
-                    <li>
-                        <a href="{{ route('admin.orders.index') }}"
-                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Đơn hàng</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.invoices.index') }}"
-                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Hóa đơn</a>
-                    </li> 
-                </ul>
-            </li> 
+                    <span class="ml-3">Đơn hàng</span>
+                </a>
+            </li>
             <li>
                 <a href="{{ route('admin.shippings.index') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
@@ -112,5 +100,5 @@
                 </a>
             </li>
         </ul>
-    </div> 
+    </div>
 </aside>

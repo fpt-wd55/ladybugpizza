@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('promotion_id')->nullable()->constrained()->onDelete('set null');
-            $table->bigInteger('amount');
+            $table->integer('amount');
             $table->foreignId('address_id')->constrained()->onDelete('cascade');
-            $table->bigInteger('discount_amount')->default(0);
-            $table->bigInteger('shipping_fee')->default(0);
+            $table->integer('discount_amount')->default(0);
+            $table->integer('shipping_fee')->default(0);
             $table->timestamp('completed_at')->nullable();
             $table->text('notes')->nullable();
             $table->foreignId('payment_method_id')->constrained()->onDelete('cascade');

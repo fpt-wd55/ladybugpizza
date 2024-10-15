@@ -13,7 +13,7 @@ class Membership extends Model
     protected $fillable = [
         'user_id',
         'points',
-        'rank',
+        'rank_id',
         'status',
         'total_spent',
     ];
@@ -21,5 +21,10 @@ class Membership extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function rank()
+    {
+        return $this->belongsTo(MembershipRank::class);
     }
 }

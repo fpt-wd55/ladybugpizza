@@ -49,20 +49,20 @@ class OrderSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
-
-            DB::table('order_item_attributes')->insert([
-                'order_item_id' => $i,
-                'product_attribute_id' => $faker->randomElement($productAttributes),
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
-
-            DB::table('order_item_toppings')->insert([
-                'order_item_id' => $i,
-                'topping_id' => $faker->randomElement($toppings),
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
+            for ($j = 1; $j < 5; $j++) {
+                DB::table('order_item_attributes')->insert([
+                    'order_item_id' => $i,
+                    'product_attribute_id' => $faker->randomElement($productAttributes),
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+                DB::table('order_item_toppings')->insert([
+                    'order_item_id' => $i,
+                    'topping_id' => $faker->randomElement($toppings),
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
         }
     }
 }

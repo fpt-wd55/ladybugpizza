@@ -3,17 +3,18 @@
 @section('content')
     {{ Breadcrumbs::render('admin.trash.listBanner') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
-        <div class="flex flex-col md:flex-row items-center justify-end space-y-3 md:space-y-0 md:space-x-4 px-4 mb-2">
+        <div
+            class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
+            <div class="flex items-center flex-1 space-x-4">
+                <h2 class="font-medium text-gray-700 text-base">
+                    Thùng rác
+                </h2>
+            </div>
             <div
-                class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-
-                <div class="flex items-center space-x-3 w-full md:w-auto">
-
-                    <a href="{{ route('admin.banners.index') }}">
-                        <button type="button" class="rounded-lg button-blue">Trở Lại</button>
-                    </a>
-
-                </div>
+                class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+                <a href="{{ route('admin.banners.index') }}">
+                    <button type="button" class="rounded-lg button-blue">Trở Lại</button>
+                </a>
             </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
@@ -159,7 +160,7 @@
             @endforelse
         </div>
         <div class="p-4">
-            {{ $deleteBanner->links() }}
+            {{ $deleteBanner->onEachSide(1)->links() }}
         </div>
     </div>
 @endsection

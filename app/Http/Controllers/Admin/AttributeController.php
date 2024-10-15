@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AttributeRequest;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class AttributeController extends Controller
@@ -24,8 +25,8 @@ class AttributeController extends Controller
      */
     public function create()
     {
-        //
-        return view('admins.attribute.add');
+        $categories = Category::all();
+        return view('admins.attribute.add', compact('categories'));
     }
 
     /**
@@ -33,7 +34,11 @@ class AttributeController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = ["attribute_name" => "required", "stocks.*" => "required"];
+        $rules = [
+            "attribute_name" => "required",
+            "category_id" => "required",
+            "stocks.*" => "required"
+        ];
 
         foreach ($request->stocks as $key => $value) {
             $rules["stocks.{$key}.attribute_value"] = 'required';
@@ -42,6 +47,7 @@ class AttributeController extends Controller
 
         $messages = [
             'attribute_name.required' => 'Vui lòng nhập tên thuộc tính',
+            'category_id.required' => 'Vui lòng chọn danh mục',
             'stocks.*.required' => 'Vui lòng nhập giá trị thuộc tính cho sản phẩm',
             'stocks.*.attribute_value.required' => 'Vui lòng nhập giá trị thuộc tính cho sản phẩm',
             'stocks.*.attribute_quantity.numeric' => 'Giá trị không hợp lệ',
@@ -52,7 +58,8 @@ class AttributeController extends Controller
         $attribute = Attribute::create(
             [
                 "name" => $request->attribute_name,
-                "status" => 1
+                "category_id" => $request->category_id,
+                "status" => !isset($request->status) ? 2 : $request->status
             ]
         );
 
@@ -74,7 +81,8 @@ class AttributeController extends Controller
      */
     public function edit(Attribute $attribute)
     {
-        return view('admins.attribute.edit', compact('attribute'));
+        $categories = Category::all();
+        return view('admins.attribute.edit', compact('attribute', 'categories'));
     }
 
     /**
@@ -84,6 +92,7 @@ class AttributeController extends Controller
     {
         $rules = [
             "attribute_name" => "required",
+            "category_id" => "required", 
         ];
 
         if ($request->stocks) {
@@ -113,7 +122,8 @@ class AttributeController extends Controller
         $attribute->update(
             [
                 "name" => $request->attribute_name,
-                "status" => 1
+                "category_id" => $request->category_id,
+                "status" => !isset($request->status) ? 2 : $request->status
             ]
         );
 
@@ -197,7 +207,8 @@ class AttributeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function deleteAttribute($id){
+    public function deleteAttribute($id)
+    {
         $attribute = Attribute::withTrashed()->find($id);
 
         if ($attribute) {

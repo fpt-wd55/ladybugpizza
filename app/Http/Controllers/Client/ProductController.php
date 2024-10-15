@@ -10,24 +10,23 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function menu(Request $request)
-{
-    $categories = Category::all();
+    public function menu()
+    {
+        $categories = Category::all();
 
-    $search = $request->input('search');
+        $combos = Product::where('category_id', 7)->where('status', 1)->get();
 
-    $categoryId = $request->input('category');
+        $products = [];
 
-    $products = Product::when($categoryId, function ($query) use ($categoryId) {
-        return $query->where('category_id', $categoryId);
-    })
-    ->when($search, function ($query) use ($search) {
-        return $query->where('name', 'like', '%' . $search . '%');
-    })->paginate(6);
+        $products = Product::where('status', 1)
+            ->get();
 
-    return view('clients.product.menu', compact('categories', 'products'));
-}
-
+        return view('clients.product.menu', [
+            'categories' => $categories,
+            'products' => $products,
+            'combos' => $combos
+        ]);
+    }
 
     public function show($slug)
     {
@@ -36,8 +35,6 @@ class ProductController extends Controller
         $attributes = $product->attributes()->get();
 
         $toppings = Topping::where('category_id', $product->category->id)->get();
-
-        // dd($toppings);
 
         return view('clients.product.detail', [
             'product' => $product,
