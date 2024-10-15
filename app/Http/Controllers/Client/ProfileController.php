@@ -37,6 +37,8 @@ class ProfileController extends Controller
 		return view('clients.profile.index', compact('user'));
 	}
 
+		$user = User::findOrFail($id);
+
 	public function postUpdate(UpdateUserRequest $request)
 	{
 		$user = Auth::user();
