@@ -29,23 +29,10 @@ class ProductController extends Controller
     {
         $categories = Category::where('status', 1)->get();
         return view('admins.product.add', compact('categories'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    } 
+    
     public function store(Request $request)
     {
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Product $product)
-    {
-        return view('admins.product.detail', compact('product'));
-}
-    public function store(Request $request) {
         dd($request->all());
     }
 
@@ -76,9 +63,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the trashed resources.
      */
-    public function trash()
-    {
-    }
+    public function trash() {}
 
     /**
      * Restore the specified resource from storage.
@@ -94,12 +79,5 @@ class ProductController extends Controller
     public function forceDelete($id)
     {
         //
-    }
-    public function favorites()
-    {
-        $favorites = Favorite::where('user_id', Auth::id())
-            ->with('product')
-            ->get();
-        return view('partials.clients', compact('favorites'));
     }
 }
