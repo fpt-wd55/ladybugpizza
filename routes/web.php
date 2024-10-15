@@ -64,6 +64,7 @@ Route::prefix('/')->group(function () {
     Route::put('/profile/inactive', [ProfileController::class, 'postInactive'])->name('client.profile.post-inactive');
     Route::get('/profile/membership', [ProfileController::class, 'membership'])->name('client.profile.membership');
     Route::get('/profile/membership/history', [ProfileController::class, 'membershipHistory'])->name('client.profile.membership-history');
+    Route::get('/profile/membership/receive', [ProfileController::class, 'membershipReceive'])->name('client.profile.membership-receive');
     Route::get('/profile/address', [ProfileController::class, 'address'])->name('client.profile.address');
     Route::get('/profile/address/add', [ProfileController::class, 'addLocation'])->name('client.profile.add-location');
     Route::post('/profile/address', [ProfileController::class, 'storeLocation'])->name('client.profile.post-location');
