@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Invoice;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -11,10 +13,26 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $status = $request->get('status'); // Lấy trạng thái từ query parameter
+
+        if($status){
+            $orders = Order::when($status, function ($query, $status) {
+                return $query->whereHas('orderStatus', function ($q) use ($status) {
+                    $q->where('name', $status);
+                });
+            })->latest('id')->paginate(10);
+        }else{
+            // Query dựa theo trạng thái, nếu không có thì lấy tất cả đơn hàng
+            $orders = Order::latest('id')->paginate(10);
+        }
+
+        $invoices = Invoice::all();
+        return view('admins.order.index', compact('orders','invoices'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -31,13 +49,17 @@ class OrderController extends Controller
     {
         //
     }
-
+    public function invoices(){
+        $invoices = Invoice::all();
+        return view('admins.order.detail',compact('invoices'));
+    }
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        $orders = Order::find($id);
+        return view('admins.order.detail',compact('orders'));
     }
 
     /**

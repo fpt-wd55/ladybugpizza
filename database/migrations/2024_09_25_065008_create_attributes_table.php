@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('attributes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->tinyInteger('status')->default(1)->comment('1:active; 2: inactive');
+            $table->integer('status')->default(1)->comment('1:active; 2: inactive');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

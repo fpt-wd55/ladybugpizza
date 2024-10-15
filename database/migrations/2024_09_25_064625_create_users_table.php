@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('google_id')->nullable();
             $table->date('date_of_birth')->nullable();
-            $table->tinyInteger('gender')->nullable()->comment('1: male; 2: female; 3: other');
-            $table->tinyInteger('status')->default(1)->comment('1: active; 2: inactive');
+            $table->integer('gender')->nullable()->comment('1: male; 2: female; 3: other');
+            $table->integer('status')->default(1)->comment('1: active; 2: inactive');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

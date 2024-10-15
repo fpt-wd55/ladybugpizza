@@ -4,10 +4,18 @@
     {{ Breadcrumbs::render('admin.trash.listcate') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div
-            class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3 p-4">
-            <a href="{{ route('admin.categories.index') }}">
-                <button type="button" class="button-dark">Quay Lại</button>
-            </a>
+            class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
+            <div class="flex items-center flex-1 space-x-4">
+                <h2 class="font-medium text-gray-700 text-base">
+                    Thùng rác
+                </h2>
+            </div>
+            <div
+                class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+                <a href="{{ route('admin.categories.index') }}">
+                    <button type="button" class="button-dark">Quay Lại</button>
+                </a>
+            </div>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-500">
@@ -22,7 +30,6 @@
                 </thead>
                 <tbody>
                     {{-- item Category --}}
-
                     @forelse ($deletedCategories as $key => $item)
                         <tr class="border-b">
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
@@ -140,7 +147,7 @@
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $deletedCategories->links() }}
+                {{ $deletedCategories->onEachSide(1)->links() }}
             </div>
         </div>
     </div>

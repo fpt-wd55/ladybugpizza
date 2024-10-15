@@ -44,7 +44,7 @@ class UserController extends Controller
         }
         // Kiem tra trang thai (Status)
         if (!isset($validatedData['status'])) {
-            $validatedData['status'] = 0;
+            $validatedData['status'] = 2;
         }
 
         // Xu ly hinh anh
