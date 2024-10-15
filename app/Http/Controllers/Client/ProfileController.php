@@ -187,6 +187,9 @@ class ProfileController extends Controller
 		return view('clients.profile.membership.history');
 	}
 
+	public function membershipReceive() {
+		return view('clients.profile.membership.receive');
+	}
 
 	public function address()
 	{

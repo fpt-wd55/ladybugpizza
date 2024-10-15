@@ -15,12 +15,12 @@
                     <ul class="-mb-px flex flex-wrap">
                         <li class="me-2">
                             <a class="inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2 hover:border-gray-300 hover:text-gray-600"
-                                href="{{ route('client.profile.membership-history', ['tab' => 'receive']) }}">Lịch sử
+                                href="{{ route('client.profile.membership-receive', ['tab' => 'receive']) }}">Lịch sử
                                 nhận</a>
                         </li>
                         <li class="me-2">
                             <a class="inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2 hover:border-gray-300 hover:text-gray-600"
-                                href="{{ route('client.profile.membership-receive', ['tab' => 'change']) }}">Lịch sử đổi</a>
+                                href="{{ route('client.profile.membership-history', ['tab' => 'change']) }}">Lịch sử đổi</a>
                         </li>
                     </ul>
                 </div>
@@ -34,14 +34,14 @@
                             <button class="flex w-full items-center justify-between py-4">
 
                                 <span class="text-left text-sm font-normal">
-                                    <p class="font-thin">Ngày 14/10/2024</p>
-                                    <p>Mua hàng tích điểm</p>
-                                    <p>vào lúc 08:00 tại LADYBUGPIZZA</p>
-                                    <p>Đơn hàng Pizza Pesto Burrata và 2 sản phẩm.</p>
+                                    <p>Ngày 3/10/10/2024</p>
+                                    <p>Đổi phiếu mua hàng thành công</p>
+                                    <p>vào lúc 08:tại LADYBUGPIZZA</p>
+                                    <p>Bạn đã đổi phiếu mua hàng thành công</p>
                                 </span>
 
                                 <span class="transition text-red-500" id="icon-1">
-                                    +1000
+                                    -1234
                                 </span>
                             </button>
 
@@ -50,14 +50,14 @@
                             <button class="flex w-full items-center justify-between py-4">
 
                                 <span class="text-left text-sm font-normal">
-                                    <p class="font-thin">Ngày 14/10/2024</p>
-                                    <p>Mua hàng tích điểm</p>
-                                    <p>vào lúc 08:00 tại LADYBUGPIZZA</p>
-                                    <p>Đơn hàng Pizza Pesto Burrata và 2 sản phẩm.</p>
+                                    <p>Ngày 3/10/10/2024</p>
+                                    <p>Đổi phiếu mua hàng thành công</p>
+                                    <p>vào lúc 08:tại LADYBUGPIZZA</p>
+                                    <p>Bạn đã đổi phiếu mua hàng thành công</p>
                                 </span>
 
                                 <span class="transition text-red-500" id="icon-1">
-                                    +1000
+                                    -1234
                                 </span>
                             </button>
 
@@ -66,14 +66,14 @@
                             <button class="flex w-full items-center justify-between py-4">
 
                                 <span class="text-left text-sm font-normal">
-                                    <p class="font-thin">Ngày 14/10/2024</p>
-                                    <p>Mua hàng tích điểm</p>
-                                    <p>vào lúc 08:00 tại LADYBUGPIZZA</p>
-                                    <p>Đơn hàng Pizza Pesto Burrata và 2 sản phẩm.</p>
+                                    <p>Ngày 3/10/10/2024</p>
+                                    <p>Đổi phiếu mua hàng thành công</p>
+                                    <p>vào lúc 08:tại LADYBUGPIZZA</p>
+                                    <p>Bạn đã đổi phiếu mua hàng thành công</p>
                                 </span>
 
                                 <span class="transition text-red-500" id="icon-1">
-                                    +1000
+                                    -1234
                                 </span>
                             </button>
 
@@ -82,14 +82,14 @@
                             <button class="flex w-full items-center justify-between py-4">
 
                                 <span class="text-left text-sm font-normal">
-                                    <p class="font-thin">Ngày 14/10/2024</p>
-                                    <p>Mua hàng tích điểm</p>
-                                    <p>vào lúc 08:00 tại LADYBUGPIZZA</p>
-                                    <p>Đơn hàng Pizza Pesto Burrata và 2 sản phẩm.</p>
+                                    <p>Ngày 3/10/10/2024</p>
+                                    <p>Đổi phiếu mua hàng thành công</p>
+                                    <p>vào lúc 08:tại LADYBUGPIZZA</p>
+                                    <p>Bạn đã đổi phiếu mua hàng thành công</p>
                                 </span>
 
                                 <span class="transition text-red-500" id="icon-1">
-                                    +1000
+                                    -1234
                                 </span>
                             </button>
 
@@ -98,30 +98,14 @@
                             <button class="flex w-full items-center justify-between py-4">
 
                                 <span class="text-left text-sm font-normal">
-                                    <p class="font-thin">Ngày 14/10/2024</p>
-                                    <p>Mua hàng tích điểm</p>
-                                    <p>vào lúc 08:00 tại LADYBUGPIZZA</p>
-                                    <p>Đơn hàng Pizza Pesto Burrata và 2 sản phẩm.</p>
+                                    <p>Ngày 3/10/10/2024</p>
+                                    <p>Đổi phiếu mua hàng thành công</p>
+                                    <p>vào lúc 08:tại LADYBUGPIZZA</p>
+                                    <p>Bạn đã đổi phiếu mua hàng thành công</p>
                                 </span>
 
                                 <span class="transition text-red-500" id="icon-1">
-                                    +1000
-                                </span>
-                            </button>
-
-                        </div>
-                        <div class="mb-4 border-b border-gray-300">
-                            <button class="flex w-full items-center justify-between py-4">
-
-                                <span class="text-left text-sm font-normal">
-                                    <p class="font-thin">Ngày 14/10/2024</p>
-                                    <p>Mua hàng tích điểm</p>
-                                    <p>vào lúc 08:00 tại LADYBUGPIZZA</p>
-                                    <p>Đơn hàng Pizza Pesto Burrata và 2 sản phẩm.</p>
-                                </span>
-
-                                <span class="transition text-red-500" id="icon-1">
-                                    +1000
+                                    -1234
                                 </span>
                             </button>
 
