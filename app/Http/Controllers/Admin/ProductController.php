@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -24,21 +25,14 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::where('status', 1)->get();
+        return view('admins.product.add', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request) {}
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Product $product)
-    {
-        return view('admins.product.detail', compact('product'));
-    }
 
     /**
      * Show the form for editing the specified resource.
