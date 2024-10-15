@@ -18,7 +18,7 @@ class ProfileController extends Controller
 		$user = Auth::user();
 		return view('clients.profile.index', compact('user'));
 	}
-	
+
 	public function postUpdate(UpdateUserRequest $request)
 	{
 		$user = Auth::user();
@@ -28,7 +28,7 @@ class ProfileController extends Controller
             $file->move('storage/uploads/avatars', $name);
             $user['avatar'] = $name;
         }
-    
+
 		$gender = null;
 		if ($request->gender == 'male') {
 			$gender = 1;
@@ -317,6 +317,5 @@ class ProfileController extends Controller
 
 		return [null, null];
 	}
-
 	public function destroyLocation(Request $request) {}
 }
