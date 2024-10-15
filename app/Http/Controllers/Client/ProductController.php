@@ -36,8 +36,6 @@ class ProductController extends Controller
 
         $toppings = Topping::where('category_id', $product->category->id)->get();
 
-        // dd($toppings);
-
         return view('clients.product.detail', [
             'product' => $product,
             'attributes' => $attributes,
