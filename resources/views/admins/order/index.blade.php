@@ -12,7 +12,8 @@
                     Đơn hàng
                 </h2>
             </div>
-            <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+            <div
+                class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 <button type="button"
                     class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
                     @svg('tabler-file-export', 'w-4 h-4 mr-2')
@@ -23,36 +24,49 @@
         <div class="p-4 border-b bg-gray-50">
             <!-- Các tab điều hướng -->
             <ul class="flex space-x-4">
+                {{-- Tất cả --}}
                 <li>
                     <a href="{{ route('admin.orders.index') }}"
                         class="px-4 py-2 border-b-2 {{ request('status') ? 'border-transparent text-gray-500' : 'border-red-600 font-semibold text-red-600' }}">
                         Tất cả
                     </a>
                 </li>
+                {{-- Hoàn thành --}}
                 <li>
-                    <a href="{{ route('admin.orders.index', ['status' => 'Đã giao hàng']) }}"
-                        class="px-4 py-2 border-b-2 {{ request('status') === 'Đã giao hàng' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
-                        Đã giao hàng
+                    <a href="{{ route('admin.orders.index', ['status' => 'Hoàn thành']) }}"
+                        class="px-4 py-2 border-b-2 {{ request('status') === 'Hoàn thành' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
+                        Hoàn thành
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('admin.orders.index', ['status' => 'Cho xác nhận']) }}"
-                        class="px-4 py-2 border-b-2 {{ request('status') === 'Cho xác nhận' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
-                        Chờ xác nhận
-                    </a>
-                </li>
+                {{-- Đã xác nhận --}}
                 <li>
                     <a href="{{ route('admin.orders.index', ['status' => 'Đã xác nhận']) }}"
                         class="px-4 py-2 border-b-2 {{ request('status') === 'Đã xác nhận' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
                         Đã xác nhận
                     </a>
                 </li>
+                {{-- Chờ xác nhận --}}
+                <li>
+                    <a href="{{ route('admin.orders.index', ['status' => 'Chờ xác nhận']) }}"
+                        class="px-4 py-2 border-b-2 {{ request('status') === 'Chờ xác nhận' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
+                        Chờ xác nhận
+                    </a>
+                </li>
+                {{-- Đang giao hàng  --}}
                 <li>
                     <a href="{{ route('admin.orders.index', ['status' => 'Đang giao hàng']) }}"
                         class="px-4 py-2 border-b-2 {{ request('status') === 'Đang giao hàng' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
                         Đang giao hàng
                     </a>
                 </li>
+                {{-- Đang tìm tài xế --}}
+                <li>
+                    <a href="{{ route('admin.orders.index', ['status' => 'Đang tìm tài xế']) }}"
+                        class="px-4 py-2 border-b-2 {{ request('status') === 'Đang tìm tài xế' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
+                        Đang tìm tài xế
+                    </a>
+                </li>
+                {{-- Đã hủy --}}
                 <li>
                     <a href="{{ route('admin.orders.index', ['status' => 'Đã hủy']) }}"
                         class="px-4 py-2 border-b-2 {{ request('status') === 'Đã hủy' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
@@ -91,11 +105,12 @@
                             <td class="px-4 py-2">
                                 <button
                                     class="px-4 py-2 text-white rounded-xl w-36
-                                {{ $order->orderStatus->name === 'Cho xác nhận'? 'bg-yellow-500' : 
-                                        ($order->orderStatus->name === 'Đã xác nhận'? 'bg-blue-500': 
-                                        ($order->orderStatus->name === 'Đang giao hàng' ? 'bg-orange-500' : 
-                                        ($order->orderStatus->name === 'Đã giao hàng'? 'bg-green-600': 
-                                        ($order->orderStatus->name === 'Đã hủy'? 'bg-slate-600': 'bg-gray-500')))) }}">
+                                {{ $order->orderStatus->name === 'Chờ xác nhận'? 'bg-yellow-500': 
+                                ($order->orderStatus->name === 'Đã xác nhận'? 'bg-blue-500': 
+                                ($order->orderStatus->name === 'Đang tìm tài xế'? 'bg-gray-500': 
+                                ($order->orderStatus->name === 'Đang giao hàng'? 'bg-gray-500' : 
+                                ($order->orderStatus->name === 'Hoàn thành'? 'bg-green-600':
+                                ($order->orderStatus->name === 'Đã hủy' ? 'bg-slate-600': 'bg-gray-500'))))) }}">
                                     {{ $order->orderStatus->name }}
                                 </button>
                             </td>
@@ -120,7 +135,7 @@
                         {{-- order modal --}}
                         <div id="order-modal-{{ $order->id }}" tabindex="-1" aria-hidden="true"
                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
-                            <div class="relative p-4 w-full max-w-2xl h-auto">
+                            <div class="relative p-4 w-full max-w-5xl h-auto">
                                 <div
                                     class="relative p-4 bg-white rounded-lg shadow sm:p-5 h-[480px] overflow-y-auto no-scrollbar">
                                     <button type="button"
@@ -130,97 +145,71 @@
                                         <span class="sr-only">Close modal</span>
                                     </button>
                                     <div class="p-4 md:p-5">
-                                        <h3 class="mb-5 text-2xl font-semibold">Chi tiết đơn hàng</h3>
                                         <div class="space-y-4">
+                                            <div class="flex justify-between">
+                                                <h1 class="text-2xl font-semibold">Đơn hàng</h1>
+                                                <div class="flex justify-center gap-2">
+                                                    @if ($order->orderStatus->name === 'Hoàn thành')
+                                                        <a href="">
+                                                            <button class="mt-4 button-red w-36">Xem hóa đơn</button>
+                                                        </a>                                                 
+                                                    @endif
+                                                    @php
+                                                        // Xác định màu sắc dựa trên trạng thái đơn hàng
+                                                        $buttonClass = match ($order->orderStatus->name) {
+                                                            'Hoàn thành' => 'button-green',
+                                                            'Đang giao hàng' => 'button-gray',
+                                                            'Đang tìm tài xế' => 'button-gray',
+                                                            'Chờ xác nhận' => 'button-yellow',
+                                                            'Đã xác nhận' => 'button-blue',
+                                                            'Đã hủy' => 'button-red',
+                                                            default => 'button-gray', // Trạng thái mặc định
+                                                        };
+                                                    @endphp
+
+                                                    <button class="mt-4 {{ $buttonClass }} w-36">
+                                                        {{ $order->orderStatus->name }}
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                            <hr class="w-full">
                                             {{-- user_id --}}
-                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
-                                                <label class="font-semibold">Tên người dùng</label>
-                                                <span class="text-gray-800">{{ $order->user->fullname }}</span>
+                                            <div class="pl-4 rounded-lg ">
+                                                <label class="font-semibold">Thông tin thanh toán</label>
+                                                <p class="text-gray-800 mt-4">{{ $order->user->fullname }}</p>
+                                                <p class="text-gray-800">{{ $order->address->detail_address }}</p>
+                                                <p class="text-gray-800">{{ $order->address->ward }}</p>
+                                                <p class="text-gray-800">{{ $order->address->district }}</p>
                                             </div>
-                                            {{-- mÃ giảm giá --}}
-                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
-                                                <label class="font-semibold">Mô tả:</label>
-                                                <span class="text-gray-800">
-                                                    @isset($orders->promotion->code)
-                                                        {{ $orders->promotion->code }}
-                                                    @else
-                                                        Không
-                                                    @endisset
-                                                </span>
+                                            {{-- Email --}}
+                                            <div class="pl-4 rounded-lg">
+                                                <label class="font-semibold">Email</label>
+                                                <p class="text-gray-800">{{ $order->user->email }}</p>
                                             </div>
-                                            {{-- Tổng số tiền --}}
-                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
-                                                <label class="font-semibold">Tổng số tiền</label>
-                                                <span class="text-gray-800">{{ number_format($order->amount) }}đ</span>
-                                            </div>
-                                            {{-- Địa chỉ --}}
-                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
-                                                <label class="font-semibold">Địa chỉ</label>
-                                                <span class="text-gray-800">{{ $order->address->detail_address }}</span>
-                                            </div>
-                                            {{-- Giá tri giảm giá --}}
-                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
-                                                <label class="font-semibold">Giá trị giảm giá</label>
-                                                <span
-                                                    class="text-gray-800">{{ number_format($order->discount_amount) }}đ</span>
-                                            </div>
-                                            {{-- phí giao hàng --}}
-                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
-                                                <label class="font-semibold">Phí giao hàng</label>
-                                                <span
-                                                    class="text-gray-800">{{ number_format($order->shipping_fee) }}đ</span>
-                                            </div>
-                                            {{-- hoàn thành --}}
-                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
-                                                <label class="font-semibold">Hoàn thành</label>
-                                                <span class="text-gray-800">{{ $order->completed_at }}</span>
-                                            </div>
-                                            {{-- ghi chú --}}
-                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
-                                                <label class="font-semibold">Ghi chú</label>
-                                                <p class="text-gray-800 text-right w-4/5">{{ $order->notes }}</p>
+                                            {{-- SĐT --}}
+                                            <div class="pl-4 rounded-lg">
+                                                <label class="font-semibold">Số điện thoại</label>
+                                                <p class="text-gray-800">{{ $order->user->phone }}</p>
                                             </div>
                                             {{-- hình thức thanh toán --}}
-                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
+                                            <div class="pl-4 rounded-lg ">
                                                 <label class="font-semibold">Hình thức thanh toán</label>
-                                                <span class="text-gray-800">{{ $order->paymentMethod->name }}</span>
+                                                <p class="text-gray-800">{{ $order->paymentMethod->name }}</p>
                                             </div>
-                                            {{-- Trạng thái đơn hàng --}}
-                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
-                                                <label class="font-semibold">Trạng thái đơn hàng </label>
-                                                <span class="text-gray-800">{{ $order->orderStatus->name }}</span>
+                                            <hr class="w-full">
+                                            {{-- <div class="pl-4 rounded-lg">
+                                                <div>
+                                                    <h2>Sản phẩm</h2>
+                                                    <p>{{$order->product->name}}</p>
+                                                </div>
+                                            </div> --}}
+                                            <div class="flex justify-end">
+                                                <a href="{{ route('admin.orders.edit', $order->id) }}">
+                                                    <button class="button-blue">Sửa</button>
+                                                </a>
                                             </div>
-                                            {{-- Lí do hủy bỏ --}}
-                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
-                                                <label class="font-semibold">Lí do hủy bỏ</label>
-
-                                                <span class="text-gray-800">
-                                                    @isset($order->canceled_reason)
-                                                        {{ $order->canceled_reason }}
-                                                    @else
-                                                    @endisset
-                                                </span>
-                                            </div>
-                                            {{-- Thời gian hủy bỏ --}}
-                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
-                                                <label class="font-semibold">Thời gian hủy bỏ</label>
-                                                <span class="text-gray-800">{{ $order->canceled_at }}</span>
-                                            </div>
-                                            {{-- Thời gian đặt hàng --}}
-                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
-                                                <label class="font-semibold">Thời gian đặt hàng</label>
-                                                <span class="text-gray-800">{{ $order->created_at }}</span>
-                                            </div>
-                                            <div class="flex justify-center">
-                                                @if ($order->invoice)
-                                                    <a
-                                                        href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
-                                                        <button class="mt-4 button-red">Xem hóa đơn</button>
-                                                    </a>
-                                                @else
-                                                    <p>Hóa đơn không có sẵn</p>
-                                                @endif
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -240,7 +229,7 @@
             </table>
             <div class="p-4">
                 {{ $orders->onEachSide(1)->appends(request()->query())->links() }}
-            </div>            
+            </div>
         </div>
     </div>
 @endsection
