@@ -40,7 +40,6 @@
                     @endforeach
                 </div>
             </div>
-
             {{-- products --}}
             <div class="mb-8">
                 @foreach ($categories as $category)
