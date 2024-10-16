@@ -44,9 +44,9 @@
                 <tbody>
                     @forelse ($products as $product)
                         <tr class="border-b hover:bg-gray-100">
-                            <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap ">
+                            <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap shrink-0">
                                 <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
-                                    class="w-auto h-8 mr-3 rounded">
+                                    class="w-8 h-8 mr-3 rounded">
                                 <div class="grid grid-flow-row">
                                     <span class="text-sm">{{ $product->name }}</span>
                                     <div class="flex items-center gap-1">
@@ -95,12 +95,11 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $product->sku }}">
                                         <li>
-                                            <a href="{{ route('client.product.show', $product->slug) }}"
+                                            <a href="{{ route('client.product.show', $product->slug) }} " target="_blank"
                                                 class="block py-2 px-4 hover:bg-gray-100">Xem</a>
                                         </li>
                                         <li>
-                                            <a href="#"
-                                                class="block py-2 px-4 hover:bg-gray-100">Đánh giá</a>
+                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Đánh giá</a>
                                         </li>
                                         <li>
                                             <a href="{{ route('admin.products.edit', $product) }}"
@@ -168,4 +167,4 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection 
