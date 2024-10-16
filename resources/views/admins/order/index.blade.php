@@ -150,9 +150,12 @@
                                                 <h1 class="text-2xl font-semibold">Đơn hàng</h1>
                                                 <div class="flex justify-center gap-2">
                                                     @if ($order->orderStatus->name === 'Hoàn thành')
-                                                        <a href="">
-                                                            <button class="mt-4 button-red w-36">Xem hóa đơn</button>
-                                                        </a>                                                 
+                                                        @if ($order->invoice)
+                                                        <a
+                                                            href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
+                                                            <button class="mt-4 button-red">Xem hóa đơn</button>
+                                                        </a>
+                                                        @endif
                                                     @endif
                                                     @php
                                                         // Xác định màu sắc dựa trên trạng thái đơn hàng
