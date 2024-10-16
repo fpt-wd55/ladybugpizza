@@ -20,19 +20,19 @@ class ProfileController extends Controller
 {
 	public function index()
 	{
-		$users = Auth::user();
-		return view('clients.profile.index', compact('users'));
+		$user = Auth::user();
+		return view('clients.profile.index', compact('user'));
 	}
 
 	public function postUpdate(UpdateUserRequest $request)
 	{
 		$user = Auth::user();
-		if($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $name = $file->getClientOriginalName();
-            $file->move('storage/uploads/avatars', $name);
-            $user['avatar'] = $name;
-        }
+		if ($request->hasFile('avatar')) {
+			$file = $request->file('avatar');
+			$name = $file->getClientOriginalName();
+			$file->move('storage/uploads/avatars', $name);
+			$user['avatar'] = $name;
+		}
 		$gender = null;
 		if ($request->gender == 'male') {
 			$gender = 1;
@@ -168,18 +168,20 @@ class ProfileController extends Controller
 		]);
 	}
 
-	public function membershipHistory() {
+	public function membershipHistory()
+	{
 		return view('clients.profile.membership.history');
 	}
 
-	public function membershipReceive() {
+	public function membershipReceive()
+	{
 		return view('clients.profile.membership.receive');
 	}
 
 	public function address()
 	{
-        $user = Auth::user();
-        $addresses = Address::where('user_id', $user->id)->with('user')->paginate(6);
+		$user = Auth::user();
+		$addresses = Address::where('user_id', $user->id)->with('user')->paginate(6);
 		return view('clients.profile.address.index', compact('addresses'));
 	}
 
@@ -192,9 +194,14 @@ class ProfileController extends Controller
 	{
 		return view('clients.profile.promotion');
 	}
-    public function addLocation() {
-        return view('clients.profile.address.add');
-    }
+	public function addLocation()
+	{
+		return view('clients.profile.address.add');
+	}
+
+	public function updateLocation(Request $request)
+	{
+	}
 
 	public function storeLocation(AddressRequest $request)
 	{
@@ -237,40 +244,39 @@ class ProfileController extends Controller
 		$addressData['lat'] = $lat;
 		Address::create($addressData);
 
-        return redirect()->route('client.profile.address')->with('success', 'Thêm địa chỉ thành công');
+		return redirect()->route('client.profile.address')->with('success', 'Thêm địa chỉ thành công');
 	}
 
-        protected function convertAddressToCoordinates($fullAddress) {
-            $client = new Client();
-            try {
-                $response = $client->get('https://nominatim.openstreetmap.org/search', [
-                    'query' => [
-                        'q' => $fullAddress,
-                        'format' => 'json',
-                    ],
-                ]);
-            } catch (\Exception $e) {
-                dd($e->getMessage());
-            }
+	protected function convertAddressToCoordinates($fullAddress)
+	{
+		$client = new Client();
+		try {
+			$response = $client->get('https://nominatim.openstreetmap.org/search', [
+				'query' => [
+					'q' => $fullAddress,
+					'format' => 'json',
+				],
+			]);
+		} catch (\Exception $e) {
+			dd($e->getMessage());
+		}
 
-            $data = json_decode($response->getBody(), true);
+		$data = json_decode($response->getBody(), true);
 
-            if (isset($data[0])) {
-                $location = $data[0];
-                return [$location['lon'], $location['lat']];
-            }
+		if (isset($data[0])) {
+			$location = $data[0];
+			return [$location['lon'], $location['lat']];
+		}
 
-            return [null, null];
-        }
+		return [null, null];
+	}
 
-    public function editLocation(Address $address){
-        return view('clients.profile.address.edit', compact('address'));
-    }
+	public function editLocation(Address $address)
+	{
+		return view('clients.profile.address.edit', compact('address'));
+	}
 
-    public function updateLocation(AddressRequest $request)
-    {
 
-    }
 
 	private function getAddressNamesByCodes($provinceCode, $districtCode, $wardCode)
 	{
@@ -330,5 +336,9 @@ class ProfileController extends Controller
 
 
 
-	public function destroyLocation(Request $request) {}
+	public function destroyLocation(Request $request)
+	{
+		$client = new Client();
+	}
+
 }
