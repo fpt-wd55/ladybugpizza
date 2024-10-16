@@ -114,36 +114,36 @@
                                     <li class="me-2">
                                         <a href="#"
                                             class="inline-block px-4 pb-2 text-red-600 border-b-2 border-red-600 rounded-t-lg"
-                                            aria-current="page">Tất cả lịch sử</a>
-                                    </li>
-                                    <li class="me-2">
-                                        <a href="#"
-                                            class="inline-block px-4 pb-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
-                                            Đã nhận</a>
-                                    </li>
-                                    <li class="me-2">
-                                        <a href="#"
-                                            class="inline-block px-4 pb-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
-                                            Đã dùng</a>
+                                            aria-current="page">Tất cả lịch sử nhận điểm</a>
                                     </li>
                                 </ul>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
-                                @for ($i = 0; $i < 5; $i++)
-                                    <div class="product-card p-4 flex items-center justify-between">
-                                        <div class="text-sm space-y-2">
-                                            <p class="font-medium">
-                                                <span class="uppercase me-2">AOHDJRNF</span>
-                                                <span class="badge-yellow inline-flex items-center">450 @svg('tabler-coins', 'icon-sm ms-2')</span>
-                                            </p>
-                                            <p>Giảm 20% cho đơn tối thiểu 300,000đ</p>
-                                            <p>Thời Gian :<span class="font-medium"> 25-07-2024</span></p>
-                                        </div>
-                                        <div>
-                                           <p class="text-[#D30A0A] text-lg font-semibold">+100</p>
-                                        </div>
+                                @forelse ($pointsHistory as $item)
+                                    
+                                <div class="product-card p-4 flex items-center justify-between">
+                                    <div class="text-sm space-y-1">
+                                        <p class="font-medium">
+                                            <span class="uppercase me-2 text-red-600">{{$item['action']}}</span>
+                                            <span class="badge-yellow inline-flex items-center">{{$item['points_added']}} @svg('tabler-coins', 'icon-sm ms-2')</span>
+                                        </p>
+                                        <p>Thời gian: <span class="font-medium">{{ \Carbon\Carbon::parse($item['created_at'])->format('h:i A') }}</span></p>
+                                        <p>Ngày : <span class="font-medium">{{ \Carbon\Carbon::parse($item['created_at'])->format('d/m/Y') }}</span></p>
+                                        
                                     </div>
-                                @endfor
+                                    <div>
+                                       <p class="text-[#D30A0A] text-lg font-semibold">+{{$item['points_added']}} </p>
+                                    </div>
+                                </div>
+                                @empty
+                               
+                                        <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                                            @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                                            <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                                        </div>
+                                 
+                                @endforelse
+                                
                             
                         </div>
                     </div>

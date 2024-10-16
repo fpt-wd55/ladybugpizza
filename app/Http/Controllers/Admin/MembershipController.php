@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use App\Models\Membership;
 use Illuminate\Http\Request;
 use App\Models\MembershipRank;
 use App\Http\Controllers\Controller;
+use App\Models\Log;
 
 class MembershipController extends Controller
 {
@@ -31,7 +33,7 @@ class MembershipController extends Controller
             // Gán rank cho mỗi membership
             $membership->rank_name = $currentRank->name;
             $membership->rank_img = $currentRank->icon;
-        } 
+        }
         // Gán màu cho từng rank
         foreach ($memberships as $membership) {
             switch ($membership->rank_name) {
@@ -105,8 +107,26 @@ class MembershipController extends Controller
         $img = $currentRank->icon;
         $rank = $currentRank->name;
 
+        $logs = Log::where('user_id', $membership->user_id)
+            ->where('action', 'Cộng điểm')
+            ->get();
+
+        $pointsHistory= [];
+
+        foreach ($logs as $log) {
+            // Giả sử description có định dạng "Cộng {số điểm} điểm"
+            preg_match('/Cộng (\d+) điểm/', $log->description, $matches);
+            if (isset($matches[1])) {
+                $pointsHistory[] = [
+                    'action' => $log->action,
+                    'points_added' => $matches[1], // Số điểm đã cộng
+                    'created_at' => $log->created_at, 
+                ];
+            }
+        }
+
         // Trả về view với dữ liệu của thành viên, rank, và progress
-        return view('admins.memberships.edit', compact('membership', 'progress', 'img', 'rank'));
+        return view('admins.memberships.edit', compact('membership', 'progress', 'img', 'rank','pointsHistory'));
     }
 
 
