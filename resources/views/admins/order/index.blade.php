@@ -105,17 +105,12 @@
                             <td class="px-4 py-2">
                                 <button
                                     class="px-4 py-2 text-white rounded-xl w-36
-                                {{ $order->orderStatus->name === 'Cho xác nhận'
-                                    ? 'bg-yellow-500'
-                                    : ($order->orderStatus->name === 'Đã xác nhận'
-                                        ? 'bg-blue-500'
-                                        : ($order->orderStatus->name === 'Đang giao hàng'
-                                            ? 'bg-orange-500'
-                                            : ($order->orderStatus->name === 'Đã giao hàng'
-                                                ? 'bg-green-600'
-                                                : ($order->orderStatus->name === 'Đã hủy'
-                                                    ? 'bg-slate-600'
-                                                    : 'bg-gray-500')))) }}">
+                                {{ $order->orderStatus->name === 'Chờ xác nhận'? 'bg-yellow-500': 
+                                ($order->orderStatus->name === 'Đã xác nhận'? 'bg-blue-500': 
+                                ($order->orderStatus->name === 'Đang tìm tài xế'? 'bg-gray-500': 
+                                ($order->orderStatus->name === 'Đang giao hàng'? 'bg-gray-500' : 
+                                ($order->orderStatus->name === 'Hoàn thành'? 'bg-green-600':
+                                ($order->orderStatus->name === 'Đã hủy' ? 'bg-slate-600': 'bg-gray-500'))))) }}">
                                     {{ $order->orderStatus->name }}
                                 </button>
                             </td>
@@ -156,9 +151,8 @@
                                                 <div class="flex justify-center gap-2">
                                                     @if ($order->orderStatus->name === 'Hoàn thành')
                                                         <a href="">
-                                                            <button class="mt-4 button-red">Xem hóa đơn</button>
-                                                        </a>
-                                                    @else
+                                                            <button class="mt-4 button-red w-36">Xem hóa đơn</button>
+                                                        </a>                                                 
                                                     @endif
                                                     @php
                                                         // Xác định màu sắc dựa trên trạng thái đơn hàng
@@ -166,14 +160,14 @@
                                                             'Hoàn thành' => 'button-green',
                                                             'Đang giao hàng' => 'button-gray',
                                                             'Đang tìm tài xế' => 'button-gray',
-                                                            'Chờ xác nhận' => 'button-blue',
-                                                            'Đã xác nhận' => 'button-red',
+                                                            'Chờ xác nhận' => 'button-yellow',
+                                                            'Đã xác nhận' => 'button-blue',
                                                             'Đã hủy' => 'button-red',
                                                             default => 'button-gray', // Trạng thái mặc định
                                                         };
                                                     @endphp
 
-                                                    <button class="mt-4 {{ $buttonClass }}">
+                                                    <button class="mt-4 {{ $buttonClass }} w-36">
                                                         {{ $order->orderStatus->name }}
                                                     </button>
 
@@ -211,8 +205,11 @@
                                                 </div>
                                             </div> --}}
                                             <div class="flex justify-end">
-                                                <button class="button-blue">Sửa</button>
+                                                <a href="{{ route('admin.orders.edit', $order->id) }}">
+                                                    <button class="button-blue">Sửa</button>
+                                                </a>
                                             </div>
+                                            
                                         </div>
                                     </div>
                                 </div>

@@ -136,6 +136,10 @@ Breadcrumbs::for('admin.orders.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
     $trail->push('Đơn hàng', route('admin.promotions.index'));
 });
+Breadcrumbs::for('admin.orders.edit', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.orders.index');
+    $trail->push('Sửa trạng thái đơn hàng', route('admin.promotions.index'));
+});
 
 // Product
 Breadcrumbs::for('admin.products.index', function (BreadcrumbTrail $trail) {

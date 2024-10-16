@@ -31,6 +31,7 @@ class OrderController extends Controller
         $invoices = Invoice::all();
         return view('admins.order.index', compact('orders','invoices'));
     }
+    
 
 
 
@@ -65,18 +66,30 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Order $order)
+    public function edit($id)
     {
-        //
-    }
+        $order = Order::findOrFail($id);
+        $statuses = ['Hoàn thành', 'Đang giao hàng', 'Đang tìm tài xế', 'Chờ xác nhận', 'Đã xác nhận', 'Đã hủy'];
+        return view('admins.order.edit', compact('order', 'statuses'));    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Order $order)
-    {
-        //
-    }
+    public function update(Request $request, $id)
+{
+    $order = Order::findOrFail($id);
+
+    // Xác thực dữ liệu
+    $request->validate([
+        'status' => 'required|string|in:Hoàn thành,Đang giao hàng,Đang tìm tài xế,Chờ xác nhận,Đã xác nhận,Đã hủy',
+    ]);
+
+    // Cập nhật trạng thái
+    $order->orderStatus->name = $request->status;
+    $order->orderStatus->save();
+
+    return redirect()->route('admin.orders.edit', $id)->with('success', 'Trạng thái đã được cập nhật!');
+}
 
     /**
      * Remove the specified resource from storage.
