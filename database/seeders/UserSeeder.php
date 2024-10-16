@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
         $now = Carbon::now();
         $faker = Faker::create();
 
-        $usersData = [
+        $datas = [
             [
                 'username' => 'quandohong28',
                 'role_id' => 3,
@@ -121,7 +121,7 @@ class UserSeeder extends Seeder
             ],
         ];
 
-        foreach ($usersData as $data) {
+        foreach ($datas as $data) {
             $user = User::create($data);
 
             Address::create([

@@ -34,6 +34,7 @@
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="px-4 py-3">STT</th>
+                        <th scope="col" class="px-4 py-3">Hình ảnh</th>
                         <th scope="col" class="px-4 py-3">Tên danh mục</th>
                         <th scope="col" class="px-4 py-3">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
@@ -48,6 +49,10 @@
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">
                                 {{ ($category->currentPage() - 1) * $category->perPage() + $key + 1 }}
                             </th>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
+                                <img loading="lazy" src="{{ asset('storage/uploads/categories/' . $item->image) }}"
+                                    class="img-sm img-circle object-cover">
+                            </td>
                             <td class="px-4 py-3">{{ $item->name }}</td>
                             <td class="px-4 py-3">
 

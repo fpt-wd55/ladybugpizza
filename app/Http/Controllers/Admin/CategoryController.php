@@ -33,20 +33,28 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        $slug = $this->createSlug($request->name);
+        // Xu ly hinh anh
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = time() . '_' . pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $image->getClientOriginalExtension();
+        }
 
-        $category = Category::create([
+        $data = [
             'name' => $request->name,
-            'slug' => $slug,
+            'slug' => $this->createSlug($request->name),
+            'image' => $image_name,
             'status' => $request->status ? 1 : 2,
-        ]);
+        ];
 
-        if ($category) {
+        if (Category::create($data)) {
+            // Xu ly upload anh
+            $image->storeAs('public/uploads/categories', $image_name);
+
             return redirect()->route('admin.categories.index')->with('success', 'Thêm danh mục thành công');
-        } 
+        }
 
         return redirect()->back()->with('error', 'Thêm danh mục thất bại');
-    } 
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -61,16 +69,34 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      */
     public function update(CategoryRequest $request, Category $category)
-    {
+    { 
+        // Xu ly hinh anh
+        $image_name = $category->image;
+        $old_image = $category->image;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = time() . '_' . pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $image->getClientOriginalExtension();
+        }
 
-        $slug = $this->createSlug($request->name);
-
-        $category->update([
+        $data = [
             'name' => $request->name,
-            'slug' => $slug,
+            'slug' => $this->createSlug($request->name),
+            'image' => $image_name,
             'status' => $request->status ? 1 : 2,
-        ]);
-        return redirect()->route('admin.categories.index')->with('success', 'Cập nhật danh mục thành công');
+        ];
+
+        if ($category->update($data)) {
+            // Xu ly upload anh
+            if ($request->hasFile('image')) {
+                // Luu anh moi
+                $image->storeAs('public/uploads/categories', $image_name);
+                // Xoa anh cu
+                unlink(storage_path('app/public/uploads/categories/' . $old_image));
+            }
+            return redirect()->back()->with('success', 'Cập nhật danh mục thành công');
+        }else {
+            return redirect()->back()->with('error', 'Cập nhật danh mục thất bại');
+        }
     }
 
     /**
@@ -85,7 +111,7 @@ class CategoryController extends Controller
         Category::destroy($id);
 
         return redirect()->back()->with('success', 'Xóa danh mục thành công');
-    } 
+    }
 
     public function trashCategory()
     {
@@ -114,5 +140,5 @@ class CategoryController extends Controller
             $forceCategories->forceDelete();
             return redirect()->back()->with('success', 'Danh mục đã xóa vĩnh viễn');
         }
-    } 
+    }
 }
