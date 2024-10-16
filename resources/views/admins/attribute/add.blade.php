@@ -7,7 +7,7 @@
             <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm thuộc tính</h3>
             <form action="{{ route('admin.attributes.store') }}" method="POST">
                 @csrf
-                <div class="grid gap-4 mb-4 sm:grid-cols-1">\
+                <div class="grid gap-4 mb-4 sm:grid-cols-1">
                     <div class="grid gap-4 mb-4 sm:grid-cols-3">
                         <div>
                             <label for="attribute_name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên thuộc

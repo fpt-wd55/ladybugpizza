@@ -95,12 +95,11 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $product->sku }}">
                                         <li>
-                                            <a href="{{ route('client.product.show', $product->slug) }}"
+                                            <a href="{{ route('client.product.show', $product->slug) }} " target="_blank"
                                                 class="block py-2 px-4 hover:bg-gray-100">Xem</a>
                                         </li>
                                         <li>
-                                            <a href="#"
-                                                class="block py-2 px-4 hover:bg-gray-100">Đánh giá</a>
+                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Đánh giá</a>
                                         </li>
                                         <li>
                                             <a href="{{ route('admin.products.edit', $product) }}"
