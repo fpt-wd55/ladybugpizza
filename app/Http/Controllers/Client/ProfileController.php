@@ -24,21 +24,6 @@ class ProfileController extends Controller
 		return view('clients.profile.index', compact('users'));
 	}
 
-	public function postUpdate(Request $request, $id)
-	{
-		$request->validate([
-			'fullname' => 'required|string|max:255',
-			'email' => 'required|email|max:255',
-			'phone' => 'nullable|string|max:20',
-			'gender' => 'nullable|string',
-			'date_of_birth' => 'nullable|date',
-		]);
-		$user = Auth::user();
-		return view('clients.profile.index', compact('user'));
-	}
-
-		$user = User::findOrFail($id);
-
 	public function postUpdate(UpdateUserRequest $request)
 	{
 		$user = Auth::user();
@@ -211,8 +196,6 @@ class ProfileController extends Controller
         return view('clients.profile.address.add');
     }
 
-	public function updateLocation(Request $request) {}
-
 	public function storeLocation(AddressRequest $request)
 	{
 		$data = $request->all();
@@ -346,30 +329,6 @@ class ProfileController extends Controller
 	}
 
 
-	protected function convertAddressToCoordinates($fullAddress)
-	{
-		$client = new Client();
-		try {
-			$response = $client->get('https://nominatim.openstreetmap.org/search', [
-				'query' => [
-					'q' => $fullAddress,
-					'format' => 'json',
-				],
-				'headers' => [
-					'User-Agent' => 'YourAppName/1.0 (http://yourwebsite.com)',
-				],
-			]);
-		} catch (\Exception $e) {
-			dd($e->getMessage());
-		}
 
-		$data = json_decode($response->getBody(), true);
-
-		if (isset($data[0])) {
-			$location = $data[0];
-			return [$location['lon'], $location['lat']];
-		}
-
-		return [null, null];
-	}
 	public function destroyLocation(Request $request) {}
+}
