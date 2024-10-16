@@ -15,7 +15,6 @@
                 <p class="mb-12 uppercase text-gray-500">Ngon đến từng miếng, đậm vị yêu thương</p>
                 @include('partials.clients.categories')
             </div>
-
             {{-- combo --}}
             <div class="mb-8">
                 {{-- <p class="font-semibold uppercase mb-4">Combo</p> --}}
