@@ -19,7 +19,6 @@
             {{-- combo --}}
             <div class="mb-8">
                 {{-- <p class="font-semibold uppercase mb-4">Combo</p> --}}
-
                 <div class="no-scrollbar flex w-full items-center gap-4 overflow-x-auto">
                     @foreach ($combos as $combo)
                     <a class="product-card relative flex w-full flex-shrink-0 overflow-hidden md:w-2/3" href="">
