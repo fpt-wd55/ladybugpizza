@@ -20,114 +20,58 @@
                         </li>
                         <li class="me-2">
                             <a class="inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2 hover:border-gray-300 hover:text-gray-600"
-                                href="{{ route('client.profile.membership-receive', ['tab' => 'change']) }}">Lịch sử đổi</a>
+                                href="{{ route('client.profile.membership-history', ['tab' => 'change']) }}">Lịch sử đổi</a>
                         </li>
                     </ul>
                 </div>
 
                 {{-- history --}}
-                <div>
-                    <div class="card p-4 md:p-8">
-
-
-                        <div class="mb-4 border-b border-gray-300">
-                            <button class="flex w-full items-center justify-between py-4">
-
-                                <span class="text-left text-sm font-normal">
-                                    <p class="font-thin">Ngày 14/10/2024</p>
-                                    <p>Mua hàng tích điểm</p>
-                                    <p>vào lúc 08:00 tại LADYBUGPIZZA</p>
-                                    <p>Đơn hàng Pizza Pesto Burrata và 2 sản phẩm.</p>
-                                </span>
-
-                                <span class="transition text-red-500" id="icon-1">
-                                    +1000
-                                </span>
-                            </button>
-
+                @switch($tab)
+                    @case('receive')
+                        <div class="card p-4 md:p-8">
+                            @for ($i = 0; $i < 10; $i++)
+                                <div class="mb-4 border-b border-gray-300">
+                                    <button class="flex w-full items-center justify-between py-4">
+                                        <span class="text-left text-sm font-normal">
+                                            <p>Ngày 3/10/10/2024</p>
+                                            <p>Đổi phiếu mua hàng thành công</p>
+                                            <p>vào lúc 08:tại LADYBUGPIZZA</p>
+                                            <p>Bạn đã đổi phiếu mua hàng thành công</p>
+                                        </span>
+                                        <span class="transition text-red-500" id="icon-1">
+                                            -1234
+                                        </span>
+                                    </button>
+                                </div>
+                            @endfor
                         </div>
-                        <div class="mb-4 border-b border-gray-300">
-                            <button class="flex w-full items-center justify-between py-4">
+                    @break
 
-                                <span class="text-left text-sm font-normal">
-                                    <p class="font-thin">Ngày 14/10/2024</p>
-                                    <p>Mua hàng tích điểm</p>
-                                    <p>vào lúc 08:00 tại LADYBUGPIZZA</p>
-                                    <p>Đơn hàng Pizza Pesto Burrata và 2 sản phẩm.</p>
-                                </span>
-
-                                <span class="transition text-red-500" id="icon-1">
-                                    +1000
-                                </span>
-                            </button>
-
+                    @case('change')
+                        <div class="card p-4 md:p-8">
+                            @for ($i = 0; $i < 10; $i++)
+                                <div class="mb-4 border-b border-gray-300">
+                                    <button class="flex w-full items-center justify-between py-4">
+                                        <span class="text-left text-sm font-normal">
+                                            <p>Ngày 3/10/10/2024</p>
+                                            <p>Đổi phiếu mua hàng thành công</p>
+                                            <p>vào lúc 08:tại LADYBUGPIZZA</p>
+                                            <p>Bạn đã đổi phiếu mua hàng thành công</p>
+                                        </span>
+                                        <span class="transition text-red-500" id="icon-1">
+                                            -1234
+                                        </span>
+                                    </button>
+                                </div>
+                            @endfor
                         </div>
-                        <div class="mb-4 border-b border-gray-300">
-                            <button class="flex w-full items-center justify-between py-4">
+                    @break
 
-                                <span class="text-left text-sm font-normal">
-                                    <p class="font-thin">Ngày 14/10/2024</p>
-                                    <p>Mua hàng tích điểm</p>
-                                    <p>vào lúc 08:00 tại LADYBUGPIZZA</p>
-                                    <p>Đơn hàng Pizza Pesto Burrata và 2 sản phẩm.</p>
-                                </span>
-
-                                <span class="transition text-red-500" id="icon-1">
-                                    +1000
-                                </span>
-                            </button>
-
+                    @default
+                        <div>
+                            khoong tim thay trang
                         </div>
-                        <div class="mb-4 border-b border-gray-300">
-                            <button class="flex w-full items-center justify-between py-4">
-
-                                <span class="text-left text-sm font-normal">
-                                    <p class="font-thin">Ngày 14/10/2024</p>
-                                    <p>Mua hàng tích điểm</p>
-                                    <p>vào lúc 08:00 tại LADYBUGPIZZA</p>
-                                    <p>Đơn hàng Pizza Pesto Burrata và 2 sản phẩm.</p>
-                                </span>
-
-                                <span class="transition text-red-500" id="icon-1">
-                                    +1000
-                                </span>
-                            </button>
-
-                        </div>
-                        <div class="mb-4 border-b border-gray-300">
-                            <button class="flex w-full items-center justify-between py-4">
-
-                                <span class="text-left text-sm font-normal">
-                                    <p class="font-thin">Ngày 14/10/2024</p>
-                                    <p>Mua hàng tích điểm</p>
-                                    <p>vào lúc 08:00 tại LADYBUGPIZZA</p>
-                                    <p>Đơn hàng Pizza Pesto Burrata và 2 sản phẩm.</p>
-                                </span>
-
-                                <span class="transition text-red-500" id="icon-1">
-                                    +1000
-                                </span>
-                            </button>
-
-                        </div>
-                        <div class="mb-4 border-b border-gray-300">
-                            <button class="flex w-full items-center justify-between py-4">
-
-                                <span class="text-left text-sm font-normal">
-                                    <p class="font-thin">Ngày 14/10/2024</p>
-                                    <p>Mua hàng tích điểm</p>
-                                    <p>vào lúc 08:00 tại LADYBUGPIZZA</p>
-                                    <p>Đơn hàng Pizza Pesto Burrata và 2 sản phẩm.</p>
-                                </span>
-
-                                <span class="transition text-red-500" id="icon-1">
-                                    +1000
-                                </span>
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
+                @endswitch
             </div>
         </div>
     </div>
