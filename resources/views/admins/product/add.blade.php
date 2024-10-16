@@ -11,10 +11,10 @@
                     <div class="sm:col-span-2">
                         <div class="flex items-center justify-center w-full mb-4 ">
                             <label for="dropzone-file"
-                                class="flex flex-col items-center justify-center w-full h-20 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                class="flex flex-col items-center justify-center w-full h-20 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                     @svg('tabler-cloud-upload', 'w-8 h-8 text-gray-400 mb-2')
-                                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
+                                    <p class="mb-2 text-sm text-gray-500"><span
                                             class="font-semibold">Nhấn để tải lên</span> hoặc kéo thả
                                         vào đây
                                     </p>
@@ -61,7 +61,8 @@
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
                                     <option selected disabled>Danh mục</option>
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" data-has-attribute="{{ isset($category->attributes) ? 1 : 0 }}"
+                                        <option value="{{ $category->id }}"
+                                            data-has-attribute="{{ count($category->attributes) }}"
                                             {{ old('category_id') == $category->id ? 'selected' : '' }}>
                                             {{ $category->name }}
                                         </option>
@@ -126,7 +127,7 @@
                                     <div
                                         class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
                                     </div>
-                                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Hoạt
+                                    <span class="ms-3 text-sm font-medium text-gray-900">Hoạt
                                         động</span>
                                 </label>
                                 @error('status')
@@ -144,7 +145,7 @@
                                     <div
                                         class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
                                     </div>
-                                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Sản phẩm nổi
+                                    <span class="ms-3 text-sm font-medium text-gray-900">Sản phẩm nổi
                                         bật</span>
                                 </label>
                                 @error('is_featured')
@@ -187,14 +188,18 @@
             const quantity = document.getElementById('quantity');
 
             // if category_id->name == 'Pizza' then show quantity
-            $category_id.addEventListener('change', function() {
-                const hasAttribute = $category_id.options[$category_id.selectedIndex].getAttribute('data-has-attribute');
-                if (hasAttribute == 1) {
-                    $quantity.style.display = 'block';
+            category_id.addEventListener('change', function() {
+                const hasAttribute = category_id.options[category_id.selectedIndex].getAttribute(
+                    'data-has-attribute');
+                console.log(hasAttribute);
+                if (hasAttribute == 0) {
+                    quantity.value = null;
+                    quantity.removeAttribute('disabled');
                 } else {
-                    $quantity.style.display = 'none';
+                    quantity.value = 0;
+                    quantity.setAttribute('disabled', 'disabled');
                 }
-            }); 
+            });
         });
     </script>
-@endsection 
+@endsection
