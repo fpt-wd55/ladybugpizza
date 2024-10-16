@@ -26,11 +26,10 @@ class ProductRequest extends FormRequest
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'description' => 'required|string',
             'category_id' => 'required|exists:categories,id',
-            'price' => 'required|numeric',
-            'discount_price' => 'nullable|numeric',
-            'quantity' => 'nullable|numeric',
-            'sku' => 'required|string|max:',
-            'status' => 'required',
+            'price' => 'required|numeric|min:0',
+            'discount_price' => 'nullable|numeric|min:0|lte:price',
+            'quantity' => 'required|integer|min:0',
+            'sku' => 'required|string|max:25|unique:products,sku',
         ];
     }
 
@@ -50,12 +49,17 @@ class ProductRequest extends FormRequest
             'category_id.exists' => 'Danh mục sản phẩm không tồn tại',
             'price.required' => 'Vui lòng nhập giá sản phẩm',
             'price.numeric' => 'Giá sản phẩm phải là số',
+            'price.min' => 'Giá sản phẩm không được nhỏ hơn 0',
             'discount_price.numeric' => 'Giá giảm phải là số',
-            'quantity.numeric' => 'Số lượng phải là số',
+            'discount_price.min' => 'Giá giảm không được nhỏ hơn 0',
+            'discount_price.lte' => 'Giá giảm phải nhỏ hơn hoặc bằng giá sản phẩm',
+            'quantity.required' => 'Vui lòng nhập số lượng',
+            'quantity.integer' => 'Số lượng phải là số nguyên',
+            'quantity.min' => 'Số lượng không được nhỏ hơn 0',
             'sku.required' => 'Vui lòng nhập SKU',
             'sku.string' => 'SKU phải là chuỗi',
             'sku.max' => 'SKU không được vượt quá 25 ký tự',
-            'status.required' => 'Vui lòng chọn trạng thái sản phẩm',
+            'sku.unique' => 'SKU đã tồn tại',
         ];
     }
 }

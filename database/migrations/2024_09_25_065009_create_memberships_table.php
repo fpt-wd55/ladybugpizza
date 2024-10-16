@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->integer('points')->default(0);
-            $table->foreignId('rank_id')->constrained('membership_ranks');
+            $table->foreignId('rank_id')->constrained('membership_ranks')->onDelete('cascade');
             $table->integer('status')->default(1)->comment('1:active; 2: inactive');
             $table->integer('total_spent')->default(0);
             $table->timestamps();

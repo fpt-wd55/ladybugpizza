@@ -9,37 +9,24 @@
                 @csrf
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
                     <div class="sm:col-span-2">
-                        <div class="grid gap-4 sm:grid-cols-3">
-                            <div class="sm:col-span-3">
-                                <div class="grid gap-4 sm:grid-cols-2">
-                                    <div class="sm:col-span-2">
-                                        <div class="grid gap-4 mb-4 sm:grid-cols-12">
-                                            <img loading="lazy" class="w-20 h-20 rounded-md"
-                                                src="http://127.0.0.1:8000/storage/uploads/avatars/user-default.png">
-                                            <div class="flex items-center justify-center w-full col-span-5">
-                                                <label for="dropzone-file"
-                                                    class="flex flex-col items-center justify-center w-full h-20 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                    <div class="flex flex-col items-center justify-center">
-                                                        @svg('tabler-cloud-upload', 'w-8 h-8 text-gray-400 mb-2')
-                                                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
-                                                                class="font-semibold">Nhấn để tải lên</span> hoặc kéo thả
-                                                            vào đây
-                                                        </p>
-                                                    </div>
-                                                    <input id="dropzone-file" name="image" type="file"
-                                                        class="hidden" />
-                                                </label>
-                                                @error('image')
-                                                    <p class="mt-2 text-sm text-red-600 ">
-                                                        {{ $message }}
-                                                    </p>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="flex items-center justify-center w-full mb-4 ">
+                            <label for="dropzone-file"
+                                class="flex flex-col items-center justify-center w-full h-20 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    @svg('tabler-cloud-upload', 'w-8 h-8 text-gray-400 mb-2')
+                                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
+                                            class="font-semibold">Nhấn để tải lên</span> hoặc kéo thả
+                                        vào đây
+                                    </p>
                                 </div>
-                            </div>
+                                <input id="dropzone-file" name="image" type="file" class="hidden" />
+                            </label>
                         </div>
+                        @error('image')
+                            <p class="mt-2 text-sm text-red-600 ">
+                                {{ $message }}
+                            </p>
+                        @enderror
                     </div>
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 sm:grid-cols-3">
@@ -74,7 +61,7 @@
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
                                     <option selected disabled>Danh mục</option>
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}"
+                                        <option value="{{ $category->id }}" data-has-attribute="{{ isset($category->attributes) ? 1 : 0 }}"
                                             {{ old('category_id') == $category->id ? 'selected' : '' }}>
                                             {{ $category->name }}
                                         </option>
@@ -91,21 +78,9 @@
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 sm:grid-cols-3">
                             <div>
-                                <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số
-                                    lượng</label>
-                                <input type="number" name="quantity" id="quantity" value="{{ old('quantity') }}"
-                                    placeholder="Số lượng"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                                @error('quantity')
-                                    <p class="mt-2 text-sm text-red-600 ">
-                                        {{ $message }}
-                                    </p>
-                                @enderror
-                            </div>
-                            <div>
                                 <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá bán thường
                                     (đ)</label>
-                                <input type="text" name="price" id="price" value="{{ old('price') }}"
+                                <input type="number" name="price" id="price" value="{{ old('price') }}"
                                     placeholder="Giá bán thường"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('price')
@@ -117,7 +92,7 @@
                             <div>
                                 <label for="discount_price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá khuyến
                                     mãi (đ)</label>
-                                <input type="text" name="discount_price" id="discount_price" placeholder="Giá khuyến mãi"
+                                <input type="number" name="discount_price" id="discount_price" placeholder="Giá khuyến mãi"
                                     value="{{ old('discount_price') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('discount_price')
@@ -126,6 +101,22 @@
                                     </p>
                                 @enderror
                             </div>
+                            <div>
+                                <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số
+                                    lượng</label>
+                                <input type="number" name="quantity" id="quantity" value="{{ old('quantity') }}"
+                                    placeholder="Số lượng"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                @error('quantity')
+                                    <p class="mt-2 text-sm text-red-600 ">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <div class="grid gap-4 mb-4 sm:grid-cols-3">
                             <div>
                                 <label for="status" class="block mb-4 text-sm font-medium text-gray-900 ">Trạng
                                     thái</label>
@@ -168,7 +159,7 @@
                         <label for="description" class="block mb-2 text-sm font-medium text-gray-900 ">Mô tả sản
                             phẩm</label>
                         <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50">
-                            <textarea id="wysiwygeditor" name="description"></textarea>
+                            <textarea id="wysiwygeditor" name="description">{{ old('description') }}</textarea>
                         </div>
                         @error('description')
                             <p class="mt-2 text-sm text-red-600 ">
@@ -176,7 +167,6 @@
                             </p>
                         @enderror
                     </div>
-
                 </div>
                 <div class="flex items-center space-x-4 mt-5">
                     <a href="{{ route('admin.products.index') }}" class="button-dark">
@@ -190,3 +180,21 @@
         </div>
     </div>
 @endsection
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const category_id = document.getElementById('category_id');
+            const quantity = document.getElementById('quantity');
+
+            // if category_id->name == 'Pizza' then show quantity
+            $category_id.addEventListener('change', function() {
+                const hasAttribute = $category_id.options[$category_id.selectedIndex].getAttribute('data-has-attribute');
+                if (hasAttribute == 1) {
+                    $quantity.style.display = 'block';
+                } else {
+                    $quantity.style.display = 'none';
+                }
+            }); 
+        });
+    </script>
+@endsection 

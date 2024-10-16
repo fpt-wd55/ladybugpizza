@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('min_order_total')->nullable();
             $table->integer('max_discount')->nullable();
             $table->integer('is_global')->default(2)->comment('1: Tất cả , 2: Không phải tất cả');
-            $table->foreignId('rank_id')->nullable()->constrained('membership_ranks');
+            $table->foreignId('rank_id')->nullable()->constrained('membership_ranks')->onDelete('cascade');
             $table->integer('status')->default(1)->comment('1: active, 2: inactive');
             $table->timestamps();
         });
