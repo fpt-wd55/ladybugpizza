@@ -59,7 +59,6 @@
                 <button class="mt-12 button-red uppercase">Đặt ngay</button>
             </div>
         </div>
-
         <div class="grid grid-cols-2 mt-10 gap-4 md:gap-8">
             <img loading="lazy" class="rounded-md" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
                 alt="">
