@@ -25,7 +25,6 @@ class MembershipSeeder extends Seeder
                 'user_id' => $user->id,
                 'points' => rand(0, 10000),
                 'rank_id' => $ranks->random()->id,
-                'status' => 1,
                 'total_spent' => rand(0, 1000000),
                 'created_at' => $now,
                 'updated_at' => $now,
