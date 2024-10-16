@@ -30,7 +30,6 @@
                         </ul>
                     </div>
                 </div>
-
                 {{-- Mục đích sử dụng thông tin --}}
                 <div class="mb-4">
                     <h3 class="font-semibold text-xs md:text-sm mb-4">2. Mục đích sử dụng thông tin:</h3>
