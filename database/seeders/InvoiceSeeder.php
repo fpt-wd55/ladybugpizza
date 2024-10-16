@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Transaction;
@@ -19,20 +18,16 @@ class InvoiceSeeder extends Seeder
     {
         $now = Carbon::now();
 
-        $orders = Order::where('order_status_id', 4)->pluck('id')->toArray();
-
+        $orders = Order::where('order_status_id', 5)->pluck('id')->toArray();
         foreach ($orders as $order) {
-            $transaction = Transaction::where('order_id', $order)->pluck('id')->toArray();
-
-            if (!empty($transaction)) {
-                Invoice::create([
-                    'order_id' => $order,
-                    'invoice_number' => Str::random(10),
-                    'transaction_id' => $transaction[0],
-                    'created_at' => $now,
-                    'updated_at' => $now,
-                ]);
-            }
+            $transaction = Transaction::where('order_id', $order)->first();
+            Invoice::insert([
+                'order_id' => $order,
+                'invoice_number' => 'INV_' . Str::random(5),
+                'transaction_id' => $transaction->id,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]); 
         }
     }
 }

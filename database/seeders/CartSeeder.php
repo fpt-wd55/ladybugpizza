@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cart;
+use App\Models\ProductAttribute;
+use App\Models\Topping;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
@@ -15,12 +19,12 @@ class CartSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-        $users = DB::table('users')->pluck('id')->toArray();
-        $productAttributes = DB::table('product_attributes')->pluck('id')->toArray();
-        $toppings = DB::table('toppings')->pluck('id')->toArray();
+        $users = User::pluck('id')->toArray();
+        $productAttributes = ProductAttribute::pluck('id')->toArray();
+        $toppings = Topping::pluck('id')->toArray();
 
         for ($i = 1; $i < 200; $i++) {
-            DB::table('carts')->insert([
+            Cart::insert([
                 'user_id' => $faker->randomElement($users),
                 'quantity' => $faker->numberBetween(1, 10),
                 'price' => $faker->numberBetween(10000, 100000),

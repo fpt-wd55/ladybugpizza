@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Order;
 use Illuminate\Database\Seeder;
 use App\Models\Transaction;
 use Carbon\Carbon;
-use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
 
 class TransactionSeeder extends Seeder
@@ -17,21 +17,17 @@ class TransactionSeeder extends Seeder
     {
         $now = Carbon::now();
 
-        $faker = Faker::create();
+        $orders = Order::get();
 
-        $users = DB::table('users')->pluck('id')->toArray();
-        $orders = DB::table('orders')->pluck('id')->toArray();
-        $paymentMethods = DB::table('payment_methods')->pluck('id')->toArray();
-
-        for ($i = 1; $i < 200; $i++) {
-            Transaction::create([
-                'order_id' => $faker->randomElement($orders),
-                'user_id' => $faker->randomElement($users),
-                'transaction_code' => $faker->uuid,
+        foreach ($orders as $order) {
+            Transaction::insert([
+                'order_id' => $order->id,
+                'user_id' => $order->user_id,
+                'transaction_code' => $order->payment_method_id == 1 ? 'MOMO_' . rand(1000, 9999) : 'COD_' . rand(1000, 9999),
                 'transaction_date' => $now,
-                'payment_method_id' => $faker->randomElement($paymentMethods),
+                'payment_method_id' => $order->payment_method_id,
                 'amount' => rand(100000, 1000000),
-                'status' => rand(1, 2),
+                'status' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);

@@ -2,6 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\OrderStatus;
+use App\Models\PaymentMethod;
+use App\Models\ProductAttribute;
+use App\Models\Topping;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,15 +25,15 @@ class OrderSeeder extends Seeder
     {
         $now = Carbon::now();
         $faker = Faker::create();
-        $users = DB::table('users')->pluck('id')->toArray();
-        $addresses = DB::table('addresses')->pluck('id')->toArray();
-        $paymentMethods = DB::table('payment_methods')->pluck('id')->toArray();
-        $orderStatuses = DB::table('order_statuses')->pluck('id')->toArray();
-        $productAttributes = DB::table('product_attributes')->pluck('id')->toArray();
-        $toppings = DB::table('toppings')->pluck('id')->toArray();
+        $users = User::get()->pluck('id')->toArray();
+        $addresses = Address::get()->pluck('id')->toArray();
+        $paymentMethods = PaymentMethod::get()->pluck('id')->toArray();
+        $orderStatuses = OrderStatus::get()->pluck('id')->toArray();
+        $productAttributes = ProductAttribute::get()->pluck('id')->toArray();
+        $toppings = Topping::get()->pluck('id')->toArray();
 
         for ($i = 1; $i < 200; $i++) {
-            DB::table('orders')->insert([
+            Order::insert([
                 'user_id' => $faker->randomElement($users),
                 'promotion_id' => null,
                 'amount' => rand(100000, 1000000),
@@ -41,8 +49,7 @@ class OrderSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
-
-            DB::table('order_items')->insert([
+            OrderItem::insert([
                 'order_id' => $i,
                 'quantity' => rand(1, 10),
                 'price' => rand(10000, 100000),
