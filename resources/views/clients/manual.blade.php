@@ -6,7 +6,6 @@
     <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
         <div class="card p-4 md:p-8">
             <h2 class="font-semibold uppercase text-sm md:text-base mb-4">HƯỚNG DẪN MUA HÀNG</h2>
-
             {{-- Bước 1 --}}
             <div class="mb-4">
                 <h3 class="font-semibold text-xs md:text-sm mb-4">Bước 1: Chọn khuyến mãi hoặc sản phẩm
