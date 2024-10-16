@@ -26,7 +26,9 @@
                 </div>
 
                 {{-- history --}}
+
                 @switch($tab)
+                    @case(null)
                     @case('receive')
                         <div class="card p-4 md:p-8">
                             @for ($i = 0; $i < 10; $i++)
