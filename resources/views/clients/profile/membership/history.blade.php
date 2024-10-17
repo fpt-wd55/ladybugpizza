@@ -24,7 +24,6 @@
                         </li>
                     </ul>
                 </div>
-
                 {{-- history --}}
                 @switch($tab)
                     @case('receive')
