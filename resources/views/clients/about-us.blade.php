@@ -1,5 +1,4 @@
 @extends('layouts.client')
-
 @section('title', 'Về chúng tôi')
 @section('content')
     <div class="w-full">
