@@ -47,7 +47,6 @@
                             <a class="link-md" href="#">Xem hoá đơn</a>
                         </div>
                     </div>
-
                     <div class="max-h-0 overflow-hidden transition" id="content-{{ $j }}">
                         <hr class="my-4">
                         <div class="pb-5 text-sm">
