@@ -9,7 +9,6 @@
 
             <div class="card mb-8 w-full p-4 md:p-8">
                 <h3 class="mb-8 font-semibold uppercase">Lịch sử sử dụng điểm</h3>
-
                 {{-- tabs --}}
                 <div class="mb-4 border-b border-gray-200 text-center text-sm font-medium text-gray-500">
                     <ul class="-mb-px flex flex-wrap">
