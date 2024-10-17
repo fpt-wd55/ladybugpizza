@@ -127,9 +127,9 @@
             <div class="mb-4">
                 {{-- info --}}
                 <div class="mb-4 flex items-center gap-4">
-                    <img alt="" class="img-circle img-sm" loading="lazy" src="{{ asset('storage/uploads/avatars/user-default.png') }}">
+                    <img alt="" class="img-circle img-sm" loading="lazy" src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}">
                     <div>
-                        <p class="mb-1 text-sm font-medium">Đỗ Hồng Quân</p>
+                        <p class="mb-1 text-sm font-medium" >Đỗ Hồng Quân</p>
                         <p class="text-sm">25-07-2024 20:06 | Đế mỏng; Size S; Topping: Thịt bò, Hành tây</p>
                     </div>
                 </div>
