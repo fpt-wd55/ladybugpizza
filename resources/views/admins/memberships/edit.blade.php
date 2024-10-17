@@ -124,10 +124,8 @@
                 {{-- history --}}
                 @switch($tab)
                     @case('receive')
-                        <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
-                            
+                        <div class="grid grid-cols-1 md:grid-cols-1 gap-4"> 
                             @forelse ($pointsHistory as $item)
-                            
                                 <div class="product-card p-4 flex items-center justify-between">
                                     <div class="text-sm space-y-1">
                                         <p class="font-medium">
@@ -141,13 +139,17 @@
                                         <p>Ngày : <span
                                                 class="font-medium">{{ $item['date'] }}</span>
                                         </p>
-
                                     </div>
                                     <div>
                                         <p class="text-[#D30A0A] text-lg font-semibold">{{ $item['points'] }} </p>
                                     </div>
                                 </div>
                             @empty
+                        <div
+                            class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                            @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                            <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                        </div>
                             @endforelse
                         @break
 
@@ -176,6 +178,11 @@
                                         </div>
                                     </div>
                                 @empty
+                            <div
+                                class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                                @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                            </div>
                                 @endforelse
                             @break
 
@@ -204,6 +211,11 @@
                                             </div>
                                         </div>
                                     @empty
+                                <div
+                                    class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                                    @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                                    <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                                </div>
                                     @endforelse
                                 @break
 
