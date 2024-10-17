@@ -168,7 +168,7 @@
                                                             default => 'button-gray', // Trạng thái mặc định
                                                         };
                                                     @endphp
-                                                    <button class="mt-4 {{ $buttonClass }} h-8 w-36">
+                                                    <button class="mt-4 {{ $buttonClass }} w-36">
                                                         {{ $order->orderStatus->name }}
                                                     </button>
                                                 </div>
@@ -230,7 +230,7 @@
                                             <hr class="w-full">                                        
                                             <div class="flex justify-end">
                                                 <a href="{{ route('admin.orders.edit', $order->id) }}">
-                                                    <button class="button-blue">Sửa</button>
+                                                    <button class="button-blue">Cập nhật</button>
                                                 </a>
                                           </div>                                          
                                         </div>
