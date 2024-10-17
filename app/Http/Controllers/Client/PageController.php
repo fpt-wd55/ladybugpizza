@@ -8,7 +8,6 @@ use App\Http\Requests\ContactRequest;
 use App\Mail\Contact;
 use App\Mail\ThankYou;
 use App\Models\Notification;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
