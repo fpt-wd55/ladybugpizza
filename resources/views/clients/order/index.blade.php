@@ -20,7 +20,6 @@
                     @endforeach
                 </ul>
             </div>
-
             {{-- Danh sách đơn hàng --}}
             @for ($j = 0; $j < 10; $j++)
                 <div class="product-card mb-4 p-4 hover:cursor-pointer">
