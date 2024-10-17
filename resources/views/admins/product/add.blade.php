@@ -14,8 +14,8 @@
                                 class="flex flex-col items-center justify-center w-full h-20 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                     @svg('tabler-cloud-upload', 'w-8 h-8 text-gray-400 mb-2')
-                                    <p class="mb-2 text-sm text-gray-500"><span
-                                            class="font-semibold">Nhấn để tải lên</span> hoặc kéo thả
+                                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Nhấn để tải lên</span>
+                                        hoặc kéo thả
                                         vào đây
                                     </p>
                                 </div>
@@ -102,11 +102,10 @@
                                     </p>
                                 @enderror
                             </div>
-                            <div>
+                            <div id="quantity">
                                 <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số
                                     lượng</label>
-                                <input type="number" name="quantity" id="quantity" value="{{ old('quantity') }}"
-                                    placeholder="Số lượng"
+                                <input type="number" name="quantity" value="{{ old('quantity') }}" placeholder="Số lượng"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('quantity')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -186,18 +185,28 @@
         document.addEventListener('DOMContentLoaded', function() {
             const category_id = document.getElementById('category_id');
             const quantity = document.getElementById('quantity');
+            const inputQuantity = quantity.querySelector('input');
 
-            // if category_id->name == 'Pizza' then show quantity
             category_id.addEventListener('change', function() {
                 const hasAttribute = category_id.options[category_id.selectedIndex].getAttribute(
                     'data-has-attribute');
-                console.log(hasAttribute);
                 if (hasAttribute == 0) {
-                    quantity.value = null;
-                    quantity.removeAttribute('disabled');
+                    // remove child of quantity
+                    while (quantity.firstChild) {
+                        quantity.removeChild(quantity.firstChild);
+                    }
                 } else {
-                    quantity.value = 0;
-                    quantity.setAttribute('disabled', 'disabled');
+                    // add child of quantity 
+                    quantity.innerHTML = `
+                        <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số lượng</label>
+                        <input type="number" name="quantity" value="{{ old('quantity') }}" placeholder="Số lượng"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                        @error('quantity')
+                            <p class="mt-2 text-sm text-red-600 ">
+                                {{ $message }}
+                            </p>
+                        @enderror
+                    `;
                 }
             });
         });
