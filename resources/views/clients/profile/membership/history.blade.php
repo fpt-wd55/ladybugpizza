@@ -6,7 +6,6 @@
     <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
         <div class="lg:flex">
             @include('clients.profile.sidebar')
-
             <div class="card mb-8 w-full p-4 md:p-8">
                 <h3 class="mb-8 font-semibold uppercase">Lịch sử sử dụng điểm</h3>
                 {{-- tabs --}}
