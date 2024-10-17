@@ -1,7 +1,5 @@
 @extends('layouts.client')
-
 @section('title', 'Về chúng tôi')
-
 @section('content')
     <div class="w-full">
         <img loading="lazy" class=" w-full object-cover" src=" {{ asset('storage/uploads/banners/banner.jpg') }}" alt="">
