@@ -103,8 +103,7 @@
                             </td>
                             <td class="px-4 py-2">{{ number_format($order->amount) }}đ</td>
                             <td class="px-4 py-2">
-                                <button
-                                    class="px-4 py-2 text-white rounded-xl w-36
+                                <button class="text-white rounded-xl w-36 h-8
                                 {{ $order->orderStatus->name === 'Chờ xác nhận'? 'bg-yellow-500': 
                                 ($order->orderStatus->name === 'Đã xác nhận'? 'bg-blue-500': 
                                 ($order->orderStatus->name === 'Đang tìm tài xế'? 'bg-gray-500': 
@@ -165,19 +164,18 @@
                                                             'Đang tìm tài xế' => 'button-gray',
                                                             'Chờ xác nhận' => 'button-yellow',
                                                             'Đã xác nhận' => 'button-blue',
-                                                            'Đã hủy' => 'button-red',
+                                                            'Đã hủy' => 'button-gray',
                                                             default => 'button-gray', // Trạng thái mặc định
                                                         };
                                                     @endphp
-
-                                                    <button class="mt-4 {{ $buttonClass }} w-36">
+                                                    <button class="mt-4 {{ $buttonClass }} h-8 w-36">
                                                         {{ $order->orderStatus->name }}
                                                     </button>
-
                                                 </div>
                                             </div>
                                             <hr class="w-full">
-                                            {{-- user_id --}}
+                                            @if ($order->orderStatus->name === 'Đã hủy')
+                                                 {{-- user_id --}}
                                             <div class="pl-4 rounded-lg ">
                                                 <label class="font-semibold">Thông tin thanh toán</label>
                                                 <p class="text-gray-800 mt-4">{{ $order->user->fullname }}</p>
@@ -200,19 +198,41 @@
                                                 <label class="font-semibold">Hình thức thanh toán</label>
                                                 <p class="text-gray-800">{{ $order->paymentMethod->name }}</p>
                                             </div>
-                                            <hr class="w-full">
-                                            {{-- <div class="pl-4 rounded-lg">
-                                                <div>
-                                                    <h2>Sản phẩm</h2>
-                                                    <p>{{$order->product->name}}</p>
-                                                </div>
-                                            </div> --}}
+                                            <div class="pl-4 rounded-lg ">
+                                                <label class="font-semibold">Lí do hủy đơn</label>
+                                                <p class="text-gray-800">{{ $order->canceled_reason }}</p>
+                                            </div>
+                                            @else
+                                                 {{-- user_id --}}
+                                            <div class="pl-4 rounded-lg ">
+                                                <label class="font-semibold">Thông tin thanh toán</label>
+                                                <p class="text-gray-800 mt-4">{{ $order->user->fullname }}</p>
+                                                <p class="text-gray-800">{{ $order->address->detail_address }}</p>
+                                                <p class="text-gray-800">{{ $order->address->ward }}</p>
+                                                <p class="text-gray-800">{{ $order->address->district }}</p>
+                                            </div>
+                                            {{-- Email --}}
+                                            <div class="pl-4 rounded-lg">
+                                                <label class="font-semibold">Email</label>
+                                                <p class="text-gray-800">{{ $order->user->email }}</p>
+                                            </div>
+                                            {{-- SĐT --}}
+                                            <div class="pl-4 rounded-lg">
+                                                <label class="font-semibold">Số điện thoại</label>
+                                                <p class="text-gray-800">{{ $order->user->phone }}</p>
+                                            </div>
+                                            {{-- hình thức thanh toán --}}
+                                            <div class="pl-4 rounded-lg ">
+                                                <label class="font-semibold">Hình thức thanh toán</label>
+                                                <p class="text-gray-800">{{ $order->paymentMethod->name }}</p>
+                                            </div>                                        
+                                            @endif                                        
+                                            <hr class="w-full">                                        
                                             <div class="flex justify-end">
                                                 <a href="{{ route('admin.orders.edit', $order->id) }}">
                                                     <button class="button-blue">Sửa</button>
                                                 </a>
-                                            </div>
-                                            
+                                          </div>                                          
                                         </div>
                                     </div>
                                 </div>
