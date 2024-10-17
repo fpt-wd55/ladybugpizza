@@ -31,7 +31,6 @@
                                     <span class="badge-red">Đang chờ xác nhận</span>
                                 </div>
                             </div>
-
                         </div>
                         <div class="mb-4 flex items-start justify-between">
                             <div class="flex items-center gap-2">
