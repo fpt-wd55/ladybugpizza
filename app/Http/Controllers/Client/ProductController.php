@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Topping;
 use Illuminate\Http\Request;
 use App\Models\Favorite;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
