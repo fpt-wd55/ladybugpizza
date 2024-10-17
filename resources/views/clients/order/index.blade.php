@@ -6,7 +6,6 @@
     <div class="min-h-screen">
         <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
             <p class="title">LỊCH SỬ ĐƠN HÀNG</p>
-
             {{-- tabs --}}
             <div class="no-scrollbar mb-4 overflow-x-auto border-b border-gray-200 text-left text-sm">
                 <ul class="flex">
