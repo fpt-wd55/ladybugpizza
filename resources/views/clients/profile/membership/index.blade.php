@@ -6,7 +6,6 @@
     <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
         <div class="lg:flex">
             @include('clients.profile.sidebar')
-
             <div>
                 <div class="card mb-8 w-full p-4 md:p-8">
                     <div class="flex items-start justify-between">
