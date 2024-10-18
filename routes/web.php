@@ -116,7 +116,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/carts', AdminCartController::class);
     // Product
     Route::resource('/products', AdminProductController::class);
-    Route::get('/trash-products', [AdminProductController::class, 'trashProduct'])->name('trash-products');
+    Route::get('/trash-products', [AdminProductController::class, 'trash'])->name('trash-products');
     Route::post('/restore-product/{id}', [AdminProductController::class, 'restore'])->name('restore-product');
     Route::delete('/delete-product/{id}', [AdminProductController::class, 'forceDelete'])->name('delete-product');
     // Attribute
@@ -146,7 +146,6 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::post('/memberships/{membership}/status', [MembershipController::class,'updateStatus'])->name('memberships.updateStatus');
     // Đánh Giá
     Route::resource('/evaluations', EvaluationController::class);
-
     Route::resource('/order-statuses', OrderStatusController::class);
     Route::resource('/payment-methods', PaymentMethodController::class);
     Route::resource('/transactions', TransactionController::class);

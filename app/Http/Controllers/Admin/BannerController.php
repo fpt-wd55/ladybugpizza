@@ -48,12 +48,7 @@ class BannerController extends Controller
         ]);
 
         return redirect()->route('admin.banners.index')->with('success', 'thêm thành công');
-    }
-
-    public function show(Banner $banner)
-    {
-        //
-    }
+    } 
 
     public function edit(Banner $banner)
     {

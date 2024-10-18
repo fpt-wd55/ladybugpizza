@@ -102,17 +102,11 @@
                                     {{ $order->address->province }}</p>
                             </td>
                             <td class="px-4 py-2">{{ number_format($order->amount) }}đ</td>
-                            <td class="px-4 py-2">
-                                <button
-                                    class="px-4 py-2 text-white rounded-xl w-36
-                                {{ $order->orderStatus->name === 'Chờ xác nhận'? 'bg-yellow-500': 
-                                ($order->orderStatus->name === 'Đã xác nhận'? 'bg-blue-500': 
-                                ($order->orderStatus->name === 'Đang tìm tài xế'? 'bg-gray-500': 
-                                ($order->orderStatus->name === 'Đang giao hàng'? 'bg-gray-500' : 
-                                ($order->orderStatus->name === 'Hoàn thành'? 'bg-green-600':
-                                ($order->orderStatus->name === 'Đã hủy' ? 'bg-slate-600': 'bg-gray-500'))))) }}">
+                            <td class="px-4 py-2"> 
+                                <span
+                                    class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white bg-{{ $order->orderStatus->color }}-500">
                                     {{ $order->orderStatus->name }}
-                                </button>
+                                </span>
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $order->id }}" data-dropdown-toggle="{{ $order->id }}-dropdown"
@@ -151,10 +145,10 @@
                                                 <div class="flex justify-center gap-2">
                                                     @if ($order->orderStatus->name === 'Hoàn thành')
                                                         @if ($order->invoice)
-                                                        <a
-                                                            href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
-                                                            <button class="mt-4 button-red">Xem hóa đơn</button>
-                                                        </a>
+                                                            <a
+                                                                href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
+                                                                <button class="mt-4 button-red">Xem hóa đơn</button>
+                                                            </a>
                                                         @endif
                                                     @endif
                                                     @php
@@ -165,54 +159,119 @@
                                                             'Đang tìm tài xế' => 'button-gray',
                                                             'Chờ xác nhận' => 'button-yellow',
                                                             'Đã xác nhận' => 'button-blue',
-                                                            'Đã hủy' => 'button-red',
+                                                            'Đã hủy' => 'button-gray',
                                                             default => 'button-gray', // Trạng thái mặc định
                                                         };
                                                     @endphp
-
                                                     <button class="mt-4 {{ $buttonClass }} w-36">
                                                         {{ $order->orderStatus->name }}
                                                     </button>
-
                                                 </div>
                                             </div>
                                             <hr class="w-full">
-                                            {{-- user_id --}}
-                                            <div class="pl-4 rounded-lg ">
-                                                <label class="font-semibold">Thông tin thanh toán</label>
-                                                <p class="text-gray-800 mt-4">{{ $order->user->fullname }}</p>
-                                                <p class="text-gray-800">{{ $order->address->detail_address }}</p>
-                                                <p class="text-gray-800">{{ $order->address->ward }}</p>
-                                                <p class="text-gray-800">{{ $order->address->district }}</p>
-                                            </div>
-                                            {{-- Email --}}
-                                            <div class="pl-4 rounded-lg">
-                                                <label class="font-semibold">Email</label>
-                                                <p class="text-gray-800">{{ $order->user->email }}</p>
-                                            </div>
-                                            {{-- SĐT --}}
-                                            <div class="pl-4 rounded-lg">
-                                                <label class="font-semibold">Số điện thoại</label>
-                                                <p class="text-gray-800">{{ $order->user->phone }}</p>
-                                            </div>
-                                            {{-- hình thức thanh toán --}}
-                                            <div class="pl-4 rounded-lg ">
-                                                <label class="font-semibold">Hình thức thanh toán</label>
-                                                <p class="text-gray-800">{{ $order->paymentMethod->name }}</p>
-                                            </div>
-                                            <hr class="w-full">
-                                            {{-- <div class="pl-4 rounded-lg">
-                                                <div>
-                                                    <h2>Sản phẩm</h2>
-                                                    <p>{{$order->product->name}}</p>
+                                            @if ($order->orderStatus->name === 'Đã hủy')
+                                                {{-- user_id --}}
+                                                <div class="pl-4 rounded-lg ">
+                                                    <label class="font-semibold">Thông tin thanh toán</label>
+                                                    <p class="text-gray-800 mt-4">{{ $order->user->fullname }}</p>
+                                                    <p class="text-gray-800">{{ $order->address->detail_address }}</p>
+                                                    <p class="text-gray-800">{{ $order->address->ward }}</p>
+                                                    <p class="text-gray-800">{{ $order->address->district }}</p>
                                                 </div>
+                                                {{-- Email --}}
+                                                <div class="pl-4 rounded-lg">
+                                                    <label class="font-semibold">Email</label>
+                                                    <p class="text-gray-800">{{ $order->user->email }}</p>
+                                                </div>
+                                                {{-- SĐT --}}
+                                                <div class="pl-4 rounded-lg">
+                                                    <label class="font-semibold">Số điện thoại</label>
+                                                    <p class="text-gray-800">{{ $order->user->phone }}</p>
+                                                </div>
+                                                {{-- hình thức thanh toán --}}
+                                                <div class="pl-4 rounded-lg ">
+                                                    <label class="font-semibold">Hình thức thanh toán</label>
+                                                    <p class="text-gray-800">{{ $order->paymentMethod->name }}</p>
+                                                </div>
+                                                <div class="pl-4 rounded-lg ">
+                                                    <label class="font-semibold">Lí do hủy đơn</label>
+                                                    <p class="text-gray-800">{{ $order->canceled_reason }}</p>
+                                                </div>
+                                                {{--  --}}
+                                                {{-- <div class="pl-4 rounded-lg ">
+                                                <label class="font-semibold">Sản phẩm</label>
+                                                <p class="text-gray-800">{{ $order->orderItems->productAttribute->product->name }}</p>
                                             </div> --}}
+                                            @else
+                                                {{-- user_id --}}
+                                                <div class="pl-4 ">
+                                                    <label class="font-semibold">Thông tin thanh toán</label>
+                                                    <p class="text-gray-800 mt-4">{{ $order->user->fullname }}</p>
+                                                    <p class="text-gray-800">{{ $order->address->detail_address }}</p>
+                                                    <p class="text-gray-800">{{ $order->address->ward }}</p>
+                                                    <p class="text-gray-800">{{ $order->address->district }}</p>
+                                                </div>
+                                                {{-- Email --}}
+                                                <div class="pl-4">
+                                                    <label class="font-semibold">Email</label>
+                                                    <p class="text-gray-800">{{ $order->user->email }}</p>
+                                                </div>
+                                                {{-- SĐT --}}
+                                                <div class="pl-4">
+                                                    <label class="font-semibold">Số điện thoại</label>
+                                                    <p class="text-gray-800">{{ $order->user->phone }}</p>
+                                                </div>
+                                                {{-- hình thức thanh toán --}}
+                                                <div class="pl-4">
+                                                    <label class="font-semibold">Hình thức thanh toán</label>
+                                                    <p class="text-gray-800">{{ $order->paymentMethod->name }}</p>
+                                                </div>
+                                                <hr class="w-full">
+                                                {{-- SẢN PHẨM --}}
+                                                <div class="flex justify-between">
+                                                    <div>
+                                                        {{-- sản phẩm --}}
+                                                        <div class="pl-4 ">
+                                                            <label class="font-semibold">Sản phẩm</label> <br>
+                                                            @foreach ($order->orderItems as $orderItem)
+                                                                @foreach ($orderItem->productAttributes as $products)
+                                                                    <span class="text-gray-800 font-semibold">
+                                                                        {{ $products->product->name }} ,
+                                                                    </span>
+                                                                @endforeach
+                                                            @endforeach
+                                                        </div>
+                                                        {{-- thuộc tính --}}
+                                                        <div class="pl-4 ">
+                                                            <span>Đế : </span>
+                                                            @foreach ($order->orderItems as $orderItem)
+                                                                @foreach ($orderItem->productAttributes as $attribute)
+                                                                    {{ $attribute->attributeValue->value }}
+                                                                @endforeach
+                                                            @endforeach
+                                                        </div>
+                                                        {{-- topping --}}
+                                                        <div class="pl-4 ">
+                                                            <span>Topping : </span>
+                                                            @foreach ($order->orderItems as $orderItem)
+                                                                @foreach ($orderItem->toppings as $topping)
+                                                                    {{ $topping->name }}
+                                                                @endforeach
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <label class="font-semibold">Tổng tiền</label>
+                                                        <p>{{ number_format($order->amount) }}đ</p>
+                                                    </div>
+                                                </div>
+                                                <hr class="w-full">
+                                            @endif
                                             <div class="flex justify-end">
                                                 <a href="{{ route('admin.orders.edit', $order->id) }}">
-                                                    <button class="button-blue">Sửa</button>
+                                                    <button class="button-blue">Cập nhật</button>
                                                 </a>
                                             </div>
-                                            
                                         </div>
                                     </div>
                                 </div>

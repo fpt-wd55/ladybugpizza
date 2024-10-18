@@ -49,7 +49,7 @@ Breadcrumbs::for('admin.trash.listcate', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.categories.index');
     $trail->push('Thùng rác', route('admin.trash.listcate'));
 });
- 
+
 // Topping
 Breadcrumbs::for('admin.toppings.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
@@ -157,17 +157,22 @@ Breadcrumbs::for('admin.products.edit', function (BreadcrumbTrail $trail, $produ
     $trail->push('Chỉnh sửa', route('admin.products.edit', $product));
 });
 
-// Breadcrumbs::for('admin.products.show', function (BreadcrumbTrail $trail, $product) {
-//     $trail->parent('admin.products.index');
-//     $trail->push('Chi tiết', route('admin.products.show', $product));
-// }); 
+Breadcrumbs::for('admin.products.show', function (BreadcrumbTrail $trail, $product) {
+    $trail->parent('admin.products.index');
+    $trail->push('Chi tiết', route('admin.products.show', $product));
+});
+
+Breadcrumbs::for('admin.product.trash', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.products.index');
+    $trail->push('Thùng rác', route('admin.trash-products'));
+  
 // Đánh Giá
 Breadcrumbs::for('admin.evaluations.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
     $trail->push('Đánh giá', route('admin.evaluations.index'));
 });
 
-Breadcrumbs::for('admin.products.show', function (BreadcrumbTrail $trail,$sanpham) {
-    $trail->parent('admin.evaluations.index');
-    $trail->push('Chi tiết đánh giá', route('admin.products.show', $sanpham));
-});
+// Breadcrumbs::for('admin.products.show', function (BreadcrumbTrail $trail,$sanpham) {
+//     $trail->parent('admin.evaluations.index');
+//     $trail->push('Chi tiết đánh giá', route('admin.products.show', $sanpham));
+

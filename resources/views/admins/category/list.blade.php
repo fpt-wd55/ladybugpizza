@@ -50,8 +50,11 @@
                                 {{ ($category->currentPage() - 1) * $category->perPage() + $key + 1 }}
                             </th>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                <img loading="lazy" src="{{ asset('storage/uploads/categories/' . $item->image) }}"
-                                    class="img-sm img-circle object-cover">
+                                <a class="shrink-0" data-fslightbox="gallery"
+                                    href="{{ asset('storage/uploads/categories/' . $item->image) }}">
+                                    <img loading="lazy" src="{{ asset('storage/uploads/categories/' . $item->image) }}"
+                                        class="img-sm img-circle object-cover">
+                                </a>
                             </td>
                             <td class="px-4 py-3">{{ $item->name }}</td>
                             <td class="px-4 py-3">
