@@ -10,7 +10,8 @@
             {{-- Product detail --}}
             <div class="col-span-5 mb-8 md:col-span-2 md:flex md:gap-8 lg:block">
                 <div>
-                    <img alt="{{ $product->name }}" class="relative mb-8 w-full rounded-lg object-cover md:h-80 md:w-80" loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}" />
+                    <img alt="{{ $product->name }}" class="relative mb-8 w-full rounded-lg object-cover md:h-80 md:w-80"
+                        loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}" />
                     <form action="#" method="post">
                         @csrf
                         @method('POST')
@@ -33,7 +34,7 @@
                         </div>
                         <p>({{ $product->avg_rating }})</p>
                     </div>
-                    <p class="">{{ $product->description }}</p>
+                    {!! $product->description !!}
                 </div>
             </div>
 
@@ -46,7 +47,8 @@
                     </p>
                     <div class="flex items-center justify-between gap-8">
                         <div class="w-full">
-                            <input checked class="peer hidden" id="hand_tossed" name="pizza_base" required type="radio" value="hand_tossed" />
+                            <input checked class="peer hidden" id="hand_tossed" name="pizza_base" required type="radio"
+                                value="hand_tossed" />
                             <label class="label-peer" for="hand_tossed">
                                 <div class="text-sm font-normal">Đế dày</div>
                             </label>
@@ -67,7 +69,8 @@
                     </p>
                     <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
                         <div class="w-full">
-                            <input checked class="peer hidden" id="s" name="size" required type="radio" value="s" />
+                            <input checked class="peer hidden" id="s" name="size" required type="radio"
+                                value="s" />
                             <label class="label-peer" for="s">
                                 <div class="text-center text-sm">
                                     <p class="mb-2 font-semibold">Size S (20cm)</p>
@@ -104,9 +107,13 @@
                     <div class="grid grid-cols-2 gap-4">
                         @foreach ($toppings as $topping)
                             <div>
-                                <input class="peer hidden" id="{{ $topping->id }}" name="toppings" type="checkbox" value="{{ $topping->id }}">
-                                <label class="flex w-full cursor-pointer items-center justify-start gap-2 overflow-hidden rounded-lg border border-gray-200 bg-white p-2 text-gray-700 transition hover:bg-gray-50 hover:text-gray-600 peer-checked:border-red-600 peer-checked:text-red-600 md:gap-4" for="{{ $topping->id }}">
-                                    <img alt="" class="h-16 w-16 flex-shrink-0 rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
+                                <input class="peer hidden" id="{{ $topping->id }}" name="toppings" type="checkbox"
+                                    value="{{ $topping->id }}">
+                                <label
+                                    class="flex w-full cursor-pointer items-center justify-start gap-2 overflow-hidden rounded-lg border border-gray-200 bg-white p-2 text-gray-700 transition hover:bg-gray-50 hover:text-gray-600 peer-checked:border-red-600 peer-checked:text-red-600 md:gap-4"
+                                    for="{{ $topping->id }}">
+                                    <img alt="" class="h-16 w-16 flex-shrink-0 rounded-lg object-cover"
+                                        loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
                                     <div class="text-sm">
                                         <p class="mb-2 font-semibold">{{ $topping->name }}</p>
                                         <p>{{ number_format($topping->price) }} đ</p>
@@ -128,10 +135,6 @@
                 {{-- info --}}
                 <div class="mb-4 flex items-center gap-4">
                     <img alt="" class="img-circle img-sm" loading="lazy" src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}">
-                    <div>
-                        <p class="mb-1 text-sm font-medium" >Đỗ Hồng Quân</p>
-                        <p class="text-sm">25-07-2024 20:06 | Đế mỏng; Size S; Topping: Thịt bò, Hành tây</p>
-                    </div>
                 </div>
                 {{-- content --}}
                 <div class="mb-4 px-8">
@@ -147,7 +150,8 @@
                         culpa harum nihil minus? Quibusdam enim at error saepe.</p>
                     <div class="flex w-full items-center gap-4 overflow-hidden">
                         @for ($i = 0; $i < 4; $i++)
-                            <img alt="" class="img-md rounded-lg" loading="lazy" src="{{ asset('storage/uploads/products/cake/chocolate_tar.jpeg') }}">
+                            <img alt="" class="img-md rounded-lg" loading="lazy"
+                                src="{{ asset('storage/uploads/products/cake/chocolate_tar.jpeg') }}">
                         @endfor
                     </div>
                 </div>
@@ -159,13 +163,17 @@
     <div class="sticky bottom-16 w-full border-t bg-white p-4 transition md:px-24 lg:bottom-0 lg:px-32">
         <div class="flex items-center justify-between">
             <div class="inline-flex rounded-md shadow-sm" role="group">
-                <button class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500" type="button">
+                <button
+                    class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500"
+                    type="button">
                     @svg('tabler-minus', 'icon-sm')
                 </button>
                 <div class="border-b border-t border-gray-200 bg-white px-4 py-1 text-sm font-medium text-gray-900">
                     1
                 </div>
-                <button class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500" type="button">
+                <button
+                    class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500"
+                    type="button">
                     @svg('tabler-plus', 'icon-sm')
                 </button>
             </div>

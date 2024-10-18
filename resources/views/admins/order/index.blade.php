@@ -103,16 +103,22 @@
                             </td>
                             <td class="px-4 py-2">{{ number_format($order->amount) }}đ</td>
                             <td class="px-4 py-2">
-                                <button
-                                    class="px-4 py-2 text-white rounded-xl w-36
-                                {{ $order->orderStatus->name === 'Chờ xác nhận'? 'bg-yellow-500': 
-                                ($order->orderStatus->name === 'Đã xác nhận'? 'bg-blue-500': 
-                                ($order->orderStatus->name === 'Đang tìm tài xế'? 'bg-gray-500': 
-                                ($order->orderStatus->name === 'Đang giao hàng'? 'bg-gray-500' : 
-                                ($order->orderStatus->name === 'Hoàn thành'? 'bg-green-600':
-                                ($order->orderStatus->name === 'Đã hủy' ? 'bg-slate-600': 'bg-gray-500'))))) }}">
+                                <span style="width: 130px;"
+                                    class="{{ $order->orderStatus->name === 'Chờ xác nhận'
+                                        ? 'bg-yellow-500'
+                                        : ($order->orderStatus->name === 'Đã xác nhận'
+                                            ? 'bg-blue-500'
+                                            : ($order->orderStatus->name === 'Đang tìm tài xế'
+                                                ? 'bg-gray-500'
+                                                : ($order->orderStatus->name === 'Đang giao hàng'
+                                                    ? 'bg-gray-500'
+                                                    : ($order->orderStatus->name === 'Hoàn thành'
+                                                        ? 'bg-green-600'
+                                                        : ($order->orderStatus->name === 'Đã hủy'
+                                                            ? 'bg-slate-600'
+                                                            : 'bg-gray-500'))))) }} text-white inline-flex shrink-0 items-center justify-center rounded px-2.5 py-0.5 text-xs font-medium">
                                     {{ $order->orderStatus->name }}
-                                </button>
+                                </span>
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $order->id }}" data-dropdown-toggle="{{ $order->id }}-dropdown"
@@ -151,10 +157,10 @@
                                                 <div class="flex justify-center gap-2">
                                                     @if ($order->orderStatus->name === 'Hoàn thành')
                                                         @if ($order->invoice)
-                                                        <a
-                                                            href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
-                                                            <button class="mt-4 button-red">Xem hóa đơn</button>
-                                                        </a>
+                                                            <a
+                                                                href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
+                                                                <button class="mt-4 button-red">Xem hóa đơn</button>
+                                                            </a>
                                                         @endif
                                                     @endif
                                                     @php
@@ -212,7 +218,7 @@
                                                     <button class="button-blue">Sửa</button>
                                                 </a>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>

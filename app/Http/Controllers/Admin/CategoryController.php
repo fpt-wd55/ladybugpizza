@@ -103,9 +103,7 @@ class CategoryController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Category $category)
-    {
-        // dd($category);
-        // $id = Category::query()->findOrFail($id);
+    { 
         $id = $category['id'];
 
         Category::destroy($id);
