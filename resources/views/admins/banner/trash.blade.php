@@ -51,9 +51,10 @@
                     <div class="h-auto">
                         <div class="grid grid-cols-2 ">
                             <div class="overflow-hidden">
-                                <img loading="lazy" src="{{ asset('storage/uploads/banners/' . $item->image) }}"
-                                    class="md:w-52 md:h-20 lg:w-80 lg:h-[170px] rounded-b-lg object-cover hover:scale-125 transition"
-                                    alt="">
+                                <a data-fslightbox="gallery" href="{{ asset('storage/uploads/banners/' . $item->image) }}">
+                                    <img loading="lazy" src="{{ asset('storage/uploads/banners/' . $item->image) }}"
+                                        class="md:w-52 md:h-20 lg:w-80 lg:h-[170px] rounded-b-lg object-cover hover:scale-125 transition">
+                                </a>
                             </div>
                             <div class="m-1">
                                 <div class="">

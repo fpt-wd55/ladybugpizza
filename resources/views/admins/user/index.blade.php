@@ -41,7 +41,7 @@
                     @forelse ($users as $user)
                         <tr class="border-b hover:bg-gray-100">
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                <a href="{{ route('admin.users.show', $user) }}" class="shrink-0">
+                                <a data-fslightbox="gallery" href="{{ Auth::user()->avatar() }}">
                                     <img loading="lazy" src="{{ Auth::user()->avatar() }}" alt="Avatar"
                                         class="w-8 h-8 mr-3 rounded">
                                 </a>

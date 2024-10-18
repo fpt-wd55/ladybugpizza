@@ -35,9 +35,12 @@
                     @forelse ($products as $product)
                         <tr class="border-b hover:bg-gray-100">
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap shrink-0">
-                                <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
-                                    onerror="this.src='{{ asset('storage/uploads/products/no-image.gif') }}'"
-                                    class="w-8 h-8 mr-3 rounded bg-slate-400">
+                                <a data-fslightbox="gallery"
+                                    href="{{ asset('storage/uploads/products/' . $product->image) }}">
+                                    <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
+                                        onerror="this.src='{{ asset('storage/uploads/products/no-image.gif') }}'"
+                                        class="w-8 h-8 mr-3 rounded bg-slate-400">
+                                </a>
                                 <div class="grid grid-flow-row">
                                     <span class="text-sm">{{ $product->name }}</span>
                                     <div class="flex items-center gap-1">
@@ -169,7 +172,8 @@
                                                 <div class="flex justify-center">
                                                     @svg('tabler-trash', 'w-12 h-12 text-red-600 text-center mb-2')
                                                 </div>
-                                                <h3 class="mb-5 font-normal">Bạn có muốn xóa vĩnh viễn sản phẩm này không?</h3>
+                                                <h3 class="mb-5 font-normal">Bạn có muốn xóa vĩnh viễn sản phẩm này không?
+                                                </h3>
 
                                                 <div class="flex justify-center items-center">
                                                     <form action="{{ route('admin.delete-product', $product) }}"

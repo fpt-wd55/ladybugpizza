@@ -35,8 +35,10 @@
                     {{-- start card --}}
                     <div class="shadow border-gray-700 bg-slate-500 h-auto card">
                         <div class="h-44 overflow-hidden">
-                            <img loading="lazy" src="{{ asset('storage/uploads/banners/' . $item->image) }}"
-                                class="w-full h-full object-cover hover:scale-125 transition rounded-t-lg" alt="">
+                            <a data-fslightbox="gallery" href="{{ asset('storage/uploads/banners/' . $item->image) }}">
+                                <img loading="lazy" src="{{ asset('storage/uploads/banners/' . $item->image) }}"
+                                    class="w-full h-full object-cover hover:scale-125 transition rounded-t-lg">
+                            </a>
                         </div>
                         <div class="flex justify-around">
                             <div class="flex items-center mt-2 text-lg font-medium text-gray-900">

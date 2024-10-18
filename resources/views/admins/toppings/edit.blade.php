@@ -22,8 +22,10 @@
                         <input
                             class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
                             type="file" name="image">
-                        <img loading="lazy" src="{{ asset('storage/uploads/toppings/' . $editTopping->image) }}"
-                            class="img-sm mt-2 img-circle object-cover" alt="">
+                        <a data-fslightbox="gallery" href="{{ asset('storage/uploads/toppings/' . $editTopping->image) }}">
+                            <img loading="lazy" src="{{ asset('storage/uploads/toppings/' . $editTopping->image) }}"
+                                class="img-sm mt-2 img-circle object-cover">
+                        </a>
                     </div>
                     @error('image')
                         <span style="color: red">{{ $message }}</span>

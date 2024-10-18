@@ -10,7 +10,7 @@
             <div class="grid gap-4 md:grid-cols-2 sm:gap-8 lg:gap-16">
                 <div class="space-y-4">
                     <div class="flex space-x-4">
-                        <img loading="lazy" class=" img-circle w-20 h-20 mr-3 rounded"
+                        <img loading="lazy" class="img-circle w-20 h-20 mr-3 rounded"
                             src="{{ asset('storage/uploads/avatars/' . $membership->user->avatar) }}" alt="Avatar"
                             {{ Auth::user()->avatar() }} />
                         <div>

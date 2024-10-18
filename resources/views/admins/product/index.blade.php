@@ -16,7 +16,7 @@
                     @svg('tabler-plus', 'w-5 h-5 mr-2')
                     Thêm sản phẩm
                 </a>
-                <a href="{{route('admin.trash-products')}}" class="button-red">
+                <a href="{{ route('admin.trash-products') }}" class="button-red">
                     @svg('tabler-trash', 'w-5 h-5 mr-2')
                     Thùng rác
                 </a>
@@ -45,9 +45,13 @@
                     @forelse ($products as $product)
                         <tr class="border-b hover:bg-gray-100">
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap shrink-0">
-                                <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
-                                    onerror="this.src='{{ asset('storage/uploads/products/no-image.gif') }}'"
-                                    class="w-8 h-8 mr-3 rounded bg-slate-400">
+                                <a data-fslightbox="gallery"
+                                    href="{{ asset('storage/uploads/products/' . $product->image) }}">
+                                    <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
+                                        onerror="this.src='{{ asset('storage/uploads/products/no-image.gif') }}'"
+                                        class="w-8 h-8 mr-3 rounded bg-slate-400">
+                                </a>
+
                                 <div class="grid grid-flow-row">
                                     <span class="text-sm">{{ $product->name }}</span>
                                     <div class="flex items-center gap-1">
