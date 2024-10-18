@@ -102,21 +102,9 @@
                                     {{ $order->address->province }}</p>
                             </td>
                             <td class="px-4 py-2">{{ number_format($order->amount) }}đ</td>
-                            <td class="px-4 py-2">
-                                <span style="width: 130px;"
-                                    class="{{ $order->orderStatus->name === 'Chờ xác nhận'
-                                        ? 'bg-yellow-500'
-                                        : ($order->orderStatus->name === 'Đã xác nhận'
-                                            ? 'bg-blue-500'
-                                            : ($order->orderStatus->name === 'Đang tìm tài xế'
-                                                ? 'bg-gray-500'
-                                                : ($order->orderStatus->name === 'Đang giao hàng'
-                                                    ? 'bg-gray-500'
-                                                    : ($order->orderStatus->name === 'Hoàn thành'
-                                                        ? 'bg-green-600'
-                                                        : ($order->orderStatus->name === 'Đã hủy'
-                                                            ? 'bg-slate-600'
-                                                            : 'bg-gray-500'))))) }} text-white inline-flex shrink-0 items-center justify-center rounded px-2.5 py-0.5 text-xs font-medium">
+                            <td class="px-4 py-2"> 
+                                <span
+                                    class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white bg-{{ $order->orderStatus->color }}-500">
                                     {{ $order->orderStatus->name }}
                                 </span>
                             </td>
@@ -237,7 +225,7 @@
                                                 <div class="pl-4">
                                                     <label class="font-semibold">Hình thức thanh toán</label>
                                                     <p class="text-gray-800">{{ $order->paymentMethod->name }}</p>
-                                                </div>                                              
+                                                </div>
                                                 <hr class="w-full">
                                                 {{-- SẢN PHẨM --}}
                                                 <div class="flex justify-between">
