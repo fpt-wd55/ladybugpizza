@@ -1,5 +1,5 @@
 <aside
-    class="fixed z-30 w-64 h-screen shadow-sm pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0"
+    class="fixed z-40 w-64 h-screen shadow-sm pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0   top-0 left-0  sm:translate-x-0"
     aria-label="Sidebar" id="logo-sidebar">
     <div class="overflow-y-auto py-5 px-3 h-full bg-white no-scrollbar">
         {{-- Menu sidebar --}}
@@ -63,7 +63,8 @@
                     </li>
                     <li>
                         <a href="#"
-                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Đánh giá</a>
+                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Đánh
+                            giá</a>
                     </li>
                     <li>
                         <a href="{{ route('admin.products.index') }}"

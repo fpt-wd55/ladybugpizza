@@ -24,23 +24,23 @@
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-xs md:text-sm">Tài khoản</th>
-                        <th scope="col" class="px-0 py-0 lg:py-3 text-xs md:text-sm ">Họ và tên</th>
-                        <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-center  text-xs md:text-sm">Thứ hạng</th>
+                        <th scope="col" class="px-0 py-0 lg:py-3 text-xs md:text-sm">Họ và tên</th>
+                        <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-center text-xs md:text-sm">Thứ hạng
+                        </th>
                         <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-xs md:text-sm">
                             <span class="sr-only">Actions</span>
                         </th>
                     </tr>
                 </thead>
-                <tbody> 
+                <tbody>
                     {{-- star item --}}
                     @forelse ($memberships as $membership)
                         {{-- @dd($membership) --}}
                         <tr class="border-b hover:bg-gray-100">
-                            <td class="flex items-center lg:px-4 lg:py-2 text-gray-900 whitespace-nowrap mt-3">
-                                <a href="{{ route('admin.memberships.edit', $membership) }}">
+                            <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap mt-3">
+                                <a class="shrink-0" href="{{ route('admin.memberships.edit', $membership) }}">
                                     <img loading="lazy"
                                         src="{{ asset('storage/uploads/avatars/' . $membership->user->avatar) }}"
-                                        alt="Avatar"
                                         class="img-circle img-sm lg:w-11 lg:h-11 mr-3 rounded border-2 hover:border-[#D30A0A] "
                                         {{ Auth::user()->avatar() }}>
                                 </a>
@@ -51,17 +51,18 @@
                                     </div>
                                 </a>
                             </td>
-                            <td class=" text-gray-900 whitespace-nowrap ">{{ $membership->user->fullname }}</td>
+                            <td class="text-gray-900 whitespace-nowrap">{{ $membership->user->fullname }}
+                            </td>
                             <td class="lg:px-4 lg:py-2 text-gray-900 whitespace-nowrap ">
                                 <div class="flex flex-col items-center ">
                                     <img loading="lazy" src="{{ asset('storage/uploads/ranks/' . $membership->rank_img) }}"
-                                        alt="" class="img-circle img-sm md:w-5 md:h-5 lg:w-11 lg:h-11">
+                                        class="img-circle w-7 h-7">
                                     <p
                                         class="uppercase text-xs md:text-sm md:font-medium lg:font-semibold {{ $membership->rank_color }}">
                                         {{ $membership->rank_name }}</p>
                                 </div>
                             </td>
-                           
+
                             <td class="lg:px-4 lg:py-3 items-center ">
                                 <button id="{{ $membership->id }}" data-dropdown-toggle="{{ $membership->id }}-dropdown"
                                     class="items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none hidden md:block"

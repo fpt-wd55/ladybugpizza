@@ -12,7 +12,7 @@
                     {{-- Anh san pham --}}
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 sm:grid-cols-12">
-                            <a data-fslightbox="gallery" href="{{ asset('storage/uploads/products/' . $product->image) }}">
+                            <a class="shrink-0" data-fslightbox="gallery" href="{{ asset('storage/uploads/products/' . $product->image) }}">
                                 <img loading="lazy" class="w-20 h-20 rounded-md bg-slate-600"
                                     src="{{ asset('storage/uploads/products/' . $product->image) }}"
                                     onerror="this.src='{{ asset('storage/uploads/products/no-image.gif') }}'">

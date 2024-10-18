@@ -1,4 +1,4 @@
-<nav class="fixed top-0 z-40 w-full bg-white border-b border-gray-200">
+<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
@@ -29,7 +29,7 @@
                     @svg('tabler-bell', 'w-6 h-6 text-gray-500')
                 </button>
                 <!-- Dropdown menu -->
-                <div class="hidden overflow-hidden z-40 my-4 max-w-sm list-none bg-white rounded divide-y divide-gray-100 shadow-lg text-sm"
+                <div class="hidden overflow-hidden z-50 my-4 max-w-sm list-none bg-white rounded divide-y divide-gray-100 shadow-lg text-sm"
                     id="notification-dropdown">
                     <div class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50">
                         Thông báo
@@ -81,7 +81,7 @@
                     {{ svg('tabler-columns', 'w-6 h-6 text-gray-500') }}
                 </button>
                 {{-- App Dropdown menu --}}
-                <div class="hidden overflow-hidden z-40 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg"
+                <div class="hidden overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg"
                     id="apps-dropdown">
                     <div class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50">
                         Tiện ích
@@ -155,7 +155,7 @@
                         src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}">
                 </button>
                 <!-- User Dropdown menu -->
-                <div class="hidden z-40 my-4 w-56 list-none bg-white rounded divide-y divide-gray-100 shadow text-sm"
+                <div class="hidden z-50 my-4 w-56 list-none bg-white rounded divide-y divide-gray-100 shadow text-sm"
                     id="dropdown">
                     <div class="py-3 px-4">
                         <span class="block font-semibold text-gray-900">{{ Auth::user()->fullname }}</span>

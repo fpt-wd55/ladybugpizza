@@ -35,7 +35,7 @@
                     @forelse ($products as $product)
                         <tr class="border-b hover:bg-gray-100">
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap shrink-0">
-                                <a data-fslightbox="gallery"
+                                <a class="shrink-0" data-fslightbox="gallery"
                                     href="{{ asset('storage/uploads/products/' . $product->image) }}">
                                     <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
                                         onerror="this.src='{{ asset('storage/uploads/products/no-image.gif') }}'"
