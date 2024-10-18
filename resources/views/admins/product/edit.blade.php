@@ -12,9 +12,11 @@
                     {{-- Anh san pham --}}
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 sm:grid-cols-12">
-                            <img loading="lazy" class="w-20 h-20 rounded-md bg-slate-600"
-                                src="{{ asset('storage/uploads/products/' . $product->image) }}"
-                                onerror="this.src='{{ asset('storage/uploads/products/no-image.gif') }}'">
+                            <a data-fslightbox="gallery" href="{{ asset('storage/uploads/products/' . $product->image) }}">
+                                <img loading="lazy" class="w-20 h-20 rounded-md bg-slate-600"
+                                    src="{{ asset('storage/uploads/products/' . $product->image) }}"
+                                    onerror="this.src='{{ asset('storage/uploads/products/no-image.gif') }}'">
+                            </a>
                             <div class="flex items-center justify-center w-full col-span-5">
                                 <label for="dropzone-file"
                                     class="flex flex-col items-center justify-center w-full h-20 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">

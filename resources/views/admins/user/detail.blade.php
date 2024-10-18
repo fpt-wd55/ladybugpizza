@@ -44,8 +44,10 @@
                 <div class="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
                     <div class="space-y-4">
                         <div class="flex space-x-4">
-                            <img loading="lazy" class="h-16 w-16 rounded-lg"
-                                src="{{ Auth::user()->avatar() }}" alt="Avatar" />
+                            <a data-fslightbox="gallery" href="{{ Auth::user()->avatar() }}">
+                                <img loading="lazy" class="h-16 w-16 rounded-lg" src="{{ Auth::user()->avatar() }}"
+                                    alt="Avatar" />
+                            </a>
                             <div>
                                 <div class="flex ms-2">
                                     <span
@@ -406,17 +408,16 @@
                         </dl>
 
                         <div class="w-full sm:flex sm:w-32 sm:items-center sm:justify-end sm:gap-4">
-                            <a href="#"
-                             data-modal-target="order-modal-{{ $order->id }}"
-                                                data-modal-toggle="order-modal-{{ $order->id }}"
+                            <a href="#" data-modal-target="order-modal-{{ $order->id }}"
+                                data-modal-toggle="order-modal-{{ $order->id }}"
                                 class=" flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0 md:w-auto">
                                 @svg('tabler-external-link', 'h-4 w-4 me-1.5')
                                 Chi tiết
                             </a>
                         </div>
                     </div>
-                      {{-- order modal --}}
-                      <div id="order-modal-{{ $order->id }}" tabindex="-1" aria-hidden="true"
+                    {{-- order modal --}}
+                    <div id="order-modal-{{ $order->id }}" tabindex="-1" aria-hidden="true"
                         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
                         <div class="relative p-4 w-full max-w-2xl h-auto">
                             <div
@@ -449,7 +450,7 @@
                                         {{-- Tổng số tiền --}}
                                         <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                             <label class="font-semibold">Tổng số tiền</label>
-                                            <span class="text-gray-800">{{number_format( $order->amount) }}đ</span>
+                                            <span class="text-gray-800">{{ number_format($order->amount) }}đ</span>
                                         </div>
                                         {{-- Địa chỉ --}}
                                         <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
@@ -459,7 +460,8 @@
                                         {{-- Giá tri giảm giá --}}
                                         <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                             <label class="font-semibold">Giá trị giảm giá</label>
-                                            <span class="text-gray-800">{{ number_format($order->discount_amount) }}đ</span>
+                                            <span
+                                                class="text-gray-800">{{ number_format($order->discount_amount) }}đ</span>
                                         </div>
                                         {{-- phí giao hàng --}}
                                         <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
@@ -489,7 +491,7 @@
                                         {{-- Lí do hủy bỏ --}}
                                         <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                             <label class="font-semibold">Lí do hủy bỏ</label>
-                                            
+
                                             <span class="text-gray-800">
                                                 @isset($order->canceled_reason)
                                                     {{ $order->canceled_reason }}
