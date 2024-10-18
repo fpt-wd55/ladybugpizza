@@ -130,32 +130,33 @@
         {{-- Evaluation --}}
         <div class="card p-4 md:p-8">
             <p class="title">Đánh giá sản phẩm</p>
-
-            <div class="mb-4">
-                {{-- info --}}
-                <div class="mb-4 flex items-center gap-4">
-                    <img alt="" class="img-circle img-sm" loading="lazy" src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}">
-                </div>
-                {{-- content --}}
-                <div class="mb-4 px-8">
-                    <p class="mb-4 text-sm">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptates ducimus
-                        sint porro facere iure placeat magnam? A aliquid odio vel quo atque sequi, architecto voluptatum
-                        expedita facilis accusantium nulla consectetur earum accusamus officiis facere modi nam ea
-                        dicta!
-                        Magnam ducimus eaque similique a totam culpa, quam eos optio ab debitis numquam praesentium
-                        laudantium cum aperiam doloremque. Voluptatibus quo placeat cum velit voluptas! Dolore nam est
-                        aliquid maiores voluptatem optio corrupti cumque? Nobis molestiae illo dignissimos rerum est
-                        ullam
-                        tempora fuga pariatur tempore odit sunt quas excepturi aliquid eos, reprehenderit, velit commodi
-                        culpa harum nihil minus? Quibusdam enim at error saepe.</p>
-                    <div class="flex w-full items-center gap-4 overflow-hidden">
-                        @for ($i = 0; $i < 4; $i++)
-                            <img alt="" class="img-md rounded-lg" loading="lazy"
-                                src="{{ asset('storage/uploads/products/cake/chocolate_tar.jpeg') }}">
-                        @endfor
+                    {{-- info --}}
+                    <div class="mb-4 flex items-center gap-4">
+                        <img alt="" class="img-circle img-sm" loading="lazy" src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}">
+                        <div>
+                            <p class="mb-1 text-sm font-medium" >Đỗ Hồng Quân</p>
+                            <p class="text-sm">25-07-2024 20:06 | Đế mỏng; Size S; Topping: Thịt bò, Hành tây</p>
+                        </div>
+                    </div>
+                    {{-- content --}}
+                    <div class="mb-4 px-8">
+                        <p class="mb-4 text-sm">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptates ducimus
+                            sint porro facere iure placeat magnam? A aliquid odio vel quo atque sequi, architecto voluptatum
+                            expedita facilis accusantium nulla consectetur earum accusamus officiis facere modi nam ea
+                            dicta!
+                            Magnam ducimus eaque similique a totam culpa, quam eos optio ab debitis numquam praesentium
+                            laudantium cum aperiam doloremque. Voluptatibus quo placeat cum velit voluptas! Dolore nam est
+                            aliquid maiores voluptatem optio corrupti cumque? Nobis molestiae illo dignissimos rerum est
+                            ullam
+                            tempora fuga pariatur tempore odit sunt quas excepturi aliquid eos, reprehenderit, velit commodi
+                            culpa harum nihil minus? Quibusdam enim at error saepe.</p>
+                        <div class="flex w-full items-center gap-4 overflow-hidden">
+                            @for ($i = 0; $i < 4; $i++)
+                                <img alt="" class="img-md rounded-lg" loading="lazy" src="{{ asset('storage/uploads/products/cake/chocolate_tar.jpeg') }}">
+                            @endfor
+                        </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 

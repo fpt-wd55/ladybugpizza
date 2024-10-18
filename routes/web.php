@@ -32,6 +32,7 @@ use App\Http\Controllers\Client\PoliciesController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
+use App\Models\Evaluation;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -142,10 +143,12 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/promotions', PromotionController::class);
     // Membership
     Route::resource('/memberships', MembershipController::class);
+    Route::post('/memberships/{membership}/status', [MembershipController::class,'updateStatus'])->name('memberships.updateStatus');
+    // Đánh Giá
+    Route::resource('/evaluations', EvaluationController::class);
     Route::resource('/order-statuses', OrderStatusController::class);
     Route::resource('/payment-methods', PaymentMethodController::class);
     Route::resource('/transactions', TransactionController::class);
-    Route::resource('/evaluations', EvaluationController::class);
     Route::resource('/shippings', ShippingController::class);
     Route::resource('/pages', AdminPageController::class);
     Route::resource('/logs', LogController::class);
