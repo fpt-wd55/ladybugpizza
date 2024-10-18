@@ -165,7 +165,8 @@ Breadcrumbs::for('admin.products.show', function (BreadcrumbTrail $trail, $produ
 Breadcrumbs::for('admin.product.trash', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.products.index');
     $trail->push('Thùng rác', route('admin.trash-products'));
-  
+});
+
 // Đánh Giá
 Breadcrumbs::for('admin.evaluations.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
@@ -176,3 +177,4 @@ Breadcrumbs::for('admin.evaluations.index', function (BreadcrumbTrail $trail) {
 //     $trail->parent('admin.evaluations.index');
 //     $trail->push('Chi tiết đánh giá', route('admin.products.show', $sanpham));
 
+// });
