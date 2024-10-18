@@ -57,23 +57,6 @@ class MembershipController extends Controller
         return view('admins.memberships.index', compact('memberships'));
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     public function show(Membership $membership) {}
 
     /**
@@ -172,8 +155,7 @@ class MembershipController extends Controller
                                 'points' => $matches[5],  // Điểm "+200"
                             ];
                         }
-                    }
-                    else if ($log->action == 'Đổi điểm') {
+                    } else if ($log->action == 'Đổi điểm') {
                         $cleanDescription = preg_replace('/\s+/', ' ', trim($log->description));
                         preg_match('/Ngày\s*(\d{1,2}\/\d{1,2}\/\d{4})\s+(.*?)\s+vào lúc\s*(\d{1,2}:\d{2})\s+tại\s+(.*?)\s*\(([-\d]+)\)/', $cleanDescription, $matches);
                         if (count($matches) === 6) {
@@ -192,30 +174,5 @@ class MembershipController extends Controller
         // END HISTORY
         // Trả về view với dữ liệu của thành viên, rank, và progress,history,tab
         return view('admins.memberships.edit', compact('membership', 'progress', 'img', 'rank', 'pointsHistory', 'tab'));
-    }
-
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Membership $membership)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Membership $membership)
-    {
-        //
-    }
-
-
-    public function updateStatus(Request $request, Membership $membership)
-    {
-        $membership->status = $request->status ? 1 : 2;
-        $membership->save();
-        return redirect()->back()->with('success', 'Cập nhật trạng thái thành công!');
     }
 }

@@ -142,7 +142,6 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/promotions', PromotionController::class);
     // Membership
     Route::resource('/memberships', MembershipController::class);
-    Route::post('/memberships/{membership}/status', [MembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
     Route::resource('/order-statuses', OrderStatusController::class);
     Route::resource('/payment-methods', PaymentMethodController::class);
     Route::resource('/transactions', TransactionController::class);
