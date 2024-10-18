@@ -5,7 +5,6 @@
 <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
 <div class="overflow-x-auto">
     <div>
-
         {{-- end điểm hội viên --}}
         <div class="py-4 md:py-5 px-3">
             <div class="grid gap-4 md:grid-cols-2 sm:gap-8 lg:gap-16">
@@ -96,10 +95,8 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
         {{-- lịch sử tiêu dùng của khách hàng --}}
         <hr>
@@ -111,15 +108,15 @@
                     <ul class="flex flex-wrap -mb-px">
                         <li class="me-2">
                             <a href="{{ route('admin.memberships.edit', [$membership,'tab' => 'history']) }}"
-                                class="inline-block px-4 pb-2 text-red-600 border-b-2 border-red-600 rounded-t-lg"
+                                class="inline-block px-4 pb-2 border-b-2 rounded-t-lg{{ $tab === 'history' ? 'text-red-600 border-red-600' : 'hover:text-gray-600 hover:border-red-600' }} "
                                 aria-current="page">Tất cả lịch sử</a>
                         </li>
                         <li class="me-2">
-                            <a class="inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2 hover:border-gray-300 hover:text-gray-600"
+                            <a class="inline-block px-4 pb-2 border-b-2 rounded-t-lg {{ $tab === 'receive' ? 'text-red-600 border-red-600' : 'hover:text-gray-600 hover:border-red-600' }}"
                                 href=" {{ route('admin.memberships.edit', [$membership,'tab' => 'receive']) }}">Lịch sử nhận</a>
                         </li>
                         <li class="me-2">
-                            <a class="inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2 hover:border-gray-300 hover:text-gray-600"
+                            <a class="inline-block px-4 pb-2 border-b-2 rounded-t-lg {{ $tab === 'change' ? 'text-red-600 border-red-600' : 'hover:text-gray-600 hover:border-red-600' }}"
                                 href="{{ route('admin.memberships.edit', [$membership,'tab' => 'change']) }}">Lịch sử đổi</a>
                         </li>
                     </ul>
@@ -127,15 +124,13 @@
                 {{-- history --}}
                 @switch($tab)
                     @case('receive')
-                        <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
-                            
+                        <div class="grid grid-cols-1 md:grid-cols-1 gap-4"> 
                             @forelse ($pointsHistory as $item)
-                            
                                 <div class="product-card p-4 flex items-center justify-between">
                                     <div class="text-sm space-y-1">
                                         <p class="font-medium">
-                                            <span class="uppercase me-2 text-red-600">{{ $item['action'] }}</span>
-                                            <span class="badge-yellow inline-flex items-center">{{ $item['points_added'] }}
+                                            <span class="uppercase me-2 text-red-600">{{ $item['action'] }} tại {{ $item['location'] }}</span>
+                                            <span class="badge-yellow inline-flex items-center">{{ $item['points'] }}
                                                 @svg('tabler-coins', 'icon-sm ms-2')</span>
                                         </p>
                                         <p>Thời gian: <span
@@ -144,13 +139,17 @@
                                         <p>Ngày : <span
                                                 class="font-medium">{{ $item['date'] }}</span>
                                         </p>
-
                                     </div>
                                     <div>
-                                        <p class="text-[#D30A0A] text-lg font-semibold">{{ $item['points_added'] }} </p>
+                                        <p class="text-[#D30A0A] text-lg font-semibold">{{ $item['points'] }} </p>
                                     </div>
                                 </div>
                             @empty
+                        <div
+                            class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                            @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                            <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                        </div>
                             @endforelse
                         @break
 
@@ -160,9 +159,9 @@
                                     <div class="product-card p-4 flex items-center justify-between">
                                         <div class="text-sm space-y-1">
                                             <p class="font-medium">
-                                                <span class="uppercase me-2 text-red-600"></span>
+                                                <span class="uppercase me-2 text-red-600">{{ $item['action'] }} tại {{ $item['location'] }}</span>
                                                 <span
-                                                    class="badge-yellow inline-flex items-center">{{ $item['points_delete'] }}
+                                                    class="badge-yellow inline-flex items-center">{{ $item['points'] }}
                                                     @svg('tabler-coins', 'icon-sm ms-2')</span>
                                             </p>
                                             <p>Thời gian: <span
@@ -174,11 +173,16 @@
 
                                         </div>
                                         <div>
-                                            <p class="text-[#D30A0A] text-lg font-semibold">{{ $item['points_delete'] }}
+                                            <p class="text-[#D30A0A] text-lg font-semibold">{{ $item['points'] }}
                                             </p>
                                         </div>
                                     </div>
                                 @empty
+                            <div
+                                class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                                @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                            </div>
                                 @endforelse
                             @break
 
@@ -188,9 +192,9 @@
                                         <div class="product-card p-4 flex items-center justify-between">
                                             <div class="text-sm space-y-1">
                                                 <p class="font-medium">
-                                                    <span class="uppercase me-2 text-red-600">{{ $item['action'] }}</span>
+                                                    <span class="uppercase me-2 text-red-600">{{ $item['action'] }} tại {{ $item['location'] }}</span>
                                                     <span
-                                                        class="badge-yellow inline-flex items-center">{{ $item['points_added'] }}
+                                                        class="badge-yellow inline-flex items-center">{{ $item['points'] }}
                                                         @svg('tabler-coins', 'icon-sm ms-2')</span>
                                                 </p>
                                                 <p>Thời gian: <span
@@ -203,10 +207,15 @@
                                             </div>
                                             <div>
                                                 <p class="text-[#D30A0A] text-lg font-semibold">
-                                                    +{{ $item['points_delete'] }} </p>
+                                                    {{ $item['points'] }} </p>
                                             </div>
                                         </div>
                                     @empty
+                                <div
+                                    class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                                    @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
+                                    <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                                </div>
                                     @endforelse
                                 @break
 

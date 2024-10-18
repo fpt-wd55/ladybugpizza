@@ -57,7 +57,7 @@
                                     <img loading="lazy" src="{{ asset('storage/uploads/ranks/' . $membership->rank_img) }}"
                                         alt="" class="img-circle img-sm md:w-5 md:h-5 lg:w-11 lg:h-11">
                                     <p
-                                        class="ms-2 uppercase text-xs md:text-sm md:font-medium lg:font-semibold {{ $membership->rank_color }}">
+                                        class="uppercase text-xs md:text-sm md:font-medium lg:font-semibold {{ $membership->rank_color }}">
                                         {{ $membership->rank_name }}</p>
                                 </div>
                             </td>
