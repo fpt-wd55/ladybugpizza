@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Evaluation;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class EvaluationController extends Controller
@@ -13,7 +14,8 @@ class EvaluationController extends Controller
      */
     public function index()
     {
-        //
+       $product = Product::paginate(10);
+       return view('admins.evaluations.index',compact('product'));
     }
 
     /**
@@ -45,7 +47,7 @@ class EvaluationController extends Controller
      */
     public function edit(Evaluation $evaluation)
     {
-        //
+       
     }
 
     /**
@@ -63,4 +65,12 @@ class EvaluationController extends Controller
     {
         //
     }
+
+    public function listComment(String $id)
+    {
+      
+        return view('admins.evaluations.edit');
+        
+    }
+
 }

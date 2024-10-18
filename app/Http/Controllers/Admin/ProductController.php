@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Category;
+use App\Models\Evaluation;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -106,5 +107,12 @@ class ProductController extends Controller
     public function forceDelete($id)
     {
         //
+    }
+   // phần Đánh Giá
+    public function show(Product $product)
+    {
+        $sanpham = Product::query()->findOrFail($product->id);
+        $evaluations = Evaluation::where('product_id',$product->id)->get();
+        return view('admins.evaluations.edit',compact('sanpham','evaluations'));
     }
 }
