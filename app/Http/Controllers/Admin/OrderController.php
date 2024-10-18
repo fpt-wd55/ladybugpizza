@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -20,14 +21,14 @@ class OrderController extends Controller
         if($status){
             $orders = Order::when($status, function ($query, $status) {
                 return $query->whereHas('orderStatus', function ($q) use ($status) {
-                    $q->where('name', $status);
+                    $q->where('name', $status)->with('orderItems.productAttributes.product', 'orderItems.toppings');
                 });
             })->latest('id')->paginate(10);
         }else{
             // Query dựa theo trạng thái, nếu không có thì lấy tất cả đơn hàng
-            $orders = Order::latest('id')->paginate(10);
+            $orders = Order::with('orderItems.productAttributes.product', 'orderItems.toppings')->latest('id')->paginate(10);
         }
-
+        
         $invoices = Invoice::all();
         return view('admins.order.index', compact('orders','invoices'));
     }
