@@ -1,7 +1,5 @@
 @extends('layouts.client')
-
 @section('title', 'Về chúng tôi')
-
 @section('content')
     <div class="w-full">
         <img loading="lazy" class=" w-full object-cover" src=" {{ asset('storage/uploads/banners/banner.jpg') }}" alt="">
@@ -10,7 +8,6 @@
         <div class="w-full">
             <div class="mt-6 text-center">
                 <h2 class="mt-12 text-6xl vujahday-script-regular">Ladybug Pizza</h2>
-
                 <div class="mb-8">
                     <p class=" text-md mt-12 ">Nằm ngay trung tâm Quận Hoàn Kiếm, Hà Nội, Ladybug Pizza là một tiệm pizza
                         phong cách người Napoli, được sáng lập bởi đầu bếp Kyle Jacovino. Với gần hai thập kỷ kinh nghiệm

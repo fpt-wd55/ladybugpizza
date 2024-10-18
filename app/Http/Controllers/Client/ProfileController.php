@@ -168,14 +168,13 @@ class ProfileController extends Controller
 		]);
 	}
 
-	public function membershipHistory()
+	public function membershipHistory(Request $request)
 	{
-		return view('clients.profile.membership.history');
-	}
+        $tab = request()->query('tab');
 
-	public function membershipReceive()
-	{
-		return view('clients.profile.membership.receive');
+		return view('clients.profile.membership.history', [
+            'tab' => $tab
+        ]);
 	}
 
 	public function address()

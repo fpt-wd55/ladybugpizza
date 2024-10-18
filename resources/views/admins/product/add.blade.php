@@ -8,6 +8,7 @@
             <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                    {{-- Anh san pham --}}
                     <div class="sm:col-span-2">
                         <div class="flex items-center justify-center w-full mb-4 ">
                             <label for="dropzone-file"
@@ -28,6 +29,7 @@
                             </p>
                         @enderror
                     </div>
+                    {{-- Thong tin co ban --}}
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 sm:grid-cols-3">
                             <div>
@@ -46,7 +48,7 @@
                                 <label for="sku" class="block mb-2 text-sm font-medium text-gray-900 ">Mã sản
                                     phẩm</label>
                                 <input type="text" name="sku" id="sku" placeholder="Mã sản phẩm"
-                                    value="{{ old('sku') }}"
+                                    value="{{ old('sku') }}" maxlength="15"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('sku')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -59,7 +61,8 @@
                                     mục</label>
                                 <select id="category_id" name="category_id"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                    <option selected disabled>Danh mục</option>
+                                    <option value="" {{ old('category_id') ? '' : 'selected' }} disabled>
+                                        Danh mục</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
                                             data-has-attribute="{{ count($category->attributes) }}"
@@ -76,6 +79,7 @@
                             </div>
                         </div>
                     </div>
+                    {{-- Gia va so luong --}}
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 sm:grid-cols-3">
                             <div>
@@ -102,19 +106,10 @@
                                     </p>
                                 @enderror
                             </div>
-                            <div id="quantity">
-                                <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số
-                                    lượng</label>
-                                <input type="number" name="quantity" value="{{ old('quantity') }}" placeholder="Số lượng"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                                @error('quantity')
-                                    <p class="mt-2 text-sm text-red-600 ">
-                                        {{ $message }}
-                                    </p>
-                                @enderror
-                            </div>
+                            <div id="quantity"></div>
                         </div>
                     </div>
+                    {{-- Trang thai --}}
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 sm:grid-cols-3">
                             <div>
@@ -155,8 +150,9 @@
                             </div>
                         </div>
                     </div>
+                    {{-- Mo ta san pham --}}
                     <div class="sm:col-span-2">
-                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900 ">Mô tả sản
+                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900">Mô tả sản
                             phẩm</label>
                         <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50">
                             <textarea id="wysiwygeditor" name="description">{{ old('description') }}</textarea>
@@ -168,6 +164,7 @@
                         @enderror
                     </div>
                 </div>
+                {{-- Submit or cancel --}}
                 <div class="flex items-center space-x-4 mt-5">
                     <a href="{{ route('admin.products.index') }}" class="button-dark">
                         Quay lại
@@ -185,21 +182,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             const category_id = document.getElementById('category_id');
             const quantity = document.getElementById('quantity');
-            const inputQuantity = quantity.querySelector('input');
-
-            category_id.addEventListener('change', function() {
-                const hasAttribute = category_id.options[category_id.selectedIndex].getAttribute(
-                    'data-has-attribute');
+            const checkHasAttribute = (hasAttribute) => {
                 if (hasAttribute == 0) {
-                    // remove child of quantity
-                    while (quantity.firstChild) {
-                        quantity.removeChild(quantity.firstChild);
-                    }
-                } else {
-                    // add child of quantity 
                     quantity.innerHTML = `
-                        <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số lượng</label>
-                        <input type="number" name="quantity" value="{{ old('quantity') }}" placeholder="Số lượng"
+                        <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số
+                            lượng</label>
+                        <input type="number" name="quantity" value="{{ old('quantity') ?? 0 }}"
+                            placeholder="Số lượng"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                         @error('quantity')
                             <p class="mt-2 text-sm text-red-600 ">
@@ -207,8 +196,20 @@
                             </p>
                         @enderror
                     `;
+                } else {
+                    quantity.innerHTML = '';
                 }
-            });
+            }
+
+            const handleCategoryChange = () => {
+                const selectedOption = category_id.options[category_id.selectedIndex];
+                const hasAttribute = selectedOption.getAttribute('data-has-attribute');
+                checkHasAttribute(hasAttribute);
+            };
+
+            category_id.addEventListener('change', handleCategoryChange);
+
+            handleCategoryChange();
         });
     </script>
 @endsection
