@@ -1,4 +1,4 @@
-<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
+<nav class="fixed top-0 z-40 w-full bg-white border-b border-gray-200">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
@@ -29,7 +29,7 @@
                     @svg('tabler-bell', 'w-6 h-6 text-gray-500')
                 </button>
                 <!-- Dropdown menu -->
-                <div class="hidden overflow-hidden z-50 my-4 max-w-sm list-none bg-white rounded divide-y divide-gray-100 shadow-lg text-sm"
+                <div class="hidden overflow-hidden z-40 my-4 max-w-sm list-none bg-white rounded divide-y divide-gray-100 shadow-lg text-sm"
                     id="notification-dropdown">
                     <div class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50">
                         Thông báo
@@ -81,7 +81,7 @@
                     {{ svg('tabler-columns', 'w-6 h-6 text-gray-500') }}
                 </button>
                 {{-- App Dropdown menu --}}
-                <div class="hidden overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg"
+                <div class="hidden overflow-hidden z-40 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg"
                     id="apps-dropdown">
                     <div class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50">
                         Tiện ích
@@ -155,7 +155,7 @@
                         src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}">
                 </button>
                 <!-- User Dropdown menu -->
-                <div class="hidden z-50 my-4 w-56 list-none bg-white rounded divide-y divide-gray-100 shadow text-sm"
+                <div class="hidden z-40 my-4 w-56 list-none bg-white rounded divide-y divide-gray-100 shadow text-sm"
                     id="dropdown">
                     <div class="py-3 px-4">
                         <span class="block font-semibold text-gray-900">{{ Auth::user()->fullname }}</span>
@@ -177,9 +177,10 @@
                     </ul>
                     <ul class="py-1 text-gray-500" aria-labelledby="dropdown">
                         <li>
-                            <a href="{{ route('auth.logout') }}"
+                            <a href="#" data-modal-target="logoutModal" data-modal-toggle="logoutModal"
                                 class="block py-2 px-4 hover:bg-gray-100 text-red-500">Đăng
-                                xuất</a>
+                                xuất
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -187,3 +188,36 @@
         </div>
     </div>
 </nav>
+
+{{-- Logout Modal --}}
+<div aria-hidden="true"
+    class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full"
+    id="logoutModal" tabindex="-1">
+    <div class="relative h-auto w-full max-w-2xl p-4">
+        <div class="relative rounded-lg bg-white p-4 shadow sm:p-5">
+            <div class="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5">
+                <h3 class="font-semibold text-gray-900 dark:text-white">
+                    Đăng xuất
+                </h3>
+                <button
+                    class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                    data-modal-toggle="logoutModal" type="button">
+                    @svg('tabler-x', 'icon-sm')
+                </button>
+            </div>
+            <div class="mb-8 flex flex-col items-center justify-center gap-4 text-sm">
+                <div>@svg('tabler-alert-triangle', 'icon-2xl text-red-500')</div>
+                <p>Bạn có thực sự muốn đăng xuất</p>
+                <p>Bạn sẽ phải đăng nhập để có thể sử dụng một số chức năng</p>
+            </div>
+            <div class="flex items-center justify-center gap-4">
+                <a class="button-red" href="{{ route('auth.logout') }}">
+                    Đăng xuất
+                </a>
+                <button class="button-dark" data-modal-hide="logoutModal" type="button">
+                    Huỷ
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

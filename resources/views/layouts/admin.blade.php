@@ -42,18 +42,20 @@
 <body class="text-sm">
     {{-- header --}}
     @include('partials.admins.header')
-    {{-- sidebar --}}
-    @include('partials.admins.sidebar')
+    <div>
+        {{-- sidebar --}}
+        @include('partials.admins.sidebar')
 
-    <div class="mt-20 sm:ml-64">
-        <div class="px-4">
-            {{-- Toast notification --}}
-            @include('partials.admins.toast-notification')
-            {{-- Content --}}
-            @yield('content')
+        <div class="mt-20 sm:ml-64">
+            <div class="px-4">
+                {{-- Toast notification --}}
+                @include('partials.admins.toast-notification')
+                {{-- Content --}}
+                @yield('content')
+            </div>
+            {{-- footer --}}
+            @include('partials.admins.footer')
         </div>
-        {{-- footer --}}
-        @include('partials.admins.footer')
     </div>
 
     @yield('scripts')
