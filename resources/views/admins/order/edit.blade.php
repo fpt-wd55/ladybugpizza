@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Danh sách đơn hàng')
+@section('title', 'Cập nhật đơn hàng')
 
 @section('content')
     {{ Breadcrumbs::render('admin.orders.edit') }}
@@ -10,7 +10,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-4 gap-4">
                 {{-- item1 --}}
                 <div>
                     <h2 class="text-lg font-semibold mb-4">Tổng quan</h2>
@@ -50,6 +50,7 @@
                     <p class="mb-2">{{$order->user->email}}</p>
                     <label class="font-semibold">Số điện thoại</label>
                     <p>{{$order->user->phone}}</p>
+                    
                 </div>
                 {{-- item3 --}}
                 <div>
@@ -60,6 +61,44 @@
                     <label class="font-semibold">Ghi chú</label>
                     <p class="mb-2">{{$order->notes}}</p>
                 </div>
+                 {{-- SẢN PHẨM --}}
+                {{-- <div class="flex justify-between">
+                    <div> --}}
+                        {{-- sản phẩm --}}
+                        {{-- <div class="pl-4 ">
+                            <label class="font-semibold">Sản phẩm</label> <br>
+                            @foreach ($order->orderItems as $orderItem)
+                                @foreach ($orderItem->productAttributes as $products)
+                                    <span class="text-gray-800 font-semibold">
+                                        {{ $products->product->name }} ,
+                                    </span>
+                                @endforeach
+                            @endforeach
+                        </div> --}}
+                        {{-- thuộc tính --}}
+                        {{-- <div class="pl-4 ">
+                            <span>Đế : </span>
+                            @foreach ($order->orderItems as $orderItem)
+                                @foreach ($orderItem->productAttributes as $attribute)
+                                    {{ $attribute->attributeValue->value }}
+                                @endforeach
+                            @endforeach
+                        </div> --}}
+                        {{-- topping --}}
+                        {{-- <div class="pl-4 ">
+                            <span>Topping : </span>
+                            @foreach ($order->orderItems as $orderItem)
+                                @foreach ($orderItem->toppings as $topping)
+                                    {{ $topping->name }}
+                                @endforeach
+                            @endforeach
+                        </div> --}}
+                    {{-- </div>
+                    <div>
+                        <label class="font-semibold">Tổng tiền</label>
+                        <p>{{ number_format($order->amount) }}đ</p>
+                    </div>
+                </div> --}}
             </div>
     </div>
 @endsection
