@@ -64,14 +64,6 @@ class PromotionController extends Controller
     {
         $data = $request->all();
 
-        // if (isset($data['status'])) {
-        //     if ($data['status'] == 'on') {
-        //         $data['status'] = 1;
-        //     }
-        // } else {
-        //     $data['status'] = 2;
-        // }
-
         $promotion->update($data);
         return redirect()->route('admin.promotions.index')->with('message', 'Cập nhật mã giảm giá thành công');
     }
