@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
         $now = Carbon::now();
         $faker = Faker::create();
 
-        $usersData = [
+        $datas = [
             [
                 'username' => 'quandohong28',
                 'role_id' => 3,
@@ -36,12 +36,12 @@ class UserSeeder extends Seeder
                 'updated_at' => $now,
             ],
             [
-                'username' => 'blackwhilee04',
+                'username' => 'lv.thanh137',
                 'role_id' => 3,
-                'email' => 'blackwhilee04@gmail.com',
-                'fullname' => 'Lê Văn Thành',
+                'email' => 'lv.thanh137@gmail.com',
+                'fullname' => 'Le Van Thanh',
                 'phone' => '0382606012',
-                'password' => Hash::make('blackwhilee04@gmail.com'),
+                'password' => Hash::make('lv.thanh137@gmail.com'),
                 'google_id' => null,
                 'date_of_birth' => '2004-07-13',
                 'gender' => 1,
@@ -121,7 +121,7 @@ class UserSeeder extends Seeder
             ],
         ];
 
-        foreach ($usersData as $data) {
+        foreach ($datas as $data) {
             $user = User::create($data);
 
             Address::create([

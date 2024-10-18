@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('image');
-            $table->bigInteger('price');
+            $table->integer('price');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();

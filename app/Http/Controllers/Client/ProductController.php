@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Topping;
-use Illuminate\Http\Request;
+use App\Models\Favorite;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -36,8 +37,6 @@ class ProductController extends Controller
 
         $toppings = Topping::where('category_id', $product->category->id)->get();
 
-        // dd($toppings);
-
         return view('clients.product.detail', [
             'product' => $product,
             'attributes' => $attributes,
@@ -47,5 +46,12 @@ class ProductController extends Controller
 
     public function addToCart()
     {
+    }
+    public function favorites()
+    {
+        $favorites = Favorite::where('user_id', Auth::id())
+            ->with('product')
+            ->get();
+        return view('partials.clients', compact('favorites'));
     }
 }

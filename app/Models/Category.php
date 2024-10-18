@@ -13,7 +13,8 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
-        'status',
+        'image',
+        'status', 
     ];
 
     public function products()
@@ -24,5 +25,10 @@ class Category extends Model
     public function toppings()
     {
         return $this->hasMany(Topping::class);
+    }
+
+    public function attributes()
+    {
+        return $this->hasMany(Attribute::class);
     }
 }

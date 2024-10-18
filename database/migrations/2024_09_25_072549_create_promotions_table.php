@@ -15,16 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('description');
-            $table->tinyInteger('discount_type')->default(1)->comment('1: percent, 2: amount');
+            $table->integer('discount_type')->default(1)->comment('1: percent, 2: amount');
             $table->integer('discount_value');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->integer('quantity');
             $table->integer('min_order_total')->nullable();
             $table->integer('max_discount')->nullable();
-            $table->tinyInteger('is_global')->default(2)->comment('1: Tất cả , 2: Không phải tất cả');
-            $table->foreignId('rank_id')->nullable()->constrained('membership_ranks');
-            $table->tinyInteger('status')->default(1)->comment('1: active, 2: inactive');
+            $table->integer('is_global')->default(2)->comment('1: Tất cả , 2: Không phải tất cả');
+            $table->foreignId('rank_id')->nullable()->constrained('membership_ranks')->onDelete('cascade');
+            $table->integer('status')->default(1)->comment('1: active, 2: inactive');
             $table->timestamps();
         });
     }

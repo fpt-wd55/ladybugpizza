@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('transaction_code');
             $table->dateTime('transaction_date');
             $table->foreignId('payment_method_id')->constrained()->onDelete('cascade');
-            $table->bigInteger('amount');
-            $table->tinyInteger('status')->default(0)->comment('1: success, 2: failed');
+            $table->integer('amount');
+            $table->integer('status')->default(0)->comment('1: success, 2: failed');
             $table->timestamps();
             $table->softDeletes();
         });

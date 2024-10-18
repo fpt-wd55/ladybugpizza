@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,7 @@ class CategorySeeder extends Seeder
     {
         $now = Carbon::now();
 
-        DB::table('categories')->insert([
+        Category::insert([
             [
                 'name' => 'Pizza',
                 'slug' => 'pizza',

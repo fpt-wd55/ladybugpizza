@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
+use App\Models\Category;
 
 class AttributeSeeder extends Seeder
 {
@@ -17,7 +18,6 @@ class AttributeSeeder extends Seeder
     public function run(): void
     {
         $now = Carbon::now();
-
         $attibutes = [
             'Loại đế' => [
                 'Dày',
@@ -42,6 +42,7 @@ class AttributeSeeder extends Seeder
             $attribute = Attribute::create([
                 'name' => $name,
                 'status' => 1,
+                'category_id' => rand(1, 7),
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);

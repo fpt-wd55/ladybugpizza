@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use App\Models\Membership;
 use Illuminate\Http\Request;
 use App\Models\MembershipRank;
 use App\Http\Controllers\Controller;
+use App\Models\Log;
 
 class MembershipController extends Controller
 {
@@ -31,7 +33,7 @@ class MembershipController extends Controller
             // Gán rank cho mỗi membership
             $membership->rank_name = $currentRank->name;
             $membership->rank_img = $currentRank->icon;
-        } 
+        }
         // Gán màu cho từng rank
         foreach ($memberships as $membership) {
             switch ($membership->rank_name) {
@@ -77,7 +79,7 @@ class MembershipController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Membership $membership)
+    public function edit(Membership $membership, Request $request)
     {
         $points = $membership->points;
 
@@ -99,14 +101,101 @@ class MembershipController extends Controller
             // Nếu không có rank tiếp theo (đang ở rank cao nhất)
             $progress = 100;
         }
-
-
         // 5. Lấy thông tin rank hiện tại
         $img = $currentRank->icon;
         $rank = $currentRank->name;
 
-        // Trả về view với dữ liệu của thành viên, rank, và progress
-        return view('admins.memberships.edit', compact('membership', 'progress', 'img', 'rank'));
+        // HISTORY
+        $tab = $request->get('tab', 'history');
+
+        $pointsHistory = [];
+        // Lấy dữ liệu tương ứng với từng tab
+        switch ($tab) {
+            case 'receive':
+                // Lấy dữ liệu cho "Lịch sử nhận"
+                $logs = Log::where('user_id', $membership->user_id)
+                    ->where('action', 'Cộng điểm')
+                    ->get();
+                                     
+                    foreach ($logs as $log) {
+                        $cleanDescription = trim($log->description);
+
+                // Biểu thức chính quy bắt toàn bộ các phần tử: ngày, hành động, thời gian, địa điểm, điểm cộng/trừ
+                preg_match('/(\d{1,2}\/\d{1,2}\/\d{4})\s+(.*?)\s+vào lúc (\d{1,2}:\d{2})\s+tại\s+(.*?)\s*\(([-\+\d]+)\)/', $cleanDescription, $matches);
+
+                        if (count($matches) === 6) { // 6 phần tử (ngày, hành động, thời gian, địa điểm, điểm cộng)
+                            $pointsHistory[] = [
+                                'date'         => $matches[1],  // Ngày "3/10/10/2024"
+                                'action'       => $matches[2],  // Hành động "Cộng điểm mua hàng thành công"
+                                'time'         => $matches[3],  // Thời gian "08:30"
+                                'location'     => $matches[4],  // Địa điểm "LADYBUGPIZZA"
+                                'points_added' => $matches[5],  // Điểm "+200"
+                            ];
+                        }
+                    } 
+                break;
+
+            case 'change':
+                // Lấy dữ liệu cho "Lịch sử đổi"
+                $logs = Log::where('user_id', $membership->user_id)
+                    ->where('action', 'Đổi điểm')
+                    ->get();
+                    foreach ($logs as $log) {
+                        $cleanDescription = preg_replace('/\s+/', ' ', trim($log->description)); 
+                       
+                        preg_match('/Ngày\s*(\d{1,2}\/\d{1,2}\/\d{4})\s.*?vào lúc\s*(\d{1,2}:\d{2})\s+tại\s+.*?\(([-\d]+)\)/', $cleanDescription, $matches);
+                        if (count($matches) === 4) {
+                            $pointsHistory[] = [
+                                'date'         => $matches[1],  // Ngày "3/10/10/2024"
+                                'time'         => $matches[2],  // Thời gian "08:30"
+                                'points_delete' => $matches[3],  // Điểm "-200"
+                            ];
+                        }
+                    }
+                break;
+
+            case 'history':
+            default:
+                $logs = Log::where('user_id', $membership->user_id)
+                    ->whereIn('action', ['Cộng điểm', 'Đổi điểm']) // Lấy cả 2 loại hành động
+                    ->get();
+
+                foreach ($logs as $log) {
+                    // Kiểm tra nếu là "Cộng điểm"
+                    if ($log->action == 'Cộng điểm') {
+                        preg_match('/Ngày (\d+\/\d+\/\d+)\s+(Cộng điểm mua hàng thành công)\s+vào lúc (\d+:\d+)\s+tại (.*?)\s+\(([-\+\d]+)\)/', $log->description, $matches);
+                    
+                        if (count($matches) === 6) { // 6 phần tử (ngày, hành động, thời gian, địa điểm, điểm cộng)
+                            $pointsHistory[] = [
+                                'date'         => $matches[1],  // Ngày "3/10/10/2024"
+                                'action'       => $matches[2],  // Hành động "Cộng điểm mua hàng thành công"
+                                'time'         => $matches[3],  // Thời gian "08:30"
+                                'location'     => $matches[4],  // Địa điểm "LADYBUGPIZZA"
+                                'points_added' => $matches[5],  // Điểm "+200"
+                            ];
+                        }
+                    }
+                    // Kiểm tra nếu là "Đổi điểm"
+                    else if ($log->action == 'Đổi điểm') {
+                        preg_match('/Ngày (\d+\/\d+\/\d+)\s+(.*?)\s+vào lúc (\d+:\d+)\s+tại (.*?)\s+\(([-\d]+)\)/', $log->description, $matches);
+                    
+                        if (count($matches) === 6) { // Cần đảm bảo có 6 nhóm bắt được
+                            $pointsHistory[] = [
+                                'date'         => $matches[1],  // Ngày "3/10/10/2024"
+                                'action'       => $matches[2],  // Hành động "Đổi phiếu mua hàng thành công"
+                                'time'         => $matches[3],  // Thời gian "08:30"
+                                'location'     => $matches[4],  // Địa điểm "LADYBUGPIZZA"
+                                'points_delete' => $matches[5], // Điểm "-200"
+                            ];
+                        }
+                    }
+                }
+                break;
+        }
+        // END HISTORY
+
+        // Trả về view với dữ liệu của thành viên, rank, và progress,history
+        return view('admins.memberships.edit', compact('membership', 'progress', 'img', 'rank', 'pointsHistory','tab'));
     }
 
 

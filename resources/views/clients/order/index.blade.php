@@ -6,7 +6,6 @@
     <div class="min-h-screen">
         <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
             <p class="title">LỊCH SỬ ĐƠN HÀNG</p>
-
             {{-- tabs --}}
             <div class="no-scrollbar mb-4 overflow-x-auto border-b border-gray-200 text-left text-sm">
                 <ul class="flex">
@@ -21,7 +20,6 @@
                     @endforeach
                 </ul>
             </div>
-
             {{-- Danh sách đơn hàng --}}
             @for ($j = 0; $j < 10; $j++)
                 <div class="product-card mb-4 p-4 hover:cursor-pointer">
@@ -33,7 +31,6 @@
                                     <span class="badge-red">Đang chờ xác nhận</span>
                                 </div>
                             </div>
-
                         </div>
                         <div class="mb-4 flex items-start justify-between">
                             <div class="flex items-center gap-2">
@@ -50,7 +47,6 @@
                             <a class="link-md" href="#">Xem hoá đơn</a>
                         </div>
                     </div>
-
                     <div class="max-h-0 overflow-hidden transition" id="content-{{ $j }}">
                         <hr class="my-4">
                         <div class="pb-5 text-sm">

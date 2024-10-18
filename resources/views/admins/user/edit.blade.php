@@ -23,13 +23,13 @@
                                     </div>
                                     <input id="dropzone-file" name="avatar" type="file" class="hidden" />
                                 </label>
-                                @error('avatar')
-                                    <p class="mt-2 text-sm text-red-600 ">
-                                        {{ $message }}
-                                    </p>
-                                @enderror
                             </div>
                         </div>
+                        @error('avatar')
+                            <p class="mt-2 text-sm text-red-600 ">
+                                {{ $message }}
+                            </p>
+                        @enderror
                     </div>
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 sm:grid-cols-3">

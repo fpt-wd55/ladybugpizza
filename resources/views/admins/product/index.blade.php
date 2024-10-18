@@ -12,11 +12,11 @@
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <a href="{{ route('admin.users.create') }}" class="button-blue">
+                <a href="{{ route('admin.products.create') }}" class="button-blue">
                     @svg('tabler-plus', 'w-5 h-5 mr-2')
                     Thêm sản phẩm
                 </a>
-                <a href="#" class="button-red">
+                <a href="{{route('admin.trash-products')}}" class="button-red">
                     @svg('tabler-trash', 'w-5 h-5 mr-2')
                     Thùng rác
                 </a>
@@ -32,11 +32,10 @@
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="px-4 py-3">Sản phẩm</th>
-                        <th scope="col" class="px-4 py-3">Giá</th>
-                        <th scope="col" class="px-4 py-3">Khuyến mãi</th>
-                        <th scope="col" class="px-4 py-3">Số lượng</th>
-                        <th scope="col" class="px-4 py-3">Danh mục</th>
-                        <th scope="col" class="px-4 py-3">Trạng thái</th>
+                        <th scope="col" class="px-4 py-3 text-center">Giá</th>
+                        <th scope="col" class="px-4 py-3 text-center">Số lượng</th>
+                        <th scope="col" class="px-4 py-3 text-center">Danh mục</th>
+                        <th scope="col" class="px-4 py-3 text-center">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Hành động</span>
                         </th>
@@ -45,29 +44,65 @@
                 <tbody>
                     @forelse ($products as $product)
                         <tr class="border-b hover:bg-gray-100">
-                            <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap ">
+                            <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap shrink-0">
                                 <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
-                                    class="w-auto h-8 mr-3 rounded">
-                                {{ $product->name }}
+                                    onerror="this.src='{{ asset('storage/uploads/products/no-image.gif') }}'"
+                                    class="w-8 h-8 mr-3 rounded bg-slate-400">
+                                <div class="grid grid-flow-row">
+                                    <span class="text-sm">{{ $product->name }}</span>
+                                    <div class="flex items-center gap-1">
+                                        <p>{{ round($product->avg_rating, 1) }}</p>
+                                        <div class="flex items-center gap-0.3">
+                                            @for ($i = 0; $i < 5; $i++)
+                                                @if ($i < $product->avg_rating)
+                                                    @svg('tabler-star-filled', 'icon-sm text-red-500')
+                                                @else
+                                                    @svg('tabler-star', 'icon-sm text-red-500')
+                                                @endif
+                                            @endfor
+                                        </div>
+                                        <p>({{ $product->total_rating }})</p>
+                                    </div>
+                                </div>
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ number_format($product->price) }}đ
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
+                                <div class="grid grid-flow-row">
+                                    @if ($product->discount_price == 0)
+                                        <span class="text-sm">
+                                            {{ number_format($product->price) }}đ
+                                        </span>
+                                    @else
+                                        <span class="text-sm line-through">{{ number_format($product->price) }}đ</span>
+                                        <span class="text-sm">
+                                            {{ number_format($product->discount_price) }}đ
+                                        </span>
+                                    @endif
+                                </div>
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                {{ number_format($product->discount_price) }}đ
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
+                                <span class=" text-xs font-medium">
+                                    @if (count($product->category->attributes) > 0)
+                                        <span
+                                            class="text-white bg-green-400 inline-flex shrink-0 items-center rounded px-2.5 py-0.5">Thuộc
+                                            tính</span>
+                                    @else
+                                        @if ($product->quantity == 0)
+                                            <span
+                                                class="text-red-500 bg-yellow-100 inline-flex shrink-0 items-center rounded px-2.5 py-0.5">Hết
+                                                hàng</span>
+                                        @else
+                                            {{ $product->quantity }}
+                                        @endif
+                                    @endif
+                                </span>
+
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                {{ $product->quantity }}
-                            </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
                                 {{ $product->category->name }}
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                <div class="flex items-center">
-                                    <div
-                                        class="inline-block indicator {{ $product->status == 1 ? 'bg-green-700' : 'bg-red-700' }}">
-                                    </div>
-                                    {{ $product->status == 1 ? 'Hoạt động' : 'Khóa' }}
-                                </div>
+                            <td
+                                class="px-4 py-2 text-gray-900 whitespace-nowrap text-center font-medium {{ $product->status == 1 ? 'text-green-700' : 'text-red-700' }}">
+                                {{ $product->status == 1 ? 'Hoạt động' : 'Khóa' }}
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $product->sku }}" data-dropdown-toggle="{{ $product->sku }}-dropdown"
@@ -79,10 +114,15 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $product->sku }}">
                                         <li>
-                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Chi tiết</a>
+                                            <a href="{{ route('client.product.show', $product->slug) }} " target="_blank"
+                                                class="block py-2 px-4 hover:bg-gray-100">Xem</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
+                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Đánh giá</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('admin.products.edit', $product) }}"
+                                                class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
                                         </li>
                                         <li>
                                             <span data-modal-target="delete-modal-{{ $product->sku }}"
@@ -109,7 +149,8 @@
                                                 <h3 class="mb-5 font-normal">Bạn có muốn xóa sản phẩm này không?</h3>
 
                                                 <div class="flex justify-center items-center">
-                                                    <form action="#" method="POST">
+                                                    <form action="{{ route('admin.products.destroy', $product) }}"
+                                                        method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit"

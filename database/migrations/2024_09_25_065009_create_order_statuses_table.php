@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('order_statuses', function (Blueprint $table) {
             $table->id();
-            // 1: Chờ xác nhận; 2: Đã xác nhận; 3: Đang giao hàng; 4: Đã giao hàng; 5: Đã hủy
             $table->string('name');
             $table->string('slug');
             $table->string('color');

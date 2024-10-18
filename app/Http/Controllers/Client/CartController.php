@@ -13,7 +13,6 @@ class CartController extends Controller
         $cart = Auth::user()->cart;
         return view('clients.cart.index');
     }
-
     public function checkout()
     {
         return view('clients.cart.checkout');

@@ -8,17 +8,54 @@
             <form action="{{ route('admin.attributes.store') }}" method="POST">
                 @csrf
                 <div class="grid gap-4 mb-4 sm:grid-cols-1">
-                    <div>
-                        <label for="attribute_name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên thuộc
-                            tính</label>
-                        <input type="text" name="attribute_name" id="attribute_name" placeholder="Tên thuộc tính"
-                            value="{{ old('attribute_name') }}"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                        @error('attribute_name')
-                            <p class="mt-2 text-sm text-red-600 ">
-                                {{ $message }}
-                            </p>
-                        @enderror
+                    <div class="grid gap-4 mb-4 sm:grid-cols-3">
+                        <div>
+                            <label for="attribute_name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên thuộc
+                                tính</label>
+                            <input type="text" name="attribute_name" id="attribute_name" placeholder="Tên thuộc tính"
+                                value="{{ old('attribute_name') }}"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            @error('attribute_name')
+                                <p class="mt-2 text-sm text-red-600 ">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+                        <div>
+                            <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 ">Danh mục</label>
+                            <select class="w-full h-10 mb-2 select" name="category_id">
+                                <option selected disabled>Danh mục</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}"
+                                        {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('category_id')
+                                <p class="mt-2 text-sm text-red-600 ">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+                        <div>
+                            <label for="status" class="block mb-4 text-sm font-medium text-gray-900 ">Trạng
+                                thái</label>
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="checkbox" name="status" class="sr-only peer" value="1"
+                                    {{ old('status') ? 'checked' : '' }}>
+                                <div
+                                    class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                                </div>
+                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Hoạt
+                                    động</span>
+                            </label>
+                            @error('status')
+                                <p class="mt-2 text-sm text-red-600 ">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
                     </div>
                     <div>
                         <table id="example" class="table-auto w-full rounded-md table-add-more">

@@ -15,11 +15,9 @@
                 <p class="mb-12 uppercase text-gray-500">Ngon đến từng miếng, đậm vị yêu thương</p>
                 @include('partials.clients.categories')
             </div>
-
             {{-- combo --}}
             <div class="mb-8">
                 {{-- <p class="font-semibold uppercase mb-4">Combo</p> --}}
-
                 <div class="no-scrollbar flex w-full items-center gap-4 overflow-x-auto">
                     @foreach ($combos as $combo)
                     <a class="product-card relative flex w-full flex-shrink-0 overflow-hidden md:w-2/3" href="">
@@ -40,7 +38,6 @@
                     @endforeach
                 </div>
             </div>
-
             {{-- products --}}
             <div class="mb-8">
                 @foreach ($categories as $category)

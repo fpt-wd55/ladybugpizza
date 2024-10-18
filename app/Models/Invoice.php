@@ -14,7 +14,6 @@ class Invoice extends Model
         'order_id',
         'invoice_number',
         'transaction_id',
-        'tax_amount',
     ];
 
     public function order()

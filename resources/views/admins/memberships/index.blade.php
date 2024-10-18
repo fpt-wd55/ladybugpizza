@@ -25,8 +25,7 @@
                     <tr>
                         <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-xs md:text-sm">Tài khoản</th>
                         <th scope="col" class="px-0 py-0 lg:py-3 text-xs md:text-sm ">Họ và tên</th>
-                        <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-center text-xs md:text-sm">Thứ hạng</th>
-                        <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-center text-xs md:text-sm">Trạng thái</th>
+                        <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-center  text-xs md:text-sm">Thứ hạng</th>
                         <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-xs md:text-sm">
                             <span class="sr-only">Actions</span>
                         </th>
@@ -54,25 +53,18 @@
                             </td>
                             <td class=" text-gray-900 whitespace-nowrap ">{{ $membership->user->fullname }}</td>
                             <td class="lg:px-4 lg:py-2 text-gray-900 whitespace-nowrap ">
-                                <div class="flex items-center justify-center">
+                                <div class="flex flex-col items-center ">
                                     <img loading="lazy" src="{{ asset('storage/uploads/ranks/' . $membership->rank_img) }}"
-                                        alt="" class="img-circle img-sm md:w-5 md:h-5">
+                                        alt="" class="img-circle img-sm md:w-5 md:h-5 lg:w-11 lg:h-11">
                                     <p
                                         class="ms-2 uppercase text-xs md:text-sm md:font-medium lg:font-semibold {{ $membership->rank_color }}">
                                         {{ $membership->rank_name }}</p>
                                 </div>
                             </td>
-                            <td class="md:px-0 md:py-0 lg:px-4 lg:py-2 text-gray-900 whitespace-nowrap ">
-                                <div class="flex items-center">
-                                    <div
-                                        class="inline-block indicator {{ $membership->status == 1 ? 'bg-green-700' : 'bg-red-700' }}">
-                                    </div>
-                                    {{ $membership->status == 1 ? 'Hoạt động' : 'Khóa' }}
-                                </div>
-                            </td>
-                            <td class="lg:px-4 lg:py-3 items-center justify-end hidden md:block">
+                           
+                            <td class="lg:px-4 lg:py-3 items-center ">
                                 <button id="{{ $membership->id }}" data-dropdown-toggle="{{ $membership->id }}-dropdown"
-                                    class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
+                                    class="items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none hidden md:block"
                                     type="button">
                                     @svg('tabler-dots', 'w-5 h-5')
                                 </button>
