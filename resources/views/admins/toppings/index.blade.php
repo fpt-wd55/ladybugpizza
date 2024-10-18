@@ -50,7 +50,7 @@
                                 {{ ($toppings->currentPage() - 1) * $toppings->perPage() + $loop->iteration }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $topping->name }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                <a data-fslightbox="gallery"
+                                <a class="shrink-0" data-fslightbox="gallery"
                                     href="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
                                     <img loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}"
                                         class="img-sm img-circle object-cover">

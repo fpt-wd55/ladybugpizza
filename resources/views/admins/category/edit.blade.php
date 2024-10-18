@@ -11,13 +11,11 @@
                     <div>
                         <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Hình ảnh</label>
                         <div class="flex items-center text-gray-900 whitespace-nowrap ">
-                            <div class="shrink-0">
-                                <a data-fslightbox="gallery"
-                                    href="{{ asset('storage/uploads/categories/' . $category->image) }}">
-                                    <img loading="lazy" src="{{ asset('storage/uploads/categories/' . $category->image) }}"
-                                        class="w-10 h-10 mr-3 rounded object-cover">
-                                </a>
-                            </div>
+                            <a class="shrink-0" data-fslightbox="gallery"
+                                href="{{ asset('storage/uploads/categories/' . $category->image) }}">
+                                <img loading="lazy" src="{{ asset('storage/uploads/categories/' . $category->image) }}"
+                                    class="w-10 h-10 mr-3 rounded object-cover">
+                            </a>
                             <input
                                 class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
                                 id="image" name="image" type="file">
