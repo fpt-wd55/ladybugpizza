@@ -13,6 +13,7 @@ class Evaluation extends Model
     protected $fillable = [
         'user_id',
         'product_id',
+        'order_id',
         'rating',
         'comment',
         'status',
@@ -27,4 +28,8 @@ class Evaluation extends Model
     {
         return $this->belongsTo(Product::class);
     }
+    public function order()
+{
+    return $this->belongsTo(Order::class);
+}
 }

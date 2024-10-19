@@ -191,7 +191,7 @@ class ProductController extends Controller
     public function listComment(String $id)
     {
         $sanpham = Product::query()->findOrFail($id);
-        $evaluations = Evaluation::where('product_id',$id)->paginate(10);
+        $evaluations = Evaluation::where('product_id',$id)->with('order')->paginate(10);
         return view('admins.evaluations.edit',compact('sanpham','evaluations'));
     }
 }

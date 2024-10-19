@@ -57,7 +57,32 @@
                                                     @endif
                                                 @endfor
                                                 </div>
-                                                <p class="text-sm">{{$item->created_at->format('d-m-Y H:i')}} | Đế mỏng; Size S; Topping: Thịt bò, Hành tây</p>
+                                                <p class="text-sm ">{{$item->created_at->format('d-m-Y H:i')}} | 
+                                                    @foreach ($item->order->orderItems as $orderItem)
+                                                    @foreach ($orderItem->productAttributes as $products)
+                                                        <span class="text-[#D30A0A] font-semibold">
+                                                            {{ $products->product->name }} ,
+                                                        </span>
+                                                    @endforeach
+                                                @endforeach</p>
+                                                <p class="text-xs">Đế :
+                                                     @foreach ($item->order->orderItems as $orderItem)
+                                                                @foreach ($orderItem->productAttributes as $attribute)
+                                                                <span class="text-gray-700 text-xs font-normal">
+                                                                    {{ $attribute->attributeValue->value }}
+                                                                </span>    
+                                                                @endforeach
+                                                            @endforeach
+                                                </p>
+                                                <p class="text-xs">Topping : 
+                                                    @foreach ($item->order->orderItems as $orderItem)
+                                                    @foreach ($orderItem->toppings as $topping)
+                                                    <span class="text-gray-700 text-xs font-normal">
+                                                        {{ $topping->name }},
+                                                    </span>    
+                                                    @endforeach
+                                                @endforeach
+                                                </p>
                                             </div>
                                             <div class="ml-auto self-start">
                                                 <div class="flex items-center">
@@ -78,8 +103,10 @@
                                                                 aria-labelledby="{{$item->id}}-dropdown-button">
                               
                                                                 <li>
-                                                                    <a href=""
-                                                                        class="block py-2 px-4 hover:bg-gray-100">Chi Tiết Hóa Đơn</a>
+                                                                    <button href=""
+                                                                        class="block py-2 px-4 hover:bg-gray-100"
+                                                                        data-modal-target="order-modal-{{ $item->order->id }}"
+                                                                        data-modal-toggle="order-modal-{{ $item->order->id }}">Chi Tiết Hóa Đơn</button>
                                                                 </li>
 
                                                                 <li class="block py-2 px-4 hover:bg-gray-100">
@@ -105,12 +132,162 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- content --}}
                                         <div class="mb-4 px-8">
                                             <p class="mb-4 text-sm">{{$item->comment}}</p>
                                            
                                         </div>
+                                        {{-- content --}}
+                                         {{-- order modal --}}
+                        <div id="order-modal-{{ $item->order->id }}" tabindex="-1" aria-hidden="true"
+                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+                            <div class="relative p-4 w-full max-w-5xl h-auto">
+                                <div
+                                    class="relative p-4 bg-white rounded-lg shadow sm:p-5 h-[480px] overflow-y-auto no-scrollbar">
+                                    <button type="button"
+                                        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                        data-modal-hide="order-modal-{{ $item->order->id }}">
+                                        @svg('tabler-x', 'w-4 h-4')
+                                        <span class="sr-only">Close modal</span>
+                                    </button>
+                                    <div class="p-4 md:p-5">
+                                        <div class="space-y-4">
+                                            <div class="flex justify-between">
+                                                <h1 class="text-2xl font-semibold">Đơn hàng</h1>
+                                                <div class="flex justify-center gap-2">
+                                                    @if ($item->order->orderStatus->name === 'Hoàn thành')
+                                                        @if ($item->order->invoice)
+                                                            <a
+                                                                href="{{ route('invoices.show', $item->order->invoice->invoice_number) }}">
+                                                                <button class="mt-4 button-red">Xem hóa đơn</button>
+                                                            </a>
+                                                        @endif
+                                                    @endif
+                                                    @php
+                                                        // Xác định màu sắc dựa trên trạng thái đơn hàng
+                                                        $buttonClass = match ($item->order->orderStatus->name) {
+                                                            'Hoàn thành' => 'button-green',
+                                                            'Đang giao hàng' => 'button-gray',
+                                                            'Đang tìm tài xế' => 'button-gray',
+                                                            'Chờ xác nhận' => 'button-yellow',
+                                                            'Đã xác nhận' => 'button-blue',
+                                                            'Đã hủy' => 'button-gray',
+                                                            default => 'button-gray', // Trạng thái mặc định
+                                                        };
+                                                    @endphp
+                                                    <button class="mt-4 {{ $buttonClass }} w-36">
+                                                        {{ $item->order->orderStatus->name }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <hr class="w-full">
+                                            @if ($item->order->orderStatus->name === 'Đã hủy')
+                                                {{-- user_id --}}
+                                                <div class="pl-4 rounded-lg ">
+                                                    <label class="font-semibold">Thông tin thanh toán</label>
+                                                    <p class="text-gray-800 mt-4">{{ $item->order->user->fullname }}</p>
+                                                    <p class="text-gray-800">{{ $item->order->address->detail_address }}</p>
+                                                    <p class="text-gray-800">{{ $item->order->address->ward }}</p>
+                                                    <p class="text-gray-800">{{ $item->order->address->district }}</p>
+                                                </div>
+                                                {{-- Email --}}
+                                                <div class="pl-4 rounded-lg">
+                                                    <label class="font-semibold">Email</label>
+                                                    <p class="text-gray-800">{{ $item->order->user->email }}</p>
+                                                </div>
+                                                {{-- SĐT --}}
+                                                <div class="pl-4 rounded-lg">
+                                                    <label class="font-semibold">Số điện thoại</label>
+                                                    <p class="text-gray-800">{{ $item->order->user->phone }}</p>
+                                                </div>
+                                                {{-- hình thức thanh toán --}}
+                                                <div class="pl-4 rounded-lg ">
+                                                    <label class="font-semibold">Hình thức thanh toán</label>
+                                                    <p class="text-gray-800">{{ $item->order->paymentMethod->name }}</p>
+                                                </div>
+                                                <div class="pl-4 rounded-lg ">
+                                                    <label class="font-semibold">Lí do hủy đơn</label>
+                                                    <p class="text-gray-800">{{ $item->order->canceled_reason }}</p>
+                                                </div>
+                                                {{--  --}}
+                                                {{-- <div class="pl-4 rounded-lg ">
+                                                <label class="font-semibold">Sản phẩm</label>
+                                                <p class="text-gray-800">{{ $item->order->orderItems->productAttribute->product->name }}</p>
+                                            </div> --}}
+                                            @else
+                                                {{-- user_id --}}
+                                                <div class="pl-4 ">
+                                                    <label class="font-semibold">Thông tin thanh toán</label>
+                                                    <p class="text-gray-800 mt-4">{{ $item->order->user->fullname }}</p>
+                                                    <p class="text-gray-800">{{ $item->order->address->detail_address }}</p>
+                                                    <p class="text-gray-800">{{ $item->order->address->ward }}</p>
+                                                    <p class="text-gray-800">{{ $item->order->address->district }}</p>
+                                                </div>
+                                                {{-- Email --}}
+                                                <div class="pl-4">
+                                                    <label class="font-semibold">Email</label>
+                                                    <p class="text-gray-800">{{ $item->order->user->email }}</p>
+                                                </div>
+                                                {{-- SĐT --}}
+                                                <div class="pl-4">
+                                                    <label class="font-semibold">Số điện thoại</label>
+                                                    <p class="text-gray-800">{{ $item->order->user->phone }}</p>
+                                                </div>
+                                                {{-- hình thức thanh toán --}}
+                                                <div class="pl-4">
+                                                    <label class="font-semibold">Hình thức thanh toán</label>
+                                                    <p class="text-gray-800">{{ $item->order->paymentMethod->name }}</p>
+                                                </div>
+                                                <hr class="w-full">
+                                                {{-- SẢN PHẨM --}}
+                                                <div class="flex justify-between">
+                                                    <div>
+                                                        {{-- sản phẩm --}}
+                                                        <div class="pl-4 ">
+                                                            <label class="font-semibold">Sản phẩm</label> <br>
+                                                            @foreach ($item->order->orderItems as $orderItem)
+                                                                @foreach ($orderItem->productAttributes as $products)
+                                                                    <span class="text-gray-800 font-semibold">
+                                                                        {{ $products->product->name }} ,
+                                                                    </span>
+                                                                @endforeach
+                                                            @endforeach
+                                                        </div>
+                                                        {{-- thuộc tính --}}
+                                                        <div class="pl-4 ">
+                                                            <span>Đế : </span>
+                                                            @foreach ($item->order->orderItems as $orderItem)
+                                                                @foreach ($orderItem->productAttributes as $attribute)
+                                                                    {{ $attribute->attributeValue->value }}
+                                                                @endforeach
+                                                            @endforeach
+                                                        </div>
+                                                        {{-- topping --}}
+                                                        <div class="pl-4 ">
+                                                            <span>Topping : </span>
+                                                            @foreach ($item->order->orderItems as $orderItem)
+                                                                @foreach ($orderItem->toppings as $topping)
+                                                                    {{ $topping->name }}
+                                                                @endforeach
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <label class="font-semibold">Tổng tiền</label>
+                                                        <p>{{ number_format($item->order->amount) }}đ</p>
+                                                    </div>
+                                                </div>
+                                                <hr class="w-full">
+                                            @endif
+                                          
+                                        </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- end order modal --}}
+                                    </div>
+                                       
+
                                     {{-- end card --}}
                                     @empty
                                     <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
