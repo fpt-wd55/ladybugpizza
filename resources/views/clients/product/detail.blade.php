@@ -10,7 +10,9 @@
             {{-- Product detail --}}
             <div class="col-span-5 mb-8 md:col-span-2 md:flex md:gap-8 lg:block">
                 <div>
-                    <img alt="{{ $product->name }}" class="relative mb-8 w-full rounded-lg object-cover md:h-80 md:w-80" loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}" />
+                    <a data-fslightbox="gallery" href="{{ asset('storage/uploads/products/' . $product->image) }}">
+                        <img alt="{{ $product->name }}" class="relative mb-8 w-full rounded-lg object-cover md:h-80 md:w-80" loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}" />
+                    </a>
                     <form action="#" method="post">
                         @csrf
                         @method('POST')
@@ -24,11 +26,7 @@
                     <div class="mb-2 flex items-center gap-2">
                         <div class="flex items-center gap-1">
                             @for ($i = 0; $i < 5; $i++)
-                                @if ($i < $product->avg_rating)
-                                    @svg('tabler-star-filled', 'icon-md text-red-500')
-                                @else
-                                    @svg('tabler-star', 'icon-md text-red-500')
-                                @endif
+                                @svg($i < $product->avg_rating ? 'tabler-star-filled' : 'tabler-star', 'icon-md text-red-500')
                             @endfor
                         </div>
                         <p>({{ $product->avg_rating }})</p>
@@ -45,7 +43,7 @@
                             <span class="text-red-500">*</span>
                             {{ $attribute->name }}
                         </p>
-                        <div class="flex items-center flex-wrap gap-8">
+                        <div class="flex flex-wrap items-center gap-8">
                             @foreach ($attribute->values as $value)
                                 <div class="min-w-32">
                                     <input checked class="peer hidden" id="option_{{ $value->id }}" name="attribute_{{ $attribute->id }}" required type="radio" value="{{ $value->value }}" />
