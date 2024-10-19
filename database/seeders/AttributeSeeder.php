@@ -35,6 +35,7 @@ class AttributeSeeder extends Seeder
                 'Cà chua Marinara',
                 'Nấm',
                 'Húng quế Pesto',
+                'Không sốt',
             ]
         ];
 
