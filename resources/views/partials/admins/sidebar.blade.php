@@ -66,7 +66,7 @@
                             class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Đánh giá</a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.products.index') }}"
+                        <a href="{{ route('admin.combos.index') }}"
                             class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100">Combo</a>
                     </li>
                     <li>
