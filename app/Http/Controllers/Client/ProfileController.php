@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use dvhcvn;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -27,12 +28,19 @@ class ProfileController extends Controller
 	public function postUpdate(UpdateUserRequest $request)
 	{
 		$user = Auth::user();
+
+		// Khởi tạo một mảng chứa các trường cần cập nhật
+		$data = [];
+
+		// Kiểm tra xem người dùng có tải lên avatar không
 		if ($request->hasFile('avatar')) {
 			$file = $request->file('avatar');
 			$name = $file->getClientOriginalName();
 			$file->move('storage/uploads/avatars', $name);
-			$user['avatar'] = $name;
+			$data['avatar'] = $name;
 		}
+
+		// Xử lý giới tính
 		$gender = null;
 		if ($request->gender == 'male') {
 			$gender = 1;
@@ -41,15 +49,21 @@ class ProfileController extends Controller
 		} elseif ($request->gender == 'other') {
 			$gender = 3;
 		}
-		$user->fullname = $request->fullname;
-		$user->email = $request->email;
-		$user->phone = $request->phone;
-		$user->date_of_birth = $request->date_of_birth;
-		$user->gender = $gender;
 
-		$user->save();
-		return redirect()->route('client.profile.index');
+		// Cập nhật thông tin người dùng
+		$data['fullname'] = $request->fullname;
+		$data['email'] = $request->email;
+		$data['phone'] = $request->phone;
+		$data['date_of_birth'] = $request->date_of_birth;
+		$data['gender'] = $gender;
+
+		if (!$user->update($data)) {
+			return redirect()->back()->with('error', 'Cập nhật thông tin thất bại');
+		}
+
+		return redirect()->route('client.profile.index')->with('success', 'Cập nhật thông tin thành công');
 	}
+
 
 	public function postChangePassword(ChangeRequest $request)
 	{
@@ -170,11 +184,11 @@ class ProfileController extends Controller
 
 	public function membershipHistory(Request $request)
 	{
-        $tab = request()->query('tab');
+		$tab = request()->query('tab');
 
 		return view('clients.profile.membership.history', [
-            'tab' => $tab
-        ]);
+			'tab' => $tab
+		]);
 	}
 
 	public function address()
@@ -339,5 +353,4 @@ class ProfileController extends Controller
 	{
 		$client = new Client();
 	}
-
 }

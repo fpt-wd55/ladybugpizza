@@ -27,7 +27,7 @@ class UpdateUserRequest extends FormRequest
 			'phone' => 'nullable|string|max:20',
 			'gender' => 'nullable|string',
 			'date_of_birth' => 'nullable|date',
-			'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+			'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ];
     }
 
@@ -39,6 +39,9 @@ class UpdateUserRequest extends FormRequest
             'phone.digits_between' => 'Số điện thoại không hợp lệ',
             'email.required' => 'Email không được để trống',
             'email.email' => 'Email không đúng định dạng',
+            'avatar.image' => 'File được chọn không phải là ảnh',
+            'avatar.mimes' => 'Ảnh đại diện không đúng định dạng',
+            'avatar.max' => 'Dung lượng ảnh đại diện không được vượt quá 2MB',
         ];
     }
 }

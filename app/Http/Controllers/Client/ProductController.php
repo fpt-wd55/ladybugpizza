@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+    /**
+     * Hiển thị trang menu
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function menu()
     {
         $categories = Category::all();
@@ -32,6 +36,11 @@ class ProductController extends Controller
         ]);
     }
 
+    /**
+     * Hiển thị trang chi tiết sản phẩm
+     * @param mixed $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function show($slug)
     {
         $product = Product::where('slug', $slug)->first();
@@ -60,10 +69,26 @@ class ProductController extends Controller
         ]);
     }
 
+    /**
+     * Thêm mới một sản phẩm vào giở hàng
+     * @return void
+     */
     public function addToCart()
     {
     }
 
+    /**
+     * Xoá một list sản phẩm khỏi giỏ hàng (có thể áp dụng cho việc xoá một sản phẩm cụ thể và clear giỏ hàng)
+     * @return void
+     */
+    public function removeFromCart()
+    {
+    }
+
+    /**
+     * Lấy ra danh sách các sản phẩm yêu thích của người dùng đang đăng nhập
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function favorites()
     {
         $favorites = Favorite::where('user_id', Auth::id())
@@ -73,6 +98,11 @@ class ProductController extends Controller
         return view('partials.clients', compact('favorites'));
     }
 
+    /**
+     * Thêm mới sản phẩm vào danh sách yêu thích
+     * @param mixed $slug
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postFavorite($slug)
     {
         $product = Product::where('slug', $slug)->first();
