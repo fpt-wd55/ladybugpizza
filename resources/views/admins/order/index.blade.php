@@ -259,7 +259,7 @@
                                                             <span>Đế : </span>
                                                             @foreach ($order->orderItems as $orderItem)
                                                                 @foreach ($orderItem->productAttributes as $attribute)
-                                                                    {{ $attribute->attributeValue->value }}
+                                                                    {{ $attribute->attributeValue->value }},
                                                                 @endforeach
                                                             @endforeach
                                                         </div>
@@ -268,7 +268,7 @@
                                                             <span>Topping : </span>
                                                             @foreach ($order->orderItems as $orderItem)
                                                                 @foreach ($orderItem->toppings as $topping)
-                                                                    {{ $topping->name }}
+                                                                    {{ $topping->name }},
                                                                 @endforeach
                                                             @endforeach
                                                         </div>
