@@ -1,38 +1,26 @@
-<div class="animate-slide-out-right fixed right-4 top-20 z-50">
+<div class="fixed right-4 top-20 z-50 animate-slide-out-right">
     @if (session('success'))
-        <div id="toast-success"
-            class="flex items-center w-full max-w-sm p-4 mb-4 text-gray-500 bg-white rounded-lg shadow " role="alert">
-            <div
-                class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg">
+        <div class="mb-4 flex w-full max-w-sm items-center rounded-lg bg-white p-4 text-gray-500 shadow" id="toast-success" role="alert">
+            <div class="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500">
                 @svg('tabler-circle-check-filled', 'w-6 h-6')
-                <span class="sr-only">Check icon</span>
             </div>
             <div class="ms-3 text-sm font-normal">
                 {{ session('success') }}
             </div>
-            <button type="button"
-                class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-0 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 transition"
-                data-dismiss-target="#toast-success" aria-label="Close">
-                <span class="sr-only">Close</span>
+            <button aria-label="Close" class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1.5 text-gray-400 transition hover:bg-gray-100 hover:text-gray-900 focus:ring-0" data-dismiss-target="#toast-success" type="button">
                 @svg('tabler-x', 'w-6 h-6')
             </button>
         </div>
     @endif
     @if (session('error'))
-        <div id="toast-danger"
-            class="flex items-center w-full max-w-sm p-4 mb-4 text-gray-500 bg-white rounded-lg shadow " role="alert">
-            <div
-                class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg ">
+        <div class="mb-4 flex w-full max-w-sm items-center rounded-lg bg-white p-4 text-gray-500 shadow" id="toast-danger" role="alert">
+            <div class="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500">
                 @svg('tabler-circle-x-filled', 'w-6 h-6')
-                <span class="sr-only">Error icon</span>
             </div>
             <div class="ms-3 text-sm font-normal">
                 {{ session('error') }}
             </div>
-            <button type="button"
-                class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-0 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 transition"
-                data-dismiss-target="#toast-danger" aria-label="Close">
-                <span class="sr-only">Close</span>
+            <button aria-label="Close" class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1.5 text-gray-400 transition hover:bg-gray-100 hover:text-gray-900 focus:ring-0" data-dismiss-target="#toast-danger" type="button">
                 @svg('tabler-x', 'w-6 h-6')
             </button>
         </div>
