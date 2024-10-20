@@ -58,7 +58,7 @@
                 <ul id="dropdown-shop" class="hidden py-2 space-y-2">
                     <li>
                         <a href="{{ route('admin.products.index') }}"
-                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 {{ request()->is('admin/products*') ? 'is-active' : '' }}">Sản
+                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 {{ request()->is('admin/product*') ? 'is-active' : '' }}">Sản
                             phẩm</a>
                     </li>
                     <li>
@@ -68,6 +68,7 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.combos.index') }}"
+                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 {{ request()->is('admin/toppings*') ? 'is-active' : '' }}">Combo</a>
                     </li>
                     <li>
                         <a href="{{ route('admin.toppings.index') }}"
