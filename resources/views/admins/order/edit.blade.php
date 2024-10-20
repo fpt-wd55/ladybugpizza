@@ -10,7 +10,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <div class="grid grid-cols-4 gap-4">
+            <div class="grid grid-cols-3 gap-4">
                 {{-- item1 --}}
                 <div>
                     <h2 class="text-lg font-semibold mb-4">Tổng quan</h2>
