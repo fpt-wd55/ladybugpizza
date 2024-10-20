@@ -37,7 +37,6 @@
                         {!! $product->description !!}
                     </div>
                 </div>
-
                 {{-- attributes --}}
                 <div class="col-span-5 md:col-span-3">
                     @foreach ($attributes as $attribute)
@@ -80,6 +79,29 @@
                         </div>
                     </div>
 
+                {{-- toppings --}}
+                <div class="mb-8">
+                    <p class="mb-4 font-normal">
+                        Bổ sung topping
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        @foreach ($toppings as $topping)
+                            <div>
+                                <input class="peer hidden" id="{{ $topping->id }}" name="toppings" type="checkbox"
+                                    value="{{ $topping->id }}">
+                                <label
+                                    class="flex w-full cursor-pointer items-center justify-start gap-2 overflow-hidden rounded-lg border border-gray-200 bg-white p-2 text-gray-700 transition hover:bg-gray-50 hover:text-gray-600 peer-checked:border-red-600 peer-checked:text-red-600 md:gap-4"
+                                    for="{{ $topping->id }}">
+                                    <img alt="" class="h-16 w-16 flex-shrink-0 rounded-lg object-cover"
+                                        loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
+                                    <div class="text-sm">
+                                        <p class="mb-2 font-semibold">{{ $topping->name }}</p>
+                                        <p>{{ number_format($topping->price) }} đ</p>
+                                    </div>
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
 
@@ -116,34 +138,44 @@
         </div>
         </div>
 
-        {{-- Add to card bar --}}
-        <div class="sticky bottom-16 w-full border-t bg-white p-4 transition md:px-24 lg:bottom-0 lg:px-32">
-            <div class="flex items-center justify-between">
-                <div class="inline-flex rounded-md shadow-sm" role="group">
-                    <button class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500" id="decrementBtn" type="button">
-                        @svg('tabler-minus', 'icon-sm')
-                    </button>
-                    <input class="w-12 border-b border-t border-gray-200 bg-white text-center py-1 text-sm font-medium text-gray-900 ring-0 focus:ring-0" id="quantityInput" name="quantity" value="1" />
-                    <button class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500" id="incrementBtn" type="button">
-                        @svg('tabler-plus', 'icon-sm')
-                    </button>
+    {{-- Add to card bar --}}
+    <div class="sticky bottom-16 w-full border-t bg-white p-4 transition md:px-24 lg:bottom-0 lg:px-32">
+        <div class="flex items-center justify-between">
+            <div class="inline-flex rounded-md shadow-sm" role="group">
+                <button
+                    class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500"
+                    type="button">
+                    @svg('tabler-minus', 'icon-sm')
+                </button>
+                <div class="border-b border-t border-gray-200 bg-white px-4 py-1 text-sm font-medium text-gray-900">
+                    1
                 </div>
-
+                <button
+                    class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500"
+                    type="button">
+                    @svg('tabler-plus', 'icon-sm')
+                </button>
+            </div>
                 <div class="flex items-center justify-center gap-4">
                     <p class="text-sm line-through">175,000đ</p>
                     <p class="text-lg font-semibold">143,000đ</p>
                 </div>
 
-                <div class="flex items-center justify-end gap-2">
-                    <button class="button-gray">
+            <div class="flex items-center justify-end gap-2">
+                <form action="{{ route('client.product.post-favorite', $product->slug) }}" method="POST"
+                    id="favorite-form">
+                    @csrf
+                    <button type="submit"
+                        class="button-gray {{ $favorites->contains($product->id) ? 'button-red' : '' }}">
                         @svg('tabler-heart', 'md:me-2 icon-sm')
-                        <span class="hidden md:block">Yêu thích</span>
+                        <span
+                            class="hidden md:block">{{ $favorites->contains($product->id) ? 'Đã yêu thích' : 'Yêu thích' }}</span>
                     </button>
-                    <button class="button-red" type="submit">
-                        @svg('tabler-shopping-bag-plus', 'md:me-2 icon-sm')
-                        <span class="hidden md:block">Thêm vào giỏ hàng</span>
-                    </button>
-                </div>
+                </form>
+                <button class="button-red">
+                    @svg('tabler-shopping-bag-plus', 'md:me-2 icon-sm')
+                    <span class="hidden md:block">Thêm vào giỏ hàng</span>
+                </button>
             </div>
         </div>
     </form>
