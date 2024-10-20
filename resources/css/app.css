@@ -370,6 +370,10 @@ html {
     display: none;
 }
 
+.is-active {
+    background-color: rgb(243 244 246);
+}
+
 .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -385,7 +389,7 @@ html {
 
 .tox-editor-header {
     box-shadow: none !important;
-    padding: 5px 0 !important; 
+    padding: 5px 0 !important;
     border-bottom: 1px solid #e2e8f0 !important;
 }
 .tox-sidebar-wrap:hover {
