@@ -5,7 +5,6 @@
 @section('content')
 <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
     <div class="grid grid-cols-3 md:gap-8">
-
         {{-- Sản phẩm --}}
         <div class="col-span-3">
 

@@ -12,19 +12,19 @@
                         <div class="product-card overflow-hidden">
                             <div class="w-full flex justify-between items-center pe-4">
                                 <div class="flex gap-4">
-                                    <img loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza_tartufo.png') }}"
-                                        class="img-md" alt="">
+                                    <img loading="lazy" src="{{ asset('storage/uploads/products/tiramisu.jpeg') }}"
+                                        class="img-md h-full" alt="">
                                     <div class="text-left py-2">
                                         <p class="font-medium mb-4">Pizza xúc xích</p>
                                         <div class="text-sm">
-                                            <p>Đế mỏng, size S</p>
-                                            <p>Topping: Thịt bò, cá hồi</p>
+                                            <p class="line-clamp-1">Đế mỏng, size S</p>
+                                            <p class="line-clamp-1">Topping: Thịt bò, cá hồi</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <div class="mb-4 text-sm flex items-center gap-2">
-                                        <span class="line-through">320,000đ</span>
+                                    <div class="mb-4 flex items-center gap-2">
+                                        <span class="line-through text-sm text-gray-600">320,000đ</span>
                                         <span class="font-medium">300,000đ</span>
                                     </div>
                                     <div class="inline-flex rounded-md shadow-sm" role="group">
@@ -42,9 +42,6 @@
                                         </button>
                                     </div>
                                 </div>
-                                <a href="#">
-                                    @svg('tabler-trash', 'icon-md text-red-600')
-                                </a>
                             </div>
                         </div>
                     @endfor

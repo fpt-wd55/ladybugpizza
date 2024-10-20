@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Topping;
-use Illuminate\Http\Request;
 use App\Models\Favorite;
+use App\Models\Attribute;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -34,7 +34,12 @@ class ProductController extends Controller
     {
         $product = Product::where('slug', $slug)->first();
 
-        $attributes = $product->attributes()->get();
+        $attributes = Attribute::with('values')
+        ->where('category_id', $product->category->id)
+        ->where('status', 1)
+        ->get();
+
+        // dd($attributes);
 
         $favorites = Favorite::where('user_id', Auth::id())->pluck('product_id');
 

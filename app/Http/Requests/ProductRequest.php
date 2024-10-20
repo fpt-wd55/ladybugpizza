@@ -21,6 +21,17 @@ class ProductRequest extends FormRequest
      */
     public function rules(): array
     {
+        if ($this->isMethod('post')) {
+            return $this->rulesForCreate();
+        } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
+            return $this->rulesForUpdate();
+        }
+
+        return [];
+    }
+
+    private function rulesForCreate()
+    {
         return [
             'name' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
@@ -28,8 +39,23 @@ class ProductRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
             'discount_price' => 'nullable|numeric|min:0|lte:price',
-            'quantity' => 'required|integer|min:0',
-            'sku' => 'required|string|max:25|unique:products,sku',
+            'quantity' => 'required_if:category_id,!=,null|integer|min:0',
+            'sku' => 'required|string|min:10|max:15|unique:products,sku',
+
+        ];
+    }
+
+    private function rulesForUpdate()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'description' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|numeric|min:0',
+            'discount_price' => 'nullable|numeric|min:0|lte:price',
+            'quantity' => 'required_if:category_id,!=,null|integer|min:0',
+            'sku' => 'required|string|min:10|max:15|unique:products,sku,' . $this->route('product')->id,
         ];
     }
 
@@ -48,17 +74,18 @@ class ProductRequest extends FormRequest
             'category_id.required' => 'Vui lòng chọn danh mục sản phẩm',
             'category_id.exists' => 'Danh mục sản phẩm không tồn tại',
             'price.required' => 'Vui lòng nhập giá sản phẩm',
-            'price.numeric' => 'Giá sản phẩm phải là số',
+            'price.numeric' => 'Giá sản phẩm không hợp lệ',
             'price.min' => 'Giá sản phẩm không được nhỏ hơn 0',
-            'discount_price.numeric' => 'Giá giảm phải là số',
-            'discount_price.min' => 'Giá giảm không được nhỏ hơn 0',
-            'discount_price.lte' => 'Giá giảm phải nhỏ hơn hoặc bằng giá sản phẩm',
-            'quantity.required' => 'Vui lòng nhập số lượng',
-            'quantity.integer' => 'Số lượng phải là số nguyên',
-            'quantity.min' => 'Số lượng không được nhỏ hơn 0',
+            'discount_price.numeric' => 'Giá khuyến mãi không hợp lệ',
+            'discount_price.min' => 'Giá khuyến mãi không được nhỏ hơn 0',
+            'discount_price.lte' => 'Giá khuyến mãi phải nhỏ hơn hoặc bằng giá sản phẩm',
+            'quantity.required_if' => 'Vui lòng nhập số lượng sản phẩm',
+            'quantity.integer' => 'Vui lòng nhập số lượng sản phẩm',
+            'quantity.min' => 'Số lượng sản phẩm không được nhỏ hơn 0',
             'sku.required' => 'Vui lòng nhập SKU',
             'sku.string' => 'SKU phải là chuỗi',
-            'sku.max' => 'SKU không được vượt quá 25 ký tự',
+            'sku.min' => 'SKU tối thiểu 10 ký tự',
+            'sku.max' => 'SKU tối đa 15 ký tự',
             'sku.unique' => 'SKU đã tồn tại',
         ];
     }

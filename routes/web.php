@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AddressController;
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ComboController;
 use App\Http\Controllers\Admin\ConversationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EvaluationController;
@@ -32,6 +33,7 @@ use App\Http\Controllers\Client\PoliciesController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
+use App\Models\Evaluation;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -116,14 +118,20 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/carts', AdminCartController::class);
     // Product
     Route::resource('/products', AdminProductController::class);
-    Route::get('/trash-products', [AdminProductController::class, 'trashProduct'])->name('trash-products');
+    Route::get('/trash-products', [AdminProductController::class, 'trash'])->name('trash-products');
     Route::post('/restore-product/{id}', [AdminProductController::class, 'restore'])->name('restore-product');
     Route::delete('/delete-product/{id}', [AdminProductController::class, 'forceDelete'])->name('delete-product');
+    Route::get('/comment-products/{id}', [AdminProductController::class, 'listComment'])->name('comment-products');
     // Attribute
     Route::resource('/attributes', AttributeController::class);
     Route::get('/trash-attributes', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');
     Route::post('/restore-attribute/{id}', [AttributeController::class, 'restoreAttribute'])->name('restore-attribute');
     Route::delete('/delete-attribute/{id}', [AttributeController::class, 'deleteAttribute'])->name('delete-attribute');
+    // Combo
+    Route::resource('/combos', ComboController::class);
+    Route::get('/trash-combos', [ComboController::class, 'trashCombo'])->name('trash-combos');
+    Route::post('/restore-combo/{id}', [ComboController::class, 'restoreCombo'])->name('restore-combo');
+    Route::delete('/delete-combo/{id}', [ComboController::class, 'deleteCombo'])->name('delete-combo');
     // Topping
     Route::resource('/toppings', ToppingController::class);
     Route::get('/trash-topping', [ToppingController::class, 'trashTopping'])->name('trash-topping');
@@ -143,11 +151,13 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/promotions', PromotionController::class);
     // Membership
     Route::resource('/memberships', MembershipController::class);
-    Route::post('/memberships/{membership}/status', [MembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
+    Route::post('/memberships/{membership}/status', [MembershipController::class,'updateStatus'])->name('memberships.updateStatus');
+    // Đánh Giá
+    Route::resource('/evaluations', EvaluationController::class);
+    Route::patch('/evaluations/update-status/{id}', [EvaluationController::class, 'updateStatus'])->name('evaluation.updateStatus');
     Route::resource('/order-statuses', OrderStatusController::class);
     Route::resource('/payment-methods', PaymentMethodController::class);
     Route::resource('/transactions', TransactionController::class);
-    Route::resource('/evaluations', EvaluationController::class);
     Route::resource('/shippings', ShippingController::class);
     Route::resource('/pages', AdminPageController::class);
     Route::resource('/logs', LogController::class);

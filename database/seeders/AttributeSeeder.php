@@ -35,6 +35,7 @@ class AttributeSeeder extends Seeder
                 'Cà chua Marinara',
                 'Nấm',
                 'Húng quế Pesto',
+                'Không sốt',
             ]
         ];
 
@@ -42,7 +43,7 @@ class AttributeSeeder extends Seeder
             $attribute = Attribute::create([
                 'name' => $name,
                 'status' => 1,
-                'category_id' => rand(1, 7),
+                'category_id' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);

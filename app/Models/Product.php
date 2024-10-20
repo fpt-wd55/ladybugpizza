@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-// use Laravel\Scout\Searchable;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    // use HasFactory, SoftDeletes, Searchable;
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
+    // use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -52,8 +52,9 @@ class Product extends Model
     {
         return $this->hasMany(ProductAttribute::class);
     }
+
     public function favorites()
     {
         return $this->hasMany(Favorite::class);
-    }
+    } 
 }

@@ -11,8 +11,11 @@
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 sm:grid-cols-12">
-                            <img loading="lazy" class="w-20 h-20 rounded-full"
-                                src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}">
+                            <a class="shrink-0" data-fslightbox="gallery"
+                                href="{{ asset('storage/uploads/avatars/' . $user->avatar) }}">
+                                <img loading="lazy" class="w-20 h-20 rounded-full"
+                                    src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}">
+                            </a>
                             <div class="flex items-center justify-center w-full col-span-5">
                                 <label for="dropzone-file"
                                     class="flex flex-col items-center justify-center w-full h-20 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -23,13 +26,13 @@
                                     </div>
                                     <input id="dropzone-file" name="avatar" type="file" class="hidden" />
                                 </label>
-                                @error('avatar')
-                                    <p class="mt-2 text-sm text-red-600 ">
-                                        {{ $message }}
-                                    </p>
-                                @enderror
                             </div>
                         </div>
+                        @error('avatar')
+                            <p class="mt-2 text-sm text-red-600 ">
+                                {{ $message }}
+                            </p>
+                        @enderror
                     </div>
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 sm:grid-cols-3">
