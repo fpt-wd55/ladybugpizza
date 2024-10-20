@@ -55,7 +55,7 @@ class EvaluationController extends Controller
      */
     public function update(Request $request, Evaluation $evaluation)
     {
-        //
+          //
     }
 
     /**
@@ -66,11 +66,16 @@ class EvaluationController extends Controller
         //
     }
 
-    public function listComment(String $id)
+    public function updateStatus(Request $request,String $id)
     {
-      
-        return view('admins.evaluations.edit');
-        
+        $evaluation = Evaluation::query()->findOrFail($id);
+        if ($evaluation) {
+        $evaluation->status = $request->has('status') ? 1 : 2 ;
+        $evaluation->save();
+
+        return redirect()->back()->with('success','thay đổi trạng thái thành công');
+        }
+        return redirect()->back()->with('error','thay đổi trạng thái thất bại');  
     }
 
 }

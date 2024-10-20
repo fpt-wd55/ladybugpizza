@@ -50,6 +50,27 @@ Breadcrumbs::for('admin.trash.listcate', function (BreadcrumbTrail $trail) {
     $trail->push('Thùng rác', route('admin.trash.listcate'));
 });
 
+// Combo
+Breadcrumbs::for('admin.combos.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Combo', route('admin.combos.index'));
+});
+
+Breadcrumbs::for('admin.combos.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.combos.index');
+    $trail->push('Thêm mới', route('admin.combos.create'));
+});
+
+Breadcrumbs::for('admin.combos.edit', function (BreadcrumbTrail $trail, $category) {
+    $trail->parent('admin.combos.index');
+    $trail->push('Chỉnh sửa', route('admin.combos.edit', $category));
+});
+
+Breadcrumbs::for('admin.trash-combo', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.combos.index');
+    $trail->push('Thùng rác', route('admin.trash-combo'));
+});
+
 // Topping
 Breadcrumbs::for('admin.toppings.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
@@ -173,8 +194,8 @@ Breadcrumbs::for('admin.evaluations.index', function (BreadcrumbTrail $trail) {
     $trail->push('Đánh giá', route('admin.evaluations.index'));
 });
 
-// Breadcrumbs::for('admin.products.show', function (BreadcrumbTrail $trail,$sanpham) {
-//     $trail->parent('admin.evaluations.index');
-//     $trail->push('Chi tiết đánh giá', route('admin.products.show', $sanpham));
+Breadcrumbs::for('admin.comment-products', function (BreadcrumbTrail $trail,$id) {
+    $trail->parent('admin.evaluations.index');
+    $trail->push('Chi tiết đánh giá', route('admin.comment-products', $id));
 
-// });
+});

@@ -1,22 +1,22 @@
 @extends('layouts.admin')
-@section('title', 'Sản phẩm')
+@section('title', 'Combo')
 @section('content')
-    {{ Breadcrumbs::render('admin.products.index') }}
+    {{ Breadcrumbs::render('admin.combos.index') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div
             class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
             <div class="flex items-center flex-1 space-x-4">
                 <h2 class="font-medium text-gray-700 text-base">
-                    Sản phẩm
+                    Combo
                 </h2>
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <a href="{{ route('admin.products.create') }}" class="button-blue">
+                <a href="{{ route('admin.combos.create') }}" class="button-blue">
                     @svg('tabler-plus', 'w-5 h-5 mr-2')
-                    Thêm sản phẩm
+                    Thêm combo
                 </a>
-                <a href="{{ route('admin.trash-products') }}" class="button-red">
+                <a href="{{ route('admin.trash-combos') }}" class="button-red">
                     @svg('tabler-trash', 'w-5 h-5 mr-2')
                     Thùng rác
                 </a>
@@ -35,7 +35,6 @@
                         <th scope="col" class="px-4 py-3">Sản phẩm</th>
                         <th scope="col" class="px-4 py-3 text-center">Giá</th>
                         <th scope="col" class="px-4 py-3 text-center">Số lượng</th>
-                        <th scope="col" class="px-4 py-3 text-center">Danh mục</th>
                         <th scope="col" class="px-4 py-3 text-center">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Hành động</span>
@@ -43,108 +42,104 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($products as $product)
+                    @forelse ($combos as $combo)
                         <tr class="border-b hover:bg-gray-100">
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
-                                {{ $product->sku }}</td>
+                                {{ $combo->sku }}</td>
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap shrink-0">
                                 <a class="shrink-0" data-fslightbox="gallery"
-                                    href="{{ asset('storage/uploads/products/' . $product->image) }}">
-                                    <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
+                                    href="{{ asset('storage/uploads/products/' . $combo->image) }}">
+                                    <img loading="lazy" src="{{ asset('storage/uploads/products/' . $combo->image) }}"
                                         onerror="this.src='{{ asset('storage/uploads/products/no-image.gif') }}'"
                                         class="w-8 h-8 mr-3 rounded bg-slate-400">
                                 </a>
-
                                 <div class="grid grid-flow-row">
-                                    <span class="text-sm">{{ $product->name }}</span>
+                                    <span class="text-sm">{{ $combo->name }}</span>
                                     <div class="flex items-center gap-1">
-                                        <p>{{ round($product->avg_rating, 1) }}</p>
+                                        <p>{{ round($combo->avg_rating, 1) }}</p>
                                         <div class="flex items-center gap-0.3">
                                             @for ($i = 0; $i < 5; $i++)
-                                                @if ($i < $product->avg_rating)
+                                                @if ($i < $combo->avg_rating)
                                                     @svg('tabler-star-filled', 'icon-sm text-red-500')
                                                 @else
                                                     @svg('tabler-star', 'icon-sm text-red-500')
                                                 @endif
                                             @endfor
                                         </div>
-                                        <p>({{ $product->total_rating }})</p>
+                                        <p>({{ $combo->total_rating }})</p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
                                 <div class="grid grid-flow-row">
-                                    @if ($product->discount_price == 0)
+                                    @if ($combo->discount_price == 0)
                                         <span class="text-sm">
-                                            {{ number_format($product->price) }}đ
+                                            {{ number_format($combo->price) }}đ
                                         </span>
                                     @else
-                                        <span class="text-sm line-through">{{ number_format($product->price) }}đ</span>
+                                        <span class="text-sm line-through">{{ number_format($combo->price) }}đ</span>
                                         <span class="text-sm">
-                                            {{ number_format($product->discount_price) }}đ
+                                            {{ number_format($combo->discount_price) }}đ
                                         </span>
                                     @endif
                                 </div>
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
                                 <span class=" text-xs font-medium">
-                                    @if (count($product->category->attributes) > 0)
+                                    @if (count($combo->category->attributes) > 0)
                                         <span
                                             class="text-white bg-green-400 inline-flex shrink-0 items-center rounded px-2.5 py-0.5">Thuộc
                                             tính</span>
                                     @else
-                                        @if ($product->quantity == 0)
+                                        @if ($combo->quantity == 0)
                                             <span
                                                 class="text-red-500 bg-yellow-100 inline-flex shrink-0 items-center rounded px-2.5 py-0.5">Hết
                                                 hàng</span>
                                         @else
-                                            {{ $product->quantity }}
+                                            {{ $combo->quantity }}
                                         @endif
                                     @endif
                                 </span>
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
-                                {{ $product->category->name }}
-                            </td>
                             <td
-                                class="px-4 py-2 text-gray-900 whitespace-nowrap text-center font-medium {{ $product->status == 1 ? 'text-green-700' : 'text-red-700' }}">
-                                {{ $product->status == 1 ? 'Hoạt động' : 'Khóa' }}
+                                class="px-4 py-2 text-gray-900 whitespace-nowrap text-center font-medium {{ $combo->status == 1 ? 'text-green-700' : 'text-red-700' }}">
+                                {{ $combo->status == 1 ? 'Hoạt động' : 'Khóa' }}
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
-                                <button id="{{ $product->sku }}" data-dropdown-toggle="{{ $product->sku }}-dropdown"
+                                <button id="{{ $combo->sku }}" data-dropdown-toggle="{{ $combo->sku }}-dropdown"
                                     class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
                                     type="button">
                                     @svg('tabler-dots', 'w-5 h-5')
                                 </button>
-                                <div id="{{ $product->sku }}-dropdown"
+                                <div id="{{ $combo->sku }}-dropdown"
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
-                                    <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $product->sku }}">
+                                    <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $combo->sku }}">
                                         <li>
-                                            <a href="{{ route('client.product.show', $product->slug) }} " target="_blank"
+                                            <a href="#" target="_blank"
                                                 class="block py-2 px-4 hover:bg-gray-100">Xem</a>
                                         </li>
                                         <li>
                                             <a href="#" class="block py-2 px-4 hover:bg-gray-100">Đánh giá</a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('admin.products.edit', $product) }}"
+                                            <a href="{{ route('admin.combos.edit', $combo) }}"
                                                 class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
                                         </li>
                                         <li>
-                                            <span data-modal-target="delete-modal-{{ $product->sku }}"
-                                                data-modal-toggle="delete-modal-{{ $product->sku }}"
+                                            <span data-modal-target="delete-modal-{{ $combo->sku }}"
+                                                data-modal-toggle="delete-modal-{{ $combo->sku }}"
                                                 class="cursor-pointer block py-2 px-4 text-sm text-red-500 hover:bg-gray-100">Xóa</span>
                                         </li>
                                     </ul>
                                 </div>
                                 {{-- Modal xác nhận xóa --}}
-                                <div id="delete-modal-{{ $product->sku }}" tabindex="-1"
+                                <div id="delete-modal-{{ $combo->sku }}" tabindex="-1"
                                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                     <div class="relative p-4 w-full max-w-md max-h-full">
                                         <div class="relative bg-white rounded-lg shadow">
                                             <button type="button"
                                                 class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-                                                data-modal-hide="delete-modal-{{ $product->sku }}">
+                                                data-modal-hide="delete-modal-{{ $combo->sku }}">
                                                 @svg('tabler-x', 'w-4 h-4')
                                                 <span class="sr-only">Close modal</span>
                                             </button>
@@ -155,7 +150,7 @@
                                                 <h3 class="mb-5 font-normal">Bạn có muốn xóa sản phẩm này không?</h3>
 
                                                 <div class="flex justify-center items-center">
-                                                    <form action="{{ route('admin.products.destroy', $product) }}"
+                                                    <form action="{{ route('admin.combos.destroy', $combo) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -165,7 +160,7 @@
                                                         </button>
                                                     </form>
 
-                                                    <button data-modal-hide="delete-modal-{{ $product->sku }}"
+                                                    <button data-modal-hide="delete-modal-{{ $combo->sku }}"
                                                         type="button"
                                                         class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-0">
                                                         Không
@@ -188,7 +183,7 @@
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $products->onEachSide(1)->links() }}
+                {{ $combos->onEachSide(1)->links() }}
             </div>
         </div>
     </div>
