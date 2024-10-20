@@ -26,7 +26,7 @@ class Cart extends Model
         return $this->belongsToMany(Topping::class, 'cart_toppings');
     }
 
-    public function productAttribute() {
+    public function attributes() {
         return $this->belongsTo(ProductAttribute::class);
     }
 }

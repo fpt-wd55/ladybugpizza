@@ -2,27 +2,27 @@
 @section('title', 'Về chúng tôi')
 @section('content')
     <div class="w-full">
-        <img loading="lazy" class=" w-full object-cover" src=" {{ asset('storage/uploads/banners/banner.jpg') }}" alt="">
+        <img alt="" class="w-full object-cover" loading="lazy" src=" {{ asset('storage/uploads/banners/banner.jpg') }}">
     </div>
-    <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
+    <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
         <div class="w-full">
             <div class="mt-6 text-center">
-                <h2 class="mt-12 text-6xl vujahday-script-regular">Ladybug Pizza</h2>
+                <h2 class="vujahday-script-regular mt-12 text-6xl">Ladybug Pizza</h2>
                 <div class="mb-8">
-                    <p class=" text-md mt-12 ">Nằm ngay trung tâm Quận Hoàn Kiếm, Hà Nội, Ladybug Pizza là một tiệm pizza
+                    <p class="mt-12">Nằm ngay trung tâm Quận Hoàn Kiếm, Hà Nội, Ladybug Pizza là một tiệm pizza
                         phong cách người Napoli, được sáng lập bởi đầu bếp Kyle Jacovino. Với gần hai thập kỷ kinh nghiệm
                         trong
                         ngành ẩm thực và niềm tự hào về di sản Ý, Jacovino đã mang đến những chiếc pizza đặc trưng, được làm
                         từ bột lên men tự nhiên và nướng trong lò gạch truyền thống của Ý.
                     </p>
-                    <p class=" text-md mt-12">Bột của từng chiếc pizza tại Ladybug Pizza được làm từ ngũ cốc hữu cơ tuyển
+                    <p class="mt-12">Bột của từng chiếc pizza tại Ladybug Pizza được làm từ ngũ cốc hữu cơ tuyển
                         chọn từ
                         các nhà xay lúa địa
                         phương, ủ men trong vòng 48 giờ để tạo ra hương vị độc đáo. Pizza được nướng ở nhiệt độ từ 800 đến
                         825
                         độ C trong khoảng 90 giây, giúp vỏ bánh giòn rụm bên ngoài nhưng vẫn mềm mại bên trong.
                     </p>
-                    <p class=" text-md mt-12">Ladybug Pizza nằm trong trung tâm Quận Hoàn Kiếm, Hà Nội – nơi tập trung các
+                    <p class="mt-12">Ladybug Pizza nằm trong trung tâm Quận Hoàn Kiếm, Hà Nội – nơi tập trung các
                         quầy
                         ẩm
                         thực và xe bán đồ ăn lưu động tại Hà Nội. Nhà hàng được thiết kế theo phong cách cổ điển nhưng vẫn
@@ -53,18 +53,14 @@
 
             </div>
             <div class="flex justify-center">
-                <button class="mt-12 button-red uppercase">Đặt ngay</button>
+                <button class="button-red mt-12 uppercase">Đặt ngay</button>
             </div>
         </div>
-        <div class="grid grid-cols-2 mt-10 gap-4 md:gap-8">
-            <img loading="lazy" class="rounded-md" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
-                alt="">
-            <img loading="lazy" class="rounded-md" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
-                alt="">
-            <img loading="lazy" class="rounded-md" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
-                alt="">
-            <img loading="lazy" class="rounded-md" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}"
-                alt="">
+        <div class="mt-10 grid grid-cols-2 gap-4 md:gap-8">
+            <img alt="" class="rounded-md" loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}">
+            <img alt="" class="rounded-md" loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}">
+            <img alt="" class="rounded-md" loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}">
+            <img alt="" class="rounded-md" loading="lazy" src="{{ asset('storage/uploads/products/pizza/pizza_pesto_burrata.jpeg') }}">
         </div>
     </div>
 @endsection

@@ -23,7 +23,7 @@ class CartSeeder extends Seeder
         $productAttributes = ProductAttribute::pluck('id')->toArray();
         $toppings = Topping::pluck('id')->toArray();
 
-        for ($i = 1; $i < 200; $i++) {
+        for ($i = 1; $i < 100; $i++) {
             Cart::insert([
                 'user_id' => $faker->randomElement($users),
                 'quantity' => $faker->numberBetween(1, 10),

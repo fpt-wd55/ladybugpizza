@@ -36,10 +36,10 @@
                 </div>
 
                 <div class="mt-12 py-8 text-center">
-                <p class="vujahday-script-regular mb-6 text-center text-6xl">Ladybug Pizza</p>
-                <p class="mb-12 uppercase text-gray-500">Ngon đến từng miếng, đậm vị yêu thương</p>
-                @include('partials.clients.categories')
-            </div>
+                    <p class="vujahday-script-regular mb-6 text-center text-6xl">Ladybug Pizza</p>
+                    <p class="mb-12 uppercase text-gray-500">Ngon đến từng miếng, đậm vị yêu thương</p>
+                    @include('partials.clients.categories')
+                </div>
 
 
                 {{-- hot pizza --}}
@@ -122,8 +122,8 @@
                             bánh pizza của chúng tôi được nướng trong lò đốt củi và phủ bên trên những nguyên liệu tươi, tự
                             nhiên và được lựa chọn cẩn thận.
                         </p>
-                        <p>
-                            <a class="link-lg" href="{{ route('client.about-us') }}">Về chúng tôi</a>
+                        <p class="flex items-center justify-center">
+                            <a class="button-red" href="{{ route('client.about-us') }}">VỀ CHÚNG TÔI</a>
                         </p>
                     </div>
                 </div>
