@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\Role;
-use App\Models\User; 
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -139,7 +139,7 @@ class UserController extends Controller
             'fullname' => trim($validatedData['fullname']),
             'email' => trim($validatedData['email']),
             'phone' => trim($validatedData['phone']),
-            'password' => bcrypt(trim($validatedData['new_password'])),
+            'password' => $validatedData['new_password'] ? bcrypt(trim($validatedData['new_password'])) : $user->password,
             'google_id' => null,
             'role_id' => $role_id,
             'avatar' => $validatedData['avatar'],
