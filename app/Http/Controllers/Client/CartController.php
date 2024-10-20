@@ -17,7 +17,7 @@ class CartController extends Controller
         ->with('attributes')
         ->get();
 
-        dd($cart);
+        // dd($cart);
 
         return view('clients.cart.index', [
             'cart' => $cart
