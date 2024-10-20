@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\PaymentMethod;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
-class PaymentMethodController extends Controller
+class ComboController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $combos = Product::where('category_id', 7)->paginate(10);
+
+        return view('admins.combo.index', compact('combos'));
     }
 
     /**
@@ -21,7 +23,7 @@ class PaymentMethodController extends Controller
      */
     public function create()
     {
-        //
+        return view('admins.combo.create');
     }
 
     /**
@@ -35,7 +37,7 @@ class PaymentMethodController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PaymentMethod $paymentMethod)
+    public function show(string $id)
     {
         //
     }
@@ -43,15 +45,15 @@ class PaymentMethodController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PaymentMethod $paymentMethod)
+    public function edit(string $id)
     {
-        //
+        return view('admins.combo.edit');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PaymentMethod $paymentMethod)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -59,8 +61,24 @@ class PaymentMethodController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PaymentMethod $paymentMethod)
+    public function destroy(string $id)
     {
         //
+    }
+
+    public function trashCombo(){
+
+    }
+
+    public function restoreCombo() {
+
+    }
+
+    public function deleteCombo() {
+
+    }
+
+    public function forceDelete() {
+        
     }
 }

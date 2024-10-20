@@ -64,7 +64,7 @@
                     </p>
                     <a href="{{ route('auth.google.redirect') }}"
                         class="mb-4 bg-red-600 flex items-center justify-center gap-4 button-red">
-                        @svg('tabler-brand-google-filled')
+                        @svg('tabler-brand-google-filled', 'icon-md')
                         Đăng nhập bằng Google
                     </a>
                 </form>

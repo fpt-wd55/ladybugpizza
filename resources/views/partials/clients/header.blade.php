@@ -151,7 +151,7 @@
 @php
     use App\Models\Favorite;
     $favorites = Favorite::where('user_id', Auth::id())->with('product')->get();
-@endphp 
+@endphp
 {{-- Favorite Product Modal --}}
 <div aria-hidden="true"
     class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0"
@@ -204,30 +204,20 @@
 
 {{-- Logout Modal --}}
 <div aria-hidden="true"
-    class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full"
+    class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
     id="logoutModal" tabindex="-1">
-    <div class="relative h-auto w-full max-w-2xl p-4">
+    <div class="relative w-full max-w-md max-h-full">
         <div class="relative rounded-lg bg-white p-4 shadow sm:p-5">
-            <div class="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5">
-                <h3 class="font-semibold text-gray-900 dark:text-white">
-                    Đăng xuất
-                </h3>
-                <button
-                    class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
-                    data-modal-toggle="logoutModal" type="button">
-                    @svg('tabler-x', 'icon-sm')
-                </button>
-            </div>
-            <div class="mb-8 flex flex-col items-center justify-center gap-4 text-sm">
+            <div class="mb-16 flex flex-col items-center justify-center gap-4 text-sm">
                 <div>@svg('tabler-alert-triangle', 'icon-2xl text-red-500')</div>
-                <p>Bạn có thực sự muốn đăng xuất</p>
+                <p class="text-lg">Bạn có thực sự muốn đăng xuất</p>
                 <p>Bạn sẽ phải đăng nhập để có thể sử dụng một số chức năng</p>
             </div>
-            <div class="flex items-center justify-center gap-4">
-                <a class="button-red" href="{{ route('auth.logout') }}">
+            <div class="flex items-center gap-4">
+                <a class="button-red w-full" href="{{ route('auth.logout') }}">
                     Đăng xuất
                 </a>
-                <button class="button-dark" type="button">
+                <button class="button-dark w-full" data-modal-hide="logoutModal" type="button">
                     Huỷ
                 </button>
             </div>

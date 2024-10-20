@@ -1,7 +1,6 @@
 @extends('layouts.client')
 
 @section('title', 'Thêm địa chỉ')
-
 @section('content')
     <div class="card my-8 md:mx-24 lg:mx-32 p-4 md:p-8 transition">
         <div class="mb-8">

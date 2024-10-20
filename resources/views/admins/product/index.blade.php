@@ -16,7 +16,7 @@
                     @svg('tabler-plus', 'w-5 h-5 mr-2')
                     Thêm sản phẩm
                 </a>
-                <a href="#" class="button-red">
+                <a href="{{ route('admin.trash-products') }}" class="button-red">
                     @svg('tabler-trash', 'w-5 h-5 mr-2')
                     Thùng rác
                 </a>
@@ -31,6 +31,7 @@
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
+                        <th scope="col" class="px-4 py-3">Mã</th>
                         <th scope="col" class="px-4 py-3">Sản phẩm</th>
                         <th scope="col" class="px-4 py-3 text-center">Giá</th>
                         <th scope="col" class="px-4 py-3 text-center">Số lượng</th>
@@ -44,9 +45,16 @@
                 <tbody>
                     @forelse ($products as $product)
                         <tr class="border-b hover:bg-gray-100">
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                                {{ $product->sku }}</td>
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap shrink-0">
-                                <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
-                                    class="w-8 h-8 mr-3 rounded">
+                                <a class="shrink-0" data-fslightbox="gallery"
+                                    href="{{ asset('storage/uploads/products/' . $product->image) }}">
+                                    <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
+                                        onerror="this.src='{{ asset('storage/uploads/products/no-image.gif') }}'"
+                                        class="w-8 h-8 mr-3 rounded bg-slate-400">
+                                </a>
+
                                 <div class="grid grid-flow-row">
                                     <span class="text-sm">{{ $product->name }}</span>
                                     <div class="flex items-center gap-1">
@@ -66,16 +74,33 @@
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
                                 <div class="grid grid-flow-row">
-                                    <span class="text-sm line-through">{{ number_format($product->price) }}đ</span>
-                                    <span class="text-sm">
-                                        {{ number_format($product->discount_price) }}đ
-                                    </span>
+                                    @if ($product->discount_price == 0)
+                                        <span class="text-sm">
+                                            {{ number_format($product->price) }}đ
+                                        </span>
+                                    @else
+                                        <span class="text-sm line-through">{{ number_format($product->price) }}đ</span>
+                                        <span class="text-sm">
+                                            {{ number_format($product->discount_price) }}đ
+                                        </span>
+                                    @endif
                                 </div>
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
-                                <span
-                                    class="{{ $product->quantity == 0 ? 'text-red-500 bg-yellow-100 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium' : '' }}">
-                                    {{ $product->quantity == 0 ? 'Hết hàng' : $product->quantity }}
+                                <span class=" text-xs font-medium">
+                                    @if (count($product->category->attributes) > 0)
+                                        <span
+                                            class="text-white bg-green-400 inline-flex shrink-0 items-center rounded px-2.5 py-0.5">Thuộc
+                                            tính</span>
+                                    @else
+                                        @if ($product->quantity == 0)
+                                            <span
+                                                class="text-red-500 bg-yellow-100 inline-flex shrink-0 items-center rounded px-2.5 py-0.5">Hết
+                                                hàng</span>
+                                        @else
+                                            {{ $product->quantity }}
+                                        @endif
+                                    @endif
                                 </span>
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
@@ -167,4 +192,4 @@
             </div>
         </div>
     </div>
-@endsection 
+@endsection

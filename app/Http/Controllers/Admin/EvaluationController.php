@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Evaluation;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class EvaluationController extends Controller
@@ -13,7 +14,8 @@ class EvaluationController extends Controller
      */
     public function index()
     {
-        //
+       $product = Product::paginate(10);
+       return view('admins.evaluations.index',compact('product'));
     }
 
     /**
@@ -45,7 +47,7 @@ class EvaluationController extends Controller
      */
     public function edit(Evaluation $evaluation)
     {
-        //
+       
     }
 
     /**
@@ -53,7 +55,7 @@ class EvaluationController extends Controller
      */
     public function update(Request $request, Evaluation $evaluation)
     {
-        //
+          //
     }
 
     /**
@@ -63,4 +65,17 @@ class EvaluationController extends Controller
     {
         //
     }
+
+    public function updateStatus(Request $request,String $id)
+    {
+        $evaluation = Evaluation::query()->findOrFail($id);
+        if ($evaluation) {
+        $evaluation->status = $request->has('status') ? 1 : 2 ;
+        $evaluation->save();
+
+        return redirect()->back()->with('success','thay đổi trạng thái thành công');
+        }
+        return redirect()->back()->with('error','thay đổi trạng thái thất bại');  
+    }
+
 }

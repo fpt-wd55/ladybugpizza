@@ -16,6 +16,7 @@
 <body class="open-sans">
     @include('partials.clients.header')
 
+    @include('partials.clients.alert')
     <div class="">
         @yield('content')
     </div>

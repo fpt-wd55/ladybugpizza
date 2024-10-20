@@ -16,13 +16,11 @@ class InvoiceController extends Controller
     /**
      * Display a listing of the resource.
      */
-
-
     public function show($invoiceNumber)
     {
         $invoice = Invoice::where('invoice_number', $invoiceNumber)->first();
         $order = Order::where('id', $invoice->order_id)->first();
-        $orderItems = OrderItem::where('order_id',$order->id)->get();
+        $orderItems = OrderItem::where('order_id', $order->id)->get();
         $transaction = Transaction::where('id', $invoice->transaction_id)->first();
         $user = User::where('id', $order->user_id)->first();
         return view('shared.invoice', [
