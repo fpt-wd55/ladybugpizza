@@ -75,7 +75,7 @@
                                   aria-labelledby="{{$item->name}}-dropdown-button">
 
                                   <li>
-                                      <a href="{{route('admin.products.show',$item)}}"
+                                      <a href="{{route('admin.comment-products',$item->id)}}"
                                           class="block py-2 px-4 hover:bg-gray-100">Chi Tiết </a>
                                   </li>
                               </ul>

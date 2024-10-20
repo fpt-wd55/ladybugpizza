@@ -194,8 +194,8 @@ Breadcrumbs::for('admin.evaluations.index', function (BreadcrumbTrail $trail) {
     $trail->push('Đánh giá', route('admin.evaluations.index'));
 });
 
-// Breadcrumbs::for('admin.products.show', function (BreadcrumbTrail $trail,$sanpham) {
-//     $trail->parent('admin.evaluations.index');
-//     $trail->push('Chi tiết đánh giá', route('admin.products.show', $sanpham));
+Breadcrumbs::for('admin.comment-products', function (BreadcrumbTrail $trail,$id) {
+    $trail->parent('admin.evaluations.index');
+    $trail->push('Chi tiết đánh giá', route('admin.comment-products', $id));
 
-// });
+});

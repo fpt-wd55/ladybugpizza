@@ -30,6 +30,7 @@ class EvaluationSeeder extends Seeder
                 Evaluation::create([
                     'user_id' => $user,
                     'product_id' => $product,
+                    'order_id' => $faker->numberBetween(1,199),
                     'rating' => $faker->numberBetween(1, 5),
                     'comment' => $faker->sentence,
                     'status' => 1,

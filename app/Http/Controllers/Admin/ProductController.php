@@ -188,10 +188,10 @@ class ProductController extends Controller
         return redirect()->back()->with('error', 'Xóa sản phẩm thất bại');
     }
    // phần Đánh Giá
-    public function show(Product $product)
+    public function listComment(String $id)
     {
-        $sanpham = Product::query()->findOrFail($product->id);
-        $evaluations = Evaluation::where('product_id',$product->id)->get();
+        $sanpham = Product::query()->findOrFail($id);
+        $evaluations = Evaluation::where('product_id',$id)->with('order')->paginate(10);
         return view('admins.evaluations.edit',compact('sanpham','evaluations'));
     }
 }
