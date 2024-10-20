@@ -9,7 +9,6 @@
         @method('POST')
         <div class="min-h-screen p-4 transition md:p-8 lg:mx-32">
             <div class="mb-8 grid grid-cols-1 gap-4 md:py-8 lg:grid-cols-5">
-
                 {{-- Product detail --}}
                 <div class="col-span-5 mb-8 md:col-span-2 md:flex md:gap-8 lg:block">
                     <div>
@@ -37,7 +36,7 @@
                         {!! $product->description !!}
                     </div>
                 </div>
-
+                
                 {{-- attributes --}}
                 <div class="col-span-5 md:col-span-3">
                     @foreach ($attributes as $attribute)
@@ -106,38 +105,71 @@
             </div>
         </div>
 
-        {{-- Add to cart bar --}}
-        <div class="sticky bottom-16 w-full border-t bg-white p-4 transition md:px-24 lg:bottom-0 lg:px-32">
-            <div class="flex items-center justify-between">
-                <div class="inline-flex rounded-md shadow-sm" role="group">
-                    <button class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500" type="button">
-                        @svg('tabler-minus', 'icon-sm')
-                    </button>
-                    <div class="border-b border-t border-gray-200 bg-white px-4 py-1 text-sm font-medium text-gray-900">
-                        1
-                    </div>
-                    <button class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500" type="button">
-                        @svg('tabler-plus', 'icon-sm')
-                    </button>
-                </div>
-                <div class="flex items-center justify-center gap-4">
-                    <p class="text-sm line-through">175,000đ</p>
-                    <p class="text-lg font-semibold">143,000đ</p>
-                </div>
+        {{-- Evaluation --}}
+        <div class="card p-4 md:p-8">
+            <p class="title">Đánh giá sản phẩm</p>
+            @foreach ($evaluations as $evaluation)
+                <div class="mb-4">
+                    {{-- info --}}
 
-                <div class="flex items-center justify-end gap-2">
-                    <form action="{{ route('client.product.post-favorite', $product->slug) }}" id="favorite-form" method="POST">
-                        @csrf
-                        <button class="button-gray {{ $favorites->contains($product->id) ? 'button-red' : '' }}" type="submit">
-                            @svg('tabler-heart', 'md:me-2 icon-sm')
-                            <span class="hidden md:block">{{ $favorites->contains($product->id) ? 'Đã yêu thích' : 'Yêu thích' }}</span>
-                        </button>
-                    </form>
-                    <button class="button-red">
-                        @svg('tabler-shopping-cart-plus', 'md:me-2 icon-sm')
-                        <span class="hidden md:block">Thêm vào giỏ hàng</span>
-                    </button>
+                    <div class="mb-4 flex items-center gap-4">
+                        <img alt="" class="img-circle img-sm" loading="lazy"
+                            src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}">
+                        <div>
+                            <p class="mb-1 text-sm font-medium">{{ $evaluation->user->fullname }}</p>
+                            <p class="text-sm">{{ $evaluation->created_at }} | {{ $evaluation->product->name }}</p>
+                        </div>
+                    </div>
+                    {{-- content --}}
+                    <div class="mb-4 px-8">
+                        <p class="mb-4 text-sm">{{ $evaluation->comment }}</p>
+                        <div class="flex w-full items-center gap-4 overflow-hidden">
+                            @for ($i = 0; $i < 4; $i++)
+                                <a data-fslightbox="gallery" href="{{ asset('storage/uploads/products/cake/chocolate_tar.jpeg') }}">
+                                    <img class="img-md rounded-lg" loading="lazy" src="{{ asset('storage/uploads/products/cake/chocolate_tar.jpeg') }}">
+                                </a>
+                            @endfor
+                        </div>
+                    </div>
+
                 </div>
+            @endforeach
+        </div>
+    </div>
+
+    {{-- Add to card bar --}}
+    <div class="sticky bottom-16 w-full border-t bg-white p-4 transition md:px-24 lg:bottom-0 lg:px-32">
+        <div class="flex items-center justify-between">
+            <div class="inline-flex rounded-md shadow-sm" role="group">
+                <button
+                    class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500"
+                    type="button">
+                    @svg('tabler-minus', 'icon-sm')
+                </button>
+                <div class="border-b border-t border-gray-200 bg-white px-4 py-1 text-sm font-medium text-gray-900">
+                    1
+                </div>
+                <button
+                    class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500"
+                    type="button">
+                    @svg('tabler-plus', 'icon-sm')
+                </button>
+            </div>
+
+            <div class="flex items-center justify-center gap-4">
+                <p class="line-through text-sm">175,000đ</p>
+                <p class="font-semibold text-lg">143,000đ</p>
+            </div>
+
+            <div class="flex items-center justify-end gap-2">
+                <button class="button-gray">
+                    @svg('tabler-heart', 'md:me-2 icon-sm')
+                    <span class="hidden md:block">Yêu thích</span>
+                </button>
+                <button class="button-red">
+                    @svg('tabler-shopping-bag-plus', 'md:me-2 icon-sm')
+                    <span class="hidden md:block">Thêm vào giỏ hàng</span>
+                </button>
             </div>
         </div>
     </form>
