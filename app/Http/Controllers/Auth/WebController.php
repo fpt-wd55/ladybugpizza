@@ -60,7 +60,7 @@ class WebController extends Controller
         $credentials = $request->validated();
         $remember = $request->has('remember');
 
-        if(Auth::attempt($credentials, $remember)) {
+        if (Auth::attempt($credentials, $remember)) {
 
             return redirect()->route('admin.dashboard')->with('success', 'Đăng nhập thành công');
         }
@@ -82,17 +82,17 @@ class WebController extends Controller
         $register = $request->session()->get('register');
         $userData = array_merge($register, $validated);
 
-        if($request->hasFile('avatar')) {
+        if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $name = $file->getClientOriginalName();
             $file->move('storage/uploads/avatars', $name);
             $userData['avatar'] = $name;
         }
 
-        $user = User::create(array_merge($userData,[
+        $user = User::create(array_merge($userData, [
             'username' => $this->processString($userData['fullname']),
             'role_id' => 2,
-            ]));
+        ]));
 
         $addressData = [
             'user_id' => $user->id,
@@ -135,7 +135,8 @@ class WebController extends Controller
         return redirect()->route('auth.login')->with('success', 'Đăng ký thành công');
     }
 
-    protected function processString($input) {
+    protected function processString($input)
+    {
 
         $transliteration = [
             'à' => 'a', 'á' => 'a', 'ạ' => 'a', 'ả' => 'a', 'ã' => 'a', 'â' => 'a', 'ầ' => 'a', 'ấ' => 'a', 'ậ' => 'a', 'ẩ' => 'a', 'ẫ' => 'a',
@@ -158,87 +159,88 @@ class WebController extends Controller
     }
 
     private function getAddressNamesByCodes($provinceCode, $districtCode, $wardCode)
-        {
-            $response = file_get_contents("https://provinces.open-api.vn/api/");
-            $provinces = json_decode($response, true);
-            $provinceName = null;
+    {
+        $response = file_get_contents("https://provinces.open-api.vn/api/");
+        $provinces = json_decode($response, true);
+        $provinceName = null;
 
-            foreach ($provinces as $province) {
-                if ($province['code'] == $provinceCode) {
-                    $provinceName = $province['name'];
+        foreach ($provinces as $province) {
+            if ($province['code'] == $provinceCode) {
+                $provinceName = $province['name'];
+                break;
+            }
+        }
+
+        $response = file_get_contents("https://provinces.open-api.vn/api/p/{$provinceCode}?depth=2");
+        $districts = json_decode($response, true);
+
+        if (!is_array($districts)) {
+            return ['province' => $provinceName, 'district' => null, 'ward' => null];
+        }
+
+        $districtName = null;
+
+        if (isset($districts['districts']) && is_array($districts['districts'])) {
+            foreach ($districts['districts'] as $district) {
+                if (isset($district['code']) && $district['code'] == $districtCode) {
+                    $districtName = $district['name'];
                     break;
                 }
             }
-
-            $response = file_get_contents("https://provinces.open-api.vn/api/p/{$provinceCode}?depth=2");
-            $districts = json_decode($response, true);
-
-            if (!is_array($districts)) {
-                return ['province' => $provinceName, 'district' => null, 'ward' => null];
-            }
-
-            $districtName = null;
-
-            if (isset($districts['districts']) && is_array($districts['districts'])) {
-                foreach ($districts['districts'] as $district) {
-                    if (isset($district['code']) && $district['code'] == $districtCode) {
-                        $districtName = $district['name'];
-                        break;
-                    }
-                }
-            }
-
-            $response = file_get_contents("https://provinces.open-api.vn/api/d/{$districtCode}?depth=2");
-            $wards = json_decode($response, true);
-
-            if (!is_array($wards)) {
-                return ['province' => $provinceName, 'district' => $districtName, 'ward' => null];
-            }
-
-            $wardName = null;
-
-            if (isset($wards['wards']) && is_array($wards['wards'])) {
-                foreach ($wards['wards'] as $ward) {
-                    if (isset($ward['code']) && $ward['code'] == $wardCode) {
-                        $wardName = $ward['name'];
-                        break;
-                    }
-                }
-            }
-
-            return [
-                'province' => $provinceName,
-                'district' => $districtName,
-                'ward' => $wardName,
-            ];
         }
 
+        $response = file_get_contents("https://provinces.open-api.vn/api/d/{$districtCode}?depth=2");
+        $wards = json_decode($response, true);
 
-        protected function convertAddressToCoordinates($fullAddress) {
-            $client = new Client();
-            try {
-                $response = $client->get('https://nominatim.openstreetmap.org/search', [
-                    'query' => [
-                        'q' => $fullAddress,
-                        'format' => 'json',
-                    ],
-                    'headers' => [
-                        'User-Agent' => 'YourAppName/1.0 (http://yourwebsite.com)',
-                    ],
-                ]);
-            } catch (\Exception $e) {
-                dd($e->getMessage());
-            }
-
-            $data = json_decode($response->getBody(), true);
-
-            if (isset($data[0])) {
-                $location = $data[0];
-                return [$location['lon'], $location['lat']];
-            }
-
-            return [null, null];
+        if (!is_array($wards)) {
+            return ['province' => $provinceName, 'district' => $districtName, 'ward' => null];
         }
+
+        $wardName = null;
+
+        if (isset($wards['wards']) && is_array($wards['wards'])) {
+            foreach ($wards['wards'] as $ward) {
+                if (isset($ward['code']) && $ward['code'] == $wardCode) {
+                    $wardName = $ward['name'];
+                    break;
+                }
+            }
+        }
+
+        return [
+            'province' => $provinceName,
+            'district' => $districtName,
+            'ward' => $wardName,
+        ];
+    }
+
+
+    protected function convertAddressToCoordinates($fullAddress)
+    {
+        $client = new Client();
+        try {
+            $response = $client->get('https://nominatim.openstreetmap.org/search', [
+                'query' => [
+                    'q' => $fullAddress,
+                    'format' => 'json',
+                ],
+                'headers' => [
+                    'User-Agent' => 'YourAppName/1.0 (http://yourwebsite.com)',
+                ],
+            ]);
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
+        $data = json_decode($response->getBody(), true);
+
+        if (isset($data[0])) {
+            $location = $data[0];
+            return [$location['lon'], $location['lat']];
+        }
+
+        return [null, null];
+    }
 
     public function postForgotPassword(ForgotPasswordRequest $request)
     {
@@ -269,7 +271,7 @@ class WebController extends Controller
             return back()->withErrors(['otp' => 'OTP không chính xác hoặc đã hết hạn.']);
         }
 
-        return redirect()->route('auth.recovery')->with( 'success' , 'Mã OTP của bạn đã được xác nhận, vui lòng nhập mật khẩu mới');
+        return redirect()->route('auth.recovery')->with('success', 'Mã OTP của bạn đã được xác nhận, vui lòng nhập mật khẩu mới');
     }
 
     public function postRecovery(RecoveryRequest $request)
@@ -278,12 +280,12 @@ class WebController extends Controller
 
         $email = Session::get('email');
         if (!$email) {
-            return back()->with('error' , 'Email không được tìm thấy trong phiên này.');
+            return back()->with('error', 'Email không được tìm thấy trong phiên này.');
         }
 
         $user = User::where('email', Session::get('email'))->first();
         if (!$user) {
-            return back()->withErrors('error' , 'Không tìm thấy người dùng trong hệ thống.');
+            return back()->withErrors('error', 'Không tìm thấy người dùng trong hệ thống.');
         }
 
         $user->password = Hash::make($request->password);
@@ -297,9 +299,11 @@ class WebController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('client.home');
+        return redirect()->route('client.home')->with('success', 'Đăng xuất thành công');
     }
-    public function deactivateAccount(Request $request){
+
+    public function deactivateAccount(Request $request)
+    {
         $user = Auth::user();
         if (!Hash::check($request->input('password'), $user->password)) {
             return redirect()->back()->withErrors(['password' => 'Mật khẩu không chính xác']);
@@ -308,6 +312,5 @@ class WebController extends Controller
         $user->save();
         Auth::logout();
         return redirect('/');
-
     }
 }
