@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AddressController;
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ComboController;
 use App\Http\Controllers\Admin\ConversationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EvaluationController;
@@ -124,6 +125,11 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/trash-attributes', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');
     Route::post('/restore-attribute/{id}', [AttributeController::class, 'restoreAttribute'])->name('restore-attribute');
     Route::delete('/delete-attribute/{id}', [AttributeController::class, 'deleteAttribute'])->name('delete-attribute');
+    // Combo
+    Route::resource('/combos', ComboController::class);
+    Route::get('/trash-combos', [ComboController::class, 'trashCombo'])->name('trash-combos');
+    Route::post('/restore-combo/{id}', [ComboController::class, 'restoreCombo'])->name('restore-combo');
+    Route::delete('/delete-combo/{id}', [ComboController::class, 'deleteCombo'])->name('delete-combo');
     // Topping
     Route::resource('/toppings', ToppingController::class);
     Route::get('/trash-topping', [ToppingController::class, 'trashTopping'])->name('trash-topping');
