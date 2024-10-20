@@ -110,7 +110,7 @@ Route::prefix('/auth')->group(function () {
 
 
 Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // User
     Route::resource('/users', UserController::class);
     Route::resource('/addresses', AddressController::class);
@@ -151,9 +151,10 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/promotions', PromotionController::class);
     // Membership
     Route::resource('/memberships', MembershipController::class);
-    Route::post('/memberships/{membership}/status', [MembershipController::class,'updateStatus'])->name('memberships.updateStatus');
+    Route::post('/memberships/{membership}/status', [MembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
     // Đánh Giá
     Route::resource('/evaluations', EvaluationController::class);
+
     Route::patch('/evaluations/update-status/{id}', [EvaluationController::class, 'updateStatus'])->name('evaluation.updateStatus');
     Route::resource('/order-statuses', OrderStatusController::class);
     Route::resource('/payment-methods', PaymentMethodController::class);
