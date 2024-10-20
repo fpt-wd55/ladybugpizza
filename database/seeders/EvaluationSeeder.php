@@ -19,19 +19,19 @@ class EvaluationSeeder extends Seeder
     {
         $now = Carbon::now();
         $faker = Faker::create();
-        
+
         $products = Product::pluck('id')->toArray();
         $users = User::pluck('id')->toArray();
 
         foreach ($products as $product) {
-            for ($i = 0; $i < 10; $i++) {
+            for ($i = 0; $i < 3; $i++) {
                 $user = $faker->randomElement($users);
-                
+
                 Evaluation::create([
                     'user_id' => $user,
                     'product_id' => $product,
-                    'order_id' => $faker->numberBetween(1,199),
-                    'rating' => $faker->numberBetween(1, 5),
+                    'order_id' => rand(1, 100),
+                    'rating' => rand(1, 5),
                     'comment' => $faker->sentence,
                     'status' => 1,
                     'created_at' => $now,
