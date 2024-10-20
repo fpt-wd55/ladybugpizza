@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('membership_ranks', function (Blueprint $table) {
+        Schema::create('faqs', function (Blueprint $table) {
             $table->id();
-            $table->string('icon');
-            $table->string('name');
-            $table->integer('min_points')->default(0);
-            $table->integer('max_points')->nullable();
+            $table->string('question');
+            $table->text('answer');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('membership_ranks');
+        Schema::dropIfExists('faqs');
     }
 };
