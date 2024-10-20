@@ -24,7 +24,7 @@
                                 <p class="text-sm font-medium">{{ $points }} Điểm</p>
                             </div>
                             <div class="mb-2 h-2 w-full rounded-full bg-gray-200">
-                                <div class="h-2 rounded-full bg-red-500" style="width: {{ $progress ?? '0' }}%;"></div>
+                                <div class="h-2 rounded-full bg-red-500" style="width: {{ $progress ?? '0' }}%"></div>
                             </div>
                             <p class="text-sm">Tích thêm {{ $nextPoints }} điểm nữa để nâng cấp lên thành viên
                                 {{ $nextRank }}
@@ -33,20 +33,19 @@
                     </div>
                 </div>
 
-                {{-- faq --}}
+                {{-- FAQ --}}
                 <div>
                     <div class="card p-4 md:p-8">
-                        <p class="title">Các câu hỏi hường gặp (FAQ)</p>
+                        <p class="title">Các câu hỏi thường gặp (FAQ)</p>
                         @foreach ($faqs as $index => $faq)
                             <div class="mb-4 border-b border-gray-300">
                                 <button class="flex w-full items-center justify-between py-4" onclick="toggleAccordion({{ $index }})">
-                                    <span class="text-left text-sm font-normal">{{ $index + 1 }}.
-                                        {{ $faq['question'] }}</span>
-                                    <span class="transition" id="icon-1">
+                                    <span class="text-left text-sm font-normal">{{ $index + 1 }}. {{ $faq['question'] }}</span>
+                                    <span class="transition" id="icon-{{ $index }}">
                                         @svg('tabler-plus', 'icon-sm')
                                     </span>
                                 </button>
-                                <div class="max-h-0 overflow-hidden transition" id="content-{{ $index }}">
+                                <div class="transition-max-height max-h-0 overflow-hidden duration-300 ease-in-out" id="content-{{ $index }}">
                                     <div class="pb-4 text-sm">
                                         {{ $faq['answer'] }}
                                     </div>
@@ -59,21 +58,20 @@
         </div>
     </div>
 
-    {{-- Diem hoi vien script --}}
+    {{-- Script xử lý Accordion --}}
     <script>
         function toggleAccordion(index) {
             const content = document.getElementById(`content-${index}`);
             const icon = document.getElementById(`icon-${index}`);
 
             const minusSVG = `@svg('tabler-minus', 'icon-sm')`;
-
             const plusSVG = `@svg('tabler-plus', 'icon-sm')`;
 
-            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+            if (getComputedStyle(content).maxHeight !== '0px') {
                 content.style.maxHeight = '0';
                 icon.innerHTML = plusSVG;
             } else {
-                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.maxHeight = content.scrollHeight + 'px'; // Sử dụng scrollHeight để mở
                 icon.innerHTML = minusSVG;
             }
         }

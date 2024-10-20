@@ -58,6 +58,10 @@ html {
     @apply transition-all duration-300 ease-in-out transform -translate-x-0;
 }
 
+.transition-max-height {
+    transition: max-height 0.3s ease-in-out;
+}
+
 .card {
     @apply bg-white border border-gray-300 rounded-lg;
 }
