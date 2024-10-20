@@ -400,8 +400,19 @@
 
                         <dl class="w-1/2 sm:w-1/4 sm:flex-1 lg:w-auto">
                             <dt class="text-base font-medium text-gray-500 ">Trạng thái:</dt>
+                            @php
+                                $colorClasses = [
+                                    'yellow' => 'bg-yellow-500',
+                                    'blue' => 'bg-blue-500',
+                                    'gray' => 'bg-gray-500',
+                                    'green' => 'bg-green-600',
+                                    'red' => 'bg-red-600',
+                                ];
+
+                                $colorClass = $colorClasses[$order->orderStatus->color] ?? 'bg-gray-500';
+                            @endphp
                             <dd
-                                class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white bg-{{$order->orderStatus->color}}-500">
+                                class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white {{ $colorClass }}">
                                 {{ $order->orderStatus->name }}
                             </dd>
                         </dl>

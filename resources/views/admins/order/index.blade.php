@@ -102,9 +102,20 @@
                                     {{ $order->address->province }}</p>
                             </td>
                             <td class="px-4 py-2">{{ number_format($order->amount) }}đ</td>
-                            <td class="px-4 py-2"> 
+                            <td class="px-4 py-2">
+                                @php
+                                    $colorClasses = [
+                                        'yellow' => 'bg-yellow-500',
+                                        'blue' => 'bg-blue-500',
+                                        'gray' => 'bg-gray-500',
+                                        'green' => 'bg-green-600',
+                                        'red' => 'bg-red-600',
+                                    ];
+
+                                    $colorClass = $colorClasses[$order->orderStatus->color] ?? 'bg-gray-500';
+                                @endphp
                                 <span
-                                    class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white bg-{{ $order->orderStatus->color }}-500">
+                                    class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white  {{ $colorClass }}">
                                     {{ $order->orderStatus->name }}
                                 </span>
                             </td>
@@ -197,11 +208,6 @@
                                                     <label class="font-semibold">Lí do hủy đơn</label>
                                                     <p class="text-gray-800">{{ $order->canceled_reason }}</p>
                                                 </div>
-                                                {{--  --}}
-                                                {{-- <div class="pl-4 rounded-lg ">
-                                                <label class="font-semibold">Sản phẩm</label>
-                                                <p class="text-gray-800">{{ $order->orderItems->productAttribute->product->name }}</p>
-                                            </div> --}}
                                             @else
                                                 {{-- user_id --}}
                                                 <div class="pl-4 ">
@@ -278,7 +284,6 @@
                             </div>
                         </div>
                         {{-- end order modal --}}
-                        {{--  --}}
                     @empty
                         <td colspan="6" class="text-center py-4 text-base">
                             <div class="flex flex-col items-center justify-center p-6 rounded-lg bg-white w-full h-80">
