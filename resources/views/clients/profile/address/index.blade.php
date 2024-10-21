@@ -12,7 +12,7 @@
                 <div class="flex items-start justify-between mb-8">
                     <h3 class="font-semibold uppercase ">địa chỉ</h3>
                     <a class="button-red" href="{{ route('client.profile.add-location') }}">
-                        @svg('tabler-plus', 'icon-md, me-2')
+                        @svg('tabler-plus', 'icon-md me-2')
                         Thêm địa chỉ
                     </a>
                 </div>
@@ -28,8 +28,10 @@
                                     @endif
                                 </div>
                                 <div class="text-sm">
-                                    <p>{{ $address->user->fullname }}</p>
-                                    <p>{{ $address->phone }}</p>
+                                    <div class="flex item-center gap-4 mb-2">
+                                        <p>{{ $address->user->fullname }}</p>
+                                        <p>{{ $address->phone }}</p>
+                                    </div>
                                     <p class="line-clamp-2">{{ $address->detail_address }}, {{ $address->ward }},
                                         {{ $address->district }}, {{ $address->province }}
                                     </p>
