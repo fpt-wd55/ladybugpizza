@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Invoice extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'order_id',
         'invoice_number',
