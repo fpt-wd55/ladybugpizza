@@ -372,11 +372,7 @@ html {
 
 .no-scrollbar::-webkit-scrollbar {
     display: none;
-}
-
-.is-active {
-    background-color: rgb(243 244 246);
-}
+} 
 
 .no-scrollbar {
     -ms-overflow-style: none;
