@@ -44,12 +44,12 @@
                 <div class="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
                     <div class="space-y-4">
                         <div class="flex space-x-4">
-                            <a class="shrink-0" data-fslightbox="gallery" href="{{ Auth::user()->avatar() }}">
+                            <a class="shrink-0 me-2" data-fslightbox="gallery" href="{{ Auth::user()->avatar() }}">
                                 <img loading="lazy" class="h-16 w-16 rounded-lg" src="{{ Auth::user()->avatar() }}"
                                     alt="Avatar" />
                             </a>
                             <div>
-                                <div class="flex ms-2">
+                                <div class="flex">
                                     <span
                                         class="flex items-center {{ $user->status == 1 ? 'text-green-500' : 'text-red-500' }}">@svg('tabler-circle-filled', 'w-3 h-3')</span>
                                     <span
@@ -57,9 +57,9 @@
                                         {{ $user->username }}
                                     </span>
                                 </div>
-                                <h2
-                                    class="flex items-center text-xl font-bold ms-2 mt-2 leading-none text-gray-900  sm:text-2xl">
-                                    {{ $user->fullname }} </h2>
+                                <h2 class="flex items-center text-xl font-bold mt-2 leading-none text-gray-900">
+                                    {{ $user->fullname }}
+                                </h2>
                             </div>
                         </div>
                         <dl class="">
@@ -69,12 +69,16 @@
                         <dl>
                             <dt class="font-semibold text-gray-900 ">Địa chỉ giao hàng</dt>
                             @foreach ($addresses as $address)
-                                <dd class="flex items-center mt-2 gap-1 text-gray-500">
-                                    @svg('tabler-map-pin-filled', 'h-5 w-5 text-gray-400 me-1')
-                                    {{ $address->detail_address . ', ' . $address->ward . ', ' . $address->district . ', ' . $address->province }}
-                                    <button data-modal-target="default-modal" data-modal-toggle="default-modal">
-                                        @svg('tabler-pencil', 'h-5 w-5 text-blue-400 mx-1')
-                                    </button>
+                                <dd class="mt-2 text-gray-500">
+                                    <div class="flex">
+                                        <span>•
+                                            {{ $address->detail_address . ', ' . $address->ward . ', ' . $address->district . ', ' . $address->province }}
+                                        </span>
+                                        <span data-modal-target="default-modal" data-modal-toggle="default-modal">
+                                            @svg('tabler-pencil', 'h-5 w-5 text-blue-400 mx-1')
+                                        </span>
+                                    </div>
+
                                     <!-- Main modal -->
                                     <div id="default-modal" tabindex="-1" aria-hidden="true"
                                         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -317,7 +321,7 @@
                             </dd>
                         </dl>
                     </div>
-                    <div class="space-y-4">
+                    <div class="space-y-4 overflow-x-auto">
                         <dl>
                             <dt class="font-semibold text-gray-900 ">Số điện thoại</dt>
                             <dd class="text-gray-500 ">{{ $user->phone }}</dd>
