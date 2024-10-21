@@ -51,7 +51,6 @@ class UserController extends Controller
             $avatar_name = time() . '_' . pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $avatar->getClientOriginalExtension();
             $validatedData['avatar'] = $avatar_name;
         }
-
         $data = [
             'username' => trim($validatedData['username']),
             'fullname' => trim($validatedData['fullname']),
