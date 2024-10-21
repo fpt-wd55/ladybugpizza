@@ -12,7 +12,7 @@
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <a href="{{ route('admin.attributes.index') }}" class="button-dark">
+                <a href="{{ route('admin.attributes.index') }}" class="button-gray">
                     @svg('tabler-arrow-back-up', 'w-5 h-5 mr-2')
                     Quay lại
                 </a>

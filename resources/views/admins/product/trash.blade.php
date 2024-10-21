@@ -12,7 +12,7 @@
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <a href="{{ route('admin.products.index') }}" class="button-dark">
+                <a href="{{ route('admin.products.index') }}" class="button-gray">
                     Quay lại
                 </a>
             </div>

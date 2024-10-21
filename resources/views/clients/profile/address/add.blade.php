@@ -63,7 +63,7 @@
                 <button type="submit" class="button-red">
                     Thêm mới
                 </button>
-                <a href="{{ route('client.profile.address') }}" class="button-dark">
+                <a href="{{ route('client.profile.address') }}" class="button-gray">
                     Quay lại
                 </a>
             </div>

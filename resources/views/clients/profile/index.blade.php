@@ -170,7 +170,7 @@
                                                 <button class="button-red" type="submit">
                                                     Xác nhận
                                                 </button>
-                                                <button class="button-dark" data-modal-hide="inactiveModal" type="button">
+                                                <button class="button-gray" data-modal-hide="inactiveModal" type="button">
                                                     Huỷ
                                                 </button>
                                             </div>

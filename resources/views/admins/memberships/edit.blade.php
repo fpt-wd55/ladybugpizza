@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="flex gap-x-1">
-                        <a href="{{ route('admin.memberships.index') }}" class=" button-dark">
+                        <a href="{{ route('admin.memberships.index') }}" class=" button-gray">
                             @svg('tabler-arrow-back-up', 'h-5 w-5 text-white me-2')
                             Quay lại
                         </a>
