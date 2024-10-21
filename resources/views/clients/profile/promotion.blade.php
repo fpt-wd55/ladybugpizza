@@ -3,26 +3,23 @@
 @section('title', 'Mã giảm giá')
 
 @section('content')
-    <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
+    <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
         <div class="lg:flex">
 
             @include('clients.profile.sidebar')
 
-            <div class="card p-4 md:p-8 w-full min-h-screen">
-                <h3 class="font-semibold uppercase mb-8">mã giảm giá</h3>
+            <div class="card min-h-screen w-full p-4 md:p-8">
+                <h3 class="mb-8 font-semibold uppercase">mã giảm giá</h3>
 
                 {{-- tabs --}}
-                <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 mb-4">
-                    <ul class="flex flex-wrap -mb-px">
+                <div class="mb-4 border-b border-gray-200 text-center text-sm font-medium text-gray-500">
+                    <ul class="-mb-px flex flex-wrap">
                         <li class="me-2">
-                            <a href="{{ route('client.profile.promotion', ['tab' => 'my-code']) }}"
-                                class="inline-block px-4 pb-2 text-red-600 border-b-2 border-red-600 rounded-t-lg"
-                                aria-current="page">Mã
+                            <a aria-current="page" class="{{ request('tab') == 'my-code' ? 'border-b-red-600 text-red-600' : '' }} inline-block rounded-t-lg border-b-2 px-4 pb-2" href="{{ route('client.profile.promotion', ['tab' => 'my-code']) }}">Mã
                                 giảm giá của tôi (13)</a>
                         </li>
                         <li class="me-2">
-                            <a href="{{ route('client.profile.promotion', ['tab' => 'redeem-code']) }}"
-                                class="inline-block px-4 pb-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">Đổi
+                            <a class="{{ request('tab') == 'redeem-code' ? 'border-b-red-600 text-red-600' : '' }} inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2 " href="{{ route('client.profile.promotion', ['tab' => 'redeem-code']) }}">Đổi
                                 mã giảm giá</a>
                         </li>
                     </ul>
@@ -51,18 +48,17 @@
                 </div> --}}
 
                 {{-- redeem-code --}}
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     @for ($i = 0; $i < 5; $i++)
-                        <div class="product-card p-4 flex items-start justify-between">
-                            <div class="text-sm space-y-2">
+                        <div class="product-card flex items-start justify-between p-4">
+                            <div class="space-y-2 text-sm">
                                 <p class="font-medium">
-                                    <span class="uppercase me-2">AOHDJRNF</span>
+                                    <span class="me-2 uppercase">AOHDJRNF</span>
                                     <span class="badge-yellow inline-flex items-center">450 @svg('tabler-coins', 'icon-sm ms-2')</span>
                                 </p>
                                 <p>Giảm 20% cho đơn tối thiểu 300,000đ</p>
                                 <p>Giảm tối đa 30,000đ</p>
-                                <p>Có hiệu lực từ <span class="font-medium">25-07-2024</span> đến <span
-                                        class="font-medium">25-07-2024</span></p>
+                                <p>Có hiệu lực từ <span class="font-medium">25-07-2024</span> đến <span class="font-medium">25-07-2024</span></p>
                             </div>
                             <div>
                                 <button class="button-red">

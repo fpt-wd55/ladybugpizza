@@ -7,9 +7,9 @@
             <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm tài khoản</h3>
             <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                <div class="grid gap-4 mb-4">
                     <div class="sm:col-span-2">
-                        <div class="grid gap-4 mb-4 sm:grid-cols-3">
+                        <div class="grid gap-4 mb-4 md:grid-cols-2 lg:grid-cols-3">
                             <div>
                                 <label for="username" class="block mb-2 text-sm font-medium text-gray-900 ">Tên tài
                                     khoản</label>
@@ -47,30 +47,35 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email</label>
-                        <input type="text" name="email" id="email" placeholder="email@domain.com"
-                            value="{{ old('email') }}"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                        @error('email')
-                            <p class="mt-2 text-sm text-red-600 ">
-                                {{ $message }}
-                            </p>
-                        @enderror
-                    </div>
-                    <div>
-                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Số điện thoại</label>
-                        <input type="text" name="phone" id="phone" placeholder="0123456789"
-                            value="{{ old('phone') }}"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                        @error('phone')
-                            <p class="mt-2 text-sm text-red-600 ">
-                                {{ $message }}
-                            </p>
-                        @enderror
+                    <div class="sm:col-span-2">
+                        <div class="grid gap-4 mb-4 md:grid-cols-2">
+                            <div>
+                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email</label>
+                                <input type="text" name="email" id="email" placeholder="email@domain.com"
+                                    value="{{ old('email') }}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                @error('email')
+                                    <p class="mt-2 text-sm text-red-600 ">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+                            <div>
+                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Số điện
+                                    thoại</label>
+                                <input type="text" name="phone" id="phone" placeholder="0123456789"
+                                    value="{{ old('phone') }}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                @error('phone')
+                                    <p class="mt-2 text-sm text-red-600 ">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
                     <div class="sm:col-span-2">
-                        <div class="grid gap-4 mb-4 sm:grid-cols-3">
+                        <div class="grid gap-4 mb-4 md:grid-cols-2 lg:grid-cols-3">
                             <div>
                                 <label class="block mb-2 text-sm font-medium text-gray-900" for="file_input">Ảnh đại
                                     diện</label>
@@ -127,7 +132,7 @@
                         </div>
                     </div>
                     <div class="sm:col-span-2">
-                        <div class="grid gap-4 mb-4 sm:grid-cols-3">
+                        <div class="grid gap-4 mb-4 lg:grid-cols-3">
                             <div>
                                 <label for="status" class="block mb-4 text-sm font-medium text-gray-900 ">Trạng
                                     thái</label>

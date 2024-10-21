@@ -194,8 +194,13 @@ Breadcrumbs::for('admin.evaluations.index', function (BreadcrumbTrail $trail) {
     $trail->push('Đánh giá', route('admin.evaluations.index'));
 });
 
-Breadcrumbs::for('admin.comment-products', function (BreadcrumbTrail $trail,$id) {
+Breadcrumbs::for('admin.comment-products', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('admin.evaluations.index');
     $trail->push('Chi tiết đánh giá', route('admin.comment-products', $id));
+});
 
+// Chat
+Breadcrumbs::for('admin.chats.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Trò chuyện', route('admin.chats.index'));
 });

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('icon');
             $table->string('name');
             $table->integer('min_points')->default(0);
+            $table->integer('max_points')->nullable();
             $table->timestamps();
         });
     }

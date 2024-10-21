@@ -12,13 +12,11 @@
                 <div class="mb-4 border-b border-gray-200 text-center text-sm font-medium text-gray-500">
                     <ul class="-mb-px flex flex-wrap">
                         <li class="me-2">
-                            <a class="inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2 hover:border-gray-300 hover:text-gray-600"
-                                href="{{ route('client.profile.membership-history', ['tab' => 'receive']) }}">Lịch sử
+                            <a class="{{ request('tab') == 'receive' ? 'border-b-red-600 text-red-600' : '' }} inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2 hover:border-gray-300 hover:text-gray-600" href="{{ route('client.profile.membership-history', ['tab' => 'receive']) }}">Lịch sử
                                 nhận</a>
                         </li>
                         <li class="me-2">
-                            <a class="inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2 hover:border-gray-300 hover:text-gray-600"
-                                href="{{ route('client.profile.membership-history', ['tab' => 'change']) }}">Lịch sử đổi</a>
+                            <a class="{{ request('tab') == 'change' ? 'border-b-red-600 text-red-600' : '' }} inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2 hover:border-gray-300 hover:text-gray-600" href="{{ route('client.profile.membership-history', ['tab' => 'change']) }}">Lịch sử đổi</a>
                         </li>
                     </ul>
                 </div>
@@ -37,7 +35,7 @@
                                             <p>vào lúc 08:tại LADYBUGPIZZA</p>
                                             <p>Bạn đã đổi phiếu mua hàng thành công</p>
                                         </span>
-                                        <span class="transition text-red-500" id="icon-1">
+                                        <span class="text-red-500 transition" id="icon-1">
                                             -1234
                                         </span>
                                     </button>
@@ -57,7 +55,7 @@
                                             <p>vào lúc 08:tại LADYBUGPIZZA</p>
                                             <p>Bạn đã đổi phiếu mua hàng thành công</p>
                                         </span>
-                                        <span class="transition text-red-500" id="icon-1">
+                                        <span class="text-red-500 transition" id="icon-1">
                                             -1234
                                         </span>
                                     </button>
@@ -65,6 +63,7 @@
                             @endfor
                         </div>
                     @break
+
                     @default
                         <div>
                             khoong tim thay trang

@@ -22,6 +22,7 @@
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="px-4 py-3">Sản phẩm</th>
+                        <th scope="col" class="px-4 py-3">Mã sản phẩm</th>
                         <th scope="col" class="px-4 py-3 text-center">Giá</th>
                         <th scope="col" class="px-4 py-3 text-center">Số lượng</th>
                         <th scope="col" class="px-4 py-3 text-center">Danh mục</th>
@@ -58,6 +59,8 @@
                                     </div>
                                 </div>
                             </td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                                {{ $product->sku }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
                                 <div class="grid grid-flow-row">
                                     @if ($product->discount_price == 0)

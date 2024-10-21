@@ -10,14 +10,14 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EvaluationController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\LogController;
-use App\Http\Controllers\Admin\MembershipController;
-use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\MembershipController; 
 use App\Http\Controllers\Admin\OrderStatusController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\CartController as AdminCartController;
+use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ShippingController;
@@ -110,6 +110,10 @@ Route::prefix('/auth')->group(function () {
 
 
 Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('admin.dashboard');
+    });
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // User
     Route::resource('/users', UserController::class);
@@ -118,35 +122,35 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/carts', AdminCartController::class);
     // Product
     Route::resource('/products', AdminProductController::class);
-    Route::get('/trash-products', [AdminProductController::class, 'trash'])->name('trash-products');
-    Route::post('/restore-product/{id}', [AdminProductController::class, 'restore'])->name('restore-product');
-    Route::delete('/delete-product/{id}', [AdminProductController::class, 'forceDelete'])->name('delete-product');
+    Route::get('/product/trash', [AdminProductController::class, 'trash'])->name('trash-products');
+    Route::post('/product/restore/{id}', [AdminProductController::class, 'restore'])->name('restore-product');
+    Route::delete('/product/delete/{id}', [AdminProductController::class, 'forceDelete'])->name('delete-product');
     Route::get('/comment-products/{id}', [AdminProductController::class, 'listComment'])->name('comment-products');
     // Attribute
     Route::resource('/attributes', AttributeController::class);
-    Route::get('/trash-attributes', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');
-    Route::post('/restore-attribute/{id}', [AttributeController::class, 'restoreAttribute'])->name('restore-attribute');
-    Route::delete('/delete-attribute/{id}', [AttributeController::class, 'deleteAttribute'])->name('delete-attribute');
+    Route::get('/attribute/trash', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');
+    Route::post('/attribute/restore/{id}', [AttributeController::class, 'restoreAttribute'])->name('restore-attribute');
+    Route::delete('/attribute/delete/{id}', [AttributeController::class, 'deleteAttribute'])->name('delete-attribute');
     // Combo
     Route::resource('/combos', ComboController::class);
-    Route::get('/trash-combos', [ComboController::class, 'trashCombo'])->name('trash-combos');
-    Route::post('/restore-combo/{id}', [ComboController::class, 'restoreCombo'])->name('restore-combo');
-    Route::delete('/delete-combo/{id}', [ComboController::class, 'deleteCombo'])->name('delete-combo');
+    Route::get('/combo/trash', [ComboController::class, 'trashCombo'])->name('trash-combos');
+    Route::post('/combo/restore-/{id}', [ComboController::class, 'restoreCombo'])->name('restore-combo');
+    Route::delete('/combo/delete/{id}', [ComboController::class, 'deleteCombo'])->name('delete-combo');
     // Topping
     Route::resource('/toppings', ToppingController::class);
-    Route::get('/trash-topping', [ToppingController::class, 'trashTopping'])->name('trash-topping');
-    Route::get('/restore-topping/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
-    Route::delete('/delete-topping/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
+    Route::get('/topping/trash', [ToppingController::class, 'trashTopping'])->name('trash-topping');
+    Route::get('/topping/restore/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
+    Route::delete('/topping/delete/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
     // Categories
     Route::resource('/categories', CategoryController::class);
-    Route::get('/trash-category', [CategoryController::class, 'trashCategory'])->name('trash.listcate');
-    Route::post('/restore-category/{id}', [CategoryController::class, 'trashRestore'])->name('trash.cateRestore');
-    Route::post('/delete-category/{id}', [CategoryController::class, 'trashForce'])->name('trash.cateDelete');
+    Route::get('/category/trash', [CategoryController::class, 'trashCategory'])->name('trash.listcate');
+    Route::post('/category/restore/{id}', [CategoryController::class, 'trashRestore'])->name('trash.cateRestore');
+    Route::post('/category/delete/{id}', [CategoryController::class, 'trashForce'])->name('trash.cateDelete');
     // Banner
     Route::resource('/banners', BannerController::class);
-    Route::post('/delete-banner/{id}', [BannerController::class, 'trashForce'])->name('trash.bannerDelete');
-    Route::post('/restore-banner/{id}', [BannerController::class, 'trashRestore'])->name('trash.bannerRestore');
-    Route::get('/trash-banner', [BannerController::class, 'trashList'])->name('trash.listBanner');
+    Route::get('/banner/trash', [BannerController::class, 'trashList'])->name('trash.listBanner');
+    Route::post('/banner/restore/{id}', [BannerController::class, 'trashRestore'])->name('trash.bannerRestore');
+    Route::post('/banner/delete/{id}', [BannerController::class, 'trashForce'])->name('trash.bannerDelete');
     // Promotion
     Route::resource('/promotions', PromotionController::class);
     // Membership
@@ -156,17 +160,16 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/evaluations', EvaluationController::class);
 
     Route::patch('/evaluations/update-status/{id}', [EvaluationController::class, 'updateStatus'])->name('evaluation.updateStatus');
-    Route::resource('/order-statuses', OrderStatusController::class);
-    Route::resource('/payment-methods', PaymentMethodController::class);
     Route::resource('/transactions', TransactionController::class);
     Route::resource('/shippings', ShippingController::class);
     Route::resource('/pages', AdminPageController::class);
     Route::resource('/logs', LogController::class);
-    Route::resource('/messages', MessageController::class);
+    // Chat
+    Route::resource('/chats', ChatController::class);
     Route::resource('/conversations', ConversationController::class);
     Route::get('/components', [DashboardController::class, 'components']);
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
 });
 
-// Cai nay dung chung luon
+// Share route
 Route::get('/invoices/{invoiceNumber}', [InvoiceController::class, 'show'])->name('invoices.show');

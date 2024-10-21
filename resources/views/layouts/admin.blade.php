@@ -51,10 +51,12 @@
                 {{-- Toast notification --}}
                 @include('partials.admins.toast-notification')
                 {{-- Content --}}
-                @yield('content')
+                <div class="m-0 p-0">
+                    @yield('content')
+                    {{-- footer --}}
+                    @include('partials.admins.footer')
+                </div>
             </div>
-            {{-- footer --}}
-            @include('partials.admins.footer')
         </div>
     </div>
 

@@ -30,12 +30,14 @@ class DatabaseSeeder extends Seeder
             OrderSeeder::class,
             BannerSeeder::class,
             EvaluationSeeder::class, 
+            EvaluationImageSeeder::class,
             PageSeeder::class,
             // ShippingSeeder::class,
             TransactionSeeder::class,
             InvoiceSeeder::class,
             ComboDetailSeeder::class,
             FavoriteSeeder::class,
+            FAQSeeder::class,
         ]); 
     }
 }
