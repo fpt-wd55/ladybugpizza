@@ -14,6 +14,8 @@ class AttributeValue extends Model
         'attribute_id',
         'value',
         'quantity',
+        'price',
+        'price_type',
     ];
 
     public function attributes()

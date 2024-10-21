@@ -203,7 +203,7 @@ html {
 }
 
 .button-gray {
-    @apply button bg-[#9B9B9B] hover:bg-[#8a8a8a];
+    @apply button button border-gray-800 bg-gray-500 hover:bg-gray-600;
 }
 
 .button-red {
