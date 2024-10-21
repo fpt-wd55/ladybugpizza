@@ -106,9 +106,12 @@ class CategoryController extends Controller
     { 
         $id = $category['id'];
 
-        Category::destroy($id);
+        if (Category::destroy($id)) {
+            return redirect()->back()->with('success', 'Xóa danh mục thành công');
+        }else{
+            return redirect()->back()->with('error', 'Xóa danh mục thất bại');
 
-        return redirect()->back()->with('success', 'Xóa danh mục thành công');
+        }
     }
 
     public function trashCategory()
@@ -126,17 +129,24 @@ class CategoryController extends Controller
 
             $restoreCate->restore();
             return redirect()->back()->with('success', 'Danh mục đã được khôi phục thành công');
+        }else{
+            return redirect()->back()->with('error', 'Khôi phục danh mục thất bại');
+
         }
     }
 
     public function trashForce(String $id)
     {
         $forceCategories = Category::withTrashed()->find($id);
-
+        $old_image =$forceCategories->image;
         if ($forceCategories) {
-
+            if ($old_image != null) {
+                unlink(storage_path('app/public/uploads/categories/' . $old_image));
+            }
             $forceCategories->forceDelete();
             return redirect()->back()->with('success', 'Danh mục đã xóa vĩnh viễn');
+        }else{
+            return redirect()->back()->with('error', 'Xóa vĩnh viễn danh mục thất bại');
         }
     }
 }

@@ -40,14 +40,18 @@ class BannerController extends Controller
             $banner_image->storeAs('public/uploads/banners', $banner_name);
         }
 
-        Banner::create([
+       $data=[
             'image' => $banner_name,
             'url' => $request->url,
             'is_local_page' => $request->is_local_page,
             'status' => $request->status ? 1 : 2,
-        ]);
+        ];
+        if( Banner::create($data)){
+            return redirect()->route('admin.banners.index')->with('success', 'thêm thành công');
+        }else{
+            return redirect()->back()->with('error', 'Thêm thất bại');
+        }
 
-        return redirect()->route('admin.banners.index')->with('success', 'thêm thành công');
     } 
 
     public function edit(Banner $banner)
@@ -79,8 +83,9 @@ class BannerController extends Controller
                 }
             }
             return redirect()->route('admin.banners.index')->with('success', 'Cập nhật thành công');
+        }else{
+            return redirect()->back()->with('error', 'Cập nhật thất bại');
         }
-
     }
 
     /**
@@ -89,10 +94,12 @@ class BannerController extends Controller
     public function destroy(Banner $banner)
     {
         $id = $banner['id'];
+        if(Banner::destroy($id)){
+            return redirect()->back()->with('success', 'Xóa thành công');
+        }else{
+            return redirect()->back()->with('error', 'Xóa thất bại');
+        }
 
-        Banner::destroy($id);
-
-        return redirect()->back()->with('success', 'Xóa thành công');
     }
 
     public function trashList(Banner $banner)
@@ -111,8 +118,12 @@ class BannerController extends Controller
         if ($old_banner != null && file_exists($filePath)) {
             unlink($filePath);
         }
-        $banner->forceDelete();
-        return back()->with('success', 'Đã xóa vĩnh viễn !');
+        if($banner->forceDelete()){
+            return back()->with('success', 'Đã xóa vĩnh viễn !');
+        }else{
+            return back()->with('error', 'Xóa vĩnh viễn thất bại !');
+        }
+        
     }
 
     // khôi phục
@@ -121,9 +132,10 @@ class BannerController extends Controller
         $restoreBanner = Banner::withTrashed()->find($id);
 
         if ($restoreBanner) {
-
             $restoreBanner->restore();
-            return redirect()->back()->with('success', 'Danh mục đã được khôi phục thành công');
+            return redirect()->back()->with('success', 'Banner đã được khôi phục thành công');
+        }else{
+            return redirect()->back()->with('error', 'Banner khôi phục thất bại');
         }
     }
 }
