@@ -42,8 +42,9 @@
                                 @foreach ($attribute->values as $value)
                                     <div class="min-w-32">
                                         <input checked class="peer hidden" id="option_{{ $value->id }}" name="attribute_{{ $attribute->id }}" required type="radio" value="{{ $value->value }}" />
-                                        <label class="label-peer" for="option_{{ $value->id }}">
-                                            <div class="text-sm font-normal">{{ $value->value }}</div>
+                                        <label class="label-peer flex flex-col items-center gap-2" for="option_{{ $value->id }}">
+                                            <p class="text-sm font-normal">{{ $value->value }}</p>
+                                            <p class="text-sm">{{ $value->price }}</p>
                                         </label>
                                     </div>
                                 @endforeach

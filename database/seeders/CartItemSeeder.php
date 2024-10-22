@@ -3,40 +3,43 @@
 namespace Database\Seeders;
 
 use App\Models\Cart;
-use App\Models\ProductAttribute;
-use App\Models\Topping;
-use App\Models\User;
+use App\Models\CartItem;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
-use Illuminate\Support\Facades\DB;
 
-class CartSeeder extends Seeder
+class CartItemSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $users = User::all();
-        $carts = [
+        $carts = Cart::all();
+
+        $items = [
             [
-                'user_id' => $users->random()->id,
+                'cart_id' => $carts->random()->id,
                 'price' => rand(100, 500) * 1000,
                 'discount_price' => rand(100, 500) * 1000,
+                'quantity' => rand(1, 5),
+                'amount' => rand(100, 500) * 1000,
             ],
             [
-                'user_id' => $users->random()->id,
+                'cart_id' => $carts->random()->id,
                 'price' => rand(100, 500) * 1000,
                 'discount_price' => rand(100, 500) * 1000,
+                'quantity' => rand(1, 5),
+                'amount' => rand(100, 500) * 1000,
             ],
             [
-                'user_id' => $users->random()->id,
+                'cart_id' => $carts->random()->id,
                 'price' => rand(100, 500) * 1000,
                 'discount_price' => rand(100, 500) * 1000,
-            ],
+                'quantity' => rand(1, 5),
+                'amount' => rand(100, 500) * 1000,
+            ]
         ];
 
-        Cart::insert($carts);
+        CartItem::insert($items);
     }
 }
