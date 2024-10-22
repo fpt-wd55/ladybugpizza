@@ -43,7 +43,7 @@
                                     {{-- card --}}    
                                     
                                     <div class="card p-2 mb-4">
-                                        <div class="mb-4 flex items-center gap-4">
+                                        <div class="mb-4 flex justify-center md:gap-1 lg:gap-4">
                                             <img alt="" class="mb-3 img-circle img-sm" loading="lazy" src="
                                             {{ filter_var($item->user->avatar, FILTER_VALIDATE_URL) ? $item->user->avatar : ($item->user->avatar ? asset('storage/uploads/avatars/' . $item->user->avatar) : asset('storage/uploads/avatars/user-default.png')) }}">
                                             <div class="">
@@ -57,15 +57,15 @@
                                                     @endif
                                                 @endfor
                                                 </div>
-                                                <p class="text-sm ">{{$item->created_at->format('d-m-Y H:i')}} | 
+                                                <p class="text-sm max-w-[270px] md:max-w-[330px] lg:max-w-[750px] break-words">{{$item->created_at->format('d-m-Y H:i')}} | 
                                                     @foreach ($item->order->orderItems as $orderItem)
                                                     @foreach ($orderItem->productAttributes as $products)
-                                                        <span class="text-[#D30A0A] font-semibold">
+                                                        <span class="text-[#D30A0A] font-semibold ">
                                                             {{ $products->product->name }} ,
                                                         </span>
                                                     @endforeach
                                                 @endforeach</p>
-                                                <p class="text-xs">Đế :
+                                                <p class="text-xs max-w-[270px] md:max-w-[330px] lg:max-w-[750px] break-words">Đế :
                                                      @foreach ($item->order->orderItems as $orderItem)
                                                                 @foreach ($orderItem->productAttributes as $attribute)
                                                                 <span class="text-gray-700 text-xs font-normal">
@@ -74,7 +74,7 @@
                                                                 @endforeach
                                                             @endforeach
                                                 </p>
-                                                <p class="text-xs">Topping : 
+                                                <p class="text-xs max-w-[270px] md:max-w-[330px] lg:max-w-[750px] break-words">Topping : 
                                                     @foreach ($item->order->orderItems as $orderItem)
                                                     @foreach ($orderItem->toppings as $topping)
                                                     <span class="text-gray-700 text-xs font-normal">
@@ -85,9 +85,9 @@
                                                 </p>
                                             </div>
                                             <div class="ml-auto self-start">
-                                                <div class="flex items-center">
+                                                <div class="flex items-center justify-center">
                                                     <div
-                                                        class="inline-block indicator {{$item->status ==1 ? 'bg-green-700' : 'bg-red-700'}} ">
+                                                        class="inline-block indicator rounded-full {{$item->status ==1 ? 'bg-green-700' : 'bg-red-700'}} ">
                                                     </div>
                                                     {{$item->status ==1 ? 'Hiển thị' : 'Ẩn'}}
                                                     <div class="px-1 py-3 flex items-center float-right">
@@ -106,7 +106,7 @@
                                                                     <button href=""
                                                                         class="block py-2 px-4 hover:bg-gray-100"
                                                                         data-modal-target="order-modal-{{ $item->order->id }}"
-                                                                        data-modal-toggle="order-modal-{{ $item->order->id }}">Chi Tiết Hóa Đơn</button>
+                                                                        data-modal-toggle="order-modal-{{ $item->order->id }}">Chi Tiết Đơn Hàng</button>
                                                                 </li>
 
                                                                 <li class="block py-2 px-4 hover:bg-gray-100">
@@ -153,31 +153,6 @@
                                         <div class="space-y-4">
                                             <div class="flex justify-between">
                                                 <h1 class="text-2xl font-semibold">Đơn hàng</h1>
-                                                <div class="flex justify-center gap-2">
-                                                    @if ($item->order->orderStatus->name === 'Hoàn thành')
-                                                        @if ($item->order->invoice)
-                                                            <a
-                                                                href="{{ route('invoices.show', $item->order->invoice->invoice_number) }}">
-                                                                <button class="mt-4 button-red">Xem hóa đơn</button>
-                                                            </a>
-                                                        @endif
-                                                    @endif
-                                                    @php
-                                                        // Xác định màu sắc dựa trên trạng thái đơn hàng
-                                                        $buttonClass = match ($item->order->orderStatus->name) {
-                                                            'Hoàn thành' => 'button-green',
-                                                            'Đang giao hàng' => 'button-gray',
-                                                            'Đang tìm tài xế' => 'button-gray',
-                                                            'Chờ xác nhận' => 'button-yellow',
-                                                            'Đã xác nhận' => 'button-blue',
-                                                            'Đã hủy' => 'button-gray',
-                                                            default => 'button-gray', // Trạng thái mặc định
-                                                        };
-                                                    @endphp
-                                                    <button class="mt-4 {{ $buttonClass }} w-36">
-                                                        {{ $item->order->orderStatus->name }}
-                                                    </button>
-                                                </div>
                                             </div>
                                             <hr class="w-full">
                                             @if ($item->order->orderStatus->name === 'Đã hủy')

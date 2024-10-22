@@ -24,10 +24,9 @@ class AttributeSeeder extends Seeder
                 'Mỏng',
             ],
             'Kích thước' => [
-                'S: 7 inch (18cm) - 4 miếng - 1 người',
-                'M: 9 inch (24cm) - 6 miếng - 2 người',
-                'L: 12 inch (30cm) - 8 miếng - 2-3 người',
-                'XL: 15 inch (38cm) - 8 miếng - 3-4 người',
+                'Size S',
+                'Size M',
+                'Size L',
             ],
             'Sốt' => [
                 'Kem béo Alfredo',
@@ -53,6 +52,8 @@ class AttributeSeeder extends Seeder
                     'attribute_id' => $attribute->id,
                     'value' => $value,
                     'quantity' => rand(0, 100),
+                    'price' => 2,
+                    'price_type' => 1,
                     'created_at' => $now,
                     'updated_at' => $now,
                 ]);

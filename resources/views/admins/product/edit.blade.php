@@ -12,10 +12,11 @@
                     {{-- Anh san pham --}}
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 sm:grid-cols-12">
-                            <a class="shrink-0" data-fslightbox="gallery" href="{{ asset('storage/uploads/products/' . $product->image) }}">
-                                <img loading="lazy" class="w-20 h-20 rounded-md bg-slate-600"
+                            <a class="shrink-0" data-fslightbox="gallery"
+                                href="{{ asset('storage/uploads/products/' . $product->image) }}">
+                                <img loading="lazy" class="w-20 h-20 rounded-md"
                                     src="{{ asset('storage/uploads/products/' . $product->image) }}"
-                                    onerror="this.src='{{ asset('storage/uploads/products/no-image.gif') }}'">
+                                    onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'">
                             </a>
                             <div class="flex items-center justify-center w-full col-span-5">
                                 <label for="dropzone-file"
@@ -174,7 +175,7 @@
                 </div>
                 {{-- Submit or cancel --}}
                 <div class="flex items-center space-x-4 mt-5">
-                    <a href="{{ route('admin.products.index') }}" class="button-dark">
+                    <a href="{{ route('admin.products.index') }}" class="button-gray">
                         Quay lại
                     </a>
                     <button type="submit" class="button-blue">

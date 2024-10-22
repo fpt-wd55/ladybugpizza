@@ -16,7 +16,7 @@
                 </a>
             </div>
             <div class="flex items-center">
-                <a href="#"
+                <a href="{{route('admin.chats.index')}}"
                     class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 ring-0 focus:ring-0">
                     <!-- Chat icon -->
                     @svg('tabler-message-dots', 'text-gray-500')
@@ -214,7 +214,7 @@
                 <a class="button-red" href="{{ route('auth.logout') }}">
                     Đăng xuất
                 </a>
-                <button class="button-dark" data-modal-hide="logoutModal" type="button">
+                <button class="button-gray" data-modal-hide="logoutModal" type="button">
                     Huỷ
                 </button>
             </div>

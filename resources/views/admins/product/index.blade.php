@@ -49,7 +49,7 @@
                                 <a class="shrink-0" data-fslightbox="gallery"
                                     href="{{ asset('storage/uploads/products/' . $product->image) }}">
                                     <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
-                                        onerror="this.src='{{ asset('storage/uploads/products/no-image.gif') }}'"
+                                        onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
                                         class="w-8 h-8 mr-3 rounded bg-slate-400">
                                 </a>
 

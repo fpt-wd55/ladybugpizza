@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('image');
             $table->text('description')->nullable();
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->bigInteger('price');
-            $table->bigInteger('discount_price')->default(0);
+            $table->integer('price');
+            $table->integer('discount_price')->default(0);
             $table->integer('quantity')->nullable();
             $table->string('sku')->unique();
             $table->tinyInteger('status')->default(1)->comment('1: Hoạt động; 2: khóa');

@@ -12,7 +12,7 @@
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <a href="{{ route('admin.products.index') }}" class="button-dark">
+                <a href="{{ route('admin.products.index') }}" class="button-gray">
                     Quay lại
                 </a>
             </div>
@@ -39,7 +39,7 @@
                                 <a class="shrink-0" data-fslightbox="gallery"
                                     href="{{ asset('storage/uploads/products/' . $product->image) }}">
                                     <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
-                                        onerror="this.src='{{ asset('storage/uploads/products/no-image.gif') }}'"
+                                        onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
                                         class="w-8 h-8 mr-3 rounded bg-slate-400">
                                 </a>
                                 <div class="grid grid-flow-row">

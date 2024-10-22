@@ -55,7 +55,7 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('admin.categories.index') }}">
-                        <button type="button" class="rounded-lg button-dark">
+                        <button type="button" class="rounded-lg button-gray">
                             Quay Lại
                         </button>
                     </a>
