@@ -18,6 +18,13 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('admin-notifications', function($user){
+Broadcast::channel('admin-notifications', function ($user) {
     return $user->isAdmin();
+});
+
+Broadcast::channel('chat', function ($user) {
+    if ($user) {
+        return ['id' => $user->id, 'fullname' => $user->fullname];
+    }
+    return false;
 });

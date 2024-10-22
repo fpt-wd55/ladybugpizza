@@ -42,7 +42,7 @@
                                     <img loading="lazy"
                                         src="{{ asset('storage/uploads/avatars/' . $membership->user->avatar) }}"
                                         class="img-circle img-sm lg:w-11 lg:h-11 mr-3 rounded border-2 hover:border-[#D30A0A] "
-                                        {{ Auth::user()->avatar() }}>
+                                        {{ $membership->avatar() }}>
                                 </a>
                                 <a href="{{ route('admin.memberships.edit', $membership) }}" class="hover:text-[#D30A0A]">
                                     <div class="grid grid-flow-row">

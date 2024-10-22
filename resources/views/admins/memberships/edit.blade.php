@@ -12,7 +12,7 @@
                     <div class="flex space-x-4">
                         <img loading="lazy" class="img-circle w-20 h-20 mr-3 rounded"
                             src="{{ asset('storage/uploads/avatars/' . $membership->user->avatar) }}" alt="Avatar"
-                            {{ Auth::user()->avatar() }} />
+                            {{ $membership->avatar() }} />
                         <div>
                             <div class="flex ms-2">
                                 <span
