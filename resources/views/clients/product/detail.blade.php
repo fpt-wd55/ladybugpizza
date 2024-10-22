@@ -44,7 +44,7 @@
                                         <input checked class="peer hidden" id="option_{{ $value->id }}" name="attribute_{{ $attribute->id }}" required type="radio" value="{{ $value->value }}" />
                                         <label class="label-peer flex flex-col items-center gap-2" for="option_{{ $value->id }}">
                                             <p class="text-sm font-normal">{{ $value->value }}</p>
-                                            <p class="text-sm">{{ $value->price }}</p>
+                                            <p class="text-sm">+ {{ $value->price_type == 1 ? number_format($value->price) : number_format(($value->price * $product->price) / 100) }}đ</p>
                                         </label>
                                     </div>
                                 @endforeach
@@ -65,7 +65,7 @@
                                         <img alt="{{ $topping->name }}" class="h-16 w-16 flex-shrink-0 rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
                                         <div class="text-sm">
                                             <p class="mb-2 font-semibold">{{ $topping->name }}</p>
-                                            <p>{{ number_format($topping->price) }} đ</p>
+                                            <p>+ {{ number_format($topping->price) }} đ</p>
                                         </div>
                                     </label>
                                 </div>

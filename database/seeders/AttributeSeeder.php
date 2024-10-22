@@ -47,13 +47,16 @@ class AttributeSeeder extends Seeder
                 'updated_at' => $now,
             ]);
 
+
             foreach ($values as $value) {
+                $name == 'Kích thước' ? $price_type = 2 : $price_type = 1;
+
                 AttributeValue::create([
                     'attribute_id' => $attribute->id,
                     'value' => $value,
                     'quantity' => rand(0, 100),
-                    'price' => 2,
-                    'price_type' => 1,
+                    'price' => ($price_type == 1) ? rand(5, 10) * 1000 : rand(5, 10),
+                    'price_type' => $price_type,
                     'created_at' => $now,
                     'updated_at' => $now,
                 ]);

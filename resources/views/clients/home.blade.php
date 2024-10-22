@@ -24,7 +24,7 @@
 
             <div>
                 {{-- carousel --}}
-                <div class="relative mb-8 w-full md:mb-12" data-carousel="slide" id="default-carousel">
+                <!-- <div class="relative mb-8 w-full md:mb-12" data-carousel="slide" id="default-carousel">
                     <div class="relative h-56 overflow-hidden rounded transition md:h-96 lg:h-[540px]">
                         @foreach ($banners as $banner)
                             <link as="image" href="{{ asset('storage/uploads/banners/' . $banner->image) }}" rel="preload">
@@ -48,7 +48,7 @@
                             @svg('tabler-chevron-right', 'icon-sm')
                         </span>
                     </button>
-                </div>
+                </div> -->
 
                 <div class="mt-12 py-8 text-center">
                     <p class="vujahday-script-regular mb-6 text-center text-6xl">Ladybug Pizza</p>
