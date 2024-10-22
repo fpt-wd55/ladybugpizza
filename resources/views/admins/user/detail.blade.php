@@ -183,7 +183,7 @@
                                                         </div>
                                                         <div class="flex items-center space-x-4 mt-5">
                                                             <span data-modal-hide="default-modal"
-                                                                class="button-dark cursor-pointer">
+                                                                class="button-gray cursor-pointer">
                                                                 Quay lại
                                                             </span>
                                                             <button type="submit" class="button-blue">
@@ -306,7 +306,7 @@
                                                     </div>
                                                     <div class="flex items-center space-x-4 mt-5">
                                                         <span data-modal-hide="add-address"
-                                                            class="button-dark cursor-pointer">
+                                                            class="button-gray cursor-pointer">
                                                             Quay lại
                                                         </span>
                                                         <button type="submit" class="button-blue">
@@ -367,7 +367,7 @@
                     </div>
                 </div>
                 <div class="flex items-start">
-                    <a href="{{ url()->previous() }}" class="button-dark me-2">
+                    <a href="{{ url()->previous() }}" class="button-gray me-2">
                         @svg('tabler-arrow-back-up', 'h-5 w-5 text-white me-2')
                         Quay lại
                     </a>

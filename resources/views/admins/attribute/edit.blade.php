@@ -174,7 +174,7 @@
                     </table>
                 </div>
                 <div class="flex items-center space-x-4 mt-5">
-                    <a href="{{ route('admin.attributes.index') }}" class="button-dark">
+                    <a href="{{ route('admin.attributes.index') }}" class="button-gray">
                         Quay lại
                     </a>
                     <button type="submit" class="button-blue">

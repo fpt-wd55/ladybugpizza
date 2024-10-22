@@ -23,56 +23,16 @@
         </div>
         <div class="p-4 border-b bg-gray-50">
             <!-- Các tab điều hướng -->
-            <ul class="flex space-x-4">
-                {{-- Tất cả --}}
-                <li>
-                    <a href="{{ route('admin.orders.index') }}"
-                        class="px-4 py-2 border-b-2 {{ request('status') ? 'border-transparent text-gray-500' : 'border-red-600 font-semibold text-red-600' }}">
-                        Tất cả
-                    </a>
+            <ul class="flex">
+                <li class="me-6 min-w-fit">
+                    <a aria-current="page" class="inline-block rounded-t-lg border-b-2 border-red-600 pb-2 text-red-600" href="{{ route('admin.orders.index') }}">Tất cả</a>
                 </li>
-                {{-- Hoàn thành --}}
-                <li>
-                    <a href="{{ route('admin.orders.index', ['status' => 'Hoàn thành']) }}"
-                        class="px-4 py-2 border-b-2 {{ request('status') === 'Hoàn thành' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
-                        Hoàn thành
-                    </a>
-                </li>
-                {{-- Đã xác nhận --}}
-                <li>
-                    <a href="{{ route('admin.orders.index', ['status' => 'Đã xác nhận']) }}"
-                        class="px-4 py-2 border-b-2 {{ request('status') === 'Đã xác nhận' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
-                        Đã xác nhận
-                    </a>
-                </li>
-                {{-- Chờ xác nhận --}}
-                <li>
-                    <a href="{{ route('admin.orders.index', ['status' => 'Chờ xác nhận']) }}"
-                        class="px-4 py-2 border-b-2 {{ request('status') === 'Chờ xác nhận' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
-                        Chờ xác nhận
-                    </a>
-                </li>
-                {{-- Đang giao hàng  --}}
-                <li>
-                    <a href="{{ route('admin.orders.index', ['status' => 'Đang giao hàng']) }}"
-                        class="px-4 py-2 border-b-2 {{ request('status') === 'Đang giao hàng' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
-                        Đang giao hàng
-                    </a>
-                </li>
-                {{-- Đang tìm tài xế --}}
-                <li>
-                    <a href="{{ route('admin.orders.index', ['status' => 'Đang tìm tài xế']) }}"
-                        class="px-4 py-2 border-b-2 {{ request('status') === 'Đang tìm tài xế' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
-                        Đang tìm tài xế
-                    </a>
-                </li>
-                {{-- Đã hủy --}}
-                <li>
-                    <a href="{{ route('admin.orders.index', ['status' => 'Đã hủy']) }}"
-                        class="px-4 py-2 border-b-2 {{ request('status') === 'Đã hủy' ? 'border-red-600 font-semibold text-red-600' : 'border-transparent text-gray-500' }}">
-                        Đã hủy
-                    </a>
-                </li>
+                @foreach ($orderStatuses as $status)
+                    <li class="me-6 min-w-fit">
+                        <a aria-current="page" class="inline-block rounded-t-lg border-b-2 border-transparent pb-2" 
+                        href="{{ route('admin.orders.index', ['tab' => $status->slug]) }}">{{ $status->name }}</a>
+                    </li>
+                @endforeach
             </ul>
         </div>
         {{--  --}}
@@ -212,7 +172,7 @@
                                             <hr class="w-full">
                                             {{-- SẢN PHẨM --}}
                                             <div class="flex justify-between">
-                                                <div>
+                                                <div class="basic-2/3">
                                                     {{-- sản phẩm --}}
                                                     <div class="pl-4 ">
                                                         <label class="font-semibold">Sản phẩm</label> <br>
@@ -244,8 +204,8 @@
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <label class="font-semibold">Tổng tiền</label>
-                                                    <p>{{ number_format($order->amount) }}đ</p>
+                                                    <label class="font-semibold">Tổng tiền thanh toán</label>
+                                                    <p>{{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ</p>
                                                 </div>
                                             </div>
                                             <div class="flex justify-end">

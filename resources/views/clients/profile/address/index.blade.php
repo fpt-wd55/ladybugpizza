@@ -98,7 +98,7 @@
                                             <button data-modal-hide="editAddressModal" type="submit" class="button-red">
                                                 Thêm mới
                                             </button>
-                                            <button data-modal-hide="editAddressModal" type="button" class="button-dark">
+                                            <button data-modal-hide="editAddressModal" type="button" class="button-gray">
                                                 Huỷ
                                             </button>
                                         </div>
@@ -130,7 +130,7 @@
                                         <button data-modal-hide="deleteAddressModal" type="submit" class="button-red">
                                             Xóa
                                         </button>
-                                        <button data-modal-hide="deleteAddressModal" type="button" class="button-dark">
+                                        <button data-modal-hide="deleteAddressModal" type="button" class="button-gray">
                                             Huỷ
                                         </button>
                                     </div>

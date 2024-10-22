@@ -6,7 +6,7 @@
         <ul class="space-y-2">
             <li>
                 <a href="{{ route('admin.dashboard') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group {{ request()->is('admin/dashboard*') ? 'is-active' : '' }}">
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group {{ request()->is('admin/dashboard*') ? 'bg-gray-200' : '' }}">
                     @svg('tabler-chart-pie', 'text-gray-500')
                     <span class="ml-3">Thống kê</span>
                 </a>
@@ -21,31 +21,29 @@
                     @svg('tabler-chevron-down', 'w-4 h-4 text-gray-500')
                 </button>
                 <ul id="dropdown-user"
-                    class="{{ request()->is(['admin/user*', 'admin/membership*'])
-                        ? 'block'
-                        : 'hidden' }} py-2 space-y-2">
+                    class="{{ request()->is(['admin/user*', 'admin/membership*']) ? 'block' : 'hidden' }} py-2 space-y-2">
                     <li>
                         <a href="{{ route('admin.users.index') }}"
-                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 {{ request()->is('admin/user*') ? 'is-active' : '' }}">Tài
+                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 {{ request()->is('admin/user*') ? 'bg-gray-200' : '' }}">Tài
                             khoản</a>
                     </li>
                     <li>
                         <a href="{{ route('admin.memberships.index') }}"
-                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 {{ request()->is('admin/membership*') ? 'is-active' : '' }}">Điểm
+                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 {{ request()->is('admin/membership*') ? 'bg-gray-200' : '' }}">Điểm
                             thành viên</a>
                     </li>
                 </ul>
             </li>
             <li>
                 <a href="{{ route('admin.categories.index') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group {{ request()->is('admin/categor*') ? 'is-active' : '' }}">
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group {{ request()->is('admin/categor*') ? 'bg-gray-200' : '' }}">
                     @svg('tabler-category', 'text-gray-500')
                     <span class="ml-3">Danh mục</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.attributes.index') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group {{ request()->is('admin/attribute*') ? 'is-active' : '' }}">
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group {{ request()->is('admin/attribute*') ? 'bg-gray-200' : '' }}">
                     @svg('tabler-sort-deacending-small-big', 'text-gray-500')
                     <span class="ml-3">Thuộc tính</span>
                 </a>
@@ -64,48 +62,48 @@
                         : 'hidden' }} py-2 space-y-2">
                     <li>
                         <a href="{{ route('admin.products.index') }}"
-                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 {{ request()->is('admin/product*') ? 'is-active' : '' }}">Sản
+                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 {{ request()->is('admin/product*') ? 'bg-gray-200' : '' }}">Sản
                             phẩm</a>
                     </li>
                     <li>
                         <a href="{{ route('admin.evaluations.index') }}"
-                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 {{ request()->is('admin/evaluation*') ? 'is-active' : '' }}">Đánh
+                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 {{ request()->is('admin/evaluation*') ? 'bg-gray-200' : '' }}">Đánh
                             giá</a>
                     </li>
                     <li>
                         <a href="{{ route('admin.combos.index') }}"
-                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 {{ request()->is('admin/combo*') ? 'is-active' : '' }}">Combo</a>
+                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 {{ request()->is('admin/combo*') ? 'bg-gray-200' : '' }}">Combo</a>
                     </li>
                     <li>
                         <a href="{{ route('admin.toppings.index') }}"
-                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 {{ request()->is('admin/topping*') ? 'is-active' : '' }}">Topping</a>
+                            class="flex items-center p-2 pl-11 w-full text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 {{ request()->is('admin/topping*') ? 'bg-gray-200' : '' }}">Topping</a>
                     </li>
                 </ul>
             </li>
             <li>
                 <a href="{{ route('admin.orders.index') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group {{ request()->is('admin/order*') ? 'is-active' : '' }}">
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group {{ request()->is('admin/order*') ? 'bg-gray-200' : '' }}">
                     @svg('tabler-package', 'text-gray-500')
                     <span class="ml-3">Đơn hàng</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.shippings.index') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group {{ request()->is('admin/shipping*') ? 'is-active' : '' }}">
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group {{ request()->is('admin/shipping*') ? 'bg-gray-200' : '' }}">
                     @svg('tabler-truck-delivery', 'text-gray-500')
                     <span class="ml-3">Giao hàng</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.promotions.index') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group {{ request()->is('admin/promotion*') ? 'is-active' : '' }}">
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group {{ request()->is('admin/promotion*') ? 'bg-gray-200' : '' }}">
                     @svg('tabler-discount-2', 'text-gray-500')
                     <span class="ml-3">Mã giảm giá</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.banners.index') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group {{ request()->is('admin/banner*') ? 'is-active' : '' }}">
+                    class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group {{ request()->is('admin/banner*') ? 'bg-gray-200' : '' }}">
                     @svg('tabler-slideshow', 'text-gray-500')
                     <span class="ml-3">Banner</span>
                 </a>

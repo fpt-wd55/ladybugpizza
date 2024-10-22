@@ -86,93 +86,20 @@ class MembershipController extends Controller
         $img = $currentRank->icon;
         $rank = $currentRank->name;
 
-        // HISTORY
-        $tab = $request->get('tab', 'history');
-        $pointsHistory = [];
-        // Lấy dữ liệu tương ứng với từng tab
-        switch ($tab) {
-            case 'receive':
-                // Lấy dữ liệu cho "Lịch sử nhận"
-                $logs = Log::where('user_id', $membership->user_id)
-                    ->where('action', 'Cộng điểm')
-                    ->get();
-                foreach ($logs as $log) {
-                    // "Ngày 3/10/2024 Cộng điểm mua hàng thành công vào lúc 08:30 tại LADYBUGPIZZA (+200)"
-                    $cleanDescription = trim($log->description);
-                    preg_match('/(\d{1,2}\/\d{1,2}\/\d{4})\s+(.*?)\s+vào lúc (\d{1,2}:\d{2})\s+tại\s+(.*?)\s*\(([-\+\d]+)\)/', $cleanDescription, $matches);
 
-                    if (count($matches) === 6) {
-                        $pointsHistory[] = [
-                            'date'         => $matches[1],  // Ngày "3/10/10/2024"
-                            'action'       => $matches[2],  // Hành động "Cộng điểm mua hàng thành công"
-                            'time'         => $matches[3],  // Thời gian "08:30"
-                            'location'     => $matches[4],  // Địa điểm "LADYBUGPIZZA"
-                            'points' => $matches[5],  // Điểm "+200"
-                        ];
-                    }
-                }
-                break;
-
-            case 'change':
-                // Lấy dữ liệu cho "Lịch sử đổi"
-                $logs = Log::where('user_id', $membership->user_id)
-                    ->where('action', 'Đổi điểm')
-                    ->get();
-                foreach ($logs as $log) {
-                    // "Ngày 3/10/2024 Đổi phiếu mua hàng thành công vào lúc 08:30 tại LADYBUGPIZZA (-200)"
-                    $cleanDescription = preg_replace('/\s+/', ' ', trim($log->description));
-                    preg_match('/Ngày\s*(\d{1,2}\/\d{1,2}\/\d{4})\s+(.*?)\s+vào lúc\s*(\d{1,2}:\d{2})\s+tại\s+(.*?)\s*\(([-\d]+)\)/', $cleanDescription, $matches);
-                    if (count($matches) === 6) {
-                        $pointsHistory[] = [
-                            'date'          => $matches[1],  // Ngày: "3/10/2024"
-                            'action'        => $matches[2],  // Hành động: "Đổi phiếu mua hàng thành công"
-                            'time'          => $matches[3],  // Thời gian: "08:30"
-                            'location'      => $matches[4],  // Địa điểm: "LADYBUGPIZZA"
-                            'points' => $matches[5],  // Điểm: "-200"
-                        ];
-                    }
-                }
-                break;
-
-            case 'history':
-                // lấy toàn bộ dữ liệu
-            default:
-                $logs = Log::where('user_id', $membership->user_id)
-                    ->whereIn('action', ['Cộng điểm', 'Đổi điểm'])
-                    ->get();
-
-                foreach ($logs as $log) {
-                    // Kiểm tra nếu là "Cộng điểm"
-                    if ($log->action == 'Cộng điểm') {
-                        $cleanDescription = trim($log->description);
-                        preg_match('/(\d{1,2}\/\d{1,2}\/\d{4})\s+(.*?)\s+vào lúc (\d{1,2}:\d{2})\s+tại\s+(.*?)\s*\(([-\+\d]+)\)/', $cleanDescription, $matches);
-                        if (count($matches) === 6) {
-                            $pointsHistory[] = [
-                                'date'         => $matches[1],  // Ngày "3/10/10/2024"
-                                'action'       => $matches[2],  // Hành động "Cộng điểm mua hàng thành công"
-                                'time'         => $matches[3],  // Thời gian "08:30"
-                                'location'     => $matches[4],  // Địa điểm "LADYBUGPIZZA"
-                                'points' => $matches[5],  // Điểm "+200"
-                            ];
-                        }
-                    } else if ($log->action == 'Đổi điểm') {
-                        $cleanDescription = preg_replace('/\s+/', ' ', trim($log->description));
-                        preg_match('/Ngày\s*(\d{1,2}\/\d{1,2}\/\d{4})\s+(.*?)\s+vào lúc\s*(\d{1,2}:\d{2})\s+tại\s+(.*?)\s*\(([-\d]+)\)/', $cleanDescription, $matches);
-                        if (count($matches) === 6) {
-                            $pointsHistory[] = [
-                                'date'          => $matches[1],  // Ngày: "3/10/2024"
-                                'action'        => $matches[2],  // Hành động: "Đổi phiếu mua hàng thành công"
-                                'time'          => $matches[3],  // Thời gian: "08:30"
-                                'location'      => $matches[4],  // Địa điểm: "LADYBUGPIZZA"
-                                'points' => $matches[5],  // Điểm: "-200"
-                            ];
-                        }
-                    }
-                }
-                break;
-        }
+        // HISTORY 
+        $histories = [];
+        $histories['all'] = Log::where('user_id', $membership->user_id)
+            ->whereIn('action', ['receive_points', 'exchange_points'])
+            ->get();
+        $histories['receive'] = Log::where('user_id', $membership->user_id)
+            ->where('action', 'receive_points')
+            ->get();
+        $histories['exchange'] = Log::where('user_id', $membership->user_id)
+            ->where('action', 'exchange_points')
+            ->get();
         // END HISTORY
         // Trả về view với dữ liệu của thành viên, rank, và progress,history,tab
-        return view('admins.memberships.edit', compact('membership', 'progress', 'img', 'rank', 'pointsHistory', 'tab'));
+        return view('admins.memberships.edit', compact('membership', 'progress', 'img', 'rank', 'histories'));
     }
 }

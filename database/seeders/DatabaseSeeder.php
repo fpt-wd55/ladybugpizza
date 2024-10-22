@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             LogSeeder::class,
-            ChatSeeder::class,
+            // ChatSeeder::class,
             CategorySeeder::class,
             AttributeSeeder::class,
             MembershipRankSeeder::class,
@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
             ComboDetailSeeder::class,
             FavoriteSeeder::class,
             FAQSeeder::class,
+            UserSettingSeeder::class,
         ]); 
     }
 }
