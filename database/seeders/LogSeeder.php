@@ -16,7 +16,7 @@ class LogSeeder extends Seeder
     public function run(): void
     {
         $now = Carbon::now();
-        
+
         $faker = Faker::create();
 
         $users = User::all();
@@ -30,6 +30,26 @@ class LogSeeder extends Seeder
                     'created_at' => $now,
                     'updated_at' => $now,
                 ]);
+            }
+            for ($i = 0; $i < 5; $i++) {
+                Log::create(
+                    [
+                        'user_id' => $user->id,
+                        'action' => 'receive_points',
+                        'description' => 'Nhận điểm thành công +' . rand(100, 1000),
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ]
+                );
+                Log::create(
+                    [
+                        'user_id' => $user->id,
+                        'action' => 'exchange_points',
+                        'description' => 'Đổi điểm thành công -' . rand(100, 1000),
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ]
+                );
             }
         }
     }
