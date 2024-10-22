@@ -7,7 +7,6 @@
         <div class="lg:flex">
 
             @include('clients.profile.sidebar')
-
             <div class="card p-4 md:p-8 w-full min-h-screen">
                 <div class="flex items-center justify-between mb-8">
                     <h3 class="font-semibold uppercase">Cài đặt</h3>
