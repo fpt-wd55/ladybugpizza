@@ -74,6 +74,7 @@
                     </div>
                 </form>
             </div>
+            
             <div class="hidden md:block max-h-[662px]">
                 <img loading="lazy" class="w-full h-full object-cover" src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}"
                     alt="Ảnh sản phẩm">
