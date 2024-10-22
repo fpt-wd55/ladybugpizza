@@ -94,7 +94,7 @@ class MembershipController extends Controller
             case 'receive':
                 // Lấy dữ liệu cho "Lịch sử nhận"
                 $logs = Log::where('user_id', $membership->user_id)
-                    ->where('action', 'Cộng điểm')
+                    ->where('action', 'receive_points')
                     ->get();
                 foreach ($logs as $log) {
                     // "Ngày 3/10/2024 Cộng điểm mua hàng thành công vào lúc 08:30 tại LADYBUGPIZZA (+200)"
@@ -116,7 +116,7 @@ class MembershipController extends Controller
             case 'change':
                 // Lấy dữ liệu cho "Lịch sử đổi"
                 $logs = Log::where('user_id', $membership->user_id)
-                    ->where('action', 'Đổi điểm')
+                    ->where('action', 'change_points')
                     ->get();
                 foreach ($logs as $log) {
                     // "Ngày 3/10/2024 Đổi phiếu mua hàng thành công vào lúc 08:30 tại LADYBUGPIZZA (-200)"
@@ -138,12 +138,12 @@ class MembershipController extends Controller
                 // lấy toàn bộ dữ liệu
             default:
                 $logs = Log::where('user_id', $membership->user_id)
-                    ->whereIn('action', ['Cộng điểm', 'Đổi điểm'])
+                    ->whereIn('action', ['receive_points', 'change_points'])
                     ->get();
 
                 foreach ($logs as $log) {
                     // Kiểm tra nếu là "Cộng điểm"
-                    if ($log->action == 'Cộng điểm') {
+                    if ($log->action == 'receive_points') {
                         $cleanDescription = trim($log->description);
                         preg_match('/(\d{1,2}\/\d{1,2}\/\d{4})\s+(.*?)\s+vào lúc (\d{1,2}:\d{2})\s+tại\s+(.*?)\s*\(([-\+\d]+)\)/', $cleanDescription, $matches);
                         if (count($matches) === 6) {
@@ -155,7 +155,7 @@ class MembershipController extends Controller
                                 'points' => $matches[5],  // Điểm "+200"
                             ];
                         }
-                    } else if ($log->action == 'Đổi điểm') {
+                    } else if ($log->action == 'change_points') {
                         $cleanDescription = preg_replace('/\s+/', ' ', trim($log->description));
                         preg_match('/Ngày\s*(\d{1,2}\/\d{1,2}\/\d{4})\s+(.*?)\s+vào lúc\s*(\d{1,2}:\d{2})\s+tại\s+(.*?)\s*\(([-\d]+)\)/', $cleanDescription, $matches);
                         if (count($matches) === 6) {
