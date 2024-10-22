@@ -38,6 +38,7 @@
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
+                
                 <div>
                     <label for="ward"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Xã/Phường:*</label>
