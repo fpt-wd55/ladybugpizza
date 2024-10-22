@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Category;
 use App\Models\Evaluation;
+use App\Models\EvaluationImage;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -192,6 +193,11 @@ class ProductController extends Controller
     {
         $sanpham = Product::query()->findOrFail($id);
         $evaluations = Evaluation::where('product_id',$id)->with('order')->paginate(10);
-        return view('admins.evaluations.edit',compact('sanpham','evaluations'));
+        $images = [];
+
+        foreach ($evaluations as $evaluation) {
+            $images[$evaluation->id] = EvaluationImage::where('evaluation_id', $evaluation->id)->get();
+        }
+        return view('admins.evaluations.edit',compact('sanpham','evaluations','images'));
     }
 }
