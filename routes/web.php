@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EvaluationController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\LogController;
-use App\Http\Controllers\Admin\MembershipController; 
+use App\Http\Controllers\Admin\MembershipController;
 use App\Http\Controllers\Admin\OrderStatusController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PaymentMethodController;
@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\CartController as AdminCartController;
 use App\Http\Controllers\Admin\ChatController;
+use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ShippingController;
@@ -164,9 +165,10 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/shippings', ShippingController::class);
     Route::resource('/pages', AdminPageController::class);
     Route::resource('/logs', LogController::class);
+
     // Chat
-    Route::resource('/chats', ChatController::class);
-    Route::resource('/conversations', ConversationController::class);
+    Route::resource('/chats', MessageController::class);
+
     Route::get('/components', [DashboardController::class, 'components']);
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
 });

@@ -44,8 +44,8 @@
                 <div class="mb-4 grid gap-4 sm:grid-cols-2 sm:gap-8 lg:gap-16">
                     <div class="space-y-4">
                         <div class="flex space-x-4">
-                            <a class="shrink-0 me-2" data-fslightbox="gallery" href="{{ Auth::user()->avatar() }}">
-                                <img loading="lazy" class="h-16 w-16 rounded-lg" src="{{ Auth::user()->avatar() }}"
+                            <a class="shrink-0 me-2" data-fslightbox="gallery" href="{{ $user->avatar() }}">
+                                <img loading="lazy" class="h-16 w-16 rounded-lg" src="{{ $user->avatar() }}"
                                     alt="Avatar" />
                             </a>
                             <div>
