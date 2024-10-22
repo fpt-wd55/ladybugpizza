@@ -39,6 +39,7 @@ class ToppingSeeder extends Seeder
         foreach ($toppings as $topping) {
             Topping::create([
                 'name' => $topping,
+                'slug' => Str::slug($topping),
                 'image' => Str::slug($topping) . '.jpeg',
                 'price' => rand(10, 50) * 1000,
                 'category_id' => 1,

@@ -5,21 +5,6 @@
 
 @section('content')
     <div class="mx-auto px-0">
-        <div class="relative flex flex-col-reverse lg:flex-row min-h-[calc(100vh-48px)] items-center justify-center gap-16 lg:justify-between overflow-hidden bg-gray-100 p-8 transition md:px-32 lg:px-40">
-            <div class="z-10 text-center lg:text-left">
-                <p class="vujahday-script-regular mb-8 text-6xl">Ladybug Pizza</p>
-                <p class="mb-8 uppercase text-gray-700">Thưởng thức pizza ngon lành bổ dưỡng của bạn</p>
-                <a class="button-primary" href="{{ route('client.product.menu') }}">Thực đơn</a>
-            </div>
-            <div class="z-10 flex-shrink-0 w-60 md:w-[400px] lg:w-[520px] transition">
-                <img alt="" class="w-full transition-transform duration-500 hover:rotate-[90deg] hover:transform" src="https://static.vecteezy.com/system/resources/previews/024/589/160/non_2x/top-view-pizza-with-ai-generated-free-png.png">
-            </div>
-
-            <div class="absolute top-[-200px] left-[-80px] h-96 w-96 rounded-full bg-white"></div>
-            <div class="absolute bottom-[-400px] right-[-400px] h-[800px] w-[800px] rounded-full bg-white"></div>
-        </div>
-
-
         <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
 
             <div>
@@ -98,7 +83,7 @@
                 {{-- Khám phá thực đơn --}}
                 <div class="mb-32 grid grid-cols-1 gap-8 lg:grid-cols-2">
                     <div class="mr-3 flex flex-col items-center text-center">
-                        <p class="mb-6 text-xl lg:text-2xl">
+                        <p class="vujahday-script-regular mb-6 text-3xl lg:text-4xl">
                             Thực đơn của chúng tôi</p>
 
                         <p class="mb-8 font-light">
@@ -106,7 +91,7 @@
                             thể thưởng thức tại 2 địa điểm của chúng tôi hoặc tại nhà với dịch vụ giao hàng nhanh chóng của
                             chúng tôi.
                         </p>
-                        <a class="button-primary mb-8" href="{{ route('client.product.menu') }}">Đặt ngay</a>
+                        <a class="button-red mb-8 uppercase" href="{{ route('client.product.menu') }}">đặt ngay</a>
                         <div class="font-light">
                             <p class="font-normal">Dịch vụ bữa trưa</p>
                             <p class="mb-4">Từ 11am đến 3pm </p>
@@ -128,17 +113,17 @@
                         <img alt="" class="h-full w-full rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/products/pizza-ca-hoi.jpg') }}">
                     </div>
                     <div class="text-center">
-                        <p class="mb-6 text-xl lg:text-2xl">Câu chuyện của chúng tôi</p>
+                        <p class="vujahday-script-regular mb-4 text-3xl lg:text-4xl">Câu chuyện của chúng tôi</p>
                         <p class="mb-6 font-light lg:mb-8">Khám phá các loại Pizza nướng bằng củi, bia Bỉ và các món tráng
                             miệng mới làm mà bạn có thể thưởng thức tại 2 địa điểm của chúng tôi hoặc tại nhà với dịch vụ giao
                             hàng nhanh chóng của chúng tôi.
                         </p>
-                        <p class="mb-8 font-light">Ladybug Pizza là một tiệm bánh Pizza đích thực, nằm ở trung tâm Hà Nội. Những chiếc
+                        <p class="font-light mb-8">Ladybug Pizza là một tiệm bánh Pizza đích thực, nằm ở trung tâm Hà Nội. Những chiếc
                             bánh pizza của chúng tôi được nướng trong lò đốt củi và phủ bên trên những nguyên liệu tươi, tự
                             nhiên và được lựa chọn cẩn thận.
                         </p>
-                        <p class="mb-4 flex items-center justify-center">
-                            <a class="button-primary" href="{{ route('client.about-us') }}">Về chúng tôi</a>
+                        <p class="flex items-center justify-center mb-4">
+                            <a class="button-red" href="{{ route('client.about-us') }}">VỀ CHÚNG TÔI</a>
                         </p>
                     </div>
                 </div>

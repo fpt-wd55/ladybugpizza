@@ -123,12 +123,12 @@ class User extends Authenticatable
         return $this->role_id == 3;
     }
 
-    public function avatar()
-    {
-        if (filter_var($this->avatar, FILTER_VALIDATE_URL)) {
-            return $this->avatar;
-        }
+        public function avatar()
+        {
+            if (filter_var($this->avatar, FILTER_VALIDATE_URL)) {
+                return $this->avatar;
+            }
 
-        return $this->avatar ? asset('storage/uploads/avatars/' . $this->avatar) : asset('images/default-avatar.jpg');
-    }
+            return $this->avatar ? asset('storage/uploads/avatars/' . $this->avatar) : asset('images/default-avatar.jpg');
+        }
 }

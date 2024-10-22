@@ -10,6 +10,7 @@ use App\Models\Topping;
 use App\Models\Favorite;
 use App\Models\User;
 use App\Models\Attribute;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -73,8 +74,15 @@ class ProductController extends Controller
      * Thêm mới một sản phẩm vào giở hàng
      * @return void
      */
-    public function addToCart()
+    public function addToCart(Request $request, $slug)
     {
+        $product = Product::where('slug', $slug)->firstOrFail();
+
+        $data = $request->all();        
+        
+        dd($data);
+        
+
     }
 
     /**
@@ -95,7 +103,9 @@ class ProductController extends Controller
             ->with('product')
             ->get();
 
-        return view('partials.clients', compact('favorites'));
+        return view('partials.clients', [
+            'favorites' => $favorites
+        ]);
     }
 
     /**
@@ -126,7 +136,7 @@ class ProductController extends Controller
                     'user_id' => Auth::id(),
                     'product_id' => $product->id,
                 ]);
-                return back()->with('success', 'Sản phẩm đã được thêm vào yêu thích!');
+                return back()->with('success', 'Sản phẩm đã được thêm vào danh sách yêu thích!');
             }
         }
 

@@ -12,6 +12,7 @@ class Topping extends Model
 
     protected $fillable = [
         'name',
+        'slug',
         'image',
         'price',
         'category_id'
