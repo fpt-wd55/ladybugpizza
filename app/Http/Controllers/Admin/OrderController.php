@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use App\Models\Order;
+use App\Models\OrderStatus;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -15,23 +16,23 @@ class OrderController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        $status = $request->get('status'); // Lấy trạng thái từ query parameter
+{
+    $status = $request->get('tab'); // Change 'status' to 'tab'
+    
+    $orders = Order::when($status, function ($query, $status) {
+        return $query->whereHas('orderStatus', function ($q) use ($status) {
+            $q->where('slug', $status); // Ensure you're querying the 'slug' column
+        });
+    })->with('orderItems.productAttributes.product', 'orderItems.toppings')
+      ->latest('id')
+      ->paginate(10);
 
-        if ($status) {
-            $orders = Order::when($status, function ($query, $status) {
-                return $query->whereHas('orderStatus', function ($q) use ($status) {
-                    $q->where('name', $status)->with('orderItems.productAttributes.product', 'orderItems.toppings');
-                });
-            })->latest('id')->paginate(10);
-        } else {
-            // Query dựa theo trạng thái, nếu không có thì lấy tất cả đơn hàng
-            $orders = Order::with('orderItems.productAttributes.product', 'orderItems.toppings')->latest('id')->paginate(10);
-        }
+    $orderStatuses = OrderStatus::all();
+    $invoices = Invoice::all();
 
-        $invoices = Invoice::all();
-        return view('admins.order.index', compact('orders', 'invoices'));
-    }
+    return view('admins.order.index', compact('orders', 'invoices', 'orderStatuses'));
+}
+
 
     /**
      * Display a listing of the resource.
