@@ -3,12 +3,10 @@
 namespace Database\Seeders;
 
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
-use App\Models\Category;
+use Illuminate\Support\Str;
 
 class AttributeSeeder extends Seeder
 {
@@ -20,8 +18,11 @@ class AttributeSeeder extends Seeder
         $now = Carbon::now();
         $attibutes = [
             'Loại đế' => [
-                'Dày',
-                'Mỏng',
+                'Đế dày truyền thống',
+                'Đế mỏng truyền thống',
+                'Đế giòn xốp',
+                'Viền phô mai',
+                'Viền xúc xích',
             ],
             'Kích thước' => [
                 'Size S',
@@ -41,19 +42,23 @@ class AttributeSeeder extends Seeder
         foreach ($attibutes as $name => $values) {
             $attribute = Attribute::create([
                 'name' => $name,
+                'slug' => Str::slug($name),
                 'status' => 1,
                 'category_id' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
 
+
             foreach ($values as $value) {
+                $name == 'Kích thước' ? $price_type = 2 : $price_type = 1;
+
                 AttributeValue::create([
                     'attribute_id' => $attribute->id,
                     'value' => $value,
                     'quantity' => rand(0, 100),
-                    'price' => 2,
-                    'price_type' => 1,
+                    'price' => ($price_type == 1) ? rand(5, 10) * 1000 : rand(5, 10),
+                    'price_type' => $price_type,
                     'created_at' => $now,
                     'updated_at' => $now,
                 ]);

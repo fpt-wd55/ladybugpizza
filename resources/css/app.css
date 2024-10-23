@@ -178,6 +178,10 @@ html {
     @apply text-white font-medium rounded text-sm px-5 py-2 flex items-center justify-center;
 }
 
+.button-primary {
+    @apply rounded bg-red-600 px-8 py-4 text-sm font-medium text-white shadow-lg transition hover:bg-white hover:text-black
+}
+
 .button-toggle {
     @apply relative w-11 h-6 bg-gray-200 dark:peer-focus:ring-blue-800 rounded-full dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600;
 }
@@ -191,11 +195,11 @@ html {
 }
 
 .button-dark {
-    @apply button border-gray-800 bg-gray-500 hover:bg-gray-600;
+    @apply button border-gray-800 bg-black hover:bg-gray-700;
 }
 
 .button-light {
-    @apply button bg-white border border-gray-300 hover:bg-gray-100;
+    @apply font-medium rounded text-sm px-5 py-2 flex items-center justify-center bg-white border border-gray-300 hover:bg-gray-100;
 }
 
 .button-green {
@@ -231,11 +235,15 @@ html {
 }
 
 .badge-dark {
-    @apply badge bg-gray-100 text-gray-800;
+    @apply badge bg-black text-white;
 }
 
 .badge-light {
-    @apply badge bg-gray-200 text-gray-800;
+    @apply badge bg-gray-100 text-gray-800;
+}
+
+.badge-gray {
+    @apply badge bg-gray-400 text-white;
 }
 
 .badge-green {

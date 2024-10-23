@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cart_toppings', function (Blueprint $table) {
-            $table->foreignId('cart_id')->constrained()->onDelete('cascade');
-            $table->foreignId('topping_id')->constrained()->onDelete('cascade');
+        Schema::create('cart_item_attributes', function (Blueprint $table) {
+            $table->foreignId('cart_item_id')->constrained()->onDelete('cascade');
+            $table->foreignId('attribute_value_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cart_toppings');
+        Schema::dropIfExists('cart_item_attributes');
     }
 };

@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\ProductAttribute;
 use App\Models\Topping;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
@@ -18,33 +19,22 @@ class CartSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
-        $users = User::pluck('id')->toArray();
-        $productAttributes = ProductAttribute::pluck('id')->toArray();
-        $toppings = Topping::pluck('id')->toArray();
+        $now = Carbon::now();
 
-        for ($i = 1; $i < 100; $i++) {
-            Cart::insert([
-                'user_id' => $faker->randomElement($users),
-                'quantity' => $faker->numberBetween(1, 10),
-                'price' => $faker->numberBetween(10000, 100000),
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
-            ]);
+        $users = User::all();
 
-            DB::table('cart_attributes')->insert([
-                'cart_id' => $i,
-                'product_attribute_id' => $faker->randomElement($productAttributes),
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
-            ]);
+        $carts = [];
 
-            DB::table('cart_toppings')->insert([
-                'cart_id' => $i,
-                'topping_id' => $faker->randomElement($toppings),
-                'created_at' => $faker->dateTimeThisYear(),
-                'updated_at' => $faker->dateTimeThisYear(),
-            ]);
+        foreach ($users as $user) {
+            $carts[] = [
+                'user_id' => $user->id,
+                'total' => rand(100, 500) * 1000,
+                'total_discount' => rand(100, 500) * 1000,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ];
         }
+
+        Cart::insert($carts);
     }
 }

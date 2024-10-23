@@ -185,8 +185,10 @@ class ProfileController extends Controller
 
 	public function promotion()
 	{
+		// Code cua huyen o day
 		return view('clients.profile.promotion');
 	}
+	
 	public function addLocation()
 	{
 		return view('clients.profile.address.add');

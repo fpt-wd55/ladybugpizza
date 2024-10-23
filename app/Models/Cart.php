@@ -12,21 +12,15 @@ class Cart extends Model
 
     protected $fillable = [
         'user_id',
-        'product_attribute_id',
-        'quantity',
-        'price',
         'total',
+        'total_discount',
     ];
 
     public function user() {
         return $this->belongsTo(User::class);
     }
 
-    public function toppings() {
-        return $this->belongsToMany(Topping::class, 'cart_toppings');
-    }
-
-    public function attributes() {
-        return $this->belongsTo(ProductAttribute::class);
+    public function items() {
+        return $this->hasMany(CartItem::class);
     }
 }

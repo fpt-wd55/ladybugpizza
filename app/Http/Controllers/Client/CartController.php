@@ -13,8 +13,8 @@ class CartController extends Controller
     {
         $user = Auth::user();
         $cart = Cart::where('user_id', $user->id)
-        ->with('toppings')
-        ->with('attributes')
+        // ->with('toppings')
+        // ->with('attributes')
         ->get();
 
         // dd($cart);

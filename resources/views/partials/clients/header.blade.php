@@ -1,4 +1,4 @@
-<header class="sticky top-0 z-40 border-b border-gray-300 bg-gray-100 px-4 py-2 text-black">
+<header class="sticky top-0 z-40 border-b border-gray-300 bg-white px-4 py-2 text-black">
     <div class="h-auto md:mx-8 lg:mx-20">
         <nav class="flex items-center justify-between">
             {{-- Logo --}}
@@ -198,7 +198,7 @@
                 <a class="button-red w-full" href="{{ route('auth.logout') }}">
                     Đăng xuất
                 </a>
-                <button class="button-gray w-full" data-modal-hide="logoutModal" type="button">
+                <button class="button-dark w-full" data-modal-hide="logoutModal" type="button">
                     Huỷ
                 </button>
             </div>

@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="flex items-center justify-end gap-2">
-                    <a href="{{ route('client.product.menu') }}" class="button-gray">Tiếp tục mua hàng</a>
+                    <a href="{{ route('client.product.menu') }}" class="button-dark">Tiếp tục mua hàng</a>
                     <a href="{{ route('client.cart.checkout') }}" class="button-red">Thanh toán</a>
                 </div>
             </div>
