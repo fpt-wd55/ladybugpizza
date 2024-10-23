@@ -122,7 +122,7 @@
                                             <p class="mb-4 text-sm">{{$item->comment}}</p>
                                             <div class="flex flex-wrap">
                                                 @foreach ($images[$item->id] as $image)
-                                                <img src="{{asset('storage/uploads/evaluations/' . $image->image)}}" alt="" class="img-md mx-0.5 h-16 sm:h-20 md:h-24 object-cover rounded-sm">
+                                                <img src="{{asset('storage/uploads/evaluations/' . $image->image)}}" alt="" class="img-md mx-0.5 my-0.5 h-16 sm:h-20 md:h-24 object-cover rounded-sm">
                                                 @endforeach
                                             </div>
                                         </div>
