@@ -46,7 +46,7 @@
                         <th class="px-4 py-3">Tổng số tiền</th>
                         <th class="px-4 py-3">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
-                            <span class="sr-only">Hành động</span>
+                            <span class="sr-only uppercase">Hành động </span>
                         </th>
                     </tr>
                 </thead>

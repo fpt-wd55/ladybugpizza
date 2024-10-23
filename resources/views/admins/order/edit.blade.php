@@ -11,7 +11,7 @@
             </div>
         @endif
         <div class="grid grid-cols-3 gap-4">
-            {{-- item1 --}}
+            {{-- Giá trị 1 --}}
             <div>
                 <h2 class="text-lg font-semibold mb-4">Tổng quan</h2>
                 <label class="font-semibold">Ngày tạo</label>
@@ -36,7 +36,7 @@
                     </div>
                 </form>
             </div>
-            {{-- item2 --}}
+            {{-- Giá trị 2 --}}
             <div>
                 <h3 class="text-lg font-semibold mb-2">Thanh toán</h3>
                 <p>{{ $order->user->fullname }}</p>
@@ -49,7 +49,7 @@
                 <p>{{ $order->user->phone }}</p>
 
             </div>
-            {{-- item3 --}}
+            {{-- Giá trị 3 --}}
             <div>
                 <h4 class="text-lg font-semibold mb-2">Giao hàng</h4>
                 <p>{{ $order->user->fullname }}</p>
@@ -70,7 +70,7 @@
                     @foreach ($order->orderItems as $orderItem)
                         @foreach ($orderItem->productAttributes as $products)
                             <span class="text-gray-800 font-semibold">
-                                {{ $products->product->name }} ,
+                                {{ $products->product->name }},
                             </span>
                         @endforeach
                     @endforeach
