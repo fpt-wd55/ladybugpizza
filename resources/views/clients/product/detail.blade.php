@@ -39,9 +39,9 @@
                                 {{ $attribute->name }}
                             </p>
                             <div class="flex flex-wrap items-center gap-4 md:gap-8">
-                                @foreach ($attribute->values as $value)
+                                @foreach ($attribute->values as $index => $value)
                                     <div class="min-w-32">
-                                        <input checked class="peer hidden" id="attribute_{{ $value->id }}" name="attributes[{{ $attribute->slug }}]" required type="radio" value="{{ $value->id }}" />
+                                        <input {{ $index === 0 ? 'checked' : '' }} class="peer hidden" id="attribute_{{ $value->id }}" name="attributes[{{ $attribute->slug }}]" required type="radio" value="{{ $value->id }}" />
                                         <label class="label-peer flex flex-col items-center gap-2" for="attribute_{{ $value->id }}">
                                             <p class="text-sm font-normal">{{ $value->value }}</p>
                                             <p class="text-sm">+ {{ number_format($value->price($product)) }}đ</p>

@@ -18,8 +18,8 @@ class AttributeSeeder extends Seeder
         $now = Carbon::now();
         $attibutes = [
             'Loại đế' => [
-                'Đế dày truyền thống',
                 'Đế mỏng truyền thống',
+                'Đế dày truyền thống',
                 'Đế giòn xốp',
                 'Viền phô mai',
                 'Viền xúc xích',
@@ -30,11 +30,12 @@ class AttributeSeeder extends Seeder
                 'Size L',
             ],
             'Sốt' => [
-                'Kem béo Alfredo',
-                'Kem Carbonara',
-                'Cà chua Marinara',
-                'Nấm',
-                'Húng quế Pesto',
+                'Sốt truyền thống',
+                'Sốt kem béo Alfredo',
+                'Sốt kem Carbonara',
+                'Sốt cà chua Marinara',
+                'Sốt nấm',
+                'Sốt húng quế Pesto',
                 'Không sốt',
             ]
         ];
