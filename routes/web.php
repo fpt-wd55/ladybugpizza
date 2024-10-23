@@ -118,6 +118,8 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // User
     Route::resource('/users', UserController::class);
+    Route::get('/user/export', [UserController::class, 'export'])->name('users.export');
+    // Address
     Route::resource('/addresses', AddressController::class);
     Route::resource('/orders', AdminOrderController::class);
     Route::resource('/carts', AdminCartController::class);

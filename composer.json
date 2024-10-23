@@ -20,6 +20,7 @@
         "laravel/scout": "^10.11",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.8",
+        "phpoffice/phpspreadsheet": "^3.3",
         "pusher/pusher-php-server": "^7.2",
         "rahulhaque/laravel-filepond": "^10.0",
         "ryangjchandler/blade-tabler-icons": "^2.3",

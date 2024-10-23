@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\Role;
 use App\Models\User;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class UserController extends Controller
 {
@@ -165,5 +167,61 @@ class UserController extends Controller
         } else {
             return redirect()->route('admin.users.edit', $user->id)->with('error', 'Cập nhật tài khoản thất bại');
         }
+    }
+
+    public function export()
+    {
+        $users = User::all();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'ID');
+        $sheet->setCellValue('B1', 'Tài khoản');
+        $sheet->setCellValue('C1', 'Vai trò');
+        $sheet->setCellValue('D1', 'Email');
+        $sheet->setCellValue('E1', 'Họ và tên');
+        $sheet->setCellValue('F1', 'Số điện thoại');
+        $sheet->setCellValue('G1', 'Ngày sinh');
+        $sheet->setCellValue('H1', 'Giới tính');
+        $sheet->setCellValue('I1', 'Trạng thái');
+        $sheet->setCellValue('J1', 'Ngày tạo');
+        $sheet->setCellValue('K1', 'Ngày cập nhật');
+        // In đậm tiêu đề
+        $sheet->getStyle('A1:K1')->getFont()->setBold(true);
+        // Tự động điều chỉnh độ rộng cột
+        foreach (range('A', 'K') as $columnID) {
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
+        }
+
+
+        $row = 2;
+        foreach ($users as $user) {
+            $sheet->setCellValue('A' . $row, $user->id);
+            $sheet->setCellValue('B' . $row, $user->username);
+            $sheet->setCellValue('C' . $row, $user->role->name);
+            $sheet->setCellValue('D' . $row, $user->email);
+            $sheet->setCellValue('E' . $row, $user->fullname);
+            $sheet->setCellValue('F' . $row, $user->phone);
+            $sheet->setCellValue('G' . $row, $user->date_of_birth);
+            $genderMap = [
+                1 => 'Nam',
+                2 => 'Nữ',
+                3 => 'Khác'
+            ];
+            $gender = $genderMap[$user->gender] ?? 'Không xác định';
+            $sheet->setCellValue('H' . $row, $gender); 
+            $sheet->setCellValue('I' . $row, $user->status == 1 ? 'Hoạt động' : 'Khóa');
+            $sheet->setCellValue('J' . $row, $user->created_at);
+            $sheet->setCellValue('K' . $row, $user->updated_at);
+            $row++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="taikhoan.xlsx"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
     }
 }
