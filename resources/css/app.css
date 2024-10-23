@@ -372,7 +372,7 @@ html {
 
 .no-scrollbar::-webkit-scrollbar {
     display: none;
-} 
+}
 
 .no-scrollbar {
     -ms-overflow-style: none;
@@ -399,4 +399,8 @@ html {
 
 .tox .tox-edit-area::before {
     border: 0 !important;
+}
+
+button[aria-selected="true"] {
+    @apply border-[#D30A0A] text-[#D30A0A];
 }
