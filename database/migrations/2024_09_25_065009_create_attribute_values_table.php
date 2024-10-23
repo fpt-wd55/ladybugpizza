@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('attribute_id')->constrained()->onDelete('cascade');
             $table->string('value');
             $table->integer('quantity')->nullable();
-            $table->decimal('price', 15, 2)->nullable();
+            $table->integer('price')->nullable();
             $table->integer('price_type')->nullable()->comment('1: Fixed, 2: Percentage, Phần trăm tính theo giá trị của sản phẩm');
             $table->timestamps();
         });

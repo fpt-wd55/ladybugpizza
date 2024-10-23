@@ -20,7 +20,7 @@
 
                             <!-- Input để upload file -->
                             <input class="hidden" id="avatar" name="avatar" type="file">
-                            <label class="button-red mt-4 cursor-pointer" for="avatar">Chọn ảnh</label>
+                            <label class="button-d mt-4 cursor-pointer" for="avatar">Chọn ảnh</label>
 
                             @error('avatar')
                                 <p class="text-sm text-red-500 text-center">{{ $message }}</p>

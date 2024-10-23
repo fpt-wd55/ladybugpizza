@@ -41,10 +41,10 @@
                             <div class="flex flex-wrap items-center gap-4 md:gap-8">
                                 @foreach ($attribute->values as $value)
                                     <div class="min-w-32">
-                                        <input checked class="peer hidden" id="option_{{ $value->id }}" name="attribute_{{ $attribute->id }}" required type="radio" value="{{ $value->value }}" />
-                                        <label class="label-peer flex flex-col items-center gap-2" for="option_{{ $value->id }}">
+                                        <input checked class="peer hidden" id="attribute_{{ $value->id }}" name="attributes[{{ $attribute->slug }}]" required type="radio" value="{{ $value->id }}" />
+                                        <label class="label-peer flex flex-col items-center gap-2" for="attribute_{{ $value->id }}">
                                             <p class="text-sm font-normal">{{ $value->value }}</p>
-                                            <p class="text-sm">+ {{ $value->price_type == 1 ? number_format($value->price) : number_format(($value->price * $product->price) / 100) }}đ</p>
+                                            <p class="text-sm">+ {{ number_format($value->price($product)) }}đ</p>
                                         </label>
                                     </div>
                                 @endforeach
@@ -60,7 +60,7 @@
                         <div class="grid grid-cols-2 gap-4">
                             @foreach ($toppings as $topping)
                                 <div>
-                                    <input class="peer hidden" id="{{ $topping->slug }}" name="toppings[]" type="checkbox" value="{{ $topping->slug }}">
+                                    <input class="peer hidden" id="{{ $topping->slug }}" name="toppings[]" type="checkbox" value="{{ $topping->id }}">
                                     <label class="flex w-full cursor-pointer items-center justify-start gap-2 overflow-hidden rounded-lg border border-gray-200 bg-white p-2 text-gray-700 transition hover:bg-gray-50 hover:text-gray-600 peer-checked:border-red-600 peer-checked:text-red-600 md:gap-4" for="{{ $topping->slug }}">
                                         <img alt="{{ $topping->name }}" class="h-16 w-16 flex-shrink-0 rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
                                         <div class="text-sm">
@@ -135,7 +135,7 @@
                 </div>
 
                 <div class="flex items-center justify-end gap-2">
-                    <a class="{{ $favorites->contains($product->id) ? 'button-red' : 'button-gray' }}" href="{{ route('client.product.post-favorite', $product->slug) }}" type="submit">
+                    <a class="{{ $favorites->contains($product->id) ? 'button-red' : 'button-light' }}" href="{{ route('client.product.post-favorite', $product->slug) }}" type="submit">
                         @svg('tabler-heart', 'md:me-2 icon-sm')
                         <span class="hidden md:block">
                             {{ $favorites->contains($product->id) ? 'Đã yêu thích' : 'Yêu thích' }}

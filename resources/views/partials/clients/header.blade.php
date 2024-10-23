@@ -198,7 +198,7 @@
                 <a class="button-red w-full" href="{{ route('auth.logout') }}">
                     Đăng xuất
                 </a>
-                <button class="button-gray w-full" data-modal-hide="logoutModal" type="button">
+                <button class="button-dark w-full" data-modal-hide="logoutModal" type="button">
                     Huỷ
                 </button>
             </div>

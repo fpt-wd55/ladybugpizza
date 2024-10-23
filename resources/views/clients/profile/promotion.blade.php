@@ -53,7 +53,7 @@
                             <div class="space-y-2 text-sm">
                                 <p class="font-medium">
                                     <span class="me-2 uppercase">AOHDJRNF</span>
-                                    <span class="badge-yellow inline-flex items-center">450 @svg('tabler-coins', 'icon-sm ms-2')</span>
+                                    <span class="badge-light inline-flex items-center">450 @svg('tabler-coins', 'icon-sm ms-2')</span>
                                 </p>
                                 <p>Giảm 20% cho đơn tối thiểu 300,000đ</p>
                                 <p>Giảm tối đa 30,000đ</p>

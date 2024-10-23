@@ -11,10 +11,6 @@
             <div class="card p-4 md:p-8 w-full min-h-screen">
                 <div class="flex items-center justify-between mb-8">
                     <h3 class="font-semibold uppercase">Cài đặt</h3>
-                    <button class="button-red">
-                        @svg('tabler-cloud-upload', 'icon-sm me-2')
-                        Lưu thay đổi
-                    </button>
                 </div>
 
                 {{-- Email notice --}}

@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\ProductAttribute;
 use App\Models\Topping;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
@@ -18,24 +19,21 @@ class CartSeeder extends Seeder
      */
     public function run(): void
     {
+        $now = Carbon::now();
+
         $users = User::all();
-        $carts = [
-            [
-                'user_id' => $users->random()->id,
-                'price' => rand(100, 500) * 1000,
-                'discount_price' => rand(100, 500) * 1000,
-            ],
-            [
-                'user_id' => $users->random()->id,
-                'price' => rand(100, 500) * 1000,
-                'discount_price' => rand(100, 500) * 1000,
-            ],
-            [
-                'user_id' => $users->random()->id,
-                'price' => rand(100, 500) * 1000,
-                'discount_price' => rand(100, 500) * 1000,
-            ],
-        ];
+
+        $carts = [];
+
+        foreach ($users as $user) {
+            $carts[] = [
+                'user_id' => $user->id,
+                'total' => rand(100, 500) * 1000,
+                'total_discount' => rand(100, 500) * 1000,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ];
+        }
 
         Cart::insert($carts);
     }
