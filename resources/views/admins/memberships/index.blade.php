@@ -35,14 +35,13 @@
                 <tbody>
                     {{-- star item --}}
                     @forelse ($memberships as $membership)
-                        {{-- @dd($membership) --}}
                         <tr class="border-b hover:bg-gray-100">
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap mt-3">
                                 <a class="shrink-0" href="{{ route('admin.memberships.edit', $membership) }}">
                                     <img loading="lazy"
                                         src="{{ asset('storage/uploads/avatars/' . $membership->user->avatar) }}"
-                                        class="img-circle img-sm lg:w-11 lg:h-11 mr-3 rounded border-2 hover:border-[#D30A0A] "
-                                        {{ $membership->avatar() }}>
+                                        class="img-circle img-sm lg:w-11 lg:h-11 mr-3 rounded border-2 hover:border-[#D30A0A]"
+                                        >
                                 </a>
                                 <a href="{{ route('admin.memberships.edit', $membership) }}" class="hover:text-[#D30A0A]">
                                     <div class="grid grid-flow-row">

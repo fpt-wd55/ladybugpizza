@@ -108,19 +108,21 @@ switch ($rank) {
                             <ul class="flex flex-wrap -mb-px" data-tabs-toggle="#history-points-membership" role="tablist">
                                 <li class="me-2" role="presentation">
                                     <button href="{{ route('admin.memberships.edit', [$membership, 'tab' => 'history']) }}"
-                                        class="inline-block px-4 pb-2 border-b-2 rounded-t-lg" id="all-tab"
-                                        data-tabs-target="#all" type="button" role="tab" aria-controls="all"
-                                        aria-selected="false">Tất cả lịch sử</button>
+                                        class="inline-block px-4 pb-2 border-b-2 rounded-t-lg hover:border-red-600 hover:text-red-600"
+                                        id="all-tab" data-tabs-target="#all" type="button" role="tab"
+                                        aria-controls="all" aria-selected="false">Tất cả lịch sử</button>
                                 </li>
                                 <li class="me-2" role="presentation">
-                                    <button class="inline-block px-4 pb-2 border-b-2 rounded-t-lg"
+                                    <button
+                                        class="inline-block px-4 pb-2 border-b-2 rounded-t-lg hover:border-red-600 hover:text-red-600"
                                         href=" {{ route('admin.memberships.edit', [$membership, 'tab' => 'receive']) }}"
                                         id="receive-tab" data-tabs-target="#receive" type="button" role="tab"
                                         aria-controls="receive" aria-selected="false">Lịch
                                         sử nhận</button>
                                 </li>
                                 <li class="me-2" role="presentation">
-                                    <button class="inline-block px-4 pb-2 border-b-2 rounded-t-lg"
+                                    <button
+                                        class="inline-block px-4 pb-2 border-b-2 rounded-t-lg hover:border-red-600 hover:text-red-600"
                                         href="{{ route('admin.memberships.edit', [$membership, 'tab' => 'change']) }}"
                                         id="exchange-tab" data-tabs-target="#exchange" type="button" role="tab"
                                         aria-controls="exchange" aria-selected="false">Lịch
@@ -135,12 +137,22 @@ switch ($rank) {
                                     @forelse ($histories['all'] as $item)
                                         <div class="product-card p-4 flex items-center justify-between">
                                             <div class="text-sm space-y-1">
-                                                <p class="font-medium">
-                                                    <span
-                                                        class="uppercase me-2 text-red-600">{{ $item->description }}</span>
-                                                    <span class="badge-yellow inline-flex items-center">
-                                                        @svg('tabler-coins', 'icon-sm ms-2')</span>
-                                                </p>
+                                                @if ($item->action == 'receive_points')
+                                                    <p class="font-medium">
+                                                        <span
+                                                            class="uppercase me-2 text-red-600">{{ $item->description }}</span>
+                                                        <span class="badge-yellow inline-flex items-center justify-center">
+                                                            @svg('tabler-coins', 'icon-sm')</span>
+                                                    </p>
+                                                @else
+                                                    <p class="font-medium">
+                                                        <span
+                                                            class="uppercase me-2 text-gray-600">{{ $item->description }}</span>
+                                                        <span class="badge-yellow inline-flex items-center justify-center">
+                                                            @svg('tabler-coins', 'icon-sm')</span>
+                                                    </p>
+                                                @endif
+
                                                 <p><span class="font-medium">Thời gian:</span> {{ $item->created_at }}</p>
                                             </div>
                                         </div>
@@ -161,8 +173,8 @@ switch ($rank) {
                                                 <p class="font-medium">
                                                     <span
                                                         class="uppercase me-2 text-red-600">{{ $item->description }}</span>
-                                                    <span class="badge-yellow inline-flex items-center">
-                                                        @svg('tabler-coins', 'icon-sm ms-2')</span>
+                                                    <span class="badge-yellow inline-flex items-center justify-center">
+                                                        @svg('tabler-coins', 'icon-sm')</span>
                                                 </p>
                                                 <p><span class="font-medium">Thời gian:</span> {{ $item->created_at }}</p>
                                             </div>
@@ -183,9 +195,9 @@ switch ($rank) {
                                             <div class="text-sm space-y-1">
                                                 <p class="font-medium">
                                                     <span
-                                                        class="uppercase me-2 text-red-600">{{ $item->description }}</span>
-                                                    <span class="badge-yellow inline-flex items-center">
-                                                        @svg('tabler-coins', 'icon-sm ms-2')</span>
+                                                        class="uppercase me-2 text-gray-600">{{ $item->description }}</span>
+                                                    <span class="badge-yellow inline-flex items-center justify-center">
+                                                        @svg('tabler-coins', 'icon-sm')</span>
                                                 </p>
                                                 <p><span class="font-medium">Thời gian:</span> {{ $item->created_at }}</p>
                                             </div>
