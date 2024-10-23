@@ -181,8 +181,8 @@ class UserController extends Controller
         $sheet->setCellValue('E1', 'Họ và tên');
         $sheet->setCellValue('F1', 'Số điện thoại');
         $sheet->setCellValue('G1', 'Ngày sinh');
-        $sheet->setCellValue('H1', 'Giới tính');
-        $sheet->setCellValue('I1', 'Trạng thái');
+        $sheet->setCellValue('H1', "Giới tính\n(1: Nam, 2: Nữ, 3: Khác)");
+        $sheet->setCellValue('I1', "Trạng thái\n(1: Hoạt động, 2: Khóa)");
         $sheet->setCellValue('J1', 'Ngày tạo');
         $sheet->setCellValue('K1', 'Ngày cập nhật');
         // In đậm tiêu đề
@@ -190,6 +190,8 @@ class UserController extends Controller
         // Tự động điều chỉnh độ rộng cột
         foreach (range('A', 'K') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
+            $sheet->getStyle($columnID)->getAlignment()->setVertical('center');
+            $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
         }
 
 
@@ -202,14 +204,8 @@ class UserController extends Controller
             $sheet->setCellValue('E' . $row, $user->fullname);
             $sheet->setCellValue('F' . $row, $user->phone);
             $sheet->setCellValue('G' . $row, $user->date_of_birth);
-            $genderMap = [
-                1 => 'Nam',
-                2 => 'Nữ',
-                3 => 'Khác'
-            ];
-            $gender = $genderMap[$user->gender] ?? 'Không xác định';
-            $sheet->setCellValue('H' . $row, $gender); 
-            $sheet->setCellValue('I' . $row, $user->status == 1 ? 'Hoạt động' : 'Khóa');
+            $sheet->setCellValue('H' . $row, $user->gender);
+            $sheet->setCellValue('I' . $row, $user->status);
             $sheet->setCellValue('J' . $row, $user->created_at);
             $sheet->setCellValue('K' . $row, $user->updated_at);
             $row++;
@@ -218,7 +214,7 @@ class UserController extends Controller
         $writer = new Xlsx($spreadsheet);
 
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="taikhoan.xlsx"');
+        header('Content-Disposition: attachment;filename="danhsachtaikhoan.xlsx"');
         header('Cache-Control: max-age=0');
 
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');

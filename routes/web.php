@@ -125,6 +125,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/carts', AdminCartController::class);
     // Product
     Route::resource('/products', AdminProductController::class);
+    Route::get('/product/export', [AdminProductController::class, 'export'])->name('products.export');
     Route::get('/product/trash', [AdminProductController::class, 'trash'])->name('trash-products');
     Route::post('/product/restore/{id}', [AdminProductController::class, 'restore'])->name('restore-product');
     Route::delete('/product/delete/{id}', [AdminProductController::class, 'forceDelete'])->name('delete-product');
