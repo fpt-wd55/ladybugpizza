@@ -147,6 +147,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::delete('/topping/delete/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
     // Categories
     Route::resource('/categories', CategoryController::class);
+    Route::get('/category/export', [CategoryController::class, 'export'])->name('categories.export');
     Route::get('/category/trash', [CategoryController::class, 'trashCategory'])->name('trash.listcate');
     Route::post('/category/restore/{id}', [CategoryController::class, 'trashRestore'])->name('trash.cateRestore');
     Route::post('/category/delete/{id}', [CategoryController::class, 'trashForce'])->name('trash.cateDelete');
