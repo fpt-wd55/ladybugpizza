@@ -171,53 +171,6 @@ class UserController extends Controller
 
     public function export()
     {
-        $users = User::all();
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', 'ID');
-        $sheet->setCellValue('B1', 'Tài khoản');
-        $sheet->setCellValue('C1', 'Vai trò');
-        $sheet->setCellValue('D1', 'Email');
-        $sheet->setCellValue('E1', 'Họ và tên');
-        $sheet->setCellValue('F1', 'Số điện thoại');
-        $sheet->setCellValue('G1', 'Ngày sinh');
-        $sheet->setCellValue('H1', "Giới tính\n(1: Nam, 2: Nữ, 3: Khác)");
-        $sheet->setCellValue('I1', "Trạng thái\n(1: Hoạt động, 2: Khóa)");
-        $sheet->setCellValue('J1', 'Ngày tạo');
-        $sheet->setCellValue('K1', 'Ngày cập nhật');
-        // In đậm tiêu đề
-        $sheet->getStyle('A1:K1')->getFont()->setBold(true);
-        // Tự động điều chỉnh độ rộng cột
-        foreach (range('A', 'K') as $columnID) {
-            $sheet->getColumnDimension($columnID)->setAutoSize(true);
-            $sheet->getStyle($columnID)->getAlignment()->setVertical('center');
-            $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
-        }
-
-
-        $row = 2;
-        foreach ($users as $user) {
-            $sheet->setCellValue('A' . $row, $user->id);
-            $sheet->setCellValue('B' . $row, $user->username);
-            $sheet->setCellValue('C' . $row, $user->role->name);
-            $sheet->setCellValue('D' . $row, $user->email);
-            $sheet->setCellValue('E' . $row, $user->fullname);
-            $sheet->setCellValue('F' . $row, $user->phone);
-            $sheet->setCellValue('G' . $row, $user->date_of_birth);
-            $sheet->setCellValue('H' . $row, $user->gender);
-            $sheet->setCellValue('I' . $row, $user->status);
-            $sheet->setCellValue('J' . $row, $user->created_at);
-            $sheet->setCellValue('K' . $row, $user->updated_at);
-            $row++;
-        }
-
-        $writer = new Xlsx($spreadsheet);
-
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="danhsachtaikhoan.xlsx"');
-        header('Cache-Control: max-age=0');
-
-        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $writer->save('php://output');
+        $this->exportExcel(User::all(), 'danhsachtaikhoan');
     }
 }
