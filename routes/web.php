@@ -132,6 +132,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/comment-products/{id}', [AdminProductController::class, 'listComment'])->name('comment-products');
     // Attribute
     Route::resource('/attributes', AttributeController::class);
+    Route::get('/attribute/export', [AttributeController::class, 'export'])->name('attributes.export');
     Route::get('/attribute/trash', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');
     Route::post('/attribute/restore/{id}', [AttributeController::class, 'restoreAttribute'])->name('restore-attribute');
     Route::delete('/attribute/delete/{id}', [AttributeController::class, 'deleteAttribute'])->name('delete-attribute');
