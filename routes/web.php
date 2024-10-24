@@ -138,6 +138,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::delete('/attribute/delete/{id}', [AttributeController::class, 'deleteAttribute'])->name('delete-attribute');
     // Combo
     Route::resource('/combos', ComboController::class);
+    Route::get('/combo/export', [ComboController::class, 'export'])->name('combos.export');
     Route::get('/combo/trash', [ComboController::class, 'trashCombo'])->name('trash-combos');
     Route::post('/combo/restore-/{id}', [ComboController::class, 'restoreCombo'])->name('restore-combo');
     Route::delete('/combo/delete/{id}', [ComboController::class, 'deleteCombo'])->name('delete-combo');
@@ -165,7 +166,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::post('/memberships/{membership}/status', [MembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
     // Đánh Giá
     Route::resource('/evaluations', EvaluationController::class);
-
+    Route::get('/evaluation/export', [EvaluationController::class, 'export'])->name('evaluations.export');
     Route::patch('/evaluations/update-status/{id}', [EvaluationController::class, 'updateStatus'])->name('evaluation.updateStatus');
     Route::resource('/transactions', TransactionController::class);
     Route::resource('/shippings', ShippingController::class);
