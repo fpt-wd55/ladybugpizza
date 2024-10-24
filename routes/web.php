@@ -164,6 +164,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::post('/banner/delete/{id}', [BannerController::class, 'trashForce'])->name('trash.bannerDelete');
     // Promotion
     Route::resource('/promotions', PromotionController::class);
+    Route::get('/promotion/export', [PromotionController::class, 'export'])->name('promotions.export');
     // Membership
     Route::resource('/memberships', MembershipController::class);
     Route::get('/membership/export', [MembershipController::class, 'export'])->name('memberships.export');

@@ -18,19 +18,20 @@
                     class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
                     @svg('tabler-file-export', 'w-4 h-4 mr-2')
                     Xuất dữ liệu
-                    </a>
+                </a>
             </div>
         </div>
         <div class="p-4 border-b bg-gray-50">
             <!-- Các tab điều hướng -->
             <ul class="flex">
                 <li class="me-6 min-w-fit">
-                    <a aria-current="page" class="inline-block rounded-t-lg border-b-2 border-red-600 pb-2 text-red-600" href="{{ route('admin.orders.index') }}">Tất cả</a>
+                    <a aria-current="page" class="inline-block rounded-t-lg border-b-2 border-red-600 pb-2 text-red-600"
+                        href="{{ route('admin.orders.index') }}">Tất cả</a>
                 </li>
                 @foreach ($orderStatuses as $status)
                     <li class="me-6 min-w-fit">
-                        <a aria-current="page" class="inline-block rounded-t-lg border-b-2 border-transparent pb-2" 
-                        href="{{ route('admin.orders.index', ['tab' => $status->slug]) }}">{{ $status->name }}</a>
+                        <a aria-current="page" class="inline-block rounded-t-lg border-b-2 border-transparent pb-2"
+                            href="{{ route('admin.orders.index', ['tab' => $status->slug]) }}">{{ $status->name }}</a>
                     </li>
                 @endforeach
             </ul>
@@ -205,7 +206,8 @@
                                                 </div>
                                                 <div>
                                                     <label class="font-semibold">Tổng tiền thanh toán</label>
-                                                    <p>{{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ</p>
+                                                    <p>{{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ
+                                                    </p>
                                                 </div>
                                             </div>
                                             <div class="flex justify-end">
