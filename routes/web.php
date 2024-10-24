@@ -121,7 +121,10 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/user/export', [UserController::class, 'export'])->name('users.export');
     // Address
     Route::resource('/addresses', AddressController::class);
+    // Order
     Route::resource('/orders', AdminOrderController::class);
+    Route::get('/order/export', [AdminOrderController::class, 'export'])->name('orders.export');
+
     Route::resource('/carts', AdminCartController::class);
     // Product
     Route::resource('/products', AdminProductController::class);
