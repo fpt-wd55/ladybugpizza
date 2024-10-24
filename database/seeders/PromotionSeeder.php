@@ -24,7 +24,7 @@ class PromotionSeeder extends Seeder
 
         for ($i = 0; $i < 100; $i++) {
             $discount_type = rand(1, 2);
-            $discount_value = $discount_type == 1 ? rand(1, 100) : rand(50000, 100000);
+            $discount_value = $discount_type == 1 ? rand(10, 50) : rand(50000, 100000);
 
             $now = Carbon::now();
             $is_global = rand(1, 2);
@@ -32,7 +32,7 @@ class PromotionSeeder extends Seeder
             // Tạo mới một khuyến mãi
             $promotion = Promotion::create([
                 'code' => Str::random(8),
-                'description' => $faker->sentence,
+                'points' => rand(1, 10) * 50,
                 'discount_type' => $discount_type,
                 'discount_value' => $discount_value,
                 'start_date' => $now,

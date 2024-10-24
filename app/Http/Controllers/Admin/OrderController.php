@@ -79,4 +79,7 @@ class OrderController extends Controller
 
         return redirect()->route('admin.orders.edit', $id)->with('success', 'Trạng thái đã được cập nhật!');
     } 
+    public function export(){
+        $this->exportExcel(Order::all(), 'danhsachdonhang');
+    }
 }
