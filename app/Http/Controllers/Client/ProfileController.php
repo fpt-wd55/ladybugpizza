@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\ContactRequest;
 use App\Models\Address;
+use App\Models\Promotion;
+use App\Models\PromotionUser;
 use App\Models\User;
 use GuzzleHttp\Client;
 use App\Http\Requests\ChangeRequest;
@@ -184,10 +186,32 @@ class ProfileController extends Controller
 	}
 
 	public function promotion()
-	{
-		// Code cua huyen o day
-		return view('clients.profile.promotion');
-	}
+{
+   
+    $tab = request()->query('tab', 'my-code');
+
+    if ($tab === 'my-code') {
+      
+        $promotions = PromotionUser::where('user_id', Auth::user()->id)
+            ->with('promotion') 
+            ->paginate(10);
+
+    } elseif ($tab == 'redeem-code') {
+       
+		$promotions = Promotion::where('status', 1) 
+		->where('is_global', 1) 
+		->when(request('rank_id'), function ($query) {
+			return $query->where('rank_id', request('rank_id'));
+		})
+		->paginate(10);
+    } else {
+ 
+        $promotions = collect();
+    }
+
+    return view('clients.profile.promotion', compact('promotions', 'tab'));
+}
+
 	
 	public function addLocation()
 	{
