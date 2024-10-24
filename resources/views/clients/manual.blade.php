@@ -25,12 +25,9 @@
                     <p class="text-center italic text-sm">Mô tả hình ảnh</p>
                 </div>
             </div>
-
             {{-- Bước 2A --}}
             <div class="mb-4">
-                <h3 class="font-semibold text-xs md:text-sm mb-4">Bước 2A: Chọn sản phẩm cho khuyến mãi hoặc chọn sản
-                    phẩm
-                    riêng lẻ nguyên giá</h3>
+                <h3 class="font-semibold text-xs md:text-sm mb-4">Bước 2A: Chọn sản phẩm cho khuyến mãi hoặc chọn sản phẩm riêng lẻ nguyên giá</h3>
                 <div class="text-sm ps-4 leading-loose tracking-wide mb-4">
                     <ul class="list-disc ps-4">
                         <li>Chọn trực tiếp các Chương trình Khuyến mãi phù hợp trên Trang chủ.</li>
