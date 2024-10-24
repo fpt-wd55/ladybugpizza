@@ -121,7 +121,10 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/user/export', [UserController::class, 'export'])->name('users.export');
     // Address
     Route::resource('/addresses', AddressController::class);
+    // Order
     Route::resource('/orders', AdminOrderController::class);
+    Route::get('/order/export', [AdminOrderController::class, 'export'])->name('orders.export');
+
     Route::resource('/carts', AdminCartController::class);
     // Product
     Route::resource('/products', AdminProductController::class);
@@ -132,16 +135,19 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/comment-products/{id}', [AdminProductController::class, 'listComment'])->name('comment-products');
     // Attribute
     Route::resource('/attributes', AttributeController::class);
+    Route::get('/attribute/export', [AttributeController::class, 'export'])->name('attributes.export');
     Route::get('/attribute/trash', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');
     Route::post('/attribute/restore/{id}', [AttributeController::class, 'restoreAttribute'])->name('restore-attribute');
     Route::delete('/attribute/delete/{id}', [AttributeController::class, 'deleteAttribute'])->name('delete-attribute');
     // Combo
     Route::resource('/combos', ComboController::class);
+    Route::get('/combo/export', [ComboController::class, 'export'])->name('combos.export');
     Route::get('/combo/trash', [ComboController::class, 'trashCombo'])->name('trash-combos');
     Route::post('/combo/restore-/{id}', [ComboController::class, 'restoreCombo'])->name('restore-combo');
     Route::delete('/combo/delete/{id}', [ComboController::class, 'deleteCombo'])->name('delete-combo');
     // Topping
     Route::resource('/toppings', ToppingController::class);
+    Route::get('/topping/export', [ToppingController::class, 'export'])->name('toppings.export');
     Route::get('/topping/trash', [ToppingController::class, 'trashTopping'])->name('trash-topping');
     Route::get('/topping/restore/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
     Route::delete('/topping/delete/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
@@ -158,13 +164,14 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::post('/banner/delete/{id}', [BannerController::class, 'trashForce'])->name('trash.bannerDelete');
     // Promotion
     Route::resource('/promotions', PromotionController::class);
+    Route::get('/promotion/export', [PromotionController::class, 'export'])->name('promotions.export');
     // Membership
     Route::resource('/memberships', MembershipController::class);
     Route::get('/membership/export', [MembershipController::class, 'export'])->name('memberships.export');
     Route::post('/memberships/{membership}/status', [MembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
     // Đánh Giá
     Route::resource('/evaluations', EvaluationController::class);
-
+    Route::get('/evaluation/export', [EvaluationController::class, 'export'])->name('evaluations.export');
     Route::patch('/evaluations/update-status/{id}', [EvaluationController::class, 'updateStatus'])->name('evaluation.updateStatus');
     Route::resource('/transactions', TransactionController::class);
     Route::resource('/shippings', ShippingController::class);

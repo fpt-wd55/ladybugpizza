@@ -76,4 +76,7 @@ class PromotionController extends Controller
         $promotion->delete();
         return back()->with('message', 'Xóa thành công');
     }
+    public function export() {
+        $this->exportExcel(Promotion::all(), 'danhsachmagiamgia');
+    }
 }
