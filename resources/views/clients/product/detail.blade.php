@@ -34,7 +34,7 @@
                 <div class="col-span-5 md:col-span-3">
                     @foreach ($attributes as $attribute)
                         <div class="mb-8">
-                            <p class="mb-4 font-normal">
+                            <p class="mb-4 font-medium text-lg">
                                 <span class="text-red-500">*</span>
                                 {{ $attribute->name }}
                             </p>
@@ -43,7 +43,7 @@
                                     <div class="min-w-32">
                                         <input {{ $index === 0 ? 'checked' : '' }} class="peer hidden" id="attribute_{{ $value->id }}" name="attributes[{{ $attribute->slug }}]" required type="radio" value="{{ $value->id }}" />
                                         <label class="label-peer flex flex-col items-center gap-2" for="attribute_{{ $value->id }}">
-                                            <p class="text-sm font-normal">{{ $value->value }}</p>
+                                            <p class="text-sm font-medium">{{ $value->value }}</p>
                                             <p class="text-sm">+ {{ number_format($value->price($product)) }}đ</p>
                                         </label>
                                     </div>
@@ -54,7 +54,7 @@
 
                     {{-- toppings --}}
                     <div class="mb-8">
-                        <p class="mb-4 font-normal">
+                        <p class="mb-4 font-medium text-lg">
                             Hương vị đậm đà hơn với topping tuỳ chỉnh
                         </p>
                         <div class="grid grid-cols-2 gap-4">
@@ -64,7 +64,7 @@
                                     <label class="flex w-full cursor-pointer items-center justify-start gap-2 overflow-hidden rounded-lg border border-gray-200 bg-white p-2 text-gray-700 transition hover:bg-gray-50 hover:text-gray-600 peer-checked:border-red-600 peer-checked:text-red-600 md:gap-4" for="{{ $topping->slug }}">
                                         <img alt="{{ $topping->name }}" class="h-16 w-16 flex-shrink-0 rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
                                         <div class="text-sm">
-                                            <p class="mb-2 font-semibold">{{ $topping->name }}</p>
+                                            <p class="mb-2 font-medium">{{ $topping->name }}</p>
                                             <p>+ {{ number_format($topping->price) }} đ</p>
                                         </div>
                                     </label>

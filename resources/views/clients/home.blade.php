@@ -8,7 +8,7 @@
         <div class="relative flex min-h-[calc(100vh-48px)] flex-col-reverse items-center justify-center gap-16 overflow-hidden bg-gray-100 p-8 transition md:px-32 lg:flex-row lg:justify-between lg:px-40">
             <div class="z-10 text-center lg:text-left">
                 <p class="vujahday-script-regular mb-8 text-6xl">Ladybug Pizza</p>
-                <p class="mb-8 uppercase text-gray-700">Thưởng thức pizza ngon lành bổ dưỡng của bạn</p>
+                <p class="mb-12 uppercase text-gray-700">Thưởng thức pizza ngon lành bổ dưỡng của bạn</p>
                 <a class="button-primary" href="{{ route('client.product.menu') }}">Thực đơn</a>
             </div>
             <div class="z-10 w-60 flex-shrink-0 transition md:w-[400px] lg:w-[520px]">
