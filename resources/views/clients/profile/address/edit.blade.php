@@ -47,6 +47,7 @@
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Xã/Phường:*</label>
                     <select name="ward" id="ward" class="input">
                         <option value="">Chọn xã/phường</option>
+                        <option value="{{ $address['ward'] }}" selected>{{ $address['ward'] }}</option>
                     </select>
                     @error('ward')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
