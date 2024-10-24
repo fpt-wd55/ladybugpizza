@@ -159,6 +159,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/promotions', PromotionController::class);
     // Membership
     Route::resource('/memberships', MembershipController::class);
+    Route::get('/membership/export', [MembershipController::class, 'export'])->name('memberships.export');
     Route::post('/memberships/{membership}/status', [MembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
     // Đánh Giá
     Route::resource('/evaluations', EvaluationController::class);

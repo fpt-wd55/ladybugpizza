@@ -102,4 +102,9 @@ class MembershipController extends Controller
         // Trả về view với dữ liệu của thành viên, rank, và progress,history,tab
         return view('admins.memberships.edit', compact('membership', 'progress', 'img', 'rank', 'histories'));
     }
+    public function export()
+    {
+        $memberships = Membership::all();
+        $this->exportExcel($memberships, 'danhsachdiemthanhvien');
+    }
 }
