@@ -56,8 +56,16 @@ class OrderController extends Controller
         ]);
     }
 
-    public function postCancel()
+    public function postCancel(Order $order)
     {
+        $order = Order::query()->findOrFail($order['id']);
+        if ($order) {
+        $order->order_status_id = 6;
+        $order->save();
+
+        return redirect()->back()->with('success','Hủy đơn hàng thành công');
+        }
+        return redirect()->back()->with('error','Hủy đơn hàng thất bại'); 
     }
 
     public function rate()
