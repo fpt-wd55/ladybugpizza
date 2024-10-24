@@ -2,23 +2,40 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
-use App\Models\Invoice;
+use App\Models\User;
 use App\Models\Order;
+use App\Models\Invoice;
 use App\Models\OrderItem;
 use App\Models\OrderStatus;
 use App\Models\Transaction;
-use App\Models\User;
-
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orderStatuses = OrderStatus::all();
+        $status = $request->get('tab');
 
+        $userId = Auth::id(); 
+    
+        $orders = Order::when($status, function ($query, $status) {
+            return $query->whereHas('orderStatus', function ($q) use ($status) {
+                $q->where('slug', $status);
+            });
+        })
+        ->where('user_id', $userId) 
+        ->with('orderItems.productAttributes.product', 'orderItems.toppings')
+        ->paginate(10);
+
+        $orderStatuses = OrderStatus::all();
+        $invoices = Invoice::all();
+        
         return view('clients.order.index', [
             'orderStatuses' => $orderStatuses,
+            'invoices' => $invoices,
+            'orders'=> $orders,
         ]);
     }
 
