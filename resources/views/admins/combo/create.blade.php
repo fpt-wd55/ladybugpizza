@@ -152,7 +152,6 @@
                                     $key = 0;
                                 @endphp
                                 @if (request()->old('stocks'))
-                                    {{-- @foreach (request()->old('stocks') as $key => $stock) --}}
                                     <tr>
                                         <td class="border px-4 py-2" colspan="3">
                                             <div class="grid grid-cols-1 gap-3 md:grid-cols-6">
@@ -189,7 +188,6 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    {{-- @endforeach --}}
                                 @else
                                     <tr>
                                         <td class="border px-4 py-2" colspan="3">
