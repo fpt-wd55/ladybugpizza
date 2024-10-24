@@ -8,15 +8,16 @@
             {{-- Sản phẩm --}}
             <div class="col-span-3">
 
-                {{-- Categories --}}
+                {{-- Danh mục --}}
                 <div class="mt-12 py-8 text-center">
                     <p class="vujahday-script-regular mb-6 text-center text-6xl">Menu</p>
-                    <p class="mb-12 uppercase text-gray-500">Ngon đến từng miếng, đậm vị yêu thương</p>
+                    <p class="playwrite-gb-s-regular mb-12 text-sm uppercase text-gray-500">Ngon đến từng miếng, đậm vị yêu thương</p>
                     @include('partials.clients.categories')
                 </div>
-                {{-- combo --}}
-                <div class="mb-8">
-                    {{-- <p class="font-semibold uppercase mb-4">Combo</p> --}}
+
+                {{-- Combo --}}
+                <div class="mb-16">
+                    <p class="playwrite-gb-s-regular mb-8 text-2xl">Combo</p>
                     <div class="no-scrollbar flex w-full items-center gap-4 overflow-x-auto">
                         @foreach ($combos as $combo)
                             <a class="product-card relative flex w-full flex-shrink-0 overflow-hidden md:w-2/3" href="">
@@ -39,15 +40,15 @@
                 </div>
 
                 {{-- products --}}
-                <div class="mb-8">
+                <div class="mb-16">
                     @foreach ($categories as $category)
                         @if ($category->id == 7)
                             @continue
                         @endif
 
-                        <p class="mb-4 font-semibold uppercase" id="{{ $category->slug }}">{{ $category->name }}</p>
+                        <p class="playwrite-gb-s-regular mb-8 text-2xl" id="{{ $category->slug }}">{{ $category->name }}</p>
 
-                        <div class="mb-8 grid grid-cols-2 gap-4 lg:mb-16 lg:grid-cols-3">
+                        <div class="mb-16 grid grid-cols-2 gap-4 lg:grid-cols-3">
                             @foreach ($products as $product)
                                 @if ($product->category_id == $category->id)
                                     <a class="product-card overflow-hidden md:flex" href="{{ route('client.product.show', $product->slug) }}">
@@ -80,4 +81,5 @@
             </div>
         </div>
     </div>
+
 @endsection

@@ -44,6 +44,14 @@ html {
     font-style: normal;
 }
 
+.playwrite-gb-s-regular {
+    font-family: "Playwrite GB S", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+
 /* flowbite components */
 
 .transition {
