@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('promotions', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
-            $table->string('description');
+            $table->integer('points')->default(0);
             $table->integer('discount_type')->default(1)->comment('1: percent, 2: amount');
             $table->integer('discount_value');
             $table->dateTime('start_date');
