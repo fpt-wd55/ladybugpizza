@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use dvhcvn;
 use Illuminate\Support\Facades\Storage;
+use App\Models\UserSetting;
 
 class ProfileController extends Controller
 {
@@ -182,7 +183,45 @@ class ProfileController extends Controller
 
 	public function settings()
 	{
-		return view('clients.profile.settings');
+		// Lấy thông tin cài đặt của người dùng hiện tại
+		$userSetting = UserSetting::where('user_id', auth()->id())->first();
+
+		// Nếu không tìm thấy cài đặt, có thể tạo mới hoặc xử lý theo ý bạn
+		if (!$userSetting) {
+			$userSetting = new UserSetting(); // Tạo một đối tượng mới nếu không tìm thấy
+			$userSetting->email_order = true; // Giá trị mặc định
+			$userSetting->email_promotions = true; // Giá trị mặc định
+			$userSetting->email_security = true; // Giá trị mặc định
+			$userSetting->push_order = true; // Giá trị mặc định
+			$userSetting->push_promotions = true; // Giá trị mặc định
+			$userSetting->push_security = true; // Giá trị mặc định
+		}
+
+		return view('clients.profile.settings', compact('userSetting'));
+	}
+	public function updateStatus(Request $request, string $id)
+	{
+		// Tìm cài đặt dựa trên ID
+		$settings = UserSetting::query()->findOrFail($id);
+
+		if ($settings) {
+			// Cập nhật các giá trị dựa trên request
+			$settings->email_order = $request->has('email_order') ? 1 : 0;
+			$settings->email_promotions = $request->has('email_promotions') ? 1 : 0;
+			$settings->email_security = $request->has('email_security') ? 1 : 0;
+			$settings->push_order = $request->has('push_order') ? 1 : 0;
+			$settings->push_promotions = $request->has('push_promotions') ? 1 : 0;
+			$settings->push_security = $request->has('push_security') ? 1 : 0;
+
+			// Lưu cài đặt
+			$settings->save();
+
+			// Trả về thông báo thành công
+			return redirect()->back()->with('success', 'Cài đặt đã được cập nhật!');
+		}
+
+		// Trả về thông báo lỗi nếu không tìm thấy cài đặt
+		return redirect()->back()->with('error', 'Thay đổi trạng thái thất bại');
 	}
 
 	public function promotion()
@@ -214,7 +253,7 @@ class ProfileController extends Controller
 		// $countMyPromotion = 
 		return view('clients.profile.promotion', compact('promotions', 'tab'));
 	}
-
+  
 	public function redeemPromotion($id)
 	{	
 		// code ở đây
@@ -227,8 +266,7 @@ class ProfileController extends Controller
 
 		return back()->with('success', 'Mã giảm giá đã được sử dụng');
 	}
-
-
+  
 	public function addLocation()
 	{
 		return view('clients.profile.address.add');
@@ -310,8 +348,6 @@ class ProfileController extends Controller
 	{
 		return view('clients.profile.address.edit', compact('address'));
 	}
-
-
 
 	private function getAddressNamesByCodes($provinceCode, $districtCode, $wardCode)
 	{
