@@ -412,3 +412,9 @@ html {
 button[aria-selected="true"] {
     @apply border-[#D30A0A] text-[#D30A0A];
 }
+
+.comfortable {
+    @apply leading-loose tracking-wider
+}
+
+

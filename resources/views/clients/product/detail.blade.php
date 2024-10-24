@@ -26,7 +26,7 @@
                             </div>
                             <p>({{ $product->avg_rating }})</p>
                         </div>
-                        {!! $product->description !!}
+                        <p class="comfortable pe-8">{{ $product->description }}</p>
                     </div>
                 </div>
 
