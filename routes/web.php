@@ -144,6 +144,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::delete('/combo/delete/{id}', [ComboController::class, 'deleteCombo'])->name('delete-combo');
     // Topping
     Route::resource('/toppings', ToppingController::class);
+    Route::get('/topping/export', [ToppingController::class, 'export'])->name('toppings.export');
     Route::get('/topping/trash', [ToppingController::class, 'trashTopping'])->name('trash-topping');
     Route::get('/topping/restore/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
     Route::delete('/topping/delete/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
