@@ -138,4 +138,7 @@ class BannerController extends Controller
             return redirect()->back()->with('error', 'Banner khôi phục thất bại');
         }
     }
+    public function export(){
+        $this->exportExcel(Banner::all(), 'danhsachbanner');
+    }
 }

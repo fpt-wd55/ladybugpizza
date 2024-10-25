@@ -161,6 +161,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::post('/category/delete/{id}', [CategoryController::class, 'trashForce'])->name('trash.cateDelete');
     // Banner
     Route::resource('/banners', BannerController::class);
+    Route::get('/banner/export', [BannerController::class, 'export'])->name('banners.export');
     Route::get('/banner/trash', [BannerController::class, 'trashList'])->name('trash.listBanner');
     Route::post('/banner/restore/{id}', [BannerController::class, 'trashRestore'])->name('trash.bannerRestore');
     Route::post('/banner/delete/{id}', [BannerController::class, 'trashForce'])->name('trash.bannerDelete');
