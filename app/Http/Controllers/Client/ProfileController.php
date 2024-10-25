@@ -239,57 +239,52 @@ class ProfileController extends Controller
 		return view('clients.profile.promotionUser', compact('promotionUsers', 'totalPromotionUser'));
 	}
 
-	public function promotion()
-	{
+	// public function promotion()
+	// {
+	// 	$myCodes = PromotionUser::where('user_id', Auth::id())
+	// 		->with('promotion')
+	// 		->paginate(10);
 
-		$myCodes = Promotion::where('status', 1)
-			->where('is_global', 1)
-			->when(request('rank_id'), function ($query) {
-				return $query->where('rank_id', request('rank_id'));
-			})
-			->paginate(10);
+	// 	$redeemCodes = Promotion::where('status', 1)
+	// 		->when(request('rank_id'), function ($query) {
+	// 			return $query->where('rank_id', request('rank_id'));
+	// 		})
+	// 		->count();
 
-		$totalPromotions = Promotion::where('status', 1)
-			->where('is_global', 1)
-			->when(request('rank_id'), function ($query) {
-				return $query->where('rank_id', request('rank_id'));
-			})
-			->count();
+	// 	$currentPoint = Auth::user()->membership->points ?? 0;
 
-		$currentPoint = Auth::user()->membership->points;
+	// 	return view('clients.profile.promotion', [
+	// 		'promotions' => $myCodes,
+	// 		'totalPromotions' => $totalPromotions,
+	// 		'currentPoint' => $currentPoint,
+	// 	]);
+	// }
 
-		return view('clients.profile.promotion', [
-			'promotions' => $promotions,
-			'totalPromotions' => $totalPromotions,
-			'currentPoint' => $currentPoint,
-		]);
-	}
+	// public function redeemPromotion($id)
+	// {
+	// 	$user = Auth::user();
+	// 	$promotion = Promotion::findOrFail($id);
 
-	public function redeemPromotion($id)
-	{
-		$user = Auth::user();
-		$promotion = Promotion::findOrFail($id);
+	// 	if ($user->membership->points < $promotion->points) {
+	// 		return back()->with('error', 'Bạn không đủ điểm để đổi mã giảm giá này.');
+	// 	}
 
-		if ($user->membership->points < $promotion->points) {
-			return back()->with('error', 'Bạn không đủ điểm để đổi mã giảm giá này.');
-		}
+	// 	if ($promotion->quantity <= 0) {
+	// 		return back()->with('error', 'Mã giảm giá đã hết.');
+	// 	}
 
-		if ($promotion->quantity <= 0) {
-			return back()->with('error', 'Mã giảm giá đã hết.');
-		}
+	// 	$user->membership->points -= $promotion->points;
+	// 	$promotion->quantity -= 1;
 
-		$user->membership->points -= $promotion->points;
-		$promotion->quantity -= 1;
+	// 	try {
+	// 		Membership::where('user_id', $user->id)->update(['points' => $user->membership->points]);
+	// 		$promotion->save();
+	// 	} catch (\Exception $e) {
+	// 		return back()->with('error', 'Đã có lỗi xảy ra.');
+	// 	}
 
-		try {
-			Membership::where('user_id', $user->id)->update(['points' => $user->membership->points]);
-			$promotion->save();
-		} catch (\Exception $e) {
-			return back()->with('error', 'Đã có lỗi xảy ra.');
-		}
-
-		return back()->with('success', 'Bạn đã đổi mã giảm giá thành công');
-	}
+	// 	return back()->with('success', 'Bạn đã đổi mã giảm giá thành công');
+	// }
 
 	public function addLocation()
 	{

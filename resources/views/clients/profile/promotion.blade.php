@@ -20,14 +20,13 @@
                                 giảm giá của tôi (13)</a>
                         </li>
                         <li class="me-2">
-                            <a class="{{ request('tab') == 'redeem-code' ? 'border-b-red-600 text-red-600' : '' }} inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2"
-                                href="{{ route('client.profile.promotion', ['tab' => 'redeem-code']) }}">Đổi
+                            <a class="{{ request('tab') == 'redeem-code' ? 'border-b-red-600 text-red-600' : '' }} inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2" href="{{ route('client.profile.promotion', ['tab' => 'redeem-code']) }}">Đổi
                                 mã giảm giá ({{ $totalPromotions }})</a>
                         </li>
                     </ul>
                 </div>
 
-                <p class="text-sm mb-8">Bạn đang có: {{ $currentPoint }} điểm</p>
+                <p class="mb-8 text-sm">Bạn đang có: {{ $currentPoint }} điểm</p>
 
                 {{-- redeem-code --}}
                 <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
