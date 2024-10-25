@@ -21,7 +21,7 @@
     </div>
 
     <!-- Chat Container -->
-    <div class="pr-4 h-[474px] block overflow-y-auto no-scrollbar min-w-full">
+    {{-- <div class="pr-4 h-[474px] block overflow-y-auto no-scrollbar min-w-full">
         @for ($i = 0; $i < 10; $i++)
             <div class="flex items-start gap-2.5 my-5">
                 <img class="w-8 h-8 rounded-full" src="https://blade-ui-kit.com/images/icon.svg">
@@ -50,7 +50,7 @@
                 <img class="w-8 h-8 rounded-full" src="https://blade-ui-kit.com/images/icon.svg">
             </div>
         @endfor
-    </div>
+    </div> --}}
     <!-- Input box  -->
     <div class="flex items-center pt-0">
         <form class="flex items-center justify-center w-full space-x-2">

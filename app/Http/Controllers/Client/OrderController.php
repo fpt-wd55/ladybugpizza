@@ -56,8 +56,28 @@ class OrderController extends Controller
         ]);
     }
 
-    public function postCancel()
+    public function postCancel(Order $order , Request $request)
     {
+        $order = Order::query()->findOrFail($order['id']);
+        $reasons = [
+            1 => 'Muốn thay đổi địa chỉ giao hàng',
+            2 => 'Muốn nhập/thay đổi mã Voucher',
+            3 => 'Muốn thay đổi sản phẩm trong đơn hàng (size, topping, số lượng,...)',
+            4 => 'Thủ tục thanh toán quá rắc rối',
+            5 => 'Tìm thấy giá rẻ hơn ở chỗ khác',
+            6 => 'Đổi ý, không muốn mua nữa',
+            7 => $request->input('reason'), // lý do khác
+        ];
+        if ($order) {
+            $selectedReason = $request->input('canceled_reason');
+            $order->canceled_reason = isset($reasons[$selectedReason]) ? $reasons[$selectedReason] : null;
+            $order->order_status_id = 6; 
+            $order->save();
+    
+            return redirect()->back()->with('success', 'Hủy đơn hàng thành công');
+        }
+    
+        return redirect()->back()->with('error', 'Hủy đơn hàng thất bại');
     }
 
     public function rate()

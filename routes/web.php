@@ -59,7 +59,7 @@ Route::prefix('/')->group(function () {
     Route::post('/checkout', [CartController::class, 'postCheckout'])->name('client.cart.post-checkout');
     Route::get('/order', [OrderController::class, 'index'])->name('client.order.index');
     Route::get('/order/{order}/invoice}', [OrderController::class, 'invoice'])->name('client.order.invoice');
-    Route::post('/order/{order}/cancel}', [OrderController::class, 'postCancel'])->name('client.order.cancel');
+    Route::patch('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
     Route::post('/order/{order}/rate}', [OrderController::class, 'postRate'])->name('client.order.rate');
     Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile.index');
     Route::put('/profile/update', [ProfileController::class, 'postUpdate'])->name('client.profile.post-update');
@@ -161,6 +161,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::post('/category/delete/{id}', [CategoryController::class, 'trashForce'])->name('trash.cateDelete');
     // Banner
     Route::resource('/banners', BannerController::class);
+    Route::get('/banner/export', [BannerController::class, 'export'])->name('banners.export');
     Route::get('/banner/trash', [BannerController::class, 'trashList'])->name('trash.listBanner');
     Route::post('/banner/restore/{id}', [BannerController::class, 'trashRestore'])->name('trash.bannerRestore');
     Route::post('/banner/delete/{id}', [BannerController::class, 'trashForce'])->name('trash.bannerDelete');
