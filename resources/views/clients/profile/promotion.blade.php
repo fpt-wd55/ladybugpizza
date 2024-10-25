@@ -19,90 +19,46 @@
                                 giảm giá của tôi (13)</a>
                         </li>
                         <li class="me-2">
-                            <a class="{{ request('tab') == 'redeem-code' ? 'border-b-red-600 text-red-600' : '' }} inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2" href="{{ route('client.profile.promotion', ['tab' => 'redeem-code']) }}">Đổi
-                                mã giảm giá</a>
+                            <a class="{{ request('tab') == 'redeem-code' ? 'border-b-red-600 text-red-600' : '' }} inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2"
+                                href="{{ route('client.profile.promotion', ['tab' => 'redeem-code']) }}">Đổi
+                                mã giảm giá ({{ $totalPromotions }})</a>
                         </li>
                     </ul>
                 </div>
 
-                {{-- my-code --}}
-                @switch($tab)
-                    @case(null)
-                    @case('my-code')
-                        <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-                            @foreach ($promotions as $promotion)
-                                <div class="product-card flex items-start justify-between p-4">
-                                    <div class="space-y-2 text-sm">
-                                        <p class="font-medium">
-                                            <span class="code me-2 uppercase">{{ $promotion->promotion->code }}</span>
-                                        </p>
-                                        <p>Giảm {{ $promotion->promotion->discount_type == 1 ? $promotion->promotion->discount_value . '%' : number_format($promotion->promotion->discount_value) . 'đ' }} cho đơn tối thiểu {{ number_format($promotion->promotion->min_order_total) }} đ</p>
-                                        <p>Giảm tối đa {{ number_format($promotion->promotion->max_discount) }} đ</p>
-                                        <p>Có hiệu lực từ <span class="font-medium">{{ $promotion->promotion->start_date }}</span> đến
-                                            <span class="font-medium">{{ $promotion->promotion->end_date }}</span>
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <button class="button-red copy-btn">
-                                            @svg('tabler-copy', 'icon-sm')
-                                        </button>
-                                    </div>
+                {{-- redeem-code --}}
+                <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+                    @foreach ($promotions as $promotion)
+                        <div class="product-card flex items-start justify-between p-4">
+                            <div class="space-y-2 text-sm">
+                                <p class="font-medium">
+                                    <span class="me-2 uppercase">{{ $promotion->code }}</span>
+                                    <span class="badge-light inline-flex items-center">{{ $promotion->points }}
+                                        @svg('tabler-coins', 'icon-sm ms-2')</span>
+                                </p>
+                                <p>Giảm
+                                    {{ $promotion->discount_type == 1 ? $promotion->discount_value . '%' : number_format($promotion->discount_value) . 'đ' }}
+                                    cho đơn tối thiểu {{ number_format($promotion->min_order_total) }} đ</p>
+                                <p>Giảm tối đa {{ number_format($promotion->max_discount) }} đ</p>
+                                <p>Có hiệu lực từ <span class="font-medium">{{ $promotion->start_date }}</span> đến
+                                    <span class="font-medium">{{ $promotion->end_date }}</span>
+                                </p>
+                            </div>
+                            <form action="{{ route('client.profile.redeem-promotion', $promotion->id) }}" method="POST">
+                                @csrf
+                                <div>
+                                    <button class="button-red">
+                                        Lưu
+                                    </button>
                                 </div>
-                            @endforeach
+                            </form>
                         </div>
-                        <div class="p-1">
-                            {{ $promotions->links() }}
-                        </div>
-                    @break
-
-                    {{-- redeem-code --}}
-                    @case('redeem-code')
-                        <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-                            @foreach ($promotions as $promotion)
-                                <div class="product-card flex items-start justify-between p-4">
-                                    <div class="space-y-2 text-sm">
-                                        <p class="font-medium">
-                                            <span class="me-2 uppercase">{{ $promotion->code }}</span>
-                                            <span class="badge-light inline-flex items-center">{{ $promotion->points }} @svg('tabler-coins', 'icon-sm ms-2')</span>
-                                        </p>
-                                        <p>Giảm {{ $promotion->discount_type == 1 ? $promotion->discount_value . '%' : number_format($promotion->discount_value) . 'đ' }} cho đơn tối thiểu {{ number_format($promotion->min_order_total) }} đ</p>
-                                        <p>Giảm tối đa {{ number_format($promotion->max_discount) }} đ</p>
-                                        <p>Có hiệu lực từ <span class="font-medium">{{ $promotion->start_date }}</span> đến
-                                            <span class="font-medium">{{ $promotion->end_date }}</span>
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <button class="button-red">
-                                            Lưu
-                                        </button>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div class="p-1">
-                            {{ $promotions->links() }}
-                        </div>
-                    @break
-
-                    @default
-                        <div>
-                            khoong tim thay trang
-                        </div>
-                @endswitch
-
+                    @endforeach
+                </div>
+                <div class="p-1">
+                    {{ $promotions->links() }}
+                </div>
             </div>
-
         </div>
     </div>
-
-    <script>
-        const copyButtons = document.querySelectorAll('.copy-btn');
-        copyButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const code = button.parentElement.previousElementSibling.querySelector('.code').innerText;
-                navigator.clipboard.writeText(code);
-                alert('Đã sao chép mã giảm giá');
-            });
-        });
-    </script>
 @endsection
