@@ -30,8 +30,8 @@
                                 </div>
                                 <div class="pt-2 text-right">
                                     <div class="mb-4 flex items-center gap-2">
-                                        <span class="text-sm text-gray-600 line-through">320,000đ</span>
-                                        <span class="font-medium">300,000đ</span>
+                                        <span class="text-sm text-gray-600 line-through">{{ number_format($item->price) }}đ</span>
+                                        <span class="font-medium">{{ number_format($item->discount_price) }}đ</span>
                                     </div>
                                     <div class="inline-flex rounded-md shadow-sm" role="group">
                                         <button class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500" id="decrement" type="button">
