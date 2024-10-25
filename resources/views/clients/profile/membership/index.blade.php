@@ -26,11 +26,16 @@
                             <div class="mb-2 h-2 w-full rounded-full bg-gray-200">
                                 <div class="h-2 rounded-full bg-red-500" style="width: {{ $progress ?? '0' }}%"></div>
                             </div>
-                            <p class="text-sm">Tích thêm {{ $nextPoints }} điểm nữa để nâng cấp lên thành viên
-                                {{ $nextRank }}
-                            </p>
+                            @if ($rank == $maxRank)
+                                <p class="text-sm">Bạn hiện là hội viên cao cấp nhất</p>
+                            @else
+                                <p class="text-sm">Tích thêm {{ $nextPoints }} điểm nữa để nâng cấp lên thành viên {{ $nextRank }}</p>
+                            @endif
                         </div>
                     </div>
+
+                    <p class="mb-2 text-sm">Bạn đã kiếm được tổng: {{ $points }} điểm</p>
+                    <p class="text-sm">Điểm hiện tại: {{ $currentPoints }}</p>
                 </div>
 
                 {{-- FAQ --}}
