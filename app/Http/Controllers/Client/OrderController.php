@@ -16,6 +16,11 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
+        $redirectHome = $this->checkUser();
+        if ($redirectHome) {
+            return $redirectHome; 
+        }
+
         $status = $request->get('tab');
 
         $userId = Auth::id(); 

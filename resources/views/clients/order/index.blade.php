@@ -189,7 +189,11 @@
 
                 </div>
             @empty
-
+            <div class="card flex flex-col items-center justify-center gap-8 p-4 md:p-8">
+                @svg('tabler-shopping-bag-exclamation', 'icon-4xl text-gray-400')
+                <p class="text-center">Đơn hàng của bạn đang trống</p>
+                <a class="button-red" href="{{ route('client.product.menu') }}">Thực đơn</a>
+            </div>
             @endforelse
 
         </div>
