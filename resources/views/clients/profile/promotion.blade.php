@@ -10,6 +10,7 @@
 
             <div class="card min-h-screen w-full p-4 md:p-8">
                 <h3 class="mb-8 font-semibold uppercase">mã giảm giá</h3>
+
                 {{-- tabs --}}
                 <div class="mb-4 border-b border-gray-200 text-center text-sm font-medium text-gray-500">
                     <ul class="-mb-px flex flex-wrap">
@@ -25,6 +26,8 @@
                         </li>
                     </ul>
                 </div>
+
+                <p class="text-sm mb-8">Bạn đang có: {{ $currentPoint }} điểm</p>
 
                 {{-- redeem-code --}}
                 <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">

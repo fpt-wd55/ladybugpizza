@@ -4,23 +4,19 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressRequest;
-use App\Http\Requests\ContactRequest;
 use App\Models\Address;
 use App\Models\Promotion;
 use App\Models\PromotionUser;
-use App\Models\User;
 use GuzzleHttp\Client;
 use App\Http\Requests\ChangeRequest;
 use App\Http\Requests\InactiveRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Faq;
+use App\Models\Membership;
 use App\Models\MembershipRank;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use dvhcvn;
-use Illuminate\Support\Facades\Storage;
 use App\Models\UserSetting;
 
 class ProfileController extends Controller
@@ -107,6 +103,7 @@ class ProfileController extends Controller
 	public function membership()
 	{
 		$membership = Auth::user()->membership;
+		$currentPoint = $membership->points;
 		$points = $membership->total_spent;
 
 		$ranks = MembershipRank::all();
@@ -145,8 +142,10 @@ class ProfileController extends Controller
 			}
 		}
 
+		$maxRank = MembershipRank::orderBy('min_points', 'desc')->first();
+
 		// 5. Hạng cao nhất thì không có hạng tiếp theo
-		if ($currentRank->name === 'Kim cương') {
+		if ($currentRank->id === $maxRank->id) {
 			$nextPoints = 0;
 			$progress = 100;
 		}
@@ -156,7 +155,9 @@ class ProfileController extends Controller
 
 		return view('clients.profile.membership.index', [
 			'rank' => $currentRank->name,
+			'maxRank' => $maxRank->name,
 			'points' => $points,
+			'currentPoints' => $currentPoint,
 			'nextPoints' => $nextPoints,
 			'nextRank' => $nextRank ? $nextRank->name : 'Không có',
 			'progress' => $progress,
@@ -237,15 +238,17 @@ class ProfileController extends Controller
 		$totalPromotionUser = PromotionUser::where('user_id', Auth::user()->id)->count();
 		return view('clients.profile.promotionUser', compact('promotionUsers', 'totalPromotionUser'));
 	}
-  
+
 	public function promotion()
 	{
-		$promotions = Promotion::where('status', 1)
+
+		$myCodes = Promotion::where('status', 1)
 			->where('is_global', 1)
 			->when(request('rank_id'), function ($query) {
 				return $query->where('rank_id', request('rank_id'));
 			})
 			->paginate(10);
+
 		$totalPromotions = Promotion::where('status', 1)
 			->where('is_global', 1)
 			->when(request('rank_id'), function ($query) {
@@ -253,59 +256,41 @@ class ProfileController extends Controller
 			})
 			->count();
 
-		return view('clients.profile.promotion', compact('promotions', 'totalPromotions'));
+		$currentPoint = Auth::user()->membership->points;
+
+		return view('clients.profile.promotion', [
+			'promotions' => $promotions,
+			'totalPromotions' => $totalPromotions,
+			'currentPoint' => $currentPoint,
+		]);
 	}
 
 	public function redeemPromotion($id)
 	{
-		$promotion = Promotion::find($id);
-
-		if (!$promotion) {
-			return back()->with('error', 'Mã giảm giá không tồn tại.');
-		}
-		if
-		(now()->gt($promotion->end_date) || now()->lt($promotion->start_date)) {
-			return back()->with('error', 'Mã giảm giá đã hết hạn hoặc chưa có hiệu lực.');
-		}
-
-		if ($promotion->quantity <= 0) {
-			return back()->with('error', 'Mã giảm giá đã hết số lượng.');
-		}
-
 		$user = Auth::user();
+		$promotion = Promotion::findOrFail($id);
 
-		if ($user->points > $promotion->points) {
+		if ($user->membership->points < $promotion->points) {
 			return back()->with('error', 'Bạn không đủ điểm để đổi mã giảm giá này.');
 		}
 
-		DB::beginTransaction();
-    
-		return view('clients.profile.promotion', compact('promotions', 'tab'));
-	}
-
-	public function redeemPromotion($id)
-	{
-
-			PromotionUser::create([
-				'promotion_id' => $promotion->id,
-				'user_id' => $user->id,
-			]);
-
-			$user->points -= $promotion->points;
-			$user->save();
-
-			$promotion->quantity -= 1;
-			$promotion->save();
-
-			DB::commit();
-			return back()->with('success', 'Mã giảm giá đã được sử dụng thành công!');
-		} catch (\Exception $e) {
-			DB::rollBack();
-			\Log::error('Error redeeming promotion: ' . $e->getMessage());
-			return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại.');
+		if ($promotion->quantity <= 0) {
+			return back()->with('error', 'Mã giảm giá đã hết.');
 		}
+
+		$user->membership->points -= $promotion->points;
+		$promotion->quantity -= 1;
+
+		try {
+			Membership::where('user_id', $user->id)->update(['points' => $user->membership->points]);
+			$promotion->save();
+		} catch (\Exception $e) {
+			return back()->with('error', 'Đã có lỗi xảy ra.');
+		}
+
+		return back()->with('success', 'Bạn đã đổi mã giảm giá thành công');
 	}
-  
+
 	public function addLocation()
 	{
 		return view('clients.profile.address.add');
