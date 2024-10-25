@@ -100,39 +100,39 @@
                                         @csrf
                                         @method('PATCH')
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="1" class="mr-2 text-[#D30A0A]"
+                                            <input type="radio" name="canceled_reason" value="1" class="mr-2 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Muốn thay đổi địa chỉ giao hàng</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="2" class="mr-2 text-[#D30A0A]"
+                                            <input type="radio" name="canceled_reason" value="2" class="mr-2 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Muốn nhập/thay đổi mã Voucher</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="3" class="mr-2 text-[#D30A0A]"
+                                            <input type="radio" name="canceled_reason" value="3" class="mr-2 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Muốn thay đổi sản phẩm trong đơn hàng (size, topping, số
                                                 lượng,...)</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="4" class="mr-2 text-[#D30A0A]"
+                                            <input type="radio" name="canceled_reason" value="4" class="mr-2 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Thủ tục thanh toán quá rắc rối</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="5" class="mr-2 text-[#D30A0A]"
+                                            <input type="radio" name="canceled_reason" value="5" class="mr-2 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Tìm thấy giá rẻ hơn ở chỗ khác</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="6" class="mr-2 text-[#D30A0A]"
+                                            <input type="radio" name="canceled_reason" value="6" class="mr-2 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Đổi ý, không muốn mua nữa</label>
                                         </div>
                                         <div class="mb-2">
                                             <input type="radio" id="otherReason-{{ $order->id }}"
-                                                name="canceled_reason" value="7" class="mr-2 text-[#D30A0A]"
+                                                name="canceled_reason" value="7" class="mr-2 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, true)">
                                             <label class="text-sm" for="otherReason-{{ $order->id }}">Lý do khác
                                                 :</label>
@@ -143,7 +143,7 @@
                                             </div>
                                         </div>
                                         <div class="flex justify-between mt-4">
-                                            <button type="button"
+                                            <button button data-modal-hide="deleteBanner-modal-{{ $order->id }}" type="button"
                                                 class="text-sm px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-lg">Không
                                                 Phải Bây Giờ</button>
                                             <button type="submit"
@@ -216,7 +216,11 @@
 
                 </div>
             @empty
-
+            <div class="card flex flex-col items-center justify-center gap-8 p-4 md:p-8">
+                @svg('tabler-shopping-bag-exclamation', 'icon-4xl text-gray-400')
+                <p class="text-center">Đơn hàng của bạn đang trống</p>
+                <a class="button-red" href="{{ route('client.product.menu') }}">Thực đơn</a>
+            </div>
             @endforelse
 
         </div>

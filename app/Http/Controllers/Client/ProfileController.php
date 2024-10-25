@@ -26,6 +26,10 @@ class ProfileController extends Controller
 {
 	public function index()
 	{
+		$redirectHome = $this->checkUser();
+        if ($redirectHome) {
+            return $redirectHome; 
+        }
 		$user = Auth::user();
 		return view('clients.profile.index', compact('user'));
 	}
@@ -105,6 +109,10 @@ class ProfileController extends Controller
 
 	public function membership()
 	{
+		$redirectHome = $this->checkUser();
+        if ($redirectHome) {
+            return $redirectHome; 
+        }
 		$membership = Auth::user()->membership;
 		$points = $membership->total_spent;
 
@@ -176,6 +184,10 @@ class ProfileController extends Controller
 
 	public function address()
 	{
+		$redirectHome = $this->checkUser();
+        if ($redirectHome) {
+            return $redirectHome; 
+        }
 		$user = Auth::user();
 		$addresses = Address::where('user_id', $user->id)->with('user')->paginate(6);
 		return view('clients.profile.address.index', compact('addresses'));
@@ -183,6 +195,10 @@ class ProfileController extends Controller
 
 	public function settings()
 	{
+		$redirectHome = $this->checkUser();
+        if ($redirectHome) {
+            return $redirectHome; 
+        }
 		// Lấy thông tin cài đặt của người dùng hiện tại
 		$userSetting = UserSetting::where('user_id', auth()->id())->first();
 
@@ -230,7 +246,10 @@ class ProfileController extends Controller
 
 	public function promotion()
 	{
-
+		$redirectHome = $this->checkUser();
+        if ($redirectHome) {
+            return $redirectHome; 
+        }
 		$tab = request()->query('tab', 'my-code');
 
 		if ($tab === 'my-code') {
