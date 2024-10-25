@@ -17,6 +17,7 @@ use App\Models\Faq;
 use App\Models\MembershipRank;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use dvhcvn;
 use Illuminate\Support\Facades\Storage;
@@ -224,49 +225,79 @@ class ProfileController extends Controller
 		return redirect()->back()->with('error', 'Thay đổi trạng thái thất bại');
 	}
 
+	public function promotionUser()
+	{
+		$promotionUsers = PromotionUser::where('user_id', Auth::id())
+			->with('promotion')
+			->paginate(10);
+		$totalPromotionUser = PromotionUser::where('user_id', Auth::user()->id)->count();
+		return view('clients.profile.promotionUser', compact('promotionUsers', 'totalPromotionUser'));
+	}
 	public function promotion()
 	{
+		$promotions = Promotion::where('status', 1)
+			->where('is_global', 1)
+			->when(request('rank_id'), function ($query) {
+				return $query->where('rank_id', request('rank_id'));
+			})
+			->paginate(10);
+		$totalPromotions = Promotion::where('status', 1)
+			->where('is_global', 1)
+			->when(request('rank_id'), function ($query) {
+				return $query->where('rank_id', request('rank_id'));
+			})
+			->count();
 
-		$tab = request()->query('tab', 'my-code');
+		return view('clients.profile.promotion', compact('promotions', 'totalPromotions'));
+	}
 
-		if ($tab === 'my-code') {
+	public function redeemPromotion($id)
+	{
+		$promotion = Promotion::find($id);
 
-			$promotions = PromotionUser::where('user_id', Auth::user()->id)
-				->with('promotion')
-				->paginate(10);
-		} elseif ($tab == 'redeem-code') {
-
-			$promotions = Promotion::where('status', 1)
-				->where('is_global', 1)
-				->when(request('rank_id'), function ($query) {
-					return $query->where('rank_id', request('rank_id'));
-				})
-				->paginate(10);
-		} else {
-
-			$promotions = collect();
-
+		if (!$promotion) {
+			return back()->with('error', 'Mã giảm giá không tồn tại.');
+		}
+		if
+		(now()->gt($promotion->end_date) || now()->lt($promotion->start_date)) {
+			return back()->with('error', 'Mã giảm giá đã hết hạn hoặc chưa có hiệu lực.');
 		}
 
-		// hoir chatgpt lấy ra số lượng mã giảm giá của tôi
+		if ($promotion->quantity <= 0) {
+			return back()->with('error', 'Mã giảm giá đã hết số lượng.');
+		}
 
-		// $countMyPromotion = 
-		return view('clients.profile.promotion', compact('promotions', 'tab'));
+		$user = Auth::user();
+
+		if ($user->points > $promotion->points) {
+			return back()->with('error', 'Bạn không đủ điểm để đổi mã giảm giá này.');
+		}
+
+		DB::beginTransaction();
+
+		try {
+
+			PromotionUser::create([
+				'promotion_id' => $promotion->id,
+				'user_id' => $user->id,
+			]);
+
+			$user->points -= $promotion->points;
+			$user->save();
+
+			$promotion->quantity -= 1;
+			$promotion->save();
+
+			DB::commit();
+			return back()->with('success', 'Mã giảm giá đã được sử dụng thành công!');
+		} catch (\Exception $e) {
+			DB::rollBack();
+			\Log::error('Error redeeming promotion: ' . $e->getMessage());
+			return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại.');
+		}
 	}
-  
-	public function redeemPromotion($id)
-	{	
-		// code ở đây
 
-		// Kiểm tra xem mã giảm giá có tồn tại không + còn hạn không + còn số lượng không
 
-		// Lưu mã giảm giá vào bảng promotion_users và trừ điểm của người dùng + trừ số lượng của mã giảm giá nếu đủ điều kiện
-
-		// Điều hướng và thông báo thành công hoặc thất bại
-
-		return back()->with('success', 'Mã giảm giá đã được sử dụng');
-	}
-  
 	public function addLocation()
 	{
 		return view('clients.profile.address.add');

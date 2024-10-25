@@ -74,6 +74,7 @@ Route::prefix('/')->group(function () {
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
     Route::put('/settings/update/{id}', [ProfileController::class, 'updateStatus'])->name('client.settings.update');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
+    Route::get('/profile/promotionUser', [ProfileController::class, 'promotionUser'])->name('client.profile.promotionUser');
     Route::post('/profile/promotion/{id}', [ProfileController::class, 'redeemPromotion'])->name('client.profile.redeem-promotion');
     Route::get('/about-us', [PageController::class, 'aboutUs'])->name('client.about-us');
     Route::get('/policies', [PageController::class, 'policies'])->name('client.policies');
