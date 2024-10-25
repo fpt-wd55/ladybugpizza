@@ -81,7 +81,7 @@
                      {{-- start modal delete --}}
                      <div id="deleteBanner-modal-{{ $order->id }}" tabindex="-1"
                         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                        <div class="relative p-4 w-full max-w-md max-h-full">
+                        <div class="relative p-2 w-full max-w-md max-h-full">
                             <div class="relative bg-white rounded-lg shadow">
                                 <button type="button"
                                     class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
@@ -89,27 +89,53 @@
                                     @svg('tabler-x', 'w-4 h-4')
                                     <span class="sr-only">Close modal</span>
                                 </button>
-                                <div class="p-4 md:p-5 text-center">
-                                    <div class="flex justify-center">
-                                        @svg('tabler-shopping-cart-off', 'w-12 h-12 text-red-600 text-center mb-2')
-                                    </div>
-                                    <h3 class="mb-5 font-normal">Bạn có muốn hủy đơn hàng này không?</h3>
-                                    <div class=" flex justify-center">
-
-                                        <form action="{{ route('client.order.cancel', $order) }}" method="POST">
-                                            @csrf
-                                            @method('PATCH')
-                                            <button type="submit"
-                                                class="text-white bg-red-600 hover:bg-red-800  focus:outline-none  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                                Hủy
-                                            </button>
-                                        </form>
-
-                                        <button data-modal-hide="deleteBanner-modal-{{ $order->id }}" type="button"
-                                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Không,
-                                            trở lại</button>
-                                    </div>
-                                </div>
+                                {{-- lý do hủy --}}
+                                <div class="p-5 bg-white rounded-lg shadow-md">
+                                    <h2 class="text-xl font-semibold mb-4">Chọn Lý Do Hủy</h2>
+                                    <p class="text-sm text-gray-600 mb-4">
+                                      Vui lòng chọn lý do hủy. Với lý do này, bạn sẽ hủy tất cả sản phẩm trong đơn hàng và không thể thay đổi sau đó.
+                                    </p>
+                                    <form>
+                                        <div class="mb-2">
+                                            <input type="radio" id="addressChange" name="cancelReason" class="mr-2 text-[#D30A0A] focus:outline-none focus:ring-0 focus:border-[#D30A0A]">
+                                            <label class="text-sm" for="addressChange">Muốn thay đổi địa chỉ giao hàng</label>
+                                          </div>
+                                          <div class="mb-2">
+                                            <input type="radio" id="voucherChange" name="cancelReason" class="mr-2 text-[#D30A0A] focus:outline-none focus:ring-0 focus:border-[#D30A0A]">
+                                            <label class="text-sm" for="voucherChange">Muốn nhập/thay đổi mã Voucher</label>
+                                          </div>
+                                          <div class="mb-2">
+                                            <input type="radio" id="productChange" name="cancelReason" class="mr-2 text-[#D30A0A] focus:outline-none focus:ring-0 focus:border-[#D30A0A]">
+                                            <label class="text-sm" for="productChange">Muốn thay đổi sản phẩm trong đơn hàng (size, topping, số lượng,...)</label>
+                                          </div>
+                                          <div class="mb-2">
+                                            <input type="radio" id="complicatedPayment" name="cancelReason" class="mr-2 text-[#D30A0A] focus:outline-none focus:ring-0 focus:border-[#D30A0A]">
+                                            <label class="text-sm" for="complicatedPayment">Thủ tục thanh toán quá rắc rối</label>
+                                          </div>
+                                          <div class="mb-2">
+                                            <input type="radio" id="foundCheaper" name="cancelReason" class="mr-2 text-[#D30A0A] focus:outline-none focus:ring-0 focus:border-[#D30A0A]">
+                                            <label class="text-sm" for="foundCheaper">Tìm thấy giá rẻ hơn ở chỗ khác</label>
+                                          </div>
+                                          <div class="mb-2">
+                                            <input type="radio" id="changedMind" name="cancelReason" class="mr-2 text-[#D30A0A] focus:outline-none focus:ring-0 focus:border-[#D30A0A]" checked>
+                                            <label class="text-sm" for="changedMind">Đổi ý, không muốn mua nữa</label>
+                                          </div>
+                                          <div class="mb-2">
+                                            <input type="radio" id="otherReason" name="cancelReason" class="mr-2 text-[#D30A0A] focus:outline-none focus:ring-0 focus:border-[#D30A0A]" 
+                                                   onclick="showOtherReasonInput()">
+                                            <label class="text-sm" for="otherReason">Lý do khác</label>
+                                          </div>
+                                          <div class="mb-2 hidden" id="otherReasonInput">
+                                            <input type="text" class="border border-gray-400 px-3 py-2 rounded-lg w-full" placeholder="Vui lòng nhập lý do khác">
+                                          </div>
+                                      
+                                        <div class="flex justify-between mt-4">
+                                          <button type="button" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-lg">KHÔNG PHẢI BÂY GIỜ</button>
+                                          <button type="submit" class="px-4 py-2 bg-[#D30A0A] hover:bg-red-800 text-white rounded-lg">HỦY ĐƠN HÀNG</button>
+                                        </div>
+                                      </form>
+                                  </div>
+                                  
                             </div>
                         </div>
                     </div>
@@ -190,5 +216,10 @@
                 content.style.maxHeight = content.scrollHeight + 'px';
             }
         }
+
+        function showOtherReasonInput() {
+            console.log(21111111);
+    document.getElementById('otherReasonInput').classList.remove('hidden');
+  }
     </script>
 @endsection
