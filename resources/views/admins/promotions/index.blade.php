@@ -79,7 +79,7 @@
                                     </ul>
                                     <div class="py-1">
                                         <a href="{{ route('admin.promotions.edit', $promotion->id) }}"
-                                            class="cursor-pointer block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Sửa</a>
+                                            class="cursor-pointer block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Cập nhật</a>
                                     </div>
                                     <div class="py-1">
                                         <a href="#" data-modal-target="delete-modal-{{ $promotion->id }}"
@@ -142,13 +142,7 @@
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                                                 <label class="font-semibold">Tên mã giảm giá:</label>
                                                 <span class="text-gray-800">{{ $promotion->code }}</span>
-                                            </div>
-
-                                            {{-- Description --}}
-                                            <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
-                                                <label class="font-semibold">Mô tả:</label>
-                                                <span class="text-gray-800">{{ $promotion->description }}</span>
-                                            </div>
+                                            </div> 
 
                                             {{-- Discount Type --}}
                                             <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-sm">

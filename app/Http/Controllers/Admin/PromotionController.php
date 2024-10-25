@@ -34,8 +34,11 @@ class PromotionController extends Controller
     public function store(PromotionRequest $request)
     {
         $data = $request->all();
-        Promotion::query()->create($data);
-        return redirect()->route('admin.promotions.index')->with('message', 'Thêm mã giảm giá thành công');
+        if (Promotion::query()->create($data)) {
+            return redirect()->route('admin.promotions.index')->with('success', 'Thêm mã giảm giá thành công');
+        } else {
+            return redirect()->back()->with('error', 'Thêm mã giảm giá thất bại');
+        }
     }
 
     /**
@@ -64,8 +67,11 @@ class PromotionController extends Controller
     {
         $data = $request->all();
 
-        $promotion->update($data);
-        return redirect()->route('admin.promotions.index')->with('message', 'Cập nhật mã giảm giá thành công');
+        if ($promotion->update($data)) {
+            return redirect()->back()->with('success', 'Cập nhật mã giảm giá thành công');
+        } else {
+            return redirect()->back()->with('error', 'Cập nhật mã giảm giá thất bại');
+        }
     }
 
     /**
@@ -73,10 +79,14 @@ class PromotionController extends Controller
      */
     public function destroy(Promotion $promotion)
     {
-        $promotion->delete();
-        return back()->with('message', 'Xóa thành công');
+        if ($promotion->delete()) {
+            return redirect()->back()->with('success', 'Xóa mã giảm giá thành công');
+        } else {
+            return redirect()->back()->with('error', 'Xóa mã giảm giá thất bại');
+        }
     }
-    public function export() {
+    public function export()
+    {
         $this->exportExcel(Promotion::all(), 'danhsachmagiamgia');
     }
 }

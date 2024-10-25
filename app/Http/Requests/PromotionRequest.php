@@ -34,7 +34,7 @@ class PromotionRequest extends FormRequest
     {
         return [
             'code' => 'required|max:10',
-            'description' => 'required',
+            'points' => 'required',
             'discount_type' => 'required|numeric|in:1,2',
             'discount_value' => [
                 'required',
@@ -60,7 +60,7 @@ class PromotionRequest extends FormRequest
     {
         return [
             'code' => 'required|max:10',
-            'description' => 'required',
+            'points' => 'required',
             'discount_type' => 'required|numeric|in:1,2',
             'discount_value' => [
                 'required',
@@ -86,7 +86,7 @@ class PromotionRequest extends FormRequest
         return [
             'code.required' => "Bạn cần nhập tên cho mã giảm giá",
             'code.max' => "Tên mã giảm giá không thể quá 10 kí tự",
-            'description.required' => "Bạn cần nhập mô tả cho mã giảm giá",
+            'points.required' => "Bạn cần nhập điểm cho mã giảm giá",
             'discount_type.required' => "Bạn cần chọn loại giảm giá",
             'discount_value.required' => "Bạn cần nhập giá trị giảm giá",
             'discount_value.integer' => "Giá trị giảm giá không hợp lệ",

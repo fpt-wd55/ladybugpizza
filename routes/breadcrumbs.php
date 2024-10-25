@@ -148,6 +148,12 @@ Breadcrumbs::for('admin.promotions.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
     $trail->push('Mã giảm giá', route('admin.promotions.index'));
 });
+
+Breadcrumbs::for('admin.promotions.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.promotions.index');
+    $trail->push('Thêm mới', route('admin.promotions.create'));
+});
+
 Breadcrumbs::for('admin.promotions.edit', function (BreadcrumbTrail $trail, $promotion) {
     $trail->parent('admin.promotions.index');
     $trail->push('Chỉnh sửa', route('admin.promotions.edit', $promotion));
