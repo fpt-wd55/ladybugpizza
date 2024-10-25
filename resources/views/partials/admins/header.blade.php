@@ -16,7 +16,7 @@
                 </a>
             </div>
             <div class="flex items-center">
-                <a href="{{route('admin.chats.index')}}"
+                <a href="{{ route('admin.chats.index') }}"
                     class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 ring-0 focus:ring-0">
                     <!-- Chat icon -->
                     @svg('tabler-message-dots', 'text-gray-500')
@@ -163,7 +163,8 @@
                     </div>
                     <ul class="py-1 text-gray-500" aria-labelledby="dropdown">
                         <li>
-                            <a href="{{ route('client.home') }}" class="block py-2 px-4 hover:bg-gray-100">Trang cửa
+                            <a href="{{ route('client.home') }}" target="_blank"
+                                class="block py-2 px-4 hover:bg-gray-100">Trang cửa
                                 hàng</a>
                         </li>
                         <li>
