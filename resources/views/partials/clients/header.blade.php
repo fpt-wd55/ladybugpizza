@@ -59,7 +59,7 @@
                         </div>
                         @if (Auth::user()->role_id == 3 || Auth::user()->role_id == 1)
                             <div class="py-2">
-                                <a target="blank" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="{{ route('admin.dashboard') }}">
+                                <a class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="{{ route('admin.dashboard') }}" target="blank">
                                     @svg('tabler-external-link', 'icon-sm')
                                     Trang quản trị
                                 </a>
@@ -168,7 +168,7 @@
                                     </div>
                                     <p>({{ $favorite->product->avg_rating }})</p>
                                 </div>
-                                <p class="mb-4 line-clamp-3 h-12">{{ $favorite->product->description }}</p>
+                                <p class="{{ empty($product->description) ? 'min-h-12' : '' }} mb-4 line-clamp-2">{{ $favorite->product->description }}</p>
                                 <div class="bottom-4 flex items-center gap-3">
                                     <p class="text-xs text-gray-500 line-through">
                                         {{ number_format($favorite->product->price) }}đ

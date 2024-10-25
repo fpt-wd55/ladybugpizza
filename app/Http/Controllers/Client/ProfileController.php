@@ -187,15 +187,19 @@ class ProfileController extends Controller
 		// Lấy thông tin cài đặt của người dùng hiện tại
 		$userSetting = UserSetting::where('user_id', auth()->id())->first();
 
-		// Nếu không tìm thấy cài đặt, có thể tạo mới hoặc xử lý theo ý bạn
+		// Nếu không tìm thấy cài đặt, tạo mới và lưu vào cơ sở dữ liệu
 		if (!$userSetting) {
-			$userSetting = new UserSetting(); // Tạo một đối tượng mới nếu không tìm thấy
-			$userSetting->email_order = true; // Giá trị mặc định
-			$userSetting->email_promotions = true; // Giá trị mặc định
-			$userSetting->email_security = true; // Giá trị mặc định
-			$userSetting->push_order = true; // Giá trị mặc định
-			$userSetting->push_promotions = true; // Giá trị mặc định
-			$userSetting->push_security = true; // Giá trị mặc định
+			$userSetting = new UserSetting();
+			$userSetting->user_id = auth()->id();
+			$userSetting->email_order = true;
+			$userSetting->email_promotions = true;
+			$userSetting->email_security = true;
+			$userSetting->push_order = true;
+			$userSetting->push_promotions = true;
+			$userSetting->push_security = true;
+
+			// Lưu vào cơ sở dữ liệu
+			$userSetting->save();
 		}
 
 		return view('clients.profile.settings', compact('userSetting'));
@@ -233,6 +237,7 @@ class ProfileController extends Controller
 		$totalPromotionUser = PromotionUser::where('user_id', Auth::user()->id)->count();
 		return view('clients.profile.promotionUser', compact('promotionUsers', 'totalPromotionUser'));
 	}
+  
 	public function promotion()
 	{
 		$promotions = Promotion::where('status', 1)
@@ -274,8 +279,12 @@ class ProfileController extends Controller
 		}
 
 		DB::beginTransaction();
+    
+		return view('clients.profile.promotion', compact('promotions', 'tab'));
+	}
 
-		try {
+	public function redeemPromotion($id)
+	{
 
 			PromotionUser::create([
 				'promotion_id' => $promotion->id,
@@ -296,8 +305,7 @@ class ProfileController extends Controller
 			return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại.');
 		}
 	}
-
-
+  
 	public function addLocation()
 	{
 		return view('clients.profile.address.add');
