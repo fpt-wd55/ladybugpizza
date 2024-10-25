@@ -14,7 +14,7 @@
                 <div class="mb-4 border-b border-gray-200 text-center text-sm font-medium text-gray-500">
                     <ul class="-mb-px flex flex-wrap">
                         <li class="me-2">
-                            <a aria-current="page" class="{{ request('tab') == 'my-code' ? 'border-b-red-600 text-red-600' : '' }} inline-block rounded-t-lg border-b-2 px-4 pb-2" href="{{ route('client.profile.promotion', ['tab' => 'my-code']) }}">Mã
+                            <a aria-current="page" class="{{ request('tab') == 'my-code' || request('tab') == null ? 'border-b-red-600 text-red-600' : '' }} inline-block rounded-t-lg border-b-2 px-4 pb-2" href="{{ route('client.profile.promotion', ['tab' => 'my-code']) }}">Mã
                                 {{-- thay số 13 bằng tổng mã giảm giá của tôi --}}
                                 giảm giá của tôi (13)</a>
                         </li>
