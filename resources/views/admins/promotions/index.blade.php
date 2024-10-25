@@ -127,25 +127,45 @@
                         {{-- detail modal --}}
                         <div id="detail-modal-{{ $promotion->id }}" tabindex="-1" aria-hidden="true"
                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
-                            <div class="relative p-4 w-full max-w-lg max-h-full">
+                            <div class="relative p-4 w-full max-w-md max-h-full">
                                 <div
-                                    class="relative p-4 bg-white rounded-lg shadow sm:p-7 h-[480px] overflow-y-auto no-scrollbar">
-                                    <button type="button"
-                                        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-                                        data-modal-hide="detail-modal-{{ $promotion->id }}">
-                                        @svg('tabler-x', 'w-4 h-4')
-                                        <span class="sr-only">Close modal</span>
-                                    </button>
+                                    class="relative p-4 bg-white rounded-lg shadow sm:p-5 h-full overflow-y-auto no-scrollbar">
                                     <div>
-                                        <h3 class="mb-7 text-2xl font-semibold text-center">Chi tiết mã giảm giá</h3>
-                                        <div class="space-y-4">
-                                            <div class="rounded-lg">
-                                                <label class="font-semibold">Mã giảm giá</label>
-                                                <p class="text-gray-800 mt-3">
-                                                    {{ $promotion->code }}
-                                                </p>
+                                        <div class="container mx-auto mb-10">
+                                            <div
+                                                class="bg-gradient-to-br from-[#bf0808] to-[#f52929] text-white text-center py-8 px-15 rounded-lg shadow-md relative">
+                                                <h3 class="text-lg font-semibold mb-4">
+                                                    <p class="">
+                                                        Giảm @if ($promotion->discount_type == '1')
+                                                            {{ number_format($promotion->discount_value) }}%
+                                                        @elseif ($promotion->discount_type == '2')
+                                                            {{ number_format($promotion->discount_value) }}₫
+                                                        @endif Giảm tối đa
+                                                        {{ number_format($promotion->max_discount) }}₫
+                                                    </p>
+                                                    <p class="mt-1">
+                                                        Đơn Tối Thiểu {{ number_format($promotion->min_order_total) }}₫
+                                                    </p>
+                                                </h3>
+                                                <div class="flex items-center space-x-2 justify-center">
+                                                    <span id="promotion-{{ $promotion->code }}"
+                                                        class="border-dashed border px-4 py-2 rounded-l">{{ $promotion->code }}</span>
+                                                    <button
+                                                        data-copy-to-clipboard-target="promotion-{{ $promotion->code }}"
+                                                        data-copy-to-clipboard-content-type="textContent"
+                                                        data-tooltip-target="tooltip-promotion-details"
+                                                        class="border border-white bg-white hover:bg-slate-200 transition text-red-600 px-2 py-2 rounded-r cursor-pointer">Sao
+                                                        chép</button>
+                                                </div>
+                                                <div
+                                                    class="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6">
+                                                </div>
+                                                <div
+                                                    class="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6">
+                                                </div>
                                             </div>
-
+                                        </div>
+                                        <div class="grid grid-cols-1 gap-4 content-between">
                                             <div class="space-y-4">
                                                 <div class="rounded-lg">
                                                     <label class="font-semibold">Hạn sử dụng mã</label>
@@ -155,29 +175,12 @@
                                                         {{ \Carbon\Carbon::parse($promotion->end_date)->format('d/m/Y H:i') }}
                                                     </p>
                                                 </div>
-
-                                                <div class="rounded-lg">
-                                                    <label class="font-semibold">Ưu đãi</label>
-                                                    <p class="text-gray-800 mt-3">
-                                                        Giảm @if ($promotion->discount_type == '1')
-                                                            {{ number_format($promotion->discount_value) }}%
-                                                        @elseif ($promotion->discount_type == '2')
-                                                            {{ number_format($promotion->discount_value) }}₫
-                                                        @endif Giảm tối đa
-                                                        {{ number_format($promotion->max_discount) }}₫
-                                                    </p>
-                                                    <p class="text-gray-800 mt-1">
-                                                        Đơn Tối Thiểu {{ number_format($promotion->min_order_total) }}₫
-                                                    </p>
-                                                </div>
-
                                                 <div class="rounded-lg">
                                                     <label class="font-semibold">Số lượng</label>
                                                     <p class="text-gray-800 mt-3">
                                                         {{ $promotion->quantity }}
                                                     </p>
                                                 </div>
-
                                                 <div class="rounded-lg">
                                                     <label class="font-semibold">Đối tượng sử dụng</label>
                                                     <p class="text-gray-800 mt-3">
@@ -188,15 +191,21 @@
                                                         @endif
                                                     </p>
                                                 </div>
-
                                                 <div class="rounded-lg">
                                                     <label class="font-semibold">Trạng thái</label>
-                                                    <p class="text-gray-800 mt-3">
+                                                    <p class="text-gray-800 mt-3 mb-6">
                                                         <span
                                                             class="text-white {{ $promotion->status == 1 ? 'bg-green-500' : 'bg-red-500' }} inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium">
                                                             {{ $promotion->status == 1 ? 'Hoạt động' : 'Khóa' }}
                                                         </span>
                                                     </p>
+                                                </div>
+                                            </div>
+                                            <div class="space-y-4">
+                                                <div class="rounded-lg">
+                                                    <button data-modal-hide="detail-modal-{{ $promotion->id }}"
+                                                        type="button" class="button-red w-full">Đồng
+                                                        ý</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -219,4 +228,10 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        const clipboard = FlowbiteInstances.getInstance('CopyClipboard', 'contact-details');
+        const tooltip = FlowbiteInstances.getInstance('Tooltip', 'tooltip-contact-details');
+    </script>
 @endsection
