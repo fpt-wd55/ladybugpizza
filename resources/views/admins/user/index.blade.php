@@ -37,20 +37,17 @@
                             Hành động
                         </button>
                         <h2 class="font-medium text-gray-700 text-base italic" id="selectedItems">
-
                         </h2>
                     </div>
                     <div id="actionsDropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="actionsDropdownButton">
                             <li>
-                                <a href="#" class="block py-2 px-4 hover:bg-gray-100">Mass
-                                    Edit</a>
+                                <a href="#" class="block py-2 px-4 hover:bg-gray-100">Kích hoạt/Khóa</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block py-2 px-4 hover:bg-gray-100">Xóa</a>
                             </li>
                         </ul>
-                        <div class="py-1">
-                            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Delete
-                                all</a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -121,11 +118,31 @@
                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
                             </div>
                         </th>
-                        <th scope="col" class="px-4 py-3">Tài khoản</th>
-                        <th scope="col" class="px-4 py-3">Họ và tên</th>
+                        <th scope="col" class="px-4 py-3">
+                            <div class="flex items-center">
+                                Tài khoản
+                                <a href="#">@svg('tabler-caret-up-down-filled', 'w-3 h-3 ms-1')</a>
+                            </div>
+                        </th>
+                        <th scope="col" class="px-4 py-3">
+                            <div class="flex items-center">
+                                Họ và tên
+                                <a href="#">@svg('tabler-caret-up-down-filled', 'w-3 h-3 ms-1')</a>
+                            </div>
+                        </th>
                         <th scope="col" class="px-4 py-3">Số điện thoại</th>
-                        <th scope="col" class="px-4 py-3">Vai trò </th>
-                        <th scope="col" class="px-4 py-3">Trạng thái</th>
+                        <th scope="col" class="px-4 py-3">
+                            <div class="flex items-center">
+                                Vai trò
+                                <a href="#">@svg('tabler-caret-up-down-filled', 'w-3 h-3 ms-1')</a>
+                            </div>
+                        </th>
+                        <th scope="col" class="px-4 py-3">
+                            <div class="flex items-center">
+                                Trạng thái
+                                <a href="#">@svg('tabler-caret-up-down-filled', 'w-3 h-3 ms-1')</a>
+                            </div>
+                        </th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Hành động</span>
                         </th>
