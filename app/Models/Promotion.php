@@ -11,7 +11,7 @@ class Promotion extends Model
 
     protected $fillable = [
         'code',
-        'description',
+        'points',
         'discount_type',
         'discount_value',
         'start_date',
@@ -32,5 +32,10 @@ class Promotion extends Model
     public function order()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function rank()
+    {
+        return $this->belongsTo(MembershipRank::class);
     }
 }

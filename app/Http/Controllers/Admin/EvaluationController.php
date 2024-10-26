@@ -77,5 +77,7 @@ class EvaluationController extends Controller
         }
         return redirect()->back()->with('error','thay đổi trạng thái thất bại');  
     }
-
+    public function export(){
+        $this->exportExcel(Evaluation::all(), 'danhsachdanhgia');
+    }
 }

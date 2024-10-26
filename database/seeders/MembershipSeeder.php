@@ -20,12 +20,13 @@ class MembershipSeeder extends Seeder
 
         $users = User::all();
         $ranks = MembershipRank::all();
+        
         foreach ($users as $user) {
             Membership::create([
                 'user_id' => $user->id,
-                'points' => rand(0, 10000),
+                'points' => rand(0, 5000),
                 'rank_id' => $ranks->random()->id,
-                'total_spent' => rand(0, 1000000),
+                'total_spent' => rand(0, 20000),
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);

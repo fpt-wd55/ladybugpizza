@@ -8,7 +8,7 @@
         <div class="relative flex min-h-[calc(100vh-48px)] flex-col-reverse items-center justify-center gap-16 overflow-hidden bg-gray-100 p-8 transition md:px-32 lg:flex-row lg:justify-between lg:px-40">
             <div class="z-10 text-center lg:text-left">
                 <p class="vujahday-script-regular mb-8 text-6xl">Ladybug Pizza</p>
-                <p class="mb-12 uppercase text-gray-700">Thưởng thức pizza ngon lành bổ dưỡng của bạn</p>
+                <p class="playwrite-gb-s-regular mb-12 text-sm uppercase text-gray-500">Thưởng thức pizza ngon lành bổ dưỡng của bạn</p>
                 <a class="button-primary" href="{{ route('client.product.menu') }}">Thực đơn</a>
             </div>
             <div class="z-10 w-60 flex-shrink-0 transition md:w-[400px] lg:w-[520px]">
@@ -25,34 +25,34 @@
             <div>
                 {{-- carousel --}}
                 <!-- <div class="relative mb-8 w-full md:mb-12" data-carousel="slide" id="default-carousel">
-                            <div class="relative h-56 overflow-hidden rounded transition md:h-96 lg:h-[540px]">
-                                @foreach ($banners as $banner)
+                                                <div class="relative h-56 overflow-hidden rounded transition md:h-96 lg:h-[540px]">
+                                                    @foreach ($banners as $banner)
     <link as="image" href="{{ asset('storage/uploads/banners/' . $banner->image) }}" rel="preload">
-                                    <div class="hidden transition duration-700" data-carousel-item>
-                                        <img alt="{{ $banner->image }}" class="absolute block h-full w-full object-cover" src="{{ asset('storage/uploads/banners/' . $banner->image) }}">
-                                    </div>
+                                                        <div class="hidden transition duration-700" data-carousel-item>
+                                                            <img alt="{{ $banner->image }}" class="absolute block h-full w-full object-cover" src="{{ asset('storage/uploads/banners/' . $banner->image) }}">
+                                                        </div>
     @endforeach
-                            </div>
-                            <div class="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2">
-                                @foreach ($banners as $index => $banner)
+                                                </div>
+                                                <div class="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2">
+                                                    @foreach ($banners as $index => $banner)
     <button aria-current="true" class="indicator" data-carousel-slide-to="{{ $index }}" type="button"></button>
     @endforeach
-                            </div>
-                            <button class="group absolute start-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-prev type="button">
-                                <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 text-white">
-                                    @svg('tabler-chevron-left', 'icon-sm')
-                                </span>
-                            </button>
-                            <button class="group absolute end-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-next type="button">
-                                <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 text-white">
-                                    @svg('tabler-chevron-right', 'icon-sm')
-                                </span>
-                            </button>
-                        </div> -->
+                                                </div>
+                                                <button class="group absolute start-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-prev type="button">
+                                                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 text-white">
+                                                        @svg('tabler-chevron-left', 'icon-sm')
+                                                    </span>
+                                                </button>
+                                                <button class="group absolute end-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-next type="button">
+                                                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 text-white">
+                                                        @svg('tabler-chevron-right', 'icon-sm')
+                                                    </span>
+                                                </button>
+                                            </div> -->
 
                 <div class="mt-12 py-8 text-center">
                     <p class="vujahday-script-regular mb-6 text-center text-6xl">Ladybug Pizza</p>
-                    <p class="mb-12 uppercase text-gray-500">Ngon đến từng miếng, đậm vị yêu thương</p>
+                    <p class="playwrite-gb-s-regular mb-12 text-sm uppercase text-gray-500">Ngon đến từng miếng, đậm vị yêu thương</p>
                     @include('partials.clients.categories')
                 </div>
 
@@ -101,8 +101,7 @@
                 {{-- Khám phá thực đơn --}}
                 <div class="mb-32 grid grid-cols-1 gap-8 lg:grid-cols-2">
                     <div class="mr-3 flex flex-col items-center text-center">
-                        <p class="mb-6 text-xl lg:text-2xl">
-                            Thực đơn của chúng tôi</p>
+                        <p class="playwrite-gb-s-regular mb-6 text-lg uppercase">Thực đơn của chúng tôi</p>
 
                         <p class="mb-8 font-light">
                             Khám phá các loại Pizza nướng bằng củi, bia Bỉ và các món tráng miệng mới làm mà bạn có
@@ -131,7 +130,7 @@
                         <img alt="" class="h-full w-full rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/products/pizza-ca-hoi.jpg') }}">
                     </div>
                     <div class="text-center">
-                        <p class="mb-6 text-xl lg:text-2xl">Câu chuyện của chúng tôi</p>
+                        <p class="playwrite-gb-s-regular mb-6 text-lg uppercase">Câu chuyện của chúng tôi</p>
                         <p class="mb-6 font-light lg:mb-8">Khám phá các loại Pizza nướng bằng củi, bia Bỉ và các món tráng
                             miệng mới làm mà bạn có thể thưởng thức tại 2 địa điểm của chúng tôi hoặc tại nhà với dịch vụ giao
                             hàng nhanh chóng của chúng tôi.

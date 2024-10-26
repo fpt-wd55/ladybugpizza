@@ -149,4 +149,8 @@ class CategoryController extends Controller
             return redirect()->back()->with('error', 'Xóa vĩnh viễn danh mục thất bại');
         }
     }
+    public function export(){
+        $categories = Category::all();
+        $this->exportExcel($categories, 'danhsachdanhmuc');
+    }
 }

@@ -4,25 +4,29 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressRequest;
-use App\Http\Requests\ContactRequest;
 use App\Models\Address;
-use App\Models\User;
+use App\Models\Promotion;
+use App\Models\PromotionUser;
 use GuzzleHttp\Client;
 use App\Http\Requests\ChangeRequest;
 use App\Http\Requests\InactiveRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Faq;
+use App\Models\Membership;
 use App\Models\MembershipRank;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use dvhcvn;
-use Illuminate\Support\Facades\Storage;
+use App\Models\UserSetting;
 
 class ProfileController extends Controller
 {
 	public function index()
 	{
+		$redirectHome = $this->checkUser();
+        if ($redirectHome) {
+            return $redirectHome; 
+        }
 		$user = Auth::user();
 		return view('clients.profile.index', compact('user'));
 	}
@@ -102,7 +106,12 @@ class ProfileController extends Controller
 
 	public function membership()
 	{
+		$redirectHome = $this->checkUser();
+        if ($redirectHome) {
+            return $redirectHome; 
+        }
 		$membership = Auth::user()->membership;
+		$currentPoint = $membership->points;
 		$points = $membership->total_spent;
 
 		$ranks = MembershipRank::all();
@@ -141,8 +150,10 @@ class ProfileController extends Controller
 			}
 		}
 
+		$maxRank = MembershipRank::orderBy('min_points', 'desc')->first();
+
 		// 5. Hạng cao nhất thì không có hạng tiếp theo
-		if ($currentRank->name === 'Kim cương') {
+		if ($currentRank->id === $maxRank->id) {
 			$nextPoints = 0;
 			$progress = 100;
 		}
@@ -152,7 +163,9 @@ class ProfileController extends Controller
 
 		return view('clients.profile.membership.index', [
 			'rank' => $currentRank->name,
+			'maxRank' => $maxRank->name,
 			'points' => $points,
+			'currentPoints' => $currentPoint,
 			'nextPoints' => $nextPoints,
 			'nextRank' => $nextRank ? $nextRank->name : 'Không có',
 			'progress' => $progress,
@@ -173,6 +186,10 @@ class ProfileController extends Controller
 
 	public function address()
 	{
+		$redirectHome = $this->checkUser();
+        if ($redirectHome) {
+            return $redirectHome; 
+        }
 		$user = Auth::user();
 		$addresses = Address::where('user_id', $user->id)->with('user')->paginate(6);
 		return view('clients.profile.address.index', compact('addresses'));
@@ -180,15 +197,102 @@ class ProfileController extends Controller
 
 	public function settings()
 	{
-		return view('clients.profile.settings');
+		$redirectHome = $this->checkUser();
+        if ($redirectHome) {
+            return $redirectHome; 
+        }
+		// Lấy thông tin cài đặt của người dùng hiện tại
+		$userSetting = UserSetting::where('user_id', auth()->id())->first();
+
+		// Nếu không tìm thấy cài đặt, tạo mới và lưu vào cơ sở dữ liệu
+		if (!$userSetting) {
+			$userSetting = new UserSetting();
+			$userSetting->user_id = auth()->id();
+			$userSetting->email_order = true;
+			$userSetting->email_promotions = true;
+			$userSetting->email_security = true;
+			$userSetting->push_order = true;
+			$userSetting->push_promotions = true;
+			$userSetting->push_security = true;
+
+			// Lưu vào cơ sở dữ liệu
+			$userSetting->save();
+		}
+
+		return view('clients.profile.settings', compact('userSetting'));
+	}
+	public function updateStatus(Request $request, string $id)
+	{
+		// Tìm cài đặt dựa trên ID
+		$settings = UserSetting::query()->findOrFail($id);
+
+		if ($settings) {
+			// Cập nhật các giá trị dựa trên request
+			$settings->email_order = $request->has('email_order') ? 1 : 0;
+			$settings->email_promotions = $request->has('email_promotions') ? 1 : 0;
+			$settings->email_security = $request->has('email_security') ? 1 : 0;
+			$settings->push_order = $request->has('push_order') ? 1 : 0;
+			$settings->push_promotions = $request->has('push_promotions') ? 1 : 0;
+			$settings->push_security = $request->has('push_security') ? 1 : 0;
+
+			// Lưu cài đặt
+			$settings->save();
+
+			// Trả về thông báo thành công
+			return redirect()->back()->with('success', 'Cài đặt đã được cập nhật!');
+		}
+
+		// Trả về thông báo lỗi nếu không tìm thấy cài đặt
+		return redirect()->back()->with('error', 'Thay đổi trạng thái thất bại');
 	}
 
-	public function promotion()
-	{
-		// Code cua huyen o day
-		return view('clients.profile.promotion');
-	}
-	
+	// public function promotion()
+	// {
+	// 	$myCodes = PromotionUser::where('user_id', Auth::id())
+	// 		->with('promotion')
+	// 		->paginate(10);
+
+	// 	$redeemCodes = Promotion::where('status', 1)
+	// 		->when(request('rank_id'), function ($query) {
+	// 			return $query->where('rank_id', request('rank_id'));
+	// 		})
+	// 		->count();
+
+	// 	$currentPoint = Auth::user()->membership->points ?? 0;
+
+	// 	return view('clients.profile.promotion', [
+	// 		'promotions' => $myCodes,
+	// 		'totalPromotions' => $totalPromotions,
+	// 		'currentPoint' => $currentPoint,
+	// 	]);
+	// }
+
+	// public function redeemPromotion($id)
+	// {
+	// 	$user = Auth::user();
+	// 	$promotion = Promotion::findOrFail($id);
+
+	// 	if ($user->membership->points < $promotion->points) {
+	// 		return back()->with('error', 'Bạn không đủ điểm để đổi mã giảm giá này.');
+	// 	}
+
+	// 	if ($promotion->quantity <= 0) {
+	// 		return back()->with('error', 'Mã giảm giá đã hết.');
+	// 	}
+
+	// 	$user->membership->points -= $promotion->points;
+	// 	$promotion->quantity -= 1;
+
+	// 	try {
+	// 		Membership::where('user_id', $user->id)->update(['points' => $user->membership->points]);
+	// 		$promotion->save();
+	// 	} catch (\Exception $e) {
+	// 		return back()->with('error', 'Đã có lỗi xảy ra.');
+	// 	}
+
+	// 	return back()->with('success', 'Bạn đã đổi mã giảm giá thành công');
+	// }
+
 	public function addLocation()
 	{
 		return view('clients.profile.address.add');
@@ -270,8 +374,6 @@ class ProfileController extends Controller
 	{
 		return view('clients.profile.address.edit', compact('address'));
 	}
-
-
 
 	private function getAddressNamesByCodes($provinceCode, $districtCode, $wardCode)
 	{

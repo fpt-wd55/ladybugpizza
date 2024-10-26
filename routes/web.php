@@ -59,7 +59,7 @@ Route::prefix('/')->group(function () {
     Route::post('/checkout', [CartController::class, 'postCheckout'])->name('client.cart.post-checkout');
     Route::get('/order', [OrderController::class, 'index'])->name('client.order.index');
     Route::get('/order/{order}/invoice}', [OrderController::class, 'invoice'])->name('client.order.invoice');
-    Route::post('/order/{order}/cancel}', [OrderController::class, 'postCancel'])->name('client.order.cancel');
+    Route::patch('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
     Route::post('/order/{order}/rate}', [OrderController::class, 'postRate'])->name('client.order.rate');
     Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile.index');
     Route::put('/profile/update', [ProfileController::class, 'postUpdate'])->name('client.profile.post-update');
@@ -72,7 +72,10 @@ Route::prefix('/')->group(function () {
     Route::post('/profile/address', [ProfileController::class, 'storeLocation'])->name('client.profile.post-location');
     Route::get('/profile/address/edit/{address}', [ProfileController::class, 'editLocation'])->name('client.profile.edit-location');
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
+    Route::put('/settings/update/{id}', [ProfileController::class, 'updateStatus'])->name('client.settings.update');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
+    Route::get('/profile/promotionUser', [ProfileController::class, 'promotionUser'])->name('client.profile.promotionUser');
+    Route::post('/profile/promotion/{id}', [ProfileController::class, 'redeemPromotion'])->name('client.profile.redeem-promotion');
     Route::get('/about-us', [PageController::class, 'aboutUs'])->name('client.about-us');
     Route::get('/policies', [PageController::class, 'policies'])->name('client.policies');
     Route::get('/manual', [PageController::class, 'manual'])->name('client.manual');
@@ -121,7 +124,10 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/user/export', [UserController::class, 'export'])->name('users.export');
     // Address
     Route::resource('/addresses', AddressController::class);
+    // Order
     Route::resource('/orders', AdminOrderController::class);
+    Route::get('/order/export', [AdminOrderController::class, 'export'])->name('orders.export');
+
     Route::resource('/carts', AdminCartController::class);
     // Product
     Route::resource('/products', AdminProductController::class);
@@ -132,37 +138,44 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/comment-products/{id}', [AdminProductController::class, 'listComment'])->name('comment-products');
     // Attribute
     Route::resource('/attributes', AttributeController::class);
+    Route::get('/attribute/export', [AttributeController::class, 'export'])->name('attributes.export');
     Route::get('/attribute/trash', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');
     Route::post('/attribute/restore/{id}', [AttributeController::class, 'restoreAttribute'])->name('restore-attribute');
     Route::delete('/attribute/delete/{id}', [AttributeController::class, 'deleteAttribute'])->name('delete-attribute');
     // Combo
     Route::resource('/combos', ComboController::class);
+    Route::get('/combo/export', [ComboController::class, 'export'])->name('combos.export');
     Route::get('/combo/trash', [ComboController::class, 'trashCombo'])->name('trash-combos');
     Route::post('/combo/restore-/{id}', [ComboController::class, 'restoreCombo'])->name('restore-combo');
     Route::delete('/combo/delete/{id}', [ComboController::class, 'deleteCombo'])->name('delete-combo');
     // Topping
     Route::resource('/toppings', ToppingController::class);
+    Route::get('/topping/export', [ToppingController::class, 'export'])->name('toppings.export');
     Route::get('/topping/trash', [ToppingController::class, 'trashTopping'])->name('trash-topping');
     Route::get('/topping/restore/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
     Route::delete('/topping/delete/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
     // Categories
     Route::resource('/categories', CategoryController::class);
+    Route::get('/category/export', [CategoryController::class, 'export'])->name('categories.export');
     Route::get('/category/trash', [CategoryController::class, 'trashCategory'])->name('trash.listcate');
     Route::post('/category/restore/{id}', [CategoryController::class, 'trashRestore'])->name('trash.cateRestore');
     Route::post('/category/delete/{id}', [CategoryController::class, 'trashForce'])->name('trash.cateDelete');
     // Banner
     Route::resource('/banners', BannerController::class);
+    Route::get('/banner/export', [BannerController::class, 'export'])->name('banners.export');
     Route::get('/banner/trash', [BannerController::class, 'trashList'])->name('trash.listBanner');
     Route::post('/banner/restore/{id}', [BannerController::class, 'trashRestore'])->name('trash.bannerRestore');
     Route::post('/banner/delete/{id}', [BannerController::class, 'trashForce'])->name('trash.bannerDelete');
     // Promotion
     Route::resource('/promotions', PromotionController::class);
+    Route::get('/promotion/export', [PromotionController::class, 'export'])->name('promotions.export');
     // Membership
     Route::resource('/memberships', MembershipController::class);
+    Route::get('/membership/export', [MembershipController::class, 'export'])->name('memberships.export');
     Route::post('/memberships/{membership}/status', [MembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
     // Đánh Giá
     Route::resource('/evaluations', EvaluationController::class);
-
+    Route::get('/evaluation/export', [EvaluationController::class, 'export'])->name('evaluations.export');
     Route::patch('/evaluations/update-status/{id}', [EvaluationController::class, 'updateStatus'])->name('evaluation.updateStatus');
     Route::resource('/transactions', TransactionController::class);
     Route::resource('/shippings', ShippingController::class);

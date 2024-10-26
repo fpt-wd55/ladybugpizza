@@ -218,4 +218,7 @@ class AttributeController extends Controller
 
         return redirect()->back()->with('error', 'Xóa thuộc tính thất bại');
     }
+    public function export(){
+        $this->exportExcel(Attribute::all(), 'danhsachthuoctinh');
+    }
 }

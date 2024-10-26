@@ -107,4 +107,7 @@ class ToppingController extends Controller
         $topping->forceDelete();
         return back()->with('success', 'Đã xóa vĩnh viễn!');
     }
+    public function export(){
+        $this->exportExcel(Topping::all(), 'danhsachtopping');
+    }
 }

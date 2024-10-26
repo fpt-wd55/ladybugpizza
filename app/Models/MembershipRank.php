@@ -20,4 +20,14 @@ class MembershipRank extends Model
     {
         return $this->hasMany(Membership::class);
     }
+
+    public function promotions()
+    {
+        return $this->hasMany(Promotion::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
