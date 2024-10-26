@@ -11,12 +11,12 @@
                 <ul class="flex">
                     <li class="me-6 min-w-fit">
                         <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->routeIs('client.order.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
-                            href="{{ route('client.order.index') }}">Tất cả</a>
+                            href="{{ route('client.order.index') }}">Tất cả <span class="text-[#D30A0A]">({{ $orderStatuses->sum('orders_count') }})</span></a>
                     </li>
                     @foreach ($orderStatuses as $status)
                         <li class="me-6 min-w-fit">
                             <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
-                                href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }}</a>
+                                href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }} <span class="text-[#D30A0A]">({{ $status->orders_count }})</span></a>
                         </li>
                     @endforeach
                 </ul>
@@ -115,8 +115,7 @@
                                             <input type="radio" name="canceled_reason" value="3"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
-                                            <label class="text-sm">Muốn thay đổi sản phẩm trong đơn hàng (size, topping, số
-                                                lượng,...)</label>
+                                            <label class="text-sm">Muốn thay đổi sản phẩm trong đơn hàng (size, topping,...)</label>
                                         </div>
                                         <div class="mb-2">
                                             <input type="radio" name="canceled_reason" value="4"
@@ -194,7 +193,7 @@
                                     $groupedProducts = [];
                                     // Lặp qua từng sản phẩm và nhóm chúng
                                     foreach ($order->orderItems as $orderItem) {
-                                        foreach ($orderItem->productAttributes as $products) {
+                                        foreach ($orderItem->attributes as $products) {
                                             $productName = $products->product->name;
                                             $attributeValue = $products->attributeValue->value;
                                             $toppings = $orderItem->toppings->pluck('name')->sort()->join(', ');
