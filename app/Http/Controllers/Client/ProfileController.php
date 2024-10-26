@@ -4,22 +4,19 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressRequest;
-use App\Http\Requests\ContactRequest;
 use App\Models\Address;
 use App\Models\Promotion;
 use App\Models\PromotionUser;
-use App\Models\User;
 use GuzzleHttp\Client;
 use App\Http\Requests\ChangeRequest;
 use App\Http\Requests\InactiveRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Faq;
+use App\Models\Membership;
 use App\Models\MembershipRank;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use dvhcvn;
-use Illuminate\Support\Facades\Storage;
 use App\Models\UserSetting;
 
 class ProfileController extends Controller
@@ -114,6 +111,7 @@ class ProfileController extends Controller
             return $redirectHome; 
         }
 		$membership = Auth::user()->membership;
+		$currentPoint = $membership->points;
 		$points = $membership->total_spent;
 
 		$ranks = MembershipRank::all();
@@ -152,8 +150,10 @@ class ProfileController extends Controller
 			}
 		}
 
+		$maxRank = MembershipRank::orderBy('min_points', 'desc')->first();
+
 		// 5. Hạng cao nhất thì không có hạng tiếp theo
-		if ($currentRank->name === 'Kim cương') {
+		if ($currentRank->id === $maxRank->id) {
 			$nextPoints = 0;
 			$progress = 100;
 		}
@@ -163,7 +163,9 @@ class ProfileController extends Controller
 
 		return view('clients.profile.membership.index', [
 			'rank' => $currentRank->name,
+			'maxRank' => $maxRank->name,
 			'points' => $points,
+			'currentPoints' => $currentPoint,
 			'nextPoints' => $nextPoints,
 			'nextRank' => $nextRank ? $nextRank->name : 'Không có',
 			'progress' => $progress,
@@ -244,51 +246,52 @@ class ProfileController extends Controller
 		return redirect()->back()->with('error', 'Thay đổi trạng thái thất bại');
 	}
 
-	public function promotion()
-	{
-		$redirectHome = $this->checkUser();
-        if ($redirectHome) {
-            return $redirectHome; 
-        }
-		$tab = request()->query('tab', 'my-code');
+	// public function promotion()
+	// {
+	// 	$myCodes = PromotionUser::where('user_id', Auth::id())
+	// 		->with('promotion')
+	// 		->paginate(10);
 
-		if ($tab === 'my-code') {
+	// 	$redeemCodes = Promotion::where('status', 1)
+	// 		->when(request('rank_id'), function ($query) {
+	// 			return $query->where('rank_id', request('rank_id'));
+	// 		})
+	// 		->count();
 
-			$promotions = PromotionUser::where('user_id', Auth::user()->id)
-				->with('promotion')
-				->paginate(10);
-		} elseif ($tab == 'redeem-code') {
+	// 	$currentPoint = Auth::user()->membership->points ?? 0;
 
-			$promotions = Promotion::where('status', 1)
-				->where('is_global', 1)
-				->when(request('rank_id'), function ($query) {
-					return $query->where('rank_id', request('rank_id'));
-				})
-				->paginate(10);
-		} else {
+	// 	return view('clients.profile.promotion', [
+	// 		'promotions' => $myCodes,
+	// 		'totalPromotions' => $totalPromotions,
+	// 		'currentPoint' => $currentPoint,
+	// 	]);
+	// }
 
-			$promotions = collect();
+	// public function redeemPromotion($id)
+	// {
+	// 	$user = Auth::user();
+	// 	$promotion = Promotion::findOrFail($id);
 
-		}
+	// 	if ($user->membership->points < $promotion->points) {
+	// 		return back()->with('error', 'Bạn không đủ điểm để đổi mã giảm giá này.');
+	// 	}
 
-		// hoir chatgpt lấy ra số lượng mã giảm giá của tôi
+	// 	if ($promotion->quantity <= 0) {
+	// 		return back()->with('error', 'Mã giảm giá đã hết.');
+	// 	}
 
-		// $countMyPromotion = 
-		return view('clients.profile.promotion', compact('promotions', 'tab'));
-	}
+	// 	$user->membership->points -= $promotion->points;
+	// 	$promotion->quantity -= 1;
 
-	public function redeemPromotion($id)
-	{
-		// code ở đây
+	// 	try {
+	// 		Membership::where('user_id', $user->id)->update(['points' => $user->membership->points]);
+	// 		$promotion->save();
+	// 	} catch (\Exception $e) {
+	// 		return back()->with('error', 'Đã có lỗi xảy ra.');
+	// 	}
 
-		// Kiểm tra xem mã giảm giá có tồn tại không + còn hạn không + còn số lượng không
-
-		// Lưu mã giảm giá vào bảng promotion_users và trừ điểm của người dùng + trừ số lượng của mã giảm giá nếu đủ điều kiện
-
-		// Điều hướng và thông báo thành công hoặc thất bại
-
-		return back()->with('success', 'Mã giảm giá đã được sử dụng');
-	}
+	// 	return back()->with('success', 'Bạn đã đổi mã giảm giá thành công');
+	// }
 
 	public function addLocation()
 	{

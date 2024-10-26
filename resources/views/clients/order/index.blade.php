@@ -221,10 +221,10 @@
                                 @foreach ($groupedProducts as $group)
                                     <div class="product-card overflow-hidden">
                                         <div class="flex w-full items-center justify-between">
-                                            <div class="flex gap-4">
+                                            <div class="flex gap-4 ">
                                                 <img alt="" class="h-auto w-24 object-cover" loading="lazy"
                                                     src="{{ asset('storage/uploads/products/' . $group['product']->image) }}">
-                                                <div class="py-2 text-left">
+                                                <div class="py-2 text-left min-w-[400px]">
                                                     <p class="mb-2 font-medium">{{ $group['product']->name }}</p>
                                                     <div class="mb-4 text-sm">
                                                         <p>{{ $group['attribute'] }}</p>
@@ -235,11 +235,11 @@
                                                             class="line-through">{{ number_format($group['discount_price']) }}đ</span>
                                                         <span
                                                             class="font-medium">{{ number_format($group['price']) }}đ</span>
-                                                        <span class="ml-auto mr-4 text-[#D30A0A] font-medium">x{{ $group['quantity'] }}</span>
+                                                        </div>
+                                                        <span class="float-right mr-4 text-[#D30A0A] font-medium">x{{ $group['quantity'] }}</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
                                     </div>
                                 @endforeach
 

@@ -18,11 +18,9 @@ class PromotionSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
-        $users = User::pluck('id')->toArray(); // Lấy ID của tất cả người dùng
         $ranks = MembershipRank::all();
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $discount_type = rand(1, 2);
             $discount_value = $discount_type == 1 ? rand(10, 50) : rand(50000, 100000);
 
@@ -30,7 +28,7 @@ class PromotionSeeder extends Seeder
             $is_global = rand(1, 2);
 
             // Tạo mới một khuyến mãi
-            $promotion = Promotion::create([
+            Promotion::create([
                 'code' => Str::random(8),
                 'points' => rand(1, 10) * 50,
                 'discount_type' => $discount_type,
@@ -46,16 +44,6 @@ class PromotionSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
-
-            foreach ($users as $user) {
-                // Tạo mới bản ghi liên kết giữa khuyến mãi và người dùng
-                PromotionUser::create([
-                    'promotion_id' => $promotion->id, // Sử dụng ID của khuyến mãi đã tạo
-                    'user_id' => $user,
-                    'created_at' => $now,
-                    'updated_at' => $now,
-                ]);
-            }
         }
     }
 }
