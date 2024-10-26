@@ -45,7 +45,7 @@
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
                                 {{ ($promotions->currentPage() - 1) * $promotions->perPage() + $loop->iteration }}</td>
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->code }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap uppercase">{{ $promotion->code }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
                                 @if ($promotion->discount_type == '1')
                                     Giảm theo %
