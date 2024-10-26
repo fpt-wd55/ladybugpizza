@@ -207,8 +207,7 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('../../../js/tableCheckboxItem.js') }}"></script>
     <script>
-        tableCheckboxItem("table-checkbox-all", "table-item-checkbox");
+        tableCheckboxItem('table-checkbox-all', 'table-item-checkbox');
     </script>
 @endsection
