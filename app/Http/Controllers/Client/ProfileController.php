@@ -246,26 +246,26 @@ class ProfileController extends Controller
 		return redirect()->back()->with('error', 'Thay đổi trạng thái thất bại');
 	}
 
-	// public function promotion()
-	// {
-	// 	$myCodes = PromotionUser::where('user_id', Auth::id())
-	// 		->with('promotion')
-	// 		->paginate(10);
+	public function promotion()
+	{
+		$myCodes = PromotionUser::where('user_id', Auth::id())
+			->with('promotion')
+			->paginate(10);
 
-	// 	$redeemCodes = Promotion::where('status', 1)
-	// 		->when(request('rank_id'), function ($query) {
-	// 			return $query->where('rank_id', request('rank_id'));
-	// 		})
-	// 		->count();
+		$redeemCodes = Promotion::where('status', 1)
+			->when(request('rank_id'), function ($query) {
+				return $query->where('rank_id', request('rank_id'));
+			})
+			->count();
 
-	// 	$currentPoint = Auth::user()->membership->points ?? 0;
+		$currentPoint = Auth::user()->membership->points ?? 0;
 
-	// 	return view('clients.profile.promotion', [
-	// 		'promotions' => $myCodes,
-	// 		'totalPromotions' => $totalPromotions,
-	// 		'currentPoint' => $currentPoint,
-	// 	]);
-	// }
+		return view('clients.profile.promotion', [
+			'promotions' => $myCodes,
+			'totalPromotions' => $totalPromotions,
+			'currentPoint' => $currentPoint,
+		]);
+	}
 
 	// public function redeemPromotion($id)
 	// {
