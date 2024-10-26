@@ -36,7 +36,6 @@ class OrderController extends Controller
 
         $orderStatuses = OrderStatus::all();
         $invoices = Invoice::all();
-        
         return view('clients.order.index', [
             'orderStatuses' => $orderStatuses,
             'invoices' => $invoices,
