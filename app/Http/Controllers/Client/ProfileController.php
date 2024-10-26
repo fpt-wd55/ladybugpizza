@@ -238,7 +238,6 @@ class ProfileController extends Controller
 			// Lưu cài đặt
 			$settings->save();
 
-			// Trả về thông báo thành công
 			return redirect()->back()->with('success', 'Cài đặt đã được cập nhật!');
 		}
 
