@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Topping;
 use Illuminate\Http\Request;
 
 class ComboController extends Controller
@@ -23,7 +25,9 @@ class ComboController extends Controller
      */
     public function create()
     {
-        return view('admins.combo.create');
+        $toppings = Topping::all();
+        $categories = Category::whereNotIn('id', [1,7])->get();
+        return view('admins.combo.create', compact('toppings', 'categories'));
     }
 
     /**
@@ -79,6 +83,6 @@ class ComboController extends Controller
     }
 
     public function forceDelete() {
-        
+
     }
 }
