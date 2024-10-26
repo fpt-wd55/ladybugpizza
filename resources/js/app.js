@@ -9,7 +9,7 @@ import {
     getProvinces,
     getDistrictsByProvince,
     getWardsByDistrict,
-    getAddressNamesByCodes
+    getAddressNamesByCodes,
 } from "./getLocation";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -52,7 +52,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    const addressNames = getAddressNamesByCodes(addressCodes.province, addressCodes.district, addressCodes.ward);
+    const addressNames = getAddressNamesByCodes(
+        addressCodes.province,
+        addressCodes.district,
+        addressCodes.ward
+    );
 
     renderProvinces();
 });
