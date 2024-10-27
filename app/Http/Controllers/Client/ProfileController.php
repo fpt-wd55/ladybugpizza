@@ -223,11 +223,8 @@ class ProfileController extends Controller
 	}
 	public function updateStatus(Request $request, string $id)
 	{
-		// Tìm cài đặt dựa trên ID
 		$settings = UserSetting::query()->findOrFail($id);
-
 		if ($settings) {
-			// Cập nhật các giá trị dựa trên request
 			$settings->email_order = $request->has('email_order') ? 1 : 0;
 			$settings->email_promotions = $request->has('email_promotions') ? 1 : 0;
 			$settings->email_security = $request->has('email_security') ? 1 : 0;
