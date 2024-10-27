@@ -168,7 +168,7 @@
                                 hàng</a>
                         </li>
                         <li>
-                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Tài
+                            <a href="{{route('admin.profiles.index')}}" class="block py-2 px-4 hover:bg-gray-100">Tài
                                 khoản</a>
                         </li>
                         <li>
