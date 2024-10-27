@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\ToppingController;
 use App\Http\Controllers\Admin\UserController;
@@ -181,10 +182,10 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/shippings', ShippingController::class);
     Route::resource('/pages', AdminPageController::class);
     Route::resource('/logs', LogController::class);
-
+    // profile
+    Route::resource('/profiles',AdminProfileController::class);
     // Chat
     Route::resource('/chats', MessageController::class);
-
     Route::get('/components', [DashboardController::class, 'components']);
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
 });
