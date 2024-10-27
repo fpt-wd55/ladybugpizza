@@ -102,9 +102,27 @@ class MembershipController extends Controller
         // Trả về view với dữ liệu của thành viên, rank, và progress,history,tab
         return view('admins.memberships.edit', compact('membership', 'progress', 'img', 'rank', 'histories'));
     }
+
     public function export()
     {
         $memberships = Membership::all();
         $this->exportExcel($memberships, 'danhsachdiemthanhvien');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+        $memberships = Membership::whereHas('user', function ($query) use ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        })->paginate(10);
+        return view('admins.memberships.index', compact('memberships'));
+
+        // $search = $request->search;
+        // $users = User::where('username', 'like', '%' . $search . '%')
+        //     ->orWhere('fullname', 'like', '%' . $search . '%')
+        //     ->orWhere('email', 'like', '%' . $search . '%')
+        //     ->orWhere('phone', 'like', '%' . $search . '%')
+        //     ->paginate(10);
+        // return view('admins.user.index', compact('users'));
     }
 }

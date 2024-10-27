@@ -171,6 +171,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/promotion/export', [PromotionController::class, 'export'])->name('promotions.export');
     // Membership
     Route::resource('/memberships', MembershipController::class);
+    Route::get('/membership/search', [MembershipController::class, 'search'])->name('memberships.search');
     Route::get('/membership/export', [MembershipController::class, 'export'])->name('memberships.export');
     Route::post('/memberships/{membership}/status', [MembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
     // Đánh Giá
