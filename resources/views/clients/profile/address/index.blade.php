@@ -138,6 +138,7 @@
                             </div>
                         </div> --}}
                     @endforeach
+                    
                 </div>
                 <div class="p-1">
                     {{ $addresses->links() }}

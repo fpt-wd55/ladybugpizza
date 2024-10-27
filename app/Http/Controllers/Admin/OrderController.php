@@ -29,7 +29,6 @@ class OrderController extends Controller
 
     $orderStatuses = OrderStatus::all();
     $invoices = Invoice::all();
-
     return view('admins.order.index', compact('orders', 'invoices', 'orderStatuses'));
 }
 

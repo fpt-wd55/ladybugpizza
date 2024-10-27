@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             CartItemToppingSeeder::class,
             PaymentMethodSeeder::class,
             PromotionSeeder::class,
+            PromotionUserSeeder::class,
             OrderSeeder::class,
             BannerSeeder::class,
             EvaluationSeeder::class, 
