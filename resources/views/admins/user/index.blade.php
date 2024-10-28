@@ -40,7 +40,7 @@
                         </h2>
                     </div>
                     <div id="actionsDropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
-                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="actionsDropdownButton">
+                        <ul class="py-1 text-sm text-gray-700" aria-labelledby="actionsDropdownButton">
                             <li>
                                 <a href="#" class="block py-2 px-4 hover:bg-gray-100">Kích hoạt/Khóa</a>
                             </li>
@@ -61,6 +61,7 @@
                         <input type="text" name="search" class="input ps-10" placeholder="Tìm kiếm..." />
                     </div>
                 </form>
+
                 <div class="flex items-center space-x-3 w-full md:w-auto">
                     <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
                         class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
@@ -271,5 +272,8 @@
 @section('scripts')
     <script>
         tableCheckboxItem('table-checkbox-all', 'table-item-checkbox');
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector('[data-modal-toggle="defaultModal"]').click();
+        });
     </script>
 @endsection
