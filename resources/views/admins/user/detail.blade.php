@@ -45,7 +45,7 @@
                     <div class="space-y-4">
                         <div class="flex space-x-4">
                             <a class="shrink-0 me-2" data-fslightbox="gallery" href="{{ $user->avatar() }}">
-                                <img loading="lazy" class="h-16 w-16 rounded-lg" src="{{ $user->avatar() }}"
+                                <img loading="lazy" class="h-16 w-16 rounded-lg object-cover" src="{{ $user->avatar() }}"
                                     alt="Avatar" />
                             </a>
                             <div>
@@ -398,7 +398,7 @@
                         <dl class="w-1/2 sm:w-1/5 md:flex-1 lg:w-auto">
                             <dt class="text-base font-medium text-gray-500 ">Đơn giá:</dt>
                             <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
-                                {{ number_format($order->amount) }}đ
+                                {{ number_format($order->amount) }}₫
                             </dd>
                         </dl>
 

@@ -12,7 +12,7 @@
                     <div class="grid gap-4 mb-4 grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
                         <a class="shrink-0" data-fslightbox="gallery"
                             href="{{ asset('storage/uploads/avatars/' . $user->avatar) }}">
-                            <img loading="lazy" class="w-20 h-20 rounded-full"
+                            <img loading="lazy" class="w-20 h-20 rounded-full object-cover"
                                 src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}">
                         </a>
                         <div class="flex items-center justify-center w-full col-span-2 md:col-span-3 lg:col-span-6">

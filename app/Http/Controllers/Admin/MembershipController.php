@@ -123,6 +123,7 @@ class MembershipController extends Controller
                     ->orWhere('fullname', 'like', '%' . $search . '%');
             })
             ->paginate(10);
+        $memberships->appends(['search' => $search]);
         // Lặp qua từng membership và tính rank dựa theo điểm
         foreach ($memberships as $membership) {
             $points = $membership->points; // Lấy điểm của thành viên hiện tại

@@ -64,7 +64,7 @@ class ToppingController extends Controller
 
         if ($topping->update($data)) {
             if ($request->hasFile('image')) {
-                $topping_image->storeAs('uploads/toppings', $topping_name); 
+                $topping_image->storeAs('uploads/toppings', $topping_name);
                 // xóa ảnh cũ
                 if ($old_image != null) {
                     unlink(storage_path('app/public/uploads/toppings/' . $old_image));
@@ -107,7 +107,19 @@ class ToppingController extends Controller
         $topping->forceDelete();
         return back()->with('success', 'Đã xóa vĩnh viễn!');
     }
-    public function export(){
+    public function export()
+    {
         $this->exportExcel(Topping::all(), 'danhsachtopping');
+    }
+
+    public function search(Request $request)
+    {
+        $categories = Category::all();
+        // $toppings = Topping::latest('id')->paginate(10);
+        $toppings = Topping::where('name', 'like', '%' . $request->search . '%')
+            ->latest('id')
+            ->paginate(10);
+        $toppings->appends(['search' => $request->search]);
+        return view('admins.toppings.index', compact('toppings', 'categories'));
     }
 }

@@ -9,7 +9,7 @@
                     @svg('tabler-baseline-density-medium', 'w-6 h-6 text-gray-500')
                 </button>
                 <a href="{{ route('admin.dashboard') }}" class="flex ms-2 md:me-24">
-                    <img alt="" class="img-sm me-3" loading="lazy"
+                    <img alt="" class="img-sm me-3 object-cover" loading="lazy"
                         src="{{ asset('storage/uploads/logo/logo.svg') }}">
                     <span class="hidden md:block self-center text-lg font-semibold whitespace-nowrap">Ladybug
                         Pizza</span>
@@ -37,7 +37,7 @@
                     <div>
                         <a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
                             <div class="flex-shrink-0">
-                                <img loading="lazy" class="w-11 h-11 rounded-full"
+                                <img loading="lazy" class="w-11 h-11 rounded-full object-cover"
                                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png"
                                     alt="Joseph McFall avatar">
                             </div>
@@ -53,7 +53,7 @@
                         </a>
                         <a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
                             <div class="flex-shrink-0">
-                                <img loading="lazy" class="w-11 h-11 rounded-full"
+                                <img loading="lazy" class="w-11 h-11 rounded-full object-cover"
                                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png"
                                     alt="Roberta Casas image">
                             </div>
@@ -151,9 +151,8 @@
                 <button type="button" class="flex mx-3 bg-gray-800 rounded-full md:mr-0 ring-0 focus:ring-0"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                     <span class="sr-only">Open user menu</span>
-                    <img id="avatar-preview" loading="lazy" class="w-8 h-8 rounded-full"
-                        src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('storage/uploads/avatars/user-default.png') }}">
-                </button>
+                    <img loading="lazy" class="w-8 h-8 rounded-full object-cover"
+                        src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}">
                 <!-- User Dropdown menu -->
                 <div class="hidden z-50 my-4 w-56 list-none bg-white rounded divide-y divide-gray-100 shadow text-sm"
                     id="dropdown">

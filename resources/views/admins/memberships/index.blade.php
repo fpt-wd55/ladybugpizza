@@ -182,7 +182,7 @@
                                 <a class="shrink-0" href="{{ route('admin.memberships.edit', $membership) }}">
                                     <img loading="lazy"
                                         src="{{ asset('storage/uploads/avatars/' . $membership->user->avatar) }}"
-                                        class="img-circle img-sm lg:w-11 lg:h-11 mr-3 rounded border-2 hover:border-[#D30A0A]">
+                                        class="img-circle img-sm lg:w-11 lg:h-11 mr-3 rounded border-2 hover:border-[#D30A0A] object-cover">
                                 </a>
                                 <a href="{{ route('admin.memberships.edit', $membership) }}" class="hover:text-[#D30A0A]">
                                     <div class="grid grid-flow-row">
@@ -197,7 +197,7 @@
                                 <div class="flex flex-col items-center ">
                                     <img loading="lazy"
                                         src="{{ asset('storage/uploads/ranks/' . $membership->rank_img) }}"
-                                        class="img-circle w-7 h-7">
+                                        class="img-circle w-7 h-7 object-cover">
                                     <p
                                         class="uppercase text-xs md:text-sm md:font-medium lg:font-semibold {{ $membership->rank_color }}">
                                         {{ $membership->rank_name }}</p>

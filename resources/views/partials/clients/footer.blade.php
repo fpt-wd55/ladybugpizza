@@ -6,7 +6,7 @@
 
     <div class="grid grid-cols-1 items-start gap-8 py-4 md:grid-cols-2 lg:grid-cols-3">
         <div class="flex flex-col items-start justify-center">
-            <img alt="logo" class="mb-4 w-16" loading="lazy" src="{{ asset('storage/uploads/logo/logo.svg') }}">
+            <img alt="logo" class="mb-4 w-16 object-cover" loading="lazy" src="{{ asset('storage/uploads/logo/logo.svg') }}">
             <p class="text-lg font-semibold">Ladybug Pizza</p>
         </div>
         <div>

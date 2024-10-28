@@ -3,7 +3,6 @@
 
 @section('content')
     {{ Breadcrumbs::render('admin.orders.index') }}
-
     <div class="mt-5 bg-white shadow sm:rounded-lg overflow-hidden">
         <div
             class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
@@ -50,7 +49,7 @@
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.users.search') }}">
+                <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.orders.search') }}">
                     <div class="relative w-full">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                             @svg('tabler-search', 'w-5 h-5 text-gray-400')
@@ -188,11 +187,12 @@
                 <tbody>
                     @forelse ($orders as $order)
                         <tr class="border-b hover:bg-gray-100">
-                            <div class="flex items-center">
-                                <input id="table-item-checkbox-{{ $order->id }}" type="checkbox"
-                                    onclick="event.stopPropagation()"
-                                    class="table-item-checkbox w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                            </div>
+                            <td class="w-4 px-4 py-3">
+                                <div class="flex items-center">
+                                    <input id="table-item-checkbox-{{ $order->id }}" type="checkbox"
+                                        onclick="event.stopPropagation()"
+                                        class="table-item-checkbox w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                </div>
                             </td>
                             <td class="px-4 py-2">{{ $order->user->fullname }}</td>
                             <td class="px-4 py-2">
@@ -344,7 +344,7 @@
                                                 </div>
                                                 <div>
                                                     <label class="font-semibold">Tổng tiền thanh toán</label>
-                                                    <p>{{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ
+                                                    <p>{{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}₫
                                                     </p>
                                                 </div>
                                             </div>

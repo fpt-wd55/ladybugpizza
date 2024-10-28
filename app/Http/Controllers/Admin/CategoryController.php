@@ -156,6 +156,7 @@ class CategoryController extends Controller
     public function search(Request $request)
     {
         $category = Category::where('name', 'like', '%' . $request->search . '%')->paginate(10);
+        $category->appends(['search' => $request->search]);
         return view('admins.category.list', compact('category'));
     }
 }

@@ -10,7 +10,7 @@
                     <div class="grid gap-4 md:grid-cols-2 sm:gap-8 lg:gap-16">
                         <div class="space-y-4">
                             <div class="flex space-x-4">
-                                <img loading="lazy" class="img-circle w-20 h-20 mr-3 rounded"
+                                <img loading="lazy" class="img-circle w-20 h-20 mr-3 rounded object-cover"
                                     src="{{ asset('storage/uploads/avatars/' . $membership->user->avatar) }}" alt="Avatar"
                                     {{ Auth::user()->avatar() }} />
                                 <div>
@@ -44,7 +44,7 @@
                                 {{-- Điểm hội viên --}}
                                 <div class="flex flex-col md:flex-row items-center gap-4">
                                     <img loading="lazy" src="{{ asset('storage/uploads/ranks/' . $img) }}" alt=""
-                                        class="img-md md:img-sm">
+                                        class="img-md md:img-sm object-cover">
                                     <div class="w-full mx-1">
                                         <div class="flex items-center justify-between mb-1 px-1 ">
                                             <p

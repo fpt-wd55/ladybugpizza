@@ -55,7 +55,7 @@
                 </div>
                 <div
                     class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                    <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.users.search') }}">
+                    <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.promotions.search') }}">
                         <div class="relative w-full">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                 @svg('tabler-search', 'w-5 h-5 text-gray-400')
@@ -197,7 +197,7 @@
                                 @if ($promotion->discount_type == '1')
                                     {{ number_format($promotion->discount_value) }}%
                                 @elseif ($promotion->discount_type == '2')
-                                    {{ number_format($promotion->discount_value) }}đ
+                                    {{ number_format($promotion->discount_value) }}₫
                                 @endif
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ number_format($promotion->quantity) }}
