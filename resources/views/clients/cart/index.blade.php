@@ -13,7 +13,7 @@
                             <div class="w-full flex justify-between items-center pe-4">
                                 <div class="flex gap-4">
                                     <img loading="lazy" src="{{ asset('storage/uploads/products/tiramisu.jpeg') }}"
-                                        class="img-md h-full" alt="">
+                                        class="img-md h-full object-cover" alt="">
                                     <div class="text-left py-2">
                                         <p class="font-medium mb-4">Pizza xúc xích</p>
                                         <div class="text-sm">
@@ -24,8 +24,8 @@
                                 </div>
                                 <div class="text-right">
                                     <div class="mb-4 flex items-center gap-2">
-                                        <span class="line-through text-sm text-gray-600">320,000đ</span>
-                                        <span class="font-medium">300,000đ</span>
+                                        <span class="line-through text-sm text-gray-600">320,000₫</span>
+                                        <span class="font-medium">300,000₫</span>
                                     </div>
                                     <div class="inline-flex rounded-md shadow-sm" role="group">
                                         <button type="button"
@@ -61,20 +61,20 @@
                     <div>
                         <div class="flex items-center justify-between mb-4 gap-32 text-sm">
                             <p class="">Tổng tiền sản phẩm</p>
-                            <p class="font-medium">150,000đ</p>
+                            <p class="font-medium">150,000₫</p>
                         </div>
                         <div class="flex items-center justify-between mb-4 gap-32 text-sm">
                             <p class="">Phí vận chuyển</p>
-                            <p class="font-medium">150,000đ</p>
+                            <p class="font-medium">150,000₫</p>
                         </div>
                         <div class="flex items-center justify-between mb-4 gap-32 text-sm">
                             <p class="">Giảm giá</p>
-                            <p class="font-medium">150,000đ</p>
+                            <p class="font-medium">150,000₫</p>
                         </div>
                         <hr class="mb-4">
                         <div class="flex items-center justify-between mb-4 gap-32">
                             <p class="font-medium">Tổng thanh toán</p>
-                            <p class="font-medium">150,000đ</p>
+                            <p class="font-medium">150,000₫</p>
                         </div>
                     </div>
                 </div>

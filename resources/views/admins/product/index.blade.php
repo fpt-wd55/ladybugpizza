@@ -56,7 +56,7 @@
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.users.search') }}">
+                <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.products.search') }}">
                     <div class="relative w-full">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                             @svg('tabler-search', 'w-5 h-5 text-gray-400')
@@ -192,7 +192,7 @@
                                     href="{{ asset('storage/uploads/products/' . $product->image) }}">
                                     <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
                                         onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
-                                        class="w-8 h-8 mr-3 rounded bg-slate-400">
+                                        class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
                                 </a>
 
                                 <div class="grid grid-flow-row">
@@ -218,12 +218,12 @@
                                 <div class="grid grid-flow-row">
                                     @if ($product->discount_price == 0)
                                         <span class="text-sm">
-                                            {{ number_format($product->price) }}đ
+                                            {{ number_format($product->price) }}₫
                                         </span>
                                     @else
-                                        <span class="text-sm line-through">{{ number_format($product->price) }}đ</span>
+                                        <span class="text-sm line-through">{{ number_format($product->price) }}₫</span>
                                         <span class="text-sm">
-                                            {{ number_format($product->discount_price) }}đ
+                                            {{ number_format($product->discount_price) }}₫
                                         </span>
                                     @endif
                                 </div>

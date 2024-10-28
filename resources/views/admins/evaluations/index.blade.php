@@ -47,7 +47,7 @@
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.users.search') }}">
+                <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.evaluations.search') }}">
                     <div class="relative w-full">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                             @svg('tabler-search', 'w-5 h-5 text-gray-400')
@@ -169,7 +169,7 @@
                 <tbody>
                     {{-- item --}}
 
-                    @forelse ($product as $key => $item)
+                    @forelse ($products as $key => $item)
                         <tr class="border-b">
                             <td class="w-4 px-4 py-3">
                                 <div class="flex items-center">
@@ -234,7 +234,7 @@
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $product->onEachSide(1)->links() }}
+                {{ $products->onEachSide(1)->links() }}
             </div>
         </div>
     </div>

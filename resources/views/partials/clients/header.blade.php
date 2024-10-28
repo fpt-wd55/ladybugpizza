@@ -4,7 +4,7 @@
             {{-- Logo --}}
             <ul class="flex items-center gap-4">
                 <a class="md:flex md:items-center" href="{{ route('client.home') }}">
-                    <img alt="" class="img-sm" loading="lazy" src="{{ asset('storage/uploads/logo/logo.svg') }}">
+                    <img alt="" class="img-sm object-cover" loading="lazy" src="{{ asset('storage/uploads/logo/logo.svg') }}">
                 </a>
 
                 <div class="hidden items-center gap-4 lg:flex">

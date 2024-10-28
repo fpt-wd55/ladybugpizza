@@ -208,4 +208,14 @@ class ProductController extends Controller
         $products = Product::all();
         $this->exportExcel($products, 'danhsachsanpham');
     }
+
+    public function search(Request $request)
+    {
+        $products = Product::orderBy('id', 'desc')
+            ->where('name', 'like', '%' . $request->search . '%')
+            ->orWhere('sku', 'like', '%' . $request->search . '%')
+            ->paginate(10);
+        $products->appends(['search' => $request->search]);
+        return view('admins.product.index', compact('products'));
+    }
 }

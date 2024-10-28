@@ -44,7 +44,7 @@
                                         <input {{ $index === 0 ? 'checked' : '' }} class="peer hidden" id="attribute_{{ $value->id }}" name="attributes[{{ $attribute->slug }}]" required type="radio" value="{{ $value->id }}" />
                                         <label class="label-peer flex flex-col items-center gap-2" for="attribute_{{ $value->id }}">
                                             <p class="text-sm font-medium">{{ $value->value }}</p>
-                                            <p class="text-sm">+ {{ number_format($value->price($product)) }}đ</p>
+                                            <p class="text-sm">+ {{ number_format($value->price($product)) }}₫</p>
                                         </label>
                                     </div>
                                 @endforeach
@@ -65,7 +65,7 @@
                                         <img alt="{{ $topping->name }}" class="h-16 w-16 flex-shrink-0 rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
                                         <div class="text-sm">
                                             <p class="mb-2 font-medium">{{ $topping->name }}</p>
-                                            <p>+ {{ number_format($topping->price) }} đ</p>
+                                            <p>+ {{ number_format($topping->price) }} ₫</p>
                                         </div>
                                     </label>
                                 </div>
@@ -130,8 +130,8 @@
                 </div>
 
                 <div class="flex items-center justify-center gap-4">
-                    <p class="text-sm line-through">175,000đ</p>
-                    <p class="text-lg font-semibold">143,000đ</p>
+                    <p class="text-sm line-through">175,000₫</p>
+                    <p class="text-lg font-semibold">143,000₫</p>
                 </div>
 
                 <div class="flex items-center justify-end gap-2">

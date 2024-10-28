@@ -45,7 +45,7 @@
                                             class="img-sm img-circle object-cover">
                                     </a>
                                 </td>
-                                <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ number_format($topping->price) }}đ
+                                <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ number_format($topping->price) }}₫
                                 </td>
                                 <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
                                     @foreach ($categories as $category)

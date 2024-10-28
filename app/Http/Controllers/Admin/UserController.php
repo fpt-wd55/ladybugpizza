@@ -177,12 +177,12 @@ class UserController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->search;
-        $users = User::where('username', 'like', '%' . $search . '%')
-            ->orWhere('fullname', 'like', '%' . $search . '%')
-            ->orWhere('email', 'like', '%' . $search . '%')
-            ->orWhere('phone', 'like', '%' . $search . '%')
+        $users = User::where('username', 'like', '%' . $request->search . '%')
+            ->orWhere('fullname', 'like', '%' . $request->search . '%')
+            ->orWhere('email', 'like', '%' . $request->search . '%')
+            ->orWhere('phone', 'like', '%' . $request->search . '%')
             ->paginate(10);
+        $users->appends(['search' => $request->search]);
         return view('admins.user.index', compact('users'));
     }
 }

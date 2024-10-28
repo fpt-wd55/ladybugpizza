@@ -126,11 +126,13 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/addresses', AddressController::class);
     // Order
     Route::resource('/orders', AdminOrderController::class);
+    Route::get('/order/search', [AdminOrderController::class, 'search'])->name('orders.search');
     Route::get('/order/export', [AdminOrderController::class, 'export'])->name('orders.export');
 
     Route::resource('/carts', AdminCartController::class);
     // Product
     Route::resource('/products', AdminProductController::class);
+    Route::get('/product/search', [AdminProductController::class, 'search'])->name('products.search');
     Route::get('/product/export', [AdminProductController::class, 'export'])->name('products.export');
     Route::get('/product/trash', [AdminProductController::class, 'trash'])->name('trash-products');
     Route::post('/product/restore/{id}', [AdminProductController::class, 'restore'])->name('restore-product');
@@ -150,6 +152,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::delete('/combo/delete/{id}', [ComboController::class, 'deleteCombo'])->name('delete-combo');
     // Topping
     Route::resource('/toppings', ToppingController::class);
+    Route::get('/topping/search', [ToppingController::class, 'search'])->name('toppings.search');
     Route::get('/topping/export', [ToppingController::class, 'export'])->name('toppings.export');
     Route::get('/topping/trash', [ToppingController::class, 'trashTopping'])->name('trash-topping');
     Route::get('/topping/restore/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
@@ -169,6 +172,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::post('/banner/delete/{id}', [BannerController::class, 'trashForce'])->name('trash.bannerDelete');
     // Promotion
     Route::resource('/promotions', PromotionController::class);
+    Route::get('/promotion/search', [PromotionController::class, 'search'])->name('promotions.search');
     Route::get('/promotion/export', [PromotionController::class, 'export'])->name('promotions.export');
     // Membership
     Route::resource('/memberships', MembershipController::class);
@@ -176,9 +180,11 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/membership/export', [MembershipController::class, 'export'])->name('memberships.export');
     Route::post('/memberships/{membership}/status', [MembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
     // Đánh Giá
-    Route::resource('/evaluations', EvaluationController::class);
+    Route::get('/evaluations', [EvaluationController::class, 'index'])->name('evaluations.index');
+    Route::get('/evaluations/search', [EvaluationController::class, 'search'])->name('evaluations.search');
     Route::get('/evaluation/export', [EvaluationController::class, 'export'])->name('evaluations.export');
     Route::patch('/evaluations/update-status/{id}', [EvaluationController::class, 'updateStatus'])->name('evaluation.updateStatus');
+
     Route::resource('/transactions', TransactionController::class);
     Route::resource('/shippings', ShippingController::class);
     Route::resource('/pages', AdminPageController::class);

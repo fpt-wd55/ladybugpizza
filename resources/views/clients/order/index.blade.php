@@ -56,9 +56,9 @@
                             </div>
                             <div class="text-right">
                                 <p class="font-light text-sm text-gray-600 line-through">
-                                    {{ number_format($order->amount + $order->shipping_fee) }}đ</p>
+                                    {{ number_format($order->amount + $order->shipping_fee) }}₫</p>
                                 <p class="text-base font-medium">
-                                    {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ
+                                    {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}₫
                                 </p>
                             </div>
                         </div>
@@ -159,8 +159,8 @@
                                                             </p>
                                                         </div>
                                                         <div class="flex items-center gap-2 text-sm">
-                                                            <span class="line-through">320,000đ</span>
-                                                            <span class="font-medium">300,000đ</span>
+                                                            <span class="line-through">320,000₫</span>
+                                                            <span class="font-medium">300,000₫</span>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -36,8 +36,8 @@
                                         <p class="font-medium">
                                             <span class="code me-2 uppercase">{{ $promotion->promotion->code }}</span>
                                         </p>
-                                        <p>Giảm {{ $promotion->promotion->discount_type == 1 ? $promotion->promotion->discount_value . '%' : number_format($promotion->promotion->discount_value) . 'đ' }} cho đơn tối thiểu {{ number_format($promotion->promotion->min_order_total) }} đ</p>
-                                        <p>Giảm tối đa {{ number_format($promotion->promotion->max_discount) }} đ</p>
+                                        <p>Giảm {{ $promotion->promotion->discount_type == 1 ? $promotion->promotion->discount_value . '%' : number_format($promotion->promotion->discount_value) . '₫' }} cho đơn tối thiểu {{ number_format($promotion->promotion->min_order_total) }} đ</p>
+                                        <p>Giảm tối đa {{ number_format($promotion->promotion->max_discount) }} ₫</p>
                                         <p>Có hiệu lực từ <span class="font-medium">{{ $promotion->promotion->start_date }}</span> đến
                                             <span class="font-medium">{{ $promotion->promotion->end_date }}</span>
                                         </p>
@@ -65,8 +65,8 @@
                                             <span class="me-2 uppercase">{{ $promotion->code }}</span>
                                             <span class="badge-light inline-flex items-center">{{ $promotion->points }} @svg('tabler-coins', 'icon-sm ms-2')</span>
                                         </p>
-                                        <p>Giảm {{ $promotion->discount_type == 1 ? $promotion->discount_value . '%' : number_format($promotion->discount_value) . 'đ' }} cho đơn tối thiểu {{ number_format($promotion->min_order_total) }} đ</p>
-                                        <p>Giảm tối đa {{ number_format($promotion->max_discount) }} đ</p>
+                                        <p>Giảm {{ $promotion->discount_type == 1 ? $promotion->discount_value . '%' : number_format($promotion->discount_value) . '₫' }} cho đơn tối thiểu {{ number_format($promotion->min_order_total) }} ₫</p>
+                                        <p>Giảm tối đa {{ number_format($promotion->max_discount) }} ₫</p>
                                         <p>Có hiệu lực từ <span class="font-medium">{{ $promotion->start_date }}</span> đến
                                             <span class="font-medium">{{ $promotion->end_date }}</span>
                                         </p>
