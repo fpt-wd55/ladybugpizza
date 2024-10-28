@@ -151,7 +151,7 @@
                 <button type="button" class="flex mx-3 bg-gray-800 rounded-full md:mr-0 ring-0 focus:ring-0"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                     <span class="sr-only">Open user menu</span>
-                    <img id="avatar-preview" loading="lazy" class="w-8 h-8 rounded-full"
+                    <img loading="lazy" class="w-8 h-8 rounded-full"
                         src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('storage/uploads/avatars/user-default.png') }}">
                 </button>
                 <!-- User Dropdown menu -->
