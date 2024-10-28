@@ -28,10 +28,10 @@
                     <div class="" onclick="toggleAccordion({{ $order->id }})">
                         <div class="mb-2 space-y-4 text-sm">
                             <div class="flex items-center">
-                                <p class="text-base font-medium text-[#D30A0A]">#LADYBUG-2024{{ $order->id }}</p>
+                                <p class="sm:text-xs md:text-base font-medium text-[#D30A0A]">#LADYBUG-2024{{ $order->id }}</p>
                                 <div class="ms-auto space-x-2">
                                     <span
-                                        class="inline-block px-3 py-1 text-sm font-semibold text-{{ $order->orderStatus->color }}-700 bg-{{ $order->orderStatus->color }}-100 rounded-full">{{ $order->orderStatus->name }}</span>
+                                        class="inline-block px-3 py-1 sm:text-xs md:text-sm font-semibold text-{{ $order->orderStatus->color }}-700 bg-{{ $order->orderStatus->color }}-100 rounded-full">{{ $order->orderStatus->name }}</span>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                     {{-- start modal delete --}}
                     <div id="deleteBanner-modal-{{ $order->id }}" tabindex="-1"
                         class="hidden  overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                        <div class="card relative w-full max-w-md max-h-full">
+                        <div class="card relative  max-w-[350px] max-h-sm md:max-w-[500px] md:max-h-sm lg:max-w-lg lg:max-h-lg">
                             <div class="relative bg-white rounded-lg shadow">
                                 <button type="button"
                                     class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
@@ -223,7 +223,7 @@
                                             <div class="flex gap-4 ">
                                                 <img alt="" class="h-auto w-24 object-cover" loading="lazy"
                                                     src="{{ asset('storage/uploads/products/' . $group['product']->image) }}">
-                                                <div class="py-2 text-left min-w-[400px]">
+                                                <div class="py-2 text-left md:min-w-[300px] ">
                                                     <p class="mb-2 font-medium">{{ $group['product']->name }}</p>
                                                     <div class="mb-4 text-sm">
                                                         <p>{{ $group['attribute'] }}</p>
