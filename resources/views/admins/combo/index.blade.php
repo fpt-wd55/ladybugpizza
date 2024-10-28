@@ -51,7 +51,7 @@
                                     href="{{ asset('storage/uploads/products/' . $combo->image) }}">
                                     <img loading="lazy" src="{{ asset('storage/uploads/products/' . $combo->image) }}"
                                         onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
-                                        class="w-8 h-8 mr-3 rounded bg-slate-400">
+                                        class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
                                 </a>
                                 <div class="grid grid-flow-row">
                                     <span class="text-sm">{{ $combo->name }}</span>
@@ -74,12 +74,12 @@
                                 <div class="grid grid-flow-row">
                                     @if ($combo->discount_price == 0)
                                         <span class="text-sm">
-                                            {{ number_format($combo->price) }}đ
+                                            {{ number_format($combo->price) }}₫
                                         </span>
                                     @else
-                                        <span class="text-sm line-through">{{ number_format($combo->price) }}đ</span>
+                                        <span class="text-sm line-through">{{ number_format($combo->price) }}₫</span>
                                         <span class="text-sm">
-                                            {{ number_format($combo->discount_price) }}đ
+                                            {{ number_format($combo->discount_price) }}₫
                                         </span>
                                     @endif
                                 </div>

@@ -4,7 +4,7 @@
             {{-- Logo --}}
             <ul class="flex items-center gap-4">
                 <a class="md:flex md:items-center" href="{{ route('client.home') }}">
-                    <img alt="" class="img-sm" loading="lazy" src="{{ asset('storage/uploads/logo/logo.svg') }}">
+                    <img alt="" class="img-sm object-cover" loading="lazy" src="{{ asset('storage/uploads/logo/logo.svg') }}">
                 </a>
 
                 <div class="hidden items-center gap-4 lg:flex">
@@ -155,7 +155,7 @@
             <div class="p-4 md:p-8">
                 @if (count($favorites) == 0)
                 <div class=" flex flex-col items-center justify-center gap-8 p-4 md:p-8">
-                    @svg('tabler-shopping-bag-exclamation', 'icon-4xl text-gray-400')
+                    @svg('tabler-heart-off', 'icon-4xl text-gray-400')
                     <p class="text-center">Sản phẩm yêu thích của bạn đang trống</p>
                     <a class="button-red" href="{{ route('client.product.menu') }}">Thực đơn</a>
                 </div>

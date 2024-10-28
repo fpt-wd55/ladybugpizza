@@ -17,7 +17,7 @@
                     </div>
                     {{-- Điểm hội viên --}}
                     <div class="mb-8 flex flex-col items-center gap-8 md:flex-row">
-                        <img alt="" class="img-md" loading="lazy" src="{{ asset('storage/uploads/ranks/' . $img) }}">
+                        <img alt="" class="img-md object-cover" loading="lazy" src="{{ asset('storage/uploads/ranks/' . $img) }}">
                         <div class="w-full">
                             <div class="mb-1 flex items-center justify-between">
                                 <p class="font-semibold uppercase text-yellow-300">{{ $rank }}</p>

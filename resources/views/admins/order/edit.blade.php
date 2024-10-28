@@ -98,20 +98,20 @@
             <div class="ml-36">
                 <div class="flex items-center justify-between mb-2 gap-32 text-sm">
                     <p class="">Tổng tiền sản phẩm</p>
-                    <p class="font-medium">{{ number_format($order->amount) }}đ</p>
+                    <p class="font-medium">{{ number_format($order->amount) }}₫</p>
                 </div>
                 <div class="flex items-center justify-between mb-2 gap-32 text-sm">
                     <p class="">Phí vận chuyển</p>
-                    <p class="font-medium">{{ number_format($order->shipping_fee) }}đ</p>
+                    <p class="font-medium">{{ number_format($order->shipping_fee) }}₫</p>
                 </div>
                 <div class="flex items-center justify-between mb-2 gap-32 text-sm">
                     <p class="">Giảm giá</p>
-                    <p class="font-medium">{{ number_format($order->discount_amount) }}đ</p>
+                    <p class="font-medium">{{ number_format($order->discount_amount) }}₫</p>
                 </div>
                 <hr class="mb-2">
                 <div class="flex items-center justify-between gap-32">
                     <p class="font-medium">Tổng tiền thanh toán</p>
-                    <p class="font-medium">{{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ</p>
+                    <p class="font-medium">{{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}₫</p>
                 </div>
             </div>
         </div>

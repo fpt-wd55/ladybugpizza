@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -172,5 +173,16 @@ class UserController extends Controller
     public function export()
     {
         $this->exportExcel(User::all(), 'danhsachtaikhoan');
+    }
+
+    public function search(Request $request)
+    {
+        $users = User::where('username', 'like', '%' . $request->search . '%')
+            ->orWhere('fullname', 'like', '%' . $request->search . '%')
+            ->orWhere('email', 'like', '%' . $request->search . '%')
+            ->orWhere('phone', 'like', '%' . $request->search . '%')
+            ->paginate(10);
+        $users->appends(['search' => $request->search]);
+        return view('admins.user.index', compact('users'));
     }
 }

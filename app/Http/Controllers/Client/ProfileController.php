@@ -24,9 +24,9 @@ class ProfileController extends Controller
 	public function index()
 	{
 		$redirectHome = $this->checkUser();
-        if ($redirectHome) {
-            return $redirectHome; 
-        }
+		if ($redirectHome) {
+			return $redirectHome;
+		}
 		$user = Auth::user();
 		return view('clients.profile.index', compact('user'));
 	}
@@ -107,9 +107,9 @@ class ProfileController extends Controller
 	public function membership()
 	{
 		$redirectHome = $this->checkUser();
-        if ($redirectHome) {
-            return $redirectHome; 
-        }
+		if ($redirectHome) {
+			return $redirectHome;
+		}
 		$membership = Auth::user()->membership;
 		$currentPoint = $membership->points;
 		$points = $membership->total_spent;
@@ -187,9 +187,9 @@ class ProfileController extends Controller
 	public function address()
 	{
 		$redirectHome = $this->checkUser();
-        if ($redirectHome) {
-            return $redirectHome; 
-        }
+		if ($redirectHome) {
+			return $redirectHome;
+		}
 		$user = Auth::user();
 		$addresses = Address::where('user_id', $user->id)->with('user')->paginate(6);
 		return view('clients.profile.address.index', compact('addresses'));
@@ -198,9 +198,9 @@ class ProfileController extends Controller
 	public function settings()
 	{
 		$redirectHome = $this->checkUser();
-        if ($redirectHome) {
-            return $redirectHome; 
-        }
+		if ($redirectHome) {
+			return $redirectHome;
+		}
 		// Lấy thông tin cài đặt của người dùng hiện tại
 		$userSetting = UserSetting::where('user_id', auth()->id())->first();
 
@@ -223,11 +223,8 @@ class ProfileController extends Controller
 	}
 	public function updateStatus(Request $request, string $id)
 	{
-		// Tìm cài đặt dựa trên ID
 		$settings = UserSetting::query()->findOrFail($id);
-
 		if ($settings) {
-			// Cập nhật các giá trị dựa trên request
 			$settings->email_order = $request->has('email_order') ? 1 : 0;
 			$settings->email_promotions = $request->has('email_promotions') ? 1 : 0;
 			$settings->email_security = $request->has('email_security') ? 1 : 0;
@@ -238,34 +235,32 @@ class ProfileController extends Controller
 			// Lưu cài đặt
 			$settings->save();
 
-			// Trả về thông báo thành công
 			return redirect()->back()->with('success', 'Cài đặt đã được cập nhật!');
 		}
 
-		// Trả về thông báo lỗi nếu không tìm thấy cài đặt
 		return redirect()->back()->with('error', 'Thay đổi trạng thái thất bại');
 	}
 
-	// public function promotion()
-	// {
-	// 	$myCodes = PromotionUser::where('user_id', Auth::id())
-	// 		->with('promotion')
-	// 		->paginate(10);
+	public function promotion()
+	{
+		$myCodes = PromotionUser::where('user_id', Auth::id())
+			->with('promotion')
+			->paginate(10);
 
-	// 	$redeemCodes = Promotion::where('status', 1)
-	// 		->when(request('rank_id'), function ($query) {
-	// 			return $query->where('rank_id', request('rank_id'));
-	// 		})
-	// 		->count();
+		$redeemCodes = Promotion::where('status', 1)
+			->when(request('rank_id'), function ($query) {
+				return $query->where('rank_id', request('rank_id'));
+			})
+			->count();
 
-	// 	$currentPoint = Auth::user()->membership->points ?? 0;
+		$currentPoint = Auth::user()->membership->points ?? 0;
 
-	// 	return view('clients.profile.promotion', [
-	// 		'promotions' => $myCodes,
-	// 		'totalPromotions' => $totalPromotions,
-	// 		'currentPoint' => $currentPoint,
-	// 	]);
-	// }
+		return view('clients.profile.promotion', [
+			'promotions' => $myCodes,
+			'totalPromotions' => $totalPromotions,
+			'currentPoint' => $currentPoint,
+		]);
+	}
 
 	// public function redeemPromotion($id)
 	// {

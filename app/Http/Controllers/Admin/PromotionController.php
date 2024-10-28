@@ -89,4 +89,14 @@ class PromotionController extends Controller
     {
         $this->exportExcel(Promotion::all(), 'danhsachmagiamgia');
     }
+
+    public function search(Request $request)
+    {
+        $promotions = Promotion::query()
+            ->orderBy('quantity', 'desc')
+            ->where('code', 'like', '%' . $request->search . '%')
+            ->paginate(10);
+        $promotions->appends(['search' => $request->search]);
+        return view('admins.promotions.index', compact('promotions'));
+    }
 }

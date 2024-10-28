@@ -3,13 +3,14 @@ import "flowbite";
 import "./charts";
 import "./fslightbox";
 import search from "./search";
+
 search.start();
 
 import {
     getProvinces,
     getDistrictsByProvince,
     getWardsByDistrict,
-    getAddressNamesByCodes
+    getAddressNamesByCodes,
 } from "./getLocation";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -52,7 +53,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    const addressNames = getAddressNamesByCodes(addressCodes.province, addressCodes.district, addressCodes.ward);
+    const addressNames = getAddressNamesByCodes(
+        addressCodes.province,
+        addressCodes.district,
+        addressCodes.ward
+    );
 
     renderProvinces();
 });
