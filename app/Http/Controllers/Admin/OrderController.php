@@ -16,22 +16,21 @@ class OrderController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        $status = $request->get('tab'); // Change 'status' to 'tab'
+{
+    $status = $request->get('tab'); // Change 'status' to 'tab'
+    
+    $orders = Order::when($status, function ($query, $status) {
+        return $query->whereHas('orderStatus', function ($q) use ($status) {
+            $q->where('slug', $status); // Ensure you're querying the 'slug' column
+        });
+    })->with('orderItems.productAttributes.product', 'orderItems.toppings')
+      ->latest('id')
+      ->paginate(10);
 
-        $orders = Order::when($status, function ($query, $status) {
-            return $query->whereHas('orderStatus', function ($q) use ($status) {
-                $q->where('slug', $status); // Ensure you're querying the 'slug' column
-            });
-        })->with('orderItems.productAttributes.product', 'orderItems.toppings')
-            ->latest('id')
-            ->paginate(10);
-
-        $orderStatuses = OrderStatus::all();
-        $invoices = Invoice::all();
-
-        return view('admins.order.index', compact('orders', 'invoices', 'orderStatuses'));
-    }
+    $orderStatuses = OrderStatus::all();
+    $invoices = Invoice::all();
+    return view('admins.order.index', compact('orders', 'invoices', 'orderStatuses'));
+}
 
 
     /**
@@ -78,37 +77,8 @@ class OrderController extends Controller
         $order->orderStatus->save();
 
         return redirect()->route('admin.orders.edit', $id)->with('success', 'Trạng thái đã được cập nhật!');
-    }
-    public function export()
-    {
+    } 
+    public function export(){
         $this->exportExcel(Order::all(), 'danhsachdonhang');
-    }
-
-    public function search(Request $request)
-    {
-        $status = $request->get('tab'); // Change 'status' to 'tab'
-        $search = $request->get('search');
-        $orders = Order::whereHas('user', function ($query) use ($search) {
-            $query->where('username', 'like', '%' . $search . '%');
-        })->when($status, function ($query, $status) {
-            return $query->whereHas('orderStatus', function ($q) use ($status) {
-                $q->where('slug', $status); // Ensure you're querying the 'slug' column
-            });
-        })->with('orderItems.productAttributes.product', 'orderItems.toppings')
-            ->latest('id')
-            ->paginate(10);
-
-        // $orders = Order::when($status, function ($query, $status) {
-        //     return $query->whereHas('orderStatus', function ($q) use ($status) {
-        //         $q->where('slug', $status); // Ensure you're querying the 'slug' column
-        //     });
-        // })->with('orderItems.productAttributes.product', 'orderItems.toppings')
-        //     ->latest('id')
-        //     ->paginate(10);
-
-        $orderStatuses = OrderStatus::all();
-        $invoices = Invoice::all();
-
-        return view('admins.order.index', compact('orders', 'invoices', 'orderStatuses'));
     }
 }

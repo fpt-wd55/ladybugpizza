@@ -153,7 +153,6 @@
                     <span class="sr-only">Open user menu</span>
                     <img loading="lazy" class="w-8 h-8 rounded-full object-cover"
                         src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}">
-                </button>
                 <!-- User Dropdown menu -->
                 <div class="hidden z-50 my-4 w-56 list-none bg-white rounded divide-y divide-gray-100 shadow text-sm"
                     id="dropdown">
@@ -168,7 +167,8 @@
                                 hàng</a>
                         </li>
                         <li>
-                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Tài
+                            <a href="{{ route('admin.profiles.index') }}"
+                                class="block py-2 px-4 hover:bg-gray-100">Tài
                                 khoản</a>
                         </li>
                         <li>

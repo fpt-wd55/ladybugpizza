@@ -26,7 +26,7 @@
                             </div>
                             <p>({{ $product->avg_rating }})</p>
                         </div>
-                        <p class="comfortable pe-8">{{ $product->description }}</p>
+                        <p class="comfortable pe-8">{!! $product->description !!}</p>
                     </div>
                 </div>
 
@@ -34,7 +34,7 @@
                 <div class="col-span-5 md:col-span-3">
                     @foreach ($attributes as $attribute)
                         <div class="mb-8">
-                            <p class="mb-4 font-medium text-lg">
+                            <p class="mb-4 text-lg font-medium">
                                 <span class="text-red-500">*</span>
                                 {{ $attribute->name }}
                             </p>
@@ -44,7 +44,7 @@
                                         <input {{ $index === 0 ? 'checked' : '' }} class="peer hidden" id="attribute_{{ $value->id }}" name="attributes[{{ $attribute->slug }}]" required type="radio" value="{{ $value->id }}" />
                                         <label class="label-peer flex flex-col items-center gap-2" for="attribute_{{ $value->id }}">
                                             <p class="text-sm font-medium">{{ $value->value }}</p>
-                                            <p class="text-sm">+ {{ number_format($value->price($product)) }}₫</p>
+                                            <p class="text-sm">+ {{ number_format($value->price($product)) }}đ</p>
                                         </label>
                                     </div>
                                 @endforeach
@@ -53,26 +53,29 @@
                     @endforeach
 
                     {{-- toppings --}}
-                    <div class="mb-8">
-                        <p class="mb-4 font-medium text-lg">
-                            Hương vị đậm đà hơn với topping tuỳ chỉnh
-                        </p>
-                        <div class="grid grid-cols-2 gap-4">
-                            @foreach ($toppings as $topping)
-                                <div>
-                                    <input class="peer hidden" id="{{ $topping->slug }}" name="toppings[]" type="checkbox" value="{{ $topping->id }}">
-                                    <label class="flex w-full cursor-pointer items-center justify-start gap-2 overflow-hidden rounded-lg border border-gray-200 bg-white p-2 text-gray-700 transition hover:bg-gray-50 hover:text-gray-600 peer-checked:border-red-600 peer-checked:text-red-600 md:gap-4" for="{{ $topping->slug }}">
-                                        <img alt="{{ $topping->name }}" class="h-16 w-16 flex-shrink-0 rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
-                                        <div class="text-sm">
-                                            <p class="mb-2 font-medium">{{ $topping->name }}</p>
-                                            <p>+ {{ number_format($topping->price) }} ₫</p>
-                                        </div>
-                                    </label>
-                                </div>
-                            @endforeach
+                    @if ($toppings->count() > 0)
+                        <div class="mb-8">
+                            <p class="mb-4 text-lg font-medium">
+                                Hương vị đậm đà hơn với topping tuỳ chỉnh
+                            </p>
+                            <div class="grid grid-cols-2 gap-4">
+                                @foreach ($toppings as $topping)
+                                    <div>
+                                        <input class="peer hidden" id="{{ $topping->slug }}" name="toppings[]" type="checkbox" value="{{ $topping->id }}">
+                                        <label class="flex w-full cursor-pointer items-center justify-start gap-2 overflow-hidden rounded-lg border border-gray-200 bg-white p-2 text-gray-700 transition hover:bg-gray-50 hover:text-gray-600 peer-checked:border-red-600 peer-checked:text-red-600 md:gap-4" for="{{ $topping->slug }}">
+                                            <img alt="{{ $topping->name }}" class="h-16 w-16 flex-shrink-0 rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
+                                            <div class="text-sm">
+                                                <p class="mb-2 font-medium">{{ $topping->name }}</p>
+                                                <p>+ {{ number_format($topping->price) }} đ</p>
+                                            </div>
+                                        </label>
+                                    </div>
+                                @endforeach
 
+                            </div>
                         </div>
-                    </div>
+
+                    @endif
                 </div>
 
 
@@ -130,8 +133,8 @@
                 </div>
 
                 <div class="flex items-center justify-center gap-4">
-                    <p class="text-sm line-through">175,000₫</p>
-                    <p class="text-lg font-semibold">143,000₫</p>
+                    <p class="text-sm line-through">175,000đ</p>
+                    <p class="text-lg font-semibold">143,000đ</p>
                 </div>
 
                 <div class="flex items-center justify-end gap-2">

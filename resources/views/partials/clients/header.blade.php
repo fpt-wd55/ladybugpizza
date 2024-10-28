@@ -59,7 +59,7 @@
                         </div>
                         @if (Auth::user()->role_id == 3 || Auth::user()->role_id == 1)
                             <div class="py-2">
-                                <a target="blank" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="{{ route('admin.dashboard') }}">
+                                <a class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="{{ route('admin.dashboard') }}" target="blank">
                                     @svg('tabler-external-link', 'icon-sm')
                                     Trang quản trị
                                 </a>
@@ -153,6 +153,13 @@
             </div>
 
             <div class="p-4 md:p-8">
+                @if (count($favorites) == 0)
+                <div class=" flex flex-col items-center justify-center gap-8 p-4 md:p-8">
+                    @svg('tabler-heart-off', 'icon-4xl text-gray-400')
+                    <p class="text-center">Sản phẩm yêu thích của bạn đang trống</p>
+                    <a class="button-red" href="{{ route('client.product.menu') }}">Thực đơn</a>
+                </div>
+            @endif
                 <div class="mb-8 grid grid-cols-2 gap-4 lg:mb-16 lg:grid-cols-2">
                     @foreach ($favorites as $favorite)
                         <a class="product-card overflow-hidden md:flex" href="{{ route('client.product.show', $favorite->product->slug) }}">
@@ -168,7 +175,7 @@
                                     </div>
                                     <p>({{ $favorite->product->avg_rating }})</p>
                                 </div>
-                                <p class="mb-4 line-clamp-3 h-12">{{ $favorite->product->description }}</p>
+                                <p class="{{ empty($product->description) ? 'min-h-12' : '' }} mb-4 line-clamp-2">{{ $favorite->product->description }}</p>
                                 <div class="bottom-4 flex items-center gap-3">
                                     <p class="text-xs text-gray-500 line-through">
                                         {{ number_format($favorite->product->price) }}đ

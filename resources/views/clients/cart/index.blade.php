@@ -4,13 +4,20 @@
 
 @section('content')
     <div class="min-h-screen">
-        <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
+        <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
             <div class="mb-8">
-                <p class="title">GIỎ HÀNG</p>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    @for ($i = 0; $i < 5; $i++)
+                <p class="title">GIỎ HÀNG ({{ count($cartItems) }})</p>
+                @if (count($cartItems) == 0)
+                    <div class="card flex flex-col items-center justify-center gap-8 p-4 md:p-8">
+                        @svg('tabler-shopping-bag-exclamation', 'icon-4xl text-gray-400')
+                        <p class="text-center">Giỏ hàng của bạn đang trống</p>
+                        <a class="button-red" href="{{ route('client.product.menu') }}">Thực đơn</a>
+                    </div>
+                @endif
+                <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    @foreach ($cartItems as $item)
                         <div class="product-card overflow-hidden">
-                            <div class="w-full flex justify-between items-center pe-4">
+                            <div class="flex w-full items-start justify-between pe-4">
                                 <div class="flex gap-4">
                                     <img loading="lazy" src="{{ asset('storage/uploads/products/tiramisu.jpeg') }}"
                                         class="img-md h-full object-cover" alt="">
@@ -22,57 +29,52 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-right">
+                                <div class="pt-2 text-right">
                                     <div class="mb-4 flex items-center gap-2">
                                         <span class="line-through text-sm text-gray-600">320,000₫</span>
                                         <span class="font-medium">300,000₫</span>
                                     </div>
                                     <div class="inline-flex rounded-md shadow-sm" role="group">
-                                        <button type="button"
-                                            class="px-2 py-1.5 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-red-500">
+                                        <button class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500" id="decrement" type="button">
                                             @svg('tabler-minus', 'icon-sm')
                                         </button>
-                                        <div
-                                            class="px-4 py-1.5 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200">
-                                            1
-                                        </div>
-                                        <button type="button"
-                                            class="px-2 py-1.5 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-red-500">
+                                        <input class="w-12 border-b border-t border-gray-200 bg-white px-4 py-1 text-center text-sm font-medium text-gray-900 focus:outline-none" name="quantity" value="1">
+                                        <button class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500" id="increment" type="button">
                                             @svg('tabler-plus', 'icon-sm')
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    @endfor
+                    @endforeach
                 </div>
             </div>
 
             {{-- Aplly discount code --}}
-            <div class="card p-4 md:p-8 mb-12">
-                <div class="lg:flex items-center justify-between gap-8 mb-8">
+            <div class="card mb-12 p-4 md:p-8">
+                <div class="mb-8 items-center justify-between gap-8 lg:flex">
                     <div class="mb-4 md:mb-8 lg:mb-0">
-                        <p class="font-medium mb-4">Bạn có mã giảm giá</p>
-                        <div class="flex gap-2 items-center">
-                            <input type="text" class="input">
-                            <button type="button" class="button-red w-32">Áp dụng</button>
+                        <p class="mb-4 font-medium">Bạn có mã giảm giá</p>
+                        <div class="flex items-center gap-2">
+                            <input class="input" type="text">
+                            <button class="button-red w-32" type="button">Áp dụng</button>
                         </div>
                     </div>
                     <div>
-                        <div class="flex items-center justify-between mb-4 gap-32 text-sm">
+                        <div class="mb-4 flex items-center justify-between gap-32 text-sm">
                             <p class="">Tổng tiền sản phẩm</p>
                             <p class="font-medium">150,000₫</p>
                         </div>
-                        <div class="flex items-center justify-between mb-4 gap-32 text-sm">
+                        <div class="mb-4 flex items-center justify-between gap-32 text-sm">
                             <p class="">Phí vận chuyển</p>
                             <p class="font-medium">150,000₫</p>
                         </div>
-                        <div class="flex items-center justify-between mb-4 gap-32 text-sm">
+                        <div class="mb-4 flex items-center justify-between gap-32 text-sm">
                             <p class="">Giảm giá</p>
                             <p class="font-medium">150,000₫</p>
                         </div>
                         <hr class="mb-4">
-                        <div class="flex items-center justify-between mb-4 gap-32">
+                        <div class="mb-4 flex items-center justify-between gap-32">
                             <p class="font-medium">Tổng thanh toán</p>
                             <p class="font-medium">150,000₫</p>
                         </div>
@@ -80,10 +82,33 @@
                 </div>
 
                 <div class="flex items-center justify-end gap-2">
-                    <a href="{{ route('client.product.menu') }}" class="button-dark">Tiếp tục mua hàng</a>
-                    <a href="{{ route('client.cart.checkout') }}" class="button-red">Thanh toán</a>
+                    <a class="button-dark" href="{{ route('client.product.menu') }}">Tiếp tục mua hàng</a>
+                    <a class="button-red" href="{{ route('client.cart.checkout') }}">Thanh toán</a>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // Lấy các phần tử cần thiết từ DOM
+        const decrementButton = document.getElementById('decrement');
+        const incrementButton = document.getElementById('increment');
+        const quantityInput = document.querySelector('input[name="quantity"]');
+
+        // Thêm sự kiện click cho nút giảm
+        decrementButton.addEventListener('click', () => {
+            let quantity = parseInt(quantityInput.value);
+            if (quantity > 1) { // Đảm bảo số lượng không nhỏ hơn 1
+                quantity -= 1;
+                quantityInput.value = quantity;
+            }
+        });
+
+        // Thêm sự kiện click cho nút tăng
+        incrementButton.addEventListener('click', () => {
+            let quantity = parseInt(quantityInput.value);
+            quantity += 1; // Tăng số lượng lên 1
+            quantityInput.value = quantity;
+        });
+    </script>
 @endsection

@@ -185,7 +185,7 @@
                                         class="table-item-checkbox w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
                                 </div>
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->code }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap uppercase">{{ $promotion->code }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
                                 @if ($promotion->discount_type == '1')
                                     Giảm theo %

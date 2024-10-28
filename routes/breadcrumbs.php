@@ -210,3 +210,8 @@ Breadcrumbs::for('admin.chats.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
     $trail->push('Trò chuyện', route('admin.chats.index'));
 });
+// profile
+Breadcrumbs::for('admin.profiles.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Tài khoản', route('admin.profiles.index'));
+});
