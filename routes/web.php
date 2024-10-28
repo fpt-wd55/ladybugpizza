@@ -184,7 +184,9 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/pages', AdminPageController::class);
     Route::resource('/logs', LogController::class);
     // profile
-    Route::resource('/profiles',AdminProfileController::class);
+    Route::get('/profiles', [AdminProfileController::class, 'index'])->name('profiles.index');
+    Route::put('/profiles/{user}', [AdminProfileController::class, 'update'])->name('profiles.update');
+
     // Chat
     Route::resource('/chats', MessageController::class);
     Route::get('/components', [DashboardController::class, 'components']);

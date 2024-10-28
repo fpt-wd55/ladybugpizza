@@ -151,8 +151,8 @@
                 <button type="button" class="flex mx-3 bg-gray-800 rounded-full md:mr-0 ring-0 focus:ring-0"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                     <span class="sr-only">Open user menu</span>
-                    <img loading="lazy" class="w-8 h-8 rounded-full"
-                        src="{{ filter_var(Auth::user()->avatar, FILTER_VALIDATE_URL) ? Auth::user()->avatar : asset('storage/uploads/avatars/' . (Auth::user()->avatar ?? 'user-default.png')) }}">
+                    <img id="avatar-preview" loading="lazy" class="w-8 h-8 rounded-full"
+                        src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('storage/uploads/avatars/user-default.png') }}">
                 </button>
                 <!-- User Dropdown menu -->
                 <div class="hidden z-50 my-4 w-56 list-none bg-white rounded divide-y divide-gray-100 shadow text-sm"
@@ -168,7 +168,8 @@
                                 hàng</a>
                         </li>
                         <li>
-                            <a href="{{route('admin.profiles.index')}}" class="block py-2 px-4 hover:bg-gray-100">Tài
+                            <a href="{{ route('admin.profiles.index') }}"
+                                class="block py-2 px-4 hover:bg-gray-100">Tài
                                 khoản</a>
                         </li>
                         <li>
