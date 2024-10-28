@@ -18,31 +18,9 @@ class ProfileController extends Controller
     }
     public function update(Request $request)
     {
-        // Xác thực ảnh (chỉ khi có ảnh được tải lên)
-        // $request->validate(
-        //     [
-        //         'email' => 'required|email|unique:users,email,' . Auth::id(), // Email phải là duy nhất
-        //         'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        //     ],
-        //     [
-        //         'email.required' => 'Trường :attribute là bắt buộc.',
-        //         'email.email' => 'Trường :attribute phải là một địa chỉ email hợp lệ.',
-        //         'unique' => 'Địa chỉ email đã tồn tại.',
-        //         'image' => 'Trường :attribute phải là một hình ảnh.',
-        //         'mimes' => 'Trường :attribute phải có định dạng: :values.',
-        //         'max' => [
-        //             'file' => 'Trường :attribute không được lớn hơn :max kilobytes.',
-        //         ],
-        //         'attributes' => [
-        //             'email' => 'email',
-        //             'avatar' => 'ảnh đại diện',
-        //             'gender' => 'giới tính',
-        //         ],
-        //     ]
-        // );
         // Lấy user hiện tại
         $user = Auth::user();
-        $user->gender = $request->gender;
+		$user->gender = $request->input('gender');
         if ($user->email !== $request->email) {
             $user->email = $request->email;
         }
@@ -54,13 +32,12 @@ class ProfileController extends Controller
                 Storage::delete($user->avatar);
             }
             // Lưu ảnh mới
-            $path = $request->file('avatar')->store('avatars', 'public');
+            $path = $request->file('avatar')->store('uploads/avatars', 'public');
             // Cập nhật đường dẫn ảnh vào DB
             $user->avatar = $path;
         }
         // Lưu thông tin người dùng
         $user->save();
-    
         return redirect()->back()->with('success', 'Thông tin tài khoản đã được cập nhật!');
     }
 }
