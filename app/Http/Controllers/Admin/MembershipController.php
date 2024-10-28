@@ -112,17 +112,51 @@ class MembershipController extends Controller
     public function search(Request $request)
     {
         $search = $request->search;
-        $memberships = Membership::whereHas('user', function ($query) use ($search) {
-            $query->where('name', 'like', '%' . $search . '%');
-        })->paginate(10);
-        return view('admins.memberships.index', compact('memberships'));
 
-        // $search = $request->search;
-        // $users = User::where('username', 'like', '%' . $search . '%')
-        //     ->orWhere('fullname', 'like', '%' . $search . '%')
-        //     ->orWhere('email', 'like', '%' . $search . '%')
-        //     ->orWhere('phone', 'like', '%' . $search . '%')
-        //     ->paginate(10);
-        // return view('admins.user.index', compact('users'));
+        // Lấy tất cả các rank từ bảng membershipranks
+        $ranks = MembershipRank::all();
+        // Lấy danh sách các membership và user where like username, email, fullname
+        $memberships = Membership::with('user')
+            ->whereHas('user', function ($query) use ($search) {
+                $query->where('username', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhere('fullname', 'like', '%' . $search . '%');
+            })
+            ->paginate(10);
+        // Lặp qua từng membership và tính rank dựa theo điểm
+        foreach ($memberships as $membership) {
+            $points = $membership->points; // Lấy điểm của thành viên hiện tại
+            $currentRank = null;
+            // Tìm rank phù hợp từ bảng membershipranks
+            foreach ($ranks as $rank) {
+                if ($points >= $rank->min_points) {
+                    $currentRank = $rank;
+                }
+            }
+            // Gán rank cho mỗi membership
+            $membership->rank_name = $currentRank->name;
+            $membership->rank_img = $currentRank->icon;
+        }
+        // Gán màu cho từng rank
+        foreach ($memberships as $membership) {
+            switch ($membership->rank_name) {
+                case 'Đồng':
+                    $membership->rank_color = 'text-[#C67746]';
+                    break;
+                case 'Bạc':
+                    $membership->rank_color = 'text-gray-500';
+                    break;
+                case 'Vàng':
+                    $membership->rank_color = 'text-yellow-300';
+                    break;
+                case 'Kim Cương':
+                    $membership->rank_color = 'text-blue-400';
+                    break;
+                default:
+                    $membership->rank_color = 'text-gray-100';
+            }
+        }
+        // Trả về view với dữ liệu memberships
+        return view('admins.memberships.index', compact('memberships'));
     }
 }
