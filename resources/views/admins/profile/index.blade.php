@@ -16,20 +16,19 @@
                 @else
                     <img src="{{ asset('storage/uploads/avatars/user-default.png') }}" alt=""
                         class="w-10 h-10 object-cover rounded-full">
-                    @endif
-                    <input type="file" id="avatar" name="avatar" class="hidden" accept="image/*"
-                        onchange="previewAvatar(event)">
-                    <label for="avatar"
-                        class="cursor-pointer px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
-                        Chọn ảnh
-                    </label>
-                    @error('avatar')
-                        <span class="text-sm text-red-500">{{ $message }}</span>
-                    @enderror
+                @endif
+                <input type="file" id="avatar" name="avatar" class="hidden" accept="image/*"
+                    onchange="previewAvatar(event)">
+                <label for="avatar" class="cursor-pointer px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                    Chọn ảnh
+                </label>
+                @error('avatar')
+                    <span class="text-sm text-red-500">{{ $message }}</span>
+                @enderror
             </div>
             <div class="mb-4">
                 <h2 class="text-xl font-bold mb-2">Hồ sơ</h2>
-                <span class="text-xl text-gray-500">{{ $user->fullname }}, {{ $user->email }}, {{ $user->phone }}</span>
+                <span class="text-lg text-gray-900">{{ $user->fullname }}, {{ $user->email }}, {{ $user->phone }}</span>
             </div>
             <!--  Profile -->
             <div class="mb-6">
