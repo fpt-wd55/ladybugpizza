@@ -152,8 +152,6 @@ class UserSeeder extends Seeder
                 'district' => $faker->city,
                 'ward' => $faker->city,
                 'detail_address' => $faker->address,
-                'lng' => $faker->longitude,
-                'lat' => $faker->latitude,
                 'is_default' => true,
                 'created_at' => $now,
                 'updated_at' => $now,

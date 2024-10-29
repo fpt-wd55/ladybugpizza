@@ -53,27 +53,30 @@
                 <div class="md:flex w-full grid-cols-3 gap-4">
                     <div class="mb-4 py-4 w-full">
                         <label for="province" class="min-h-5">Tỉnh/Thành phố:*</label>
-                        <select name="province" id="province" class="mt-2 mb-2 input" onchange="getProvinces(event)">
+                        {{-- <select name="province" id="province" class="mt-2 mb-2 input" onchange="getProvinces(event)">
                             <option value="">Chọn tỉnh/thành phố</option>
-                        </select>
+                        </select> --}}
+                        <input type="text" name="province" id="province" value="{{ old('province') }}" placeholder="VD: Hà Nội" class="mt-2 mb-2 input">
                         @error('province')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="mb-4 py-4 w-full">
                         <label for="district">Quận/Huyện:*</label>
-                        <select name="district" id="district" class="mt-2 mb-2 input" onchange="getDistricts(event)">
+                        {{-- <select name="district" id="district" class="mt-2 mb-2 input" onchange="getDistricts(event)">
                             <option value="">Chọn quận/huyện</option>
-                        </select>
+                        </select> --}}
+                        <input type="text" name="district" id="district" value="{{ old('district') }}" placeholder="VD: Quận Nam Từ Liêm" class="mt-2 mb-2 input">
                         @error('district')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="mb-4 py-4 w-full">
                         <label for="ward">Phường/Xã:*</label>
-                        <select name="ward" id="ward" class="mt-2 mb-2 input">
+                        {{-- <select name="ward" id="ward" class="mt-2 mb-2 input">
                             <option value="">Chọn phường/xã</option>
-                        </select>
+                        </select> --}}
+                        <input type="text" name="ward" id="ward" value="{{ old('ward') }}" placeholder="VD: Phường Phú Đô" class="mt-2 mb-2 input">
                         @error('ward')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                         @enderror
