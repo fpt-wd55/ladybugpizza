@@ -18,6 +18,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\UserSetting;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
@@ -241,50 +243,81 @@ class ProfileController extends Controller
 
 	public function promotion()
 	{
-		$myCodes = PromotionUser::where('user_id', Auth::id())
+		$myCodes = PromotionUser::where('user_id', Auth::user()->id)
 			->with('promotion')
 			->paginate(10);
 
+		$countMyCodes = PromotionUser::where('user_id', Auth::user()->id)->count();
+
+		$userRankId = Auth::user()->membership->rank_id;
+
 		$redeemCodes = Promotion::where('status', 1)
-			->when(request('rank_id'), function ($query) {
-				return $query->where('rank_id', request('rank_id'));
+			->where('quantity', '>', 0)
+			->where(function ($query) use ($userRankId) {
+				$query->where('is_global', '!=', 2)
+					->orWhere('rank_id', $userRankId);
 			})
-			->count();
+			->paginate(10);
 
 		$currentPoint = Auth::user()->membership->points ?? 0;
 
 		return view('clients.profile.promotion', [
-			'promotions' => $myCodes,
-			// 'totalPromotions' => $totalPromotions,
+			'myCodes' => $myCodes,
+			'countMyCodes' => $countMyCodes,
+			'redeemCodes' => $redeemCodes,
 			'currentPoint' => $currentPoint,
 		]);
 	}
 
-	// public function redeemPromotion($id)
-	// {
-	// 	$user = Auth::user();
-	// 	$promotion = Promotion::findOrFail($id);
+	public function redeemPromotion($id)
+	{
+		$user = Auth::user();
+		$promotion = Promotion::findOrFail($id);
 
-	// 	if ($user->membership->points < $promotion->points) {
-	// 		return back()->with('error', 'Bạn không đủ điểm để đổi mã giảm giá này.');
-	// 	}
+		if ($user->membership->points < $promotion->points) {
+			return back()->with('error', 'Bạn không đủ điểm để đổi mã giảm giá này.');
+		}
 
-	// 	if ($promotion->quantity <= 0) {
-	// 		return back()->with('error', 'Mã giảm giá đã hết.');
-	// 	}
+		if ($promotion->quantity <= 0) {
+			return back()->with('error', 'Mã giảm giá đã hết.');
+		}
 
-	// 	$user->membership->points -= $promotion->points;
-	// 	$promotion->quantity -= 1;
+		// kiểm tra xem người dùng đã đổi mã giảm giá này chưa
+		$hasRedeemed = PromotionUser::where('user_id', $user->id)
+			->where('promotion_id', $promotion->id)
+			->exists();
 
-	// 	try {
-	// 		Membership::where('user_id', $user->id)->update(['points' => $user->membership->points]);
-	// 		$promotion->save();
-	// 	} catch (\Exception $e) {
-	// 		return back()->with('error', 'Đã có lỗi xảy ra.');
-	// 	}
+		if ($hasRedeemed) {
+			return back()->with('error', 'Bạn đã đổi mã giảm giá này rồi.');
+		}
 
-	// 	return back()->with('success', 'Bạn đã đổi mã giảm giá thành công');
-	// }
+		// kiểm tra xem mã giảm giá còn hiệu lực không
+		if ($promotion->end_date < Carbon::now()) {
+			return back()->with('error', 'Mã giảm giá đã hết hạn.');
+		}
+
+		// Transaction để đảm bảo tính toàn vẹn
+		try {
+			DB::transaction(function () use ($user, $promotion) {
+				// Cập nhật điểm cho người dùng
+				$user->membership->decrement('points', $promotion->points);
+
+				// Giảm số lượng mã giảm giá
+				$promotion->decrement('quantity');
+
+				// Lưu thông tin người dùng đã đổi mã giảm giá
+				PromotionUser::create([
+					'user_id' => $user->id,
+					'promotion_id' => $promotion->id,
+				]);
+			});
+		} catch (\Exception $e) {
+			return back()->with('error', 'Đã có lỗi xảy ra.');
+		}
+
+		return back()->with('success', 'Bạn đã đổi mã giảm giá thành công');
+	}
+
 
 	public function addLocation()
 	{
