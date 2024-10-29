@@ -1,52 +1,49 @@
 @extends('layouts.admin')
 @section('title', 'Banner | Chỉnh sửa')
 @section('content')
-{{ Breadcrumbs::render('admin.banners.edit',$banner) }}
-    <div class="p-4 mx-auto">
-        <h3 class="mb-4 text-lg font-bold text-gray-900 ">Banner</h3>
-        <form action="{{ route('admin.banners.update', $banner) }}" method="POST" enctype="multipart/form-data">
+    {{ Breadcrumbs::render('admin.banners.edit', $banner) }}
+    <div class="mx-auto p-4">
+        <h3 class="mb-4 text-lg font-bold text-gray-900">Banner</h3>
+        <form action="{{ route('admin.banners.update', $banner) }}" enctype="multipart/form-data" method="POST">
             @csrf
             @method('PUT')
-            <div class="grid gap-4 gap-x-5 mb-4 sm:grid-cols-2">
+            <div class="mb-4 grid gap-4 gap-x-5 sm:grid-cols-2">
                 {{-- url --}}
                 <div>
 
-                    <label for="url" class="block mb-2 text-base font-medium text-gray-900 ">Url</label>
-                    <input type="text" name="url" id="name" value="{{ $banner->url }}"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-primary-600 block w-full p-2.5">
+                    <label class="mb-2 block text-base font-medium text-gray-900" for="url">Url</label>
+                    <input class="focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900" id="name" name="url" type="text" value="{{ $banner->url }}">
 
                     @error('url')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Lỗi! </span>
-                            {{ $message }}</p>
+                            {{ $message }}
+                        </p>
                     @enderror
                 </div>
                 {{-- end url --}}
 
                 {{-- local page --}}
                 <div class="">
-                    <label for="url" class="block mb-3 text-base font-medium text-gray-900 ">Đường dẫn trang</label>
+                    <label class="mb-3 block text-base font-medium text-gray-900" for="url">Đường dẫn trang</label>
                     <div class="flex gap-x-3">
 
                         <div class="">
-                            <input id="" type="radio" name="is_local_page"
-                                class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300  rounded-full transition"
-                                value="1" {{ $banner->is_local_page == 1 ? 'checked' : '' }}>
-                            <label for="" class="ml-2 text-base cursor-pointer">
+                            <input {{ $banner->is_local_page == 1 ? 'checked' : '' }} class="input-radio" id="local" name="is_local_page" type="radio" value="1">
+                            <label class="ml-2 cursor-pointer text-base" for="local">
                                 Trang cục bộ
                             </label>
                         </div>
                         <div class="">
-                            <input id="" type="radio" name="is_local_page"
-                                class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300  rounded-full transition"
-                                value="2" {{ $banner->is_local_page == 2 ? 'checked' : '' }}>
-                            <label for="" class="ml-2 text-base cursor-pointer">
+                            <input {{ $banner->is_local_page == 2 ? 'checked' : '' }} class="input-radio" id="external" name="is_local_page" type="radio" value="2">
+                            <label class="ml-2 cursor-pointer text-base" for="external">
                                 Trang bên ngoài
                             </label>
                         </div>
                     </div>
                     @error('is_local_page')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Lỗi! </span>
-                            {{ $message }}</p>
+                            {{ $message }}
+                        </p>
                     @enderror
                 </div>
                 {{-- end local page --}}
@@ -54,19 +51,13 @@
 
                 {{-- image --}}
                 <div class="mb-3">
-                    <label for="image" class="block mb-2 text-base font-medium text-gray-900">Ảnh banner</label>
-                    <input
-                        class="mb-4 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
-                        type="file" name="image" id="imageInput" accept="image/*">
-                   
-                    <div class="h-auto overflow-hidden relative rounded-md shadow-lg">
-                        <a id="imageLink" href="{{ asset('storage/uploads/banners/' . $banner->image) }}" target="_blank"
-                            class="block">
-                            <img loading="lazy" id="currentImage" src="{{ asset('storage/uploads/banners/' . $banner->image) }}"
-                                class="w-full h-full object-cover rounded-md transform transition-all duration-500"
-                                alt="Banner image">
-                            <div
-                                class="absolute bottom-2 right-2 bg-white px-2 py-1 text-xs font-semibold text-gray-800 rounded-md shadow-md">
+                    <label class="mb-2 block text-base font-medium text-gray-900" for="image">Ảnh banner</label>
+                    <input accept="image/*" class="mb-4 block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none" id="imageInput" name="image" type="file">
+
+                    <div class="relative h-auto overflow-hidden rounded-md shadow-lg">
+                        <a class="block" href="{{ asset('storage/uploads/banners/' . $banner->image) }}" id="imageLink" target="_blank">
+                            <img alt="Banner image" class="h-full w-full transform rounded-md object-cover transition-all duration-500" id="currentImage" loading="lazy" src="{{ asset('storage/uploads/banners/' . $banner->image) }}">
+                            <div class="absolute bottom-2 right-2 rounded-md bg-white px-2 py-1 text-xs font-semibold text-gray-800 shadow-md">
                                 Nhấp vào để xem ảnh lớn
                             </div>
                     </div>
@@ -75,13 +66,11 @@
 
                 {{-- status --}}
                 <div class="">
-                    <label for="name" class="block mb-3 mt-1 text-base font-medium text-gray-900 ">Trạng thái</label>
+                    <label class="mb-3 mt-1 block text-base font-medium text-gray-900" for="name">Trạng thái</label>
                     <div class="flex items-center">
-                        <label for="status-toggle" class="inline-flex relative items-center cursor-pointer">
-                            <input type="checkbox" id="status-toggle" name="status" class="sr-only peer" value="1"
-                                {{ $banner->status == 1 ? 'checked' : '' }}>
-                            <div
-                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none  rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                        <label class="relative inline-flex cursor-pointer items-center" for="status-toggle">
+                            <input {{ $banner->status == 1 ? 'checked' : '' }} class="peer sr-only" id="status-toggle" name="status" type="checkbox" value="1">
+                            <div class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-red-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none dark:border-gray-600 dark:bg-gray-700">
                             </div>
 
                         </label>
@@ -92,12 +81,12 @@
 
 
             </div>
-            <div class="flex items-center space-x-4 mt-7">
-                <button type="submit" class=" rounded-lg button-blue">
-                    Cập Nhật    
+            <div class="mt-7 flex items-center space-x-4">
+                <button class="button-red" type="submit">
+                    Cập Nhật
                 </button>
                 <a href="{{ route('admin.banners.index') }}">
-                    <button type="button" class="rounded-lg button-green">Quay Lại</button>
+                    <button class="button-gray" type="button">Quay Lại</button>
                 </a>
             </div>
         </form>

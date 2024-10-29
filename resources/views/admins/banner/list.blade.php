@@ -35,28 +35,37 @@
                                 <img class="h-full w-full rounded-t-lg object-cover transition hover:scale-110" loading="lazy" src="{{ asset('storage/uploads/banners/' . $item->image) }}">
                             </a>
                         </div>
-                        <div class="flex justify-around">
-                            <div class="mt-2 flex items-center text-lg font-medium text-gray-900">
-                                <div class="indicator {{ $item->status == 1 ? 'bg-green-700' : 'bg-red-700' }} inline-block">
+                        <div class="flex items-start justify-between p-4">
+                            <div class="flex justify-around">
+                                <div class="">
+                                    <div class="mb-2 flex items-center text-gray-900">
+                                        <div class="indicator {{ $item->status == 1 ? 'bg-green-700' : 'bg-red-700' }} inline-block">
+                                        </div>
+                                        <span>{{ $item->status == 1 ? 'Hoạt động' : 'Khóa' }}</span>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="text-sm text-gray-500 transition hover:scale-105 hover:bg-gray-100 hover:text-[#D30A0A] hover:underline" href="{{ $item->url }}" href="" target="blank">{{ $item->url }}</a>
+                                    </div>
                                 </div>
-                                {{ $item->status == 1 ? 'Hoạt động' : 'Khóa' }}
                             </div>
-                        </div>
-                        <div class="min-h-24 mb-2 p-2 text-center">
-                            <span class="text-sm text-gray-500 transition hover:scale-105 hover:bg-gray-100 hover:text-[#D30A0A] hover:underline">{{ $item->url }}
-                            </span>
-                        </div>
-                        <div class="mb-5 flex justify-around">
-                            <div class="">
-                                <a class="" href="{{ route('admin.banners.edit', $item) }}"><button class="button-blue w-32 md:w-24 lg:w-32"> Sửa @svg('tabler-edit', 'w-5 w-5 h-5 ml-1')</button></a>
-                            </div>
-                            <div class="">
-                                <a class="button-red w-32 md:w-24 lg:w-32" data-modal-target="deleteBanner-modal-{{ $item->id }}" data-modal-toggle="deleteBanner-modal-{{ $item->id }}" href="#">
-                                    Xóa @svg('tabler-trash', 'w-5 w-5 h-5 ml-1')
-                                </a>
+                            <div>
+                                <button class="inline-flex items-center rounded-lg p-0.5 text-center text-sm text-gray-500 hover:text-gray-800 focus:outline-none" data-dropdown-toggle="dropdown-menu-{{ $item->id }}" id="{{ $item->id }}" type="button">
+                                    @svg('tabler-dots', 'w-5 h-5')
+                                </button>
+                                <div class="z-10 hidden w-44 divide-y divide-gray-100 rounded bg-white shadow" id="dropdown-menu-{{ $item->id }}">
+                                    <ul aria-labelledby="dropdown-menu-{{ $item->id }}" class="py-1 text-sm text-gray-700">
+                                        <li>
+                                            <a class="block px-4 py-2 hover:bg-gray-100" href="{{ route('admin.banners.edit', $item) }}">Cập nhật</a>
+                                        </li>
+                                        <li>
+                                            <a class="block px-4 py-2 hover:bg-gray-100" data-modal-target="deleteBanner-modal-{{ $item->id }}" data-modal-toggle="deleteBanner-modal-{{ $item->id }}" href="#">Xoá</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                     {{-- start modal delete --}}
                     <div class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0" id="deleteBanner-modal-{{ $item->id }}" tabindex="-1">
                         <div class="relative max-h-full w-full max-w-md p-4">
