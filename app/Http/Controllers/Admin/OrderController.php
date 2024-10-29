@@ -25,13 +25,14 @@ class OrderController extends Controller
             });
         })->with('orderItems.productAttributes.product', 'orderItems.toppings')
             ->latest('id')
-            ->paginate(10); 
-            
+            ->paginate(10);
+
+        dd($orders);
+
         $orderStatuses = OrderStatus::all();
         $invoices = Invoice::all();
         return view('admins.order.index', compact('orders', 'invoices', 'orderStatuses'));
     }
-
 
     /**
      * Display a listing of the resource.

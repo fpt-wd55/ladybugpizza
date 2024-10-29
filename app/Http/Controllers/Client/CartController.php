@@ -20,14 +20,10 @@ class CartController extends Controller
 
         $cart = Cart::where('user_id', $user->id)->first();
 
-
-
         $cartItems = CartItem::where('cart_id', $cart->id)
             ->with('toppings')
             ->with('attributes')
             ->get();
-
-            // dd($cartItems);
 
         return view('clients.cart.index', [
             'cartItems' => $cartItems

@@ -21,13 +21,19 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Order::class);
     }
-    
+
     public function attributes()
     {
         return $this->belongsToMany(ProductAttribute::class, 'order_item_attributes');
     }
+
     public function toppings()
     {
         return $this->belongsToMany(Topping::class, 'order_item_toppings');
+    }
+
+    public function productAttributes()
+    {
+        return $this->belongsTo(ProductAttribute::class);
     }
 }
