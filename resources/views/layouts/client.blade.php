@@ -28,7 +28,7 @@
     @include('partials.clients.footer')
 
     {{-- FABs --}}
-    @include('partials.clients.FABs')
+    @include('partials.clients.float-buttons')
 
 
 </body>

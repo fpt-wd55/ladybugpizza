@@ -23,7 +23,7 @@
         </button>
 
         <div id="menu"
-            class="fixed bottom-16 right-0 z-10 mt-16 p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800"
+            class="fixed bottom-16 right-0 z-10 p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800"
             tabindex="-1" aria-labelledby="drawer-right-label">
             <h5 id="drawer-right-label"
                 class="inline-flex items-center mb-4 text-sm text-gray-7">

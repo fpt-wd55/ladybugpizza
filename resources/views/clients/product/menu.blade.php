@@ -11,7 +11,6 @@
                 {{-- Danh mục --}}
                 <div class="mt-12 py-8 text-center">
                     <p class="vujahday-script-regular mb-6 text-center text-6xl">Menu</p>
-                    <p class="playwrite-gb-s-regular mb-12 text-sm uppercase text-gray-500">Ngon đến từng miếng, đậm vị yêu thương</p>
                     @include('partials.clients.categories')
                 </div>
 

@@ -4,7 +4,7 @@
     <div class="w-full">
         <img alt="" class="w-full object-cover" loading="lazy" src=" {{ asset('storage/uploads/banners/banner.jpg') }}">
     </div>
-    <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
+    <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32 comfortable">
         <div class="w-full">
             <div class="mt-6 text-center">
                 <h2 class="vujahday-script-regular mt-12 text-6xl">Ladybug Pizza</h2>
@@ -34,7 +34,7 @@
                         hưởng không khí sôi động của thành phố.
                     </p>
                 </div>
-                <p class="title-lg">Giờ mở cửa & Địa điểm</p>
+                <p class="playwrite-gb-s-regular mb-6 text-lg uppercase">Giờ mở cửa & Địa điểm</p>
                 <p>35 Đường Downing, <br>
                     New York, NY 10014 <br>
                     917-935-6434
@@ -45,15 +45,15 @@
                     nhìn về phía bên phải của cổng vào để thấy container của chúng tôi!
                 </p>
                 <div class="mt-8">
-                    <span class="font-medium">Thứ Hai - Thứ Năm </span>: 10h sáng - 8h tối <br>
-                    <span class="font-medium">Thứ Sáu</span>: 12h trưa - 12h đêm <br>
-                    <span class="font-medium">Thứ Bảy</span>: 11h sáng - 12h đêm <br>
-                    <span class="font-medium">Chủ Nhật</span>: 11h sáng - 10h tối
+                    <span class="font-bold">Thứ Hai - Thứ Năm </span>: 10h sáng - 8h tối <br>
+                    <span class="font-bold">Thứ Sáu</span>: 12h trưa - 12h đêm <br>
+                    <span class="font-bold">Thứ Bảy</span>: 11h sáng - 12h đêm <br>
+                    <span class="font-bold">Chủ Nhật</span>: 11h sáng - 10h tối
                 </div>
 
             </div>
             <div class="flex justify-center">
-                <button class="button-red mt-12 uppercase">Đặt ngay</button>
+                <button class="button-primary mt-12 uppercase">Đặt ngay</button>
             </div>
         </div>
         <div class="mt-10 grid grid-cols-2 gap-4 md:gap-8">
