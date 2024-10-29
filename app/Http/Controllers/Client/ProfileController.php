@@ -231,7 +231,6 @@ class ProfileController extends Controller
 			$settings->push_order = $request->has('push_order') ? 1 : 0;
 			$settings->push_promotions = $request->has('push_promotions') ? 1 : 0;
 			$settings->push_security = $request->has('push_security') ? 1 : 0;
-
 			$settings->save();
 
 			return redirect()->back()->with('success', 'Cài đặt đã được cập nhật!');
