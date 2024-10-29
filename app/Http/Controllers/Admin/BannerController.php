@@ -17,7 +17,7 @@ class BannerController extends Controller
     {
         $banners = Banner::orderBy('status', 'asc')->paginate(6);
 
-        return view('admins.banner.list', compact('banners'));
+        return view('admins.banner.index', compact('banners'));
     }
 
     /**
