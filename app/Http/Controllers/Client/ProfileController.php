@@ -256,7 +256,7 @@ class ProfileController extends Controller
 
 		return view('clients.profile.promotion', [
 			'promotions' => $myCodes,
-			'totalPromotions' => $totalPromotions,
+			// 'totalPromotions' => $totalPromotions,
 			'currentPoint' => $currentPoint,
 		]);
 	}
