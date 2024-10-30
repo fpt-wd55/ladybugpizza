@@ -18,15 +18,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\UserSetting;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
 	public function index()
 	{
 		$redirectHome = $this->checkUser();
-        if ($redirectHome) {
-            return $redirectHome; 
-        }
+		if ($redirectHome) {
+			return $redirectHome;
+		}
 		$user = Auth::user();
 		return view('clients.profile.index', compact('user'));
 	}
@@ -107,9 +109,9 @@ class ProfileController extends Controller
 	public function membership()
 	{
 		$redirectHome = $this->checkUser();
-        if ($redirectHome) {
-            return $redirectHome; 
-        }
+		if ($redirectHome) {
+			return $redirectHome;
+		}
 		$membership = Auth::user()->membership;
 		$currentPoint = $membership->points;
 		$points = $membership->total_spent;
@@ -187,9 +189,9 @@ class ProfileController extends Controller
 	public function address()
 	{
 		$redirectHome = $this->checkUser();
-        if ($redirectHome) {
-            return $redirectHome; 
-        }
+		if ($redirectHome) {
+			return $redirectHome;
+		}
 		$user = Auth::user();
 		$addresses = Address::where('user_id', $user->id)->with('user')->paginate(6);
 		return view('clients.profile.address.index', compact('addresses'));
@@ -198,9 +200,9 @@ class ProfileController extends Controller
 	public function settings()
 	{
 		$redirectHome = $this->checkUser();
-        if ($redirectHome) {
-            return $redirectHome; 
-        }
+		if ($redirectHome) {
+			return $redirectHome;
+		}
 		// Lấy thông tin cài đặt của người dùng hiện tại
 		$userSetting = UserSetting::where('user_id', auth()->id())->first();
 
@@ -223,75 +225,99 @@ class ProfileController extends Controller
 	}
 	public function updateStatus(Request $request, string $id)
 	{
-		// Tìm cài đặt dựa trên ID
 		$settings = UserSetting::query()->findOrFail($id);
-
 		if ($settings) {
-			// Cập nhật các giá trị dựa trên request
 			$settings->email_order = $request->has('email_order') ? 1 : 0;
 			$settings->email_promotions = $request->has('email_promotions') ? 1 : 0;
 			$settings->email_security = $request->has('email_security') ? 1 : 0;
 			$settings->push_order = $request->has('push_order') ? 1 : 0;
 			$settings->push_promotions = $request->has('push_promotions') ? 1 : 0;
 			$settings->push_security = $request->has('push_security') ? 1 : 0;
-
-			// Lưu cài đặt
 			$settings->save();
 
-			// Trả về thông báo thành công
 			return redirect()->back()->with('success', 'Cài đặt đã được cập nhật!');
 		}
 
-		// Trả về thông báo lỗi nếu không tìm thấy cài đặt
 		return redirect()->back()->with('error', 'Thay đổi trạng thái thất bại');
 	}
 
-	// public function promotion()
-	// {
-	// 	$myCodes = PromotionUser::where('user_id', Auth::id())
-	// 		->with('promotion')
-	// 		->paginate(10);
+	public function promotion()
+	{
+		$myCodes = PromotionUser::where('user_id', Auth::user()->id)
+			->with('promotion')
+			->paginate(10);
 
-	// 	$redeemCodes = Promotion::where('status', 1)
-	// 		->when(request('rank_id'), function ($query) {
-	// 			return $query->where('rank_id', request('rank_id'));
-	// 		})
-	// 		->count();
+		$countMyCodes = PromotionUser::where('user_id', Auth::user()->id)->count();
 
-	// 	$currentPoint = Auth::user()->membership->points ?? 0;
+		$userRankId = Auth::user()->membership->rank_id;
 
-	// 	return view('clients.profile.promotion', [
-	// 		'promotions' => $myCodes,
-	// 		'totalPromotions' => $totalPromotions,
-	// 		'currentPoint' => $currentPoint,
-	// 	]);
-	// }
+		$redeemCodes = Promotion::where('status', 1)
+			->where('quantity', '>', 0)
+			->where(function ($query) use ($userRankId) {
+				$query->where('is_global', '!=', 2)
+					->orWhere('rank_id', $userRankId);
+			})
+			->paginate(10);
 
-	// public function redeemPromotion($id)
-	// {
-	// 	$user = Auth::user();
-	// 	$promotion = Promotion::findOrFail($id);
+		$currentPoint = Auth::user()->membership->points ?? 0;
 
-	// 	if ($user->membership->points < $promotion->points) {
-	// 		return back()->with('error', 'Bạn không đủ điểm để đổi mã giảm giá này.');
-	// 	}
+		return view('clients.profile.promotion', [
+			'myCodes' => $myCodes,
+			'countMyCodes' => $countMyCodes,
+			'redeemCodes' => $redeemCodes,
+			'currentPoint' => $currentPoint,
+		]);
+	}
 
-	// 	if ($promotion->quantity <= 0) {
-	// 		return back()->with('error', 'Mã giảm giá đã hết.');
-	// 	}
+	public function redeemPromotion($id)
+	{
+		$user = Auth::user();
+		$promotion = Promotion::findOrFail($id);
 
-	// 	$user->membership->points -= $promotion->points;
-	// 	$promotion->quantity -= 1;
+		if ($user->membership->points < $promotion->points) {
+			return back()->with('error', 'Bạn không đủ điểm để đổi mã giảm giá này.');
+		}
 
-	// 	try {
-	// 		Membership::where('user_id', $user->id)->update(['points' => $user->membership->points]);
-	// 		$promotion->save();
-	// 	} catch (\Exception $e) {
-	// 		return back()->with('error', 'Đã có lỗi xảy ra.');
-	// 	}
+		if ($promotion->quantity <= 0) {
+			return back()->with('error', 'Mã giảm giá đã hết.');
+		}
 
-	// 	return back()->with('success', 'Bạn đã đổi mã giảm giá thành công');
-	// }
+		// kiểm tra xem người dùng đã đổi mã giảm giá này chưa
+		$hasRedeemed = PromotionUser::where('user_id', $user->id)
+			->where('promotion_id', $promotion->id)
+			->exists();
+
+		if ($hasRedeemed) {
+			return back()->with('error', 'Bạn đã đổi mã giảm giá này rồi.');
+		}
+
+		// kiểm tra xem mã giảm giá còn hiệu lực không
+		if ($promotion->end_date < Carbon::now()) {
+			return back()->with('error', 'Mã giảm giá đã hết hạn.');
+		}
+
+		// Transaction để đảm bảo tính toàn vẹn
+		try {
+			DB::transaction(function () use ($user, $promotion) {
+				// Cập nhật điểm cho người dùng
+				$user->membership->decrement('points', $promotion->points);
+
+				// Giảm số lượng mã giảm giá
+				$promotion->decrement('quantity');
+
+				// Lưu thông tin người dùng đã đổi mã giảm giá
+				PromotionUser::create([
+					'user_id' => $user->id,
+					'promotion_id' => $promotion->id,
+				]);
+			});
+		} catch (\Exception $e) {
+			return back()->with('error', 'Đã có lỗi xảy ra.');
+		}
+
+		return back()->with('success', 'Bạn đã đổi mã giảm giá thành công');
+	}
+
 
 	public function addLocation()
 	{

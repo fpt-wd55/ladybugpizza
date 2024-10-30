@@ -17,8 +17,6 @@ class Address extends Model
         'district',
         'ward',
         'detail_address',
-        'lng',
-        'lat',
         'is_default',
     ];
 

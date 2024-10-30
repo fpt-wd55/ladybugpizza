@@ -9,7 +9,7 @@
                     @svg('tabler-baseline-density-medium', 'w-6 h-6 text-gray-500')
                 </button>
                 <a href="{{ route('admin.dashboard') }}" class="flex ms-2 md:me-24">
-                    <img alt="" class="img-sm me-3" loading="lazy"
+                    <img alt="" class="img-sm me-3 object-cover" loading="lazy"
                         src="{{ asset('storage/uploads/logo/logo.svg') }}">
                     <span class="hidden md:block self-center text-lg font-semibold whitespace-nowrap">Ladybug
                         Pizza</span>
@@ -37,7 +37,7 @@
                     <div>
                         <a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
                             <div class="flex-shrink-0">
-                                <img loading="lazy" class="w-11 h-11 rounded-full"
+                                <img loading="lazy" class="w-11 h-11 rounded-full object-cover"
                                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png"
                                     alt="Joseph McFall avatar">
                             </div>
@@ -53,7 +53,7 @@
                         </a>
                         <a href="#" class="flex py-3 px-4 border-b hover:bg-gray-100">
                             <div class="flex-shrink-0">
-                                <img loading="lazy" class="w-11 h-11 rounded-full"
+                                <img loading="lazy" class="w-11 h-11 rounded-full object-cover"
                                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png"
                                     alt="Roberta Casas image">
                             </div>

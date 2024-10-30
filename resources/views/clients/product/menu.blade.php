@@ -11,7 +11,6 @@
                 {{-- Danh mục --}}
                 <div class="mt-12 py-8 text-center">
                     <p class="vujahday-script-regular mb-6 text-center text-6xl">Menu</p>
-                    <p class="playwrite-gb-s-regular mb-12 text-sm uppercase text-gray-500">Ngon đến từng miếng, đậm vị yêu thương</p>
                     @include('partials.clients.categories')
                 </div>
 
@@ -30,8 +29,8 @@
                                         <li>2 Pepsi lon 450ml</li>
                                     </ul>
                                     <div class="absolute bottom-4 flex items-center gap-3">
-                                        <p class="text-sm text-gray-500 line-through">190,000đ</p>
-                                        <p class="text-lg font-semibold">190,000đ</p>
+                                        <p class="text-sm text-gray-500 line-through">190,000₫</p>
+                                        <p class="text-lg font-semibold">190,000₫</p>
                                     </div>
                                 </div>
                             </a>
@@ -67,9 +66,9 @@
                                             <p class="{{ empty($product->description) ? 'min-h-12' : '' }} mb-4 line-clamp-2">{{ $product->description }}</p>
                                             <div class="bottom-4 flex items-center gap-3">
                                                 <p class="text-xs text-gray-500 line-through">
-                                                    {{ number_format($product->price) }}đ
+                                                    {{ number_format($product->price) }}₫
                                                 </p>
-                                                <p class="font-semibold">{{ number_format($product->discount_price) }}đ</p>
+                                                <p class="font-semibold">{{ number_format($product->discount_price) }}₫</p>
                                             </div>
                                         </div>
                                     </a>

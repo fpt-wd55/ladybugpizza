@@ -93,7 +93,7 @@
                         <div class="grid gap-4 mb-4 sm:grid-cols-3">
                             <div>
                                 <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá bán thường
-                                    (đ)</label>
+                                    (₫)</label>
                                 <input type="number" name="price" id="price"
                                     value="{{ old('price', $product->price) }}" placeholder="Giá bán thường"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -105,7 +105,7 @@
                             </div>
                             <div>
                                 <label for="discount_price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá khuyến
-                                    mãi (đ)</label>
+                                    mãi (₫)</label>
                                 <input type="number" name="discount_price" id="discount_price" placeholder="Giá khuyến mãi"
                                     value="{{ old('discount_price', $product->discount_price) }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
