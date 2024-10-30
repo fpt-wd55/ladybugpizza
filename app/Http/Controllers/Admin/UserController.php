@@ -86,12 +86,8 @@ class UserController extends Controller
         $addresses = $user->addresses;
         $orders = $user->orders()->paginate(5);
         $evaluations = $user->evaluations;
-        $favorites = null;
-
-        // foreach ($orders as $order) {
-        //     $order->created_at = Carbon::parse($order->created_at)->format('Y-m-d');
-        // }
-
+        $favorites = null; 
+        
         return view('admins.user.detail', compact('user', 'addresses', 'orders', 'evaluations', 'favorites'));
     }
 
