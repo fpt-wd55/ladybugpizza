@@ -19,15 +19,12 @@ class OrderController extends Controller
     {
         $status = $request->get('tab'); // Change 'status' to 'tab'
 
-        $orders = Order::when($status, function ($query, $status) {
-            return $query->whereHas('orderStatus', function ($q) use ($status) {
-                $q->where('slug', $status); // Ensure you're querying the 'slug' column
-            });
-        })->with('orderItems.productAttributes.product', 'orderItems.toppings')
-            ->latest('id')
-            ->paginate(10);
-
-        dd($orders);
+        $orders = Order::query() // Change 'Order::all()' to 'Order::query()'
+            ->when($status, function ($query, $status) {
+                return $query->whereHas('orderStatus', function ($query) use ($status) {
+                    return $query->where('slug', $status);
+                });
+            })->latest('id')->paginate(10);
 
         $orderStatuses = OrderStatus::all();
         $invoices = Invoice::all();
@@ -42,6 +39,7 @@ class OrderController extends Controller
         $invoices = Invoice::all();
         return view('admins.order.detail', compact('invoices'));
     }
+
     /**
      * Display the specified resource.
      */
@@ -79,6 +77,7 @@ class OrderController extends Controller
 
         return redirect()->route('admin.orders.edit', $id)->with('success', 'Trạng thái đã được cập nhật!');
     }
+    
     public function export()
     {
         $this->exportExcel(Order::all(), 'danhsachdonhang');

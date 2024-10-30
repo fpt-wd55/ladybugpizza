@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use App\Models\Evaluate;
 use App\Models\Evaluation;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
@@ -21,7 +22,8 @@ class EvaluationSeeder extends Seeder
         $faker = Faker::create();
 
         $products = Product::pluck('id')->toArray();
-        $users = User::pluck('id')->toArray();
+        $users = User::where('role_id', 2)->get();
+        $orders = Order::all();
 
         $comments = [
             'Rất tốt! Tôi cảm thấy rất hài lòng với sản phẩm này, chất lượng tốt, giá cả hợp lý. Tôi sẽ tiếp tục ủng hộ cửa hàng.',
@@ -43,15 +45,14 @@ class EvaluationSeeder extends Seeder
         ];
 
         foreach ($products as $product) {
-            for ($i = 0; $i < 3; $i++) {
-                $user = $faker->randomElement($users);
-
-                Evaluation::create([
-                    'user_id' => $user,
+            for ($i = 0; $i < 3; $i++) { 
+                $comment = $faker->randomElement($comments);
+                Evaluation::insert([
+                    'user_id' => $users->random()->id,
                     'product_id' => $product,
-                    'order_id' => rand(1, 100),
+                    'order_id' => $orders->random()->id,
                     'rating' => rand(1, 5),
-                    'comment' => $faker->randomElement($comments),
+                    'comment' => $comment,
                     'status' => 1,
                     'created_at' => $now,
                     'updated_at' => $now,
