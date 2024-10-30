@@ -72,6 +72,7 @@ Route::prefix('/')->group(function () {
     Route::get('/profile/address/add', [ProfileController::class, 'addLocation'])->name('client.profile.add-location');
     Route::post('/profile/address', [ProfileController::class, 'storeLocation'])->name('client.profile.post-location');
     Route::get('/profile/address/edit/{address}', [ProfileController::class, 'editLocation'])->name('client.profile.edit-location');
+    Route::put('/profile/address/update/{address}',[ProfileController::class, 'updateLocation'])->name('client.profile.update-location');
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
     Route::put('/settings/update/{id}', [ProfileController::class, 'updateStatus'])->name('client.settings.update');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');

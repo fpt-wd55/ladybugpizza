@@ -27,15 +27,20 @@
                                         <span class="badge-red">Mặc định</span>
                                     @endif
                                 </div>
-                                <div class="text-sm">
-                                    <div class="flex item-center gap-4 mb-2">
-                                        <p>{{ $address->user->fullname }}</p>
-                                        <p>{{ $address->phone }}</p>
+                                <div class="text-sm mb-2">
+                                    <div class="flex items-center mb-1">
+                                        <p class="uppercase">{{ $address->user->fullname }}</p>
+                                        <span class="mx-2 h-5 border-l border-gray-300"></span>
+                                        <p class="text-gray-600 text-base">(+84) {{ $address->phone }}</p>
                                     </div>
-                                    <p class="line-clamp-2">{{ $address->detail_address }}, {{ $address->ward }},
+                                    <p class="line-clamp-2 text-gray-600 text-base">{{ $address->detail_address }}, {{ $address->ward }},
                                         {{ $address->district }}, {{ $address->province }}
                                     </p>
                                 </div>
+                                @if ($address->is_default == 0)
+                                <button class="ml-auto border border-gray-300 text-gray-700 px-3 py-1 rounded text-sm hover:text-red-500  hover:border-red-500">Thiết lập mặc định</button>
+                                @endif
+                               
                             </div>
                             <div class="text-right flex flex-col md:flex-row gap-4 items-center justify-center">
                                 <a href="{{ route('client.profile.edit-location', $address) }}" class="link-md">Sửa</a>

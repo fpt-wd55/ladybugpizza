@@ -102,6 +102,7 @@ class WebController extends Controller
             'ward' => $validated['ward'],
             'detail_address' => $validated['address'],
             'title' => $validated['title'],
+            'is_default' => 1,
         ];
 
         // dd($addressData);
