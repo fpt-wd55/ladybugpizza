@@ -51,7 +51,7 @@
             <div class="mb-6 grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                    <input type="email" name="email" value="{{ old('email', $user->email) }}" class="input">
+                    <input type="email" name="email" value="{{ old('email', $user->email) }}" class="input mb-2">
                     @error('email')
                         <span class="text-sm text-red-500">{{ $message }}</span>
                     @enderror
