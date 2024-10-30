@@ -33,8 +33,8 @@
             language: 'vi',
             menubar: false,
             statusbar: false,
-            plugins: 'fullscreen lists link',
-            toolbar: 'undo redo | blocks | bold italic underline strikethrough removeformat link | alignleft aligncenter alignright | bullist numlist | fullscreen'
+            plugins: 'fullscreen lists link image code',
+            toolbar: 'undo redo | blocks | bold italic underline strikethrough removeformat link image code | alignleft aligncenter alignright | bullist numlist | fullscreen'
         });
 
         function tableCheckboxItem(checkboxAllId, checkboxItemClass) {
