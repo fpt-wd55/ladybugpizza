@@ -266,7 +266,8 @@
                                                 class="block py-2 px-4 hover:bg-gray-100">Xem</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Đánh giá</a>
+                                            <a href="{{ route('admin.products.evaluation', $product) }}"
+                                                class="block py-2 px-4 hover:bg-gray-100">Đánh giá</a>
                                         </li>
                                         <li>
                                             <a href="{{ route('admin.products.edit', $product) }}"
