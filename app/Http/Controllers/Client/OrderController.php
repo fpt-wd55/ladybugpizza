@@ -31,12 +31,14 @@ class OrderController extends Controller
             });
         })
         ->where('user_id', $userId) 
-        ->with('orderItems.productAttributes.product', 'orderItems.toppings')
+        ->with('orderItems.attributes.product', 'orderItems.toppings')
         ->paginate(10);
+        // đếm số lượng order trong tab
+        $orderStatuses = OrderStatus::withCount(['orders' => function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        }])->get();
 
-        $orderStatuses = OrderStatus::all();
         $invoices = Invoice::all();
-        
         return view('clients.order.index', [
             'orderStatuses' => $orderStatuses,
             'invoices' => $invoices,

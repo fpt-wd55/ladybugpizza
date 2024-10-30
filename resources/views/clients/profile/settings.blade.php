@@ -15,7 +15,6 @@
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="id" value="{{ $userSetting->id }}">
-
                     {{-- Email notice --}}
                     <div class="mb-8">
                         <p class="font-medium mb-4">Thông báo Email</p>
@@ -47,7 +46,6 @@
                             </label>
                         </div>
                     </div>
-
                     {{-- Push notice --}}
                     <div class="mb-8">
                         <p class="font-medium mb-4">Thông báo đẩy</p>

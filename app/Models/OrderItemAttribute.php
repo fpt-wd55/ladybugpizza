@@ -11,26 +11,16 @@ class OrderItemAttribute extends Model
 
     protected $fillable = [
         'order_item_id',
-        'product_attribute_id',
+        'attribute_value_id',
     ];
 
     public function orderItem()
     {
         return $this->belongsTo(OrderItem::class);
-    }
+    } 
 
-    public function productAttribute()
+    public function attributes()
     {
-        return $this->belongsTo(ProductAttribute::class);
-    }
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
-
-    public function attribute()
-    {
-        return $this->belongsTo(Attribute::class);
-    }
+        return $this->belongsTo(AttributeValue::class);
+    } 
 }

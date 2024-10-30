@@ -97,38 +97,41 @@ class WebController extends Controller
         $addressData = [
             'user_id' => $user->id,
             'phone' => $user->phone,
-            'provinceCode' => $validated['province'],
-            'districtCode' => $validated['district'],
-            'wardCode' => $validated['ward'],
+            'province' => $validated['province'],
+            'district' => $validated['district'],
+            'ward' => $validated['ward'],
             'detail_address' => $validated['address'],
             'title' => $validated['title'],
+            'is_default' => 1,
         ];
 
-        $addressNames = $this->getAddressNamesByCodes(
-            $addressData['provinceCode'],
-            $addressData['districtCode'],
-            $addressData['wardCode']
-        );
+        // dd($addressData);
 
-        if (is_null($addressNames['province']) || is_null($addressNames['district']) || is_null($addressNames['ward'])) {
-            return back()->withErrors(['address' => 'Không thể tìm thấy tên cho mã địa chỉ.']);
-        }
+        // $addressNames = $this->getAddressNamesByCodes(
+        //     $addressData['provinceCode'],
+        //     $addressData['districtCode'],
+        //     $addressData['wardCode']
+        // );
 
-        $addressData['province'] = $addressNames['province'];
-        $addressData['district'] = $addressNames['district'];
-        $addressData['ward'] = $addressNames['ward'];
+        // if (is_null($addressNames['province']) || is_null($addressNames['district']) || is_null($addressNames['ward'])) {
+        //     return back()->withErrors(['address' => 'Không thể tìm thấy tên cho mã địa chỉ.']);
+        // }
 
-        $fullAddress = implode(', ', [
-            $addressData['detail_address'],
-            $addressData['ward'],
-            $addressData['district'],
-            $addressData['province'],
-        ]);
+        // $addressData['province'] = $addressNames['province'];
+        // $addressData['district'] = $addressNames['district'];
+        // $addressData['ward'] = $addressNames['ward'];
 
-        [$lng, $lat] = $this->convertAddressToCoordinates($fullAddress);
+        // $fullAddress = implode(', ', [
+        //     $addressData['detail_address'],
+        //     $addressData['ward'],
+        //     $addressData['district'],
+        //     $addressData['province'],
+        // ]);
 
-        $addressData['lng'] = $lng;
-        $addressData['lat'] = $lat;
+        // [$lng, $lat] = $this->convertAddressToCoordinates($fullAddress);
+
+        // $addressData['lng'] = $lng;
+        // $addressData['lat'] = $lat;
 
         Address::create($addressData);
 

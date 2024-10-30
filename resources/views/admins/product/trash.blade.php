@@ -40,7 +40,7 @@
                                     href="{{ asset('storage/uploads/products/' . $product->image) }}">
                                     <img loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
                                         onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
-                                        class="w-8 h-8 mr-3 rounded bg-slate-400">
+                                        class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
                                 </a>
                                 <div class="grid grid-flow-row">
                                     <span class="text-sm">{{ $product->name }}</span>
@@ -65,12 +65,12 @@
                                 <div class="grid grid-flow-row">
                                     @if ($product->discount_price == 0)
                                         <span class="text-sm">
-                                            {{ number_format($product->price) }}đ
+                                            {{ number_format($product->price) }}₫
                                         </span>
                                     @else
-                                        <span class="text-sm line-through">{{ number_format($product->price) }}đ</span>
+                                        <span class="text-sm line-through">{{ number_format($product->price) }}₫</span>
                                         <span class="text-sm">
-                                            {{ number_format($product->discount_price) }}đ
+                                            {{ number_format($product->discount_price) }}₫
                                         </span>
                                     @endif
                                 </div>

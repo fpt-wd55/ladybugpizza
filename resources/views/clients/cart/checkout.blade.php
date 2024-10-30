@@ -98,19 +98,19 @@
                             <div class="">
                                 <div class="mb-4 flex items-center justify-between gap-32 text-sm">
                                     <p class="">Tổng tiền sản phẩm</p>
-                                    <p class="font-medium">150,000đ</p>
+                                    <p class="font-medium">150,000₫</p>
                                 </div>
                                 <div class="mb-4 flex items-center justify-between gap-32 text-sm">
                                     <p class="">Phí vận chuyển</p>
-                                    <p class="font-medium">150,000đ</p>
+                                    <p class="font-medium">150,000₫</p>
                                 </div>
                                 <div class="mb-4 flex items-center justify-between gap-32 text-sm">
                                     <p class="">Giảm giá</p>
-                                    <p class="font-medium">150,000đ</p>
+                                    <p class="font-medium">150,000₫</p>
                                 </div>
                                 <hr class="mb-4">
-                                <div class="mb-4 flex items-center justify-end gap-32">
-                                    <p class="font-medium">150,000đ</p>
+                                <div class="flex items-center justify-end mb-4 gap-32">
+                                    <p class="font-medium">150,000₫</p>
                                 </div>
                             </div>
                             <div class="mb-16">

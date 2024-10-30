@@ -27,8 +27,8 @@
                             </div>
                             <p class="mb-4 line-clamp-3 h-12 text-base">{{ $sanpham->description }}</p>
                             <div class="bottom-4 flex items-center gap-3">
-                                <p class="text-sm text-gray-500 line-through">{{ number_format($sanpham->price) }}đ</p>
-                                <p class="font-semibold text-base">{{ number_format($sanpham->discount_price) }}đ</p>
+                                <p class="text-sm text-gray-500 line-through">{{ number_format($sanpham->price) }}₫</p>
+                                <p class="font-semibold text-base">{{ number_format($sanpham->discount_price) }}₫</p>
                             </div>
                         </div>
                     </a>

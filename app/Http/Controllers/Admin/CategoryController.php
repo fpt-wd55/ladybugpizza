@@ -69,7 +69,7 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      */
     public function update(CategoryRequest $request, Category $category)
-    { 
+    {
         // Xu ly hinh anh
         $image_name = $category->image;
         $old_image = $category->image;
@@ -94,7 +94,7 @@ class CategoryController extends Controller
                 unlink(storage_path('app/public/uploads/categories/' . $old_image));
             }
             return redirect()->back()->with('success', 'Cập nhật danh mục thành công');
-        }else {
+        } else {
             return redirect()->back()->with('error', 'Cập nhật danh mục thất bại');
         }
     }
@@ -103,14 +103,13 @@ class CategoryController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Category $category)
-    { 
+    {
         $id = $category['id'];
 
         if (Category::destroy($id)) {
             return redirect()->back()->with('success', 'Xóa danh mục thành công');
-        }else{
+        } else {
             return redirect()->back()->with('error', 'Xóa danh mục thất bại');
-
         }
     }
 
@@ -129,28 +128,35 @@ class CategoryController extends Controller
 
             $restoreCate->restore();
             return redirect()->back()->with('success', 'Danh mục đã được khôi phục thành công');
-        }else{
+        } else {
             return redirect()->back()->with('error', 'Khôi phục danh mục thất bại');
-
         }
     }
 
     public function trashForce(String $id)
     {
         $forceCategories = Category::withTrashed()->find($id);
-        $old_image =$forceCategories->image;
+        $old_image = $forceCategories->image;
         if ($forceCategories) {
             if ($old_image != null) {
                 unlink(storage_path('app/public/uploads/categories/' . $old_image));
             }
             $forceCategories->forceDelete();
             return redirect()->back()->with('success', 'Danh mục đã xóa vĩnh viễn');
-        }else{
+        } else {
             return redirect()->back()->with('error', 'Xóa vĩnh viễn danh mục thất bại');
         }
     }
-    public function export(){
+    public function export()
+    {
         $categories = Category::all();
         $this->exportExcel($categories, 'danhsachdanhmuc');
+    }
+
+    public function search(Request $request)
+    {
+        $category = Category::where('name', 'like', '%' . $request->search . '%')->paginate(10);
+        $category->appends(['search' => $request->search]);
+        return view('admins.category.list', compact('category'));
     }
 }

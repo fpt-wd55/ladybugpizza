@@ -20,8 +20,6 @@ return new class extends Migration
             $table->string('district');
             $table->string('ward');
             $table->string('detail_address');
-            $table->string('lng')->nullable();
-            $table->string('lat')->nullable();
             $table->boolean('is_default')->default(false);
             $table->timestamps();
         });

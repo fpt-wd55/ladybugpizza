@@ -78,7 +78,7 @@
                     </div>
                     {{-- min_order_total --}}
                     <div>
-                        <label for=" min_order_total" class="label-lg">Đơn hàng tối thiểu (VNĐ)</label>
+                        <label for=" min_order_total" class="label-lg">Đơn hàng tối thiểu (₫)</label>
                         <input type="text" name="min_order_total" class="input h-10 mb-2"
                             value="{{ old('min_order_total') }}" />
                         @error('min_order_total')
@@ -87,7 +87,7 @@
                     </div>
                     {{-- max_discount --}}
                     <div>
-                        <label for="max_discount" class="label-lg">Giảm tối đa (VNĐ)</label>
+                        <label for="max_discount" class="label-lg">Giảm tối đa (₫)</label>
                         <input type="text" name="max_discount" class="input h-10 mb-2"
                             value="{{ old('max_discount') }}" />
                         @error('max_discount')
