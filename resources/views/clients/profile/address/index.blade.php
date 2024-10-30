@@ -38,15 +38,57 @@
                                     </p>
                                 </div>
                                 @if ($address->is_default == 0)
-                                <button class="ml-auto border border-gray-300 text-gray-700 px-3 py-1 rounded text-sm hover:text-red-500  hover:border-red-500">Thiết lập mặc định</button>
-                                @endif
-                               
+                                <form action="{{ route('client.profile.set-address', $address) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="ml-auto border border-gray-300 text-gray-700 px-3 py-1 rounded text-sm hover:text-[#D30A0A] hover:border-[#D30A0A]">
+                                        Thiết lập mặc định
+                                    </button>
+                                </form>
+                            @endif
                             </div>
                             <div class="text-right flex flex-col md:flex-row gap-4 items-center justify-center">
                                 <a href="{{ route('client.profile.edit-location', $address) }}" class="link-md">Sửa</a>
-                                <a href="#" class="link-md">@svg('tabler-trash', 'icon-md')</a>
+                                @if ($address->is_default == 0)       
+                                <a href="#" class="link-md"  data-modal-target="delete-modal-{{ $address->id }}"
+                                    data-modal-toggle="delete-modal-{{ $address->id }}">@svg('tabler-trash', 'icon-md')</a>
+                                @endif
                             </div>
                         </div>
+                          {{-- start modal --}}
+                          <div id="delete-modal-{{ $address->id }}" tabindex="-1"
+                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                            <div class="relative p-4 w-full max-w-md max-h-full">
+                                <div class="relative bg-white rounded-lg shadow">
+                                    <button type="button"
+                                        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                        data-modal-hide="delete-modal-{{ $address->id }}">
+                                        @svg('tabler-x', 'w-4 h-4')
+                                        <span class="sr-only">Close modal</span>
+                                    </button>
+                                    <div class="p-4 md:p-5 text-center">
+                                        <div class="flex justify-center">
+                                            @svg('tabler-map-2', 'w-12 h-12 text-red-600 text-center mb-2')
+                                        </div>
+                                        <h3 class="mb-5 font-normal">Bạn có muốn xóa địa chỉ này không?</h3>
+                                        <div class="flex justify-center">
+                                        <form action="{{ route('client.profile.delete-location', $address) }}" method="POST">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit"
+                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                Xóa
+                                            </button>
+                                        </form>
+
+                                        <button data-modal-hide="delete-modal-{{ $address->id }}" type="button"
+                                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Không,
+                                            trở lại</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- end modal --}}
 
                         {{-- edit adress Modal --}}
                         {{-- <div id="editAddressModal-{{ $i }}" tabindex="-1" aria-hidden="true"
