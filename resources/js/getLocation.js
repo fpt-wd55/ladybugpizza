@@ -7,7 +7,7 @@ export function getProvinces() {
 export function getDistrictsByProvince(provinceId) {
     const province = dvhcvn.findById(provinceId);
     return province ? province.children : [];
-}
+} 
 
 export function getWardsByDistrict(districtId) {
     const district = dvhcvn.findById(districtId);
