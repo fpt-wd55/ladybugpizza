@@ -312,33 +312,23 @@
                                             {{-- SẢN PHẨM --}}
                                             <div class="flex justify-between">
                                                 <div class="basic-2/3">
-                                                    {{-- sản phẩm --}}
-                                                    <div class="pl-4 ">
-                                                        <label class="font-semibold">Sản phẩm</label> <br>
+                                                    <div class="pl-4">
+                                                        <label class="font-semibold mb-5">Sản phẩm</label> <br>
                                                         @foreach ($order->orderItems as $orderItem)
-                                                            @foreach ($orderItem->productAttributes as $products)
-                                                                <span class="text-gray-800 font-semibold">
-                                                                    {{ $products->product->name }} ,
-                                                                </span>
-                                                            @endforeach
-                                                        @endforeach
-                                                    </div>
-                                                    {{-- thuộc tính --}}
-                                                    <div class="pl-4 ">
-                                                        <span>Đế : </span>
-                                                        @foreach ($order->orderItems as $orderItem)
-                                                            @foreach ($orderItem->productAttributes as $attribute)
-                                                                {{ $attribute->attributeValue->value }},
-                                                            @endforeach
-                                                        @endforeach
-                                                    </div>
-                                                    {{-- topping --}}
-                                                    <div class="pl-4 ">
-                                                        <span>Topping : </span>
-                                                        @foreach ($order->orderItems as $orderItem)
-                                                            @foreach ($orderItem->toppings as $topping)
-                                                                {{ $topping->name }},
-                                                            @endforeach
+                                                            <p class="text-gray-800 font-semibold">
+                                                                {{ $orderItem->product->name }}
+                                                            </p>
+                                                            <p>
+                                                                @if ($orderItem->atrributeValues->count() > 0)
+                                                                    {{ $orderItem->atrributeValues->map->value->join(', ') }}
+                                                                @endif
+                                                            </p>
+                                                            <p>
+                                                                @if ($orderItem->toppingValues->count() > 0)
+                                                                    <span>Topping:
+                                                                    </span>{{ $orderItem->toppingValues->map->name->join(', ') }}
+                                                                @endif
+                                                            </p>
                                                         @endforeach
                                                     </div>
                                                 </div>

@@ -3,10 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Address;
+use App\Models\AttributeValue;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderStatus;
 use App\Models\PaymentMethod;
+use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\Topping;
 use App\Models\User;
@@ -25,50 +27,49 @@ class OrderSeeder extends Seeder
     {
         $now = Carbon::now();
         $faker = Faker::create();
-        $users = User::get()->pluck('id')->toArray();
-        $addresses = Address::get()->pluck('id')->toArray();
-        $paymentMethods = PaymentMethod::get()->pluck('id')->toArray();
-        $orderStatuses = OrderStatus::get()->pluck('id')->toArray();
-        $productAttributes = ProductAttribute::get()->pluck('id')->toArray();
-        $toppings = Topping::get()->pluck('id')->toArray();
+        $products = Product::all();
+        $users = User::where('role_id', 2)->get();
+        $paymentMethods = PaymentMethod::all();
+        $orderStatuses = OrderStatus::all();
+        $attributes = AttributeValue::all();
+        $toppings = Topping::all();
 
-        for ($i = 1; $i < 200; $i++) {
+        for ($i = 1; $i < 100; $i++) {
+            $user = $users->random()->id;
+            $address = Address::where('user_id', $user)->first();
             Order::insert([
-                'user_id' => $faker->randomElement($users),
+                'user_id' => $user,
                 'promotion_id' => null,
-                'amount' => rand(100000, 1000000),
-                'address_id' => $faker->randomElement($addresses),
+                'amount' => rand(100, 500) * 1000,
+                'address_id' => $address->id,
                 'discount_amount' => rand(0, 10000),
                 'shipping_fee' => 25000,
                 'completed_at' => $now,
                 'notes' => $faker->text,
-                'payment_method_id' => $faker->randomElement($paymentMethods),
-                'order_status_id' => $faker->randomElement($orderStatuses),
+                'payment_method_id' => $paymentMethods->random()->id,
+                'order_status_id' => $orderStatuses->random()->id,
                 'canceled_reason' => $faker->text,
                 'canceled_at' => $now,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
-            OrderItem::insert([
-                'order_id' => $i,
-                'quantity' => rand(1, 10),
-                'price' => rand(10000, 100000),
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
             for ($j = 1; $j < 5; $j++) {
-                DB::table('order_item_attributes')->insert([
-                    'order_item_id' => $i,
-                    'product_attribute_id' => $faker->randomElement($productAttributes),
-                    'created_at' => $now,
-                    'updated_at' => $now,
+                $orderItem = OrderItem::create([
+                    'order_id' => $i,
+                    'product_id' => $products->random()->id,
+                    'quantity' => rand(1, 5),
+                    'price' => rand(100, 500) * 1000,
                 ]);
-                DB::table('order_item_toppings')->insert([
-                    'order_item_id' => $i,
-                    'topping_id' => $faker->randomElement($toppings),
-                    'created_at' => $now,
-                    'updated_at' => $now,
-                ]);
+                for ($k = 1; $k < 3; $k++) {
+                    DB::table('order_item_attributes')->insert([
+                        'order_item_id' => $orderItem->id,
+                        'attribute_value_id' => $attributes->random()->id,
+                    ]);
+                    DB::table('order_item_toppings')->insert([
+                        'order_item_id' => $orderItem->id,
+                        'topping_id' => $toppings->random()->id,
+                    ]);
+                }
             }
         }
     }
