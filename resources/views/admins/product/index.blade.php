@@ -336,3 +336,11 @@
         </div>
     </div>
 @endsection
+@section('scripts')
+    <script>
+        tableCheckboxItem('table-checkbox-all', 'table-item-checkbox');
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector('[data-modal-toggle="defaultModal"]').click();
+        });
+    </script>
+@endsection

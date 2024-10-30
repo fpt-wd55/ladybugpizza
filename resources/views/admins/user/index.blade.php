@@ -29,26 +29,6 @@
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 <div class="flex items-center space-x-3 w-full md:w-full">
-                    <div class="flex items-center w-full">
-                        <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
-                            class="w-full md:w-auto flex items-center justify-center py-2 ps-2 pe-3 me-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
-                            type="button">
-                            @svg('tabler-chevron-down', 'w-5 h-5 me-3')
-                            Hành động
-                        </button>
-                        <h2 class="font-medium text-gray-700 text-base italic" id="selectedItems">
-                        </h2>
-                    </div>
-                    <div id="actionsDropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
-                        <ul class="py-1 text-sm text-gray-700" aria-labelledby="actionsDropdownButton">
-                            <li>
-                                <a href="#" class="block py-2 px-4 hover:bg-gray-100">Kích hoạt/Khóa</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block py-2 px-4 hover:bg-gray-100">Xóa tài khoản</a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
             <div
@@ -74,34 +54,31 @@
                         <form action="#" aria-labelledby="filterDropdownButton">
                             <h6 class="mb-3 text-sm font-medium text-gray-900">Vai trò</h6>
                             <ul class="space-y-2 text-sm">
-                                <li class="flex items-center">
-                                    <input id="admin" type="checkbox" value="filter-role-admin"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                    <label for="admin" class="ml-2 text-sm font-medium text-gray-900">Quản trị
-                                        viên</label>
-                                </li>
-                                <li class="flex items-center">
-                                    <input id="client" type="checkbox" value="filter-role-client"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                    <label for="client" class="ml-2 text-sm font-medium text-gray-900">Khách hàng</label>
-                                </li>
+                                @foreach ($roles as $role)
+                                    <li class="flex items-center">
+                                        <input id="admin" type="checkbox" value="filter-role-{{ $role->id }}"
+                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                        <label for="admin"
+                                            class="ml-2 text-sm font-medium text-gray-900">{{ $role->name }}</label>
+                                    </li>
+                                @endforeach
                             </ul>
                             <h6 class="my-3 text-sm font-medium text-gray-900">Giới tính</h6>
                             <ul class="space-y-2 text-sm">
                                 <li class="flex items-center">
-                                    <input id="male" type="checkbox" value="filter-gender-male"
+                                    <input id="male" type="checkbox" value="filter-gender-1"
                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
                                     <label for="male" class="ml-2 text-sm font-medium text-gray-900">Nam</label>
                                 </li>
                                 <li class="flex items-center">
-                                    <input id="female" type="checkbox" value="filter-gender-female"
+                                    <input id="female" type="checkbox" value="filter-gender-2"
                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
                                     <label for="female" class="ml-2 text-sm font-medium text-gray-900">Nữ</label>
                                 </li>
                                 <li class="flex items-center">
-                                    <input id="other" type="checkbox" value="filter-gender-other"
+                                    <input id="other" type="checkbox" value="filter-gender-3"
                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                    <label for="other" class="ml-2 text-sm font-medium text-gray-900">Khac</label>
+                                    <label for="other" class="ml-2 text-sm font-medium text-gray-900">Khác</label>
                                 </li>
                             </ul>
                             <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
@@ -158,12 +135,6 @@
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
-                        <th scope="col" class="p-4">
-                            <div class="flex items-center">
-                                <input id="table-checkbox-all" type="checkbox"
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                            </div>
-                        </th>
                         <th scope="col" class="px-4 py-3">
                             <div class="flex items-center">
                                 Tài khoản
@@ -197,13 +168,6 @@
                 <tbody>
                     @forelse ($users as $user)
                         <tr class="border-b hover:bg-gray-100">
-                            <td class="w-4 px-4 py-3">
-                                <div class="flex items-center">
-                                    <input id="table-item-checkbox-{{ $user->id }}" type="checkbox"
-                                        onclick="event.stopPropagation()"
-                                        class="table-item-checkbox w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                </div>
-                            </td>
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap">
                                 <a class="shrink-0" data-fslightbox="gallery" href="{{ $user->avatar() }}">
                                     <img loading="lazy" src="{{ $user->avatar() }}" alt="Avatar"
@@ -268,12 +232,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('scripts')
-    <script>
-        tableCheckboxItem('table-checkbox-all', 'table-item-checkbox');
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelector('[data-modal-toggle="defaultModal"]').click();
-        });
-    </script>
 @endsection
