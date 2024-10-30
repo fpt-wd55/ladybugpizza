@@ -292,37 +292,56 @@ class ProfileController extends Controller
 		return view('clients.profile.address.add');
 	}
 
-	public function updateLocation(Request $request)
+	public function updateLocation(AddressRequest $request , Address $address)
 	{
+		$data = $request->all();
+		// dd($data);
+		$addressData = [
+			'user_id' => Auth()->user()->id,
+			'phone' => Auth()->user()->phone,
+			'province' => $data['province'],
+			'district' => $data['district'],
+			'ward' => $data['ward'],
+			'detail_address' => $data['address'],
+			'title' => $data['title'],
+		];
+		$fullAddress = implode(', ', [
+			$addressData['detail_address'],
+			$addressData['ward'],
+			$addressData['district'],
+			$addressData['province'],
+		]);
+		$address->update($addressData);
+
+		return redirect()->route('client.profile.address')->with('success', 'Cập nhật địa chỉ thành công');
 	}
 
 	public function storeLocation(AddressRequest $request)
 	{
 		$data = $request->all();
-
 		$addressData = [
 			'user_id' => Auth()->user()->id,
 			'phone' => Auth()->user()->phone,
-			'provinceCode' => $data['province'],
-			'districtCode' => $data['district'],
-			'wardCode' => $data['ward'],
+			'province' => $data['province'],
+			'district' => $data['district'],
+			'ward' => $data['ward'],
 			'detail_address' => $data['address'],
 			'title' => $data['title'],
 		];
 
-		$addressNames = $this->getAddressNamesByCodes(
-			$addressData['provinceCode'],
-			$addressData['districtCode'],
-			$addressData['wardCode']
-		);
+		// $addressNames = $this->getAddressNamesByCodes(
+		// 	$addressData['provinceCode'],
+		// 	$addressData['districtCode'],
+		// 	$addressData['wardCode']
+		// );
 
-		if (is_null($addressNames['province']) || is_null($addressNames['district']) || is_null($addressNames['ward'])) {
-			return back()->withErrors(['address' => 'Không thể tìm thấy tên cho mã địa chỉ.']);
-		}
+		// if (is_null($addressNames['province']) || is_null($addressNames['district']) || is_null($addressNames['ward'])) {
+		// 	return back()->withErrors(['address' => 'Không thể tìm thấy tên cho mã địa chỉ.']);
+		// }
 
-		$addressData['province'] = $addressNames['province'];
-		$addressData['district'] = $addressNames['district'];
-		$addressData['ward'] = $addressNames['ward'];
+		// $addressData['province'] = $addressNames['province'];
+		// $addressData['district'] = $addressNames['district'];
+		// $addressData['ward'] = $addressNames['ward'];
 
 		$fullAddress = implode(', ', [
 			$addressData['detail_address'],
@@ -331,10 +350,10 @@ class ProfileController extends Controller
 			$addressData['province'],
 		]);
 
-		[$lng, $lat] = $this->convertAddressToCoordinates($fullAddress);
+		// [$lng, $lat] = $this->convertAddressToCoordinates($fullAddress);
 
-		$addressData['lng'] = $lng;
-		$addressData['lat'] = $lat;
+		// $addressData['lng'] = $lng;
+		// $addressData['lat'] = $lat;
 		Address::create($addressData);
 
 		return redirect()->route('client.profile.address')->with('success', 'Thêm địa chỉ thành công');

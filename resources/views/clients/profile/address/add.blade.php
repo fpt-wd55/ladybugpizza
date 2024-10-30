@@ -21,9 +21,10 @@
                 <div>
                     <label for="province" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tỉnh/Thành
                         phố:*</label>
-                    <select name="province" id="province" class="input">
+                    {{-- <select name="province" id="province" class="input">
                         <option value="">Chọn tỉnh/thành phố</option>
-                    </select>
+                    </select> --}}
+                    <input type="text" name="province" id="province" value="{{ old('province') }}" placeholder="VD: Hà Nội" class="mt-2 mb-2 input">
                     @error('province')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
@@ -31,9 +32,10 @@
                 <div>
                     <label for="district"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quận/Huyện:*</label>
-                    <select name="district" id="district" class="input">
+                    {{-- <select name="district" id="district" class="input">
                         <option value="">Chọn quận/huyện</option>
-                    </select>
+                    </select> --}}
+                    <input type="text" name="district" id="district" value="{{ old('district') }}" placeholder="VD: Quận Nam Từ Liêm" class="mt-2 mb-2 input">
                     @error('district')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
@@ -42,9 +44,10 @@
                 <div>
                     <label for="ward"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Xã/Phường:*</label>
-                    <select name="ward" id="ward" class="input">
+                    {{-- <select name="ward" id="ward" class="input">
                         <option value="">Chọn xã/phường</option>
-                    </select>
+                    </select> --}}
+                    <input type="text" name="ward" id="ward" value="{{ old('ward') }}" placeholder="VD: Phường Phú Đô" class="mt-2 mb-2 input">
                     @error('ward')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
