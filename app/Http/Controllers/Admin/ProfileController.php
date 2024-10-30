@@ -44,6 +44,7 @@ class ProfileController extends Controller
         // Xác thực dữ liệu đầu vào
         $request->validate([
             'current_password' => 'nullable',
+            'email' => 'required',
             'new_password' => [
                 'min:8', 
                 'nullable', 
@@ -52,6 +53,7 @@ class ProfileController extends Controller
                 'regex:/[\W_]/',  // Ít nhất một ký tự đặc biệt
             ],
         ], [
+            'email.required' => 'Email không được bỏ trống',
             'new_password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
             'new_password.regex' => 'Mật khẩu phải chứa ít nhất một chữ hoa, một số và một ký tự đặc biệt.',
         ]);
