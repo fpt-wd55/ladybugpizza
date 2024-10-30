@@ -151,7 +151,7 @@
                 <button type="button" class="flex mx-3 bg-gray-800 rounded-full md:mr-0 ring-0 focus:ring-0"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                     <span class="sr-only">Open user menu</span>
-                    @if (Auth::check() && Auth::user()->avatar)
+                    @if (Auth::check() && Auth::user()->avatar && \Storage::exists('uploads/avatars/' . Auth::user()->avatar))
                         <img src="{{ asset('storage/uploads/avatars/' . Auth::user()->avatar) }}" alt="User Avatar"
                             class="object-cover w-10 h-10 rounded-full">
                     @else
