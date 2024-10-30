@@ -9,8 +9,8 @@
         <form action="{{ route('admin.profiles.update', $user) }}" enctype="multipart/form-data" method="POST">
             @csrf
             @method('PUT')
-            <div class="flex items-center gap-8 mb-8">
-                @if ($user->avatar)
+            <div class="flex items-center gap-6 mb-8">
+                @if ($user->avatar && \Storage::exists('uploads/avatars/' . $user->avatar))
                     <img id="avatar-preview" src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}" alt="User Avatar"
                         class="w-10 h-10 object-cover rounded-full">
                 @else

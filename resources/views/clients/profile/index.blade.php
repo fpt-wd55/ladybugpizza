@@ -16,10 +16,10 @@
                         <form action="{{ route('client.profile.post-update') }}" class="mb-8" enctype="multipart/form-data" method="POST">
                             @csrf
                             @method('PUT')
-                            <img alt="" class="img-circle img-lg object-cover" height="150" loading="lazy" src="{{ Auth::user()->avatar() }}" width="150">
+                            <img alt="" id="avatar-preview" class="img-circle img-lg object-cover" height="150" loading="lazy" src="{{ Auth::user()->avatar() }}" width="150">
 
                             <!-- Input để upload file -->
-                            <input class="hidden" id="avatar" name="avatar" type="file">
+                            <input class="hidden" id="avatar" onchange="previewAvatar(event)" name="avatar" type="file">
                             <label class="button-dark mt-4 cursor-pointer" for="avatar">Chọn ảnh</label>
 
                             @error('avatar')
@@ -202,3 +202,14 @@
             </div>
         </div>
     @endsection
+    <script>
+        // Hiển thị ảnh preview khi người dùng chọn ảnh
+        function previewAvatar(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('avatar-preview');
+                output.src = reader.result; // Cập nhật src của ảnh preview
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
