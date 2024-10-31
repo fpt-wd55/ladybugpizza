@@ -16,7 +16,7 @@
                     @foreach ($orderStatuses as $status)
                         <li class="me-6 min-w-fit">
                             <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
-                                href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }} <span class="text-[#D30A0A]">({{ $status->orders_count }})</span></a>
+                                href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }} ({{ $status->orders_count }})</a>
                         </li>
                     @endforeach
                 </ul>
@@ -31,7 +31,7 @@
                                 <p class="sm:text-xs md:text-base font-medium text-[#D30A0A]">#LADYBUG-2024{{ $order->id }}</p>
                                 <div class="ms-auto space-x-2">
                                     <span
-                                        class="inline-block px-3 py-1 sm:text-xs md:text-sm font-semibold text-{{ $order->orderStatus->color }}-700 bg-{{ $order->orderStatus->color }}-100 rounded-full">{{ $order->orderStatus->name }}</span>
+                                        class="text-xs font-medium px-2.5 py-0.5 rounded text-{{ $order->orderStatus->color }}-700 bg-{{ $order->orderStatus->color }}-100">{{ $order->orderStatus->name }}</span>
                                 </div>
                             </div>
                         </div>

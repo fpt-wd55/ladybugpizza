@@ -190,18 +190,6 @@ class ProductController extends Controller
 
         return redirect()->back()->with('error', 'Xóa sản phẩm thất bại');
     }
-    // phần Đánh Giá
-    public function listComment(String $id)
-    {
-        $sanpham = Product::query()->findOrFail($id);
-        $evaluations = Evaluation::where('product_id', $id)->with('order')->paginate(10);
-        $images = [];
-
-        foreach ($evaluations as $evaluation) {
-            $images[$evaluation->id] = EvaluationImage::where('evaluation_id', $evaluation->id)->get();
-        }
-        return view('admins.evaluations.edit', compact('sanpham', 'evaluations', 'images'));
-    }
 
     public function export()
     {
@@ -217,5 +205,27 @@ class ProductController extends Controller
             ->paginate(10);
         $products->appends(['search' => $request->search]);
         return view('admins.product.index', compact('products'));
+    }
+
+    public function evaluation(Product $product)
+    {
+        $evaluations = Evaluation::where('product_id', $product->id)->with('order')->paginate(10);
+
+        foreach ($evaluations as $evaluation) {
+            $evaluation->images = EvaluationImage::where('evaluation_id', $evaluation->id)->get();
+        }
+
+        return view('admins.product.evaluation', compact('product', 'evaluations'));
+    }
+
+    public function evaluationUpdate(Request $request, Evaluation $evaluation)
+    {
+        if ($evaluation) {
+            $evaluation->update([
+                'status' => $request->status ? 1 : 2,
+            ]);
+            return redirect()->back()->with('success', 'Cập nhật đánh giá thành công');
+        }
+        return redirect()->back()->with('error', 'Cập nhật đánh giá thất bại');
     }
 }

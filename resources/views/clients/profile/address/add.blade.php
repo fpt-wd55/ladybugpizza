@@ -4,7 +4,7 @@
 @section('content')
     <div class="card my-8 md:mx-24 lg:mx-32 p-4 md:p-8 transition">
         <div class="mb-8">
-            <h3 class="font-semibold uppercase ">thêm địa chỉ</h3>
+            <h3 class="font-semibold uppercase ">Thêm địa chỉ</h3>
         </div>
         <form action="{{ route('client.profile.post-location') }}" method="POST">
             @csrf
@@ -40,7 +40,6 @@
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
-                
                 <div>
                     <label for="ward"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Xã/Phường:*</label>

@@ -92,8 +92,6 @@ class ProductController extends Controller
 
         $data = $request->all();
 
-        // dd($data);
-
         $attributes = data_get($data, 'attributes', []);
         $toppings = data_get($data, 'toppings', []);
 

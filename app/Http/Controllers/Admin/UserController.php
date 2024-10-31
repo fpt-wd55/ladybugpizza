@@ -17,8 +17,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(10);
-        return view('admins.user.index', compact('users'));
+        $users = User::paginate(10); 
+        $roles = Role::where('id', '>', 1)->get();
+        return view('admins.user.index', compact('users', 'roles'));
     }
 
     /**
@@ -88,10 +89,6 @@ class UserController extends Controller
         $evaluations = $user->evaluations;
         $favorites = null;
 
-        // foreach ($orders as $order) {
-        //     $order->created_at = Carbon::parse($order->created_at)->format('Y-m-d');
-        // }
-
         return view('admins.user.detail', compact('user', 'addresses', 'orders', 'evaluations', 'favorites'));
     }
 
@@ -119,7 +116,12 @@ class UserController extends Controller
         }
         // Kiem tra trang thai (Status)
         if (!isset($validatedData['status'])) {
-            $validatedData['status'] = 0;
+            $validatedData['status'] = 2;
+        }
+
+        // Kiem tra khong huy duoc tai khoan quan tri
+        if ($user->role_id != 2 && $user->status == 1 && $validatedData['status'] == 2) {
+            return redirect()->route('admin.users.edit', $user->id)->with('error', 'Không thể khóa tài khoản quản trị');
         }
 
         // Xu ly hinh anh

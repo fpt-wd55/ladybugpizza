@@ -25,34 +25,33 @@
             <div>
                 {{-- carousel --}}
                 <!-- <div class="relative mb-8 w-full md:mb-12" data-carousel="slide" id="default-carousel">
-                                                <div class="relative h-56 overflow-hidden rounded transition md:h-96 lg:h-[540px]">
-                                                    @foreach ($banners as $banner)
+                                                    <div class="relative h-56 overflow-hidden rounded transition md:h-96 lg:h-[540px]">
+                                                        @foreach ($banners as $banner)
     <link as="image" href="{{ asset('storage/uploads/banners/' . $banner->image) }}" rel="preload">
-                                                        <div class="hidden transition duration-700" data-carousel-item>
-                                                            <img alt="{{ $banner->image }}" class="absolute block h-full w-full object-cover" src="{{ asset('storage/uploads/banners/' . $banner->image) }}">
-                                                        </div>
+                                                            <div class="hidden transition duration-700" data-carousel-item>
+                                                                <img alt="{{ $banner->image }}" class="absolute block h-full w-full object-cover" src="{{ asset('storage/uploads/banners/' . $banner->image) }}">
+                                                            </div>
     @endforeach
-                                                </div>
-                                                <div class="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2">
-                                                    @foreach ($banners as $index => $banner)
+                                                    </div>
+                                                    <div class="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2">
+                                                        @foreach ($banners as $index => $banner)
     <button aria-current="true" class="indicator" data-carousel-slide-to="{{ $index }}" type="button"></button>
     @endforeach
-                                                </div>
-                                                <button class="group absolute start-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-prev type="button">
-                                                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 text-white">
-                                                        @svg('tabler-chevron-left', 'icon-sm')
-                                                    </span>
-                                                </button>
-                                                <button class="group absolute end-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-next type="button">
-                                                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 text-white">
-                                                        @svg('tabler-chevron-right', 'icon-sm')
-                                                    </span>
-                                                </button>
-                                            </div> -->
+                                                    </div>
+                                                    <button class="group absolute start-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-prev type="button">
+                                                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 text-white">
+                                                            @svg('tabler-chevron-left', 'icon-sm')
+                                                        </span>
+                                                    </button>
+                                                    <button class="group absolute end-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-next type="button">
+                                                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 text-white">
+                                                            @svg('tabler-chevron-right', 'icon-sm')
+                                                        </span>
+                                                    </button>
+                                                </div> -->
 
                 <div class="mt-12 py-8 text-center">
-                    <p class="vujahday-script-regular mb-6 text-center text-6xl">Ladybug Pizza</p>
-                    <p class="playwrite-gb-s-regular mb-12 text-sm uppercase text-gray-500">Ngon đến từng miếng, đậm vị yêu thương</p>
+                    <p class="vujahday-script-regular mb-6 text-center text-6xl">Menu</p>
                     @include('partials.clients.categories')
                 </div>
 
@@ -99,20 +98,20 @@
                 <p class="vujahday-script-regular mb-32 text-center text-6xl">Khám phá</p>
 
                 {{-- Khám phá thực đơn --}}
-                <div class="mb-32 grid grid-cols-1 gap-8 lg:grid-cols-2">
+                <div class="comfortable mb-32 grid grid-cols-1 gap-8 lg:grid-cols-2">
                     <div class="mr-3 flex flex-col items-center text-center">
                         <p class="playwrite-gb-s-regular mb-6 text-lg uppercase">Thực đơn của chúng tôi</p>
 
-                        <p class="mb-8 font-light">
+                        <p class="mb-8">
                             Khám phá các loại Pizza nướng bằng củi, bia Bỉ và các món tráng miệng mới làm mà bạn có
                             thể thưởng thức tại 2 địa điểm của chúng tôi hoặc tại nhà với dịch vụ giao hàng nhanh chóng của
                             chúng tôi.
                         </p>
                         <a class="button-primary mb-8" href="{{ route('client.product.menu') }}">Đặt ngay</a>
-                        <div class="font-light">
-                            <p class="font-normal">Dịch vụ bữa trưa</p>
+                        <div class="">
+                            <p class="font-semibold">Dịch vụ bữa trưa</p>
                             <p class="mb-4">Từ 11am đến 3pm </p>
-                            <p class="font-normal">Dịch vụ bữa tối</p>
+                            <p class="font-semibold">Dịch vụ bữa tối</p>
                             <p class="mb-4">Từ 5pm đến 10pm</p>
                             <p class="mb-8">Xin lưu ý rằng gọi món lần cuối là 30 phút trước giờ đóng cửa</p>
                         </div>
@@ -122,7 +121,7 @@
                 </div>
 
                 {{-- Cau chuyen cua chung toi --}}
-                <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                <div class="comfortable grid grid-cols-1 gap-8 lg:grid-cols-2">
                     <div class="grid grid-cols-2 grid-rows-2 gap-4">
                         <img alt="" class="h-full w-full rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/products/pizza-margherita.jpeg') }}">
                         <img alt="" class="h-full w-full rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/products/pizza-4-cheese.jpeg') }}">
@@ -131,11 +130,11 @@
                     </div>
                     <div class="text-center">
                         <p class="playwrite-gb-s-regular mb-6 text-lg uppercase">Câu chuyện của chúng tôi</p>
-                        <p class="mb-6 font-light lg:mb-8">Khám phá các loại Pizza nướng bằng củi, bia Bỉ và các món tráng
+                        <p class="mb-6 lg:mb-8">Khám phá các loại Pizza nướng bằng củi, bia Bỉ và các món tráng
                             miệng mới làm mà bạn có thể thưởng thức tại 2 địa điểm của chúng tôi hoặc tại nhà với dịch vụ giao
                             hàng nhanh chóng của chúng tôi.
                         </p>
-                        <p class="mb-8 font-light">Ladybug Pizza là một tiệm bánh Pizza đích thực, nằm ở trung tâm Hà Nội. Những chiếc
+                        <p class="mb-8">Ladybug Pizza là một tiệm bánh Pizza đích thực, nằm ở trung tâm Hà Nội. Những chiếc
                             bánh pizza của chúng tôi được nướng trong lò đốt củi và phủ bên trên những nguyên liệu tươi, tự
                             nhiên và được lựa chọn cẩn thận.
                         </p>

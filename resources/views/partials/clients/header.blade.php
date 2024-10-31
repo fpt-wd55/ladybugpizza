@@ -154,12 +154,12 @@
 
             <div class="p-4 md:p-8">
                 @if (count($favorites) == 0)
-                <div class=" flex flex-col items-center justify-center gap-8 p-4 md:p-8">
-                    @svg('tabler-heart-off', 'icon-4xl text-gray-400')
-                    <p class="text-center">Sản phẩm yêu thích của bạn đang trống</p>
-                    <a class="button-red" href="{{ route('client.product.menu') }}">Thực đơn</a>
-                </div>
-            @endif
+                    <div class="flex flex-col items-center justify-center gap-8 p-4 md:p-8">
+                        @svg('tabler-heart-off', 'icon-4xl text-gray-400')
+                        <p class="text-center">Sản phẩm yêu thích của bạn đang trống</p>
+                        <a class="button-red" href="{{ route('client.product.menu') }}">Thực đơn</a>
+                    </div>
+                @endif
                 <div class="mb-8 grid grid-cols-2 gap-4 lg:mb-16 lg:grid-cols-2">
                     @foreach ($favorites as $favorite)
                         <a class="product-card overflow-hidden md:flex" href="{{ route('client.product.show', $favorite->product->slug) }}">
