@@ -321,7 +321,7 @@
                             </td>
                         </tr>
                     @empty
-                        <td colspan="6" class="text-center py-4 text-base">
+                        <td colspan="7" class="text-center py-4 text-base">
                             <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
                                 @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
                                 <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
