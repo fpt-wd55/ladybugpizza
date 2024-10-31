@@ -43,8 +43,8 @@ class ProfileController extends Controller
         }
         // Xác thực dữ liệu đầu vào
         $request->validate([
-            'current_password' => 'nullable',
             'email' => 'required',
+            'confirm_password' => isset($request->new_password) ? 'required|same:new_password' : 'same:new_password',
             'new_password' => [
                 'min:8', 
                 'nullable', 
@@ -54,22 +54,12 @@ class ProfileController extends Controller
             ],
         ], [
             'email.required' => 'Email không được bỏ trống',
-            'new_password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
-            'new_password.regex' => 'Mật khẩu phải chứa ít nhất một chữ hoa, một số và một ký tự đặc biệt.',
+            'new_password.min' => 'Mật khẩu phải có ít nhất 8 ký tự',
+            'new_password.regex' => 'Mật khẩu phải chứa ít nhất một chữ hoa, một số và một ký tự đặc biệt',
+            'confirm_password.same' => 'Mật khẩu xác nhận không khớp',
+            'confirm_password.required' => 'Xác nhận mật khẩu không được bỏ trống',
         ]);
-        // Kiểm tra xem mật khẩu hiện tại có đúng không
         
-        if ($request->filled('current_password')) {
-            // Nếu mật khẩu cũ sai, trả về lỗi
-            if (!Hash::check($request->current_password, $user->password)) {
-                return back()->withErrors(['current_password' => 'Mật khẩu hiện tại không đúng.']);
-            }
-    
-            // Nếu nhập mật khẩu mới, cập nhật mật khẩu
-            if ($request->filled('new_password')) {
-                $user->password = Hash::make($request->new_password);
-            }
-        }
         $user->save();
         return redirect()->back()->with('success', 'Thông tin tài khoản đã được cập nhật!');
     }
