@@ -124,6 +124,8 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/users', UserController::class);
     Route::get('/user/export', [UserController::class, 'export'])->name('users.export');
     Route::get('/user/search', [UserController::class, 'search'])->name('users.search');
+    Route::get('/user/filter', [UserController::class, 'filter'])->name('users.filter');
+
     // Address
     Route::resource('/addresses', AddressController::class);
     // Order
