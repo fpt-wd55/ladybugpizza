@@ -59,7 +59,9 @@ class ProfileController extends Controller
             'confirm_password.same' => 'Mật khẩu xác nhận không khớp',
             'confirm_password.required' => 'Xác nhận mật khẩu không được bỏ trống',
         ]);
-        
+        if($request->new_password){
+            $user->password = Hash::make($request->new_password);
+        }
         $user->save();
         return redirect()->back()->with('success', 'Thông tin tài khoản đã được cập nhật!');
     }
