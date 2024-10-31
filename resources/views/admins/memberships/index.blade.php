@@ -151,13 +151,7 @@
         <div class="overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-gray-700 uppercase bg-gray-50">
-                    <tr>
-                        <th scope="col" class="p-4">
-                            <div class="flex items-center">
-                                <input id="table-checkbox-all" type="checkbox"
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                            </div>
-                        </th>
+                    <tr> 
                         <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-xs md:text-sm">Tài khoản</th>
                         <th scope="col" class="px-0 py-0 lg:py-3 text-xs md:text-sm">Họ và tên</th>
                         <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-center text-xs md:text-sm">Thứ hạng
@@ -170,14 +164,7 @@
                 <tbody>
                     {{-- star item --}}
                     @forelse ($memberships as $membership)
-                        <tr class="border-b hover:bg-gray-100">
-                            <td class="w-4 px-4 py-3">
-                                <div class="flex items-center">
-                                    <input id="table-item-checkbox-{{ $membership->user->id }}" type="checkbox"
-                                        onclick="event.stopPropagation()"
-                                        class="table-item-checkbox w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                </div>
-                            </td>
+                        <tr class="border-b hover:bg-gray-100"> 
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap mt-3">
                                 <a class="shrink-0" href="{{ route('admin.memberships.edit', $membership) }}">
                                     <img loading="lazy"

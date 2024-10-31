@@ -2,7 +2,7 @@
 @section('title', 'Tài khoản')
 @section('content')
     {{ Breadcrumbs::render('admin.users.index') }}
-    <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
+    <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden min-h-screen">
         <div
             class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
             <div
@@ -50,14 +50,16 @@
                         Bộ lọc
                         @svg('tabler-chevron-down', 'w-5 h-5 ms-3')
                     </button>
-                    <div id="filterDropdown" class="z-10 hidden w-96 p-3 bg-white rounded-lg shadow">
-                        <form action="#" aria-labelledby="filterDropdownButton">
+                    <div id="filterDropdown" class="z-50 hidden w-96 p-3 bg-white rounded-lg shadow">
+                        <form action="{{ route('admin.users.filter') }}" aria-labelledby="filterDropdownButton">
                             <h6 class="mb-3 text-sm font-medium text-gray-900">Vai trò</h6>
                             <ul class="space-y-2 text-sm">
                                 @foreach ($roles as $role)
                                     <li class="flex items-center">
-                                        <input id="admin" type="checkbox" value="filter-role-{{ $role->id }}"
-                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                        <input id="admin" type="checkbox" name="filter_role[]"
+                                            value="{{ $role->id }}"
+                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                            @if (in_array($role->id, request()->input('filter_role', []))) checked @endif>
                                         <label for="admin"
                                             class="ml-2 text-sm font-medium text-gray-900">{{ $role->name }}</label>
                                     </li>
@@ -66,17 +68,20 @@
                             <h6 class="my-3 text-sm font-medium text-gray-900">Giới tính</h6>
                             <ul class="space-y-2 text-sm">
                                 <li class="flex items-center">
-                                    <input id="male" type="checkbox" value="filter-gender-1"
+                                    <input id="male" type="checkbox" name="filter_gender[]" value="1"
+                                        @if (in_array(1, request()->input('filter_gender', []))) checked @endif
                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
                                     <label for="male" class="ml-2 text-sm font-medium text-gray-900">Nam</label>
                                 </li>
                                 <li class="flex items-center">
-                                    <input id="female" type="checkbox" value="filter-gender-2"
+                                    <input id="female" type="checkbox" name="filter_gender[]" value="2"
+                                        @if (in_array(2, request()->input('filter_gender', []))) checked @endif
                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
                                     <label for="female" class="ml-2 text-sm font-medium text-gray-900">Nữ</label>
                                 </li>
                                 <li class="flex items-center">
-                                    <input id="other" type="checkbox" value="filter-gender-3"
+                                    <input id="other" type="checkbox" name="filter_gender[]" value="3"
+                                        @if (in_array(3, request()->input('filter_gender', []))) checked @endif
                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
                                     <label for="other" class="ml-2 text-sm font-medium text-gray-900">Khác</label>
                                 </li>
@@ -84,45 +89,34 @@
                             <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
                             <ul class="space-y-2 text-sm">
                                 <li class="flex items-center">
-                                    <input id="active" type="checkbox" value="filter-status-active"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                    <input id="active" type="checkbox" name="filter_status[]" value="1"
+                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                        @if (in_array(1, request()->input('filter_status', []))) checked @endif>
                                     <label for="active" class="ml-2 text-sm font-medium text-gray-900">Hoạt động</label>
                                 </li>
                                 <li class="flex items-center">
-                                    <input id="inactive" type="checkbox" value="filter-status-inactive"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                    <input id="inactive" type="checkbox" name="filter_status[]" value="2"
+                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                        @if (in_array(2, request()->input('filter_status', []))) checked @endif>
                                     <label for="inactive" class="ml-2 text-sm font-medium text-gray-900">Khóa</label>
                                 </li>
                             </ul>
                             <h6 class="my-3 text-sm font-medium text-gray-900">Ngày sinh</h6>
                             <div class="flex items-center">
                                 <div>
-                                    <input name="filter-birthday-start" type="date"
+                                    <input name="filter_birthday_start" type="date"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                        placeholder="mm/dd/yyyy">
+                                        placeholder="mm/dd/yyyy"
+                                        value="{{ old('filter_birthday_start', request()->input('filter_birthday_start')) }}">
                                 </div>
                                 <span class="mx-4 text-gray-500">-</span>
                                 <div>
-                                    <input name="filter-birthday-end" type="date"
+                                    <input name="filter_birthday_end" type="date"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                        placeholder="mm/dd/yyyy">
+                                        placeholder="mm/dd/yyyy"
+                                        value="{{ old('filter_birthday_end', request()->input('filter_birthday_end')) }}">
                                 </div>
                             </div>
-                            <h6 class="my-3 text-sm font-medium text-gray-900">Ngày tham gia</h6>
-                            <div class="flex items-center">
-                                <div>
-                                    <input name="filter-created-start" type="date"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                        placeholder="mm/dd/yyyy">
-                                </div>
-                                <span class="mx-4 text-gray-500">-</span>
-                                <div>
-                                    <input name="filter-created-end" type="date"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                        placeholder="mm/dd/yyyy">
-                                </div>
-                            </div>
-
                             <button type="submit" class="button-red w-full mt-5">
                                 Lọc
                             </button>
