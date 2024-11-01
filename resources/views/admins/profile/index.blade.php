@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Tài khoản')
 
-@section('content')
+@section('content') 
     {{ Breadcrumbs::render('admin.profiles.index') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="mt-10 mx-4">
@@ -15,7 +15,7 @@
                         <img id="avatar-preview" src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}"
                             alt="User Avatar" class="w-10 h-10 object-cover rounded-full">
                     @else
-                        <img src="{{ asset('storage/uploads/avatars/user-default.png') }}" alt=""
+                        <img src="{{ asset('storage/uploads/avatars/user-default.png') }}"
                             class="w-10 h-10 object-cover rounded-full">
                     @endif
                     <input type="file" id="avatar" name="avatar" class="hidden" accept="image/*"
@@ -149,6 +149,7 @@
         </div>
     </div>
 @endsection
+
 <script>
     // Hiển thị ảnh preview khi người dùng chọn ảnh
     function previewAvatar(event) {
