@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 @section('title', 'Tài khoản')
 
-@section('content') 
+@section('content')
     {{ Breadcrumbs::render('admin.profiles.index') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
-        <div class="mt-10 mx-4">
-            <h1 class="text-2xl font-bold mb-6">Tài khoản</h1>
+        <div class="mt-7 mx-4">
+            <h1 class="text-2xl font-semibold mb-6">Tài khoản</h1>
             <!-- Profile Picture -->
             <form action="{{ route('admin.profiles.update', $user) }}" enctype="multipart/form-data" method="POST">
                 @csrf
@@ -29,9 +29,7 @@
                     @enderror
                 </div>
                 <div class="mb-4">
-                    <h2 class="text-xl font-bold mb-2">Hồ sơ</h2>
-                    <span class="text-lg text-gray-900">{{ $user->fullname }}, {{ $user->email }},
-                        {{ $user->phone }}</span>
+                    <h2 class="text-xl font-semibold mb-2">Thông tin cá nhân</h2>
                 </div>
                 <!--  Profile -->
                 <div class="mb-6">
@@ -86,18 +84,22 @@
                     </div>
                 </div>
                 {{-- mat khau --}}
+
+                <div class="mb-4">
+                    <h2 class="text-xl font-semibold mb-2">Đổi mật khẩu</h2>
+                </div>
                 <div class="mb-6 grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Mật khẩu mới</label>
-                        <input type="password" class="input mb-2" name="new_password"
-                            placeholder="Nhập mật khẩu mới...">
+                        <input type="password" class="input mb-2" name="new_password" placeholder="Nhập mật khẩu mới...">
                         @error('new_password')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Xác nhận mật khẩu </label>
-                        <input class="input mb-2" name="confirm_password" type="password" placeholder="Xác nhận mật khẩu...">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Xác nhận mật khẩu mới</label>
+                        <input class="input mb-2" name="confirm_password" type="password"
+                            placeholder="Xác nhận mật khẩu mới...">
                         @error('confirm_password')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -109,11 +111,10 @@
                     {{-- <button class="button-blue" type="submit">Cập nhật</button> --}}
                     <button>
                         <a href="#" data-modal-target="update-modal-{{ $user->id }}"
-                            data-modal-toggle="update-modal-{{ $user->id }}"
-                            class="button-red">Cập nhật</a>
+                            data-modal-toggle="update-modal-{{ $user->id }}" class="button-red">Cập nhật</a>
                     </button>
-                     {{-- update modal --}}
-                     <div id="update-modal-{{ $user->id }}" tabindex="-1"
+                    {{-- update modal --}}
+                    <div id="update-modal-{{ $user->id }}" tabindex="-1"
                         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                         <div class="relative p-4 w-full max-w-md max-h-full">
                             <div class="relative bg-white rounded-lg shadow">
@@ -128,8 +129,7 @@
                                         @svg('tabler-user-up', 'w-12 h-12 text-red-600 text-center mb-2')
                                     </div>
                                     <h3 class="mb-8 text-xl font-normal">Bạn chắc chắn thay đổi thông tin chứ?</h3>
-                                    <form action="{{ route('admin.users.destroy', $user->id) }}"
-                                        method="POST">
+                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
                                         @method('PUT')
                                         @csrf
                                         <button type="submit"
