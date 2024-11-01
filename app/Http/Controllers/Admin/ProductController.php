@@ -200,6 +200,7 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $products = Product::orderBy('id', 'desc')
+            ->where('category_id', '!=', 7)
             ->where('name', 'like', '%' . $request->search . '%')
             ->orWhere('sku', 'like', '%' . $request->search . '%')
             ->paginate(10);
