@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Banner;
-use Illuminate\Http\Request;
+use App\Models\Banner; 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BannerRequest;
 use Illuminate\Support\Facades\Storage;
