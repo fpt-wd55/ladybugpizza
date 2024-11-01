@@ -19,7 +19,6 @@ class BannerController extends Controller
 
         return view('admins.banner.index', compact('banners'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
