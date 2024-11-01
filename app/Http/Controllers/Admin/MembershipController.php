@@ -26,23 +26,6 @@ class MembershipController extends Controller
             })
             ->paginate(10);
 
-        // Lặp qua từng membership và tính rank dựa theo điểm
-        foreach ($memberships as $membership) {
-            $currentRank = null;
-            // Tìm rank phù hợp từ bảng membershipranks
-            foreach ($ranks as $minPoints => $rank) {
-                if ($membership->points >= $minPoints) {
-                    $currentRank = $rank;
-                }
-            }
-            // Gán rank cho mỗi membership
-            if ($currentRank) {
-                $membership->rank_name = $currentRank->name;
-                $membership->rank_img = $currentRank->icon;
-                $membership->rank_color = $currentRank->color;
-            }
-        }   
-
         // Trả về view với dữ liệu memberships
         return view('admins.memberships.index', compact('memberships', 'ranks'));
     }
@@ -156,35 +139,20 @@ class MembershipController extends Controller
         // Lấy tất cả các rank từ bảng membershipranks
         $ranks = MembershipRank::all()->keyBy('min_points');
 
-        // Lấy danh sách các membership 
+        // Lấy danh sách các membership  
         $query = Membership::query();
         $query->whereHas('user', function ($query) {
             $query->where('role_id', 2);
         });
 
-        // Lọc theo rank
-        if ($request->filter_rank) {
-            $query->where('points', '>=', $request->filter_rank);
+        // Lọc theo rank 
+        if (isset($request->filter_rank)) {
+            $query->whereIn('rank_id', $request->filter_rank);
         }
 
         $memberships = $query->paginate(10);
 
-        // Lặp qua từng membership và tính rank dựa theo điểm
-        foreach ($memberships as $membership) {
-            $currentRank = null;
-            // Tìm rank phù hợp từ bảng membershipranks
-            foreach ($ranks as $minPoints => $rank) {
-                if ($membership->points >= $minPoints) {
-                    $currentRank = $rank;
-                }
-            }
-            // Gán rank cho mỗi membership
-            if ($currentRank) {
-                $membership->rank_name = $currentRank->name;
-                $membership->rank_img = $currentRank->icon;
-                $membership->rank_color = $currentRank->color;
-            }
-        }
+        $memberships->appends(['filter_rank' => $request->filter_rank]);
 
         // Trả về view với dữ liệu memberships
         return view('admins.memberships.index', compact('memberships', 'ranks'));

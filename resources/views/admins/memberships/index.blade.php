@@ -50,9 +50,9 @@
                             <ul class="space-y-2 text-sm">
                                 @foreach ($ranks as $rank)
                                     <li class="flex items-center">
-                                        <input type="checkbox" name="filter_rank[]" value="{{ $rank->min_point }}"
+                                        <input type="checkbox" name="filter_rank[]" value="{{ $rank->id }}"
                                             class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                            @if (in_array($rank->min_point, request()->input('filter_rank', []))) checked @endif>
+                                            @if (in_array($rank->id, request()->input('filter_rank', []))) checked @endif>
                                         <label for="admin"
                                             class="ml-2 text-sm font-medium text-gray-900">{{ $rank->name }}</label>
                                     </li>
@@ -101,11 +101,12 @@
                             </td>
                             <td class="lg:px-4 lg:py-2 text-gray-900 whitespace-nowrap ">
                                 <div class="flex flex-col items-center ">
-                                    <img loading="lazy" src="{{ asset('storage/uploads/ranks/' . $membership->rank_img) }}"
+                                    <img loading="lazy"
+                                        src="{{ asset('storage/uploads/ranks/' . $membership->rank->icon) }}"
                                         class="img-circle w-7 h-7 object-cover">
                                     <p
-                                        class="uppercase text-xs md:text-sm md:font-medium lg:font-semibold {{ $membership->rank_color }}">
-                                        {{ $membership->rank_name }}</p>
+                                        class="uppercase text-xs md:text-sm md:font-medium lg:font-semibold {{ $membership->rank->color }}">
+                                        {{ $membership->rank->name }}</p>
                                 </div>
                             </td>
 
