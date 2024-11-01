@@ -72,10 +72,10 @@ Route::prefix('/')->group(function () {
     Route::get('/profile/address/add', [ProfileController::class, 'addLocation'])->name('client.profile.add-location');
     Route::post('/profile/address', [ProfileController::class, 'storeLocation'])->name('client.profile.post-location');
     Route::get('/profile/address/edit/{address}', [ProfileController::class, 'editLocation'])->name('client.profile.edit-location');
-    Route::put('/profile/address/update/{address}',[ProfileController::class, 'updateLocation'])->name('client.profile.update-location');
-    Route::delete('/profile/address/delete/{address}',[ProfileController::class, 'deleteLocation'])->name('client.profile.delete-location');
+    Route::put('/profile/address/update/{address}', [ProfileController::class, 'updateLocation'])->name('client.profile.update-location');
+    Route::delete('/profile/address/delete/{address}', [ProfileController::class, 'deleteLocation'])->name('client.profile.delete-location');
     Route::post('/profile/address/set-defautl/{address}', [ProfileController::class, 'setDefaultAddress'])->name('client.profile.set-address');
- 
+
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
     Route::put('/settings/update/{id}', [ProfileController::class, 'updateStatus'])->name('client.settings.update');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
@@ -128,14 +128,12 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/user/export', [UserController::class, 'export'])->name('users.export');
     Route::get('/user/search', [UserController::class, 'search'])->name('users.search');
     Route::get('/user/filter', [UserController::class, 'filter'])->name('users.filter');
-
     // Address
     Route::resource('/addresses', AddressController::class);
     // Order
     Route::resource('/orders', AdminOrderController::class);
     Route::get('/order/search', [AdminOrderController::class, 'search'])->name('orders.search');
     Route::get('/order/export', [AdminOrderController::class, 'export'])->name('orders.export');
-
     // Route::resource('/carts', AdminCartController::class);
     // Product
     Route::resource('/products', AdminProductController::class);
@@ -184,6 +182,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/promotion/export', [PromotionController::class, 'export'])->name('promotions.export');
     // Membership
     Route::resource('/memberships', MembershipController::class);
+    Route::get('/membership/filter', [MembershipController::class, 'filter'])->name('memberships.filter');
     Route::get('/membership/search', [MembershipController::class, 'search'])->name('memberships.search');
     Route::get('/membership/export', [MembershipController::class, 'export'])->name('memberships.export');
     Route::post('/memberships/{membership}/status', [MembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
