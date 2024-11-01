@@ -9,9 +9,7 @@ use App\Models\Evaluation;
 use App\Models\EvaluationImage;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Support\Str; 
 
 class ProductController extends Controller
 {

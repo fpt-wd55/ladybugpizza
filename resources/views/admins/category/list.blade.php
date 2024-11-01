@@ -75,80 +75,22 @@
                         @svg('tabler-chevron-down', 'w-5 h-5 ms-3')
                     </button>
                     <div id="filterDropdown" class="z-10 hidden w-96 p-3 bg-white rounded-lg shadow">
-                        <form action="#" aria-labelledby="filterDropdownButton">
-                            <h6 class="mb-3 text-sm font-medium text-gray-900">Vai trò</h6>
-                            <ul class="space-y-2 text-sm">
-                                <li class="flex items-center">
-                                    <input id="admin" type="checkbox" value="filter-role-admin"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                    <label for="admin" class="ml-2 text-sm font-medium text-gray-900">Quản trị
-                                        viên</label>
-                                </li>
-                                <li class="flex items-center">
-                                    <input id="client" type="checkbox" value="filter-role-client"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                    <label for="client" class="ml-2 text-sm font-medium text-gray-900">Khách hàng</label>
-                                </li>
-                            </ul>
-                            <h6 class="my-3 text-sm font-medium text-gray-900">Giới tính</h6>
-                            <ul class="space-y-2 text-sm">
-                                <li class="flex items-center">
-                                    <input id="male" type="checkbox" value="filter-gender-male"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                    <label for="male" class="ml-2 text-sm font-medium text-gray-900">Nam</label>
-                                </li>
-                                <li class="flex items-center">
-                                    <input id="female" type="checkbox" value="filter-gender-female"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                    <label for="female" class="ml-2 text-sm font-medium text-gray-900">Nữ</label>
-                                </li>
-                                <li class="flex items-center">
-                                    <input id="other" type="checkbox" value="filter-gender-other"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                    <label for="other" class="ml-2 text-sm font-medium text-gray-900">Khac</label>
-                                </li>
-                            </ul>
+                        <form action="{{ route('admin.categories.filter') }}" aria-labelledby="filterDropdownButton">
                             <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
                             <ul class="space-y-2 text-sm">
                                 <li class="flex items-center">
-                                    <input id="active" type="checkbox" value="filter-status-active"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                    <input id="active" type="checkbox" name="filter_status[]" value="1"
+                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                        @if (in_array(1, request()->input('filter_status', []))) checked @endif>
                                     <label for="active" class="ml-2 text-sm font-medium text-gray-900">Hoạt động</label>
                                 </li>
                                 <li class="flex items-center">
-                                    <input id="inactive" type="checkbox" value="filter-status-inactive"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                    <input id="inactive" type="checkbox" name="filter_status[]" value="2"
+                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                        @if (in_array(2, request()->input('filter_status', []))) checked @endif>
                                     <label for="inactive" class="ml-2 text-sm font-medium text-gray-900">Khóa</label>
                                 </li>
                             </ul>
-                            <h6 class="my-3 text-sm font-medium text-gray-900">Ngày sinh</h6>
-                            <div class="flex items-center">
-                                <div>
-                                    <input name="filter-birthday-start" type="date"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                        placeholder="mm/dd/yyyy">
-                                </div>
-                                <span class="mx-4 text-gray-500">-</span>
-                                <div>
-                                    <input name="filter-birthday-end" type="date"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                        placeholder="mm/dd/yyyy">
-                                </div>
-                            </div>
-                            <h6 class="my-3 text-sm font-medium text-gray-900">Ngày tham gia</h6>
-                            <div class="flex items-center">
-                                <div>
-                                    <input name="filter-created-start" type="date"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                        placeholder="mm/dd/yyyy">
-                                </div>
-                                <span class="mx-4 text-gray-500">-</span>
-                                <div>
-                                    <input name="filter-created-end" type="date"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                        placeholder="mm/dd/yyyy">
-                                </div>
-                            </div>
 
                             <button type="submit" class="button-red w-full mt-5">
                                 Lọc

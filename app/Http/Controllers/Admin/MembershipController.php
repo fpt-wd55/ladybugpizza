@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
 use App\Models\Membership;
 use Illuminate\Http\Request;
 use App\Models\MembershipRank;

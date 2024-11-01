@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Category;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
-use App\Http\Requests\CategoryEditRequest;
 
 class CategoryController extends Controller
 {
@@ -17,6 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         $category = Category::paginate(10);
+
         return view('admins.category.list', compact('category'));
     }
 
@@ -157,6 +156,20 @@ class CategoryController extends Controller
     {
         $category = Category::where('name', 'like', '%' . $request->search . '%')->paginate(10);
         $category->appends(['search' => $request->search]);
+        return view('admins.category.list', compact('category'));
+    }
+
+    public function filter(Request $request)
+    { 
+        $query = Category::query();
+
+        if (isset($request->filter_status)) {
+            $query->whereIn('status', $request->filter_status);
+        }
+
+        $category = $query->paginate(10);
+        $category->appends(['filter_status' => $request->filter_status]);
+
         return view('admins.category.list', compact('category'));
     }
 }

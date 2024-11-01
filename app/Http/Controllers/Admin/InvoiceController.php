@@ -7,9 +7,7 @@ use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Transaction;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Psy\Readline\Transient;
+use App\Models\User; 
 
 class InvoiceController extends Controller
 {

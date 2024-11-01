@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ToppingRequest;
 use App\Models\Category;
 use App\Models\Topping;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request; 
 
 class ToppingController extends Controller
 {

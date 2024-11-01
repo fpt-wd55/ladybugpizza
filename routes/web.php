@@ -5,19 +5,13 @@ use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ComboController;
-use App\Http\Controllers\Admin\ConversationController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\EvaluationController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\LogController;
 use App\Http\Controllers\Admin\MembershipController;
-use App\Http\Controllers\Admin\OrderStatusController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
-use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\TransactionController;
-use App\Http\Controllers\Admin\CartController as AdminCartController;
-use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
@@ -31,11 +25,9 @@ use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\PageController;
-use App\Http\Controllers\Client\PoliciesController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
-use App\Models\Evaluation;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -166,6 +158,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     // Categories
     Route::resource('/categories', CategoryController::class);
     Route::get('/category/search', [CategoryController::class, 'search'])->name('categories.search');
+    Route::get('/category/filter', [CategoryController::class, 'filter'])->name('categories.filter');
     Route::get('/category/export', [CategoryController::class, 'export'])->name('categories.export');
     Route::get('/category/trash', [CategoryController::class, 'trashCategory'])->name('trash.listcate');
     Route::post('/category/restore/{id}', [CategoryController::class, 'trashRestore'])->name('trash.cateRestore');

@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Http\Request; 
 
 class UserController extends Controller
 {
