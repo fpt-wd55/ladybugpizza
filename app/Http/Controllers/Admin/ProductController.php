@@ -9,7 +9,7 @@ use App\Models\Evaluation;
 use App\Models\EvaluationImage;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str; 
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -18,8 +18,9 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $categories = Category::where('status', 1)->get();
         $products = Product::orderBy('id', 'desc')->paginate(10);
-        return view('admins.product.index', compact('products'));
+        return view('admins.product.index', compact('products', 'categories'));
     }
 
     /**
@@ -226,5 +227,11 @@ class ProductController extends Controller
             return redirect()->back()->with('success', 'Cập nhật đánh giá thành công');
         }
         return redirect()->back()->with('error', 'Cập nhật đánh giá thất bại');
+    }
+
+    public function filter(Request $request)
+    {
+        $products = Product::orderBy('id', 'desc')->paginate(10);
+        return view('admins.product.index', compact('products'));
     }
 }
