@@ -165,7 +165,7 @@ class AttributeController extends Controller
         };
 
         // if ($request->old_stocks) {
-            $validateStocks($request->old_stocks, 'old_stocks');
+        $validateStocks($request->old_stocks, 'old_stocks');
         // }
 
         if ($request->stocks) {
@@ -280,5 +280,33 @@ class AttributeController extends Controller
     public function export()
     {
         $this->exportExcel(Attribute::all(), 'danhsachthuoctinh');
+    }
+
+    public function bulkAction(Request $request)
+    {
+        // $selectedIds = explode(',', $request->input('selected_ids'));
+        // $action = $request->input('action');
+
+        // if ($action == 'delete') {
+        //     Category::whereIn('id', $selectedIds)->delete();
+        //     return redirect()->back()->with('success', 'Xóa danh mục thành công');
+        // } else if ($action == 'force_delete') {
+        //     foreach ($selectedIds as $id) {
+        //         $forceCategories = Category::withTrashed()->find($id);
+        //         $old_image = $forceCategories->image;
+        //         if ($forceCategories) {
+        //             if ($old_image != null) {
+        //                 unlink(storage_path('app/public/uploads/categories/' . $old_image));
+        //             }
+        //             $forceCategories->forceDelete();
+        //         }
+        //     }
+        //     return redirect()->back()->with('success', 'Xóa vĩnh viễn danh mục thành công');
+        // } else if ($action == 'restore') {
+        //     Category::withTrashed()->whereIn('id', $selectedIds)->restore();
+        //     return redirect()->back()->with('success', 'Khôi phục danh mục thành công');
+        // }
+
+        // return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
     }
 }

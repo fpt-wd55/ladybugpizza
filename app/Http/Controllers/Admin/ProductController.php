@@ -235,4 +235,41 @@ class ProductController extends Controller
         $products = Product::orderBy('id', 'desc')->paginate(10);
         return view('admins.product.index', compact('products'));
     }
+
+    public function bulkAction(Request $request)
+    {
+        $selectedIds = explode(',', $request->input('selected_ids'));
+        $action = $request->input('action');
+
+        if ($action == 'delete') {
+            Product::whereIn('id', $selectedIds)->delete();
+            return redirect()->back()->with('success', 'Xóa sản phẩm thành công');
+        } else if ($action == 'force_delete') {
+            foreach ($selectedIds as $id) {
+                $forceProduct = Product::withTrashed()->find($id);
+                $old_image = $forceProduct->image;
+                if ($forceProduct) {
+                    if ($forceProduct->image != null) {
+                        try {
+                            // Kiểm tra tồn tại ảnh sản phẩm
+                            if (file_exists(storage_path('app/public/uploads/products/' . $old_image))) {
+                                unlink(storage_path('app/public/uploads/products/' . $old_image));
+                            }
+                        } catch (\Exception $e) {
+                            return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
+                        }
+                    }
+                    $forceProduct->forceDelete();
+                } else {
+                    return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
+                }
+            }
+            return redirect()->back()->with('success', 'Xóa vĩnh viễn sản phẩm thành công');
+        } else if ($action == 'restore') {
+            Product::withTrashed()->whereIn('id', $selectedIds)->restore();
+            return redirect()->back()->with('success', 'Khôi phục sản phẩm thành công');
+        }
+
+        return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
+    }
 }

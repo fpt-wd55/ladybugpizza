@@ -160,7 +160,7 @@ class CategoryController extends Controller
     }
 
     public function filter(Request $request)
-    { 
+    {
         $query = Category::query();
 
         if (isset($request->filter_status)) {
@@ -171,5 +171,40 @@ class CategoryController extends Controller
         $category->appends(['filter_status' => $request->filter_status]);
 
         return view('admins.category.list', compact('category'));
+    }
+
+    public function bulkAction(Request $request)
+    {
+        $selectedIds = explode(',', $request->input('selected_ids'));
+        $action = $request->input('action');
+
+        if ($action == 'delete') {
+            Category::whereIn('id', $selectedIds)->delete();
+            return redirect()->back()->with('success', 'Xóa danh mục thành công');
+        } else if ($action == 'force_delete') {
+            foreach ($selectedIds as $id) {
+                $forceCategories = Category::withTrashed()->find($id);
+                $old_image = $forceCategories->image;
+                if ($forceCategories) {
+                    if ($old_image != null) {
+                        try {
+                            // Kiểm tra tồn tại ảnh sản phẩm
+                            if (file_exists(storage_path('app/public/uploads/categories/' . $old_image))) {
+                                unlink(storage_path('app/public/uploads/categories/' . $old_image));
+                            }
+                        } catch (\Exception $e) {
+                            return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
+                        }
+                    }
+                    $forceCategories->forceDelete();
+                }
+            }
+            return redirect()->back()->with('success', 'Xóa vĩnh viễn danh mục thành công');
+        } else if ($action == 'restore') {
+            Category::withTrashed()->whereIn('id', $selectedIds)->restore();
+            return redirect()->back()->with('success', 'Khôi phục danh mục thành công');
+        }
+
+        return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
     }
 }

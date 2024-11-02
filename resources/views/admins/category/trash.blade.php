@@ -22,13 +22,13 @@
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 <div class="flex items-center space-x-3 w-full md:w-full">
-                    <form method="POST" action="#">
+                    <form method="POST" action="{{ route('admin.categories.bulkAction') }}">
                         @csrf
                         <input type="hidden" name="selected_ids" id="selectedIds" value="">
                         <div id="actionButtons" class="hidden">
-                            <button type="submit" name="action" value="delete" class="button-red me-2">Xóa</button>
-                            <button type="submit" name="action" value="deactivate" class="button-gray me-2">Hủy kích
-                                hoạt</button>
+                            <button type="submit" name="action" value="restore" class="button-green me-2">Khôi phục</button>
+                            <button type="submit" name="action" value="force_delete" class="button-red me-2">Xóa vĩnh
+                                viễn</button>
                             <h2 class="font-medium text-gray-700 text-base italic items-center flex" id="selectedItems">
                             </h2>
                         </div>
@@ -87,7 +87,7 @@
                             <div class="flex items-center">
                                 <input id="table-checkbox-all" type="checkbox"
                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                            </div>                  
+                            </div>
                         </th>
                         <th scope="col" class="px-4 py-3">Tên danh mục</th>
                         <th scope="col" class="px-4 py-3">Slug</th>
