@@ -129,6 +129,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     // Route::resource('/carts', AdminCartController::class);
     // Product
     Route::resource('/products', AdminProductController::class);
+    Route::post('product/bulk-action', [AdminProductController::class, 'bulkAction'])->name('products.bulkAction');
     Route::get('/product/filter', [AdminProductController::class, 'filter'])->name('products.filter');
     Route::get('/product/evaluation/{product}', [AdminProductController::class, 'evaluation'])->name('products.evaluation');
     Route::put('/product/evaluation/update/{evaluation}', [AdminProductController::class, 'evaluationUpdate'])->name('products.evaluation.update');
@@ -139,6 +140,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::delete('/product/delete/{id}', [AdminProductController::class, 'forceDelete'])->name('delete-product');
     // Attribute
     Route::resource('/attributes', AttributeController::class);
+    Route::post('attribute/bulk-action', [AttributeController::class, 'bulkAction'])->name('attributes.bulkAction');
     Route::get('/attribute/export', [AttributeController::class, 'export'])->name('attributes.export');
     Route::get('/attribute/trash', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');
     Route::post('/attribute/restore/{id}', [AttributeController::class, 'restoreAttribute'])->name('restore-attribute');
@@ -160,6 +162,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/categories', CategoryController::class);
     Route::get('/category/search', [CategoryController::class, 'search'])->name('categories.search');
     Route::get('/category/filter', [CategoryController::class, 'filter'])->name('categories.filter');
+    Route::post('category/bulk-action', [CategoryController::class, 'bulkAction'])->name('categories.bulkAction');
     Route::get('/category/export', [CategoryController::class, 'export'])->name('categories.export');
     Route::get('/category/trash', [CategoryController::class, 'trashCategory'])->name('trash.listcate');
     Route::post('/category/restore/{id}', [CategoryController::class, 'trashRestore'])->name('trash.cateRestore');
