@@ -108,7 +108,6 @@
                 {{-- button --}}
                 <div class="flex justify-end gap-2">
                     <button class="button-gray" type="reset">Hủy</button>
-                    {{-- <button class="button-blue" type="submit">Cập nhật</button> --}}
                     <button>
                         <a href="#" data-modal-target="update-modal-{{ $user->id }}"
                             data-modal-toggle="update-modal-{{ $user->id }}" class="button-red">Cập nhật</a>
@@ -122,7 +121,7 @@
                                     class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
                                     data-modal-hide="update-modal-{{ $user->id }}">
                                     @svg('tabler-x', 'w-4 h-4')
-                                    <span class="sr-only">Close modal</span>
+                                    <span class="sr-only">Close</span>
                                 </button>
                                 <div class="p-4 md:p-5 text-center">
                                     <div class="flex justify-center">
