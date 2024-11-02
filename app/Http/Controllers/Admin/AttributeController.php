@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller; 
+use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AttributeController extends Controller
 {
@@ -36,42 +37,72 @@ class AttributeController extends Controller
         $rules = [
             "attribute_name" => "required",
             "category_id" => "required",
-            "stocks.*" => "required"
         ];
-
-        foreach ($request->stocks as $key => $value) {
-            $rules["stocks.{$key}.attribute_value"] = 'required';
-            $rules["stocks.{$key}.attribute_quantity"] = 'nullable|numeric';
-        }
 
         $messages = [
             'attribute_name.required' => 'Vui lòng nhập tên thuộc tính',
             'category_id.required' => 'Vui lòng chọn danh mục',
-            'stocks.*.required' => 'Vui lòng nhập giá trị thuộc tính cho sản phẩm',
-            'stocks.*.attribute_value.required' => 'Vui lòng nhập giá trị thuộc tính cho sản phẩm',
-            'stocks.*.attribute_quantity.numeric' => 'Giá trị không hợp lệ',
         ];
 
         $request->validate($rules, $messages);
 
+        if ($request->stocks) {
+            $stockRules = [];
+            $stockMessages = [];
+
+            foreach ($request->stocks as $key => $value) {
+                $stockRules["stocks.{$key}.attribute_value"] = 'required';
+                $stockRules["stocks.{$key}.attribute_quantity"] = 'nullable|numeric';
+                $stockRules["stocks.{$key}.attribute_type_price"] = 'required|numeric';
+                $stockRules["stocks.{$key}.attribute_price"] = [
+                    'required',
+                    'numeric',
+                    function ($attribute, $value, $fail) use ($key, $request) {
+                        $typePrice = $request->stocks[$key]['attribute_type_price'];
+                        if ($typePrice == 2 && ($value < 1 || $value > 100)) {
+                            $fail('Giá trị phải nằm trong khoảng từ 1 đến 100');
+                        } elseif ($typePrice == 1 && $value <= 0) {
+                            $fail('Giá trị không hợp lệ');
+                        }
+                    }
+                ];
+
+                $stockMessages["stocks.{$key}.attribute_value.required"] = 'Vui lòng nhập giá trị thuộc tính cho sản phẩm';
+                $stockMessages["stocks.{$key}.attribute_quantity.numeric"] = 'Giá trị không hợp lệ';
+                $stockMessages["stocks.{$key}.attribute_type_price.required"] = 'Vui lòng chọn loại giá';
+                $stockMessages["stocks.{$key}.attribute_type_price.numeric"] = 'Giá trị không hợp lệ';
+                $stockMessages["stocks.{$key}.attribute_price.required"] = 'Vui lòng nhập giá';
+                $stockMessages["stocks.{$key}.attribute_price.numeric"] = 'Giá trị không hợp lệ';
+            }
+
+            $request->validate($stockRules, $stockMessages);
+        }
+
         $attribute = Attribute::create(
             [
                 "name" => $request->attribute_name,
+                "slug" => rand(1, 9999) . '-' . Str::slug($request->attribute_name),
                 "category_id" => $request->category_id,
                 "status" => !isset($request->status) ? 2 : $request->status
             ]
         );
 
+        if ($request->stocks) {
+            foreach ($request->stocks as $key => $value) {
+                AttributeValue::create([
+                    'attribute_id' => $attribute->id,
+                    'value' => $value['attribute_value'],
+                    'quantity' => $value['attribute_quantity'] ?? null,
+                    'price' => $value['attribute_price'],
+                    'price_type' => $value['attribute_type_price'],
+                ]);
+            }
+        }
+
         if (!$attribute) {
             return redirect()->back()->with(['error' => 'Có lỗi xảy ra, vui lòng thử lại.']);
         }
-        foreach ($request->stocks as $key => $value) {
-            AttributeValue::create([
-                'attribute_id' => $attribute->id,
-                'value' => $value['attribute_value'],
-                'quantity' => $value['attribute_quantity'] ?? null,
-            ]);
-        }
+
         return redirect()->route('admin.attributes.index')->with(['success' => 'Thêm thuộc tính thành công']);
     }
 
@@ -91,36 +122,61 @@ class AttributeController extends Controller
     {
         $rules = [
             "attribute_name" => "required",
-            "category_id" => "required", 
+            "category_id" => "required",
         ];
-
-        if ($request->stocks) {
-            foreach ($request->stocks as $key => $value) {
-                $rules["stocks.{$key}.attribute_value"] = 'required';
-                $rules["stocks.{$key}.attribute_quantity"] = 'nullable|numeric';
-            }
-        }
-
-        if ($request->old_stocks) {
-            foreach ($request->old_stocks as $key => $value) {
-                $rules["old_stocks.{$key}.value"] = 'required';
-                $rules["old_stocks.{$key}.quantity"] = 'nullable|numeric';
-            }
-        }
 
         $messages = [
             'attribute_name.required' => 'Vui lòng nhập tên thuộc tính',
-            'stocks.*.attribute_value.required' => 'Vui lòng nhập giá trị thuộc tính',
-            'stocks.*.attribute_quantity.numeric' => 'Giá trị không hợp lệ',
-            'old_stocks.*.value.required' => 'Vui lòng nhập giá trị thuộc tính',
-            'old_stocks.*.quantity.numeric' => 'Giá trị không hợp lệ',
+            'category_id.required' => 'Vui lòng chọn danh mục',
         ];
 
         $request->validate($rules, $messages);
 
+        $validateStocks = function ($stocks, $prefix) use ($request) {
+            $stockRules = [];
+            $stockMessages = [];
+
+            foreach ($stocks as $key => $value) {
+                $stockRules["{$prefix}.{$key}.attribute_value"] = 'required';
+                $stockRules["{$prefix}.{$key}.attribute_quantity"] = 'nullable|numeric';
+                $stockRules["{$prefix}.{$key}.attribute_type_price"] = 'required|numeric';
+                $stockRules["{$prefix}.{$key}.attribute_price"] = [
+                    'required',
+                    'numeric',
+                    function ($attribute, $value, $fail) use ($key, $request, $prefix) {
+                        $typePrice = $request->{$prefix}[$key]['attribute_type_price'];
+                        if ($typePrice == 1 && ($value < 1 || $value > 100)) {
+                            $fail('Giá trị phải nằm trong khoảng từ 1 đến 100');
+                        } elseif ($typePrice == 2 && $value <= 0) {
+                            $fail('Giá trị không hợp lệ');
+                        }
+                    }
+                ];
+
+                $stockMessages["{$prefix}.{$key}.attribute_value.required"] = 'Vui lòng nhập giá trị thuộc tính cho sản phẩm';
+                $stockMessages["{$prefix}.{$key}.attribute_quantity.numeric"] = 'Giá trị không hợp lệ';
+                $stockMessages["{$prefix}.{$key}.attribute_type_price.required"] = 'Vui lòng chọn loại giá';
+                $stockMessages["{$prefix}.{$key}.attribute_type_price.numeric"] = 'Giá trị không hợp lệ';
+                $stockMessages["{$prefix}.{$key}.attribute_price.required"] = 'Vui lòng nhập giá';
+                $stockMessages["{$prefix}.{$key}.attribute_price.numeric"] = 'Giá trị không hợp lệ';
+            }
+
+            $request->validate($stockRules, $stockMessages);
+        };
+
+        // if ($request->old_stocks) {
+            $validateStocks($request->old_stocks, 'old_stocks');
+        // }
+
+        if ($request->stocks) {
+            $validateStocks($request->stocks, 'stocks');
+        }
+
+
         $attribute->update(
             [
                 "name" => $request->attribute_name,
+                "slug" => rand(1, 9999) . '-' . Str::slug($request->attribute_name),
                 "category_id" => $request->category_id,
                 "status" => !isset($request->status) ? 2 : $request->status
             ]
@@ -152,6 +208,8 @@ class AttributeController extends Controller
                 $attributeValue->update([
                     'value' => $oldStock['value'],
                     'quantity' => $oldStock['quantity'] ?? null,
+                    'price' => $oldStock['attribute_price'],
+                    'price_type' => $oldStock['attribute_type_price'],
                 ]);
             }
         }
@@ -163,6 +221,8 @@ class AttributeController extends Controller
                     'attribute_id' => $attribute->id,
                     'value' => $newStock['attribute_value'],
                     'quantity' => $newStock['attribute_quantity'] ?? null,
+                    'price' => $newStock['attribute_price'],
+                    'price_type' => $newStock['attribute_type_price'],
                 ]);
             }
         }
@@ -217,7 +277,8 @@ class AttributeController extends Controller
 
         return redirect()->back()->with('error', 'Xóa thuộc tính thất bại');
     }
-    public function export(){
+    public function export()
+    {
         $this->exportExcel(Attribute::all(), 'danhsachthuoctinh');
     }
 }

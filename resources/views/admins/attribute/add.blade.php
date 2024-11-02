@@ -61,7 +61,7 @@
                         <table id="example" class="table-auto w-full rounded-md table-add-more">
                             <thead>
                                 <tr class="border">
-                                    <th colspan="2" class="px-4 py-2 text-start text-base font-medium">Thêm giá trị</th>
+                                    <th colspan="3" class="px-4 py-2 text-start text-base font-medium">Thêm giá trị</th>
                                     <th class="px-6 py-2 text-end">
                                         <a href="#" class="font-medium text-blue-600 hover:underline btn-add-more">+
                                             Thêm mới</a>
@@ -75,9 +75,9 @@
                                 @if (request()->old('stocks'))
                                     @foreach (request()->old('stocks') as $key => $stock)
                                         <tr>
-                                            <td class="border px-4 py-2" colspan="3">
-                                                <div class="grid grid-cols-1 gap-3 md:grid-cols-6">
-                                                    <div class="md:col-span-3">
+                                            <td class="border px-4 py-2" colspan="4">
+                                                <div class="grid grid-cols-1 gap-3 md:grid-cols-7">
+                                                    <div class="md:col-span-2">
                                                         <input type="text"
                                                             name="stocks[{{ $key }}][attribute_value]"
                                                             placeholder="Tên giá trị"
@@ -101,6 +101,32 @@
                                                             </p>
                                                         @enderror
                                                     </div>
+                                                    <div class="md:col-span-2">
+                                                        <div class="grid grid-cols-3">
+                                                            <select
+                                                                name="stocks[{{ $key }}][attribute_type_price]"
+                                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:border-primary-600 block w-full p-2.5">
+                                                                <option value="1"
+                                                                    {{ isset($stock['attribute_type_price']) && $stock['attribute_type_price'] == 1 ? 'selected' : '' }}>
+                                                                    Theo giá tiền (₫)
+                                                                </option>
+                                                                <option value="2"
+                                                                    {{ isset($stock['attribute_type_price']) && $stock['attribute_type_price'] == 2 ? 'selected' : '' }}>
+                                                                    Theo phần trăm (%)
+                                                                </option>
+                                                            </select>
+                                                            <input type="number"
+                                                                name="stocks[{{ $key }}][attribute_price]"
+                                                                value="{{ $stock['attribute_price'] ?? '' }}"
+                                                                class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-0 border focus:border-primary-600 border-gray-300 focus:ring-0 col-span-2"
+                                                                placeholder="Giá" />
+                                                        </div>
+                                                        @error("stocks.{$key}.attribute_price")
+                                                            <p class="mt-2 text-sm text-red-600 ">
+                                                                {{ $message }}
+                                                            </p>
+                                                        @enderror
+                                                    </div>
                                                     <div class="md:col-span-1">
                                                         <button type="button"
                                                             class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 btn-add-more-rm w-full">
@@ -113,9 +139,9 @@
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td class="border px-4 py-2" colspan="3">
-                                            <div class="grid grid-cols-1 gap-3 md:grid-cols-6">
-                                                <div class="md:col-span-3">
+                                        <td class="border px-4 py-2" colspan="4">
+                                            <div class="grid grid-cols-1 gap-3 md:grid-cols-7">
+                                                <div class="md:col-span-2">
                                                     <input type="text" name="stocks[0][attribute_value]"
                                                         placeholder="Tên giá trị"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -124,6 +150,18 @@
                                                     <input type="number" name="stocks[0][attribute_quantity]"
                                                         placeholder="Số lượng"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                                </div>
+                                                <div class="md:col-span-2">
+                                                    <div class="grid grid-cols-3">
+                                                        <select name="stocks[0][attribute_type_price]"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:border-primary-600 block w-full p-2.5">
+                                                            <option value="1">Theo giá tiền (₫)</option>
+                                                            <option value="2" selected>Theo phần trăm (%)</option>
+                                                        </select>
+                                                        <input type="number" name="stocks[0][attribute_price]"
+                                                            class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-0 border focus:border-primary-600 border-gray-300 focus:ring-0 col-span-2"
+                                                            placeholder="Giá" />
+                                                    </div>
                                                 </div>
                                                 <div class="md:col-span-1">
                                                     <button type="button"
@@ -161,9 +199,9 @@
                 i++;
                 document.querySelector('.table-add-more tbody').insertAdjacentHTML('beforeend', `
                     <tr>
-                        <td class="border px-4 py-2" colspan="3">
-                            <div class="grid grid-cols-1 gap-3 md:grid-cols-6">
-                                <div class="md:col-span-3">
+                        <td class="border px-4 py-2" colspan="4">
+                            <div class="grid grid-cols-1 gap-3 md:grid-cols-7">
+                                <div class="md:col-span-2">
                                     <input type="text" name="stocks[${i}][attribute_value]"
                                         placeholder="Tên giá trị"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -172,6 +210,18 @@
                                     <input type="number" name="stocks[${i}][attribute_quantity]"
                                         placeholder="Số lượng"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                </div>
+                                <div class="md:col-span-2">
+                                    <div class="grid grid-cols-3">
+                                        <select name="stocks[${i}][attribute_type_price]"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:border-primary-600 block w-full p-2.5">
+                                            <option value="1">Theo giá tiền (₫)</option>
+                                            <option value="2" selected>Theo phần trăm (%)</option>
+                                        </select>
+                                        <input type="number" name="stocks[${i}][attribute_price]"
+                                            class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-0 border focus:border-primary-600 border-gray-300 focus:ring-0 col-span-2"
+                                            placeholder="Giá" />
+                                    </div>
                                 </div>
                                 <div class="md:col-span-1">
                                     <button type="button"
