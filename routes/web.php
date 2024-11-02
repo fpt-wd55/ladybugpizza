@@ -5,19 +5,13 @@ use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ComboController;
-use App\Http\Controllers\Admin\ConversationController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\EvaluationController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\LogController;
 use App\Http\Controllers\Admin\MembershipController;
-use App\Http\Controllers\Admin\OrderStatusController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
-use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\TransactionController;
-use App\Http\Controllers\Admin\CartController as AdminCartController;
-use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
@@ -31,11 +25,9 @@ use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\PageController;
-use App\Http\Controllers\Client\PoliciesController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
-use App\Models\Evaluation;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,7 +64,10 @@ Route::prefix('/')->group(function () {
     Route::get('/profile/address/add', [ProfileController::class, 'addLocation'])->name('client.profile.add-location');
     Route::post('/profile/address', [ProfileController::class, 'storeLocation'])->name('client.profile.post-location');
     Route::get('/profile/address/edit/{address}', [ProfileController::class, 'editLocation'])->name('client.profile.edit-location');
-    Route::put('/profile/address/update/{address}',[ProfileController::class, 'updateLocation'])->name('client.profile.update-location');
+    Route::put('/profile/address/update/{address}', [ProfileController::class, 'updateLocation'])->name('client.profile.update-location');
+    Route::delete('/profile/address/delete/{address}', [ProfileController::class, 'deleteLocation'])->name('client.profile.delete-location');
+    Route::post('/profile/address/set-defautl/{address}', [ProfileController::class, 'setDefaultAddress'])->name('client.profile.set-address');
+
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
     Route::put('/settings/update/{id}', [ProfileController::class, 'updateStatus'])->name('client.settings.update');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
@@ -124,22 +119,23 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/users', UserController::class);
     Route::get('/user/export', [UserController::class, 'export'])->name('users.export');
     Route::get('/user/search', [UserController::class, 'search'])->name('users.search');
+    Route::get('/user/filter', [UserController::class, 'filter'])->name('users.filter');
     // Address
     Route::resource('/addresses', AddressController::class);
     // Order
     Route::resource('/orders', AdminOrderController::class);
     Route::get('/order/search', [AdminOrderController::class, 'search'])->name('orders.search');
     Route::get('/order/export', [AdminOrderController::class, 'export'])->name('orders.export');
-
-    Route::resource('/carts', AdminCartController::class);
+    // Route::resource('/carts', AdminCartController::class);
     // Product
     Route::resource('/products', AdminProductController::class);
+    Route::get('/product/evaluation/{product}', [AdminProductController::class, 'evaluation'])->name('products.evaluation');
+    Route::put('/product/evaluation/update/{evaluation}', [AdminProductController::class, 'evaluationUpdate'])->name('products.evaluation.update');
     Route::get('/product/search', [AdminProductController::class, 'search'])->name('products.search');
     Route::get('/product/export', [AdminProductController::class, 'export'])->name('products.export');
     Route::get('/product/trash', [AdminProductController::class, 'trash'])->name('trash-products');
     Route::post('/product/restore/{id}', [AdminProductController::class, 'restore'])->name('restore-product');
     Route::delete('/product/delete/{id}', [AdminProductController::class, 'forceDelete'])->name('delete-product');
-    Route::get('/comment-products/{id}', [AdminProductController::class, 'listComment'])->name('comment-products');
     // Attribute
     Route::resource('/attributes', AttributeController::class);
     Route::get('/attribute/export', [AttributeController::class, 'export'])->name('attributes.export');
@@ -162,6 +158,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     // Categories
     Route::resource('/categories', CategoryController::class);
     Route::get('/category/search', [CategoryController::class, 'search'])->name('categories.search');
+    Route::get('/category/filter', [CategoryController::class, 'filter'])->name('categories.filter');
     Route::get('/category/export', [CategoryController::class, 'export'])->name('categories.export');
     Route::get('/category/trash', [CategoryController::class, 'trashCategory'])->name('trash.listcate');
     Route::post('/category/restore/{id}', [CategoryController::class, 'trashRestore'])->name('trash.cateRestore');
@@ -178,14 +175,10 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/promotion/export', [PromotionController::class, 'export'])->name('promotions.export');
     // Membership
     Route::resource('/memberships', MembershipController::class);
+    Route::get('/membership/filter', [MembershipController::class, 'filter'])->name('memberships.filter');
     Route::get('/membership/search', [MembershipController::class, 'search'])->name('memberships.search');
     Route::get('/membership/export', [MembershipController::class, 'export'])->name('memberships.export');
     Route::post('/memberships/{membership}/status', [MembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
-    // Đánh Giá
-    Route::get('/evaluations', [EvaluationController::class, 'index'])->name('evaluations.index');
-    Route::get('/evaluations/search', [EvaluationController::class, 'search'])->name('evaluations.search');
-    Route::get('/evaluation/export', [EvaluationController::class, 'export'])->name('evaluations.export');
-    Route::patch('/evaluations/update-status/{id}', [EvaluationController::class, 'updateStatus'])->name('evaluation.updateStatus');
 
     Route::resource('/transactions', TransactionController::class);
     Route::resource('/shippings', ShippingController::class);

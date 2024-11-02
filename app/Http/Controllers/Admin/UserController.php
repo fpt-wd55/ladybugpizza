@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Http\Request; 
 
 class UserController extends Controller
 {
@@ -18,7 +16,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(10);
-        return view('admins.user.index', compact('users'));
+        $roles = Role::where('id', '>', 1)->get();
+        return view('admins.user.index', compact('users', 'roles'));
     }
 
     /**
@@ -86,8 +85,8 @@ class UserController extends Controller
         $addresses = $user->addresses;
         $orders = $user->orders()->paginate(5);
         $evaluations = $user->evaluations;
-        $favorites = null; 
-        
+        $favorites = null;
+
         return view('admins.user.detail', compact('user', 'addresses', 'orders', 'evaluations', 'favorites'));
     }
 
@@ -115,7 +114,12 @@ class UserController extends Controller
         }
         // Kiem tra trang thai (Status)
         if (!isset($validatedData['status'])) {
-            $validatedData['status'] = 0;
+            $validatedData['status'] = 2;
+        }
+
+        // Kiem tra khong huy duoc tai khoan quan tri
+        if ($user->role_id != 2 && $user->status == 1 && $validatedData['status'] == 2) {
+            return redirect()->route('admin.users.edit', $user->id)->with('error', 'Không thể khóa tài khoản quản trị');
         }
 
         // Xu ly hinh anh
@@ -180,5 +184,36 @@ class UserController extends Controller
             ->paginate(10);
         $users->appends(['search' => $request->search]);
         return view('admins.user.index', compact('users'));
+    }
+
+    public function filter(Request $request)
+    {
+        $query = User::query();
+
+        if (isset($request->filter_role)) {
+            $query->whereIn('role_id', $request->filter_role);
+        }
+        
+        if (isset($request->filter_status)) {
+            $query->whereIn('status', $request->filter_status);
+        }
+        
+        if (isset($request->filter_gender)) {
+            $query->whereIn('gender', $request->filter_gender);
+        }
+
+        // filte_birthday_start or filter_birthday_end
+        if (isset($request->filter_birthday_start) && isset($request->filter_birthday_end)) {
+            $query->whereBetween('date_of_birth', [$request->filter_birthday_start, $request->filter_birthday_end]);
+        }
+
+        $users = $query->paginate(10);
+
+        $users->appends(['filter_role' => $request->filter_role]);
+        $users->appends(['filter_status' => $request->filter_status]);
+        $users->appends(['filter_gender' => $request->filter_gender]);
+
+        $roles = Role::where('id', '>', 1)->get();
+        return view('admins.user.index', compact('users', 'roles'));
     }
 }

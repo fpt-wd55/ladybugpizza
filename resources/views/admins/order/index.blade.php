@@ -163,8 +163,7 @@
                     </li>
                 @endforeach
             </ul>
-        </div>
-        {{--  --}}
+        </div> 
         <div class="overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="bg-gray-50 text-gray-700 uppercase">

@@ -2,7 +2,7 @@
 @section('title', 'Tài khoản')
 @section('content')
     {{ Breadcrumbs::render('admin.users.index') }}
-    <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
+    <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden min-h-screen">
         <div
             class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
             <div
@@ -29,26 +29,6 @@
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 <div class="flex items-center space-x-3 w-full md:w-full">
-                    <div class="flex items-center w-full">
-                        <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
-                            class="w-full md:w-auto flex items-center justify-center py-2 ps-2 pe-3 me-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
-                            type="button">
-                            @svg('tabler-chevron-down', 'w-5 h-5 me-3')
-                            Hành động
-                        </button>
-                        <h2 class="font-medium text-gray-700 text-base italic" id="selectedItems">
-                        </h2>
-                    </div>
-                    <div id="actionsDropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
-                        <ul class="py-1 text-sm text-gray-700" aria-labelledby="actionsDropdownButton">
-                            <li>
-                                <a href="#" class="block py-2 px-4 hover:bg-gray-100">Kích hoạt/Khóa</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block py-2 px-4 hover:bg-gray-100">Xóa tài khoản</a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
             <div
@@ -70,82 +50,73 @@
                         Bộ lọc
                         @svg('tabler-chevron-down', 'w-5 h-5 ms-3')
                     </button>
-                    <div id="filterDropdown" class="z-10 hidden w-96 p-3 bg-white rounded-lg shadow">
-                        <form action="#" aria-labelledby="filterDropdownButton">
+                    <div id="filterDropdown" class="z-50 hidden w-96 p-3 bg-white rounded-lg shadow">
+                        <form action="{{ route('admin.users.filter') }}" aria-labelledby="filterDropdownButton">
                             <h6 class="mb-3 text-sm font-medium text-gray-900">Vai trò</h6>
                             <ul class="space-y-2 text-sm">
-                                <li class="flex items-center">
-                                    <input id="admin" type="checkbox" value="filter-role-admin"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                    <label for="admin" class="ml-2 text-sm font-medium text-gray-900">Quản trị
-                                        viên</label>
-                                </li>
-                                <li class="flex items-center">
-                                    <input id="client" type="checkbox" value="filter-role-client"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                    <label for="client" class="ml-2 text-sm font-medium text-gray-900">Khách hàng</label>
-                                </li>
+                                @foreach ($roles as $role)
+                                    <li class="flex items-center">
+                                        <input id="admin" type="checkbox" name="filter_role[]"
+                                            value="{{ $role->id }}"
+                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                            @if (in_array($role->id, request()->input('filter_role', []))) checked @endif>
+                                        <label for="admin"
+                                            class="ml-2 text-sm font-medium text-gray-900">{{ $role->name }}</label>
+                                    </li>
+                                @endforeach
                             </ul>
                             <h6 class="my-3 text-sm font-medium text-gray-900">Giới tính</h6>
                             <ul class="space-y-2 text-sm">
                                 <li class="flex items-center">
-                                    <input id="male" type="checkbox" value="filter-gender-male"
+                                    <input id="male" type="checkbox" name="filter_gender[]" value="1"
+                                        @if (in_array(1, request()->input('filter_gender', []))) checked @endif
                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
                                     <label for="male" class="ml-2 text-sm font-medium text-gray-900">Nam</label>
                                 </li>
                                 <li class="flex items-center">
-                                    <input id="female" type="checkbox" value="filter-gender-female"
+                                    <input id="female" type="checkbox" name="filter_gender[]" value="2"
+                                        @if (in_array(2, request()->input('filter_gender', []))) checked @endif
                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
                                     <label for="female" class="ml-2 text-sm font-medium text-gray-900">Nữ</label>
                                 </li>
                                 <li class="flex items-center">
-                                    <input id="other" type="checkbox" value="filter-gender-other"
+                                    <input id="other" type="checkbox" name="filter_gender[]" value="3"
+                                        @if (in_array(3, request()->input('filter_gender', []))) checked @endif
                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                    <label for="other" class="ml-2 text-sm font-medium text-gray-900">Khac</label>
+                                    <label for="other" class="ml-2 text-sm font-medium text-gray-900">Khác</label>
                                 </li>
                             </ul>
                             <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
                             <ul class="space-y-2 text-sm">
                                 <li class="flex items-center">
-                                    <input id="active" type="checkbox" value="filter-status-active"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                    <input id="active" type="checkbox" name="filter_status[]" value="1"
+                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                        @if (in_array(1, request()->input('filter_status', []))) checked @endif>
                                     <label for="active" class="ml-2 text-sm font-medium text-gray-900">Hoạt động</label>
                                 </li>
                                 <li class="flex items-center">
-                                    <input id="inactive" type="checkbox" value="filter-status-inactive"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                    <input id="inactive" type="checkbox" name="filter_status[]" value="2"
+                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                        @if (in_array(2, request()->input('filter_status', []))) checked @endif>
                                     <label for="inactive" class="ml-2 text-sm font-medium text-gray-900">Khóa</label>
                                 </li>
                             </ul>
                             <h6 class="my-3 text-sm font-medium text-gray-900">Ngày sinh</h6>
                             <div class="flex items-center">
                                 <div>
-                                    <input name="filter-birthday-start" type="date"
+                                    <input name="filter_birthday_start" type="date"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                        placeholder="mm/dd/yyyy">
+                                        placeholder="mm/dd/yyyy"
+                                        value="{{ old('filter_birthday_start', request()->input('filter_birthday_start')) }}">
                                 </div>
                                 <span class="mx-4 text-gray-500">-</span>
                                 <div>
-                                    <input name="filter-birthday-end" type="date"
+                                    <input name="filter_birthday_end" type="date"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                        placeholder="mm/dd/yyyy">
+                                        placeholder="mm/dd/yyyy"
+                                        value="{{ old('filter_birthday_end', request()->input('filter_birthday_end')) }}">
                                 </div>
                             </div>
-                            <h6 class="my-3 text-sm font-medium text-gray-900">Ngày tham gia</h6>
-                            <div class="flex items-center">
-                                <div>
-                                    <input name="filter-created-start" type="date"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                        placeholder="mm/dd/yyyy">
-                                </div>
-                                <span class="mx-4 text-gray-500">-</span>
-                                <div>
-                                    <input name="filter-created-end" type="date"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                        placeholder="mm/dd/yyyy">
-                                </div>
-                            </div>
-
                             <button type="submit" class="button-red w-full mt-5">
                                 Lọc
                             </button>
@@ -158,12 +129,6 @@
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
-                        <th scope="col" class="p-4">
-                            <div class="flex items-center">
-                                <input id="table-checkbox-all" type="checkbox"
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                            </div>
-                        </th>
                         <th scope="col" class="px-4 py-3">
                             <div class="flex items-center">
                                 Tài khoản
@@ -197,13 +162,6 @@
                 <tbody>
                     @forelse ($users as $user)
                         <tr class="border-b hover:bg-gray-100">
-                            <td class="w-4 px-4 py-3">
-                                <div class="flex items-center">
-                                    <input id="table-item-checkbox-{{ $user->id }}" type="checkbox"
-                                        onclick="event.stopPropagation()"
-                                        class="table-item-checkbox w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                </div>
-                            </td>
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap">
                                 <a class="shrink-0" data-fslightbox="gallery" href="{{ $user->avatar() }}">
                                     <img loading="lazy" src="{{ $user->avatar() }}" alt="Avatar"
@@ -268,12 +226,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('scripts')
-    <script>
-        tableCheckboxItem('table-checkbox-all', 'table-item-checkbox');
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelector('[data-modal-toggle="defaultModal"]').click();
-        });
-    </script>
 @endsection

@@ -68,11 +68,11 @@
                             <tbody data-accordion="open">
                                 @forelse ($attribute->values as $value)
                                     <tr class="border-b">
-                                        <td class="border px-4 py-2" colspan="3">
-                                            <div class="grid grid-cols-1 gap-3 md:grid-cols-6">
+                                        <td class="border px-4 py-2" colspan="4">
+                                            <div class="grid grid-cols-1 gap-3 md:grid-cols-7">
                                                 <input type="hidden" name="old_stocks[{{ $value->id }}][id]"
                                                     value="{{ $value->id }}">
-                                                <div class="md:col-span-3">
+                                                <div class="md:col-span-2">
                                                     <input type="text" name="old_stocks[{{ $value->id }}][value]"
                                                         placeholder="Tên giá trị" value="{{ $value->value }}"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -87,6 +87,31 @@
                                                         placeholder="Số lượng" value="{{ $value->quantity }}"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                                     @error("old_stocks.{$value->id}.quantity")
+                                                        <p class="mt-2 text-sm text-red-600 ">
+                                                            {{ $message }}
+                                                        </p>
+                                                    @enderror
+                                                </div>
+                                                <div class="md:col-span-2">
+                                                    <div class="grid grid-cols-3">
+                                                        <select name="old_stocks[{{ $value->id }}][attribute_type_price]"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:border-primary-600 block w-full p-2.5">
+                                                            <option value="1"
+                                                                {{ $value->price_type == 1 ? 'selected' : '' }}>
+                                                                Theo giá tiền (₫)
+                                                            </option>
+                                                            <option value="2"
+                                                                {{ $value->price_type == 2 ? 'selected' : '' }}>
+                                                                Theo phần trăm (%)
+                                                            </option>
+                                                        </select>
+                                                        <input type="number"
+                                                            name="old_stocks[{{ $value->id }}][attribute_price]"
+                                                            value="{{ $value->price }}"
+                                                            class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-0 border focus:border-primary-600 border-gray-300 focus:ring-0 col-span-2"
+                                                            placeholder="Giá" />
+                                                    </div>
+                                                    @error("old_stocks.{$value->id}.attribute_price")
                                                         <p class="mt-2 text-sm text-red-600 ">
                                                             {{ $message }}
                                                         </p>
@@ -133,9 +158,9 @@
                             @if (request()->old('stocks'))
                                 @foreach (request()->old('stocks') as $key => $stock)
                                     <tr>
-                                        <td class="border px-4 py-2" colspan="3">
-                                            <div class="grid grid-cols-1 gap-3 md:grid-cols-6">
-                                                <div class="md:col-span-3">
+                                        <td class="border px-4 py-2" colspan="4">
+                                            <div class="grid grid-cols-1 gap-3 md:grid-cols-7">
+                                                <div class="md:col-span-2">
                                                     <input type="text"
                                                         name="stocks[{{ $key }}][attribute_value]"
                                                         placeholder="Tên giá trị"
@@ -158,6 +183,24 @@
                                                             {{ $message }}
                                                         </p>
                                                     @enderror
+                                                </div>
+                                                <div class="md:col-span-2">
+                                                    <div class="grid grid-cols-3">
+                                                        <select name="stocks[{{ $key }}][attribute_type_price]"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:border-primary-600 block w-full p-2.5">
+                                                            <option value="1"
+                                                                {{ isset($stock['attribute_type_price']) && $stock['attribute_type_price'] == 1 ? 'selected' : '' }}>
+                                                                Theo giá tiền (₫)
+                                                            </option>
+                                                            <option value="2"
+                                                                {{ isset($stock['attribute_type_price']) && $stock['attribute_type_price'] == 2 ? 'selected' : '' }}>
+                                                                Theo phần trăm (%)
+                                                            </option>
+                                                        </select>
+                                                        <input type="number" name="stocks[0][attribute_price]"
+                                                            class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-0 border focus:border-primary-600 border-gray-300 focus:ring-0 col-span-2"
+                                                            placeholder="Giá" />
+                                                    </div>
                                                 </div>
                                                 <div class="md:col-span-1">
                                                     <button type="button"
@@ -195,9 +238,9 @@
                 i++;
                 document.querySelector('.table-add-more tbody').insertAdjacentHTML('beforeend', `
                     <tr>
-                        <td class="border px-4 py-2" colspan="3">
-                            <div class="grid grid-cols-1 gap-3 md:grid-cols-6">
-                                <div class="md:col-span-3">
+                        <td class="border px-4 py-2" colspan="4">
+                            <div class="grid grid-cols-1 gap-3 md:grid-cols-7">
+                                <div class="md:col-span-2">
                                     <input type="text" name="stocks[${i}][attribute_value]"
                                         placeholder="Tên giá trị"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -206,6 +249,18 @@
                                     <input type="number" name="stocks[${i}][attribute_quantity]"
                                         placeholder="Số lượng"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                </div>
+                                <div class="md:col-span-2">
+                                    <div class="grid grid-cols-3">
+                                        <select name="stocks[${i}][attribute_type_price]"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:border-primary-600 block w-full p-2.5">
+                                            <option value="1">Theo giá tiền (₫)</option>
+                                            <option value="2" selected>Theo phần trăm (%)</option>
+                                        </select>
+                                        <input type="number" name="stocks[${i}][attribute_price]"
+                                            class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-0 border focus:border-primary-600 border-gray-300 focus:ring-0 col-span-2"
+                                            placeholder="Giá" />
+                                    </div>
                                 </div>
                                 <div class="md:col-span-1">
                                     <button type="button"

@@ -19,24 +19,28 @@ class MembershipRankSeeder extends Seeder
                 'name' => 'Đồng',
                 'min_points' => 0,
                 'max_points' => 1000,
+                'color' => 'text-[#C67746]',
             ],
             [
                 'icon' => 'silver.svg',
                 'name' => 'Bạc',
                 'min_points' => 1001,
                 'max_points' => 3000,
+                'color' => 'text-gray-500',
             ],
             [
                 'icon' => 'gold.svg',
                 'name' => 'Vàng',
                 'min_points' => 3001,
                 'max_points' => 10000,
+                'color' => 'text-yellow-300',
             ],
             [
                 'icon' => 'diamond.svg',
                 'name' => 'Kim Cương',
                 'min_points' => 10001,
                 'max_points' => null,
+                'color' => 'text-blue-400',
             ],
         ]);
     }

@@ -14,6 +14,7 @@ class MembershipRank extends Model
         'name',
         'min_points',
         'max_points',
+        'color',
     ];
 
     public function memberships()

@@ -48,11 +48,7 @@
                     <li>
                         <a class="{{ request()->is('admin/product*') ? 'bg-gray-200' : '' }} group flex w-full items-center rounded-lg p-2 pl-11 text-gray-900 transition duration-75 hover:bg-gray-100" href="{{ route('admin.products.index') }}">Sản
                             phẩm</a>
-                    </li>
-                    <li>
-                        <a class="{{ request()->is('admin/evaluation*') ? 'bg-gray-200' : '' }} group flex w-full items-center rounded-lg p-2 pl-11 text-gray-900 transition duration-75 hover:bg-gray-100" href="{{ route('admin.evaluations.index') }}">Đánh
-                            giá</a>
-                    </li>
+                    </li> 
                     <li>
                         <a class="{{ request()->is('admin/combo*') ? 'bg-gray-200' : '' }} group flex w-full items-center rounded-lg p-2 pl-11 text-gray-900 transition duration-75 hover:bg-gray-100" href="{{ route('admin.combos.index') }}">Combo</a>
                     </li>

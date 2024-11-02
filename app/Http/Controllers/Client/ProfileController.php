@@ -193,7 +193,10 @@ class ProfileController extends Controller
 			return $redirectHome;
 		}
 		$user = Auth::user();
-		$addresses = Address::where('user_id', $user->id)->with('user')->paginate(6);
+		$addresses = Address::where('user_id', $user->id)
+		->with('user')
+		->orderBy('is_default', 'desc')
+		->paginate(6);
 		return view('clients.profile.address.index', compact('addresses'));
 	}
 
@@ -418,6 +421,28 @@ class ProfileController extends Controller
 	public function editLocation(Address $address)
 	{
 		return view('clients.profile.address.edit', compact('address'));
+	}
+
+	public function deleteLocation(Address $address)
+	{
+
+		$id = $address['id'];
+
+        if (Address::destroy($id)) {
+            return redirect()->back()->with('success', 'Xóa địa thành công');
+        } else {
+            return redirect()->back()->with('error', 'Xóa địa chỉ thất bại');
+        }
+		
+	}
+	public function setDefaultAddress(Address $address)
+	{
+		Address::where('user_id', $address->user_id)->update(['is_default' => 0]);
+
+		$address->is_default = 1;
+		$address->save();
+
+		return redirect()->back()->with('success', 'Địa chỉ mặc định đã được cập nhật.');
 	}
 
 	private function getAddressNamesByCodes($provinceCode, $districtCode, $wardCode)

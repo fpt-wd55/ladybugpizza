@@ -4,8 +4,8 @@
 @section('content')
     {{ Breadcrumbs::render('admin.profiles.index') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
-        <div class="mt-10 mx-4">
-            <h1 class="text-2xl font-bold mb-6">Tài khoản</h1>
+        <div class="mt-7 mx-4">
+            <h1 class="text-2xl font-semibold mb-6">Tài khoản</h1>
             <!-- Profile Picture -->
             <form action="{{ route('admin.profiles.update', $user) }}" enctype="multipart/form-data" method="POST">
                 @csrf
@@ -29,9 +29,7 @@
                     @enderror
                 </div>
                 <div class="mb-4">
-                    <h2 class="text-xl font-bold mb-2">Hồ sơ</h2>
-                    <span class="text-lg text-gray-900">{{ $user->fullname }}, {{ $user->email }},
-                        {{ $user->phone }}</span>
+                    <h2 class="text-xl font-semibold mb-2">Thông tin cá nhân</h2>
                 </div>
                 <!--  Profile -->
                 <div class="mb-6">
@@ -86,6 +84,10 @@
                     </div>
                 </div>
                 {{-- mat khau --}}
+
+                <div class="mb-4">
+                    <h2 class="text-xl font-semibold mb-2">Đổi mật khẩu</h2>
+                </div>
                 <div class="mb-6 grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Mật khẩu mới</label>
@@ -95,9 +97,9 @@
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Xác nhận mật khẩu </label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Xác nhận mật khẩu mới</label>
                         <input class="input mb-2" name="confirm_password" type="password"
-                            placeholder="Xác nhận mật khẩu...">
+                            placeholder="Xác nhận mật khẩu mới...">
                         @error('confirm_password')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -130,12 +132,12 @@
                                         @method('PUT')
                                         @csrf
                                         <button type="submit"
-                                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                            class="transition text-white bg-red-600 hover:bg-red-800 focus:ring-0 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                             Đồng ý
                                         </button>
                                     </form>
                                     <button data-modal-hide="update-modal-{{ $user->id }}" type="button"
-                                        class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Không</button>
+                                        class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-0 transition">Không</button>
                                 </div>
                             </div>
                         </div>

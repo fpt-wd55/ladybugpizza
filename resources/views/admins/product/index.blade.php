@@ -266,7 +266,8 @@
                                                 class="block py-2 px-4 hover:bg-gray-100">Xem</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Đánh giá</a>
+                                            <a href="{{ route('admin.products.evaluation', $product) }}"
+                                                class="block py-2 px-4 hover:bg-gray-100">Đánh giá</a>
                                         </li>
                                         <li>
                                             <a href="{{ route('admin.products.edit', $product) }}"
@@ -320,7 +321,7 @@
                             </td>
                         </tr>
                     @empty
-                        <td colspan="6" class="text-center py-4 text-base">
+                        <td colspan="7" class="text-center py-4 text-base">
                             <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
                                 @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
                                 <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
@@ -334,4 +335,12 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        tableCheckboxItem('table-checkbox-all', 'table-item-checkbox');
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector('[data-modal-toggle="defaultModal"]').click();
+        });
+    </script>
 @endsection

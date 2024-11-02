@@ -20,16 +20,16 @@ class MembershipSeeder extends Seeder
 
         $users = User::all();
         $ranks = MembershipRank::all();
-        
+
         foreach ($users as $user) {
             Membership::create([
                 'user_id' => $user->id,
-                'points' => rand(0, 5000),
-                'rank_id' => $ranks->random()->id,
+                'points' => $points = rand(0, 12000),
+                'rank_id' => $points <= 1000 ? 1 : ($points <= 3000 ? 2 : ($points <= 10000 ? 3 : 4)),
                 'total_spent' => rand(0, 20000),
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
         }
     }
-} 
+}

@@ -194,15 +194,9 @@ Breadcrumbs::for('admin.product.trash', function (BreadcrumbTrail $trail) {
     $trail->push('Thùng rác', route('admin.trash-products'));
 });
 
-// Đánh Giá
-Breadcrumbs::for('admin.evaluations.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin.dashboard');
-    $trail->push('Đánh giá', route('admin.evaluations.index'));
-});
-
-Breadcrumbs::for('admin.comment-products', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('admin.evaluations.index');
-    $trail->push('Chi tiết đánh giá', route('admin.comment-products', $id));
+Breadcrumbs::for('admin.products.evaluation', function (BreadcrumbTrail $trail, $product) {
+    $trail->parent('admin.products.index');
+    $trail->push('Đánh giá sản phẩm', route('admin.products.evaluation', $product));
 });
 
 // Chat
