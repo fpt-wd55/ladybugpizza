@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Tài khoản')
 
-@section('content') 
+@section('content')
     {{ Breadcrumbs::render('admin.profiles.index') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="mt-10 mx-4">
@@ -89,15 +89,15 @@
                 <div class="mb-6 grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Mật khẩu mới</label>
-                        <input type="password" class="input mb-2" name="new_password"
-                            placeholder="Nhập mật khẩu mới...">
+                        <input type="password" class="input mb-2" name="new_password" placeholder="Nhập mật khẩu mới...">
                         @error('new_password')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Xác nhận mật khẩu </label>
-                        <input class="input mb-2" name="confirm_password" type="password" placeholder="Xác nhận mật khẩu...">
+                        <input class="input mb-2" name="confirm_password" type="password"
+                            placeholder="Xác nhận mật khẩu...">
                         @error('confirm_password')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -106,14 +106,12 @@
                 {{-- button --}}
                 <div class="flex justify-end gap-2">
                     <button class="button-gray" type="reset">Hủy</button>
-                    {{-- <button class="button-blue" type="submit">Cập nhật</button> --}}
                     <button>
                         <a href="#" data-modal-target="update-modal-{{ $user->id }}"
-                            data-modal-toggle="update-modal-{{ $user->id }}"
-                            class="button-red">Cập nhật</a>
+                            data-modal-toggle="update-modal-{{ $user->id }}" class="button-red">Cập nhật</a>
                     </button>
-                     {{-- update modal --}}
-                     <div id="update-modal-{{ $user->id }}" tabindex="-1"
+                    {{-- update modal --}}
+                    <div id="update-modal-{{ $user->id }}" tabindex="-1"
                         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                         <div class="relative p-4 w-full max-w-md max-h-full">
                             <div class="relative bg-white rounded-lg shadow">
@@ -121,15 +119,14 @@
                                     class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
                                     data-modal-hide="update-modal-{{ $user->id }}">
                                     @svg('tabler-x', 'w-4 h-4')
-                                    <span class="sr-only">Close modal</span>
+                                    <span class="sr-only">Close</span>
                                 </button>
                                 <div class="p-4 md:p-5 text-center">
                                     <div class="flex justify-center">
                                         @svg('tabler-user-up', 'w-12 h-12 text-red-600 text-center mb-2')
                                     </div>
                                     <h3 class="mb-8 text-xl font-normal">Bạn chắc chắn thay đổi thông tin chứ?</h3>
-                                    <form action="{{ route('admin.users.destroy', $user->id) }}"
-                                        method="POST">
+                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
                                         @method('PUT')
                                         @csrf
                                         <button type="submit"
