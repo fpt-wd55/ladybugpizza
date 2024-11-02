@@ -129,6 +129,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     // Route::resource('/carts', AdminCartController::class);
     // Product
     Route::resource('/products', AdminProductController::class);
+    Route::get('/product/filter', [AdminProductController::class, 'filter'])->name('products.filter');
     Route::get('/product/evaluation/{product}', [AdminProductController::class, 'evaluation'])->name('products.evaluation');
     Route::put('/product/evaluation/update/{evaluation}', [AdminProductController::class, 'evaluationUpdate'])->name('products.evaluation.update');
     Route::get('/product/search', [AdminProductController::class, 'search'])->name('products.search');
