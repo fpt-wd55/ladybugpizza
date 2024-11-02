@@ -34,32 +34,22 @@
                 <div
                     class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                     <div class="flex items-center space-x-3 w-full md:w-full">
-                        <div class="flex items-center w-full">
-                            <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
-                                class="w-full md:w-auto flex items-center justify-center py-2 ps-2 pe-3 me-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
-                                type="button">
-                                @svg('tabler-chevron-down', 'w-5 h-5 me-3')
-                                Hành động
-                            </button>
-                            <h2 class="font-medium text-gray-700 text-base italic" id="selectedItems">
-                            </h2>
-                        </div>
-                        <div id="actionsDropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
-                            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                aria-labelledby="actionsDropdownButton">
-                                <li>
-                                    <a href="#" class="block py-2 px-4 hover:bg-gray-100">Kích hoạt/Khóa</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="block py-2 px-4 hover:bg-gray-100">Xóa tài khoản</a>
-                                </li>
-                            </ul>
-                        </div>
+                        <form method="POST" action="#">
+                            @csrf
+                            <input type="hidden" name="selected_ids" id="selectedIds" value="">
+                            <div id="actionButtons" class="hidden">
+                                <button type="submit" name="action" value="delete" class="button-red me-2">Xóa</button>
+                                <button type="submit" name="action" value="deactivate" class="button-gray me-2">Hủy kích
+                                    hoạt</button>
+                                <h2 class="font-medium text-gray-700 text-base italic items-center flex" id="selectedItems">
+                                </h2>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div
                     class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                    <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.toppings.search') }}">
+                    <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.products.search') }}">
                         <div class="relative w-full">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                 @svg('tabler-search', 'w-5 h-5 text-gray-400')
@@ -67,97 +57,141 @@
                             <input type="text" name="search" class="input ps-10" placeholder="Tìm kiếm..." />
                         </div>
                     </form>
-                    <div class="flex items-center space-x-3 w-full md:w-auto">
-                        <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
+                    <div class="flex items-center w-full md:w-auto">
+                        <button data-modal-target="filterDropdown" data-modal-toggle="filterDropdown"
                             class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
                             type="button">
                             @svg('tabler-filter-filled', 'w-5 h-5 me-2')
                             Bộ lọc
-                            @svg('tabler-chevron-down', 'w-5 h-5 ms-3')
                         </button>
-                        <div id="filterDropdown" class="z-10 hidden w-96 p-3 bg-white rounded-lg shadow">
-                            <form action="#" aria-labelledby="filterDropdownButton">
-                                <h6 class="mb-3 text-sm font-medium text-gray-900">Vai trò</h6>
-                                <ul class="space-y-2 text-sm">
-                                    <li class="flex items-center">
-                                        <input id="admin" type="checkbox" value="filter-role-admin"
-                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                        <label for="admin" class="ml-2 text-sm font-medium text-gray-900">Quản trị
-                                            viên</label>
-                                    </li>
-                                    <li class="flex items-center">
-                                        <input id="client" type="checkbox" value="filter-role-client"
-                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                        <label for="client" class="ml-2 text-sm font-medium text-gray-900">Khách
-                                            hàng</label>
-                                    </li>
-                                </ul>
-                                <h6 class="my-3 text-sm font-medium text-gray-900">Giới tính</h6>
-                                <ul class="space-y-2 text-sm">
-                                    <li class="flex items-center">
-                                        <input id="male" type="checkbox" value="filter-gender-male"
-                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                        <label for="male" class="ml-2 text-sm font-medium text-gray-900">Nam</label>
-                                    </li>
-                                    <li class="flex items-center">
-                                        <input id="female" type="checkbox" value="filter-gender-female"
-                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                        <label for="female" class="ml-2 text-sm font-medium text-gray-900">Nữ</label>
-                                    </li>
-                                    <li class="flex items-center">
-                                        <input id="other" type="checkbox" value="filter-gender-other"
-                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                        <label for="other" class="ml-2 text-sm font-medium text-gray-900">Khac</label>
-                                    </li>
-                                </ul>
-                                <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
-                                <ul class="space-y-2 text-sm">
-                                    <li class="flex items-center">
-                                        <input id="active" type="checkbox" value="filter-status-active"
-                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                        <label for="active" class="ml-2 text-sm font-medium text-gray-900">Hoạt
-                                            động</label>
-                                    </li>
-                                    <li class="flex items-center">
-                                        <input id="inactive" type="checkbox" value="filter-status-inactive"
-                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                        <label for="inactive" class="ml-2 text-sm font-medium text-gray-900">Khóa</label>
-                                    </li>
-                                </ul>
-                                <h6 class="my-3 text-sm font-medium text-gray-900">Ngày sinh</h6>
-                                <div class="flex items-center">
-                                    <div>
-                                        <input name="filter-birthday-start" type="date"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                            placeholder="mm/dd/yyyy">
+                        <form action="#" method="get" id="filterDropdown" tabindex="-1" aria-hidden="true"
+                            class="fixed inset-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-modal md:h-full">
+                            <div class="relative w-full h-full max-w-2xl md:h-auto">
+                                <!-- Modal content -->
+                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
+                                    <!-- Modal header -->
+                                    <div class="flex items-start justify-between px-6 py-4 rounded-t">
+                                        <h3 class="text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                            Bộ lọc
+                                        </h3>
+                                        <button type="button"
+                                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                            data-modal-toggle="filterDropdown">
+                                            @svg('tabler-x', 'w-5 h-5')
+                                        </button>
                                     </div>
-                                    <span class="mx-4 text-gray-500">-</span>
-                                    <div>
-                                        <input name="filter-birthday-end" type="date"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                            placeholder="mm/dd/yyyy">
+                                    <!-- Modal body -->
+                                    <div class="px-4 md:px-6"> 
+                                        <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
+                                        <ul class="space-y-2 text-sm">
+                                            <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+                                                <li class="flex items-center">
+                                                    <input id="active" type="checkbox" name="filter_status[]"
+                                                        value="1"
+                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                        @if (in_array(1, request()->input('filter_status', []))) checked @endif>
+                                                    <label for="active"
+                                                        class="ml-2 text-sm font-medium text-gray-900">Hoạt
+                                                        động</label>
+                                                </li>
+                                                <li class="flex items-center">
+                                                    <input id="inactive" type="checkbox" name="filter_status[]"
+                                                        value="2"
+                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                        @if (in_array(2, request()->input('filter_status', []))) checked @endif>
+                                                    <label for="inactive"
+                                                        class="ml-2 text-sm font-medium text-gray-900">Khóa</label>
+                                                </li>
+                                                <li class="flex items-center">
+                                                    <input id="active" type="checkbox" name="filter_inventory[]"
+                                                        value="1"
+                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                        @if (in_array(1, request()->input('filter_inventory', []))) checked @endif>
+                                                    <label for="active" class="ml-2 text-sm font-medium text-gray-900">Còn
+                                                        hàng</label>
+                                                </li>
+                                                <li class="flex items-center">
+                                                    <input id="inactive" type="checkbox" name="filter_inventory[]"
+                                                        value="2"
+                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                        @if (in_array(2, request()->input('filter_inventory', []))) checked @endif>
+                                                    <label for="inactive"
+                                                        class="ml-2 text-sm font-medium text-gray-900">Hết
+                                                        hàng</label>
+                                                </li>
+                                            </div>
+                                        </ul>
+                                        <h6 class="my-3 text-sm font-medium text-gray-900">Sản phẩm</h6>
+                                        <ul class="space-y-2 text-sm">
+                                            <li class="flex items-center">
+                                                <input id="is_featured" type="checkbox" name="filter_is_featured"
+                                                    value="1"
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                    @if (request()->input('filter_is_featured') == 1) checked @endif>
+                                                <label for="is_featured"
+                                                    class="ml-2 text-sm font-medium text-gray-900">Sản
+                                                    phẩm
+                                                    hot</label>
+                                            </li>
+                                            <li class="flex items-center">
+                                                <input id="product_discount" type="checkbox"
+                                                    name="filter_product_discount" value="1"
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                    @if (request()->input('filter_product_discount') == 1) checked @endif>
+                                                <label for="product_discount"
+                                                    class="ml-2 text-sm font-medium text-gray-900">Sản phẩm
+                                                    khuyến mãi</label>
+                                            </li>
+                                        </ul>
+                                        <h6 class="my-3 text-sm font-medium text-gray-900">Giá</h6>
+                                        <div class="flex items-center">
+                                            <div>
+                                                <input name="filter_price_min" type="number"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
+                                                    placeholder="1.000 đ">
+                                            </div>
+                                            <span class="mx-4 text-gray-500">-</span>
+                                            <div>
+                                                <input name="filter_price_max" type="number"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
+                                                    placeholder="100.000.000 đ">
+                                            </div>
+                                        </div>
+                                        <h6 class="my-3 text-sm font-medium text-gray-900">Đánh giá</h6>
+                                        <ul class="space-y-2 text-sm">
+                                            @for ($i = 5; $i >= 1; $i--)
+                                                <li class="flex items-center">
+                                                    <input id="active" type="checkbox" name="filter_rating[]"
+                                                        value="{{ $i }}"
+                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                        @if (in_array(1, request()->input('filter_rating', []))) checked @endif>
+                                                    <label for="active"
+                                                        class="ml-2 text-sm font-medium text-gray-900 flex items-center gap-1">
+                                                        <div class="flex items-center gap-0.3">
+                                                            @for ($j = 1; $j <= $i; $j++)
+                                                                @svg('tabler-star-filled', 'icon-sm me-1 text-red-500')
+                                                            @endfor
+                                                            @if ($i < 5)
+                                                                @for ($k = 0; $k < 5 - $i; $k++)
+                                                                    @svg('tabler-star', 'icon-sm me-1 text-red-500')
+                                                                @endfor
+                                                            @endif
+                                                        </div>
+                                                    </label>
+                                                </li>
+                                            @endfor
+                                        </ul>
                                     </div>
-                                </div>
-                                <h6 class="my-3 text-sm font-medium text-gray-900">Ngày tham gia</h6>
-                                <div class="flex items-center">
-                                    <div>
-                                        <input name="filter-created-start" type="date"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                            placeholder="mm/dd/yyyy">
-                                    </div>
-                                    <span class="mx-4 text-gray-500">-</span>
-                                    <div>
-                                        <input name="filter-created-end" type="date"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                            placeholder="mm/dd/yyyy">
-                                    </div>
-                                </div>
 
-                                <button type="submit" class="button-red w-full mt-5">
-                                    Lọc
-                                </button>
-                            </form>
-                        </div>
+                                    <!-- Modal footer -->
+                                    <div class="flex items-center p-6 space-x-4 rounded-b dark:border-gray-600">
+                                        <button type="submit" class="button-red">
+                                            Lọc sản phẩm
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -185,7 +219,7 @@
                             <td class="w-4 px-4 py-3">
                                 <div class="flex items-center">
                                     <input id="table-item-checkbox-{{ $topping->id }}" type="checkbox"
-                                        onclick="event.stopPropagation()"
+                                        onclick="event.stopPropagation()" value="{{ $topping->id }}"
                                         class="table-item-checkbox w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
                                 </div>
                             </td>
@@ -278,4 +312,9 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        tableCheckboxItem('table-checkbox-all', 'table-item-checkbox');
+    </script>
 @endsection

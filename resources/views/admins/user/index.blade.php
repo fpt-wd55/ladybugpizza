@@ -42,86 +42,119 @@
                     </div>
                 </form>
 
-                <div class="flex items-center space-x-3 w-full md:w-auto">
-                    <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
+                <div class="flex items-center w-full md:w-auto">
+                    <button data-modal-target="filterDropdown" data-modal-toggle="filterDropdown"
                         class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
                         type="button">
                         @svg('tabler-filter-filled', 'w-5 h-5 me-2')
                         Bộ lọc
-                        @svg('tabler-chevron-down', 'w-5 h-5 ms-3')
                     </button>
-                    <div id="filterDropdown" class="z-50 hidden w-96 p-3 bg-white rounded-lg shadow">
-                        <form action="{{ route('admin.users.filter') }}" aria-labelledby="filterDropdownButton">
-                            <h6 class="mb-3 text-sm font-medium text-gray-900">Vai trò</h6>
-                            <ul class="space-y-2 text-sm">
-                                @foreach ($roles as $role)
-                                    <li class="flex items-center">
-                                        <input id="admin" type="checkbox" name="filter_role[]"
-                                            value="{{ $role->id }}"
-                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                            @if (in_array($role->id, request()->input('filter_role', []))) checked @endif>
-                                        <label for="admin"
-                                            class="ml-2 text-sm font-medium text-gray-900">{{ $role->name }}</label>
-                                    </li>
-                                @endforeach
-                            </ul>
-                            <h6 class="my-3 text-sm font-medium text-gray-900">Giới tính</h6>
-                            <ul class="space-y-2 text-sm">
-                                <li class="flex items-center">
-                                    <input id="male" type="checkbox" name="filter_gender[]" value="1"
-                                        @if (in_array(1, request()->input('filter_gender', []))) checked @endif
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                    <label for="male" class="ml-2 text-sm font-medium text-gray-900">Nam</label>
-                                </li>
-                                <li class="flex items-center">
-                                    <input id="female" type="checkbox" name="filter_gender[]" value="2"
-                                        @if (in_array(2, request()->input('filter_gender', []))) checked @endif
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                    <label for="female" class="ml-2 text-sm font-medium text-gray-900">Nữ</label>
-                                </li>
-                                <li class="flex items-center">
-                                    <input id="other" type="checkbox" name="filter_gender[]" value="3"
-                                        @if (in_array(3, request()->input('filter_gender', []))) checked @endif
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
-                                    <label for="other" class="ml-2 text-sm font-medium text-gray-900">Khác</label>
-                                </li>
-                            </ul>
-                            <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
-                            <ul class="space-y-2 text-sm">
-                                <li class="flex items-center">
-                                    <input id="active" type="checkbox" name="filter_status[]" value="1"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                        @if (in_array(1, request()->input('filter_status', []))) checked @endif>
-                                    <label for="active" class="ml-2 text-sm font-medium text-gray-900">Hoạt động</label>
-                                </li>
-                                <li class="flex items-center">
-                                    <input id="inactive" type="checkbox" name="filter_status[]" value="2"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                        @if (in_array(2, request()->input('filter_status', []))) checked @endif>
-                                    <label for="inactive" class="ml-2 text-sm font-medium text-gray-900">Khóa</label>
-                                </li>
-                            </ul>
-                            <h6 class="my-3 text-sm font-medium text-gray-900">Ngày sinh</h6>
-                            <div class="flex items-center">
-                                <div>
-                                    <input name="filter_birthday_start" type="date"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                        placeholder="mm/dd/yyyy"
-                                        value="{{ old('filter_birthday_start', request()->input('filter_birthday_start')) }}">
+                    <form action="{{ route('admin.users.filter') }}" method="get" id="filterDropdown" tabindex="-1"
+                        aria-hidden="true"
+                        class="fixed inset-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-modal md:h-full">
+                        <div class="relative w-full h-full max-w-xl md:h-auto">
+                            <!-- Modal content -->
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
+                                <!-- Modal header -->
+                                <div class="flex items-start justify-between px-6 py-4 rounded-t">
+                                    <h3 class="text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                        Bộ lọc
+                                    </h3>
+                                    <button type="button"
+                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        data-modal-toggle="filterDropdown">
+                                        @svg('tabler-x', 'w-5 h-5')
+                                    </button>
                                 </div>
-                                <span class="mx-4 text-gray-500">-</span>
-                                <div>
-                                    <input name="filter_birthday_end" type="date"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                        placeholder="mm/dd/yyyy"
-                                        value="{{ old('filter_birthday_end', request()->input('filter_birthday_end')) }}">
+                                <!-- Modal body -->
+                                <div class="px-4 md:px-6">
+                                    <h6 class="mb-3 text-sm font-medium text-gray-900">Vai trò</h6>
+                                    <ul class="space-y-2 text-sm">
+                                        <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+                                            @foreach ($roles as $role)
+                                                <li class="flex items-center">
+                                                    <input id="admin" type="checkbox" name="filter_role[]"
+                                                        value="{{ $role->id }}"
+                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                        @if (in_array($role->id, request()->input('filter_role', []))) checked @endif>
+                                                    <label for="admin"
+                                                        class="ml-2 text-sm font-medium text-gray-900">{{ $role->name }}</label>
+                                                </li>
+                                            @endforeach
+                                        </div>
+                                    </ul>
+                                    <h6 class="my-3 text-sm font-medium text-gray-900">Giới tính</h6>
+                                    <ul class="space-y-2 text-sm">
+                                        <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+                                            <li class="flex items-center">
+                                                <input id="male" type="checkbox" name="filter_gender[]" value="1"
+                                                    @if (in_array(1, request()->input('filter_gender', []))) checked @endif
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                                <label for="male"
+                                                    class="ml-2 text-sm font-medium text-gray-900">Nam</label>
+                                            </li>
+                                            <li class="flex items-center">
+                                                <input id="female" type="checkbox" name="filter_gender[]" value="2"
+                                                    @if (in_array(2, request()->input('filter_gender', []))) checked @endif
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                                <label for="female"
+                                                    class="ml-2 text-sm font-medium text-gray-900">Nữ</label>
+                                            </li>
+                                            <li class="flex items-center">
+                                                <input id="other" type="checkbox" name="filter_gender[]" value="3"
+                                                    @if (in_array(3, request()->input('filter_gender', []))) checked @endif
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                                <label for="other"
+                                                    class="ml-2 text-sm font-medium text-gray-900">Khác</label>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                    <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
+                                    <ul class="space-y-2 text-sm">
+                                        <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+                                            <li class="flex items-center">
+                                                <input id="active" type="checkbox" name="filter_status[]" value="1"
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                    @if (in_array(1, request()->input('filter_status', []))) checked @endif>
+                                                <label for="active" class="ml-2 text-sm font-medium text-gray-900">Hoạt
+                                                    động</label>
+                                            </li>
+                                            <li class="flex items-center">
+                                                <input id="inactive" type="checkbox" name="filter_status[]" value="2"
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                    @if (in_array(2, request()->input('filter_status', []))) checked @endif>
+                                                <label for="inactive"
+                                                    class="ml-2 text-sm font-medium text-gray-900">Khóa</label>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                    <h6 class="my-3 text-sm font-medium text-gray-900">Ngày sinh</h6>
+                                    <div class="flex items-center">
+                                        <div>
+                                            <input name="filter_birthday_start" type="date"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
+                                                placeholder="mm/dd/yyyy"
+                                                value="{{ old('filter_birthday_start', request()->input('filter_birthday_start')) }}">
+                                        </div>
+                                        <span class="mx-4 text-gray-500">-</span>
+                                        <div>
+                                            <input name="filter_birthday_end" type="date"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
+                                                placeholder="mm/dd/yyyy"
+                                                value="{{ old('filter_birthday_end', request()->input('filter_birthday_end')) }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="flex items-center p-6 space-x-4 rounded-b dark:border-gray-600">
+                                    <button type="submit" class="button-red">
+                                        Lọc tài khoản
+                                    </button>
                                 </div>
                             </div>
-                            <button type="submit" class="button-red w-full mt-5">
-                                Lọc
-                            </button>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

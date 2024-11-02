@@ -39,29 +39,33 @@
 
         function tableCheckboxItem(checkboxAllId, checkboxItemClass) {
             const checkboxTableAll = document.getElementById(checkboxAllId);
-            const checkboxTableItem = document.querySelectorAll(
-                `.${checkboxItemClass}`
-            );
+            const checkboxTableItems = document.querySelectorAll(`.${checkboxItemClass}`);
             const selectedItems = document.querySelector("#selectedItems");
+            const selectedIdsInput = document.getElementById('selectedIds');
+            const actionButtons = document.getElementById('actionButtons');
 
             const updateSelectedItems = () => {
-                const checkedItems = document.querySelectorAll(
-                    ".table-item-checkbox:checked"
-                ).length;
-                selectedItems.textContent = checkedItems ?
-                    `${checkedItems} mục được chọn` :
-                    "";
-                checkboxTableAll.checked = checkedItems === checkboxTableItem.length;
+                const checkedItems = document.querySelectorAll(".table-item-checkbox:checked");
+                const selectedIds = Array.from(checkedItems).map(item => item.value);
+                selectedIdsInput.value = selectedIds.join(',');
+
+                selectedItems.innerHTML = checkedItems.length ? `${checkedItems.length} mục được chọn` : "";
+                checkboxTableAll.checked = checkedItems.length === checkboxTableItems.length;
+
+                actionButtons.classList.toggle('hidden', checkedItems.length === 0);
+                actionButtons.classList.toggle('flex', checkedItems.length > 0);
+                actionButtons.classList.toggle('items-center', checkedItems.length > 0);
+                actionButtons.classList.toggle('justify-start', checkedItems.length > 0);
             };
 
             checkboxTableAll.addEventListener("change", function() {
-                checkboxTableItem.forEach((checkbox) => {
+                checkboxTableItems.forEach((checkbox) => {
                     checkbox.checked = checkboxTableAll.checked;
                 });
                 updateSelectedItems();
             });
 
-            checkboxTableItem.forEach((checkbox) => {
+            checkboxTableItems.forEach((checkbox) => {
                 checkbox.addEventListener("change", updateSelectedItems);
             });
         };

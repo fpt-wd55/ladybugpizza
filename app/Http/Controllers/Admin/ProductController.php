@@ -153,8 +153,9 @@ class ProductController extends Controller
      */
     public function trash()
     {
+        $categories = Category::where('status', 1)->get();
         $products = Product::onlyTrashed()->orderBy('id', 'desc')->paginate(10);
-        return view('admins.product.trash', compact('products'));
+        return view('admins.product.trash', compact('products', 'categories'));
     }
 
     /**
