@@ -16,13 +16,12 @@ class PromotionController extends Controller
      */
     public function index()
     {
-        $categories = Category::where('status', 1)->get();
         $ranks = MembershipRank::get();
 
         $promotions = Promotion::query()
             ->orderBy('quantity', 'desc')
             ->paginate(10);
-        return view('admins.promotions.index', compact('promotions', 'categories', 'ranks'));
+        return view('admins.promotions.index', compact('promotions', 'ranks'));
     }
 
     /**
@@ -133,28 +132,40 @@ class PromotionController extends Controller
 
     public function filter(Request $request)
     {
-        // $query = Topping::query();
+        $query = Promotion::query();
 
-        // if (isset($request->filter_category)) {
-        //     $query->whereIn('category_id', $request->filter_category);
-        // }
+        if (isset($request->filter_discount_type)) {
+            $query->whereIn('discount_type', $request->filter_discount_type);
+        }
 
-        // if (isset($request->filter_price_min)) {
-        //     $query->where('price', '>=', $request->filter_price_min);
-        // }
+        if (isset($request->filter_range) && in_array(0, $request->filter_range)) {
+            $query->where('is_global', 1);
+        }
 
-        // if (isset($request->filter_price_max)) {
-        //     $query->where('price', '<=', $request->filter_price_max);
-        // }
+        if (isset($request->filter_range) && !in_array(0, $request->filter_range)) {
+            $query->where('is_global', 2);
+            $query->whereIn('rank_id', $request->filter_range);
+        }
 
-        // $toppings = $query->paginate(10);
+        if (isset($request->filter_date_min)) {
+            $query->where('start_date', '>=', $request->filter_date_min);
+        }
 
-        // $toppings->appends(['filter_category' => $request->filter_category]);
-        // $toppings->appends(['filter_price_min' => $request->filter_price_min]);
-        // $toppings->appends(['filter_price_max' => $request->filter_price_max]);
+        if (isset($request->filter_date_max)) {
+            $query->where('end_date', '<=', $request->filter_date_max);
+        }
 
-        // $categories = Category::all();
+        $promotions = $query->paginate(10);
 
-        // return view('admins.toppings.index', compact('toppings', 'categories'));
+        $promotions->appends([
+            'filter_discount_type' => $request->filter_discount_type,
+            'filter_range' => $request->filter_range,
+            'filter_date_min' => $request->filter_date_min,
+            'filter_date_max' => $request->filter_date_max,
+        ]);
+
+        $ranks = MembershipRank::get();
+
+        return view('admins.promotions.index', compact('promotions', 'ranks'));
     }
 }
