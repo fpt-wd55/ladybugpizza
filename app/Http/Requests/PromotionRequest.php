@@ -33,7 +33,7 @@ class PromotionRequest extends FormRequest
     public function rulesForCreate(): array
     {
         return [
-            'code' => 'required|max:10',
+            'code' => 'required|max:10|unique:promotions,code',
             'points' => 'required|numeric|min:1',
             'discount_type' => 'required|numeric|in:1,2',
             'discount_value' => [
@@ -58,8 +58,9 @@ class PromotionRequest extends FormRequest
 
     public function rulesForUpdate(): array
     {
+        $promotionId = $this->route('promotion') ? $this->route('promotion')->id : null;
         return [
-            'code' => 'required|max:10',
+            'code' => 'required|max:10|unique:promotions,code,' . $promotionId,
             'points' => 'required|numeric|min:1',
             'discount_type' => 'required|numeric|in:1,2',
             'discount_value' => [
@@ -86,6 +87,7 @@ class PromotionRequest extends FormRequest
         return [
             'code.required' => "Bạn cần nhập tên cho mã giảm giá",
             'code.max' => "Tên mã giảm giá không thể quá 10 kí tự",
+            'code.unique' => "Tên mã giảm giá đã tồn tại",
             'points.required' => "Bạn cần nhập điểm cho mã giảm giá",
             'points.min' => "Điểm phải lớn hơn 0",
             'points.numeric' => "Điểm phải là một số",

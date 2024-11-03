@@ -134,12 +134,12 @@
             <!-- Các tab điều hướng -->
             <ul class="flex">
                 <li class="me-6 min-w-fit">
-                    <a aria-current="page" class="inline-block rounded-t-lg border-b-2 border-red-600 pb-2 text-red-600"
+                    <a aria-current="page" class="inline-block rounded-t-lg pb-1 border-b-2 {{ request()->routeIs('admin.orders.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
                         href="{{ route('admin.orders.index') }}">Tất cả</a>
                 </li>
                 @foreach ($orderStatuses as $status)
                     <li class="me-6 min-w-fit">
-                        <a aria-current="page" class="inline-block rounded-t-lg border-b-2 border-transparent pb-2"
+                        <a aria-current="page" class="inline-block rounded-t-lg border-b-2 pb-1 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
                             href="{{ route('admin.orders.index', ['tab' => $status->slug]) }}">{{ $status->name }}</a>
                     </li>
                 @endforeach
