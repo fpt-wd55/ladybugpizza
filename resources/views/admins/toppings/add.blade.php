@@ -27,7 +27,7 @@
             <div class="flex justify-between gap-2 mt-4">
                 <div class="w-full mb-5">
                     <label for="price" class="label-lg">Giá</label>
-                    <input type="text" name="price" class="input h-10 mb-2" value="{{ old('price') }}" />
+                    <input type="number" name="price" class="input h-10 mb-2" value="{{ old('price') }}" />
                     @error('price')
                         <span style="color: red">{{ $message }}</span>
                     @enderror
@@ -50,7 +50,7 @@
             <div
                 class="mb-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 <button class="button-blue" type="submit">Thêm</button>
-                <a href="{{ route('admin.toppings.index') }}" class="button-green">Quay lại</a>
+                <a href="{{ route('admin.toppings.index') }}" class="button-gray">Quay lại</a>
             </div>
         </form>
     </div>

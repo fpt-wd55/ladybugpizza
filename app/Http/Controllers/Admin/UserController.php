@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -193,18 +193,21 @@ class UserController extends Controller
         if (isset($request->filter_role)) {
             $query->whereIn('role_id', $request->filter_role);
         }
-        
+
         if (isset($request->filter_status)) {
             $query->whereIn('status', $request->filter_status);
         }
-        
+
         if (isset($request->filter_gender)) {
             $query->whereIn('gender', $request->filter_gender);
+        } 
+        
+        if (isset($request->filter_birthday_start)) {
+            $query->where('date_of_birth', '>=', $request->filter_birthday_start);
         }
 
-        // filte_birthday_start or filter_birthday_end
-        if (isset($request->filter_birthday_start) && isset($request->filter_birthday_end)) {
-            $query->whereBetween('date_of_birth', [$request->filter_birthday_start, $request->filter_birthday_end]);
+        if (isset($request->filter_birthday_end)) {
+            $query->where('date_of_birth', '<=', $request->filter_birthday_end);
         }
 
         $users = $query->paginate(10);
@@ -212,6 +215,8 @@ class UserController extends Controller
         $users->appends(['filter_role' => $request->filter_role]);
         $users->appends(['filter_status' => $request->filter_status]);
         $users->appends(['filter_gender' => $request->filter_gender]);
+        $users->appends(['filter_birthday_start' => $request->filter_birthday_start]);
+        $users->appends(['filter_birthday_end' => $request->filter_birthday_end]);
 
         $roles = Role::where('id', '>', 1)->get();
         return view('admins.user.index', compact('users', 'roles'));

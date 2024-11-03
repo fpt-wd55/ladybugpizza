@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ToppingRequest;
 use App\Models\Category;
 use App\Models\Topping;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ToppingController extends Controller
 {
@@ -27,19 +28,22 @@ class ToppingController extends Controller
     {
         $data = $request->except('image');
         $data['image'] = "";
+        $data['slug'] = time() . '-' . Str::slug($request->name);
         if ($request->hasFile('image')) {
             $topping_image = $request->file('image');
             $topping_name = 'topping_' . pathinfo($topping_image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $topping_image->getClientOriginalExtension();
             $data['image'] = $topping_name;
-            $topping_image->storeAs('uploads/toppings', $topping_name);
+            $topping_image->storeAs('public/uploads/toppings', $topping_name);
         }
         Topping::query()->create($data);
         return redirect()->route('admin.toppings.index')->with('success', 'Thêm Topping thành công');
     }
+
     public function show(Topping $topping)
     {
         //
     }
+
     public function edit(Topping $topping)
     {
         $categories = Category::all();
@@ -60,10 +64,11 @@ class ToppingController extends Controller
         } else {
             $data['image'] = $old_image;
         }
+        $data['slug'] = time() . '-' . Str::slug($request->name);
 
         if ($topping->update($data)) {
             if ($request->hasFile('image')) {
-                $topping_image->storeAs('uploads/toppings', $topping_name);
+                $topping_image->storeAs('public/uploads/toppings', $topping_name);
                 // xóa ảnh cũ
                 if ($old_image != null) {
                     unlink(storage_path('app/public/uploads/toppings/' . $old_image));
@@ -120,5 +125,69 @@ class ToppingController extends Controller
             ->paginate(10);
         $toppings->appends(['search' => $request->search]);
         return view('admins.toppings.index', compact('toppings', 'categories'));
+    }
+
+    public function filter(Request $request)
+    {
+        $query = Topping::query();
+
+        if (isset($request->filter_category)) {
+            $query->whereIn('category_id', $request->filter_category);
+        }
+
+        if (isset($request->filter_price_min)) {
+            $query->where('price', '>=', $request->filter_price_min);
+        }
+
+        if (isset($request->filter_price_max)) {
+            $query->where('price', '<=', $request->filter_price_max);
+        }
+
+        $toppings = $query->paginate(10);
+
+        $toppings->appends(['filter_category' => $request->filter_category]);
+        $toppings->appends(['filter_price_min' => $request->filter_price_min]);
+        $toppings->appends(['filter_price_max' => $request->filter_price_max]);
+
+        $categories = Category::all();
+
+        return view('admins.toppings.index', compact('toppings', 'categories'));
+    }
+
+    public function bulkAction(Request $request)
+    {
+        $selectedIds = explode(',', $request->input('selected_ids'));
+        $action = $request->input('action');
+
+        if ($action == 'delete') {
+            Topping::whereIn('id', $selectedIds)->delete();
+            return redirect()->back()->with('success', 'Xóa topping thành công');
+        } else if ($action == 'force_delete') {
+            foreach ($selectedIds as $id) {
+                $forceTopping = Topping::withTrashed()->find($id);
+                $old_image = $forceTopping->image;
+                if ($forceTopping) {
+                    if ($forceTopping->image != null) {
+                        try {
+                            // Kiểm tra tồn tại ảnh topping
+                            if (file_exists(storage_path('app/public/uploads/toppings/' . $old_image))) {
+                                unlink(storage_path('app/public/uploads/toppings/' . $old_image));
+                            }
+                        } catch (\Exception $e) {
+                            return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
+                        }
+                    }
+                    $forceTopping->forceDelete();
+                } else {
+                    return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
+                }
+            }
+            return redirect()->back()->with('success', 'Xóa vĩnh viễn topping thành công');
+        } else if ($action == 'restore') {
+            Topping::withTrashed()->whereIn('id', $selectedIds)->restore();
+            return redirect()->back()->with('success', 'Khôi phục topping thành công');
+        }
+
+        return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
     }
 }

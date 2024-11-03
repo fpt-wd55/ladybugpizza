@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PromotionRequest;
+use App\Models\Category;
+use App\Models\MembershipRank;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
 
@@ -14,10 +16,13 @@ class PromotionController extends Controller
      */
     public function index()
     {
+        $categories = Category::where('status', 1)->get();
+        $ranks = MembershipRank::get();
+
         $promotions = Promotion::query()
             ->orderBy('quantity', 'desc')
             ->paginate(10);
-        return view('admins.promotions.index', compact('promotions'));
+        return view('admins.promotions.index', compact('promotions', 'categories', 'ranks'));
     }
 
     /**
@@ -98,5 +103,58 @@ class PromotionController extends Controller
             ->paginate(10);
         $promotions->appends(['search' => $request->search]);
         return view('admins.promotions.index', compact('promotions'));
+    }
+
+    public function bulkAction(Request $request)
+    {
+        $selectedIds = explode(',', $request->input('selected_ids'));
+        $action = $request->input('action');
+
+        if ($action == 'delete') {
+            Promotion::whereIn('id', $selectedIds)->delete();
+            return redirect()->back()->with('success', 'Xóa mã giảm giá thành công');
+        } else if ($action == 'force_delete') {
+            foreach ($selectedIds as $id) {
+                $forcePromotion = Promotion::withTrashed()->find($id);
+                if ($forcePromotion) {
+                    $forcePromotion->forceDelete();
+                } else {
+                    return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
+                }
+            }
+            return redirect()->back()->with('success', 'Xóa vĩnh viễn mã giảm giá thành công');
+        } else if ($action == 'restore') {
+            Promotion::withTrashed()->whereIn('id', $selectedIds)->restore();
+            return redirect()->back()->with('success', 'Khôi phục mã giảm giá thành công');
+        }
+
+        return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
+    }
+
+    public function filter(Request $request)
+    {
+        // $query = Topping::query();
+
+        // if (isset($request->filter_category)) {
+        //     $query->whereIn('category_id', $request->filter_category);
+        // }
+
+        // if (isset($request->filter_price_min)) {
+        //     $query->where('price', '>=', $request->filter_price_min);
+        // }
+
+        // if (isset($request->filter_price_max)) {
+        //     $query->where('price', '<=', $request->filter_price_max);
+        // }
+
+        // $toppings = $query->paginate(10);
+
+        // $toppings->appends(['filter_category' => $request->filter_category]);
+        // $toppings->appends(['filter_price_min' => $request->filter_price_min]);
+        // $toppings->appends(['filter_price_max' => $request->filter_price_max]);
+
+        // $categories = Category::all();
+
+        // return view('admins.toppings.index', compact('toppings', 'categories'));
     }
 }
