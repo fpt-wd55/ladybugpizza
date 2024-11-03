@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             InvoiceSeeder::class,
             ComboDetailSeeder::class,
             FavoriteSeeder::class,
-            FAQSeeder::class,
+            FaqSeeder::class,
             UserSettingSeeder::class,
         ]); 
     }
