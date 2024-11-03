@@ -209,3 +209,8 @@ Breadcrumbs::for('admin.profiles.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
     $trail->push('Tài khoản', route('admin.profiles.index'));
 });
+// pages
+Breadcrumbs::for('admin.pages.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Trang', route('admin.pages.index'));
+});

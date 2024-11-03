@@ -83,7 +83,7 @@
                 </button>
                 <ul class="{{ request()->is(['admin/page*', 'admin/banner*']) ? 'block' : 'hidden' }} space-y-2 py-2" id="dropdown-page">
                     <li>
-                        <a class="{{ request()->is('admin/page*') ? 'bg-gray-200' : '' }} group flex w-full items-center rounded-lg p-2 pl-11 text-gray-900 transition duration-75 hover:bg-gray-100" href="{{ route('admin.products.index') }}">Danh sách trang</a>
+                        <a class="{{ request()->is('admin/page*') ? 'bg-gray-200' : '' }} group flex w-full items-center rounded-lg p-2 pl-11 text-gray-900 transition duration-75 hover:bg-gray-100" href="{{ route('admin.pages.index') }}">Danh sách trang</a>
                     </li>
                     <li>
                         <a class="{{ request()->is('admin/banner*') ? 'bg-gray-200' : '' }} group flex w-full items-center rounded-lg p-2 pl-11 text-gray-900 transition duration-75 hover:bg-gray-100" href="{{ route('admin.banners.index') }}">Banner</a>
