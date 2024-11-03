@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -21,10 +22,11 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $profileId = Auth::id();
         return [
             'fullname' => 'required|string|max:255',
-			'email' => 'required|email|max:255',
-			'phone' => 'nullable|string|max:20',
+			'email' => 'required|email|max:255|unique:users,email,'.$profileId,
+			'phone' => 'nullable|string|max:20|unique:users,phone,'.$profileId,
 			'gender' => 'nullable|string',
 			'date_of_birth' => 'nullable|date',
 			'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
@@ -37,8 +39,10 @@ class UpdateUserRequest extends FormRequest
             'fullname.string' => 'Họ và tên phải là chuỗi ký tự',
             'phone.required' => 'Số điện thoại không được để trống',
             'phone.digits_between' => 'Số điện thoại không hợp lệ',
+            'phone.unique' => 'Số điện thoại đã tồn tại',
             'email.required' => 'Email không được để trống',
             'email.email' => 'Email không đúng định dạng',
+            'email.unique' => 'Email đã tồn tại',
             'avatar.image' => 'File được chọn không phải là ảnh',
             'avatar.mimes' => 'Ảnh đại diện không đúng định dạng',
             'avatar.max' => 'Dung lượng ảnh đại diện không được vượt quá 2MB',
