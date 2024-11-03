@@ -153,6 +153,8 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::delete('/combo/delete/{id}', [ComboController::class, 'deleteCombo'])->name('delete-combo');
     // Topping
     Route::resource('/toppings', ToppingController::class);
+    Route::get('/topping/filter', [ToppingController::class, 'filter'])->name('toppings.filter');
+    Route::post('topping/bulk-action', [ToppingController::class, 'bulkAction'])->name('toppings.bulkAction');
     Route::get('/topping/search', [ToppingController::class, 'search'])->name('toppings.search');
     Route::get('/topping/export', [ToppingController::class, 'export'])->name('toppings.export');
     Route::get('/topping/trash', [ToppingController::class, 'trashTopping'])->name('trash-topping');
@@ -175,6 +177,8 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::post('/banner/delete/{id}', [BannerController::class, 'trashForce'])->name('trash.bannerDelete');
     // Promotion
     Route::resource('/promotions', PromotionController::class);
+    Route::get('/promotion/filter', [PromotionController::class, 'filter'])->name('promotions.filter');
+    Route::post('promotion/bulk-action', [PromotionController::class, 'bulkAction'])->name('promotions.bulkAction');
     Route::get('/promotion/search', [PromotionController::class, 'search'])->name('promotions.search');
     Route::get('/promotion/export', [PromotionController::class, 'export'])->name('promotions.export');
     // Membership

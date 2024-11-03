@@ -30,13 +30,11 @@
                 <div
                     class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                     <div class="flex items-center space-x-3 w-full md:w-full">
-                        <form method="POST" action="#">
+                        <form method="POST" action="{{ route('admin.promotions.bulkAction') }}">
                             @csrf
                             <input type="hidden" name="selected_ids" id="selectedIds" value="">
                             <div id="actionButtons" class="hidden">
                                 <button type="submit" name="action" value="delete" class="button-red me-2">Xóa</button>
-                                <button type="submit" name="action" value="deactivate" class="button-gray me-2">Hủy kích
-                                    hoạt</button>
                                 <h2 class="font-medium text-gray-700 text-base italic items-center flex" id="selectedItems">
                                 </h2>
                             </div>
@@ -54,37 +52,101 @@
                         </div>
                     </form>
                     <div class="flex items-center space-x-3 w-full md:w-auto">
-                        <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
+                        <button data-modal-target="filterDropdown" data-modal-toggle="filterDropdown"
                             class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
                             type="button">
                             @svg('tabler-filter-filled', 'w-5 h-5 me-2')
                             Bộ lọc
-                            @svg('tabler-chevron-down', 'w-5 h-5 ms-3')
                         </button>
-                        <div id="filterDropdown" class="z-10 hidden w-96 p-3 bg-white rounded-lg shadow">
-                            <form action="{{ route('admin.categories.filter') }}" aria-labelledby="filterDropdownButton">
-                                <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
-                                <ul class="space-y-2 text-sm">
-                                    <li class="flex items-center">
-                                        <input id="active" type="checkbox" name="filter_status[]" value="1"
-                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                            @if (in_array(1, request()->input('filter_status', []))) checked @endif>
-                                        <label for="active" class="ml-2 text-sm font-medium text-gray-900">Hoạt
-                                            động</label>
-                                    </li>
-                                    <li class="flex items-center">
-                                        <input id="inactive" type="checkbox" name="filter_status[]" value="2"
-                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                            @if (in_array(2, request()->input('filter_status', []))) checked @endif>
-                                        <label for="inactive" class="ml-2 text-sm font-medium text-gray-900">Khóa</label>
-                                    </li>
-                                </ul>
+                        <form action="{{ route('admin.promotions.filter') }}" method="get" id="filterDropdown"
+                            tabindex="-1" aria-hidden="true"
+                            class="fixed inset-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-modal md:h-full">
+                            <div class="relative w-full h-full max-w-2xl md:h-auto">
+                                <!-- Modal content -->
+                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
+                                    <!-- Modal header -->
+                                    <div class="flex items-start justify-between px-6 py-4 rounded-t">
+                                        <h3 class="text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                            Bộ lọc
+                                        </h3>
+                                        <button type="button"
+                                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                            data-modal-toggle="filterDropdown">
+                                            @svg('tabler-x', 'w-5 h-5')
+                                        </button>
+                                    </div>
+                                    <!-- Modal body -->
+                                    <div class="px-4 md:px-6">
+                                        <h6 class="my-3 text-sm font-medium text-gray-900">Loại mã</h6>
+                                        <ul class="space-y-2 text-sm">
+                                            <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+                                                <li class="flex items-center">
+                                                    <input type="checkbox" name="filter_discount_type[]" value="1"
+                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                        @if (in_array(1, request()->input('filter_discount_type', []))) checked @endif>
+                                                    <label for="active"
+                                                        class="ml-2 text-sm font-medium text-gray-900">Giảm theo %</label>
+                                                </li>
+                                                <li class="flex items-center">
+                                                    <input type="checkbox" name="filter_discount_type[]" value="2"
+                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                        @if (in_array(2, request()->input('filter_discount_type', []))) checked @endif>
+                                                    <label for="inactive"
+                                                        class="ml-2 text-sm font-medium text-gray-900">Giảm theo giá
+                                                        tiền</label>
+                                                </li>
+                                            </div>
+                                        </ul>
+                                        <h6 class="my-3 text-sm font-medium text-gray-900">Phạm vi</h6>
+                                        <ul class="space-y-2 text-sm">
+                                            <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+                                                <li class="flex items-center">
+                                                    <input type="checkbox" name="filter_range[]" value="0"
+                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                        @if (in_array(1, request()->input('filter_range', []))) checked @endif>
+                                                    <label for="active"
+                                                        class="ml-2 text-sm font-medium text-gray-900">Chung</label>
+                                                </li>
+                                                @foreach ($ranks as $rank)
+                                                    <li class="flex items-center">
+                                                        <input type="checkbox" name="filter_range[]"
+                                                            value="{{ $rank->id }}"
+                                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                            @if (in_array(2, request()->input('filter_range', []))) checked @endif>
+                                                        <label for="inactive"
+                                                            class="ml-2 text-sm font-medium text-gray-900">Hạng
+                                                            {{ $rank->name }}</label>
+                                                    </li>
+                                                @endforeach
+                                            </div>
+                                        </ul> 
+                                        <h6 class="my-3 text-sm font-medium text-gray-900">Thời gian</h6>
+                                        <div class="flex items-center">
+                                            <div>
+                                                <input name="filter_date_min" type="date"
+                                                    value="{{ request()->input('filter_date_min') }}"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
+                                                    placeholder="1.000 đ">
+                                            </div>
+                                            <span class="mx-4 text-gray-500">-</span>
+                                            <div>
+                                                <input name="filter_date_max" type="date"
+                                                    value="{{ request()->input('filter_date_max') }}"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
+                                                    placeholder="100.000.000 đ">
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                <button type="submit" class="button-red me-2 w-full mt-5">
-                                    Lọc
-                                </button>
-                            </form>
-                        </div>
+                                    <!-- Modal footer -->
+                                    <div class="flex items-center p-6 space-x-4 rounded-b dark:border-gray-600">
+                                        <button type="submit" class="button-red">
+                                            Lọc dữ liệu
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -131,7 +193,8 @@
                                     {{ number_format($promotion->discount_value) }}₫
                                 @endif
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ number_format($promotion->quantity) }}
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                                {{ number_format($promotion->quantity) }}
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $promotion->id }}" data-dropdown-toggle="{{ $promotion->id }}-dropdown"

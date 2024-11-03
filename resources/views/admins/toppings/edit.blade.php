@@ -35,7 +35,7 @@
             <div class="flex justify-between gap-2 mt-20 mb-20">
                 <div class="w-full h-10 mb-5">
                     <label for="price" class="label-lg">Giá</label>
-                    <input type="text" name="price" class="input mb-2" value="{{ $editTopping->price }}" />
+                    <input type="number" name="price" class="input mb-2" value="{{ $editTopping->price }}" />
                     @error('price')
                         <span style="color: red">{{ $message }}</span>
                     @enderror

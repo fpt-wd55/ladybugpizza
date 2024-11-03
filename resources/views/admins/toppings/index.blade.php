@@ -34,13 +34,11 @@
                 <div
                     class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                     <div class="flex items-center space-x-3 w-full md:w-full">
-                        <form method="POST" action="#">
+                        <form method="POST" action="{{ route('admin.toppings.bulkAction') }}">
                             @csrf
                             <input type="hidden" name="selected_ids" id="selectedIds" value="">
                             <div id="actionButtons" class="hidden">
                                 <button type="submit" name="action" value="delete" class="button-red me-2">Xóa</button>
-                                <button type="submit" name="action" value="deactivate" class="button-gray me-2">Hủy kích
-                                    hoạt</button>
                                 <h2 class="font-medium text-gray-700 text-base italic items-center flex" id="selectedItems">
                                 </h2>
                             </div>
@@ -64,7 +62,8 @@
                             @svg('tabler-filter-filled', 'w-5 h-5 me-2')
                             Bộ lọc
                         </button>
-                        <form action="#" method="get" id="filterDropdown" tabindex="-1" aria-hidden="true"
+                        <form action="{{ route('admin.toppings.filter') }}" method="get" id="filterDropdown"
+                            tabindex="-1" aria-hidden="true"
                             class="fixed inset-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-modal md:h-full">
                             <div class="relative w-full h-full max-w-2xl md:h-auto">
                                 <!-- Modal content -->
@@ -81,106 +80,36 @@
                                         </button>
                                     </div>
                                     <!-- Modal body -->
-                                    <div class="px-4 md:px-6"> 
-                                        <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
+                                    <div class="px-4 md:px-6">
+                                        <h6 class="mb-3 text-sm font-medium text-gray-900">Danh mục</h6>
                                         <ul class="space-y-2 text-sm">
                                             <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
-                                                <li class="flex items-center">
-                                                    <input id="active" type="checkbox" name="filter_status[]"
-                                                        value="1"
-                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                        @if (in_array(1, request()->input('filter_status', []))) checked @endif>
-                                                    <label for="active"
-                                                        class="ml-2 text-sm font-medium text-gray-900">Hoạt
-                                                        động</label>
-                                                </li>
-                                                <li class="flex items-center">
-                                                    <input id="inactive" type="checkbox" name="filter_status[]"
-                                                        value="2"
-                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                        @if (in_array(2, request()->input('filter_status', []))) checked @endif>
-                                                    <label for="inactive"
-                                                        class="ml-2 text-sm font-medium text-gray-900">Khóa</label>
-                                                </li>
-                                                <li class="flex items-center">
-                                                    <input id="active" type="checkbox" name="filter_inventory[]"
-                                                        value="1"
-                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                        @if (in_array(1, request()->input('filter_inventory', []))) checked @endif>
-                                                    <label for="active" class="ml-2 text-sm font-medium text-gray-900">Còn
-                                                        hàng</label>
-                                                </li>
-                                                <li class="flex items-center">
-                                                    <input id="inactive" type="checkbox" name="filter_inventory[]"
-                                                        value="2"
-                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                        @if (in_array(2, request()->input('filter_inventory', []))) checked @endif>
-                                                    <label for="inactive"
-                                                        class="ml-2 text-sm font-medium text-gray-900">Hết
-                                                        hàng</label>
-                                                </li>
+                                                @foreach ($categories as $category)
+                                                    <li class="flex items-center">
+                                                        <input id="admin" type="checkbox" name="filter_category[]"
+                                                            value="{{ $category->id }}"
+                                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                            @if (in_array($category->id, request()->input('filter_category', []))) checked @endif>
+                                                        <label for="admin"
+                                                            class="ml-2 text-sm font-medium text-gray-900">{{ $category->name }}</label>
+                                                    </li>
+                                                @endforeach
                                             </div>
-                                        </ul>
-                                        <h6 class="my-3 text-sm font-medium text-gray-900">Sản phẩm</h6>
-                                        <ul class="space-y-2 text-sm">
-                                            <li class="flex items-center">
-                                                <input id="is_featured" type="checkbox" name="filter_is_featured"
-                                                    value="1"
-                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                    @if (request()->input('filter_is_featured') == 1) checked @endif>
-                                                <label for="is_featured"
-                                                    class="ml-2 text-sm font-medium text-gray-900">Sản
-                                                    phẩm
-                                                    hot</label>
-                                            </li>
-                                            <li class="flex items-center">
-                                                <input id="product_discount" type="checkbox"
-                                                    name="filter_product_discount" value="1"
-                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                    @if (request()->input('filter_product_discount') == 1) checked @endif>
-                                                <label for="product_discount"
-                                                    class="ml-2 text-sm font-medium text-gray-900">Sản phẩm
-                                                    khuyến mãi</label>
-                                            </li>
-                                        </ul>
+                                        </ul> 
                                         <h6 class="my-3 text-sm font-medium text-gray-900">Giá</h6>
                                         <div class="flex items-center">
                                             <div>
-                                                <input name="filter_price_min" type="number"
+                                                <input name="filter_price_min" type="number" value="{{ request()->input('filter_price_min') }}"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
                                                     placeholder="1.000 đ">
                                             </div>
                                             <span class="mx-4 text-gray-500">-</span>
                                             <div>
-                                                <input name="filter_price_max" type="number"
+                                                <input name="filter_price_max" type="number" value="{{ request()->input('filter_price_max') }}"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
                                                     placeholder="100.000.000 đ">
                                             </div>
                                         </div>
-                                        <h6 class="my-3 text-sm font-medium text-gray-900">Đánh giá</h6>
-                                        <ul class="space-y-2 text-sm">
-                                            @for ($i = 5; $i >= 1; $i--)
-                                                <li class="flex items-center">
-                                                    <input id="active" type="checkbox" name="filter_rating[]"
-                                                        value="{{ $i }}"
-                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                        @if (in_array(1, request()->input('filter_rating', []))) checked @endif>
-                                                    <label for="active"
-                                                        class="ml-2 text-sm font-medium text-gray-900 flex items-center gap-1">
-                                                        <div class="flex items-center gap-0.3">
-                                                            @for ($j = 1; $j <= $i; $j++)
-                                                                @svg('tabler-star-filled', 'icon-sm me-1 text-red-500')
-                                                            @endfor
-                                                            @if ($i < 5)
-                                                                @for ($k = 0; $k < 5 - $i; $k++)
-                                                                    @svg('tabler-star', 'icon-sm me-1 text-red-500')
-                                                                @endfor
-                                                            @endif
-                                                        </div>
-                                                    </label>
-                                                </li>
-                                            @endfor
-                                        </ul>
                                     </div>
 
                                     <!-- Modal footer -->
