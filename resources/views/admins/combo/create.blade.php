@@ -306,7 +306,6 @@
                     }
                 });
             }
-
             function createNewField(categoryId, categoryName, categoryItem) {
                 if (!categoryOptionsCache[categoryId]) {
                     categoryOptionsCache[categoryId] = Array.from(categoryItem.querySelectorAll('select option'))
