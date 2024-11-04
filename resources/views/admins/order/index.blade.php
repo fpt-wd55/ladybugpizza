@@ -64,67 +64,72 @@
                                 </div>
                                 <!-- Modal body -->
                                 <div class="px-4 md:px-6">
-                                    <h6 class="my-3 text-sm font-medium text-gray-900">Loại mã</h6>
+                                    <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
                                     <ul class="space-y-2 text-sm">
                                         <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
-                                            <li class="flex items-center">
-                                                <input type="checkbox" name="filter_discount_type[]" value="1"
-                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                    @if (in_array(1, request()->input('filter_discount_type', []))) checked @endif>
-                                                <label for="active" class="ml-2 text-sm font-medium text-gray-900">Giảm
-                                                    theo %</label>
-                                            </li>
-                                            <li class="flex items-center">
-                                                <input type="checkbox" name="filter_discount_type[]" value="2"
-                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                    @if (in_array(2, request()->input('filter_discount_type', []))) checked @endif>
-                                                <label for="inactive" class="ml-2 text-sm font-medium text-gray-900">Giảm
-                                                    theo giá
-                                                    tiền</label>
-                                            </li>
-                                        </div>
-                                    </ul>
-                                    <h6 class="my-3 text-sm font-medium text-gray-900">Phạm vi</h6>
-                                    <ul class="space-y-2 text-sm">
-                                        <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
-                                            <li class="flex items-center">
-                                                <input type="checkbox" name="filter_range[]" value="0"
-                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                    @if (in_array(0, request()->input('filter_range', []))) checked @endif>
-                                                <label for="active"
-                                                    class="ml-2 text-sm font-medium text-gray-900">Chung</label>
-                                            </li>
-                                            @foreach ($ranks as $rank)
+                                            @foreach ($orderStatuses as $status)
                                                 <li class="flex items-center">
-                                                    <input type="checkbox" name="filter_range[]" value="{{ $rank->id }}"
+                                                    <input type="checkbox" name="filter_status[]"
+                                                        value="{{ $status->id }}"
                                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                        @if (in_array($rank->id, request()->input('filter_range', []))) checked @endif>
-                                                    <label class="ml-2 text-sm font-medium text-gray-900">Hạng
-                                                        {{ $rank->name }}</label>
+                                                        @if (in_array($status->id, request()->input('filter_status', []))) checked @endif>
+                                                    <label for="active"
+                                                        class="ml-2 text-sm font-medium text-gray-900">{{ $status->name }}</label>
                                                 </li>
                                             @endforeach
                                         </div>
                                     </ul>
-                                    <h6 class="my-3 text-sm font-medium text-gray-900">Thời gian</h6>
+                                    <h6 class="my-3 text-sm font-medium text-gray-900">Phương thức thanh toán</h6>
+                                    <ul class="space-y-2 text-sm">
+                                        <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+                                            @foreach ($paymentMethods as $paymentMethod)
+                                                <li class="flex items-center">
+                                                    <input type="checkbox" name="filter_paymentMethod[]"
+                                                        value="{{ $paymentMethod->id }}"
+                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                        @if (in_array($paymentMethod->id, request()->input('filter_paymentMethod', []))) checked @endif>
+                                                    <label for="active"
+                                                        class="ml-2 text-sm font-medium text-gray-900">{{ $paymentMethod->name }}</label>
+                                                </li>
+                                            @endforeach
+                                        </div>
+                                    </ul>
+                                    <h6 class="my-3 text-sm font-medium text-gray-900">Tổng đơn hàng</h6>
+                                    <div class="flex items-center">
+                                        <div>
+                                            <input name="filter_amount_min" type="number"
+                                                value="{{ request()->input('filter_amount_min') }}"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
+                                                placeholder="1.000 đ">
+                                        </div>
+                                        <span class="mx-4 text-gray-500">-</span>
+                                        <div>
+                                            <input name="filter_amount_max" type="number"
+                                                value="{{ request()->input('filter_amount_max') }}"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
+                                                placeholder="100.000.000 đ">
+                                        </div>
+                                    </div>
+                                    <h6 class="my-3 text-sm font-medium text-gray-900">Ngày đặt hàng</h6>
                                     <div class="flex items-center">
                                         <div>
                                             <input name="filter_date_min" type="date"
                                                 value="{{ request()->input('filter_date_min') }}"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                                placeholder="1.000 đ">
+                                                placeholder="mm/dd/yyyy">
                                         </div>
                                         <span class="mx-4 text-gray-500">-</span>
                                         <div>
                                             <input name="filter_date_max" type="date"
                                                 value="{{ request()->input('filter_date_max') }}"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                                placeholder="100.000.000 đ">
+                                                placeholder="mm/dd/yyyy">
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Modal footer -->
-                                <div class="flex items-center p-6 space-x-4 rounded-b dark:border-gray-600">
+                                <div class="flex items-center p-6 space-x-4 rounded-b">
                                     <button type="submit" class="button-red">
                                         Lọc dữ liệu
                                     </button>
@@ -139,12 +144,14 @@
             <!-- Các tab điều hướng -->
             <ul class="flex">
                 <li class="me-6 min-w-fit">
-                    <a aria-current="page" class="inline-block rounded-t-lg pb-1 border-b-2 {{ request()->routeIs('admin.orders.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
+                    <a aria-current="page"
+                        class="inline-block rounded-t-lg pb-1 border-b-2 {{ request()->routeIs('admin.orders.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
                         href="{{ route('admin.orders.index') }}">Tất cả</a>
                 </li>
                 @foreach ($orderStatuses as $status)
                     <li class="me-6 min-w-fit">
-                        <a aria-current="page" class="inline-block rounded-t-lg border-b-2 pb-1 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
+                        <a aria-current="page"
+                            class="inline-block rounded-t-lg border-b-2 pb-1 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
                             href="{{ route('admin.orders.index', ['tab' => $status->slug]) }}">{{ $status->name }}</a>
                     </li>
                 @endforeach
