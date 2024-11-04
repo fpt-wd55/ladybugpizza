@@ -72,10 +72,10 @@ Route::prefix('/')->group(function () {
     Route::put('/settings/update/{id}', [ProfileController::class, 'updateStatus'])->name('client.settings.update');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
     Route::post('/profile/promotion/{id}', [ProfileController::class, 'redeemPromotion'])->name('client.profile.redeem-promotion');
-    Route::get('/about-us', [PageController::class, 'aboutUs'])->name('client.about-us');
-    Route::get('/policies', [PageController::class, 'policies'])->name('client.policies');
-    Route::get('/manual', [PageController::class, 'manual'])->name('client.manual');
-    Route::get('/contact', [PageController::class, 'contact'])->name('client.contact');
+    Route::get('/ve-chung-toi', [PageController::class, 'aboutUs'])->name('client.about-us');
+    Route::get('/chinh-sach-va-dieu-khoan', [PageController::class, 'policies'])->name('client.policies');
+    Route::get('/huong-dan-mua-hang', [PageController::class, 'manual'])->name('client.manual');
+    Route::get('/lien-he', [PageController::class, 'contact'])->name('client.contact');
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
     Route::get('/favorites', [ProductController::class, 'favorites'])->name('client.product.favorites');
     Route::get('product/{slug}/favorite', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
@@ -201,6 +201,9 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/chats', MessageController::class);
     Route::get('/components', [DashboardController::class, 'components']);
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
+    // pages
+    Route::resource('/pages', AdminPageController::class);
+
 });
 
 // Share route

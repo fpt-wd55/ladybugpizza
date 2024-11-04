@@ -214,3 +214,7 @@ Breadcrumbs::for('admin.pages.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
     $trail->push('Trang', route('admin.pages.index'));
 });
+Breadcrumbs::for('admin.pages.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.pages.index');
+    $trail->push('Thêm mới', route('admin.pages.index'));
+});

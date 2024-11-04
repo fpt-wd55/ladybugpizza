@@ -186,9 +186,7 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $page->id }}">
                                         <li>
-                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100"
-                                                data-modal-target="detail-modal-{{ $page->id }}"
-                                                data-modal-toggle="detail-modal-{{ $page->id }}">Chi tiết </a>
+                                            <a href="{{url($page->slug)}}" class="block py-2 px-4 hover:bg-gray-100">Chi tiết </a>
                                         </li>
                                         <li>
                                             <a href="{{ route('admin.pages.edit', $page->id) }}"
@@ -219,7 +217,7 @@
                                         <div class="flex justify-center">
                                             @svg('tabler-trash', 'w-12 h-12 text-red-600 text-center mb-2')
                                         </div>
-                                        <h3 class="mb-5 font-normal">Bạn có muốn xóa mã giảm giá này không?</h3>
+                                        <h3 class="mb-5 font-normal">Bạn có muốn xóa trang này không?</h3>
                                         <form action="{{ route('admin.pages.destroy', $page->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
@@ -236,86 +234,6 @@
                             </div>
                         </div>
                         {{-- end delete modal --}}
-
-                        {{-- detail modal --}}
-                        <div id="detail-modal-{{ $page->id }}" tabindex="-1" aria-hidden="true"
-                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
-                            <div class="relative p-4 w-full max-w-md max-h-full">
-                                <div
-                                    class="relative p-4 bg-white rounded-lg shadow sm:p-5 h-full overflow-y-auto no-scrollbar">
-                                    <div>
-                                        <div class="container mx-auto mb-10">
-                                            <div
-                                                class="bg-gradient-to-br from-[#bf0808] to-[#f52929] text-white text-center py-8 px-15 rounded-lg shadow-md relative">
-                                                <h3 class="text-lg font-semibold mb-4">
-                                                    <p class="">
-                                                        Giảm @if ($page->discount_type == '1')
-                                                            {{ number_format($page->discount_value) }}%
-                                                        @elseif ($page->discount_type == '2')
-                                                            {{ number_format($page->discount_value) }}₫
-                                                        @endif Giảm tối đa
-                                                        {{ number_format($page->max_discount) }}₫
-                                                    </p>
-                                                    <p class="mt-1">
-                                                        Đơn Tối Thiểu {{ number_format($page->min_order_total) }}₫
-                                                    </p>
-                                                </h3>
-                                                <div class="flex items-center space-x-2 justify-center">
-                                                    <span id="page-{{ $page->code }}"
-                                                        class="border-dashed border px-4 py-2 rounded-l">{{ $page->code }}</span>
-                                                    <button data-copy-to-clipboard-target="page-{{ $page->code }}"
-                                                        data-copy-to-clipboard-content-type="textContent"
-                                                        data-tooltip-target="tooltip-page-details"
-                                                        class="border border-white bg-white hover:bg-slate-200 transition text-red-600 px-2 py-2 rounded-r cursor-pointer">Sao
-                                                        chép</button>
-                                                </div>
-                                                <div
-                                                    class="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 left-0 -ml-6">
-                                                </div>
-                                                <div
-                                                    class="w-12 h-12 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 right-0 -mr-6">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="grid grid-cols-1 gap-4 content-between">
-                                            <div class="space-y-4">
-                                                <div class="rounded-lg">
-                                                    <label class="font-semibold">Hạn sử dụng mã</label>
-                                                    <p class="text-gray-800 mt-3">
-                                                        {{ \Carbon\Carbon::parse($page->start_date)->format('d/m/Y H:i') }}
-                                                        -
-                                                        {{ \Carbon\Carbon::parse($page->end_date)->format('d/m/Y H:i') }}
-                                                    </p>
-                                                </div>
-                                                <div class="rounded-lg">
-                                                    <label class="font-semibold">Số lượng</label>
-                                                    <p class="text-gray-800 mt-3">
-                                                        {{ $page->quantity }}
-                                                    </p>
-                                                </div>
-
-                                                <div class="rounded-lg">
-                                                    <label class="font-semibold">Trạng thái</label>
-                                                    <p class="text-gray-800 mt-3 mb-6">
-                                                        <span
-                                                            class="text-white {{ $page->status == 1 ? 'bg-green-500' : 'bg-red-500' }} inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium">
-                                                            {{ $page->status == 1 ? 'Hoạt động' : 'Khóa' }}
-                                                        </span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="space-y-4">
-                                                <div class="rounded-lg">
-                                                    <button data-modal-hide="detail-modal-{{ $page->id }}"
-                                                        type="button" class="button-red w-full">Đồng
-                                                        ý</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- end detail modal --}}
                         @empty
                             <td colspan="6" class="text-center py-4 text-base">
                                 <div class="flex flex-col items-center justify-center p-6 rounded-lg bg-white w-full h-80">
