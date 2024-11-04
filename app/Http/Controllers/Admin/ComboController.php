@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
+use App\Models\AttributeValue;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Topping;
@@ -25,9 +27,20 @@ class ComboController extends Controller
      */
     public function create()
     {
+        $pizzas = Product::where('category_id', 1)->get();
+        $bases = AttributeValue::where('attribute_id', 1)->get();
+        $sizes = AttributeValue::where('attribute_id', 2)->get();
+        $sauces = AttributeValue::where('attribute_id',3)->get();
         $toppings = Topping::all();
-        $categories = Category::whereNotIn('id', [1,7])->get();
-        return view('admins.combo.create', compact('toppings', 'categories'));
+        $categories = Category::whereNotIn('id', [1,7])->with('products')->get();
+        return view('admins.combo.create', [
+            'pizzas' => $pizzas,
+            'bases' => $bases,
+            'sizes' => $sizes,
+            'sauces' => $sauces,
+            'toppings' => $toppings,
+            'categories' => $categories,
+        ]);
     }
 
     /**
