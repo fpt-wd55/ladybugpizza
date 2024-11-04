@@ -288,7 +288,6 @@
                     });
                 });
             }
-
             function setupCategoryButtons() {
                 categoryContainer.addEventListener('click', function(event) {
                     const categoryItem = event.target.closest('.category-item');
