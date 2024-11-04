@@ -175,6 +175,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/banner/trash', [BannerController::class, 'trashList'])->name('trash.listBanner');
     Route::post('/banner/restore/{id}', [BannerController::class, 'trashRestore'])->name('trash.bannerRestore');
     Route::post('/banner/delete/{id}', [BannerController::class, 'trashForce'])->name('trash.bannerDelete');
+    Route::get('/banner/filter', [BannerController::class, 'filter'])->name('banner.filter');
     // Promotion
     Route::resource('/promotions', PromotionController::class);
     Route::get('/promotion/filter', [PromotionController::class, 'filter'])->name('promotions.filter');
