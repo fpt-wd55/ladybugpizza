@@ -129,85 +129,137 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50">
                             <textarea id="wysiwygeditor" name="description">{{ old('description') }}</textarea>
                         </div>
                     </div>
-
                     <div>
-                        <table id="example" class="table-auto w-full rounded-md table-add-more">
-                            <thead>
-                                <tr class="border">
-                                    <th colspan="2" class="px-4 py-2 text-start text-base font-medium">Thêm sản phẩm</th>
-                                    <th class="px-6 py-2 text-end">
-                                        <a href="#" class="font-medium text-blue-600 hover:underline btn-add-more">+
-                                            Thêm mới</a>
-                                    </th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-                                    <td class="border px-4 py-2" colspan="3">
-                                        <h2 class="pb-2">Pizza</h2>
-                                        <div class="grid grid-cols-1 gap-3 md:grid-cols-8">
-                                            <div class="md:col-span-2">
-                                                <select name="" id="" class="input">
-                                                    <option value="">Chọn pizza</option>
-                                                </select>
+                        <div class="m-3 p-3 card">
+                            <h2 class="pb-2">Pizza</h2>
+                            <div class="flex flex-wrap justify-between gap-3 py-3">
+                                <div class="flex-1">
+                                    <select name="" id="" class="input">
+                                        <option value="">Chọn pizza</option>
+                                        @foreach ($pizzas as $pizza)
+                                            <option value="{{ $pizza->id }}">{{ $pizza->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="flex-1">
+                                    <select name="" id="" class="input">
+                                        <option value="">Chọn đế</option>
+                                        @foreach ($bases as $base)
+                                            <option value="{{ $base->id }}">{{ $base->value }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="flex-1">
+                                    <select name="" id="" class="input">
+                                        <option value="">Chọn size</option>
+                                        @foreach ($sizes as $size)
+                                            <option value="{{ $size->id }}">{{ $size->value }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="flex-1">
+                                    <select name="" id="" class="input">
+                                        <option value="">Chọn sốt</option>
+                                        @foreach ($sauces as $sauce)
+                                            <option value="{{ $sauce->id }}">{{ $sauce->value }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="flex rounded-md" role="group">
+                                    <button
+                                        class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500"
+                                        id="decrement" type="button">
+                                        @svg('tabler-minus', 'icon-sm')
+                                    </button>
+                                    <input
+                                        class="w-12 border-b border-t border-gray-200 bg-white px-4 py-1 text-center text-sm font-medium text-gray-900 focus:outline-none"
+                                        name="quantity" value="1">
+                                    <button
+                                        class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500"
+                                        id="increment" type="button">
+                                        @svg('tabler-plus', 'icon-sm')
+                                    </button>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button type="button" class="flex button-blue add-field">
+                                        Thêm
+                                    </button>
+                                    <button type="button" class="flex button-red remove-field">
+                                        Xóa
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="w-full">
+                                <input type="checkbox" id="accordion-toggle" class="hidden peer">
+                                <label for="accordion-toggle"
+                                    class="w-full flex gap-3 cursor-pointer items-center px-5 text-slate-800">
+                                    Toppings
+                                    <svg class="w-5 h-5 transition-transform transform peer-checked:rotate-180"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </label>
+                                <div class="overflow-hidden transition-all duration-300 max-h-0 peer-checked:max-h-96">
+                                    <div class="flex flex-wrap justify-between gap-2 p-4">
+                                        @foreach ($toppings as $topping)
+                                            <div class="flex items-center me-4 gap-2">
+                                                <input type="checkbox" name="{{ $topping->name }}"
+                                                    id="{{ $topping->name }}" class="input-checkbox">
+                                                <label for="{{ $topping->name }}"
+                                                    class="">{{ $topping->name }}</label>
                                             </div>
-                                            <div class="md:col-span-2">
-                                                <select name="" id="" class="input">
-                                                    <option value="">Chọn thuộc tính</option>
-                                                </select>
-                                            </div>
-                                            <div class="md:col-span-2">
-                                                <input type="number" name="" placeholder="Số lượng"
-                                                    class="input" min="0">
-                                            </div>
-                                            <div class="flex gap-3 md:col-span-2">
-                                                <button type="button" class="flex items-center button-blue">
-                                                    Thêm sản phẩm
-                                                </button>
-                                                <button type="button" class="flex items-center button-red">
-                                                    Xóa sản phẩm
-                                                </button>
-                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="category-container">
+                            @foreach ($categories as $category)
+                                <div class="p-3 m-3 card category-item" data-category-id="{{ $category->id }}">
+                                    <h2 class="pb-2">{{ $category->name }}</h2>
+                                    <div class="flex flex-wrap justify-between gap-10">
+                                        <div class="flex-1">
+                                            <select name="products[{{ $category->id }}]" class="input flex-1">
+                                                <option value="">Chọn {{ $category->name }}</option>
+                                                @foreach ($category->products as $product)
+                                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="border px-4 py-2" colspan="3">
-                                        <h2 class="pb-2">Bánh</h2>
-                                        <div class="grid grid-cols-1 gap-3 md:grid-cols-8">
-                                            <div class="md:col-span-2">
-                                                <select name="" id="" class="input">
-                                                    <option value="">Chọn pizza</option>
-                                                </select>
-                                            </div>
-                                            <div class="md:col-span-2">
-                                                <select name="" id="" class="input">
-                                                    <option value="">Chọn thuộc tính</option>
-                                                </select>
-                                            </div>
-                                            <div class="md:col-span-2">
-                                                <input type="number" name="" placeholder="Số lượng"
-                                                    class="input" min="0">
-                                            </div>
-                                            <div class="flex gap-3 md:col-span-2">
-                                                <button type="button" class="flex items-center button-blue">
-                                                    Thêm sản phẩm
-                                                </button>
-                                                <button type="button" class="flex items-center button-red">
-                                                    Xóa sản phẩm
-                                                </button>
-                                            </div>
+                                        <div class="flex rounded-md" role="group">
+                                            <button
+                                                class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500 decrement"
+                                                type="button">
+                                                @svg('tabler-minus', 'icon-sm')
+                                            </button>
+                                            <input
+                                                class="w-12 border-b border-t border-gray-200 bg-white px-4 py-1 text-center text-sm font-medium text-gray-900 focus:outline-none quantity-input"
+                                                name="quantity_{{ $category->id }}" value="1">
+                                            <button
+                                                class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500 increment"
+                                                type="button">
+                                                @svg('tabler-plus', 'icon-sm')
+                                            </button>
                                         </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        <div class="flex gap-3">
+                                            <button type="button" class="button-blue add-field"
+                                                data-category-id="{{ $category->id }}">
+                                                Thêm
+                                            </button>
+                                            <button type="button" class="button-red remove-field">
+                                                Xóa
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4 mt-5">
@@ -221,4 +273,83 @@
             </form>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryContainer = document.getElementById('category-container');
+            const categoryOptionsCache = {};
+
+            function setupQuantityButtons(buttons) {
+                buttons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const quantityInput = this.parentElement.querySelector('.quantity-input');
+                        let currentValue = parseInt(quantityInput.value) || 0;
+                        quantityInput.value = this.classList.contains('increment') ? currentValue +
+                            1 : Math.max(currentValue - 1, 1);
+                    });
+                });
+            }
+
+            function setupCategoryButtons() {
+                categoryContainer.addEventListener('click', function(event) {
+                    const categoryItem = event.target.closest('.category-item');
+                    if (!categoryItem) return;
+
+                    const categoryId = event.target.dataset.categoryId;
+
+                    if (event.target.classList.contains('add-field')) {
+                        const categoryName = categoryItem.querySelector('h2').textContent;
+                        const newField = createNewField(categoryId, categoryName, categoryItem);
+                        categoryItem.appendChild(newField);
+                        setupQuantityButtons(newField.querySelectorAll('.increment, .decrement'));
+                    }
+                    if (event.target.classList.contains('remove-field')) {
+                        event.target.closest('.new-item')?.remove();
+                    }
+                });
+            }
+
+            function createNewField(categoryId, categoryName, categoryItem) {
+                if (!categoryOptionsCache[categoryId]) {
+                    categoryOptionsCache[categoryId] = Array.from(categoryItem.querySelectorAll('select option'))
+                        .map(option => `<option value="${option.value}">${option.text}</option>`)
+                        .join('');
+                }
+
+                const options = categoryOptionsCache[categoryId];
+
+                const newField = document.createElement('div');
+                newField.className = 'flex flex-wrap justify-between gap-10 new-item py-1';
+                newField.innerHTML = `
+                    <div class="flex-1">
+                        <select name="products[${categoryId}]" class="input flex-1">
+                            <option value="">Chọn ${categoryName}</option>
+                            ${options}
+                        </select>
+                    </div>
+                    <div class="flex rounded-md" role="group">
+                        <button class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500 decrement" type="button">
+                            @svg('tabler-minus', 'icon-sm')
+                        </button>
+                        <input class="w-12 border-b border-t border-gray-200 bg-white px-4 py-1 text-center text-sm font-medium text-gray-900 focus:outline-none quantity-input" name="quantity_${categoryId}" value="1">
+                        <button class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500 increment" type="button">
+                            @svg('tabler-plus', 'icon-sm')
+                        </button>
+                    </div>
+                    <div class="flex gap-3">
+                        <button type="button" class="button-blue add-field" data-category-id="${categoryId}">
+                            Thêm
+                        </button>
+                        <button type="button" class="button-red remove-field">
+                            Xóa
+                        </button>
+                    </div>`;
+
+                return newField;
+            }
+
+            setupQuantityButtons(document.querySelectorAll('.increment, .decrement'));
+            setupCategoryButtons();
+        });
+    </script>
+
 @endsection
