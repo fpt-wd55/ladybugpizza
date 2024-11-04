@@ -124,6 +124,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/addresses', AddressController::class);
     // Order
     Route::resource('/orders', AdminOrderController::class);
+    Route::get('/order/filter', [AdminOrderController::class, 'filter'])->name('orders.filter');
     Route::get('/order/search', [AdminOrderController::class, 'search'])->name('orders.search');
     Route::get('/order/export', [AdminOrderController::class, 'export'])->name('orders.export');
     // Route::resource('/carts', AdminCartController::class);

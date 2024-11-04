@@ -80,4 +80,40 @@ class OrderController extends Controller
     {
         $this->exportExcel(Order::all(), 'danhsachdonhang');
     }
+
+    public function filter(Request $request)
+    {
+        // $query = User::query();
+
+        // if (isset($request->filter_role)) {
+        //     $query->whereIn('role_id', $request->filter_role);
+        // }
+
+        // if (isset($request->filter_status)) {
+        //     $query->whereIn('status', $request->filter_status);
+        // }
+
+        // if (isset($request->filter_gender)) {
+        //     $query->whereIn('gender', $request->filter_gender);
+        // } 
+        
+        // if (isset($request->filter_birthday_start)) {
+        //     $query->where('date_of_birth', '>=', $request->filter_birthday_start);
+        // }
+
+        // if (isset($request->filter_birthday_end)) {
+        //     $query->where('date_of_birth', '<=', $request->filter_birthday_end);
+        // }
+
+        // $users = $query->paginate(10);
+
+        // $users->appends(['filter_role' => $request->filter_role]);
+        // $users->appends(['filter_status' => $request->filter_status]);
+        // $users->appends(['filter_gender' => $request->filter_gender]);
+        // $users->appends(['filter_birthday_start' => $request->filter_birthday_start]);
+        // $users->appends(['filter_birthday_end' => $request->filter_birthday_end]);
+
+        // $roles = Role::where('id', '>', 1)->get();
+        // return view('admins.user.index', compact('users', 'roles'));
+    }
 }
