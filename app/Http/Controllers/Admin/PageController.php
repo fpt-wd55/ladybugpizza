@@ -71,6 +71,13 @@ class PageController extends Controller
      */
     public function destroy(Page $page)
     {
-        //
+        $page->delete(); // Xóa trang
+
+        // Chuyển hướng về trang danh sách với thông báo thành công
+        return redirect()->route('admin.pages.index')->with('success', 'Trang đã được xóa thành công.');
+    }
+    public function trashPage(){
+        $pages = Page::onlyTrashed()->latest('id')->paginate(10);
+        return view('admins.page.trash',compact('pages'));
     }
 }
