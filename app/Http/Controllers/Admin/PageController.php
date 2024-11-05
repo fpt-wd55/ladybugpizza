@@ -69,8 +69,33 @@ class PageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    // xóa mềm
     public function destroy(Page $page)
     {
-        //
+        $page->delete(); // Xóa trang
+
+        // Chuyển hướng về trang danh sách với thông báo thành công
+        return redirect()->route('admin.pages.index')->with('success', 'Trang đã được xóa thành công.');
     }
+    // thùng rác
+    public function trashPage(){
+        $pages = Page::onlyTrashed()->latest('id')->paginate(10);
+        return view('admins.page.trash',compact('pages'));
+    }
+    // khoi phục
+    public function resPage($id)
+    {
+        $page = Page::withTrashed()->find($id);
+        $page->restore();
+
+        return back()->with('success', 'Khôi phục thành công');
+    }
+    // xóa vĩnh viễn
+    public function forceDestroy($id)
+{
+    $page = Page::withTrashed()->find($id);
+        $page->forceDelete();
+        return back()->with('success', 'Đã xóa vĩnh viễn!');
+}
+
 }

@@ -218,3 +218,11 @@ Breadcrumbs::for('admin.pages.create', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.pages.index');
     $trail->push('Thêm mới', route('admin.pages.index'));
 });
+Breadcrumbs::for('admin.pages.edit', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.pages.index');
+    $trail->push('Sửa', route('admin.pages.index'));
+});
+Breadcrumbs::for('admin.trash-pages', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.pages.index');
+    $trail->push('Thùng rác', route('admin.trash.pages'));
+});
