@@ -28,6 +28,18 @@ class PageController extends Controller
         return view('clients.manual');
     }
 
+    public function render($page) {
+        $content = 'abc';
+
+        return view('clients.dynamic-page', [
+            'page'=> $page,
+            'content'=> $content
+        ]);
+    } 
+
+
+
+
     public function contact()
     {
         $user = auth()->user();

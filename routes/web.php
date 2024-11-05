@@ -28,7 +28,9 @@ use App\Http\Controllers\Client\PageController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
+use App\Models\Page;
 use Illuminate\Support\Facades\Route;
+use Laravel\Prompts\Concerns\Fallback;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +42,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+$pages = Page::where('status', 1)->get();
+
+
 
 Route::prefix('/')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('client.home');
