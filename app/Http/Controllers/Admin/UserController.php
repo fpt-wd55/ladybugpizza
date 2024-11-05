@@ -130,12 +130,7 @@ class UserController extends Controller
             $avatar_name = time() . '_' . pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $avatar->getClientOriginalExtension();
             $validatedData['avatar'] = $avatar_name;
         }
-
-        // Kiem tra nhap mat khau moi
-        if (isset($validatedData['new_password'])) {
-            $validatedData['new_password'] = bcrypt($validatedData['new_password']);
-        }
-
+        
         $data = [
             'username' => $user->username,
             'fullname' => trim($validatedData['fullname']),

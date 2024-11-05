@@ -19,7 +19,9 @@ class ProductController extends Controller
     public function index()
     {
         $categories = Category::where('status', 1)->get();
-        $products = Product::orderBy('id', 'desc')->paginate(10);
+        $products = Product::orderBy('id', 'desc')
+            ->where('category_id', '!=', 7)
+            ->paginate(10);
         return view('admins.product.index', compact('products', 'categories'));
     }
 
@@ -230,12 +232,6 @@ class ProductController extends Controller
         return redirect()->back()->with('error', 'Cập nhật đánh giá thất bại');
     }
 
-    public function filter(Request $request)
-    {
-        $products = Product::orderBy('id', 'desc')->paginate(10);
-        return view('admins.product.index', compact('products'));
-    }
-
     public function bulkAction(Request $request)
     {
         $selectedIds = explode(',', $request->input('selected_ids'));
@@ -271,5 +267,58 @@ class ProductController extends Controller
         }
 
         return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
+    }
+
+    public function filter(Request $request)
+    {
+        $query = Product::query();
+        $query->where('category_id', '!=', 7);
+
+        if (isset($request->filter_category)) {
+            $query->whereIn('category_id', $request->filter_category);
+        }
+
+        if (isset($request->filter_status)) {
+            $query->whereIn('status', $request->filter_status);
+        }
+
+        if (isset($request->filter_is_featured)) {
+            $query->whereIn('is_featured', $request->filter_is_featured);
+        }
+
+        if (isset($request->filter_product_discount)) {
+            $query->whereIn('discount_price', '>', 0);
+        }
+
+        if (isset($request->filter_rating)) {
+            if ($request->filter_rating < 5) {
+                $query->whereBetween('avg_rating', [$request->filter_rating, $request->filter_rating + 1]);
+            } else {
+                $query->where('avg_rating', $request->filter_rating);
+            }
+        }
+
+        if (isset($request->filter_price_min)) {
+            $query->where('price', '>=', $request->filter_price_min);
+        }
+
+        if (isset($request->filter_price_max)) {
+            $query->where('price', '<=', $request->filter_price_max);
+        }
+
+        $products = $query->paginate(10);
+
+        $products->appends([
+            'filter_category' => $request->filter_category,
+            'filter_status' => $request->filter_status,
+            'filter_is_featured' => $request->filter_is_featured,
+            'filter_product_discount' => $request->filter_product_discount,
+            'filter_rating' => $request->filter_rating,
+            'filter_price_min' => $request->filter_price_min,
+            'filter_price_max' => $request->filter_price_max,
+        ]);
+
+        $categories = Category::where('status', 1)->get();
+        return view('admins.product.index', compact('products', 'categories'));
     }
 }

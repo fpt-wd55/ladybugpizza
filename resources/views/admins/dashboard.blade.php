@@ -1,8 +1,10 @@
 @extends('layouts.admin')
 @section('content')
     {{ Breadcrumbs::render('admin.dashboard') }}
+    <h3 class="text-base font-bold leading-none text-gray-900 sm:text-xl mb-3">Đơn hàng</h3>
     <div class="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
         <!-- Main widget -->
+
         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex-shrink-0">
