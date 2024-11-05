@@ -1,7 +1,6 @@
 @extends('layouts.client')
 
 @section('title', 'Lịch sử đơn hàng')
-
 @section('content')
     <div class="min-h-screen">
         <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
