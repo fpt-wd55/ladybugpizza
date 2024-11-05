@@ -83,7 +83,13 @@ class PageController extends Controller
         return view('admins.page.trash',compact('pages'));
     }
     // khoi phục
-    
+    public function resPage($id)
+    {
+        $page = Page::withTrashed()->find($id);
+        $page->restore();
+
+        return back()->with('success', 'Khôi phục thành công');
+    }
     // xóa vĩnh viễn
     public function forceDestroy($id)
 {
