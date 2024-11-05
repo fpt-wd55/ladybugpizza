@@ -3,7 +3,6 @@
 @section('title', 'Chi tiết sản phẩm')
 
 @section('content')
-
     <form action="{{ route('client.product.add-to-cart', $product->slug) }}" method="post">
         @method('POST')
         @csrf
