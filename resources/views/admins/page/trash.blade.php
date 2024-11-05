@@ -23,8 +23,9 @@
                 <div
                     class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                     <div class="flex items-center space-x-3 w-full md:w-full">
-                        <form method="POST" action="{{route('admin.toppings.bulkAction')}}">
+                        <form method="POST" action="">
                             @csrf
+                            @method('DELETE')
                             <input type="hidden" name="selected_ids" id="selectedIds" value="">
                             <div id="actionButtons" class="hidden">
                                 <button type="submit" name="action" value="restore" class="button-green me-2">Khôi
@@ -231,7 +232,7 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $page->name }}">
                                         <li>
-                                            <a href=""
+                                            <a href="{{route('admin.resPage',$page->id)}}"
                                                 class="block py-2 px-4 hover:bg-gray-100">Khôi Phục</a>
                                         </li>
                                     </ul>
@@ -260,7 +261,7 @@
                                         </div>
                                         <h3 class="mb-5 font-normal">Bạn chắc chắn xóa vĩnh viễn trang này?</h3>
 
-                                        <form action=""
+                                        <form action="{{ route('admin.forceDestroy.pages', $page->id) }}"
                                             method="POST">
                                             @method('DELETE')
                                             @csrf

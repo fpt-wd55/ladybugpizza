@@ -203,7 +203,9 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
     // pages
     Route::resource('/pages', AdminPageController::class);
-    Route::get('/trash-pages', [AdminPageController::class, 'trashPage'])->name('trash.pages');
+    Route::get('/page/trash', [AdminPageController::class, 'trashPage'])->name('trash.pages');
+    Route::get('/page/restore/{id}', [AdminPageController::class, 'resPage'])->name('resPage');
+    Route::delete('/page/forceDestroy/{id}', [AdminPageController::class, 'forceDestroy'])->name('forceDestroy.pages');
 
 });
 
