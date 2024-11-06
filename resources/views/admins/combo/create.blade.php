@@ -134,87 +134,89 @@
                         </div>
                     </div>
                     <div>
-                        <div class="m-3 p-3 card">
-                            <h2 class="pb-2">Pizza</h2>
-                            <div class="flex flex-wrap justify-between gap-3 py-3">
-                                <div class="flex-1">
-                                    <select name="" id="" class="input">
-                                        <option value="">Chọn pizza</option>
-                                        @foreach ($pizzas as $pizza)
-                                            <option value="{{ $pizza->id }}">{{ $pizza->name }}</option>
-                                        @endforeach
-                                    </select>
+                        <div id="pizzaContainer">
+                            <div class="m-3 p-3 card">
+                                <h2 class="pb-2">Pizza</h2>
+                                <div class="flex flex-wrap justify-between gap-3 py-3">
+                                    <div class="flex-1">
+                                        <select name="" id="" class="input">
+                                            <option value="">Chọn pizza</option>
+                                            @foreach ($pizzas as $pizza)
+                                                <option value="{{ $pizza->id }}">{{ $pizza->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="flex-1">
+                                        <select name="" id="" class="input">
+                                            <option value="">Chọn đế</option>
+                                            @foreach ($bases as $base)
+                                                <option value="{{ $base->id }}">{{ $base->value }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="flex-1">
+                                        <select name="" id="" class="input">
+                                            <option value="">Chọn size</option>
+                                            @foreach ($sizes as $size)
+                                                <option value="{{ $size->id }}">{{ $size->value }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="flex-1">
+                                        <select name="" id="" class="input">
+                                            <option value="">Chọn sốt</option>
+                                            @foreach ($sauces as $sauce)
+                                                <option value="{{ $sauce->id }}">{{ $sauce->value }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="flex rounded-md" role="group">
+                                        <button
+                                            class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500 decrement"
+                                            type="button">
+                                            @svg('tabler-minus', 'icon-sm')
+                                        </button>
+                                        <input
+                                            class="w-12 border-b border-t border-gray-200 bg-white px-4 py-1 text-center text-sm font-medium text-gray-900 focus:outline-none quantity-input"
+                                            name="quantity" value="1">
+                                        <button
+                                            class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500 increment"
+                                            type="button">
+                                            @svg('tabler-plus', 'icon-sm')
+                                        </button>
+                                    </div>
+                                    <div class="flex gap-3">
+                                        <button type="button" class="flex button-blue add-pizza-field">
+                                            Thêm
+                                        </button>
+                                        <button type="button" class="flex button-red remove-pizza-field">
+                                            Xóa
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="flex-1">
-                                    <select name="" id="" class="input">
-                                        <option value="">Chọn đế</option>
-                                        @foreach ($bases as $base)
-                                            <option value="{{ $base->id }}">{{ $base->value }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="flex-1">
-                                    <select name="" id="" class="input">
-                                        <option value="">Chọn size</option>
-                                        @foreach ($sizes as $size)
-                                            <option value="{{ $size->id }}">{{ $size->value }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="flex-1">
-                                    <select name="" id="" class="input">
-                                        <option value="">Chọn sốt</option>
-                                        @foreach ($sauces as $sauce)
-                                            <option value="{{ $sauce->id }}">{{ $sauce->value }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="flex rounded-md" role="group">
-                                    <button
-                                        class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500"
-                                        id="decrement" type="button">
-                                        @svg('tabler-minus', 'icon-sm')
-                                    </button>
-                                    <input
-                                        class="w-12 border-b border-t border-gray-200 bg-white px-4 py-1 text-center text-sm font-medium text-gray-900 focus:outline-none"
-                                        name="quantity" value="1">
-                                    <button
-                                        class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500"
-                                        id="increment" type="button">
-                                        @svg('tabler-plus', 'icon-sm')
-                                    </button>
-                                </div>
-                                <div class="flex gap-3">
-                                    <button type="button" class="flex button-blue add-field">
-                                        Thêm
-                                    </button>
-                                    <button type="button" class="flex button-red remove-field">
-                                        Xóa
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="w-full">
-                                <input type="checkbox" id="accordion-toggle" class="hidden peer">
-                                <label for="accordion-toggle"
-                                    class="w-full flex gap-3 cursor-pointer items-center px-5 text-slate-800">
-                                    Toppings
-                                    <svg class="w-5 h-5 transition-transform transform peer-checked:rotate-180"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                </label>
-                                <div class="overflow-hidden transition-all duration-300 max-h-0 peer-checked:max-h-96">
-                                    <div class="flex flex-wrap justify-between gap-2 p-4">
-                                        @foreach ($toppings as $topping)
-                                            <div class="flex items-center me-4 gap-2">
-                                                <input type="checkbox" name="{{ $topping->name }}"
-                                                    id="{{ $topping->name }}" class="input-checkbox">
-                                                <label for="{{ $topping->name }}"
-                                                    class="">{{ $topping->name }}</label>
-                                            </div>
-                                        @endforeach
+                                <div class="w-full">
+                                    <input type="checkbox" id="accordion-toggle" class="hidden peer">
+                                    <label for="accordion-toggle"
+                                        class="w-full flex gap-3 cursor-pointer items-center px-5 text-slate-800">
+                                        Toppings
+                                        <svg class="w-5 h-5 transition-transform transform peer-checked:rotate-180"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </label>
+                                    <div class="overflow-hidden transition-all duration-300 max-h-0 peer-checked:max-h-96">
+                                        <div class="flex flex-wrap justify-between gap-2 p-4">
+                                            @foreach ($toppings as $topping)
+                                                <div class="flex items-center me-4 gap-2">
+                                                    <input type="checkbox" name="{{ $topping->name }}"
+                                                        id="{{ $topping->name }}" class="input-checkbox">
+                                                    <label for="{{ $topping->name }}"
+                                                        class="">{{ $topping->name }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -275,6 +277,7 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const pizzaContainer = document.getElementById('pizzaContainer');
             const categoryContainer = document.getElementById('category-container');
             const categoryOptionsCache = {};
 
@@ -288,6 +291,7 @@
                     });
                 });
             }
+
             function setupCategoryButtons() {
                 categoryContainer.addEventListener('click', function(event) {
                     const categoryItem = event.target.closest('.category-item');
@@ -306,6 +310,7 @@
                     }
                 });
             }
+
             function createNewField(categoryId, categoryName, categoryItem) {
                 if (!categoryOptionsCache[categoryId]) {
                     categoryOptionsCache[categoryId] = Array.from(categoryItem.querySelectorAll('select option'))

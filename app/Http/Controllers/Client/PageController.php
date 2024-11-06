@@ -35,10 +35,7 @@ class PageController extends Controller
             'page'=> $page,
             'content'=> $content
         ]);
-    } 
-
-
-
+    }
 
     public function contact()
     {
@@ -71,6 +68,6 @@ class PageController extends Controller
 
         Mail::to($contactData['email'])->send(new ThankYou($contactData));
 
-        return back()->with('success', 'Gửi thông tin thành công');
+        return back()->with('success', 'Gửi thông tin liên hệ thành công!');
     }
 }
