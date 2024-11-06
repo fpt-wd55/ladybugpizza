@@ -54,7 +54,6 @@ class PageRequest extends FormRequest
                 'required',
                 'string',
                 'max:20',
-                'unique:pages,slug',
                 'regex:/^[a-z0-9-]+$/', // Chỉ chấp nhận chữ cái thường, số và dấu gạch ngang
             ],
             'content' => 'required'

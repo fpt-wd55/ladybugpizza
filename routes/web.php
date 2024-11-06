@@ -206,7 +206,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/page/trash', [AdminPageController::class, 'trashPage'])->name('trash.pages');
     Route::get('/page/restore/{id}', [AdminPageController::class, 'resPage'])->name('resPage');
     Route::delete('/page/forceDestroy/{id}', [AdminPageController::class, 'forceDestroy'])->name('forceDestroy.pages');
-
+    
 });
 
 // Share route

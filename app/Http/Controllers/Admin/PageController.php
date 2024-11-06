@@ -54,16 +54,27 @@ class PageController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Page $page)
-    {
-        //
-    }
+{
+    return view('admins.page.edit', compact('page'));
+}
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Page $page)
+    public function update(PageRequest $request, Page $page)
     {
-        //
+        $data = $request->all();
+        $page->title = $data['title'];
+        $page->slug = $data['slug'];
+        $page->status = $data['status'] ?? 0; // Set mặc định là 0 nếu không có status
+        $page->content = $data['content'];
+    
+        // Lưu lại thay đổi
+        $page->save();
+    
+        // Chuyển hướng về trang danh sách trang với thông báo thành công
+        return redirect()->route('admin.pages.index')->with('success', 'Cập nhật trang thành công!');
     }
 
     /**
