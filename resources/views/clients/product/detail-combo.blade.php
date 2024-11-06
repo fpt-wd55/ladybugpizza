@@ -72,7 +72,7 @@
                         </div>
                         {{-- content --}}
                         <div class="mb-4 px-14">
-                            <p class="mb-4 text-sm">Combo này quá rẻ</p>
+                            <p class="mb-4 text-sm">Combo này quá rẻ và đồ ăn ngon</p>
                             <div class="no-scrollbar flex w-full items-center gap-4 overflow-x-auto">
                                 @for ($i = 0; $i < 5; $i++)
                                     <a class="min-w-16 min-h-16 max-w-16 max-h-16 overflow-hidden" data-fslightbox="gallery"
