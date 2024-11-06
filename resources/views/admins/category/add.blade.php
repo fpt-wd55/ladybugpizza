@@ -24,8 +24,6 @@
                         already
                         taken!</p>
                 </div>
-
-
                 <div class="sm:col-span-2">
                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Ảnh</label>
                     <label for="dropzone-file"
@@ -42,9 +40,6 @@
                         already
                         taken!</p>
                 </div>
-
-
-
                 <div class="">
                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Trạng thái</label>
 
