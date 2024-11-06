@@ -79,6 +79,7 @@
                 <img loading="lazy" class="w-full h-full object-cover" src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}"
                     alt="Ảnh sản phẩm">
             </div>
+            
         </div>
     </div>
 @endsection
