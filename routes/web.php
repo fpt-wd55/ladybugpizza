@@ -81,8 +81,7 @@ Route::prefix('/')->group(function () {
     Route::get('/ve-chung-toi', [PageController::class, 'aboutUs'])->name('client.about-us');
     Route::get('/chinh-sach-va-dieu-khoan', [PageController::class, 'policies'])->name('client.policies');
     Route::get('/huong-dan-mua-hang', [PageController::class, 'manual'])->name('client.manual');
-    Route::get('/lien-he', [PageController::class, 'contact'])->name('client.contact');
-    Route::get('/ban-muon-gi', [PageController::class, 'contact'])->name('client.contact');
+    Route::get('/contact', [PageController::class, 'contact'])->name('client.contact');
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
     Route::get('/favorites', [ProductController::class, 'favorites'])->name('client.product.favorites');
     Route::get('product/{slug}/favorite', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
