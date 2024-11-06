@@ -95,17 +95,19 @@
                                                     </li>
                                                 @endforeach
                                             </div>
-                                        </ul> 
+                                        </ul>
                                         <h6 class="my-3 text-sm font-medium text-gray-900">Giá</h6>
                                         <div class="flex items-center">
                                             <div>
-                                                <input name="filter_price_min" type="number" value="{{ request()->input('filter_price_min') }}"
+                                                <input name="filter_price_min" type="number"
+                                                    value="{{ request()->input('filter_price_min') }}"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
                                                     placeholder="1.000 đ">
                                             </div>
                                             <span class="mx-4 text-gray-500">-</span>
                                             <div>
-                                                <input name="filter_price_max" type="number" value="{{ request()->input('filter_price_max') }}"
+                                                <input name="filter_price_max" type="number"
+                                                    value="{{ request()->input('filter_price_max') }}"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
                                                     placeholder="100.000.000 đ">
                                             </div>
