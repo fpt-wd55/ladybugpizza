@@ -17,72 +17,47 @@
                 </a>
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
             @forelse ($deleteBanner as $item)
                 {{-- star item --}}
-                <div class="card h-auto">
-                    <ul
-                        class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800">
-                        <li class="">
-                            @if ($item->is_local_page == 1)
-                                <span
-                                    class="text-xs inline-block p-2 border border-gray-300 text-blue-600 rounded-ss-lg bg-blue-100 ">
-                                    Trang cục bộ
-                                </span>
-                            @else
-                                <span
-                                    class="text-xs inline-block p-2 text-red-600 border border-gray-300 rounded-ss-lg bg-red-100 ">
-                                    trang bên ngoài
-                                </span>
-                            @endif
-                        </li>
-                        <li class="">
-                            @if ($item->status == 1)
-                                <span class="text-xs inline-block p-2 border border-gray-300 text-green-600  bg-green-100 ">
-                                    Hoạt động
-                                </span>
-                            @else
-                                <span class="text-xs inline-block p-2 border border-gray-300 text-red-600  bg-red-100 ">
-                                    Khóa
-                                </span>
-                            @endif
-                        </li>
-                    </ul>
-                    <div class="h-auto">
-                        <div class="grid grid-cols-2 ">
-                            <div class="overflow-hidden">
-                                <a class="shrink-0" data-fslightbox="gallery" href="{{ asset('storage/uploads/banners/' . $item->image) }}">
-                                    <img loading="lazy" src="{{ asset('storage/uploads/banners/' . $item->image) }}"
-                                        class="md:w-52 md:h-20 lg:w-80 lg:h-[170px] rounded-b-lg object-cover hover:scale-125 transition">
-                                </a>
-                            </div>
-                            <div class="m-1">
-                                <div class="">
-                                    <span
-                                        class="md:text-sm break-all badge-default hover:underline hover:text-blue-500 hover:scale-105 hover:bg-gray-100 transition">{{ $item->url }}
-                                    </span>
+                <div class="card h-auto border-gray-700 bg-slate-500 shadow relative">
+                    <div class="h-52 overflow-hidden rounded-t">
+                        <a class="overflow-hidden" data-fslightbox="gallery" href="{{ asset('storage/uploads/banners/' . $item->image) }}">
+                            <img class="h-full w-full object-cover transition hover:scale-105" loading="lazy" src="{{ asset('storage/uploads/banners/' . $item->image) }}">
+                        </a>
+                    </div>
+                    <div class="flex items-start justify-between p-4">
+                        <div class="flex justify-around">
+                            <div class="">
+                                <div class="mb-2 flex items-center text-gray-900">
+                                    <div class="indicator {{ $item->status == 1 ? 'bg-green-700' : 'bg-red-700' }} inline-block">
+                                    </div>
+                                    <span>{{ $item->status == 1 ? 'Hoạt động' : 'Khóa' }}</span>
                                 </div>
-                                <div class="flex float-right mt-11 mr-2">
-                                    <a href="#" data-modal-target="restore-modal-{{ $item->id }}"
-                                        data-modal-toggle="restore-modal-{{ $item->id }}"
-                                        class="cursor-pointer block px-1 text-sm  text-gray-500 hover:text-green-500 "
-                                        title="Restore">
-
-                                        @svg('tabler-restore', 'w-7 h-7')
-                                    </a>
-
-
-                                    <a href="#" data-modal-target="delete-modal-{{ $item->id }}"
-                                        data-modal-toggle="delete-modal-{{ $item->id }}"
-                                        class="cursor-pointer block px-1 text-sm  text-gray-500 hover:text-red-500 "
-                                        title="Delete">
-                                        @svg('tabler-trash-x-filled', 'w-7 h-7 text-red-500')
-                                    </a>
+                                <div class="text-center">
+                                    <a class="text-sm text-gray-500 transition hover:scale-105 hover:bg-gray-100 hover:text-[#D30A0A] hover:underline" href="{{ $item->url }}" href="" target="blank">{{ $item->url }}</a>
                                 </div>
                             </div>
                         </div>
+                        <div class="flex absolute bottom-0 right-0 p-4">
+                            <a href="#" data-modal-target="restore-modal-{{ $item->id }}"
+                                data-modal-toggle="restore-modal-{{ $item->id }}"
+                                class="cursor-pointer block px-1 text-sm  text-gray-500 hover:text-green-500 "
+                                title="Restore">
+                                @svg('tabler-restore', 'w-7 h-7')
+                            </a>
+
+
+                            <a href="#" data-modal-target="delete-modal-{{ $item->id }}"
+                                data-modal-toggle="delete-modal-{{ $item->id }}"
+                                class="cursor-pointer block  text-sm  text-gray-500 hover:text-red-500 "
+                                title="Delete">
+                                @svg('tabler-trash-x-filled', 'w-7 h-7 ')
+                            </a>
+                        </div>
                     </div>
                 </div>
+             
                 {{-- start modal restore --}}
                 <div id="restore-modal-{{ $item->id }}" tabindex="-1"
                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -154,7 +129,7 @@
                 {{-- end modal delete --}}
                 {{-- end item --}}
             @empty
-                <div class="col-span-2 flex flex-col  items-center justify-center  p-6 rounded-lg bg-white w-full h-96">
+                <div class="col-span-2 md:col-span-3 flex flex-col  items-center justify-center  p-6 rounded-lg bg-white w-full h-96">
                     @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
                     <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
                 </div>

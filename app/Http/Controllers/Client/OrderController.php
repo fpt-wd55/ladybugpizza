@@ -31,7 +31,6 @@ class OrderController extends Controller
             });
         })
         ->where('user_id', $userId) 
-        ->with('orderItems.attributes.product', 'orderItems.toppings')
         ->paginate(10);
         // đếm số lượng order trong tab
         $orderStatuses = OrderStatus::withCount(['orders' => function ($query) use ($userId) {
