@@ -1,17 +1,90 @@
 @extends('layouts.admin')
 @section('content')
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-
     {{ Breadcrumbs::render('admin.dashboard') }}
-    <h3 class="mb-3 text-base font-bold leading-none text-gray-900 sm:text-xl">Đơn hàng</h3>
-    <div class="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
-
-        <div class="card max-w-full p-8">
-            {{-- <p class="mb-8 font-medium">Biểu đồ doanh thu</p> --}}
-            {!! $chart->container() !!}
+    {{-- Tổng quan --}}
+    <h3 class="my-3 text-base font-bold leading-none text-gray-900 sm:text-xl">Tổng quan</h3>
+    <div class="mt-4 grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-4">
+        <div class="relative flex flex-col min-w-0 border break-words bg-white shadow-soft-xl rounded-lg bg-clip-border">
+            <div class="flex-auto p-4">
+                <div class="flex flex-row -mx-3 items-center">
+                    <div class="flex-none w-2/3 max-w-full px-3">
+                        <div>
+                            <p class="mb-0 font-sans font-semibold leading-normal text-lg">Tài khoản</p>
+                            <h5 class="mb-0 font-bold text-base">
+                                2,340
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="px-3 text-right basis-1/3 flex items-center justify-end">
+                        @svg('tabler-user', 'w-8 h-8 text-gray-500')
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- Main widget -->
-
+        <div class="relative flex flex-col min-w-0 border break-words bg-white shadow-soft-xl rounded-lg bg-clip-border">
+            <div class="flex-auto p-4">
+                <div class="flex flex-row -mx-3 items-center">
+                    <div class="flex-none w-2/3 max-w-full px-3">
+                        <div>
+                            <p class="mb-0 font-sans font-semibold leading-normal text-lg">Đơn hàng</p>
+                            <h5 class="mb-0 font-bold text-base">
+                                2,340
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="px-3 text-right basis-1/3 flex items-center justify-end">
+                        @svg('tabler-package', 'w-8 h-8 text-gray-500')
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="relative flex flex-col min-w-0 border break-words bg-white shadow-soft-xl rounded-lg bg-clip-border">
+            <div class="flex-auto p-4">
+                <div class="flex flex-row -mx-3 items-center">
+                    <div class="flex-none w-2/3 max-w-full px-3">
+                        <div>
+                            <p class="mb-0 font-sans font-semibold leading-normal text-lg">Sản phẩm</p>
+                            <h5 class="mb-0 font-bold text-base">
+                                2,340
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="px-3 text-right basis-1/3 flex items-center justify-end">
+                        @svg('tabler-pizza', 'w-8 h-8 text-gray-500')
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="relative flex flex-col min-w-0 border break-words bg-white shadow-soft-xl rounded-lg bg-clip-border">
+            <div class="flex-auto p-4">
+                <div class="flex flex-row -mx-3 items-center">
+                    <div class="flex-none w-2/3 max-w-full px-3">
+                        <div>
+                            <p class="mb-0 font-sans font-semibold leading-normal text-lg">Danh mục</p>
+                            <h5 class="mb-0 font-bold text-base">
+                                2,340
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="px-3 text-right basis-1/3 flex items-center justify-end">
+                        @svg('tabler-category', 'w-8 h-8 text-gray-500')
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Doanh thu --}}
+    <h3 class="my-3 text-base font-bold leading-none text-gray-900 sm:text-xl">Doanh thu</h3>
+    <div class="card max-w-full p-8 mb-3">
+        {!! $chart->container() !!}
+    </div>
+    {{-- Đơn hàng --}}
+    {{-- Người dùng --}}
+    {{-- Sản phẩm --}}
+    {{-- Mã giảm giá --}}
+    <!-- Main widget -->
+    <div class="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
         <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6 2xl:col-span-2">
             <div class="mb-4 flex items-center justify-between">
                 <div class="flex-shrink-0">
@@ -27,11 +100,14 @@
             <!-- Card Footer -->
             <div class="mt-4 flex items-center justify-between border-t border-gray-200 pt-3 sm:pt-6">
                 <div>
-                    <button class="inline-flex items-center rounded-lg p-2 text-center text-sm font-medium text-gray-500 hover:text-gray-900" data-dropdown-toggle="weekly-sales-dropdown" type="button">Last 7 days
+                    <button
+                        class="inline-flex items-center rounded-lg p-2 text-center text-sm font-medium text-gray-500 hover:text-gray-900"
+                        data-dropdown-toggle="weekly-sales-dropdown" type="button">Last 7 days
                         @svg('tabler-chevron-down', 'w-5 h-5 ml-1')
                     </button>
                     <!-- Dropdown menu -->
-                    <div class="z-50 my-4 hidden list-none divide-y divide-gray-100 rounded bg-white shadow" id="weekly-sales-dropdown">
+                    <div class="z-50 my-4 hidden list-none divide-y divide-gray-100 rounded bg-white shadow"
+                        id="weekly-sales-dropdown">
                         <div class="px-4 py-3" role="none">
                             <p class="truncate text-sm font-medium text-gray-900" role="none">
                                 Sep 16, 2021 - Sep 22, 2021
@@ -39,28 +115,35 @@
                         </div>
                         <ul class="py-1" role="none">
                             <li>
-                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Yesterday</a>
+                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                    role="menuitem">Yesterday</a>
                             </li>
                             <li>
-                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Today</a>
+                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                    role="menuitem">Today</a>
                             </li>
                             <li>
-                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Last 7 days</a>
+                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                    role="menuitem">Last 7 days</a>
                             </li>
                             <li>
-                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Last 30 days</a>
+                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                    role="menuitem">Last 30 days</a>
                             </li>
                             <li>
-                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Last 90 days</a>
+                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                    role="menuitem">Last 90 days</a>
                             </li>
                         </ul>
                         <div class="py-1" role="none">
-                            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Custom...</a>
+                            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                role="menuitem">Custom...</a>
                         </div>
                     </div>
                 </div>
                 <div class="flex-shrink-0">
-                    <a class="text-primary-700 inline-flex items-center rounded-lg p-2 text-xs font-medium uppercase hover:bg-gray-100 sm:text-sm" href="#">
+                    <a class="text-primary-700 inline-flex items-center rounded-lg p-2 text-xs font-medium uppercase hover:bg-gray-100 sm:text-sm"
+                        href="#">
                         Sales Report
                         @svg('tabler-chevron-right', 'w-5 h-5 ml-1')
                     </a>
@@ -71,23 +154,31 @@
         <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
             <h3 class="mb-4 flex items-center text-lg font-semibold text-gray-900">Statistics this month
             </h3>
-            <div class="invisible absolute z-10 inline-block w-72 rounded-lg border border-gray-200 bg-white text-sm font-light text-gray-500 opacity-0 shadow-sm transition-opacity duration-300" data-popover id="popover-description" role="tooltip">
+            <div class="invisible absolute z-10 inline-block w-72 rounded-lg border border-gray-200 bg-white text-sm font-light text-gray-500 opacity-0 shadow-sm transition-opacity duration-300"
+                data-popover id="popover-description" role="tooltip">
                 <div data-popper-arrow></div>
             </div>
             <div class="sm:hidden">
                 <label class="sr-only" for="tabs">Select tab</label>
-                <select class="focus:border-primary-500 block w-full rounded-t-lg border-0 border-b border-gray-200 bg-gray-50 p-2.5 text-sm text-gray-900 focus:ring-0" id="tabs">
+                <select
+                    class="focus:border-primary-500 block w-full rounded-t-lg border-0 border-b border-gray-200 bg-gray-50 p-2.5 text-sm text-gray-900 focus:ring-0"
+                    id="tabs">
                     <option>Top Product</option>
                     <option>Top Customer</option>
                 </select>
             </div>
-            <ul class="hidden divide-x divide-gray-200 rounded-lg text-center text-sm font-medium text-gray-500 sm:flex" data-tabs-toggle="#fullWidthTabContent" id="fullWidthTab" role="tablist">
+            <ul class="hidden divide-x divide-gray-200 rounded-lg text-center text-sm font-medium text-gray-500 sm:flex"
+                data-tabs-toggle="#fullWidthTabContent" id="fullWidthTab" role="tablist">
                 <li class="w-full">
-                    <button aria-controls="faq" aria-selected="true" class="inline-block w-full rounded-tl-lg bg-gray-50 p-4 hover:bg-gray-100 focus:outline-none" data-tabs-target="#faq" id="faq-tab" role="tab" type="button">Top
+                    <button aria-controls="faq" aria-selected="true"
+                        class="inline-block w-full rounded-tl-lg bg-gray-50 p-4 hover:bg-gray-100 focus:outline-none"
+                        data-tabs-target="#faq" id="faq-tab" role="tab" type="button">Top
                         products</button>
                 </li>
                 <li class="w-full">
-                    <button aria-controls="about" aria-selected="false" class="inline-block w-full rounded-tr-lg bg-gray-50 p-4 hover:bg-gray-100 focus:outline-none" data-tabs-target="#about" id="about-tab" role="tab" type="button">Top
+                    <button aria-controls="about" aria-selected="false"
+                        class="inline-block w-full rounded-tr-lg bg-gray-50 p-4 hover:bg-gray-100 focus:outline-none"
+                        data-tabs-target="#about" id="about-tab" role="tab" type="button">Top
                         Customers</button>
                 </li>
             </ul>
@@ -97,7 +188,8 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center justify-between">
                                 <div class="flex min-w-0 items-center">
-                                    <img alt="imac image" class="h-10 w-10 flex-shrink-0" loading="lazy" src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png">
+                                    <img alt="imac image" class="h-10 w-10 flex-shrink-0" loading="lazy"
+                                        src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png">
                                     <div class="ml-3">
                                         <p class="truncate font-medium text-gray-900">
                                             iPhone 14 Pro
@@ -117,7 +209,8 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center justify-between">
                                 <div class="flex min-w-0 items-center">
-                                    <img alt="imac image" class="h-10 w-10 flex-shrink-0" loading="lazy" src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png">
+                                    <img alt="imac image" class="h-10 w-10 flex-shrink-0" loading="lazy"
+                                        src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png">
                                     <div class="ml-3">
                                         <p class="truncate font-medium text-gray-900">
                                             Apple iMac 27"
@@ -137,7 +230,8 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center justify-between">
                                 <div class="flex min-w-0 items-center">
-                                    <img alt="watch image" class="h-10 w-10 flex-shrink-0" loading="lazy" src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png">
+                                    <img alt="watch image" class="h-10 w-10 flex-shrink-0" loading="lazy"
+                                        src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png">
                                     <div class="ml-3">
                                         <p class="truncate font-medium text-gray-900">
                                             Apple Watch SE
@@ -157,7 +251,8 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center justify-between">
                                 <div class="flex min-w-0 items-center">
-                                    <img alt="ipad image" class="h-10 w-10 flex-shrink-0" loading="lazy" src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png">
+                                    <img alt="ipad image" class="h-10 w-10 flex-shrink-0" loading="lazy"
+                                        src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png">
                                     <div class="ml-3">
                                         <p class="truncate font-medium text-gray-900">
                                             Apple iPad Air
@@ -177,7 +272,8 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center justify-between">
                                 <div class="flex min-w-0 items-center">
-                                    <img alt="imac image" class="h-10 w-10 flex-shrink-0" loading="lazy" src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png">
+                                    <img alt="imac image" class="h-10 w-10 flex-shrink-0" loading="lazy"
+                                        src="https://flowbite-admin-dashboard.vercel.app/images/products/iphone.png">
                                     <div class="ml-3">
                                         <p class="truncate font-medium text-gray-900">
                                             Apple iMac 24"
@@ -201,7 +297,8 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-shrink-0">
-                                    <img alt="Neil image" class="h-8 w-8 rounded-full" loading="lazy" src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png">
+                                    <img alt="Neil image" class="h-8 w-8 rounded-full" loading="lazy"
+                                        src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png">
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="truncate font-medium text-gray-900">
@@ -219,7 +316,8 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-shrink-0">
-                                    <img alt="Neil image" class="h-8 w-8 rounded-full" loading="lazy" src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png">
+                                    <img alt="Neil image" class="h-8 w-8 rounded-full" loading="lazy"
+                                        src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png">
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="truncate font-medium text-gray-900">
@@ -237,7 +335,8 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-shrink-0">
-                                    <img alt="Neil image" class="h-8 w-8 rounded-full" loading="lazy" src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png">
+                                    <img alt="Neil image" class="h-8 w-8 rounded-full" loading="lazy"
+                                        src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png">
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="truncate font-medium text-gray-900">
@@ -255,7 +354,8 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-shrink-0">
-                                    <img alt="Neil image" class="h-8 w-8 rounded-full" loading="lazy" src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png">
+                                    <img alt="Neil image" class="h-8 w-8 rounded-full" loading="lazy"
+                                        src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png">
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="truncate font-medium text-gray-900">
@@ -273,7 +373,8 @@
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-shrink-0">
-                                    <img alt="Neil image" class="h-8 w-8 rounded-full" loading="lazy" src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png">
+                                    <img alt="Neil image" class="h-8 w-8 rounded-full" loading="lazy"
+                                        src="https://flowbite-admin-dashboard.vercel.app/images/users/neil-sims.png">
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="truncate font-medium text-gray-900">
@@ -294,11 +395,14 @@
             <!-- Card Footer -->
             <div class="mt-5 flex items-center justify-between border-t border-gray-200 pt-3 sm:pt-6">
                 <div>
-                    <button class="inline-flex items-center rounded-lg p-2 text-center text-sm font-medium text-gray-500 hover:text-gray-900" data-dropdown-toggle="stats-dropdown" type="button">Last 7 days
+                    <button
+                        class="inline-flex items-center rounded-lg p-2 text-center text-sm font-medium text-gray-500 hover:text-gray-900"
+                        data-dropdown-toggle="stats-dropdown" type="button">Last 7 days
                         @svg('tabler-chevron-down', 'w-5 h-5 ml-1')
                     </button>
                     <!-- Dropdown menu -->
-                    <div class="z-50 my-4 hidden list-none divide-y divide-gray-100 rounded bg-white shadow" id="stats-dropdown">
+                    <div class="z-50 my-4 hidden list-none divide-y divide-gray-100 rounded bg-white shadow"
+                        id="stats-dropdown">
                         <div class="px-4 py-3" role="none">
                             <p class="truncate text-sm font-medium text-gray-900" role="none">
                                 Sep 16, 2021 - Sep 22, 2021
@@ -306,28 +410,35 @@
                         </div>
                         <ul class="py-1" role="none">
                             <li>
-                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Hôm qua</a>
+                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                    role="menuitem">Hôm qua</a>
                             </li>
                             <li>
-                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Hôm nay</a>
+                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                    role="menuitem">Hôm nay</a>
                             </li>
                             <li>
-                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Last 7 days</a>
+                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                    role="menuitem">Last 7 days</a>
                             </li>
                             <li>
-                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Last 30 days</a>
+                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                    role="menuitem">Last 30 days</a>
                             </li>
                             <li>
-                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Last 90 days</a>
+                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                    role="menuitem">Last 90 days</a>
                             </li>
                         </ul>
                         <div class="py-1" role="none">
-                            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Custom...</a>
+                            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                role="menuitem">Custom...</a>
                         </div>
                     </div>
                 </div>
                 <div class="flex-shrink-0">
-                    <a class="text-primary-700 inline-flex items-center rounded-lg p-2 text-xs font-medium uppercase hover:bg-gray-100 sm:text-sm" href="#">
+                    <a class="text-primary-700 inline-flex items-center rounded-lg p-2 text-xs font-medium uppercase hover:bg-gray-100 sm:text-sm"
+                        href="#">
                         Full Report
                         @svg('tabler-chevron-right', 'w-4 h-4 ml-2')
                     </a>
@@ -399,7 +510,8 @@
         <div class="mb-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6 xl:mb-0">
             <div class="mb-4 flex items-center justify-between">
                 <h3 class="text-lg font-semibold text-gray-900">Smart chat</h3>
-                <a class="text-primary-700 inline-flex items-center rounded-lg p-2 text-sm font-medium hover:bg-gray-100" href="#">
+                <a class="text-primary-700 inline-flex items-center rounded-lg p-2 text-sm font-medium hover:bg-gray-100"
+                    href="#">
                     View all
                 </a>
             </div>
@@ -409,18 +521,23 @@
                     <footer class="mb-2 flex items-center justify-between">
                         <div class="flex items-center">
                             <p class="mr-3 inline-flex items-center text-sm font-semibold text-gray-900">
-                                <img alt="Michael Gough" class="mr-2 h-6 w-6 rounded-full" loading="lazy" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg">Michael
+                                <img alt="Michael Gough" class="mr-2 h-6 w-6 rounded-full" loading="lazy"
+                                    src="https://flowbite.com/docs/images/people/profile-picture-2.jpg">Michael
                                 Gough
                             </p>
-                            <p class="text-sm text-gray-600"><time datetime="2022-02-08" pubdate title="February 8th, 2022">
+                            <p class="text-sm text-gray-600"><time datetime="2022-02-08" pubdate
+                                    title="February 8th, 2022">
                                     01/03/2023 4:15 PM</time></p>
                         </div>
-                        <button class="inline-flex items-center rounded-lg bg-white p-2 text-center text-sm font-medium text-gray-500 hover:bg-gray-100 focus:ring-0" data-dropdown-toggle="dropdownComment1" id="dropdownComment1Button" type="button">
+                        <button
+                            class="inline-flex items-center rounded-lg bg-white p-2 text-center text-sm font-medium text-gray-500 hover:bg-gray-100 focus:ring-0"
+                            data-dropdown-toggle="dropdownComment1" id="dropdownComment1Button" type="button">
                             @svg('tabler-dots', 'w-5 h-5')
                             <span class="sr-only">Comment settings</span>
                         </button>
                         <!-- Dropdown menu -->
-                        <div class="z-10 hidden w-36 divide-y divide-gray-100 rounded bg-white shadow" id="dropdownComment1">
+                        <div class="z-10 hidden w-36 divide-y divide-gray-100 rounded bg-white shadow"
+                            id="dropdownComment1">
                             <ul aria-labelledby="dropdownMenuIconHorizontalButton" class="py-1 text-sm text-gray-700">
                                 <li>
                                     <a class="block px-4 py-2 hover:bg-gray-100" href="#">Edit</a>
@@ -443,8 +560,12 @@
                     <form>
                         <label class="sr-only" for="chat">Your message</label>
                         <div class="mb-5 flex items-center">
-                            <textarea class="focus:ring-primary-0 focus:border-primary-500 mr-4 block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900" id="chat" placeholder="Reply in thread..." rows="1"></textarea>
-                            <button class="text-primary-600 hover:bg-primary-100 inline-flex cursor-pointer justify-center rounded-lg" type="submit">
+                            <textarea
+                                class="focus:ring-primary-0 focus:border-primary-500 mr-4 block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900"
+                                id="chat" placeholder="Reply in thread..." rows="1"></textarea>
+                            <button
+                                class="text-primary-600 hover:bg-primary-100 inline-flex cursor-pointer justify-center rounded-lg"
+                                type="submit">
                                 @svg('tabler-send-2', 'w-7 h-7 text-gray-500')
                                 <span class="sr-only">Send message</span>
                             </button>
@@ -475,13 +596,17 @@
                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                     @svg('tabler-calendar-week', 'w-5 h-5 text-gray-500')
                                 </div>
-                                <input class="focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:ring-0" name="start" placeholder="From" type="text">
+                                <input
+                                    class="focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:ring-0"
+                                    name="start" placeholder="From" type="text">
                             </div>
                             <div class="relative">
                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                     @svg('tabler-calendar-week', 'w-5 h-5 text-gray-500')
                                 </div>
-                                <input class="focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:ring-0" name="end" placeholder="To" type="text">
+                                <input
+                                    class="focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pl-10 text-sm text-gray-900 focus:ring-0"
+                                    name="end" placeholder="To" type="text">
                             </div>
                         </div>
                     </div>
@@ -490,11 +615,14 @@
                 <!-- Card Footer -->
                 <div class="mt-4 flex items-center justify-between border-t border-gray-200 pt-3 sm:pt-6">
                     <div>
-                        <button class="inline-flex items-center rounded-lg p-2 text-center text-sm font-medium text-gray-500 hover:text-gray-900" data-dropdown-toggle="sales-by-category-dropdown" type="button">Last 7 days
+                        <button
+                            class="inline-flex items-center rounded-lg p-2 text-center text-sm font-medium text-gray-500 hover:text-gray-900"
+                            data-dropdown-toggle="sales-by-category-dropdown" type="button">Last 7 days
                             @svg('tabler-chevron-down', 'w-5 h-5 ml-1')
                         </button>
                         <!-- Dropdown menu -->
-                        <div class="z-50 my-4 hidden list-none divide-y divide-gray-100 rounded bg-white shadow" id="sales-by-category-dropdown">
+                        <div class="z-50 my-4 hidden list-none divide-y divide-gray-100 rounded bg-white shadow"
+                            id="sales-by-category-dropdown">
                             <div class="px-4 py-3" role="none">
                                 <p class="truncate text-sm font-medium text-gray-900" role="none">
                                     Sep 16, 2021 - Sep 22, 2021
@@ -502,28 +630,35 @@
                             </div>
                             <ul class="py-1" role="none">
                                 <li>
-                                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Yesterday</a>
+                                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                        role="menuitem">Yesterday</a>
                                 </li>
                                 <li>
-                                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Today</a>
+                                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                        role="menuitem">Today</a>
                                 </li>
                                 <li>
-                                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Last 7 days</a>
+                                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                        role="menuitem">Last 7 days</a>
                                 </li>
                                 <li>
-                                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Last 30 days</a>
+                                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                        role="menuitem">Last 30 days</a>
                                 </li>
                                 <li>
-                                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Last 90 days</a>
+                                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                        role="menuitem">Last 90 days</a>
                                 </li>
                             </ul>
                             <div class="py-1" role="none">
-                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#" role="menuitem">Custom...</a>
+                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="#"
+                                    role="menuitem">Custom...</a>
                             </div>
                         </div>
                     </div>
                     <div class="flex-shrink-0">
-                        <a class="text-primary-700 inline-flex items-center rounded-lg p-2 text-xs font-medium uppercase hover:bg-gray-100 sm:text-sm" href="#">
+                        <a class="text-primary-700 inline-flex items-center rounded-lg p-2 text-xs font-medium uppercase hover:bg-gray-100 sm:text-sm"
+                            href="#">
                             Sales Report
                             @svg('tabler-chevron-right', 'w-4 h-4 ml-2')
                         </a>
@@ -536,7 +671,8 @@
                         <h3 class="font-normal text-gray-500">Traffic by device</h3>
                         <span class="text-2xl font-bold leading-none text-gray-900 sm:text-3xl">Desktop</span>
                     </div>
-                    <a class="text-primary-700 inline-flex items-center rounded-lg p-2 text-xs font-medium uppercase hover:bg-gray-100 sm:text-sm" href="#">
+                    <a class="text-primary-700 inline-flex items-center rounded-lg p-2 text-xs font-medium uppercase hover:bg-gray-100 sm:text-sm"
+                        href="#">
                         Full report
                         @svg('tabler-chevron-right', 'w-4 h-4 ml-2')
                     </a>
