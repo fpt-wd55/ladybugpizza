@@ -21,9 +21,9 @@
         </div>
         <div>
             <ul class="space-y-4">
+                <li><a class="text-sm transition hover:text-red-500" href="{{ route('client.contact') }}">Liên hệ</a></li>
                 <li><a class="text-sm font-medium uppercase transition hover:text-red-500" href="{{ route('client.product.menu') }}">GIỚI THIỆU</a></li>
                 <li><a class="text-sm transition hover:text-red-500" href="{{ route('client.dynamic-page', 've-chung-toi') }}">Về chúng tôi</a></li>
-                <li><a class="text-sm transition hover:text-red-500" href="{{ route('client.contact') }}">Liên hệ</a></li>
                 <li><a class="text-sm transition hover:text-red-500" href="{{ route('client.dynamic-page', 'huong-dan-mua-hang') }}">Hướng dẫn mua hàng</a></li>
                 <li><a class="text-sm transition hover:text-red-500" href="{{ route('client.dynamic-page', 'chinh-sach-va-dieu-khoan') }}">Chính sách và điều khoản</a></li>
             </ul>
