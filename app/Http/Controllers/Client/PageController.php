@@ -8,25 +8,20 @@ use App\Http\Requests\ContactRequest;
 use App\Mail\Contact;
 use App\Mail\ThankYou;
 use App\Models\Notification;
+use App\Models\Page;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class PageController extends Controller
 {
-    public function aboutUs()
-    {
-        return view('clients.about-us');
-    }
+    public function dynamicPage(String $slug){ 
+        $page = Page::where('slug', $slug)->where('status', 1)->first(); 
 
-    public function policies()
-    {
-        return view('clients.policies');
-    }
-
-    public function manual()
-    {
-        return view('clients.manual');
-    }
+        if($page){
+            return view('clients.dynamic-page', compact('page'));
+        }
+        return view('shared.errors.404');
+    } 
 
     public function render($page) {
         $content = 'abc';

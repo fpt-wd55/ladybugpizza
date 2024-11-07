@@ -26,7 +26,7 @@
             </button>
             <ul class="space-y-2 text-sm font-medium">
                 <li>
-                    <a class="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white" href="{{ route('client.about-us') }}">
+                    <a class="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white" href="{{ route('client.dynamic-page', 've-chung-toi') }}">
                         @svg('tabler-info-circle', 'icon-sm mr-2')
                         <span>Về chúng tôi</span>
                     </a>
@@ -38,13 +38,13 @@
                     </a>
                 </li>
                 <li>
-                    <a class="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white" href="{{ route('client.manual') }}">
+                    <a class="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white" href="{{ route('client.dynamic-page', 'huong-dan-mua-hang') }}">
                         @svg('tabler-help', 'icon-sm mr-2')
                         <span>Hướng dẫn mua hàng</span>
                     </a>
                 </li>
                 <li>
-                    <a class="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white" href="{{ route('client.policies') }}">
+                    <a class="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white" href="{{ route('client.dynamic-page', 'chinh-sach-va-dieu-khoan') }}">
                         @svg('tabler-shield-check', 'icon-sm mr-2')
                         <span>Chính sách và điều khoản</span>
                     </a>
