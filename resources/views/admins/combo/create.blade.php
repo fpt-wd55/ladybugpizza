@@ -12,7 +12,7 @@
                         <div>
                             <label for="attribute_name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên
                                 combo</label>
-                            <input type="text" name="attribute_name" id="attribute_name" placeholder="Tên thuộc tính"
+                            <input type="text" name="attribute_name" id="attribute_name" placeholder="Tên combo"
                                 value="{{ old('attribute_name') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                             @error('attribute_name')
@@ -134,10 +134,10 @@
                         </div>
                     </div>
                     <div>
-                        <div id="pizzaContainer">
-                            <div class="m-3 p-3 card">
-                                <h2 class="pb-2">Pizza</h2>
-                                <div class="flex flex-wrap justify-between gap-3 py-3">
+                        <div class="m-3 p-3 card">
+                            <h2 class="pb-2">Pizza</h2>
+                            <div id="pizza-container">
+                                <div class="pizza-item flex flex-wrap justify-between gap-3 py-3">
                                     <div class="flex-1">
                                         <select name="" id="" class="input">
                                             <option value="">Chọn pizza</option>
@@ -178,13 +178,14 @@
                                         </button>
                                         <input
                                             class="w-12 border-b border-t border-gray-200 bg-white px-4 py-1 text-center text-sm font-medium text-gray-900 focus:outline-none quantity-input"
-                                            name="quantity" value="1">
+                                            name="quantity_${pizzaCounter}" value="1">
                                         <button
                                             class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500 increment"
                                             type="button">
                                             @svg('tabler-plus', 'icon-sm')
                                         </button>
                                     </div>
+
                                     <div class="flex gap-3">
                                         <button type="button" class="flex button-blue add-pizza-field">
                                             Thêm
@@ -206,13 +207,14 @@
                                                 d="M19 9l-7 7-7-7" />
                                         </svg>
                                     </label>
-                                    <div class="overflow-hidden transition-all duration-300 max-h-0 peer-checked:max-h-96">
+                                    <div
+                                        class="overflow-hidden transition-all duration-300 max-h-0 peer-checked:max-h-96 toppings-container">
                                         <div class="flex flex-wrap justify-between gap-2 p-4">
                                             @foreach ($toppings as $topping)
                                                 <div class="flex items-center me-4 gap-2">
-                                                    <input type="checkbox" name="{{ $topping->name }}"
-                                                        id="{{ $topping->name }}" class="input-checkbox">
-                                                    <label for="{{ $topping->name }}"
+                                                    <input type="checkbox" id="topping_{{ $topping->id }}"
+                                                        name="topping_{{ $topping->id }}" class="input-checkbox">
+                                                    <label for="topping_{{ $topping->id }}"
                                                         class="">{{ $topping->name }}</label>
                                                 </div>
                                             @endforeach
@@ -277,16 +279,111 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const pizzaContainer = document.getElementById('pizzaContainer');
             const categoryContainer = document.getElementById('category-container');
             const categoryOptionsCache = {};
+            let pizzaCounter = 1;
+            const pizzaContainer = document.getElementById('pizza-container');
+
+            pizzaContainer.addEventListener('click', function(event) {
+                if (event.target.classList.contains('add-pizza-field')) {
+                    const pizzaItemHTML = `
+            <div class="pizza-wrapper" data-pizza-id="${pizzaCounter}">
+                <div class="flex flex-wrap justify-between gap-3 py-3 pizza-item">
+                    <div class="flex-1">
+                        <select name="pizza" class="input pizza-select">
+                            <option value="">Chọn pizza</option>
+                            @foreach ($pizzas as $pizza)
+                                <option value="{{ $pizza->id }}">{{ $pizza->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="flex-1">
+                        <select name="base" class="input base-select">
+                            <option value="">Chọn đế</option>
+                            @foreach ($bases as $base)
+                                <option value="{{ $base->id }}">{{ $base->value }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="flex-1">
+                        <select name="size" class="input size-select">
+                            <option value="">Chọn size</option>
+                            @foreach ($sizes as $size)
+                                <option value="{{ $size->id }}">{{ $size->value }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="flex-1">
+                        <select name="sauce" class="input sauce-select">
+                            <option value="">Chọn sốt</option>
+                            @foreach ($sauces as $sauce)
+                                <option value="{{ $sauce->id }}">{{ $sauce->value }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="flex rounded-md" role="group">
+                        <button class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500 decrement" type="button">
+                            @svg('tabler-minus', 'icon-sm')
+                        </button>
+                        <input class="w-12 border-b border-t border-gray-200 bg-white px-4 py-1 text-center text-sm font-medium text-gray-900 focus:outline-none quantity-input" name="quantity" value="1">
+                        <button class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500 increment" type="button">
+                            @svg('tabler-plus', 'icon-sm')
+                        </button>
+                    </div>
+                    <div class="flex gap-3">
+                        <button type="button" class="flex button-blue add-pizza-field">Thêm</button>
+                        <button type="button" class="flex button-red remove-pizza-field" data-id="${pizzaCounter}">Xóa</button>
+                    </div>
+                </div>
+                <div class="w-full">
+                    <input type="checkbox" class="hidden peer" id="accordion-toggle-${pizzaCounter}" data-id="${pizzaCounter}">
+                    <label for="accordion-toggle-${pizzaCounter}" data-id="${pizzaCounter}"
+                           class="w-full flex gap-3 cursor-pointer items-center px-5 text-slate-800">
+                        Toppings
+                        <svg class="w-5 h-5 transition-transform transform peer-checked:rotate-180"
+                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </label>
+                    <div class="overflow-hidden transition-all duration-300 max-h-0 peer-checked:max-h-96 toppings-container">
+                        <div class="flex flex-wrap justify-between gap-2 p-4">
+                            @foreach ($toppings as $topping)
+                                <div class="flex items-center me-4 gap-2">
+                                    <input type="checkbox" id="topping_${pizzaCounter}_{{ $topping->id }}" name="topping_${pizzaCounter}_{{ $topping->id }}" class="input-checkbox">
+                                    <label for="topping_${pizzaCounter}_{{ $topping->id }}">{{ $topping->name }}</label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+                    const pizzaItem = document.createElement('div');
+                    pizzaItem.innerHTML = pizzaItemHTML;
+                    pizzaContainer.appendChild(pizzaItem);
+                    setupQuantityButtons(pizzaItem.querySelectorAll('.increment, .decrement'));
+                    pizzaCounter++;
+                }
+
+                if (event.target.classList.contains('remove-pizza-field')) {
+                    const pizzaId = event.target.getAttribute('data-id');
+                    const pizzaWrapper = pizzaContainer.querySelector(
+                        `.pizza-wrapper[data-pizza-id="${pizzaId}"]`);
+                    if (pizzaWrapper) {
+                        pizzaWrapper.remove();
+                    }
+                }
+            });
 
             function setupQuantityButtons(buttons) {
                 buttons.forEach(button => {
                     button.addEventListener('click', function() {
-                        const quantityInput = this.parentElement.querySelector('.quantity-input');
+                        const quantityInput = this.parentElement.querySelector(
+                            '.quantity-input');
                         let currentValue = parseInt(quantityInput.value) || 0;
-                        quantityInput.value = this.classList.contains('increment') ? currentValue +
+                        quantityInput.value = this.classList.contains('increment') ?
+                            currentValue +
                             1 : Math.max(currentValue - 1, 1);
                     });
                 });
@@ -303,7 +400,8 @@
                         const categoryName = categoryItem.querySelector('h2').textContent;
                         const newField = createNewField(categoryId, categoryName, categoryItem);
                         categoryItem.appendChild(newField);
-                        setupQuantityButtons(newField.querySelectorAll('.increment, .decrement'));
+                        setupQuantityButtons(newField.querySelectorAll(
+                            '.increment, .decrement'));
                     }
                     if (event.target.classList.contains('remove-field')) {
                         event.target.closest('.new-item')?.remove();
@@ -313,7 +411,8 @@
 
             function createNewField(categoryId, categoryName, categoryItem) {
                 if (!categoryOptionsCache[categoryId]) {
-                    categoryOptionsCache[categoryId] = Array.from(categoryItem.querySelectorAll('select option'))
+                    categoryOptionsCache[categoryId] = Array.from(categoryItem.querySelectorAll(
+                            'select option'))
                         .map(option => `<option value="${option.value}">${option.text}</option>`)
                         .join('');
                 }
