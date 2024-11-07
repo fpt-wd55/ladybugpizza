@@ -60,7 +60,8 @@
                         @svg('tabler-filter-filled', 'w-5 h-5 me-2')
                         Bộ lọc
                     </button>
-                    <form action="#" method="get" id="filterDropdown" tabindex="-1" aria-hidden="true"
+                    <form action="{{ route('admin.products.filter') }}" method="get" id="filterDropdown" tabindex="-1"
+                        aria-hidden="true"
                         class="fixed inset-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-modal md:h-full">
                         <div class="relative w-full h-full max-w-2xl md:h-auto">
                             <!-- Modal content -->
@@ -110,29 +111,12 @@
                                                 <label for="inactive"
                                                     class="ml-2 text-sm font-medium text-gray-900">Khóa</label>
                                             </li>
-                                            <li class="flex items-center">
-                                                <input id="active" type="checkbox" name="filter_inventory[]"
-                                                    value="1"
-                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                    @if (in_array(1, request()->input('filter_inventory', []))) checked @endif>
-                                                <label for="active" class="ml-2 text-sm font-medium text-gray-900">Còn
-                                                    hàng</label>
-                                            </li>
-                                            <li class="flex items-center">
-                                                <input id="inactive" type="checkbox" name="filter_inventory[]"
-                                                    value="2"
-                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                    @if (in_array(2, request()->input('filter_inventory', []))) checked @endif>
-                                                <label for="inactive" class="ml-2 text-sm font-medium text-gray-900">Hết
-                                                    hàng</label>
-                                            </li>
                                         </div>
                                     </ul>
                                     <h6 class="my-3 text-sm font-medium text-gray-900">Sản phẩm</h6>
                                     <ul class="space-y-2 text-sm">
                                         <li class="flex items-center">
-                                            <input id="is_featured" type="checkbox" name="filter_is_featured"
-                                                value="1"
+                                            <input id="is_featured" type="checkbox" name="filter_is_featured" value="1"
                                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
                                                 @if (request()->input('filter_is_featured') == 1) checked @endif>
                                             <label for="is_featured" class="ml-2 text-sm font-medium text-gray-900">Sản
@@ -170,7 +154,7 @@
                                                 <input id="active" type="checkbox" name="filter_rating[]"
                                                     value="{{ $i }}"
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                    @if (in_array(1, request()->input('filter_rating', []))) checked @endif>
+                                                    @if (in_array($i, request()->input('filter_rating', []))) checked @endif>
                                                 <label for="active"
                                                     class="ml-2 text-sm font-medium text-gray-900 flex items-center gap-1">
                                                     <div class="flex items-center gap-0.3">

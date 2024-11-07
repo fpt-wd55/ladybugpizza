@@ -43,7 +43,7 @@
                 </div>
                 <div
                     class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                    <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.categories.search') }}">
+                    <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.promotions.search') }}">
                         <div class="relative w-full">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                 @svg('tabler-search', 'w-5 h-5 text-gray-400')
@@ -103,7 +103,7 @@
                                                 <li class="flex items-center">
                                                     <input type="checkbox" name="filter_range[]" value="0"
                                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                        @if (in_array(1, request()->input('filter_range', []))) checked @endif>
+                                                        @if (in_array(0, request()->input('filter_range', []))) checked @endif>
                                                     <label for="active"
                                                         class="ml-2 text-sm font-medium text-gray-900">Chung</label>
                                                 </li>
@@ -112,14 +112,13 @@
                                                         <input type="checkbox" name="filter_range[]"
                                                             value="{{ $rank->id }}"
                                                             class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                            @if (in_array(2, request()->input('filter_range', []))) checked @endif>
-                                                        <label for="inactive"
-                                                            class="ml-2 text-sm font-medium text-gray-900">Hạng
+                                                            @if (in_array($rank->id, request()->input('filter_range', []))) checked @endif>
+                                                        <label class="ml-2 text-sm font-medium text-gray-900">Hạng
                                                             {{ $rank->name }}</label>
                                                     </li>
                                                 @endforeach
                                             </div>
-                                        </ul> 
+                                        </ul>
                                         <h6 class="my-3 text-sm font-medium text-gray-900">Thời gian</h6>
                                         <div class="flex items-center">
                                             <div>

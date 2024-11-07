@@ -33,7 +33,7 @@ class ProductRequest extends FormRequest
     private function rulesForCreate()
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:products,name',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'description' => 'required|string',
             'category_id' => 'required|exists:categories,id',
@@ -47,17 +47,19 @@ class ProductRequest extends FormRequest
 
     private function rulesForUpdate()
     {
+        $productId = $this->route('product') ? $this->route('product')->id : null;
         return [
-            'name' => 'required|string|max:255',
+           'name' => 'required|string|max:255|unique:products,name,' . $productId,
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'description' => 'required|string',
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
             'discount_price' => 'nullable|numeric|min:0|lte:price',
             'quantity' => 'required_if:category_id,!=,null|integer|min:0',
-            'sku' => 'required|string|min:10|max:15|unique:products,sku,' . $this->route('product')->id,
+            'sku' => 'required|string|min:10|max:15|unique:products,sku,' . $productId,
         ];
     }
+    
 
     public function messages(): array
     {
@@ -65,6 +67,7 @@ class ProductRequest extends FormRequest
             'name.required' => 'Vui lòng nhập tên sản phẩm',
             'name.string' => 'Tên sản phẩm phải là chuỗi',
             'name.max' => 'Tên sản phẩm không được vượt quá 255 ký tự',
+            'name.unique' => 'Tên sản phẩm đã tồn tại',
             'image.required' => 'Vui lòng chọn ảnh sản phẩm',
             'image.image' => 'Ảnh sản phẩm phải là ảnh',
             'image.mimes' => 'Ảnh sản phẩm phải có định dạng jpeg, png, jpg, gif, svg, webp',

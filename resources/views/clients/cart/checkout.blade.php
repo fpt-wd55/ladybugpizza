@@ -8,7 +8,6 @@
             <div class="card mb-12 p-4 md:p-8">
                 <p class="title">THANH TOÁN</p>
                 <div class="grid grid-cols-1 gap-8 lg:grid-cols-5">
-
                     {{-- Thông tin nhận hàng --}}
                     <div class="col-span-3">
                         <div class="mb-8">

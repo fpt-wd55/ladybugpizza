@@ -57,78 +57,79 @@
                         <input class="input ps-10" name="search" placeholder="Tìm kiếm..." type="text" />
                     </div>
                 </form>
-                <div class="flex w-full items-center space-x-3 md:w-auto">
-                    <button class="hover:text-primary-700 flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-0 md:w-auto" data-dropdown-toggle="filterDropdown" id="filterDropdownButton" type="button">
+                <div class="flex items-center w-full md:w-auto">
+                    <button data-modal-target="filterDropdown" data-modal-toggle="filterDropdown"
+                        class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
+                        type="button">
                         @svg('tabler-filter-filled', 'w-5 h-5 me-2')
                         Bộ lọc
-                        @svg('tabler-chevron-down', 'w-5 h-5 ms-3')
                     </button>
-                    <div class="z-10 hidden w-96 rounded-lg bg-white p-3 shadow" id="filterDropdown">
-                        <form action="#" aria-labelledby="filterDropdownButton">
-                            <h6 class="mb-3 text-sm font-medium text-gray-900">Vai trò</h6>
-                            <ul class="space-y-2 text-sm">
-                                <li class="flex items-center">
-                                    <input class="text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" id="admin" type="checkbox" value="filter-role-admin">
-                                    <label class="ml-2 text-sm font-medium text-gray-900" for="admin">Quản trị
-                                        viên</label>
-                                </li>
-                                <li class="flex items-center">
-                                    <input class="text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" id="client" type="checkbox" value="filter-role-client">
-                                    <label class="ml-2 text-sm font-medium text-gray-900" for="client">Khách hàng</label>
-                                </li>
-                            </ul>
-                            <h6 class="my-3 text-sm font-medium text-gray-900">Giới tính</h6>
-                            <ul class="space-y-2 text-sm">
-                                <li class="flex items-center">
-                                    <input class="text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" id="male" type="checkbox" value="filter-gender-male">
-                                    <label class="ml-2 text-sm font-medium text-gray-900" for="male">Nam</label>
-                                </li>
-                                <li class="flex items-center">
-                                    <input class="text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" id="female" type="checkbox" value="filter-gender-female">
-                                    <label class="ml-2 text-sm font-medium text-gray-900" for="female">Nữ</label>
-                                </li>
-                                <li class="flex items-center">
-                                    <input class="text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" id="other" type="checkbox" value="filter-gender-other">
-                                    <label class="ml-2 text-sm font-medium text-gray-900" for="other">Khac</label>
-                                </li>
-                            </ul>
-                            <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
-                            <ul class="space-y-2 text-sm">
-                                <li class="flex items-center">
-                                    <input class="text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" id="active" type="checkbox" value="filter-status-active">
-                                    <label class="ml-2 text-sm font-medium text-gray-900" for="active">Hoạt động</label>
-                                </li>
-                                <li class="flex items-center">
-                                    <input class="text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" id="inactive" type="checkbox" value="filter-status-inactive">
-                                    <label class="ml-2 text-sm font-medium text-gray-900" for="inactive">Khóa</label>
-                                </li>
-                            </ul>
-                            <h6 class="my-3 text-sm font-medium text-gray-900">Ngày sinh</h6>
-                            <div class="flex items-center">
-                                <div>
-                                    <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 ps-3 text-sm text-gray-900 focus:ring-0" name="filter-birthday-start" placeholder="mm/dd/yyyy" type="date">
+                    <form action="{{ route('admin.banner.filter') }}" method="get" id="filterDropdown" tabindex="-1"
+                        aria-hidden="true"
+                        class="fixed inset-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-modal md:h-full">
+                        <div class="relative w-full h-full max-w-xl md:h-auto">
+                            <!-- Modal content -->
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
+                                <!-- Modal header -->
+                                <div class="flex items-start justify-between px-6 py-4 rounded-t">
+                                    <h3 class="text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                        Bộ lọc
+                                    </h3>
+                                    <button type="button"
+                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        data-modal-toggle="filterDropdown">
+                                        @svg('tabler-x', 'w-5 h-5')
+                                    </button>
                                 </div>
-                                <span class="mx-4 text-gray-500">-</span>
-                                <div>
-                                    <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 ps-3 text-sm text-gray-900 focus:ring-0" name="filter-birthday-end" placeholder="mm/dd/yyyy" type="date">
+                                <!-- Modal body -->
+                                <div class="px-4 md:px-6">
+                                    <h6 class="my-3 text-sm font-medium text-gray-900">Loại trang</h6>
+                                    <ul class="space-y-2 text-sm">
+                                        <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+                                            <li class="flex items-center">
+                                                <input id="local" type="checkbox" name="filter_is_local_page[]" value="1"
+                                                    @if (in_array(1, request()->input('filter_is_local_page', []))) checked @endif
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                                <label for="local" class="ml-2 text-sm font-medium text-gray-900">Trang cục bộ</label>
+                                            </li>
+                                            <li class="flex items-center">
+                                                <input id="external" type="checkbox" name="filter_is_local_page[]" value="2"
+                                                    @if (in_array(2, request()->input('filter_is_local_page', []))) checked @endif
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                                <label for="external" class="ml-2 text-sm font-medium text-gray-900">Trang bên ngoài</label>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                    
+                                    <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
+                                    <ul class="space-y-2 text-sm">
+                                        <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+                                            <li class="flex items-center">
+                                                <input id="active" type="checkbox" name="filter_status[]" value="1"
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                    @if (in_array(1, request()->input('filter_status', []))) checked @endif>
+                                                <label for="active" class="ml-2 text-sm font-medium text-gray-900">Hoạt động</label>
+                                            </li>
+                                            <li class="flex items-center">
+                                                <input id="inactive" type="checkbox" name="filter_status[]" value="2"
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                    @if (in_array(2, request()->input('filter_status', []))) checked @endif>
+                                                <label for="inactive" class="ml-2 text-sm font-medium text-gray-900">Khóa</label>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                    
                                 </div>
-                            </div>
-                            <h6 class="my-3 text-sm font-medium text-gray-900">Ngày tham gia</h6>
-                            <div class="flex items-center">
-                                <div>
-                                    <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 ps-3 text-sm text-gray-900 focus:ring-0" name="filter-created-start" placeholder="mm/dd/yyyy" type="date">
-                                </div>
-                                <span class="mx-4 text-gray-500">-</span>
-                                <div>
-                                    <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 ps-3 text-sm text-gray-900 focus:ring-0" name="filter-created-end" placeholder="mm/dd/yyyy" type="date">
-                                </div>
-                            </div>
 
-                            <button class="button-red mt-5 w-full" type="submit">
-                                Lọc
-                            </button>
-                        </form>
-                    </div>
+                                <!-- Modal footer -->
+                                <div class="flex items-center p-6 space-x-4 rounded-b dark:border-gray-600">
+                                    <button type="submit" class="button-red">
+                                        Lọc banner
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use App\Models\Order;
-use App\Models\OrderStatus; 
-use Illuminate\Http\Request; 
+use App\Models\OrderStatus;
+use App\Models\PaymentMethod;
+use App\Models\Role;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -25,8 +27,9 @@ class OrderController extends Controller
             })->latest('id')->paginate(10);
 
         $orderStatuses = OrderStatus::all();
+        $paymentMethods = PaymentMethod::all();
         $invoices = Invoice::all();
-        return view('admins.order.index', compact('orders', 'invoices', 'orderStatuses'));
+        return view('admins.order.index', compact('orders', 'invoices', 'orderStatuses', 'paymentMethods'));
     }
 
     /**
@@ -75,9 +78,51 @@ class OrderController extends Controller
 
         return redirect()->route('admin.orders.edit', $id)->with('success', 'Trạng thái đã được cập nhật!');
     }
-    
+
     public function export()
     {
         $this->exportExcel(Order::all(), 'danhsachdonhang');
+    }
+
+    public function filter(Request $request)
+    {
+        $query = Order::query();
+
+        if (isset($request->filter_status)) {
+            $query->whereIn('order_status_id', $request->filter_status);
+        } 
+
+        if (isset($request->filter_paymentMethod)) {
+            $query->whereIn('payment_method_id', $request->filter_paymentMethod);
+        } 
+
+        if (isset($request->filter_amount_min)) {
+            $query->where('amount', '>=', $request->filter_amount_min);
+        }
+
+        if (isset($request->filter_amount_max)) {
+            $query->where('amount', '<=', $request->filter_amount_max);
+        }  
+
+        if (isset($request->filter_date_min)) {
+            $query->where('created_at', '>=', $request->filter_date_min);
+        }
+
+        if (isset($request->filter_date_max)) {
+            $query->where('created_at', '<=', $request->filter_date_max);
+        }    
+
+        $orders = $query->paginate(10);
+
+        $orders->appends(['filter_role' => $request->filter_role]);
+        $orders->appends(['filter_status' => $request->filter_status]);
+        $orders->appends(['filter_gender' => $request->filter_gender]);
+        $orders->appends(['filter_birthday_start' => $request->filter_birthday_start]);
+        $orders->appends(['filter_birthday_end' => $request->filter_birthday_end]);
+
+        $orderStatuses = OrderStatus::all();
+        $paymentMethods = PaymentMethod::all();
+        $invoices = Invoice::all();
+        return view('admins.order.index', compact('orders', 'invoices', 'orderStatuses', 'paymentMethods'));
     }
 }

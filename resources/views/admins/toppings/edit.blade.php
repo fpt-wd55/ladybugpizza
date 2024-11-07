@@ -4,10 +4,12 @@
 @section('content')
     {{ Breadcrumbs::render('admin.toppings.edit', $editTopping) }}
     <div>
+
         <form action="{{ route('admin.toppings.update', $editTopping) }}" class="w-full" method="post"
             enctype="multipart/form-data">
             @csrf
             @method('PUT')
+
             <div class="flex justify-between gap-2">
                 <div class="w-full h-10 mb-5">
                     <label for="name" class="label-lg">Tên</label>
@@ -16,17 +18,20 @@
                         <span style="color: red">{{ $message }}</span>
                     @enderror
                 </div>
+
                 <div class="w-full h-10 mb-5">
                     <label class="label-lg">Ảnh</label>
                     <div>
                         <input
                             class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
                             type="file" name="image">
-                        <a class="shrink-0" data-fslightbox="gallery" href="{{ asset('storage/uploads/toppings/' . $editTopping->image) }}">
+                        <a class="shrink-0" data-fslightbox="gallery"
+                            href="{{ asset('storage/uploads/toppings/' . $editTopping->image) }}">
                             <img loading="lazy" src="{{ asset('storage/uploads/toppings/' . $editTopping->image) }}"
                                 class="img-sm mt-2 img-circle object-cover">
                         </a>
                     </div>
+                    
                     @error('image')
                         <span style="color: red">{{ $message }}</span>
                     @enderror

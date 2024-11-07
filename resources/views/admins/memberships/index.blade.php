@@ -58,7 +58,6 @@
                                     </li>
                                 @endforeach
                             </ul>
-
                             <button type="submit" class="button-red w-full mt-5">
                                 Lọc
                             </button>

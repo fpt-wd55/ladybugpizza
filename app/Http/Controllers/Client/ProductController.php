@@ -193,4 +193,8 @@ class ProductController extends Controller
 
         return back()->with('error', 'Sản phẩm không tồn tại!');
     }
+
+    public function showCombo(){
+       return view('clients.product.detail-combo');
+    }
 }

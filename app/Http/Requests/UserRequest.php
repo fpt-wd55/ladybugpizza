@@ -49,7 +49,7 @@ class UserRequest extends FormRequest
             'username' => 'sometimes|required|string|max:255|unique:users,username,' . $this->user->id,
             'fullname' => 'sometimes|required|string|max:255',
             'email' => 'sometimes|required|email|unique:users,email,' . $this->user->id,
-            'phone' => 'sometimes|required|string|max:255',
+            'phone' => 'sometimes|required|string|max:255|unique:users,phone,' . $this->user->id,
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'date_of_birth' => 'sometimes|required|date',
             'roleSelect' => 'sometimes|required|integer',
