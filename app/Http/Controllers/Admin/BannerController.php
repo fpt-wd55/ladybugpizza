@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Banner; 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BannerRequest;
 use Illuminate\Support\Facades\Storage;
@@ -139,4 +140,23 @@ class BannerController extends Controller
     public function export(){
         $this->exportExcel(Banner::all(), 'danhsachbanner');
     }
+    // bộ lọc 
+    public function filter(Request $request)
+{
+    $query = Banner::query();
+
+    if (isset($request->filter_is_local_page)) {
+        $query->whereIn('is_local_page', $request->filter_is_local_page);
+    }
+    if (isset($request->filter_status)) {
+        $query->whereIn('status', $request->filter_status);
+    }
+    $banners = $query->paginate(6);
+
+    $banners->appends(['filter_is_local_page' => $request->filter_is_local_page]);
+    $banners->appends(['filter_status' => $request->filter_status]);
+
+    return view('admins.banner.index', compact('banners'));
+}
+
 }

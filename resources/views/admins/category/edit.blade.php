@@ -34,9 +34,6 @@
                                 {{ $message }}</p>
                         @enderror
                     </div>
-
-
-
                     <div class="">
                         <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Trạng thái</label>
 

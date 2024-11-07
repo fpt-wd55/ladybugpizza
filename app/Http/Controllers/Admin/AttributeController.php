@@ -133,45 +133,44 @@ class AttributeController extends Controller
         $request->validate($rules, $messages);
 
         $validateStocks = function ($stocks, $prefix) use ($request) {
-            $stockRules = [];
-            $stockMessages = [];
+            ${$prefix . 'Rules'} = [];
+            ${$prefix . 'Messages'} = [];
 
             foreach ($stocks as $key => $value) {
-                $stockRules["{$prefix}.{$key}.attribute_value"] = 'required';
-                $stockRules["{$prefix}.{$key}.attribute_quantity"] = 'nullable|numeric';
-                $stockRules["{$prefix}.{$key}.attribute_type_price"] = 'required|numeric';
-                $stockRules["{$prefix}.{$key}.attribute_price"] = [
+                ${$prefix . 'Rules'}["{$prefix}.{$key}.attribute_value"] = 'required';
+                ${$prefix . 'Rules'}["{$prefix}.{$key}.attribute_quantity"] = 'nullable|numeric';
+                ${$prefix . 'Rules'}["{$prefix}.{$key}.attribute_type_price"] = 'required|numeric';
+                ${$prefix . 'Rules'}["{$prefix}.{$key}.attribute_price"] = [
                     'required',
                     'numeric',
                     function ($attribute, $value, $fail) use ($key, $request, $prefix) {
                         $typePrice = $request->{$prefix}[$key]['attribute_type_price'];
-                        if ($typePrice == 1 && ($value < 1 || $value > 100)) {
+                        if ($typePrice == 2 && ($value < 1 || $value > 100)) {
                             $fail('Giá trị phải nằm trong khoảng từ 1 đến 100');
-                        } elseif ($typePrice == 2 && $value <= 0) {
+                        } elseif ($typePrice == 1 && $value <= 0) {
                             $fail('Giá trị không hợp lệ');
                         }
                     }
                 ];
 
-                $stockMessages["{$prefix}.{$key}.attribute_value.required"] = 'Vui lòng nhập giá trị thuộc tính cho sản phẩm';
-                $stockMessages["{$prefix}.{$key}.attribute_quantity.numeric"] = 'Giá trị không hợp lệ';
-                $stockMessages["{$prefix}.{$key}.attribute_type_price.required"] = 'Vui lòng chọn loại giá';
-                $stockMessages["{$prefix}.{$key}.attribute_type_price.numeric"] = 'Giá trị không hợp lệ';
-                $stockMessages["{$prefix}.{$key}.attribute_price.required"] = 'Vui lòng nhập giá';
-                $stockMessages["{$prefix}.{$key}.attribute_price.numeric"] = 'Giá trị không hợp lệ';
+                ${$prefix . 'Messages'}["{$prefix}.{$key}.attribute_value.required"] = 'Vui lòng nhập giá trị thuộc tính cho sản phẩm';
+                ${$prefix . 'Messages'}["{$prefix}.{$key}.attribute_quantity.numeric"] = 'Giá trị không hợp lệ';
+                ${$prefix . 'Messages'}["{$prefix}.{$key}.attribute_type_price.required"] = 'Vui lòng chọn loại giá';
+                ${$prefix . 'Messages'}["{$prefix}.{$key}.attribute_type_price.numeric"] = 'Giá trị không hợp lệ';
+                ${$prefix . 'Messages'}["{$prefix}.{$key}.attribute_price.required"] = 'Vui lòng nhập giá';
+                ${$prefix . 'Messages'}["{$prefix}.{$key}.attribute_price.numeric"] = 'Giá trị không hợp lệ';
             }
 
-            $request->validate($stockRules, $stockMessages);
+            $request->validate(${$prefix . 'Rules'}, ${$prefix . 'Messages'}); 
         };
 
-        // if ($request->old_stocks) {
+        if ($request->old_stocks) {
         $validateStocks($request->old_stocks, 'old_stocks');
-        // }
+        }
 
         if ($request->stocks) {
             $validateStocks($request->stocks, 'stocks');
         }
-
 
         $attribute->update(
             [
@@ -277,6 +276,7 @@ class AttributeController extends Controller
 
         return redirect()->back()->with('error', 'Xóa thuộc tính thất bại');
     }
+
     public function export()
     {
         $this->exportExcel(Attribute::all(), 'danhsachthuoctinh');

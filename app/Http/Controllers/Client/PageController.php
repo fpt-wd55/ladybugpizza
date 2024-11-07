@@ -23,6 +23,15 @@ class PageController extends Controller
         return view('shared.errors.404');
     } 
 
+    public function render($page) {
+        $content = 'abc';
+
+        return view('clients.dynamic-page', [
+            'page'=> $page,
+            'content'=> $content
+        ]);
+    }
+
     public function contact()
     {
         $user = auth()->user();
@@ -54,6 +63,6 @@ class PageController extends Controller
 
         Mail::to($contactData['email'])->send(new ThankYou($contactData));
 
-        return back()->with('success', 'Gửi thông tin thành công');
+        return back()->with('success', 'Gửi thông tin liên hệ thành công!');
     }
 }

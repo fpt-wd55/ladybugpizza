@@ -1,7 +1,6 @@
 @extends('layouts.client')
 
 @section('title', 'Cài đặt')
-
 @section('content')
     <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
         <div class="lg:flex">

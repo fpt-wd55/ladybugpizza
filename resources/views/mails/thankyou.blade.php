@@ -83,7 +83,9 @@
         <p class="mt-4">Cảm ơn đã liên hệ với chúng tôi</p>
         <p>Xin chào {{ $contactData['fullname'] }},</p>
         <p>Cảm ơn bạn đã gửi thông tin đến chúng tôi. Chúng tôi đã nhận được tin nhắn với tiêu đề
-            "{{ $contactData['title'] }}".</p>
+            <strong>"{{ $contactData['title'] }}"</strong>.
+        </p>
+        <p>Với nội dung là: {{ $contactData['message'] }}.</p>
         <p>Nếu bạn cần thêm hỗ trợ, xin đừng ngần ngại liên hệ với chúng tôi.</p>
         <p>Trân trọng.</p>
     </div>

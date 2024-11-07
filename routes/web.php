@@ -28,7 +28,9 @@ use App\Http\Controllers\Client\PageController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
+use App\Models\Page;
 use Illuminate\Support\Facades\Route;
+use Laravel\Prompts\Concerns\Fallback;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,10 +43,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+$pages = Page::where('status', 1)->get();
+
+
+
 Route::prefix('/')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('client.home');
     Route::get('/menu', [ProductController::class, 'menu'])->name('client.product.menu');
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('client.product.show');
+    Route::get('/combo', [ProductController::class, 'showCombo'])->name('client.product.showCombo');
     Route::post('/product/favorite/{slug}', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
     Route::post('/product/cart/{slug}', [ProductController::class, 'addToCart'])->name('client.product.add-to-cart');
     Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
@@ -121,6 +128,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::resource('/addresses', AddressController::class);
     // Order
     Route::resource('/orders', AdminOrderController::class);
+    Route::get('/order/filter', [AdminOrderController::class, 'filter'])->name('orders.filter');
     Route::get('/order/search', [AdminOrderController::class, 'search'])->name('orders.search');
     Route::get('/order/export', [AdminOrderController::class, 'export'])->name('orders.export');
     // Route::resource('/carts', AdminCartController::class);
@@ -172,6 +180,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/banner/trash', [BannerController::class, 'trashList'])->name('trash.listBanner');
     Route::post('/banner/restore/{id}', [BannerController::class, 'trashRestore'])->name('trash.bannerRestore');
     Route::post('/banner/delete/{id}', [BannerController::class, 'trashForce'])->name('trash.bannerDelete');
+    Route::get('/banner/filter', [BannerController::class, 'filter'])->name('banner.filter');
     // Promotion
     Route::resource('/promotions', PromotionController::class);
     Route::get('/promotion/filter', [PromotionController::class, 'filter'])->name('promotions.filter');

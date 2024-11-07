@@ -24,7 +24,6 @@ class MembershipController extends Controller
                 $query->where('role_id', 2);
             })
             ->paginate(10);
-
         // Trả về view với dữ liệu memberships
         return view('admins.memberships.index', compact('memberships', 'ranks'));
     }
