@@ -1,12 +1,13 @@
 @extends('layouts.admin')
-@section('title', 'Trang | Thêm mới')
+@section('title', 'Trang | Sửa')
 @section('content')
-    {{ Breadcrumbs::render('admin.pages.create') }}
+    {{ Breadcrumbs::render('admin.pages.edit') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="p-4 mx-auto">
             <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm mới trang</h3>
-            <form action="{{ route('admin.pages.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.pages.update', $page) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 sm:grid-cols-2">
@@ -14,7 +15,7 @@
                             <div>
                                 <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Tiêu đề</label>
                                 <input type="text" name="title" id="title" placeholder="Tiêu đề"
-                                    value="{{ old('title') }}"
+                                    value="{{ $page->title }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('title')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -27,7 +28,7 @@
                                 <label for="slug" class="block mb-2 text-sm font-medium text-gray-900 ">Đường
                                     dẫn</label>
                                 <input type="text" name="slug" id="slug" placeholder="Đường dẫn"
-                                    value="{{ old('slug') }}" 
+                                    value="{{ $page->slug }}" maxlength="15"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('slug')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -37,21 +38,19 @@
                             </div>
                         </div>
                     </div>
-                    {{-- Trang thai --}}
+                    {{-- Trạng thái --}}
                     <div>
-                        <label for="status" class="block mb-4 text-sm font-medium text-gray-900 ">Trạng
-                            thái</label>
+                        <label for="status" class="block mb-4 text-sm font-medium text-gray-900">Trạng thái</label>
                         <label class="inline-flex items-center cursor-pointer">
                             <input type="checkbox" name="status" class="sr-only peer" value="1"
-                                {{ old('status') ? 'checked' : '' }}>
+                                {{ old('status', $page->status) ? 'checked' : '' }}>
                             <div
                                 class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
                             </div>
-                            <span class="ms-3 text-sm font-medium text-gray-900">Hoạt
-                                động</span>
+                            <span class="ms-3 text-sm font-medium text-gray-900">Hoạt động</span>
                         </label>
                         @error('status')
-                            <p class="mt-2 text-sm text-red-600 ">
+                            <p class="mt-2 text-sm text-red-600">
                                 {{ $message }}
                             </p>
                         @enderror
@@ -60,7 +59,7 @@
                     <div class="sm:col-span-2">
                         <label for="content" class="block mb-2 text-sm font-medium text-gray-900">Nội dung</label>
                         <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50">
-                            <textarea id="wysiwygeditor" name="content">{{ old('content') }}</textarea>
+                            <textarea id="wysiwygeditor" name="content">{{ $page->content }}</textarea>
                         </div>
                         @error('content')
                             <p class="mt-2 text-sm text-red-600 ">
@@ -75,7 +74,7 @@
                         Quay lại
                     </a>
                     <button type="submit" class="button-blue">
-                        Thêm trang
+                        Cập nhật
                     </button>
                 </div>
             </form>

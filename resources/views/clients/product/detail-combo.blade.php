@@ -47,9 +47,6 @@
                     @endfor
                 </div>
             </div>
-
-
-
             {{-- Evaluation --}}
             <div class="card col-span-5 p-4 md:p-8 mt-5">
                 <p class="title">Đánh giá sản phẩm</p>
@@ -61,7 +58,7 @@
                                 src="{{ asset('storage/uploads/avatars/8BtecQvUAuNBKKyyvpVPmgBHePejYpJfg3xsaNKN.webp') }}">
                             <div>
                                 <div class="mb-1 flex items-center gap-2">
-                                    <p class="text-sm font-medium">đỗ hồng quân</p>
+                                    <p class="text-sm font-medium">Đỗ Hồng Quân</p>
                                     <div class="flex items-center gap-1">
                                         @svg('tabler-star-filled', 'icon-sm text-red-500')
                                         @svg('tabler-star-filled', 'icon-sm text-red-500')
@@ -75,7 +72,7 @@
                         </div>
                         {{-- content --}}
                         <div class="mb-4 px-14">
-                            <p class="mb-4 text-sm">combo quá ngon</p>
+                            <p class="mb-4 text-sm">Combo này quá rẻ và đồ ăn ngon</p>
                             <div class="no-scrollbar flex w-full items-center gap-4 overflow-x-auto">
                                 @for ($i = 0; $i < 5; $i++)
                                     <a class="min-w-16 min-h-16 max-w-16 max-h-16 overflow-hidden" data-fslightbox="gallery"

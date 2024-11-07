@@ -77,7 +77,7 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $page->id }}">
                                         <li>
-                                            <a href="{{ url($page->slug) }}" class="block py-2 px-4 hover:bg-gray-100">Chi
+                                            <a href="{{ url($page->slug) }}" target="_blank" class="block py-2 px-4 hover:bg-gray-100">Chi
                                                 tiết </a>
                                         </li>
                                         <li>

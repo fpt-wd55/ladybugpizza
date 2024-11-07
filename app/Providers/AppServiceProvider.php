@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\FooterController;
+use App\Http\Controllers\HeaderController;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +22,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Sử dụng View Composer để truyền dữ liệu vào header
+        View::composer('partials.clients.header', function ($view) {
+            $view->with(HeaderController::getHeaderData());
+        });
+        // Tự động truyền dữ liệu từ FooterController cho view footer
+        View::composer('partials.clients.footer', function ($view) {
+            $view->with(FooterController::getFooterData());
+        });
     }
 }

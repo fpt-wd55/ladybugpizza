@@ -139,7 +139,7 @@
                             nhiên và được lựa chọn cẩn thận.
                         </p>
                         <p class="mb-4 flex items-center justify-center">
-                            <a class="button-primary" href="{{ route('client.about-us') }}">Về chúng tôi</a>
+                            <a class="button-primary" href="{{ route('client.dynamic-page', 've-chung-toi') }}">Về chúng tôi</a>
                         </p>
                     </div>
                 </div>

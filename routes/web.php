@@ -74,18 +74,15 @@ Route::prefix('/')->group(function () {
     Route::put('/profile/address/update/{address}', [ProfileController::class, 'updateLocation'])->name('client.profile.update-location');
     Route::delete('/profile/address/delete/{address}', [ProfileController::class, 'deleteLocation'])->name('client.profile.delete-location');
     Route::post('/profile/address/set-defautl/{address}', [ProfileController::class, 'setDefaultAddress'])->name('client.profile.set-address');
-
     Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
     Route::put('/settings/update/{id}', [ProfileController::class, 'updateStatus'])->name('client.settings.update');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
     Route::post('/profile/promotion/{id}', [ProfileController::class, 'redeemPromotion'])->name('client.profile.redeem-promotion');
-    Route::get('/ve-chung-toi', [PageController::class, 'aboutUs'])->name('client.about-us');
-    Route::get('/chinh-sach-va-dieu-khoan', [PageController::class, 'policies'])->name('client.policies');
-    Route::get('/huong-dan-mua-hang', [PageController::class, 'manual'])->name('client.manual');
-    Route::get('/contact', [PageController::class, 'contact'])->name('client.contact');
+    Route::get('/lien-he', [PageController::class, 'contact'])->name('client.contact'); 
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
     Route::get('/favorites', [ProductController::class, 'favorites'])->name('client.product.favorites');
     Route::get('product/{slug}/favorite', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
+    Route::get('/{slug}', [PageController::class, 'dynamicPage'])->name('client.dynamic-page');
 });
 
 Route::prefix('/errors')->group(function () {
@@ -214,7 +211,6 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/page/trash', [AdminPageController::class, 'trashPage'])->name('trash.pages');
     Route::get('/page/restore/{id}', [AdminPageController::class, 'resPage'])->name('resPage');
     Route::delete('/page/forceDestroy/{id}', [AdminPageController::class, 'forceDestroy'])->name('forceDestroy.pages');
-
 });
 
 // Share route
