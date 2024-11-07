@@ -27,7 +27,7 @@
                                 <label for="slug" class="block mb-2 text-sm font-medium text-gray-900 ">Đường
                                     dẫn</label>
                                 <input type="text" name="slug" id="slug" placeholder="Đường dẫn"
-                                    value="{{ old('slug') }}" maxlength="15"
+                                    value="{{ old('slug') }}" 
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('slug')
                                     <p class="mt-2 text-sm text-red-600 ">
