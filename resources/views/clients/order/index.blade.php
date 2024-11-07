@@ -192,10 +192,10 @@
                                     $groupedProducts = [];
                                     // Lặp qua từng sản phẩm và nhóm chúng
                                     foreach ($order->orderItems as $orderItem) {
-                                        foreach ($orderItem->attributes as $products) {
-                                            $productName = $products->product->name;
-                                            $attributeValue = $products->attributeValue->value;
-                                            $toppings = $orderItem->toppings->pluck('name')->sort()->join(', ');
+                                       
+                                            $productName = $orderItem->product->name;
+                                            $attributeValue = $orderItem->atrributeValues->map->value->join(', ');
+                                            $toppings = $orderItem->toppingValues->map->name->join(', ');
                                             // Tạo một key duy nhất để nhóm các sản phẩm trùng nhau
                                             $key = $productName . '|' . $attributeValue . '|' . $toppings;
                                             // Nếu key đã tồn tại, tăng số lượng; nếu không, thêm vào mảng
@@ -203,42 +203,41 @@
                                                 $groupedProducts[$key]['quantity'] += 1;
                                             } else {
                                                 $groupedProducts[$key] = [
-                                                    'product' => $products->product,
+                                                    'product' => $orderItem->product,
                                                     'attribute' => $attributeValue,
                                                     'toppings' => $toppings,
                                                     'quantity' => 1,
-                                                    'price' =>  $products->product->price,
-                                                    'discount_price' => $products->product->discount_price,
+                                                    'price' =>  $orderItem->product->price,
+                                                    'discount_price' => $orderItem->product->discount_price,
                                                 ];
                                             }
-                                        }
+                                        
                                     }
                                 @endphp
 
                                 <!-- Hiển thị các sản phẩm sau khi đã nhóm -->
                                 @foreach ($groupedProducts as $group)
-                                    <div class="product-card overflow-hidden">
-                                        <div class="flex w-full items-center justify-between">
-                                            <div class="flex gap-4 ">
-                                                <img alt="" class="h-auto w-24 object-cover" loading="lazy"
-                                                    src="{{ asset('storage/uploads/products/' . $group['product']->image) }}">
-                                                <div class="py-2 text-left md:min-w-[300px] ">
-                                                    <p class="mb-2 font-medium">{{ $group['product']->name }}</p>
-                                                    <div class="mb-4 text-sm">
-                                                        <p>{{ $group['attribute'] }}</p>
-                                                        <p>Topping: {{ $group['toppings'] }}</p>
-                                                    </div>
-                                                    <div class="flex items-center gap-2 text-sm">
-                                                        <span
-                                                            class="line-through">{{ number_format($group['discount_price']) }}đ</span>
-                                                        <span
-                                                            class="font-medium">{{ number_format($group['price']) }}đ</span>
-                                                        </div>
-                                                        <span class="float-right mr-4 text-[#D30A0A] font-medium">x{{ $group['quantity'] }}</span>
-                                                    </div>
+                                <div class="product-card overflow-hidden w-auto relative">
+                                    <div class="flex w-full items-center justify-between">
+                                        <div class="flex gap-4">
+                                            <img alt="" class="h-auto w-24 object-cover" loading="lazy"
+                                                src="{{ asset('storage/uploads/products/' . $group['product']->image) }}">
+                                            <div class="py-2 text-left md:min-w-[300px]">
+                                                <p class="mb-2 font-medium">{{ $group['product']->name }}</p>
+                                                <div class="mb-4 text-sm">
+                                                    <p>{{ $group['attribute'] }}</p>
+                                                    <p>Topping: {{ $group['toppings'] }}</p>
+                                                </div>
+                                                <div class="flex items-center gap-2 text-sm">
+                                                    <span class="line-through">{{ number_format($group['discount_price']) }}đ</span>
+                                                    <span class="font-medium">{{ number_format($group['price']) }}đ</span>
                                                 </div>
                                             </div>
+                                        </div>
                                     </div>
+                                    <span class="absolute bottom-0 right-0 text-[#D30A0A] font-medium p-2">x{{ $group['quantity'] }}</span>
+                                </div>
+                                
                                 @endforeach
 
                             </div>
