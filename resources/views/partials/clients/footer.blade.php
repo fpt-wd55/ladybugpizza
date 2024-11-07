@@ -6,27 +6,32 @@
 
     <div class="grid grid-cols-1 items-start gap-8 py-4 md:grid-cols-2 lg:grid-cols-3">
         <div class="flex flex-col items-start justify-center">
-            <img alt="logo" class="mb-4 w-16 object-cover" loading="lazy" src="{{ asset('storage/uploads/logo/logo.svg') }}">
+            <img alt="logo" class="mb-4 w-16 object-cover" loading="lazy"
+                src="{{ asset('storage/uploads/logo/logo.svg') }}">
             <p class="text-lg font-semibold">Ladybug Pizza</p>
         </div>
         <div>
             <ul class="space-y-4">
-                <li><a class="text-sm font-medium uppercase transition hover:text-red-500" href="{{ route('client.product.menu') }}">THỰC ĐƠN</a></li>
+                <li><a class="text-sm font-medium uppercase transition hover:text-red-500"
+                        href="{{ route('client.product.menu') }}">THỰC ĐƠN</a></li>
                 <div class="grid grid-cols-2 gap-4">
                     @foreach ($categories as $category)
-                        <li><a class="text-sm transition hover:text-red-500" href="{{ route('client.product.menu') . '#' . $category->slug }}">{{ $category->name }}</a></li>
+                        <li><a class="text-sm transition hover:text-red-500"
+                                href="{{ route('client.product.menu') . '#' . $category->slug }}">{{ $category->name }}</a>
+                        </li>
                     @endforeach
                 </div>
             </ul>
         </div>
         <div>
             <ul class="space-y-4">
-                <li><a class="text-sm transition hover:text-red-500" href="{{ route('client.contact') }}">Liên hệ</a></li>
-                @foreach ($pages as $page )
-                    
-                <li><a class="text-sm transition hover:text-red-500" href="{{ route('client.dynamic-page', $page->slug)}}">{{ $page->title }}</a></li>
+                <li><a class="text-sm transition hover:text-red-500" href="{{ route('client.contact') }}">Liên hệ</a>
+                </li>
+                @foreach ($pages as $page)
+                    <li>
+                        <a class="text-sm transition hover:text-red-500" href="{{ route('client.dynamic-page', $page->slug) }}">{{ $page->title }}</a>
+                        </li>
                 @endforeach
-               
             </ul>
         </div>
     </div>
