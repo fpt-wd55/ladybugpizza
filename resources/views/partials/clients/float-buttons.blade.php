@@ -1,62 +1,13 @@
 <div class="fixed bottom-32 right-0 p-4 lg:bottom-16 lg:right-8">
-    <button class="chat-open mb-4 flex h-10 w-10 items-center justify-center rounded-full border border-white bg-red-600 text-white" onclick="chatboxToogleHandler()">
-        @svg('tabler-message', 'icon-sm')
+    <button onclick="window.open('https://m.me/486082071252967', '_blank', 'width=400,height=600');" class="chat-open mb-4 flex h-10 w-10 items-center justify-center rounded-full text-white" onclick="chatboxToogleHandler()"> 
+        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+            <radialGradient id="8O3wK6b5ASW2Wn6hRCB5xa_YFbzdUk7Q3F8_gr1" cx="11.087" cy="7.022" r="47.612" gradientTransform="matrix(1 0 0 -1 0 50)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1292ff"></stop><stop offset=".079" stop-color="#2982ff"></stop><stop offset=".23" stop-color="#4e69ff"></stop><stop offset=".351" stop-color="#6559ff"></stop><stop offset=".428" stop-color="#6d53ff"></stop><stop offset=".754" stop-color="#df47aa"></stop><stop offset=".946" stop-color="#ff6257"></stop></radialGradient><path fill="url(#8O3wK6b5ASW2Wn6hRCB5xa_YFbzdUk7Q3F8_gr1)" d="M44,23.5C44,34.27,35.05,43,24,43c-1.651,0-3.25-0.194-4.784-0.564	c-0.465-0.112-0.951-0.069-1.379,0.145L13.46,44.77C12.33,45.335,11,44.513,11,43.249v-4.025c0-0.575-0.257-1.111-0.681-1.499	C6.425,34.165,4,29.11,4,23.5C4,12.73,12.95,4,24,4S44,12.73,44,23.5z"></path><path d="M34.992,17.292c-0.428,0-0.843,0.142-1.2,0.411l-5.694,4.215	c-0.133,0.1-0.28,0.15-0.435,0.15c-0.15,0-0.291-0.047-0.41-0.136l-3.972-2.99c-0.808-0.601-1.76-0.918-2.757-0.918	c-1.576,0-3.025,0.791-3.876,2.116l-1.211,1.891l-4.12,6.695c-0.392,0.614-0.422,1.372-0.071,2.014	c0.358,0.654,1.034,1.06,1.764,1.06c0.428,0,0.843-0.142,1.2-0.411l5.694-4.215c0.133-0.1,0.28-0.15,0.435-0.15	c0.15,0,0.291,0.047,0.41,0.136l3.972,2.99c0.809,0.602,1.76,0.918,2.757,0.918c1.576,0,3.025-0.791,3.876-2.116l1.211-1.891	l4.12-6.695c0.392-0.614,0.422-1.372,0.071-2.014C36.398,17.698,35.722,17.292,34.992,17.292L34.992,17.292z" opacity=".05"></path><path d="M34.992,17.792c-0.319,0-0.63,0.107-0.899,0.31l-5.697,4.218	c-0.216,0.163-0.468,0.248-0.732,0.248c-0.259,0-0.504-0.082-0.71-0.236l-3.973-2.991c-0.719-0.535-1.568-0.817-2.457-0.817	c-1.405,0-2.696,0.705-3.455,1.887l-1.21,1.891l-4.115,6.688c-0.297,0.465-0.32,1.033-0.058,1.511c0.266,0.486,0.787,0.8,1.325,0.8	c0.319,0,0.63-0.107,0.899-0.31l5.697-4.218c0.216-0.163,0.468-0.248,0.732-0.248c0.259,0,0.504,0.082,0.71,0.236l3.973,2.991	c0.719,0.535,1.568,0.817,2.457,0.817c1.405,0,2.696-0.705,3.455-1.887l1.21-1.891l4.115-6.688c0.297-0.465,0.32-1.033,0.058-1.511	C36.051,18.106,35.531,17.792,34.992,17.792L34.992,17.792z" opacity=".07"></path><path fill="#fff" d="M34.394,18.501l-5.7,4.22c-0.61,0.46-1.44,0.46-2.04,0.01L22.68,19.74	c-1.68-1.25-4.06-0.82-5.19,0.94l-1.21,1.89l-4.11,6.68c-0.6,0.94,0.55,2.01,1.44,1.34l5.7-4.22c0.61-0.46,1.44-0.46,2.04-0.01	l3.974,2.991c1.68,1.25,4.06,0.82,5.19-0.94l1.21-1.89l4.11-6.68C36.434,18.901,35.284,17.831,34.394,18.501z"></path>
+            </svg>
     </button>
     <button class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 text-white" id="back-to-top">
         @svg('tabler-arrow-up', 'icon-sm')
     </button>
-</div>
-
-{{-- Box chat --}}
-<div class="chat-box fixed bottom-20 left-4 right-4 z-50 hidden h-[600px] rounded-lg border border-[#e5e7eb] bg-white p-5 shadow-lg sm:left-auto sm:right-8 sm:w-[440px]">
-    <!-- Heading -->
-    <div class="flex items-center justify-between border-b pb-4">
-        <h2 class="text-lg font-semibold tracking-tight">Ladybug Pizza</h2>
-        <button class="chat-close rounded-md bg-gray-50 p-2 hover:bg-gray-100" onclick="chatboxToogleHandler()">
-            @svg('tabler-minus', 'icon-sm')
-        </button>
-    </div>
-
-    <!-- Chat Container -->
-    <div class="no-scrollbar block h-[474px] min-w-full overflow-y-auto">
-        @for ($i = 0; $i < 10; $i++)
-            <div class="my-5 flex items-start gap-2.5">
-                <img class="h-8 w-8 rounded-full" src="https://blade-ui-kit.com/images/icon.svg">
-                <div class="flex w-full max-w-[320px] flex-col gap-1">
-                    <div class="flex items-center justify-start space-x-2 rtl:space-x-reverse">
-                        <span class="text-sm font-semibold text-gray-900">Bonnie Green</span>
-                        <span class="text-sm font-normal text-gray-500">11:46</span>
-                    </div>
-                    <div class="leading-1.5 flex flex-col rounded-xl border-gray-200 bg-gray-100 p-4">
-                        <p class="text-sm font-normal text-gray-900"> That's awesome. I think our users
-                            will really appreciate the improvements.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="my-5 flex items-start gap-2.5">
-                <div class="flex w-full max-w-[320px] flex-col gap-1">
-                    <div class="flex items-center justify-end space-x-2 rtl:space-x-reverse">
-                        <span class="text-sm font-semibold text-gray-900">Bonnie Green</span>
-                        <span class="text-sm font-normal text-gray-500">11:46</span>
-                    </div>
-                    <div class="leading-1.5 flex flex-col rounded-xl border-gray-200 bg-gray-100 p-4">
-                        <p class="text-sm font-normal text-gray-900"> That's awesome. I think our users
-                            will really appreciate the improvements.</p>
-                    </div>
-                </div>
-                <img class="h-8 w-8 rounded-full" src="https://blade-ui-kit.com/images/icon.svg">
-            </div>
-        @endfor
-    </div>
-    <!-- Input box  -->
-    <div class="flex items-center pt-0">
-        <form class="flex w-full items-center justify-center space-x-2">
-            <input class="flex h-10 w-full rounded-md border border-[#e5e7eb] px-3 py-2 text-sm text-[#030712] placeholder-[#6b7280] focus:outline-none focus:ring-2 focus:ring-red-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" placeholder="Nhập tin nhắn" value="">
-            <button class="inline-flex h-10 items-center justify-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-[#f9fafb] hover:bg-red-700 disabled:pointer-events-none disabled:opacity-50">
-                Gửi</button>
-        </form>
-    </div>
-</div>
+</div> 
 
 {{-- Back to top & Chat --}}
 <script>
@@ -68,15 +19,4 @@
             behavior: 'smooth'
         })
     })
-</script>
-
-{{-- chat --}}
-<script>
-    const chatBox = document.querySelector('.chat-box');
-    const chatOpen = document.querySelector('.chat-open');
-
-    function chatboxToogleHandler() {
-        chatBox.classList.toggle("hidden");
-        chatOpen.classList.toggle("hidden");
-    }
-</script>
+</script> 

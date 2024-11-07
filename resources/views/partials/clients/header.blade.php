@@ -24,16 +24,16 @@
                     {{-- About us dropdown --}}
                     <div class="z-10 hidden w-64 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow" id="aboutUsDropdown">
                         <div class="py-2">
-                            <a class="flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase transition hover:bg-gray-100 hover:text-red-500" href="{{ route('client.about-us') }}">Về chúng tôi</a>
+                            <a class="flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase transition hover:bg-gray-100 hover:text-red-500" href="{{ route('client.dynamic-page', 've-chung-toi') }}">Về chúng tôi</a>
                         </div>
                         <div class="py-2">
                             <a class="flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase transition hover:bg-gray-100 hover:text-red-500" href="{{ route('client.contact') }}">Liên hệ</a>
                         </div>
                         <div class="py-2">
-                            <a class="flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase transition hover:bg-gray-100 hover:text-red-500" href="{{ route('client.manual') }}">Hướng dẫn mua hàng</a>
+                            <a class="flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase transition hover:bg-gray-100 hover:text-red-500" href="{{ route('client.dynamic-page', 'huong-dan-mua-hang') }}">Hướng dẫn mua hàng</a>
                         </div>
                         <div class="py-2">
-                            <a class="flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase transition hover:bg-gray-100 hover:text-red-500" href="{{ route('client.policies') }}">Chính sách và điều khoản</a>
+                            <a class="flex items-center gap-2 px-4 py-2 text-xs font-medium uppercase transition hover:bg-gray-100 hover:text-red-500" href="{{ route('client.dynamic-page', 'chinh-sach-va-dieu-khoan') }}">Chính sách và điều khoản</a>
                         </div>
                     </div>
                 </div>

@@ -16,8 +16,8 @@
                 </a>
             </div>
             <div class="flex items-center">
-                <a href="{{ route('admin.chats.index') }}"
-                    class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 ring-0 focus:ring-0">
+                <a href="https://business.facebook.com/latest/inbox/all/?nav_ref=manage_page_ap_plus_inbox_message_button&asset_id=486082071252967"
+                    target="_blank" class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 ring-0 focus:ring-0">
                     <!-- Chat icon -->
                     @svg('tabler-message-dots', 'text-gray-500')
                 </a>

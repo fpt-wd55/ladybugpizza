@@ -37,7 +37,6 @@ class PageRequest extends FormRequest
             'slug' => [
                 'required',
                 'string',
-                'max:20',
                 'unique:pages,slug',
                 'regex:/^[a-z0-9-]+$/', // Chỉ chấp nhận chữ cái thường, số và dấu gạch ngang
             ],
@@ -53,7 +52,6 @@ class PageRequest extends FormRequest
             'slug' => [
                 'required',
                 'string',
-                'max:20',
                 'regex:/^[a-z0-9-]+$/', // Chỉ chấp nhận chữ cái thường, số và dấu gạch ngang
             ],
             'content' => 'required'
@@ -65,7 +63,6 @@ class PageRequest extends FormRequest
         return [
             'title.required' => "Bạn cần nhập tiêu đề cho trang",
             'slug.required' => "Bạn cần nhập đường dẫn cho trang",
-            'slug.max' => "Đường dẫn không quá 20 kí tự",
             'slug.unique' => "Đường dẫn đã tồn tại trong hệ thống",
             'slug.regex' => "Đường dẫn không hợp lệ",
             'content.required' => "Bạn cần mô tả nội dung cho trang"
