@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ComboRequest;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Category;
@@ -46,9 +47,9 @@ class ComboController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ComboRequest $request)
     {
-        //
+        $request->validated();
     }
 
     /**
