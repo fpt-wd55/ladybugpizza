@@ -70,6 +70,8 @@
             });
         };
     </script>
+
+    @livewireStyles
 </head>
 
 <body class="text-sm">
@@ -94,6 +96,8 @@
     </div>
 
     @yield('scripts')
+    
+    @livewireScripts
 </body>
 
 </html>
