@@ -10,12 +10,12 @@
                 <div class="grid gap-4 mb-4 sm:grid-cols-1">
                     <div class="grid gap-4 mb-4 sm:grid-cols-3">
                         <div>
-                            <label for="attribute_name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên
                                 combo</label>
-                            <input type="text" name="attribute_name" id="attribute_name" placeholder="Tên combo"
-                                value="{{ old('attribute_name') }}"
+                            <input type="text" name="name" id="name" placeholder="Tên combo"
+                                value="{{ old('name') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                            @error('attribute_name')
+                            @error('name')
                                 <p class="mt-2 text-sm text-red-600 ">
                                     {{ $message }}
                                 </p>
@@ -70,22 +70,22 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Số lượng</label>
-                                <input type="number" name="price" id="price" value="{{ old('price') }}"
+                                <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số lượng</label>
+                                <input type="number" name="quantity" id="quantity" value="{{ old('quantity') }}"
                                     placeholder="Số lượng" min="0"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                                @error('price')
+                                @error('quantity')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
                                     </p>
                                 @enderror
                             </div>
                             <div class="mt-3">
-                                <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Mã combo</label>
-                                <input type="text" name="price" id="price" value="{{ old('price') }}"
+                                <label for="sku" class="block mb-2 text-sm font-medium text-gray-900 ">Mã combo</label>
+                                <input type="text" name="sku" id="sku" value="{{ old('sku') }}"
                                     placeholder="Mã combo"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                                @error('price')
+                                @error('sku')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
                                     </p>
@@ -111,17 +111,17 @@
                                     @enderror
                                 </div>
                                 <div class="mt-3">
-                                    <label for="status" class="block mb-4 text-sm font-medium text-gray-900 ">Combo nổi
+                                    <label for="is_featured" class="block mb-4 text-sm font-medium text-gray-900 ">Combo nổi
                                         bật</label>
                                     <label class="inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" name="status" class="sr-only peer" value="1"
-                                            {{ old('status') ? 'checked' : '' }}>
+                                        <input type="checkbox" name="is_featured" class="sr-only peer" value="1"
+                                            {{ old('is_featured') ? 'checked' : '' }}>
                                         <div
                                             class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
                                         </div>
                                         <span class="ms-3 text-sm font-medium text-gray-900">Combo nổi bật</span>
                                     </label>
-                                    @error('status')
+                                    @error('is_featured')
                                         <p class="mt-2 text-sm text-red-600 ">
                                             {{ $message }}
                                         </p>
@@ -129,8 +129,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50">
-                            <textarea id="wysiwygeditor" name="description">{{ old('description') }}</textarea>
+                        <div>
+                            <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50">
+                                <textarea id="wysiwygeditor" name="description">{{ old('description') }}</textarea>
+                            </div>
+                            @error('description')
+                                <p class="mt-2 text-sm text-red-600 ">
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </div>
                     </div>
                     <div>
@@ -139,36 +146,48 @@
                             <div id="pizza-container">
                                 <div class="pizza-item flex flex-wrap justify-between gap-3 py-3">
                                     <div class="flex-1">
-                                        <select name="" id="" class="input">
+                                        <select name="pizza[]" id="" class="input">
                                             <option value="">Chọn pizza</option>
                                             @foreach ($pizzas as $pizza)
                                                 <option value="{{ $pizza->id }}">{{ $pizza->name }}</option>
                                             @endforeach
                                         </select>
+                                        @error('pizza.*')
+                                            <p class="text-red-600">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div class="flex-1">
-                                        <select name="" id="" class="input">
+                                        <select name="base[]" id="" class="input">
                                             <option value="">Chọn đế</option>
                                             @foreach ($bases as $base)
                                                 <option value="{{ $base->id }}">{{ $base->value }}</option>
                                             @endforeach
                                         </select>
+                                        @error('base.*')
+                                            <p class="text-red-600">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div class="flex-1">
-                                        <select name="" id="" class="input">
+                                        <select name="size[]" id="" class="input">
                                             <option value="">Chọn size</option>
                                             @foreach ($sizes as $size)
                                                 <option value="{{ $size->id }}">{{ $size->value }}</option>
                                             @endforeach
                                         </select>
+                                        @error('size.*')
+                                            <p class="text-red-600">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div class="flex-1">
-                                        <select name="" id="" class="input">
+                                        <select name="sauce[]" id="" class="input">
                                             <option value="">Chọn sốt</option>
                                             @foreach ($sauces as $sauce)
                                                 <option value="{{ $sauce->id }}">{{ $sauce->value }}</option>
                                             @endforeach
                                         </select>
+                                        @error('sauce.*')
+                                            <p class="text-red-600">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     <div class="flex rounded-md" role="group">
                                         <button
@@ -179,13 +198,15 @@
                                         <input
                                             class="w-12 border-b border-t border-gray-200 bg-white px-4 py-1 text-center text-sm font-medium text-gray-900 focus:outline-none quantity-input"
                                             name="quantity_${pizzaCounter}" value="1">
+                                        @error('quantity.*')
+                                            <p class="text-red-600">{{ $message }}</p>
+                                        @enderror
                                         <button
                                             class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500 increment"
                                             type="button">
                                             @svg('tabler-plus', 'icon-sm')
                                         </button>
                                     </div>
-
                                     <div class="flex gap-3">
                                         <button type="button" class="flex button-blue add-pizza-field">
                                             Thêm
