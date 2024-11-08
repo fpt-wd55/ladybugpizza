@@ -54,9 +54,9 @@ class PageController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Page $page)
-{
-    return view('admins.page.edit', compact('page'));
-}
+    {
+        return view('admins.page.edit', compact('page'));
+    }
 
 
     /**
@@ -69,10 +69,10 @@ class PageController extends Controller
         $page->slug = $data['slug'];
         $page->status = $data['status'] ?? 0; // Set mặc định là 0 nếu không có status
         $page->content = $data['content'];
-    
+
         // Lưu lại thay đổi
         $page->save();
-    
+
         // Chuyển hướng về trang danh sách trang với thông báo thành công
         return redirect()->route('admin.pages.index')->with('success', 'Cập nhật trang thành công!');
     }
@@ -89,9 +89,10 @@ class PageController extends Controller
         return redirect()->route('admin.pages.index')->with('success', 'Trang đã được xóa thành công.');
     }
     // thùng rác
-    public function trashPage(){
+    public function trashPage()
+    {
         $pages = Page::onlyTrashed()->latest('id')->paginate(10);
-        return view('admins.page.trash',compact('pages'));
+        return view('admins.page.trash', compact('pages'));
     }
     // khoi phục
     public function resPage($id)
@@ -103,10 +104,13 @@ class PageController extends Controller
     }
     // xóa vĩnh viễn
     public function forceDestroy($id)
-{
-    $page = Page::withTrashed()->find($id);
+    {
+        $page = Page::withTrashed()->find($id);
         $page->forceDelete();
         return back()->with('success', 'Đã xóa vĩnh viễn!');
-}
-
+    }
+    public function export()
+    {
+        $this->exportExcel(Page::all(), 'danhsachtrang');
+    }
 }
