@@ -12,4 +12,12 @@ return [
     |
     */
     'default_library' => 'Chartjs',
+    'libraries' => [
+        'Chartjs',
+        'Highcharts', 
+        'Fusioncharts',
+        'Echarts',
+        'Frappe',
+        'C3',
+    ],
 ];
