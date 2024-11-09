@@ -1,79 +1,4 @@
 <div>
-    {{ Breadcrumbs::render('admin.dashboard') }}
-    <h3 class="my-3 text-base font-bold leading-none text-gray-900 sm:text-xl">Tổng quan</h3>
-    <div class="my-4 grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-4">
-        <div class="relative flex flex-col min-w-0 border break-words bg-white shadow-soft-xl rounded-lg bg-clip-border">
-            <div class="flex-auto p-4">
-                <div class="flex flex-row -mx-3 items-center">
-                    <div class="flex-none w-2/3 max-w-full px-3">
-                        <div>
-                            <p class="mb-0 font-sans font-semibold leading-normal text-lg">Tài khoản</p>
-                            <h5 class="mb-0 font-bold text-base">
-                                2,340
-                            </h5>
-                        </div>
-                    </div>
-                    <div class="px-3 text-right basis-1/3 flex items-center justify-end">
-                        @svg('tabler-user', 'w-8 h-8 text-gray-500')
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="relative flex flex-col min-w-0 border break-words bg-white shadow-soft-xl rounded-lg bg-clip-border">
-            <div class="flex-auto p-4">
-                <div class="flex flex-row -mx-3 items-center">
-                    <div class="flex-none w-2/3 max-w-full px-3">
-                        <div>
-                            <p class="mb-0 font-sans font-semibold leading-normal text-lg">Đơn hàng</p>
-                            <h5 class="mb-0 font-bold text-base">
-                                2,340
-                            </h5>
-                        </div>
-                    </div>
-                    <div class="px-3 text-right basis-1/3 flex items-center justify-end">
-                        @svg('tabler-package', 'w-8 h-8 text-gray-500')
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div
-            class="relative flex flex-col min-w-0 border break-words bg-white shadow-soft-xl rounded-lg bg-clip-border">
-            <div class="flex-auto p-4">
-                <div class="flex flex-row -mx-3 items-center">
-                    <div class="flex-none w-2/3 max-w-full px-3">
-                        <div>
-                            <p class="mb-0 font-sans font-semibold leading-normal text-lg">Sản phẩm</p>
-                            <h5 class="mb-0 font-bold text-base">
-                                2,340
-                            </h5>
-                        </div>
-                    </div>
-                    <div class="px-3 text-right basis-1/3 flex items-center justify-end">
-                        @svg('tabler-pizza', 'w-8 h-8 text-gray-500')
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div
-            class="relative flex flex-col min-w-0 border break-words bg-white shadow-soft-xl rounded-lg bg-clip-border">
-            <div class="flex-auto p-4">
-                <div class="flex flex-row -mx-3 items-center">
-                    <div class="flex-none w-2/3 max-w-full px-3">
-                        <div>
-                            <p class="mb-0 font-sans font-semibold leading-normal text-lg">Danh mục</p>
-                            <h5 class="mb-0 font-bold text-base">
-                                2,340
-                            </h5>
-                        </div>
-                    </div>
-                    <div class="px-3 text-right basis-1/3 flex items-center justify-end">
-                        @svg('tabler-category', 'w-8 h-8 text-gray-500')
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="grid grid-cols-2 items-center justify-between pb-4 space-y-3 md:space-y-0 md:space-x-4">
         <div class="w-full md:w-1/2">
             <h3 class="my-3 text-base font-bold leading-none text-gray-900 sm:text-xl">Doanh thu</h3>
@@ -215,8 +140,7 @@
             <div
                 class="relative flex flex-col min-w-0 border break-words bg-white shadow-soft-xl rounded-lg bg-clip-border">
                 <div class="rounded-lg p-4 sm:p-6 2xl:col-span-2">
-                    <div
-                        class="grid grid-cols-2 items-center justify-between pb-4 space-y-3 md:space-y-0 md:space-x-4">
+                    <div class="grid grid-cols-2 items-center justify-between pb-4 space-y-3 md:space-y-0 md:space-x-4">
                         <div class="w-full md:w-1/2">
                             <h3 class="my-3 text-sm font-bold leading-none text-gray-900 sm:text-base">Doanh thu</h3>
                         </div>
@@ -575,6 +499,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.6/highcharts.js" charset="utf-8"></script>
+
     {{ $chart->script() }}
     {{ $revenueChart1->script() }}
     {{ $revenueChart2->script() }}
