@@ -1,6 +1,6 @@
 <div>
     <h3 class="my-3 text-base font-bold leading-none text-gray-900 sm:text-xl">Tổng quan</h3>
-    <div class="my-4 grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-4">
+    <div class="my-4 grid w-full grid-cols-2 gap-4 2xl:grid-cols-4">
         <div class="relative flex flex-col min-w-0 border break-words bg-white shadow-soft-xl rounded-lg bg-clip-border">
             <div class="flex-auto p-4">
                 <div class="flex flex-row -mx-3 items-center">
