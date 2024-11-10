@@ -96,7 +96,7 @@
                 {{-- thanh toán --}}
                 <div class="ml-36">
                     <div class="flex items-center justify-between mb-2 gap-32 text-sm">
-                        <p class="">Tổng tiền sản phẩm</p>
+                        <p class="">Tổng số tiền sản phẩm</p>
                         <p class="font-medium">{{ number_format($order->amount) }}₫</p>
                     </div>
                     <div class="flex items-center justify-between mb-2 gap-32 text-sm">
