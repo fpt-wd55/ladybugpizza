@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Topping;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ComboController extends Controller
 {
@@ -49,7 +50,36 @@ class ComboController extends Controller
      */
     public function store(ComboRequest $request)
     {
-        $request->validated();
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = trim(strtolower($request->sku)) . '_' . pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $image->getClientOriginalExtension();
+        }
+
+        $data = [
+            'name' => trim($request->name),
+            'slug' => trim(strtolower($request->sku)) . '-' . Str::slug($request->name),
+            'image' => $image_name,
+            'description' => trim($request->description),
+            'category_id' => 7,
+            'price' => $request->price,
+            'discount_price' => $request->discount_price ?? 0,
+            'quantity' => $request->quantity,
+            'sku' => trim(strtoupper($request->sku)),
+            'status' => isset($request->status) ? $request->status : 2,
+            'is_featured' => isset($request->is_featured) ? $request->is_featured : 2,
+            'avg_rating' => 0,
+            'total_rating' => 0,
+        ];
+        // dd($data);
+
+        if (Product::create($data)) {
+            $image->storeAs('public/uploads/combos', $image_name);
+
+            return redirect()->route('admins.combo')->with('success', 'Thêm combo thành công');
+        } else {
+
+            return redirect()->back()->with('error', 'Thêm combo thất bại');
+        }
     }
 
     /**
@@ -63,17 +93,66 @@ class ComboController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $combo)
     {
-        return view('admins.combo.edit');
+        $pizzas = Product::where('category_id', 1)->get();
+        $bases = AttributeValue::where('attribute_id', 1)->get();
+        $sizes = AttributeValue::where('attribute_id', 2)->get();
+        $sauces = AttributeValue::where('attribute_id',3)->get();
+        $toppings = Topping::all();
+        $categories = Category::whereNotIn('id', [1,7])->with('products')->get();
+        return view('admins.combo.edit', [
+            'combo' => $combo,
+            'pizzas' => $pizzas,
+            'bases' => $bases,
+            'sizes' => $sizes,
+            'sauces' => $sauces,
+            'toppings' => $toppings,
+            'categories' => $categories,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ComboRequest $request, Product $combo)
     {
-        //
+        $old_image = $combo->image;
+        $image_name = $old_image;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_name = trim(strtolower($request->sku)) . '_' . pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $image->getClientOriginalExtension();
+        }
+
+        $data = [
+            'name' => trim($request->name),
+            'slug' => trim(strtolower($request->sku)) . '-' . Str::slug($request->name),
+            'image' => $image_name,
+            'description' => trim($request->description),
+            'category_id' => 7,
+            'price' => $request->price,
+            'discount_price' => $request->discount_price ?? 0,
+            'quantity' => $request->quantity,
+            'sku' => trim(strtoupper($request->sku)),
+            'status' => isset($request->status) ? $request->status : 2,
+            'is_featured' => isset($request->is_featured) ? $request->is_featured : 2,
+            'avg_rating' => 0,
+            'total_rating' => 0,
+        ];
+
+        if ($combo->update($data)) {
+            if ($request->hasFile('image')) {
+                $image->storeAs('public/uploads/combos', $image_name);
+                if (file_exists(storage_path('app/public/uploads/combos/' . $old_image))) {
+                    unlink(storage_path('app/public/uploads/combos/' . $old_image));
+                }
+            }
+
+            return redirect()->back()->with('success', 'Cập nhật combo thành công');
+        } else {
+
+            return redirect()->back()->with('error', 'Cập nhật combo thất bại');
+        }
     }
 
     /**

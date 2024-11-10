@@ -5,7 +5,7 @@
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="p-4 mx-auto">
             <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm combo</h3>
-            <form action="{{ route('admin.combos.store') }}" method="POST">
+            <form action="{{ route('admin.combos.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid gap-4 mb-4 sm:grid-cols-1">
                     <div class="grid gap-4 mb-4 sm:grid-cols-3">
