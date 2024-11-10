@@ -47,10 +47,9 @@
                                                 </div>
                                                 <div
                                                     class="flex flex-col leading-1.5 p-3 border-gray-200 bg-gray-100 rounded-lg">
-                                                    <p class="text-sm font-normal text-gray-900"> That's awesome. I think
-                                                        our
-                                                        users
-                                                        will really appreciate the improvements.</p>
+                                                    <p class="text-sm font-normal text-gray-900"> hật tuyệt vời. Tôi nghĩ
+                                                        người dùng của chúng tôi sẽ thực sự đánh giá cao những cải tiến này.
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -62,10 +61,9 @@
                                                 </div>
                                                 <div
                                                     class="flex flex-col leading-1.5 p-3 border-gray-200 bg-gray-100 rounded-lg">
-                                                    <p class="text-sm font-normal text-gray-900"> That's awesome. I think
-                                                        our
-                                                        users
-                                                        will really appreciate the improvements.</p>
+                                                    <p class="text-sm font-normal text-gray-900">Thật tuyệt vời. Tôi nghĩ
+                                                        người dùng của chúng tôi sẽ thực sự đánh giá cao những cải tiến này.
+                                                    </p>
                                                 </div>
                                             </div>
                                             <img class="w-8 h-8 rounded-full"
