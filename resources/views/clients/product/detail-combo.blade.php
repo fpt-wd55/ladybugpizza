@@ -47,52 +47,8 @@
                     @endfor
                 </div>
             </div>
-            {{-- Evaluation --}}
-            <div class="card col-span-5 p-4 md:p-8 mt-5">
-                <p class="title">Đánh giá sản phẩm</p>
-                @for ($i = 0; $i < 5; $i++)
-                    <div class="mb-12">
-                        {{-- info --}}
-                        <div class="mb-4 flex items-center gap-4">
-                            <img alt="" class="img-circle img-sm" loading="lazy"
-                                src="{{ asset('storage/uploads/avatars/8BtecQvUAuNBKKyyvpVPmgBHePejYpJfg3xsaNKN.webp') }}">
-                            <div>
-                                <div class="mb-1 flex items-center gap-2">
-                                    <p class="text-sm font-medium">Đỗ Hồng Quân</p>
-                                    <div class="flex items-center gap-1">
-                                        @svg('tabler-star-filled', 'icon-sm text-red-500')
-                                        @svg('tabler-star-filled', 'icon-sm text-red-500')
-                                        @svg('tabler-star-filled', 'icon-sm text-red-500')
-                                        @svg('tabler-star-filled', 'icon-sm text-red-500')
-                                        @svg('tabler-star', 'icon-sm text-red-500')
-                                    </div>
-                                </div>
-                                <p class="text-sm">12:30:00</p>
-                            </div>
-                        </div>
-                        {{-- content --}}
-                        <div class="mb-4 px-14">
-                            <p class="mb-4 text-sm">Combo này quá rẻ và đồ ăn ngon</p>
-                            <div class="no-scrollbar flex w-full items-center gap-4 overflow-x-auto">
-                                @for ($i = 0; $i < 5; $i++)
-                                    <a class="min-w-16 min-h-16 max-w-16 max-h-16 overflow-hidden" data-fslightbox="gallery"
-                                        href="{{ asset('storage/uploads/products/tiramisu.jpeg') }}">
-                                        <img class="w-full rounded object-cover" loading="lazy"
-                                            src="{{ asset('storage/uploads/products/tiramisu.jpeg') }}">
-                                    </a>
-                                @endfor
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
-                @endfor
-
-            </div>
         </div>
-
-
         </div>
-
         {{-- Add to card bar --}}
         <div class="sticky bottom-16 w-full border-t bg-white p-4 transition lg:bottom-0 lg:px-32">
             <div class="flex items-center justify-between">
