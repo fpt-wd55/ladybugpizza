@@ -19,19 +19,19 @@ class ComboRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
-    {
-        return [
-            'name' => 'required|string|max:255|unique:products,name',
-            'price' => 'required|numeric|min:0',
-            'discount_price' => 'required|numeric|min:0|lt:price',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-            'quantity' => 'required|integer|min:1',
-            'sku' => 'required|string|min:10|max:15|unique:products,sku',
-            'description' => 'required|string',
-        ];
-    }
+    public function rules(): array {
+    $comboId = $this->route('combo')->id ?? null;
 
+    return [
+        'name' => 'required|string|max:255|unique:products,name,' . $comboId . ',id',
+        'price' => 'required|numeric|min:0',
+        'discount_price' => 'required|numeric|min:0|lt:price',
+        'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+        'quantity' => 'required|integer|min:1',
+        'sku' => 'required|string|min:10|max:15|unique:products,sku,' . $comboId . ',id',
+        'description' => 'required|string',
+    ];
+}
     public function messages(): array {
         return [
             'name.required' => 'Vui lòng nhập tên combo',
@@ -45,8 +45,6 @@ class ComboRequest extends FormRequest
             'discount_price.numeric' => 'Giá giảm phải là số',
             'discount_price.min' => 'Giá giảm không được nhỏ hơn 0',
             'discount_price.lt' => 'Giá giảm phải nhỏ hơn giá gốc',
-            'image.required' => 'Vui lòng chọn ảnh',
-            'image.image' => 'Ảnh combo phải là ảnh',
             'image.mimes' => 'Ảnh phải có định dạng jpeg, png, jpg, gif, svg, webp',
             'image.max' => 'Ảnh không được vượt quá 2048 KB',
             'quantity.required' => 'Vui lòng nhập số lượng',
