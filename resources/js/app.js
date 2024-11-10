@@ -1,6 +1,5 @@
 import "./bootstrap";
-import "flowbite";
-import "./charts";
+import "flowbite"; 
 import "./fslightbox";
 import search from "./search";
 
