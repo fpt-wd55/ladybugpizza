@@ -49,7 +49,6 @@
                         class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
                         type="file" name="image" value="" id="imageInput" accept="image/*"
                         onchange="previewImage(event)">
-
                     @error('image')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Lỗi! </span>
                             {{ $message }}</p>
@@ -63,7 +62,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div>
                     <label for="name" class="block mb-3 mt-1 text-base font-medium text-gray-900 ">Trạng thái</label>
                     <div class="flex items-center">
