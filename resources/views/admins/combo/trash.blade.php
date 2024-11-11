@@ -44,6 +44,7 @@
                             @svg('tabler-search', 'w-5 h-5 text-gray-400')
                         </div>
                         <input type="text" name="search" class="input ps-10" placeholder="Tìm kiếm..." />
+                        <input type="hidden" name="context" value="trash" />
                     </div>
                 </form>
                 <div class="flex items-center w-full md:w-auto">
@@ -106,7 +107,8 @@
                                     <h6 class="my-3 text-sm font-medium text-gray-900">Combo</h6>
                                     <ul class="space-y-2 text-sm">
                                         <li class="flex items-center">
-                                            <input id="is_featured" type="checkbox" name="filter_is_featured" value="1"
+                                            <input id="is_featured" type="checkbox" name="filter_is_featured"
+                                                value="1"
                                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
                                                 @if (request()->input('filter_is_featured') == 1) checked @endif>
                                             <label for="is_featured" class="ml-2 text-sm font-medium text-gray-900">Combo
@@ -367,7 +369,7 @@
                         <td colspan="6" class="text-center py-4 text-base">
                             <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
                                 @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
-                                <p class="mt-4 text-gray-500 text-sm">Thùng rác của combo trống.</p>
+                                <p class="mt-4 text-gray-500 text-sm">Không có dữ liệu.</p>
                             </div>
                         </td>
                     @endforelse

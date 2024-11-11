@@ -231,16 +231,26 @@ class ComboController extends Controller
     }
 
     public function search(Request $request){
-    $combos = Product::orderBy('id', 'desc')
-        ->where('category_id', 7)
-        ->where('name', 'like', '%' . $request->search . '%')
-        ->orWhere('sku', 'like', '%' . $request->search . '%')
-        ->paginate(10);
+        $context = $request->input('context', 'index');
+        $query = Product::orderBy('id', 'desc')
+            ->where('category_id', 7)
+            ->where(function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->search . '%')
+                    ->orWhere('sku', 'like', '%' . $request->search . '%');
+            });
 
-    $combos->appends(['search' => $request->search]);
+        if ($context === 'trash') {
+            $combos = $query->onlyTrashed()->paginate(10);
+            $view = 'admins.combo.trash';
+        } else {
+            $combos = $query->paginate(10);
+            $view = 'admins.combo.index';
+        }
+        $combos->appends(['search' => $request->search]);
 
-    return view('admins.combo.trash', compact('combos'));
+        return view($view, compact('combos'));
     }
+
 
     public function evaluation(Product $combo)
     {
