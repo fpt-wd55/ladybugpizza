@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Combo')
+@section('title', 'Combo | Thùng rác')
 @section('content')
     {{ Breadcrumbs::render('admin.combo.trash') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
@@ -367,7 +367,7 @@
                         <td colspan="6" class="text-center py-4 text-base">
                             <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
                                 @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
-                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                                <p class="mt-4 text-gray-500 text-sm">Thùng rác của combo trống.</p>
                             </div>
                         </td>
                     @endforelse
