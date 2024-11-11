@@ -250,7 +250,8 @@
                                     <h2 class="pb-2">{{ $category->name }}</h2>
                                     <div class="flex flex-wrap justify-between gap-10">
                                         <div class="flex-1">
-                                            <select name="products[{{ $category->id }}]" class="input flex-1">
+                                            <select name="products[{{ $category->id }}]"
+                                                class="input flex-1 category-select">
                                                 <option value="">Chọn {{ $category->name }}</option>
                                                 @foreach ($category->products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -434,6 +435,7 @@
                 if (!categoryOptionsCache[categoryId]) {
                     categoryOptionsCache[categoryId] = Array.from(categoryItem.querySelectorAll(
                             'select option'))
+                        .filter(option => option.value !== "")
                         .map(option => `<option value="${option.value}">${option.text}</option>`)
                         .join('');
                 }

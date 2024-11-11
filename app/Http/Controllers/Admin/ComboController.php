@@ -19,7 +19,7 @@ class ComboController extends Controller
      */
     public function index()
     {
-        $combos = Product::where('category_id', 7)->paginate(10);
+        $combos = Product::orderByDesc('id')->where('category_id', 7)->paginate(10);
 
         return view('admins.combo.index', compact('combos'));
     }
@@ -75,7 +75,7 @@ class ComboController extends Controller
         if (Product::create($data)) {
             $image->storeAs('public/uploads/combos', $image_name);
 
-            return redirect()->route('admins.combo')->with('success', 'Thêm combo thành công');
+            return redirect()->route('admin.combos.index')->with('success', 'Thêm combo thành công');
         } else {
 
             return redirect()->back()->with('error', 'Thêm combo thất bại');
