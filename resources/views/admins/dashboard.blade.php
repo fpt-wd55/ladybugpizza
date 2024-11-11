@@ -6,9 +6,10 @@
     @livewire('overview')
 
     {{-- Thống kê --}}
-    @livewire('statistic')
+    <h3 class="my-3 text-base font-bold leading-none text-gray-900 sm:text-xl">Doanh thu</h3>
+    {{-- Doanh thu và đơn hàng --}}
+    @livewire('statistic-revenue-one')
 @endsection
 @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.6/highcharts.js" charset="utf-8"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
 @endsection

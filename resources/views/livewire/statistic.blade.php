@@ -1,9 +1,4 @@
 <div>
-    <h3 class="my-3 text-base font-bold leading-none text-gray-900 sm:text-xl">Doanh thu</h3>
-    {{-- Doanh thu và đơn hàng --}}
-    @livewire('statistic-revenue-one')
-
-
     {{-- <div class="my-4 grid grid-cols-1 xl:grid-cols-2 xl:gap-4 gap-y-4">
         <div>
             <div
@@ -464,7 +459,7 @@
         </div>
     </div> --}}
 
-    {{ $revenueChart1->script() }}
+    {{-- {{ $revenueChart1->script() }}
     {{ $revenueChart2->script() }}
     {{ $revenueChart3->script() }}
     {{ $revenueChart4->script() }}
@@ -473,5 +468,5 @@
     {{ $userChart3->script() }}
     {{ $userChart4->script() }}
     {{ $userChart5->script() }}
-    {{ $userChart6->script() }}
+    {{ $userChart6->script() }} --}}
 </div>
