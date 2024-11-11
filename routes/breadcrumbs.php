@@ -67,9 +67,9 @@ Breadcrumbs::for('admin.combos.edit', function (BreadcrumbTrail $trail, $combo) 
 });
 
 
-Breadcrumbs::for('admin.trash-combo', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('admin.combo.trash', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.combos.index');
-    $trail->push('Thùng rác', route('admin.trash-combo'));
+    $trail->push('Thùng rác', route('admin.trash-combos'));
 });
 
 // Topping

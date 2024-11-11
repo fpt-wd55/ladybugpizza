@@ -78,7 +78,7 @@ Route::prefix('/')->group(function () {
     Route::put('/settings/update/{id}', [ProfileController::class, 'updateStatus'])->name('client.settings.update');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
     Route::post('/profile/promotion/{id}', [ProfileController::class, 'redeemPromotion'])->name('client.profile.redeem-promotion');
-    Route::get('/lien-he', [PageController::class, 'contact'])->name('client.contact'); 
+    Route::get('/lien-he', [PageController::class, 'contact'])->name('client.contact');
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
     Route::get('/favorites', [ProductController::class, 'favorites'])->name('client.product.favorites');
     Route::get('product/{slug}/favorite', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
@@ -155,7 +155,13 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/combo/export', [ComboController::class, 'export'])->name('combos.export');
     Route::get('/combo/trash', [ComboController::class, 'trashCombo'])->name('trash-combos');
     Route::post('/combo/restore-/{id}', [ComboController::class, 'restoreCombo'])->name('restore-combo');
-    Route::delete('/combo/delete/{id}', [ComboController::class, 'deleteCombo'])->name('delete-combo');
+    Route::delete('/combo/delete/{id}', [ComboController::class, 'forceDelete'])->name('delete-combo');
+    Route::post('combo/bulk-action', [ComboController::class, 'bulkAction'])->name('combos.bulkAction');
+    Route::get('/combo/search', [ComboController::class, 'search'])->name('combos.search');
+    Route::get('/combo/evaluation/{combo}', [ComboController::class, 'evaluation'])->name('combos.evaluation');
+    Route::put('/combo/evaluation/update/{evaluation}', [ComboController::class, 'evaluationUpdate'])->name('combos.evaluation.update');
+    Route::get('/combo/filter', [ComboController::class, 'filter'])->name('combos.filter');
+
     // Topping
     Route::resource('/toppings', ToppingController::class);
     Route::get('/topping/filter', [ToppingController::class, 'filter'])->name('toppings.filter');

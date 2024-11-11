@@ -154,28 +154,90 @@ class ComboController extends Controller
             return redirect()->back()->with('error', 'Cập nhật combo thất bại');
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Product $combo)
     {
-        //
+        if ($combo->delete()) {
+            return redirect()->back()->with('success', 'Xóa combo thành công');
+        } else {
+            return redirect()->back()->with('error', 'Xóa combo thất bại');
+        }
     }
-
     public function trashCombo(){
-
+        $categories = Category::where('status', 1)->get();
+        $combos = Product::onlyTrashed()->where('category_id', 7)->orderBy('id', 'desc')->paginate(10);
+        return view('admins.combo.trash', compact('combos', 'categories'));
     }
 
-    public function restoreCombo() {
+    public function restoreCombo($id) {
+        $combo = Product::withTrashed()->find($id);
 
+        if ($combo->restore()) {
+            return redirect()->back()->with('success', 'Khôi phục combo thành công');
+        }
+
+        return redirect()->back()->with('error', 'Khôi phục combo thất bại');
     }
 
-    public function deleteCombo() {
+    public function forceDelete($id) {
+        $combo = Product::withTrashed()->find($id);
 
+        if ($combo) {
+            if (file_exists(storage_path('app/public/uploads/combos/' . $combo->image))) {
+                unlink(storage_path('app/public/uploads/combos/' . $combo->image));
+            }
+            $combo->forceDelete();
+            return redirect()->back()->with('success', 'Xóa sản phẩm thành công');
+        }
+
+        return redirect()->back()->with('error', 'Xóa sản phẩm thất bại');
     }
 
-    public function forceDelete() {
+    public function bulkAction(Request $request)
+    {
+        $selectedIds = explode(',', $request->input('selected_ids'));
+        $action = $request->input('action');
 
+        if ($action == 'delete') {
+            Product::whereIn('id', $selectedIds)->delete();
+            return redirect()->back()->with('success', 'Xóa combo thành công');
+        } else if ($action == 'force_delete') {
+            foreach ($selectedIds as $id) {
+                $forceCombo = Product::withTrashed()->find($id);
+                $old_image = $forceCombo->image;
+                if ($forceCombo) {
+                    if ($forceCombo->image != null) {
+                        try {
+                            if (file_exists(storage_path('app/public/uploads/combos/' . $old_image))) {
+                                unlink(storage_path('app/public/uploads/combos/' . $old_image));
+                            }
+                        } catch (\Exception $e) {
+                            return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
+                        }
+                    }
+                    $forceCombo->forceDelete();
+                } else {
+                    return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
+                }
+            }
+            return redirect()->back()->with('success', 'Xóa vĩnh viễn combo thành công');
+        } else if ($action == 'restore') {
+            Product::withTrashed()->whereIn('id', $selectedIds)->restore();
+            return redirect()->back()->with('success', 'Khôi phục combo thành công');
+        }
+
+        return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
     }
+
+    public function search(Request $request){
+    $combos = Product::orderBy('id', 'desc')
+        ->where('category_id', 7)
+        ->where('name', 'like', '%' . $request->search . '%')
+        ->orWhere('sku', 'like', '%' . $request->search . '%')
+        ->paginate(10);
+
+    $combos->appends(['search' => $request->search]);
+
+    return view('admins.combo.trash', compact('combos'));
+}
+
 }
