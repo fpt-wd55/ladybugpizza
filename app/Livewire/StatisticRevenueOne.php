@@ -22,103 +22,51 @@ class StatisticRevenueOne extends Component
     {
         $this->timeRange = $timeRange;
         $this->updateChartData();
+        $this->dispatch('updateChart', [
+            'labels' => $this->labels,
+            'revenueData' => $this->revenueData,
+            'orderData' => $this->orderData,
+        ]);
     }
 
     public function updateChartData()
     {
-        $this->labels = $this->getLabels();
-        $this->revenueData = $this->getRevenueData();
-        $this->orderData = $this->getOrderData();
-        $this->nameTimeRange = $this->getNameTimeRange();
-    }
-
-    public function chart()
-    {
-        $chart = new Highcharts();
-        $chart->title('Tổng doanh thu và đơn hàng');
-        $chart->type('spline');
-        $chart->labels($this->labels);
-
-        $chart->dataset('Doanh thu', 'spline', $this->revenueData)->options([
-            'borderColor' => '#007bff',
-            'backgroundColor' => 'rgba(0, 123, 255, 0.3)',
-        ]);
-
-        $chart->dataset('Chi phí', 'spline', $this->orderData)->options([
-            'borderColor' => '#ff5733',
-            'backgroundColor' => 'rgba(255, 87, 51, 0.3)',
-        ]);
-
-        return $chart;
-    }
-
-    public function getNameTimeRange()
-    {
         switch ($this->timeRange) {
             case '7':
-                return '7 ngày qua';
+                $this->nameTimeRange = '7 ngày qua';
+                $this->labels = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật'];
+                $this->revenueData = [100, 200, 150, 300, 250, 400, 350];
+                $this->orderData = [120, 180, 160, 280, 240, 380, 330];
+                break;
             case '30':
-                return '30 ngày qua';
+                $this->nameTimeRange = '30 ngày qua';
+                $this->labels = range(1, 30);
+                $this->revenueData = array_map(fn() => rand(100, 500), range(1, 30));
+                $this->orderData = array_map(fn() => rand(100, 500), range(1, 30));
+                break;
             case '90':
-                return '90 ngày qua';
+                $this->nameTimeRange = '90 ngày qua';
+                $this->labels = range(1, 90);
+                $this->revenueData = array_map(fn() => rand(100, 500), range(1, 90));
+                $this->orderData = array_map(fn() => rand(100, 500), range(1, 90));
+                break;
             case '365':
-                return '1 năm qua';
+                $this->nameTimeRange = '1 năm qua';
+                $this->labels = range(1, 12);
+                $this->revenueData = array_map(fn() => rand(1000, 5000), range(1, 12));
+                $this->orderData = array_map(fn() => rand(1000, 5000), range(1, 12));
+                break;
             default:
-                return '';
-        }
-    }
-
-    private function getLabels()
-    {
-        switch ($this->timeRange) {
-            case '7':
-                return ['Ngày 1', 'Ngày 2', 'Ngày 3', 'Ngày 4', 'Ngày 5', 'Ngày 6', 'Ngày 7'];
-            case '30':
-                return array_map(fn($i) => "Ngày $i", range(1, 30));
-            case '90':
-                return array_map(fn($i) => "Ngày $i", range(1, 90));
-            case '365':
-                return array_map(fn($i) => "Tháng $i", range(1, 12));
-            default:
-                return [];
-        }
-    }
-
-    private function getRevenueData()
-    {
-        switch ($this->timeRange) {
-            case '7':
-                return [100, 200, 150, 300, 250, 400, 350];
-            case '30':
-                return array_map(fn() => rand(100, 500), range(1, 30));
-            case '90':
-                return array_map(fn() => rand(100, 500), range(1, 90));
-            case '365':
-                return array_map(fn() => rand(1000, 5000), range(1, 12));
-            default:
-                return [];
-        }
-    }
-
-    private function getOrderData()
-    {
-        switch ($this->timeRange) {
-            case '7':
-                return [120, 180, 160, 280, 240, 380, 330];
-            case '30':
-                return array_map(fn() => rand(100, 500), range(1, 30));
-            case '90':
-                return array_map(fn() => rand(100, 500), range(1, 90));
-            case '365':
-                return array_map(fn() => rand(1000, 5000), range(1, 12));
-            default:
-                return [];
+                $this->nameTimeRange = '1 năm qua';
+                $this->labels = range(1, 12);
+                $this->revenueData = array_map(fn() => rand(1000, 5000), range(1, 12));
+                $this->orderData = array_map(fn() => rand(1000, 5000), range(1, 12));
+                break;
         }
     }
 
     public function render()
     {
-        $StatisticRevenueOne = $this->chart();
-        return view('livewire.statistic-revenue-one', compact('StatisticRevenueOne'));
+        return view('livewire.statistic-revenue-one');
     }
 }
