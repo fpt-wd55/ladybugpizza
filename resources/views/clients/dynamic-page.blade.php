@@ -1,5 +1,9 @@
 @extends('layouts.client')
+
 @section('title', $page->title)
-@section('content') 
+
+@section('content')
+
     {!! $page->content !!}
+
 @endsection
