@@ -31,4 +31,15 @@ class Category extends Model
     {
         return $this->hasMany(Attribute::class);
     }
+    public function comboDetails()
+    {
+        return $this->hasManyThrough(
+            ComboDetail::class,
+            Product::class,
+            'category_id',
+            'combo_id',       
+            'id',           
+            'id'              
+        );
+    }
 }
