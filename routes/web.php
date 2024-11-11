@@ -78,11 +78,7 @@ Route::prefix('/')->group(function () {
     Route::put('/settings/update/{id}', [ProfileController::class, 'updateStatus'])->name('client.settings.update');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
     Route::post('/profile/promotion/{id}', [ProfileController::class, 'redeemPromotion'])->name('client.profile.redeem-promotion');
-<<<<<<< HEAD
-    Route::get('/lien-he', [PageController::class, 'contact'])->name('client.contact');
-=======
     Route::get('/contact', [PageController::class, 'contact'])->name('client.contact'); 
->>>>>>> 4697360 (Cập nhật giao diện trang tĩnh)
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
     Route::get('/favorites', [ProductController::class, 'favorites'])->name('client.product.favorites');
     Route::get('product/{slug}/favorite', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
