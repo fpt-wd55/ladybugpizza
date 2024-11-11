@@ -11,6 +11,8 @@ use App\Models\Product;
 use App\Models\Topping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\Evaluation;
+use App\Models\EvaluationImage;
 
 class ComboController extends Controller
 {
@@ -238,6 +240,28 @@ class ComboController extends Controller
     $combos->appends(['search' => $request->search]);
 
     return view('admins.combo.trash', compact('combos'));
-}
+    }
+
+    public function evaluation(Product $combo)
+    {
+        $evaluations = Evaluation::where('product_id', $combo->id)->with('order')->paginate(10);
+
+        foreach ($evaluations as $evaluation) {
+            $evaluation->images = EvaluationImage::where('evaluation_id', $evaluation->id)->get();
+        }
+
+        return view('admins.combo.evaluation', compact('combo', 'evaluations'));
+    }
+
+    public function evaluationUpdate(Request $request, Evaluation $evaluation)
+    {
+        if ($evaluation) {
+            $evaluation->update([
+                'status' => $request->status ? 1 : 2,
+            ]);
+            return redirect()->back()->with('success', 'Cập nhật đánh giá thành công');
+        }
+        return redirect()->back()->with('error', 'Cập nhật đánh giá thất bại');
+    }
 
 }
