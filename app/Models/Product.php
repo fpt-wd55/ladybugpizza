@@ -57,4 +57,8 @@ class Product extends Model
     {
         return $this->hasMany(Favorite::class);
     } 
+    public function comboDetails()
+    {
+        return $this->hasMany(ComboDetail::class, 'combo_id');
+    }
 }

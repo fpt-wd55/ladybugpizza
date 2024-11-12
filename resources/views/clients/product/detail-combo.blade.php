@@ -13,13 +13,15 @@
 
                 <a class="product-card relative flex w-full flex-shrink-0 overflow-hidden " href="">
                     <img alt="" class="h-60 w-1/2 flex-shrink-0 object-cover" loading="lazy"
-                        src="{{ asset('storage/uploads/products/an-het-menu-khong-lo-map-u.jpeg') }}">
+                        src="{{ asset('storage/uploads/products/'.$combo->image) }}">
                     <div class="p-4">
-                        <p class="mb-2 text-sm font-semibold md:text-base">Combo ăn thả ga</p>
+                        <p class="mb-2 text-sm font-semibold md:text-base">{{$combo->name}}</p>
                         <ul class="list-disc space-y-1 ps-4 text-xs md:text-sm">
-                            <li>Pizza xúc xích phô mai size S</li>
-                            <li>Pizza xúc xích phô mai size M</li>
-                            <li>2 Pepsi lon 450ml</li>
+                            @foreach ($combo->comboDetails as $detail)
+                            <li>
+                                {{ $detail->productAttribute->product->name }} - {{ $detail->productAttribute->attributeValue->value }}
+                            </li>
+                        @endforeach
                         </ul>
                         <div class="absolute bottom-4 flex items-center gap-2">
                             <p class="text-sm text-gray-500 line-through">190,000₫</p>
@@ -33,19 +35,24 @@
             <div class="mt-10">
                 <p class="inline-block uppercase rounded-t-lg mb-3 pb-1 border-b-2 border-[#D30A0A] text-[#D30A0A]">chi tiết
                     combo</p>
-                <div class="grid grid-cols-2 gap-2">
-                    @for ($i = 0; $i < 4; $i++)
-                        <div class="product-card flex h-[100px] bg-white shadow-md rounded-lg overflow-hidden">
-                            <img alt="Bánh mì ăn liền" class="w-1/3 h-full object-cover" loading="lazy"
-                                src="{{ asset('storage/uploads/products/pasta-carbonara.jpeg') }}">
-                            <div class="p-2 flex-grow text-sm">
-                                <p class="md:mb-1 font-semibold">Pizza carbonara</p>
-                                <p class="line-clamp-2">ngon đậm vị</p>
-                                <span class="float-right mr-4 md:pt-4 text-[#D30A0A] font-medium">x2</span>
+                    <div class="grid grid-cols-2 gap-2">
+                        @foreach ($combo->comboDetails as $detail)
+                            <div class="product-card flex h-[100px] bg-white shadow-md rounded-lg overflow-hidden">
+                                <img alt="Bánh mì ăn liền" class="w-1/3 h-full object-cover" loading="lazy"
+                                    src="{{ asset('storage/uploads/products/'.$detail->productAttribute->product->image) }}">
+                                <div class="p-2 flex flex-col justify-between flex-grow text-sm">
+                                    <p class="font-semibold">{{ $detail->productAttribute->product->name }}</p>
+                                    <div class="hidden md:block">
+                                        <p class="{{ empty($detail->productAttribute->product->description) ? 'min-h-12' : '' }} text-xs line-clamp-2">
+                                            {{ $detail->productAttribute->product->description }}
+                                        </p>
+                                    </div>
+                                    <span class="text-[#D30A0A] font-medium self-end">x2</span>
+                                </div>
                             </div>
-                        </div>
-                    @endfor
-                </div>
+                        @endforeach
+                    </div>
+                    
             </div>
         </div>
         </div>
