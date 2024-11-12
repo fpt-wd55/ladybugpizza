@@ -17,7 +17,7 @@
                     </div>
                     <button class="button-red" type="submit">Lọc</button>
                 </div>
-            </div>
+            </div> 
             <div class="flex items-center justify-start lg:justify-end w-full md:w-auto mt-3 lg:m-0">
                 <button id="statisticRevenueOne" data-dropdown-toggle="statistic-revenue-one"
                     data-dropdown-placement="bottom"
@@ -57,15 +57,15 @@
                 </div>
             </div>
         </div>
-        <div class="max-w-full mb-3" id="container">
+        <div class="max-w-full mb-3" id="statistic_revenue_one">
         </div>
     </div>
 </div>
 <script>
     document.addEventListener('livewire:init', () => {
-        const chart = Highcharts.chart('container', {
+        const chart = Highcharts.stockChart('statistic_revenue_one', {
             chart: {
-                type: 'spline'
+                type: 'line'
             },
             title: {
                 text: 'Tổng doanh thu và đơn hàng'
@@ -77,11 +77,6 @@
                 title: {
                     text: ''
                 },
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle'
             },
             plotOptions: {
                 series: {
@@ -97,6 +92,12 @@
                     data: @json($this->orderData)
                 }
             ],
+            rangeSelector: {
+                enabled: false
+            },
+            scrollbar: {
+                enabled: false
+            },
             responsive: {
                 rules: [{
                     condition: {
@@ -112,6 +113,7 @@
                 }]
             }
         });
+
         Livewire.on('updateChart', (data) => {
             chart.update({
                 xAxis: {
