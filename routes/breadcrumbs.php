@@ -61,14 +61,20 @@ Breadcrumbs::for('admin.combos.create', function (BreadcrumbTrail $trail) {
     $trail->push('Thêm mới', route('admin.combos.create'));
 });
 
-Breadcrumbs::for('admin.combos.edit', function (BreadcrumbTrail $trail, $category) {
+Breadcrumbs::for('admin.combos.edit', function (BreadcrumbTrail $trail, $combo) {
     $trail->parent('admin.combos.index');
-    $trail->push('Chỉnh sửa', route('admin.combos.edit', $category));
+    $trail->push('Chỉnh sửa', route('admin.combos.edit', $combo));
 });
 
-Breadcrumbs::for('admin.trash-combo', function (BreadcrumbTrail $trail) {
+
+Breadcrumbs::for('admin.combo.trash', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.combos.index');
-    $trail->push('Thùng rác', route('admin.trash-combo'));
+    $trail->push('Thùng rác', route('admin.trash-combos'));
+});
+
+Breadcrumbs::for('admin.combos.evaluation', function (BreadcrumbTrail $trail, $combo) {
+    $trail->parent('admin.combos.index');
+    $trail->push('Đánh giá', route('admin.combos.evaluation', $combo));
 });
 
 // Topping

@@ -1,6 +1,6 @@
 @extends('layouts.client')
 
-@section('title', 'Chi tiết sản phẩm')
+@section('title', $product->name)
 
 @section('content')
     <form action="{{ route('client.product.add-to-cart', $product->slug) }}" method="post">
@@ -16,7 +16,7 @@
                         </a>
                     </div>
                     <div>
-                        <p class="mb-4 text-xl font-medium uppercase md:text-2xl">{{ $product->name }}</p>
+                        <h1 class="mb-4 text-xl font-medium uppercase md:text-2xl">{{ $product->name }}</h1>
                         <div class="mb-2 flex items-center gap-2">
                             <div class="flex items-center gap-1">
                                 @for ($i = 0; $i < 5; $i++)

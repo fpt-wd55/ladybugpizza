@@ -5,7 +5,7 @@
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="p-4 mx-auto">
             <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm combo</h3>
-            <form action="{{ route('admin.combos.store') }}" method="POST">
+            <form action="{{ route('admin.combos.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid gap-4 mb-4 sm:grid-cols-1">
                     <div class="grid gap-4 mb-4 sm:grid-cols-3">
@@ -250,7 +250,8 @@
                                     <h2 class="pb-2">{{ $category->name }}</h2>
                                     <div class="flex flex-wrap justify-between gap-10">
                                         <div class="flex-1">
-                                            <select name="products[{{ $category->id }}]" class="input flex-1">
+                                            <select name="products[{{ $category->id }}]"
+                                                class="input flex-1 category-select">
                                                 <option value="">Chọn {{ $category->name }}</option>
                                                 @foreach ($category->products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
@@ -434,6 +435,7 @@
                 if (!categoryOptionsCache[categoryId]) {
                     categoryOptionsCache[categoryId] = Array.from(categoryItem.querySelectorAll(
                             'select option'))
+                        .filter(option => option.value !== "")
                         .map(option => `<option value="${option.value}">${option.text}</option>`)
                         .join('');
                 }

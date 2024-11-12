@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Sản phẩm | Thêm mới')
+@section('title', 'Sản phẩm | Cập nhật')
 @section('content')
     {{ Breadcrumbs::render('admin.products.edit', $product) }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">

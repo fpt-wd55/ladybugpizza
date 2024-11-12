@@ -25,7 +25,6 @@
                 <div class="">
                     <label class="mb-3 block text-base font-medium text-gray-900" for="url">Đường dẫn trang</label>
                     <div class="flex gap-x-3">
-
                         <div class="">
                             <input {{ $banner->is_local_page == 1 ? 'checked' : '' }} class="input-radio" id="local"
                                 name="is_local_page" type="radio" value="1">

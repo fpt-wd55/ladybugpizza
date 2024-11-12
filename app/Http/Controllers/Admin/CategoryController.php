@@ -18,7 +18,6 @@ class CategoryController extends Controller
 
         return view('admins.category.list', compact('category'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -32,7 +31,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        // Xu ly hinh anh
+        // Xử lý hình ảnh 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_name = time() . '_' . pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $image->getClientOriginalExtension();
@@ -46,7 +45,7 @@ class CategoryController extends Controller
         ];
 
         if (Category::create($data)) {
-            // Xu ly upload anh
+            // Xử lý upload ảnh
             $image->storeAs('public/uploads/categories', $image_name);
 
             return redirect()->route('admin.categories.index')->with('success', 'Thêm danh mục thành công');
@@ -54,7 +53,6 @@ class CategoryController extends Controller
 
         return redirect()->back()->with('error', 'Thêm danh mục thất bại');
     }
-
     /**
      * Show the form for editing the specified resource.
      */

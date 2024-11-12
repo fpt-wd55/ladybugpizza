@@ -37,7 +37,6 @@ class PageController extends Controller
             'status' => $request->has('status') ? 1 : 0, // Đặt trạng thái thành 1 nếu checkbox được chọn, ngược lại là 0
             'content' => $request->input('content'),
         ]);
-
         // Chuyển hướng về trang danh sách với thông báo thành công
         return redirect()->route('admin.pages.index')->with('success', 'Trang đã được tạo thành công.');
     }
@@ -69,10 +68,8 @@ class PageController extends Controller
         $page->slug = $data['slug'];
         $page->status = $data['status'] ?? 0; // Set mặc định là 0 nếu không có status
         $page->content = $data['content'];
-
         // Lưu lại thay đổi
         $page->save();
-
         // Chuyển hướng về trang danh sách trang với thông báo thành công
         return redirect()->route('admin.pages.index')->with('success', 'Cập nhật trang thành công!');
     }
@@ -84,7 +81,6 @@ class PageController extends Controller
     public function destroy(Page $page)
     {
         $page->delete(); // Xóa trang
-
         // Chuyển hướng về trang danh sách với thông báo thành công
         return redirect()->route('admin.pages.index')->with('success', 'Trang đã được xóa thành công.');
     }
@@ -99,7 +95,6 @@ class PageController extends Controller
     {
         $page = Page::withTrashed()->find($id);
         $page->restore();
-
         return back()->with('success', 'Khôi phục thành công');
     }
     // xóa vĩnh viễn

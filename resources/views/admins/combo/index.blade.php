@@ -27,12 +27,157 @@
                 </button>
             </div>
         </div>
+        <div
+            class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4 border-t">
+            <div
+                class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+                <div class="flex items-center space-x-3 w-full md:w-full">
+                    <form method="POST" action="{{ route('admin.combos.bulkAction') }}">
+                        @csrf
+                        <input type="hidden" name="selected_ids" id="selectedIds" value="">
+                        <div id="actionButtons" class="hidden">
+                            <button type="submit" name="action" value="delete" class="button-red me-2">Xóa</button>
+                            <h2 class="font-medium text-gray-700 text-base italic items-center flex" id="selectedItems">
+                            </h2>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div
+                class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+                <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.combos.search') }}" method="GET">
+                    <div class="relative w-full">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            @svg('tabler-search', 'w-5 h-5 text-gray-400')
+                        </div>
+                        <input type="text" name="search" class="input ps-10" placeholder="Tìm kiếm..." />
+                        <input type="hidden" name="context" value="index" />
+                    </div>
+                </form>
+                <div class="flex items-center w-full md:w-auto">
+                    <button data-modal-target="filterDropdown" data-modal-toggle="filterDropdown"
+                        class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
+                        type="button">
+                        @svg('tabler-filter-filled', 'w-5 h-5 me-2')
+                        Bộ lọc
+                    </button>
+                    <form action="{{ route('admin.combos.filter') }}" method="get" id="filterDropdown" tabindex="-1"
+                        aria-hidden="true"
+                        class="fixed inset-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-modal md:h-full">
+                        <div class="relative w-full h-full max-w-2xl md:h-auto">
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
+                                <div class="flex items-start justify-between px-6 py-4 rounded-t">
+                                    <h3 class="text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                        Bộ lọc
+                                    </h3>
+                                    <button type="button"
+                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        data-modal-toggle="filterDropdown">
+                                        @svg('tabler-x', 'w-5 h-5')
+                                    </button>
+                                </div>
+                                <div class="px-4 md:px-6">
+                                    <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
+                                    <ul class="space-y-2 text-sm">
+                                        <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+                                            <li class="flex items-center">
+                                                <input id="active" type="checkbox" name="filter_status[]" value="1"
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                    @if (in_array(1, request()->input('filter_status', []))) checked @endif>
+                                                <label for="active" class="ml-2 text-sm font-medium text-gray-900">Hoạt
+                                                    động</label>
+                                            </li>
+                                            <li class="flex items-center">
+                                                <input id="inactive" type="checkbox" name="filter_status[]" value="2"
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                    @if (in_array(2, request()->input('filter_status', []))) checked @endif>
+                                                <label for="inactive"
+                                                    class="ml-2 text-sm font-medium text-gray-900">Khóa</label>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                    <h6 class="my-3 text-sm font-medium text-gray-900">Sản phẩm</h6>
+                                    <ul class="space-y-2 text-sm">
+                                        <li class="flex items-center">
+                                            <input id="is_featured" type="checkbox" name="filter_is_featured" value="1"
+                                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                @if (request()->input('filter_is_featured') == 1) checked @endif>
+                                            <label for="is_featured" class="ml-2 text-sm font-medium text-gray-900">Sản
+                                                phẩm
+                                                hot</label>
+                                        </li>
+                                        <li class="flex items-center">
+                                            <input id="combo_discount" type="checkbox" name="filter_combo_discount"
+                                                value="1"
+                                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                @if (request()->input('filter_combo_discount') == 1) checked @endif>
+                                            <label for="combo_discount" class="ml-2 text-sm font-medium text-gray-900">Sản
+                                                phẩm
+                                                khuyến mãi</label>
+                                        </li>
+                                    </ul>
+                                    <h6 class="my-3 text-sm font-medium text-gray-900">Giá</h6>
+                                    <div class="flex items-center">
+                                        <div>
+                                            <input name="filter_price_min" type="number"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
+                                                placeholder="1.000 đ">
+                                        </div>
+                                        <span class="mx-4 text-gray-500">-</span>
+                                        <div>
+                                            <input name="filter_price_max" type="number"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
+                                                placeholder="100.000.000 đ">
+                                        </div>
+                                    </div>
+                                    <h6 class="my-3 text-sm font-medium text-gray-900">Đánh giá</h6>
+                                    <ul class="space-y-2 text-sm">
+                                        @for ($i = 5; $i >= 1; $i--)
+                                            <li class="flex items-center">
+                                                <input id="active" type="checkbox" name="filter_rating[]"
+                                                    value="{{ $i }}"
+                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                    @if (in_array($i, request()->input('filter_rating', []))) checked @endif>
+                                                <label for="active"
+                                                    class="ml-2 text-sm font-medium text-gray-900 flex items-center gap-1">
+                                                    <div class="flex items-center gap-0.3">
+                                                        @for ($j = 1; $j <= $i; $j++)
+                                                            @svg('tabler-star-filled', 'icon-sm me-1 text-red-500')
+                                                        @endfor
+                                                        @if ($i < 5)
+                                                            @for ($k = 0; $k < 5 - $i; $k++)
+                                                                @svg('tabler-star', 'icon-sm me-1 text-red-500')
+                                                            @endfor
+                                                        @endif
+                                                    </div>
+                                                </label>
+                                            </li>
+                                        @endfor
+                                    </ul>
+                                </div>
+                                <div class="flex items-center p-6 space-x-4 rounded-b dark:border-gray-600">
+                                    <button type="submit" class="button-red">
+                                        Lọc combo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-gray-700 uppercase bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-4 py-3">Mã</th>
-                        <th scope="col" class="px-4 py-3">Sản phẩm</th>
+                        <th scope="col" class="p-4">
+                            <div class="flex items-center">
+                                <input id="table-checkbox-all" type="checkbox"
+                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                            </div>
+                        </th>
+                        <th scope="col" class="px-4 py-3">Mã combo</th>
+                        <th scope="col" class="px-4 py-3">Combo</th>
                         <th scope="col" class="px-4 py-3 text-center">Giá</th>
                         <th scope="col" class="px-4 py-3 text-center">Số lượng</th>
                         <th scope="col" class="px-4 py-3 text-center">Trạng thái</th>
@@ -44,13 +189,20 @@
                 <tbody>
                     @forelse ($combos as $combo)
                         <tr class="border-b hover:bg-gray-100">
+                            <td class="w-4 px-4 py-3">
+                                <div class="flex items-center">
+                                    <input id="table-item-checkbox-{{ $combo->id }}" type="checkbox"
+                                        onclick="event.stopPropagation()" value="{{ $combo->id }}"
+                                        class="table-item-checkbox w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                </div>
+                            </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
                                 {{ $combo->sku }}</td>
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap shrink-0">
                                 <a class="shrink-0" data-fslightbox="gallery"
-                                    href="{{ asset('storage/uploads/products/' . $combo->image) }}">
-                                    <img loading="lazy" src="{{ asset('storage/uploads/products/' . $combo->image) }}"
-                                        onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
+                                    href="{{ asset('storage/uploads/combos/' . $combo->image) }}">
+                                    <img loading="lazy" src="{{ asset('storage/uploads/combos/' . $combo->image) }}"
+                                        onerror="this.src='{{ asset('storage/uploads/combos/product-placehoder.jpg') }}'"
                                         class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
                                 </a>
                                 <div class="grid grid-flow-row">
@@ -115,11 +267,12 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $combo->sku }}">
                                         <li>
-                                            <a href="#" target="_blank"
+                                            <a href="{{ route('client.product.showCombo', $combo) }}" target="_blank"
                                                 class="block py-2 px-4 hover:bg-gray-100">Xem</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100">Đánh giá</a>
+                                            <a href="{{ route('admin.combos.evaluation', $combo) }}"
+                                                class="block py-2 px-4 hover:bg-gray-100">Đánh giá</a>
                                         </li>
                                         <li>
                                             <a href="{{ route('admin.combos.edit', $combo) }}"
@@ -132,7 +285,6 @@
                                         </li>
                                     </ul>
                                 </div>
-                                {{-- Modal xác nhận xóa --}}
                                 <div id="delete-modal-{{ $combo->sku }}" tabindex="-1"
                                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                     <div class="relative p-4 w-full max-w-md max-h-full">
@@ -176,7 +328,7 @@
                         <td colspan="6" class="text-center py-4 text-base">
                             <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
                                 @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
-                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống.</p>
                             </div>
                         </td>
                     @endforelse
@@ -187,4 +339,9 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        tableCheckboxItem('table-checkbox-all', 'table-item-checkbox');
+    </script>
 @endsection

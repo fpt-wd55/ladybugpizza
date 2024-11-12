@@ -22,8 +22,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Berkshire+Swash&family=Dancing+Script:wght@400..700&family=Vujahday+Script&display=swap"
         rel="stylesheet">
-    {{-- ApexCharts Script --}}
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     {{-- TinyMCE --}}
     <script src="https://cdn.tiny.cloud/1/46tw1u77hj3s6r7nihhrey5e41ssxp7s4zwurwbiyk3ohblk/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
@@ -95,9 +93,9 @@
         </div>
     </div>
 
-    @yield('scripts')
-    
     @livewireScripts
+    @yield('scripts')
+    @stack('scripts')
 </body>
 
 </html>
