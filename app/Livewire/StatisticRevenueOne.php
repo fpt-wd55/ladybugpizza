@@ -4,11 +4,11 @@ namespace App\Livewire;
 
 use App\Charts\Highcharts;
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class StatisticRevenueOne extends Component
 {
-    public $timeRange = '7';
     public $labels = [];
     public $nameTimeRange = '7 ngày qua';
     public $revenueData = [];
@@ -16,13 +16,43 @@ class StatisticRevenueOne extends Component
 
     public function mount()
     {
-        $this->updateChartData();
+        $this->updateChart(7);
     }
 
-    public function updateTimeRange($timeRange)
+    public function updateChart($timeRange)
     {
-        $this->timeRange = $timeRange;
-        $this->updateChartData();
+        switch ($timeRange) {
+            case '7':
+                $this->nameTimeRange = '7 ngày qua';
+                $this->labels = $this->getLabels($timeRange);
+                $this->revenueData = $this->getRevenueData($this->labels);
+                $this->orderData = $this->getOrdersData($this->labels);
+                break;
+            case '30':
+                $this->nameTimeRange = '30 ngày qua';
+                $this->labels = $this->getLabels($timeRange);
+                $this->revenueData = $this->getRevenueData($this->labels);
+                $this->orderData = $this->getOrdersData($this->labels);
+                break;
+            case '90':
+                $this->nameTimeRange = '90 ngày qua';
+                $this->labels = $this->getLabels($timeRange);
+                $this->revenueData = $this->getRevenueData($this->labels);
+                $this->orderData = $this->getOrdersData($this->labels);
+                break;
+            case '365':
+                $this->nameTimeRange = '1 năm qua';
+                $this->labels = $this->getLabels($timeRange);
+                $this->revenueData = $this->getRevenueData($this->labels);
+                $this->orderData = $this->getOrdersData($this->labels);
+                break;
+            default:
+                $this->nameTimeRange = '7 ngày qua';
+                $this->labels = $this->getLabels(7);
+                $this->revenueData = $this->getRevenueData($this->labels);
+                $this->orderData = $this->getOrdersData($this->labels);
+                break;
+        }
         $this->dispatch('updateChart', [
             'labels' => $this->labels,
             'revenueData' => $this->revenueData,
@@ -30,73 +60,39 @@ class StatisticRevenueOne extends Component
         ]);
     }
 
-    public function updateChartData()
+    public function getLabels($timeRange)
     {
-        switch ($this->timeRange) {
-            case '7':
-                $this->nameTimeRange = '7 ngày qua';
-                $this->revenueData = [100, 200, 150, 300, 250, 400, 350];
-                $this->orderData = [120, 180, 160, 280, 240, 380, 330];
 
-                $order = Order::query();
-                $date = now();
-                for ($i = 0; $i < $this->timeRange; $i++) {
-                    $this->labels[] = $date->subDays(1)->format('d/m/yy');
-                }
-                $this->labels = array_reverse($this->labels);
-
-                break;
-            case '30':
-                $this->nameTimeRange = '30 ngày qua';
-
-                $date = now();
-                for ($i = 0; $i < $this->timeRange; $i++) {
-                    $this->labels[] = $date->subDays(1)->format('d/m/yy');
-                }
-                $this->labels = array_reverse($this->labels);
-
-                $this->revenueData = array_map(fn() => rand(100, 500), range(1, 30));
-                $this->orderData = array_map(fn() => rand(100, 500), range(1, 30));
-                break;
-            case '90':
-                $this->nameTimeRange = '90 ngày qua';
-
-                $date = now();
-                for ($i = 0; $i < $this->timeRange; $i++) {
-                    $this->labels[] = $date->subDays(1)->format('d/m/yy');
-                }
-
-                $this->labels = array_reverse($this->labels);
-                $this->labels = array_reverse($this->labels);
-                $this->revenueData = array_map(fn() => rand(100, 500), range(1, 90));
-                $this->orderData = array_map(fn() => rand(100, 500), range(1, 90));
-                break;
-            case '365':
-                $this->nameTimeRange = '1 năm qua';
-
-                $date = now();
-                for ($i = 0; $i < $this->timeRange; $i++) {
-                    $this->labels[] = $date->subWeeks(1)->format('d/m/yy');
-                }
-                $this->labels = array_reverse($this->labels);
-
-                $this->revenueData = array_map(fn() => rand(1000, 5000), range(1, $this->timeRange));
-                $this->orderData = array_map(fn() => rand(1000, 5000), range(1, $this->timeRange));
-                break;
-            default:
-                $this->nameTimeRange = '7 ngày qua';
-
-                $date = now();
-                for ($i = 0; $i < 7; $i++) {
-                    $this->labels[] = $date->subDays(1)->format('d/m/yy');
-                }
-                $this->labels = array_reverse($this->labels); 
-
-                $this->revenueData = array_map(fn() => rand(1000, 5000), range(1, 12));
-                $this->orderData = array_map(fn() => rand(1000, 5000), range(1, 12));
-                break;
+        $date = now();
+        for ($i = 0; $i < $timeRange; $i++) {
+            $this->labels[] = $date->subDays(1)->format('Y-m-d');
         }
-    } 
+        return array_reverse($this->labels);
+    }
+
+    public function getRevenueData(array $labels)
+    {
+        $revenueData = [];
+        foreach ($labels as $label) {
+            $revenueData[] = DB::table('orders')
+            ->whereDate('completed_at', $label)
+            ->groupBy('completed_at')
+            ->sum('amount');
+        } 
+        return $revenueData;
+    }
+
+    public function getOrdersData(array $labels)
+    {
+        $orderData = [];
+        foreach ($labels as $label) {
+            $orderData[] = DB::table('orders')
+                ->whereDate('created_at', $label)
+                ->orderBy('created_at', 'asc')
+                ->count();
+        }
+        return $orderData;
+    }
 
     public function render()
     {

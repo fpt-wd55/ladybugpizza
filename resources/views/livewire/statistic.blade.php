@@ -1,5 +1,5 @@
 <div>
-    {{-- <div class="my-4 grid grid-cols-1 xl:grid-cols-2 xl:gap-4 gap-y-4">
+    <div class="my-4 grid grid-cols-1 xl:grid-cols-2 xl:gap-4 gap-y-4">
         <div>
             <div
                 class="relative col-span-2 flex flex-col min-w-0 border break-words bg-white shadow-soft-xl rounded-lg bg-clip-border">
@@ -99,8 +99,7 @@
             <div
                 class="relative flex flex-col min-w-0 border break-words bg-white shadow-soft-xl rounded-lg bg-clip-border">
                 <div class="rounded-lg p-4 sm:p-6 2xl:col-span-2">
-                    <div
-                        class="grid grid-cols-2 items-center justify-between pb-4 space-y-3 md:space-y-0 md:space-x-4">
+                    <div class="grid grid-cols-2 items-center justify-between pb-4 space-y-3 md:space-y-0 md:space-x-4">
                         <div class="w-full md:w-1/2">
                             <h3 class="my-3 text-sm font-bold leading-none text-gray-900 sm:text-base">Doanh thu
                             </h3>
@@ -457,9 +456,9 @@
                 {!! $userChart6->container() !!}
             </div>
         </div>
-    </div> --}}
+    </div>
 
-    {{-- {{ $revenueChart1->script() }}
+    {{ $revenueChart1->script() }}
     {{ $revenueChart2->script() }}
     {{ $revenueChart3->script() }}
     {{ $revenueChart4->script() }}
@@ -468,5 +467,5 @@
     {{ $userChart3->script() }}
     {{ $userChart4->script() }}
     {{ $userChart5->script() }}
-    {{ $userChart6->script() }} --}}
+    {{ $userChart6->script() }}
 </div>

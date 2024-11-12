@@ -17,7 +17,7 @@
                     </div>
                     <button class="button-red" type="submit">Lọc</button>
                 </div>
-            </div> 
+            </div>
             <div class="flex items-center justify-start lg:justify-end w-full md:w-auto mt-3 lg:m-0">
                 <button id="statisticRevenueOne" data-dropdown-toggle="statistic-revenue-one"
                     data-dropdown-placement="bottom"
@@ -30,25 +30,25 @@
                     class="hidden z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow">
                     <ul class="p-2 text-start text-sm font-medium text-gray-900">
                         <li>
-                            <a href="#" wire:click.prevent="updateTimeRange('7')"
+                            <a href="#" wire:click.prevent="updateChart('7')"
                                 class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100">
                                 7 ngày qua
                             </a href="#">
                         </li>
                         <li>
-                            <a href="#" wire:click.prevent="updateTimeRange('30')"
+                            <a href="#" wire:click.prevent="updateChart('30')"
                                 class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100">
                                 30 ngày qua
                             </a href="#">
                         </li>
                         <li>
-                            <a href="#" wire:click.prevent="updateTimeRange('90')"
+                            <a href="#" wire:click.prevent="updateChart('90')"
                                 class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100">
                                 90 ngày qua
                             </a href="#">
                         </li>
                         <li>
-                            <a href="#" wire:click.prevent="updateTimeRange('365')"
+                            <a href="#" wire:click.prevent="updateChart('365')"
                                 class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100">
                                 1 năm qua
                             </a href="#">
@@ -60,13 +60,14 @@
         <div class="max-w-full mb-3" id="statistic_revenue_one">
         </div>
     </div>
-</div>
+</div> 
 <script>
     document.addEventListener('livewire:init', () => {
         const chart = Highcharts.stockChart('statistic_revenue_one', {
             chart: {
                 type: 'line'
             },
+            colors: ['#f87171', '#60a5fa'],
             title: {
                 text: 'Tổng doanh thu và đơn hàng'
             },
