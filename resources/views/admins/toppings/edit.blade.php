@@ -4,12 +4,10 @@
 @section('content')
     {{ Breadcrumbs::render('admin.toppings.edit', $editTopping) }}
     <div>
-
         <form action="{{ route('admin.toppings.update', $editTopping) }}" class="w-full" method="post"
             enctype="multipart/form-data">
             @csrf
             @method('PUT')
-
             <div class="flex justify-between gap-2">
                 <div class="w-full h-10 mb-5">
                     <label for="name" class="label-lg">Tên</label>
@@ -18,7 +16,6 @@
                         <span style="color: red">{{ $message }}</span>
                     @enderror
                 </div>
-
                 <div class="w-full h-10 mb-5">
                     <label class="label-lg">Ảnh</label>
                     <div>
@@ -31,7 +28,6 @@
                                 class="img-sm mt-2 img-circle object-cover">
                         </a>
                     </div>
-                    
                     @error('image')
                         <span style="color: red">{{ $message }}</span>
                     @enderror
