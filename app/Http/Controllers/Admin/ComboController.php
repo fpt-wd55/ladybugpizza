@@ -16,9 +16,6 @@ use App\Models\EvaluationImage;
 
 class ComboController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $combos = Product::orderByDesc('id')->where('category_id', 7)->paginate(10);
@@ -26,9 +23,6 @@ class ComboController extends Controller
         return view('admins.combo.index', compact('combos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $pizzas = Product::where('category_id', 1)->get();
@@ -47,9 +41,6 @@ class ComboController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(ComboRequest $request)
     {
         if ($request->hasFile('image')) {
@@ -84,17 +75,11 @@ class ComboController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Product $combo)
     {
         $pizzas = Product::where('category_id', 1)->get();
@@ -114,9 +99,6 @@ class ComboController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(ComboRequest $request, Product $combo)
     {
         $old_image = $combo->image;
@@ -159,8 +141,10 @@ class ComboController extends Controller
     public function destroy(Product $combo)
     {
         if ($combo->delete()) {
+
             return redirect()->back()->with('success', 'Xóa combo thành công');
         } else {
+
             return redirect()->back()->with('error', 'Xóa combo thất bại');
         }
     }
@@ -263,15 +247,56 @@ class ComboController extends Controller
         return view('admins.combo.evaluation', compact('combo', 'evaluations'));
     }
 
-    public function evaluationUpdate(Request $request, Evaluation $evaluation)
-    {
+    public function evaluationUpdate(Request $request, Evaluation $evaluation){
         if ($evaluation) {
             $evaluation->update([
                 'status' => $request->status ? 1 : 2,
             ]);
             return redirect()->back()->with('success', 'Cập nhật đánh giá thành công');
         }
+
         return redirect()->back()->with('error', 'Cập nhật đánh giá thất bại');
     }
+
+    public function filter(Request $request){
+        $query = Product::where('category_id', 7);
+
+        if ($request->filled('filter_status')) {
+            $query->whereIn('status', $request->input('filter_status'));
+        }
+
+        if ($request->filled('filter_is_featured')) {
+            $query->where('is_featured', 1);
+        }
+
+        if ($request->filled('filter_combo_discount')) {
+            $query->where('discount_price', '>', 0);
+        }
+
+        if ($request->filled('filter_rating')) {
+            $ratings = $request->input('filter_rating');
+            $query->where(function($query) use ($ratings) {
+                foreach ($ratings as $rating) {
+                    $query->orWhere('avg_rating', $rating);
+                }
+            });
+        }
+
+        if ($request->filled('filter_price_min') || $request->filled('filter_price_max')) {
+            $priceMin = $request->input('filter_price_min', 0);
+            $priceMax = $request->input('filter_price_max', PHP_INT_MAX);
+            if ($request->filled('filter_price_min')) {
+                $query->where('price', '>=', $priceMin);
+            }
+            if ($request->filled('filter_price_max')) {
+                $query->where('price', '<=', $priceMax);
+            }
+        }
+
+        $combos = $query->paginate(10)->appends($request->query());
+
+        return view('admins.combo.index', compact('combos'));
+    }
+
 
 }
