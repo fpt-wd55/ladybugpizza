@@ -20,7 +20,7 @@
                     <div class="no-scrollbar flex w-full items-center gap-4 overflow-x-auto">
                         @foreach ($comboCategory->products as $combo)
                         <a href="{{route('client.product.showCombo',$combo->slug)}}" class="product-card relative flex w-full flex-shrink-0 overflow-hidden md:w-2/3" href="">
-                            <img alt="" class="h-60 w-1/2 flex-shrink-0 object-cover" loading="lazy" src="{{ asset('storage/uploads/products/' . $combo->image) }}">
+                            <img alt="" class="h-60 w-1/2 flex-shrink-0 object-cover" loading="lazy" src="{{ asset('storage/uploads/combos/' . $combo->image) }}">
                             <div class="p-4">
                                 <p class="mb-2 text-sm font-semibold md:text-base">{{ $combo->name }}</p>
                                 <ul class="list-disc space-y-1 ps-4 text-xs md:text-sm">
