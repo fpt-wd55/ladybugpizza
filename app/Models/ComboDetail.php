@@ -11,8 +11,14 @@ class ComboDetail extends Model
 
     protected $fillable = [
           'combo_id',
-          'product_attribute_id'
+          'product_attribute_id',
+          'quantity'
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'combo_id');
+    }
 
     public function productAttribute()
     {

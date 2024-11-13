@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('combo_details', function (Blueprint $table) {
             $table->integer('combo_id')->foreignId('product_id')->constrained('products');
             $table->foreignId('product_attribute_id')->constrained()->onDelete('cascade');
+            $table->integer('quantity')->nullable();
             $table->timestamps();
         });
     }

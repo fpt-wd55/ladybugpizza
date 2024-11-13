@@ -56,7 +56,7 @@ class Product extends Model
     public function favorites()
     {
         return $this->hasMany(Favorite::class);
-    } 
+    }
     public function comboDetails()
     {
         return $this->hasMany(ComboDetail::class, 'combo_id');
