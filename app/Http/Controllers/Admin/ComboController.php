@@ -75,11 +75,6 @@ class ComboController extends Controller
         }
     }
 
-    public function show(string $id)
-    {
-        //
-    }
-
     public function edit(Product $combo)
     {
         $pizzas = Product::where('category_id', 1)->get();

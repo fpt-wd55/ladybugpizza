@@ -267,7 +267,7 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $combo->sku }}">
                                         <li>
-                                            <a href="{{ route('client.product.showCombo', $combo) }}" target="_blank"
+                                            <a href="{{ route('client.product.showCombo', $combo->slug) }}" target="_blank"
                                                 class="block py-2 px-4 hover:bg-gray-100">Xem</a>
                                         </li>
                                         <li>
