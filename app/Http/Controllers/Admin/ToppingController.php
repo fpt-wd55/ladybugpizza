@@ -17,13 +17,11 @@ class ToppingController extends Controller
         $toppings = Topping::latest('id')->paginate(10);
         return view('admins.toppings.index', compact('toppings', 'categories'));
     }
-
     public function create()
     {
         $categories = Category::all();
         return view('admins.toppings.add', compact('categories'));
     }
-
     public function store(ToppingRequest $request)
     {
         $data = $request->except('image');
