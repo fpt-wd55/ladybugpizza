@@ -39,7 +39,6 @@ class ProfileController extends Controller
 
 		// Khởi tạo một mảng chứa các trường cần cập nhật
 		$data = [];
-
 		// Kiểm tra xem người dùng có tải lên avatar không
 		if ($request->hasFile('avatar')) {
 			$file = $request->file('avatar');
@@ -47,7 +46,6 @@ class ProfileController extends Controller
 			$file->move('storage/uploads/avatars', $name);
 			$data['avatar'] = $name;
 		}
-
 		// Xử lý giới tính
 		$gender = null;
 		if ($request->gender == 'male') {
