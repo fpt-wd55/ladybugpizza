@@ -28,7 +28,6 @@ class UserController extends Controller
         $permissions = Role::where('id', '>', 2)->get();
         return view('admins.user.add', compact('permissions'));
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -47,7 +46,7 @@ class UserController extends Controller
             $validatedData['status'] = 2;
         }
 
-        // Xu ly hinh anh
+        // Xử lý hình ảnh
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $avatar_name = time() . '_' . pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $avatar->getClientOriginalExtension();
