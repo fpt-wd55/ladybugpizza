@@ -20,11 +20,8 @@ class OrderController extends Controller
         if ($redirectHome) {
             return $redirectHome; 
         }
-
         $status = $request->get('tab');
-
         $userId = Auth::id(); 
-    
         $orders = Order::when($status, function ($query, $status) {
             return $query->whereHas('orderStatus', function ($q) use ($status) {
                 $q->where('slug', $status);
