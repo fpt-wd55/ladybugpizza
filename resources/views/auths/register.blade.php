@@ -53,7 +53,7 @@
                         <div class="">
                             <input type="checkbox" name="agree" id="agree" class="input-checkbox mb-1">
                             <label for="agree" class="text-sm ms-1">Khách hàng đồng ý với</label>
-                            <a href="{{ route('client.policies') }}" class="text-red-600 text-sm">chính sách và điều
+                            <a href="{{ route('client.dynamic-page','chinh-sach-va-dieu-khoan') }}" class="text-red-600 text-sm">chính sách và điều
                                 khoản</a>
                         </div>
                         @error('agree')
