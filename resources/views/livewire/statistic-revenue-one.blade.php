@@ -1,134 +1,107 @@
-<div>
-    <div wire:ignore class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2">
-        <div class="grid grid-cols-1 lg:grid-cols-3 items-center justify-between pb-4 mt-4">
-            <div class="w-full md:w-1/2 col-span-2">
-                <div date-rangepicker class="grid items-center grid-cols-3 gap-4 w-full">
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            @svg('tabler-calendar', 'w-5 h-5 text-gray-500')
-                        </div>
-                        <input name="start" type="text" class="input pl-10 p-2" placeholder="Từ">
-                    </div>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            @svg('tabler-calendar', 'w-5 h-5 text-gray-500')
-                        </div>
-                        <input name="end" type="text" class="input pl-10 p-2" placeholder="Đến">
-                    </div>
-                    <button class="button-red" type="submit">Lọc</button>
+<div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 mb-4">
+    <div class="grid grid-cols-1 lg:grid-cols-3 items-center justify-between pb-4 mt-4">
+        <div class="w-full md:w-1/2 col-span-2">
+            <div class="grid items-center grid-cols-3 gap-4 w-full">
+                <input wire:model="startDateStatisticRevenueOne" autocomplete="off" type="date" class="input">
+                <input wire:model="endDateStatisticRevenueOne" autocomplete="off" type="date" class="input">
+                <button wire:click="filterByDateRangeStatisticRevenueOne" class="button-red" type="button">Lọc</button>
+            </div>
+            @if ($errors->has('startDateStatisticRevenueOne') || $errors->has('endDateStatisticRevenueOne'))
+                <div class="text-sm text-red-800 py-2">
+                    <span>{{ $errors->first('startDateStatisticRevenueOne') ?: $errors->first('endDateStatisticRevenueOne') }}</span>
                 </div>
-            </div> 
-            <div class="flex items-center justify-start lg:justify-end w-full md:w-auto mt-3 lg:m-0">
-                <button id="statisticRevenueOne" data-dropdown-toggle="statistic-revenue-one"
-                    data-dropdown-placement="bottom"
-                    class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
-                    type="button">
-                    {{ $nameTimeRange }}
-                    @svg ('tabler-chevron-down', 'w-4 h-4 ml-2 text-gray-500')
+            @endif
+        </div>
+        <div class="flex items-center justify-start lg:justify-end w-full md:w-auto mt-3 lg:m-0">
+            <div class="inline-flex items-center rounded-md bg-slate-100 p-1.5">
+                <button wire:click.prevent="updateChartStatisticRevenueOne('week')"
+                    class="rounded {{ $selectedTimeRangeStatisticRevenueOne == 'week' ? 'bg-white' : '' }} px-3 py-1 text-xs font-medium text-black shadow-card hover:bg-white me-1">
+                    Tuần
                 </button>
-                <div id="statistic-revenue-one"
-                    class="hidden z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow">
-                    <ul class="p-2 text-start text-sm font-medium text-gray-900">
-                        <li>
-                            <a href="#" wire:click.prevent="updateTimeRange('7')"
-                                class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100">
-                                7 ngày qua
-                            </a href="#">
-                        </li>
-                        <li>
-                            <a href="#" wire:click.prevent="updateTimeRange('30')"
-                                class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100">
-                                30 ngày qua
-                            </a href="#">
-                        </li>
-                        <li>
-                            <a href="#" wire:click.prevent="updateTimeRange('90')"
-                                class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100">
-                                90 ngày qua
-                            </a href="#">
-                        </li>
-                        <li>
-                            <a href="#" wire:click.prevent="updateTimeRange('365')"
-                                class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100">
-                                1 năm qua
-                            </a href="#">
-                        </li>
-                    </ul>
-                </div>
+                <button wire:click.prevent="updateChartStatisticRevenueOne('month')"
+                    class="rounded {{ $selectedTimeRangeStatisticRevenueOne == 'month' ? 'bg-white' : '' }} px-3 py-1 text-xs font-medium text-black hover:bg-white me-1">
+                    Tháng
+                </button>
+                <button wire:click.prevent="updateChartStatisticRevenueOne('year')"
+                    class="rounded {{ $selectedTimeRangeStatisticRevenueOne == 'year' ? 'bg-white' : '' }} px-3 py-1 text-xs font-medium text-black hover:bg-white me-1">
+                    Năm
+                </button>
             </div>
         </div>
-        <div class="max-w-full mb-3" id="statistic_revenue_one">
-        </div>
+    </div>
+    <div wire:ignore class="max-w-full mb-3" id="statistic_revenue_one">
     </div>
 </div>
 <script>
     document.addEventListener('livewire:init', () => {
-        const chart = Highcharts.stockChart('statistic_revenue_one', {
+        const chart = Highcharts.chart('statistic_revenue_one', {
             chart: {
-                type: 'line'
-            },
-            title: {
-                text: 'Tổng doanh thu và đơn hàng'
-            },
-            xAxis: {
-                categories: @json($this->labels)
-            },
-            yAxis: {
-                title: {
-                    text: ''
-                },
-            },
-            plotOptions: {
-                series: {
-                    allowPointSelect: true
+                zooming: {
+                    type: 'xy'
                 }
+            },
+            colors: ['#d42020', '#1E429F'],
+            title: {
+                text: 'Thống kê doanh thu và đơn hàng theo thời gian',
+            },
+            xAxis: [{
+                categories: @json($this->labels),
+                crosshair: true
+            }],
+            yAxis: [{
+                allowDecimals: false,
+                labels: {
+                    format: '{value} VNĐ',
+                },
+                title: {
+                    text: '',
+                }
+            }, {
+                allowDecimals: false,
+                title: {
+                    text: '',
+                },
+                labels: {
+                    format: '{value}',
+                },
+                opposite: true
+            }],
+            tooltip: {
+                shared: true
+            },
+            legend: {
+                align: 'center',
+                verticalAlign: 'top',
             },
             series: [{
-                    name: 'Doanh thu',
-                    data: @json($this->revenueData)
-                },
-                {
-                    name: 'Đơn hàng',
-                    data: @json($this->orderData)
+                name: 'Đơn hàng',
+                type: 'column',
+                yAxis: 1,
+                data: @json($this->orderDataStatisticRevenueOne),
+                tooltip: {
+                    valueSuffix: ' đơn'
                 }
-            ],
-            rangeSelector: {
-                enabled: false
-            },
-            scrollbar: {
-                enabled: false
-            },
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 500
-                    },
-                    chartOptions: {
-                        legend: {
-                            layout: 'horizontal',
-                            align: 'center',
-                            verticalAlign: 'bottom'
-                        }
-                    }
-                }]
-            }
+
+            }, {
+                name: 'Doanh thu',
+                type: 'spline',
+                data: @json($this->revenueDataStatisticRevenueOne),
+                tooltip: {
+                    valueSuffix: ' VNĐ'
+                }
+            }]
         });
 
-        Livewire.on('updateChart', (data) => {
-            chart.update({
-                xAxis: {
-                    categories: data[0].labels
-                },
-                series: [{
-                        name: 'Doanh thu',
-                        data: data[0].revenueData
-                    },
-                    {
-                        name: 'Đơn hàng',
-                        data: data[0].orderData
-                    }
-                ]
-            });
+        Livewire.on('updateChartStatisticRevenueOne', (data) => {
+            if (chart.series.length) {
+                chart.xAxis[0].setCategories(data[0].labels);
+                chart.series[0].update({
+                    data: data[0].orderDataStatisticRevenueOne
+                });
+                chart.series[1].update({
+                    data: data[0].revenueDataStatisticRevenueOne
+                });
+            }
         });
     })
 </script>
