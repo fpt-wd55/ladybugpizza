@@ -6,12 +6,12 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class StatisticRevenueOne extends Component
+class StatisticOrderOne extends Component
 {
     public $labels = [];
     public $selectedTimeRangeStatisticRevenueOne = 7;
-    public $revenueDataStatisticRevenueOne = [];
-    public $orderDataStatisticRevenueOne = [];
+    public $revenueData = [];
+    public $orderData = [];
     public $startDateStatisticRevenueOne;
     public $endDateStatisticRevenueOne;
 
@@ -23,8 +23,8 @@ class StatisticRevenueOne extends Component
     public function updateChartStatisticRevenueOne($timeRange)
     {
         $this->labels = [];
-        $this->revenueDataStatisticRevenueOne = [];
-        $this->orderDataStatisticRevenueOne = [];
+        $this->revenueData = [];
+        $this->orderData = [];
         $this->selectedTimeRangeStatisticRevenueOne = $timeRange;
 
         $date = now();
@@ -58,15 +58,15 @@ class StatisticRevenueOne extends Component
 
         $this->dispatch('updateChartStatisticRevenueOne', [
             'labels' => $this->labels,
-            'revenueDataStatisticRevenueOne' => $this->revenueDataStatisticRevenueOne,
-            'orderDataStatisticRevenueOne' => $this->orderDataStatisticRevenueOne,
+            'revenueData' => $this->revenueData,
+            'orderData' => $this->orderData,
         ]);
     }
 
     public function filterByDateRangeStatisticRevenueOne()
     {
         $this->labels = [];
-        $this->revenueDataStatisticRevenueOne = [];
+        $this->revenueData = [];
 
         $this->validate(
             [
@@ -92,8 +92,8 @@ class StatisticRevenueOne extends Component
 
         $this->dispatch('updateChartStatisticRevenueOne', [
             'labels' => $this->labels,
-            'revenueDataStatisticRevenueOne' => $this->revenueDataStatisticRevenueOne,
-            'orderDataStatisticRevenueOne' => $this->orderDataStatisticRevenueOne,
+            'revenueData' => $this->revenueData,
+            'orderData' => $this->orderData,
         ]);
     }
 
@@ -117,15 +117,12 @@ class StatisticRevenueOne extends Component
                 $query->whereDate('completed_at', $time)
                     ->groupBy('completed_at');
             }
-            $this->revenueDataStatisticRevenueOne[] = (int)$query->sum('amount');
-            $this->orderDataStatisticRevenueOne[] = $query->count();
+            $this->revenueData[] = (int)$query->sum('amount');
+            $this->orderData[] = $query->count();
         }
     }
-
     public function render()
     {
-        return view('livewire.statistic-revenue-one', [
-            'selectedTimeRangeStatisticRevenueOne' => $this->selectedTimeRangeStatisticRevenueOne,
-        ]);
+        return view('livewire.statistic-order-one');
     }
 }

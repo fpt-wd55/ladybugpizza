@@ -40,7 +40,7 @@ class OrderSeeder extends Seeder
             Order::insert([
                 'user_id' => $user,
                 'promotion_id' => null,
-                'amount' => rand(100, 500) * 1000,
+                'amount' => rand(100, 700) * 1000,
                 'address_id' => $address->id,
                 'discount_amount' => rand(0, 10000),
                 'shipping_fee' => 25000,
