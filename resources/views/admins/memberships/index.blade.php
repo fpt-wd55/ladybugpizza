@@ -102,7 +102,7 @@
                                 <div class="flex flex-col items-center ">
                                     <img loading="lazy"
                                         src="{{ asset('storage/uploads/ranks/' . $membership->rank->icon) }}"
-                                        class="img-circle w-7 h-7 object-cover">
+                                        class="img-circle w-8 h-8 object-contain">
                                     <p
                                         class="uppercase text-xs md:text-sm md:font-medium lg:font-semibold {{ $membership->rank->color }}">
                                         {{ $membership->rank->name }}</p>

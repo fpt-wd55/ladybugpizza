@@ -44,7 +44,7 @@
                                 {{-- Điểm hội viên --}}
                                 <div class="flex flex-col md:flex-row items-center gap-4">
                                     <img loading="lazy" src="{{ asset('storage/uploads/ranks/' . $img) }}" alt=""
-                                        class="img-md md:img-sm object-cover">
+                                        class="img-md md:img-sm object-contain">
                                     <div class="w-full mx-1">
                                         <div class="flex items-center justify-between mb-1 px-1 ">
                                             <p
