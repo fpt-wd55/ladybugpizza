@@ -34,15 +34,18 @@
 </div>
 <script>
     document.addEventListener('livewire:init', () => {
-        const chart = Highcharts.chart('statistic_revenue_one', {
+        const statistic_revenue_one = Highcharts.chart('statistic_revenue_one', {
             chart: {
                 zooming: {
                     type: 'xy'
                 }
             },
+            credits: {
+                enabled: false
+            },
             colors: ['#d42020', '#1E429F'],
             title: {
-                text: 'Thống kê doanh thu và đơn hàng theo thời gian',
+                text: 'Biểu đồ doanh thu và đơn hàng',
             },
             xAxis: [{
                 categories: @json($this->labels),
@@ -89,16 +92,19 @@
                 tooltip: {
                     valueSuffix: ' VNĐ'
                 }
-            }]
+            }],
+            accessibility: {
+                enabled: false
+            }
         });
 
-        Livewire.on('updateChartStatisticRevenueOne', (data) => {
-            if (chart.series.length) {
-                chart.xAxis[0].setCategories(data[0].labels);
-                chart.series[0].update({
+        Livewire.on('updateChartStatisticRevenueOne', (data) => { 
+            if (statistic_revenue_one.series.length) {
+                statistic_revenue_one.xAxis[0].setCategories(data[0].labels);
+                statistic_revenue_one.series[0].update({
                     data: data[0].orderDataStatisticRevenueOne
                 });
-                chart.series[1].update({
+                statistic_revenue_one.series[1].update({
                     data: data[0].revenueDataStatisticRevenueOne
                 });
             }

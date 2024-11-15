@@ -9,7 +9,7 @@ use Livewire\Component;
 class StatisticRevenueOne extends Component
 {
     public $labels = [];
-    public $selectedTimeRangeStatisticRevenueOne = 7;
+    public $selectedTimeRangeStatisticRevenueOne;
     public $revenueDataStatisticRevenueOne = [];
     public $orderDataStatisticRevenueOne = [];
     public $startDateStatisticRevenueOne;
@@ -124,8 +124,6 @@ class StatisticRevenueOne extends Component
 
     public function render()
     {
-        return view('livewire.statistic-revenue-one', [
-            'selectedTimeRangeStatisticRevenueOne' => $this->selectedTimeRangeStatisticRevenueOne,
-        ]);
+        return view('livewire.statistic-revenue-one');
     }
 }
