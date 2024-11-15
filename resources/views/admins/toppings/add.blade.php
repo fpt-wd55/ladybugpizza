@@ -8,9 +8,7 @@
     <div class="container">
         <form action="{{ route('admin.toppings.store') }}" class="w-full" method="post" enctype="multipart/form-data">
             @csrf
-
             <div class="flex justify-between gap-2">
-
                 <div class="w-full mb-5">
                     <label for="name" class="label-lg">Tên</label>
                     <input type="text" name="name" class="input h-10 mb-2" value="{{ old('name') }}" />
@@ -18,7 +16,6 @@
                         <span style="color: red ">{{ $message }}</span>
                     @enderror
                 </div>
-
                 <div class="w-full mb-5">
                     <label for="image" class="label-lg">Ảnh</label>
                     <input
@@ -28,9 +25,7 @@
                         <span style="color: red">{{ $message }}</span>
                     @enderror
                 </div>
-
             </div>
-
             <div class="flex justify-between gap-2 mt-4">
                 <div class="w-full mb-5">
                     <label for="price" class="label-lg">Giá</label>
@@ -39,7 +34,6 @@
                         <span style="color: red">{{ $message }}</span>
                     @enderror
                 </div>
-                
                 <div class="w-full mb-5">
                     <label for="category_id" class="label-lg ">Danh mục</label>
                     <select class="w-full h-10 mb-2 select" name="category_id" id="">

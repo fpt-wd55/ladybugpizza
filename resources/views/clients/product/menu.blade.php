@@ -18,23 +18,27 @@
                 <div class="mb-16">
                     <p class="playwrite-gb-s-regular mb-8 text-2xl">Combo</p>
                     <div class="no-scrollbar flex w-full items-center gap-4 overflow-x-auto">
-                        @foreach ($combos as $combo)
-                            <a class="product-card relative flex w-full flex-shrink-0 overflow-hidden md:w-2/3" href="">
-                                <img alt="" class="h-60 w-1/2 flex-shrink-0 object-cover" loading="lazy" src="{{ asset('storage/uploads/products/' . $combo->image) }}">
-                                <div class="p-4">
-                                    <p class="mb-2 text-sm font-semibold md:text-base">{{ $combo->name }}</p>
-                                    <ul class="list-disc space-y-1 ps-4 text-xs md:text-sm">
-                                        <li>Pizza xúc xích phô mai size S</li>
-                                        <li>Pizza xúc xích phô mai size M</li>
-                                        <li>2 Pepsi lon 450ml</li>
-                                    </ul>
-                                    <div class="absolute bottom-4 flex items-center gap-3">
-                                        <p class="text-sm text-gray-500 line-through">190,000₫</p>
-                                        <p class="text-lg font-semibold">190,000₫</p>
-                                    </div>
+                        @foreach ($comboCategory->products as $combo)
+                        <a href="{{route('client.product.showCombo',$combo->slug)}}" class="product-card relative flex w-full flex-shrink-0 overflow-hidden md:w-2/3" href="">
+                            <img alt="" class="h-60 w-1/2 flex-shrink-0 object-cover" loading="lazy" src="{{ asset('storage/uploads/combos/' . $combo->image) }}">
+                            <div class="p-4">
+                                <p class="mb-2 text-sm font-semibold md:text-base">{{ $combo->name }}</p>
+                                <ul class="list-disc space-y-1 ps-4 text-xs md:text-sm">
+                                    {{-- Lặp qua các chi tiết của sản phẩm trong combo --}}
+                                    @foreach ($combo->comboDetails as $detail)
+                                        <li>
+                                            {{ $detail->productAttribute->product->name }} - {{ $detail->productAttribute->attributeValue->value }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                <div class="absolute bottom-4 flex items-center gap-3">
+                                    <p class="text-sm text-gray-500 line-through">{{ number_format($combo->price) }}₫</p>
+                                    <p class="text-lg font-semibold">{{ number_format($combo->discount_price) }}₫</p>
                                 </div>
-                            </a>
-                        @endforeach
+                            </div>
+                        </a>
+                    @endforeach
+                    
                     </div>
                 </div>
 

@@ -2,123 +2,128 @@
 
 namespace App\Livewire;
 
-use App\Charts\Highcharts;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class StatisticRevenueOne extends Component
 {
-    public $timeRange = '7';
     public $labels = [];
-    public $nameTimeRange = '7 ngày qua';
-    public $revenueData = [];
-    public $orderData = [];
+    public $selectedTimeRangeStatisticRevenueOne;
+    public $revenueDataStatisticRevenueOne = [];
+    public $orderDataStatisticRevenueOne = [];
+    public $startDateStatisticRevenueOne;
+    public $endDateStatisticRevenueOne;
 
     public function mount()
     {
-        $this->updateChartData();
+        $this->updateChartStatisticRevenueOne('week');
     }
 
-    public function updateTimeRange($timeRange)
+    public function updateChartStatisticRevenueOne($timeRange)
     {
-        $this->timeRange = $timeRange;
-        $this->updateChartData();
-    }
+        $this->labels = [];
+        $this->revenueDataStatisticRevenueOne = [];
+        $this->orderDataStatisticRevenueOne = [];
+        $this->selectedTimeRangeStatisticRevenueOne = $timeRange;
 
-    public function updateChartData()
-    {
-        $this->labels = $this->getLabels();
-        $this->revenueData = $this->getRevenueData();
-        $this->orderData = $this->getOrderData();
-        $this->nameTimeRange = $this->getNameTimeRange();
-    }
+        $date = now();
+        $dataTimes = [];
 
-    public function chart()
-    {
-        $chart = new Highcharts();
-        $chart->title('Tổng doanh thu và đơn hàng');
-        $chart->type('spline');
-        $chart->labels($this->labels);
+        switch ($timeRange) {
+            case 'week':
+                $start = $date->copy()->startOfWeek();
+                $end = $date->copy();
+                $format = 'Y-m-d';
+                $labelFormat = 'd/m/Y';
+                break;
+            case 'month':
+                $start = $date->copy()->startOfMonth();
+                $end = $date->copy();
+                $format = 'Y-m-d';
+                $labelFormat = 'd/m/Y';
+                break;
+            case 'year':
+                $start = $date->copy()->startOfYear();
+                $end = $date->copy();
+                $format = 'Y-m';
+                $labelFormat = 'm/Y';
+                break;
+            default:
+                break;
+        }
 
-        $chart->dataset('Doanh thu', 'spline', $this->revenueData)->options([
-            'borderColor' => '#007bff',
-            'backgroundColor' => 'rgba(0, 123, 255, 0.3)',
+        $this->generateLabelsAndDataTimes($start, $end, $timeRange, $format, $labelFormat, $dataTimes);
+        $this->fetchData($dataTimes, $timeRange);
+
+        $this->dispatch('updateChartStatisticRevenueOne', [
+            'labels' => $this->labels,
+            'revenueDataStatisticRevenueOne' => $this->revenueDataStatisticRevenueOne,
+            'orderDataStatisticRevenueOne' => $this->orderDataStatisticRevenueOne,
         ]);
+    }
 
-        $chart->dataset('Chi phí', 'spline', $this->orderData)->options([
-            'borderColor' => '#ff5733',
-            'backgroundColor' => 'rgba(255, 87, 51, 0.3)',
+    public function filterByDateRangeStatisticRevenueOne()
+    {
+        $this->labels = [];
+        $this->revenueDataStatisticRevenueOne = [];
+
+        $this->validate(
+            [
+                'startDateStatisticRevenueOne' => 'required|date',
+                'endDateStatisticRevenueOne' => 'required|date|after_or_equal:startDateStatisticRevenueOne',
+            ],
+            [
+                'startDateStatisticRevenueOne.required' => 'Vui lòng chọn ngày bắt đầu',
+                'startDateStatisticRevenueOne.date' => 'Ngày bắt đầu không hợp lệ',
+                'endDateStatisticRevenueOne.required' => 'Vui lòng chọn ngày kết thúc',
+                'endDateStatisticRevenueOne.date' => 'Ngày kết thuc không hợp lệ',
+                'endDateStatisticRevenueOne.after_or_equal' => 'Ngày kết thúc phải sau hoặc bằng ngày bắt đầu',
+            ]
+        );
+
+        $start = Carbon::parse($this->startDateStatisticRevenueOne);
+        $end = Carbon::parse($this->endDateStatisticRevenueOne);
+
+
+        $dataTimes = [];
+        $this->generateLabelsAndDataTimes($start, $end, 'day', 'Y-m-d', 'd/m/Y', $dataTimes);
+        $this->fetchData($dataTimes, 'day');
+
+        $this->dispatch('updateChartStatisticRevenueOne', [
+            'labels' => $this->labels,
+            'revenueDataStatisticRevenueOne' => $this->revenueDataStatisticRevenueOne,
+            'orderDataStatisticRevenueOne' => $this->orderDataStatisticRevenueOne,
         ]);
-
-        return $chart;
     }
 
-    public function getNameTimeRange()
+    private function generateLabelsAndDataTimes($start, $end, $timeRange, $format, $labelFormat, &$dataTimes)
     {
-        switch ($this->timeRange) {
-            case '7':
-                return '7 ngày qua';
-            case '30':
-                return '30 ngày qua';
-            case '90':
-                return '90 ngày qua';
-            case '365':
-                return '1 năm qua';
-            default:
-                return '';
+        for ($date = $start; $date->lte($end); $date->add($timeRange === 'year' ? '1 month' : '1 day')) {
+            $this->labels[] = $date->format($labelFormat);
+            $dataTimes[] = $date->format($format);
         }
     }
 
-    private function getLabels()
+    private function fetchData($dataTimes, $timeRange)
     {
-        switch ($this->timeRange) {
-            case '7':
-                return ['Ngày 1', 'Ngày 2', 'Ngày 3', 'Ngày 4', 'Ngày 5', 'Ngày 6', 'Ngày 7'];
-            case '30':
-                return array_map(fn($i) => "Ngày $i", range(1, 30));
-            case '90':
-                return array_map(fn($i) => "Ngày $i", range(1, 90));
-            case '365':
-                return array_map(fn($i) => "Tháng $i", range(1, 12));
-            default:
-                return [];
-        }
-    }
-
-    private function getRevenueData()
-    {
-        switch ($this->timeRange) {
-            case '7':
-                return [100, 200, 150, 300, 250, 400, 350];
-            case '30':
-                return array_map(fn() => rand(100, 500), range(1, 30));
-            case '90':
-                return array_map(fn() => rand(100, 500), range(1, 90));
-            case '365':
-                return array_map(fn() => rand(1000, 5000), range(1, 12));
-            default:
-                return [];
-        }
-    }
-
-    private function getOrderData()
-    {
-        switch ($this->timeRange) {
-            case '7':
-                return [120, 180, 160, 280, 240, 380, 330];
-            case '30':
-                return array_map(fn() => rand(100, 500), range(1, 30));
-            case '90':
-                return array_map(fn() => rand(100, 500), range(1, 90));
-            case '365':
-                return array_map(fn() => rand(1000, 5000), range(1, 12));
-            default:
-                return [];
+        foreach ($dataTimes as $time) {
+            $query = DB::table('orders');
+            if ($timeRange === 'year') {
+                $query->whereYear('completed_at', Carbon::parse($time)->year)
+                    ->whereMonth('completed_at', Carbon::parse($time)->month)
+                    ->groupBy(DB::raw('YEAR(completed_at), MONTH(completed_at)'));
+            } else {
+                $query->whereDate('completed_at', $time)
+                    ->groupBy('completed_at');
+            }
+            $this->revenueDataStatisticRevenueOne[] = (int)$query->sum('amount');
+            $this->orderDataStatisticRevenueOne[] = $query->count();
         }
     }
 
     public function render()
     {
-        $StatisticRevenueOne = $this->chart();
-        return view('livewire.statistic-revenue-one', compact('StatisticRevenueOne'));
+        return view('livewire.statistic-revenue-one');
     }
 }

@@ -72,6 +72,11 @@ Breadcrumbs::for('admin.combo.trash', function (BreadcrumbTrail $trail) {
     $trail->push('Thùng rác', route('admin.trash-combos'));
 });
 
+Breadcrumbs::for('admin.combos.evaluation', function (BreadcrumbTrail $trail, $combo) {
+    $trail->parent('admin.combos.index');
+    $trail->push('Đánh giá', route('admin.combos.evaluation', $combo));
+});
+
 // Topping
 Breadcrumbs::for('admin.toppings.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');

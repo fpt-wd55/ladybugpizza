@@ -250,12 +250,14 @@
                                     <h2 class="pb-2">{{ $category->name }}</h2>
                                     <div class="flex flex-wrap justify-between gap-10">
                                         <div class="flex-1">
-                                            <select name="products[{{ $category->id }}]" class="input flex-1">
+                                            <select name="products[{{ $category->id }}][]"
+                                                class="input flex-1 category-select">
                                                 <option value="">Chọn {{ $category->name }}</option>
                                                 @foreach ($category->products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->name }}</option>
                                                 @endforeach
                                             </select>
+
                                         </div>
                                         <div class="flex rounded-md" role="group">
                                             <button
@@ -265,7 +267,7 @@
                                             </button>
                                             <input
                                                 class="w-12 border-b border-t border-gray-200 bg-white px-4 py-1 text-center text-sm font-medium text-gray-900 focus:outline-none quantity-input"
-                                                name="quantity_{{ $category->id }}" value="1">
+                                                name="quantities[{{ $category->id }}][product_id]" value="1">
                                             <button
                                                 class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500 increment"
                                                 type="button">
@@ -434,6 +436,7 @@
                 if (!categoryOptionsCache[categoryId]) {
                     categoryOptionsCache[categoryId] = Array.from(categoryItem.querySelectorAll(
                             'select option'))
+                        .filter(option => option.value !== "")
                         .map(option => `<option value="${option.value}">${option.text}</option>`)
                         .join('');
                 }

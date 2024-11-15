@@ -11,22 +11,18 @@ use App\Models\Product;
 use App\Models\Topping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\Evaluation;
+use App\Models\EvaluationImage;
 
 class ComboController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $combos = Product::where('category_id', 7)->paginate(10);
+        $combos = Product::orderByDesc('id')->where('category_id', 7)->paginate(10);
 
         return view('admins.combo.index', compact('combos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $pizzas = Product::where('category_id', 1)->get();
@@ -45,9 +41,6 @@ class ComboController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(ComboRequest $request)
     {
         if ($request->hasFile('image')) {
@@ -75,24 +68,13 @@ class ComboController extends Controller
         if (Product::create($data)) {
             $image->storeAs('public/uploads/combos', $image_name);
 
-            return redirect()->route('admins.combo')->with('success', 'Thêm combo thành công');
+            return redirect()->route('admin.combos.index')->with('success', 'Thêm combo thành công');
         } else {
 
             return redirect()->back()->with('error', 'Thêm combo thất bại');
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Product $combo)
     {
         $pizzas = Product::where('category_id', 1)->get();
@@ -112,9 +94,6 @@ class ComboController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(ComboRequest $request, Product $combo)
     {
         $old_image = $combo->image;
@@ -157,8 +136,10 @@ class ComboController extends Controller
     public function destroy(Product $combo)
     {
         if ($combo->delete()) {
+
             return redirect()->back()->with('success', 'Xóa combo thành công');
         } else {
+
             return redirect()->back()->with('error', 'Xóa combo thất bại');
         }
     }
@@ -229,15 +210,88 @@ class ComboController extends Controller
     }
 
     public function search(Request $request){
-    $combos = Product::orderBy('id', 'desc')
-        ->where('category_id', 7)
-        ->where('name', 'like', '%' . $request->search . '%')
-        ->orWhere('sku', 'like', '%' . $request->search . '%')
-        ->paginate(10);
+        $context = $request->input('context', 'index');
+        $query = Product::orderBy('id', 'desc')
+            ->where('category_id', 7)
+            ->where(function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->search . '%')
+                    ->orWhere('sku', 'like', '%' . $request->search . '%');
+            });
 
-    $combos->appends(['search' => $request->search]);
+        if ($context === 'trash') {
+            $combos = $query->onlyTrashed()->paginate(10);
+            $view = 'admins.combo.trash';
+        } else {
+            $combos = $query->paginate(10);
+            $view = 'admins.combo.index';
+        }
+        $combos->appends(['search' => $request->search]);
 
-    return view('admins.combo.trash', compact('combos'));
-}
+        return view($view, compact('combos'));
+    }
+
+
+    public function evaluation(Product $combo)
+    {
+        $evaluations = Evaluation::where('product_id', $combo->id)->with('order')->paginate(10);
+
+        foreach ($evaluations as $evaluation) {
+            $evaluation->images = EvaluationImage::where('evaluation_id', $evaluation->id)->get();
+        }
+
+        return view('admins.combo.evaluation', compact('combo', 'evaluations'));
+    }
+
+    public function evaluationUpdate(Request $request, Evaluation $evaluation){
+        if ($evaluation) {
+            $evaluation->update([
+                'status' => $request->status ? 1 : 2,
+            ]);
+            return redirect()->back()->with('success', 'Cập nhật đánh giá thành công');
+        }
+
+        return redirect()->back()->with('error', 'Cập nhật đánh giá thất bại');
+    }
+
+    public function filter(Request $request){
+        $query = Product::where('category_id', 7);
+
+        if ($request->filled('filter_status')) {
+            $query->whereIn('status', $request->input('filter_status'));
+        }
+
+        if ($request->filled('filter_is_featured')) {
+            $query->where('is_featured', 1);
+        }
+
+        if ($request->filled('filter_combo_discount')) {
+            $query->where('discount_price', '>', 0);
+        }
+
+        if ($request->filled('filter_rating')) {
+            $ratings = $request->input('filter_rating');
+            $query->where(function($query) use ($ratings) {
+                foreach ($ratings as $rating) {
+                    $query->orWhere('avg_rating', $rating);
+                }
+            });
+        }
+
+        if ($request->filled('filter_price_min') || $request->filled('filter_price_max')) {
+            $priceMin = $request->input('filter_price_min', 0);
+            $priceMax = $request->input('filter_price_max', PHP_INT_MAX);
+            if ($request->filled('filter_price_min')) {
+                $query->where('price', '>=', $priceMin);
+            }
+            if ($request->filled('filter_price_max')) {
+                $query->where('price', '<=', $priceMax);
+            }
+        }
+
+        $combos = $query->paginate(10)->appends($request->query());
+
+        return view('admins.combo.index', compact('combos'));
+    }
+
 
 }

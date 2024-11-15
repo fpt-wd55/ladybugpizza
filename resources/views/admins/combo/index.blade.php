@@ -45,12 +45,13 @@
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.combos.search') }}">
+                <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.combos.search') }}" method="GET">
                     <div class="relative w-full">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                             @svg('tabler-search', 'w-5 h-5 text-gray-400')
                         </div>
                         <input type="text" name="search" class="input ps-10" placeholder="Tìm kiếm..." />
+                        <input type="hidden" name="context" value="index" />
                     </div>
                 </form>
                 <div class="flex items-center w-full md:w-auto">
@@ -110,8 +111,8 @@
                                                 value="1"
                                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
                                                 @if (request()->input('filter_combo_discount') == 1) checked @endif>
-                                            <label for="combo_discount"
-                                                class="ml-2 text-sm font-medium text-gray-900">Sản phẩm
+                                            <label for="combo_discount" class="ml-2 text-sm font-medium text-gray-900">Sản
+                                                phẩm
                                                 khuyến mãi</label>
                                         </li>
                                     </ul>
@@ -266,7 +267,7 @@
                                     class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
                                     <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $combo->sku }}">
                                         <li>
-                                            <a href="{{ route('client.product.showCombo', $combo) }}" target="_blank"
+                                            <a href="{{ route('client.product.showCombo', $combo->slug) }}" target="_blank"
                                                 class="block py-2 px-4 hover:bg-gray-100">Xem</a>
                                         </li>
                                         <li>
@@ -327,7 +328,7 @@
                         <td colspan="6" class="text-center py-4 text-base">
                             <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
                                 @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
-                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống.</p>
                             </div>
                         </td>
                     @endforelse

@@ -72,10 +72,10 @@
                                 </div>
                             </div>
                             @error('image')
-                                    <p class="mt-2 text-sm text-red-600 ">
-                                        {{ $message }}
-                                    </p>
-                                @enderror
+                                <p class="mt-2 text-sm text-red-600 ">
+                                    {{ $message }}
+                                </p>
+                            @enderror
                             <div>
                                 <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số lượng</label>
                                 <input type="number" name="quantity" id="quantity"
@@ -441,6 +441,7 @@
                 if (!categoryOptionsCache[categoryId]) {
                     categoryOptionsCache[categoryId] = Array.from(categoryItem.querySelectorAll(
                             'select option'))
+                        .filter(option => option.value !== "")
                         .map(option => `<option value="${option.value}">${option.text}</option>`)
                         .join('');
                 }

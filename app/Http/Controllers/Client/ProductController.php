@@ -26,7 +26,10 @@ class ProductController extends Controller
     {
         $categories = Category::all();
 
-        $combos = Product::where('category_id', 7)->where('status', 1)->get();
+        $comboCategory = Category::with(['products.comboDetails.productAttribute.product'])
+    ->where('id', 7)
+    ->first();
+
 
         $products = [];
 
@@ -36,7 +39,7 @@ class ProductController extends Controller
         return view('clients.product.menu', [
             'categories' => $categories,
             'products' => $products,
-            'combos' => $combos
+            'comboCategory' => $comboCategory
         ]);
     }
 
@@ -194,7 +197,17 @@ class ProductController extends Controller
         return back()->with('error', 'Sản phẩm không tồn tại!');
     }
 
-    public function showCombo(){
-       return view('clients.product.detail-combo');
+    public function showCombo($slug){
+        $combo = Product::with(['comboDetails.productAttribute.product'])
+        ->where('slug', $slug)
+        ->where('category_id', 7)
+        ->firstOrFail();
+       // Nhóm các sản phẩm trùng nhau trong combo và tính số lượng
+        $groupedComboDetails = $combo->comboDetails->groupBy('product_attribute_id')->map(function ($details) {
+            $detail = $details->first();
+            $detail->quantity = $details->count(); // Đếm số lần xuất hiện của sản phẩm
+            return $detail;
+        });
+       return view('clients.product.detail-combo',compact('combo', 'groupedComboDetails'));
     }
 }

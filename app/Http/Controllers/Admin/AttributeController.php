@@ -258,7 +258,6 @@ class AttributeController extends Controller
             $attribute->restore();
             return redirect()->back()->with('success', 'Khôi phục thuộc tính thành công');
         }
-
         return redirect()->back()->with('error', 'Khôi phục thuộc tính thất bại');
     }
 
@@ -273,7 +272,6 @@ class AttributeController extends Controller
             $attribute->forceDelete();
             return redirect()->back()->with('success', 'Xóa thuộc tính thành công');
         }
-
         return redirect()->back()->with('error', 'Xóa thuộc tính thất bại');
     }
 

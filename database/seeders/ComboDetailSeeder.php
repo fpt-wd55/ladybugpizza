@@ -17,6 +17,7 @@ class ComboDetailSeeder extends Seeder
             DB::table('combo_details')->insert([
                 'combo_id' => rand(1, 10),
                 'product_attribute_id' => rand(1, 10),
+                'quantity' => rand(1, 10),
             ]);
         }
     }

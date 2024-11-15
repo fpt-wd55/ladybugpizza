@@ -34,24 +34,24 @@ class OrderSeeder extends Seeder
         $attributes = AttributeValue::all();
         $toppings = Topping::all();
 
-        for ($i = 1; $i < 100; $i++) {
+        for ($i = 1; $i < 500; $i++) {
             $user = $users->random()->id;
             $address = Address::where('user_id', $user)->first();
             Order::insert([
                 'user_id' => $user,
                 'promotion_id' => null,
-                'amount' => rand(100, 500) * 1000,
+                'amount' => rand(100, 700) * 1000,
                 'address_id' => $address->id,
                 'discount_amount' => rand(0, 10000),
                 'shipping_fee' => 25000,
-                'completed_at' => $now,
+                'completed_at' => $faker->dateTimeBetween('-1 year', 'now'),
                 'notes' => $faker->text,
                 'payment_method_id' => $paymentMethods->random()->id,
                 'order_status_id' => $orderStatuses->random()->id,
-                'canceled_reason' => $faker->text,
-                'canceled_at' => $now,
-                'created_at' => $now,
-                'updated_at' => $now,
+                'canceled_at' => rand(0, 1) ? $faker->dateTimeBetween('-1 year', 'now') : null,
+                'canceled_reason' => rand(0, 1) ? $faker->text : null,
+                'created_at' => $faker->dateTimeBetween('-1 year', 'now'),
+                'updated_at' =>  $faker->dateTimeBetween('-1 year', 'now'),
             ]);
             for ($j = 1; $j < 5; $j++) {
                 $orderItem = OrderItem::create([

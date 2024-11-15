@@ -51,7 +51,7 @@ Route::prefix('/')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('client.home');
     Route::get('/menu', [ProductController::class, 'menu'])->name('client.product.menu');
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('client.product.show');
-    Route::get('/combo', [ProductController::class, 'showCombo'])->name('client.product.showCombo');
+    Route::get('/combo/{slug}', [ProductController::class, 'showCombo'])->name('client.product.showCombo');
     Route::post('/product/favorite/{slug}', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
     Route::post('/product/cart/{slug}', [ProductController::class, 'addToCart'])->name('client.product.add-to-cart');
     Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
@@ -78,7 +78,7 @@ Route::prefix('/')->group(function () {
     Route::put('/settings/update/{id}', [ProfileController::class, 'updateStatus'])->name('client.settings.update');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
     Route::post('/profile/promotion/{id}', [ProfileController::class, 'redeemPromotion'])->name('client.profile.redeem-promotion');
-    Route::get('/lien-he', [PageController::class, 'contact'])->name('client.contact');
+    Route::get('/contact', [PageController::class, 'contact'])->name('client.contact'); 
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
     Route::get('/favorites', [ProductController::class, 'favorites'])->name('client.product.favorites');
     Route::get('product/{slug}/favorite', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
