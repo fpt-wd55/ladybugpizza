@@ -13,22 +13,28 @@
                         <div class="mb-8">
                             <p class="mb-4 font-medium">Thông tin nhận hàng</p>
                             <div class="mb-4">
-                                <p class="mb-2 text-sm font-normal" for="">Họ và tên: <span class="text-red-600">*</span></p>
-                                <input class="input w-full" name="fullname" type="text" value="{{ old('fullname') ?? Auth::user()->fullname }}">
+                                <p class="mb-2 text-sm font-normal" for="">Họ tên: <span
+                                        class="text-red-600">*</span></p>
+                                <input class="input w-full" name="fullname" type="text"
+                                    value="{{ old('fullname') ?? Auth::user()->fullname }}">
                                 @error('password')
                                     <p class="text-sm text-red-500">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="mb-4">
-                                <p class="mb-2 text-sm font-normal" for="">Số điện thoại: <span class="text-red-600">*</span></p>
-                                <input class="input w-full" name="phone" type="text" value="{{ old('phone') ?? Auth::user()->phone }}">
+                                <p class="mb-2 text-sm font-normal" for="">Số điện thoại: <span
+                                        class="text-red-600">*</span></p>
+                                <input class="input w-full" name="phone" type="text"
+                                    value="{{ old('phone') ?? Auth::user()->phone }}">
                                 @error('password')
                                     <p class="text-sm text-red-500">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="mb-4">
-                                <p class="mb-2 text-sm font-normal" for="">Email: <span class="text-red-600">*</span></p>
-                                <input class="input w-full" name="email" type="text" value="{{ old('email') ?? Auth::user()->email }}">
+                                <p class="mb-2 text-sm font-normal" for="">Email: <span
+                                        class="text-red-600">*</span></p>
+                                <input class="input w-full" name="email" type="text"
+                                    value="{{ old('email') ?? Auth::user()->email }}">
                                 @error('password')
                                     <p class="text-sm text-red-500">{{ $message }}</p>
                                 @enderror
@@ -36,7 +42,8 @@
                             <div class="mb-4">
                                 <div class="flex items-end gap-8">
                                     <div>
-                                        <p class="mb-2 text-sm font-normal" for="">Chọn địa chỉ: <span class="text-red-600">*</span></p>
+                                        <p class="mb-2 text-sm font-normal" for="">Chọn địa chỉ: <span
+                                                class="text-red-600">*</span></p>
                                         <select class="input" id="province" name="province">
                                             <option value="">Nhà riêng</option>
                                             <option value="">Cơ quan</option>
@@ -46,7 +53,8 @@
                                     <div class="flex items-center gap-4 mb-2">
                                         <p class="text-sm">Đặt làm mặc định</p>
                                         <label class="inline-flex cursor-pointer items-center">
-                                            <input class="peer sr-only" name="email_order" onchange="this.form.submit()" type="checkbox" value="1">
+                                            <input class="peer sr-only" name="email_order" onchange="this.form.submit()"
+                                                type="checkbox" value="1">
                                             <span class="button-toggle"></span>
                                         </label>
                                     </div>
@@ -57,21 +65,24 @@
                             </div>
                             <div class="mb-4 grid grid-cols-12 items-center gap-4">
                                 <div class="col-span-12 lg:col-span-4">
-                                    <p class="mb-2 text-sm font-normal" for="">Tỉnh/Thành phố: <span class="text-red-600">*</span></p>
+                                    <p class="mb-2 text-sm font-normal" for="">Tỉnh/Thành phố: <span
+                                            class="text-red-600">*</span></p>
                                     <input class="input w-full" type="text">
                                     @error('password')
                                         <p class="text-sm text-red-500">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="col-span-6 lg:col-span-4">
-                                    <p class="mb-2 text-sm font-normal" for="">Quận/Huyện: <span class="text-red-600">*</span></p>
+                                    <p class="mb-2 text-sm font-normal" for="">Quận/Huyện: <span
+                                            class="text-red-600">*</span></p>
                                     <input class="input w-full" type="text">
                                     @error('password')
                                         <p class="text-sm text-red-500">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="col-span-6 lg:col-span-4">
-                                    <p class="mb-2 text-sm font-normal" for="">Phường/Xã: <span class="text-red-600">*</span></p>
+                                    <p class="mb-2 text-sm font-normal" for="">Phường/Xã: <span
+                                            class="text-red-600">*</span></p>
                                     <input class="input w-full" type="text">
                                     @error('password')
                                         <p class="text-sm text-red-500">{{ $message }}</p>
@@ -79,7 +90,8 @@
                                 </div>
                             </div>
                             <div class="mb-4">
-                                <p class="mb-2 text-sm font-normal" for="">Địa chỉ chi tiết: <span class="text-red-600">*</span>
+                                <p class="mb-2 text-sm font-normal" for="">Địa chỉ chi tiết: <span
+                                        class="text-red-600">*</span>
                                 </p>
                                 <textarea class="text-area w-full" type="text"></textarea>
                                 @error('password')
@@ -88,9 +100,7 @@
                             </div>
                         </div>
                     </div>
-
                     {{-- Thanh toán --}}
-
                     <div class="col-span-2">
                         <div class="mb-16">
                             <p class="mb-4 font-medium">Đơn hàng của bạn</p>
@@ -116,7 +126,8 @@
                                 <p class="mb-4 font-medium">Phương thức thanh toán</p>
                                 <div class="flex items-center justify-between">
                                     <div class="mb-4 flex items-center">
-                                        <input class="input-radio me-2" id="default-radio-1" name="default-radio" type="radio" value="">
+                                        <input class="input-radio me-2" id="default-radio-1" name="default-radio"
+                                            type="radio" value="">
                                         <label class="text-sm font-normal" for="default-radio-1">Thanh toán khi nhận
                                             hàng</label>
                                     </div>
@@ -125,7 +136,8 @@
                                 <hr class="mb-4">
                                 <div class="flex items-center justify-between">
                                     <div class="mb-4 flex items-center">
-                                        <input class="input-radio me-2" id="default-radio-1" name="default-radio" type="radio" value="">
+                                        <input class="input-radio me-2" id="default-radio-1" name="default-radio"
+                                            type="radio" value="">
                                         <label class="text-sm font-normal" for="default-radio-1">Ví MoMo</label>
                                     </div>
                                     @svg('tabler-credit-card', 'icon-lg text-gray-700')
@@ -151,5 +163,4 @@
             </div>
         </div>
     </div>
-
 @endsection
