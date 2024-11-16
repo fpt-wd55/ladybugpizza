@@ -43,7 +43,7 @@ use Laravel\Prompts\Concerns\Fallback;
 |
 */
 
-$pages = Page::where('status', 1)->get();
+// $pages = Page::where('status', 1)->get();
 
 
 
