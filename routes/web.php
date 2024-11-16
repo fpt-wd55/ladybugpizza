@@ -145,7 +145,6 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::delete('/product/delete/{id}', [AdminProductController::class, 'forceDelete'])->name('delete-product');
     // Attribute
     Route::resource('/attributes', AttributeController::class);
-    Route::post('attribute/bulk-action', [AttributeController::class, 'bulkAction'])->name('attributes.bulkAction');
     Route::get('/attribute/export', [AttributeController::class, 'export'])->name('attributes.export');
     Route::get('/attribute/trash', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');
     Route::post('/attribute/restore/{id}', [AttributeController::class, 'restoreAttribute'])->name('restore-attribute');
