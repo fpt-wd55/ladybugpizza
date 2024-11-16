@@ -97,6 +97,8 @@ class AttributeController extends Controller
                     'price_type' => $value['attribute_type_price'],
                 ]);
             }
+        } else {
+            return redirect()->back()->with(['error' => 'Thêm thuộc tính không thành công']);
         }
 
         if (!$attribute) {
@@ -132,19 +134,19 @@ class AttributeController extends Controller
 
         $request->validate($rules, $messages);
 
-        $validateStocks = function ($stocks, $prefix) use ($request) {
-            ${$prefix . 'Rules'} = [];
-            ${$prefix . 'Messages'} = [];
+        if ($request->old_stocks) {
+            $oldStockRules = [];
+            $oldStockMessages = [];
 
-            foreach ($stocks as $key => $value) {
-                ${$prefix . 'Rules'}["{$prefix}.{$key}.attribute_value"] = 'required';
-                ${$prefix . 'Rules'}["{$prefix}.{$key}.attribute_quantity"] = 'nullable|numeric';
-                ${$prefix . 'Rules'}["{$prefix}.{$key}.attribute_type_price"] = 'required|numeric';
-                ${$prefix . 'Rules'}["{$prefix}.{$key}.attribute_price"] = [
+            foreach ($request->old_stocks as $key => $value) {
+                $oldStockRules["old_stocks.{$key}.attribute_value"] = 'required';
+                $oldStockRules["old_stocks.{$key}.attribute_quantity"] = 'nullable|numeric';
+                $oldStockRules["old_stocks.{$key}.attribute_type_price"] = 'required|numeric';
+                $oldStockRules["old_stocks.{$key}.attribute_price"] = [
                     'required',
                     'numeric',
-                    function ($attribute, $value, $fail) use ($key, $request, $prefix) {
-                        $typePrice = $request->{$prefix}[$key]['attribute_type_price'];
+                    function ($attribute, $value, $fail) use ($key, $request) {
+                        $typePrice = $request->old_stocks[$key]['attribute_type_price'];
                         if ($typePrice == 2 && ($value < 1 || $value > 100)) {
                             $fail('Giá trị phải nằm trong khoảng từ 1 đến 100');
                         } elseif ($typePrice == 1 && $value <= 0) {
@@ -153,23 +155,49 @@ class AttributeController extends Controller
                     }
                 ];
 
-                ${$prefix . 'Messages'}["{$prefix}.{$key}.attribute_value.required"] = 'Vui lòng nhập giá trị thuộc tính cho sản phẩm';
-                ${$prefix . 'Messages'}["{$prefix}.{$key}.attribute_quantity.numeric"] = 'Giá trị không hợp lệ';
-                ${$prefix . 'Messages'}["{$prefix}.{$key}.attribute_type_price.required"] = 'Vui lòng chọn loại giá';
-                ${$prefix . 'Messages'}["{$prefix}.{$key}.attribute_type_price.numeric"] = 'Giá trị không hợp lệ';
-                ${$prefix . 'Messages'}["{$prefix}.{$key}.attribute_price.required"] = 'Vui lòng nhập giá';
-                ${$prefix . 'Messages'}["{$prefix}.{$key}.attribute_price.numeric"] = 'Giá trị không hợp lệ';
+                $oldStockMessages["old_stocks.{$key}.attribute_value.required"] = 'Vui lòng nhập giá trị thuộc tính cho sản phẩm';
+                $oldStockMessages["old_stocks.{$key}.attribute_quantity.numeric"] = 'Giá trị không hợp lệ';
+                $oldStockMessages["old_stocks.{$key}.attribute_type_price.required"] = 'Vui lòng chọn loại giá';
+                $oldStockMessages["old_stocks.{$key}.attribute_type_price.numeric"] = 'Giá trị không hợp lệ';
+                $oldStockMessages["old_stocks.{$key}.attribute_price.required"] = 'Vui lòng nhập giá';
+                $oldStockMessages["old_stocks.{$key}.attribute_price.numeric"] = 'Giá trị không hợp lệ';
             }
 
-            $request->validate(${$prefix . 'Rules'}, ${$prefix . 'Messages'}); 
-        };
+            $request->validate($oldStockRules, $oldStockMessages);
+        } else {
+            return redirect()->back()->with(['error' => 'Cập nhật thuộc tính không thành công']);
+        } 
 
-        if ($request->old_stocks) {
-        $validateStocks($request->old_stocks, 'old_stocks');
-        }
+        if ($request->stocks) { 
+            $stockRules = [];
+            $stockMessages = [];
 
-        if ($request->stocks) {
-            $validateStocks($request->stocks, 'stocks');
+            foreach ($request->stocks as $key => $value) {
+                $stockRules["stocks.{$key}.attribute_value"] = 'required';
+                $stockRules["stocks.{$key}.attribute_quantity"] = 'nullable|numeric';
+                $stockRules["stocks.{$key}.attribute_type_price"] = 'required|numeric';
+                $stockRules["stocks.{$key}.attribute_price"] = [
+                    'required',
+                    'numeric',
+                    function ($attribute, $value, $fail) use ($key, $request) {
+                        $typePrice = $request->stocks[$key]['attribute_type_price'];
+                        if ($typePrice == 2 && ($value < 1 || $value > 100)) {
+                            $fail('Giá trị phải nằm trong khoảng từ 1 đến 100');
+                        } elseif ($typePrice == 1 && $value <= 0) {
+                            $fail('Giá trị không hợp lệ');
+                        }
+                    }
+                ];
+
+                $stockMessages["stocks.{$key}.attribute_value.required"] = 'Vui lòng nhập giá trị thuộc tính cho sản phẩm';
+                $stockMessages["stocks.{$key}.attribute_quantity.numeric"] = 'Giá trị không hợp lệ';
+                $stockMessages["stocks.{$key}.attribute_type_price.required"] = 'Vui lòng chọn loại giá';
+                $stockMessages["stocks.{$key}.attribute_type_price.numeric"] = 'Giá trị không hợp lệ';
+                $stockMessages["stocks.{$key}.attribute_price.required"] = 'Vui lòng nhập giá';
+                $stockMessages["stocks.{$key}.attribute_price.numeric"] = 'Giá trị không hợp lệ';
+            }
+
+            $request->validate($stockRules, $stockMessages);
         }
 
         $attribute->update(
@@ -205,8 +233,8 @@ class AttributeController extends Controller
             foreach ($oldStocks as $oldStock) {
                 $attributeValue = AttributeValue::find($oldStock['id']);
                 $attributeValue->update([
-                    'value' => $oldStock['value'],
-                    'quantity' => $oldStock['quantity'] ?? null,
+                    'value' => $oldStock['attribute_value'],
+                    'quantity' => $oldStock['attribute_quantity'] ?? null,
                     'price' => $oldStock['attribute_price'],
                     'price_type' => $oldStock['attribute_type_price'],
                 ]);
