@@ -68,7 +68,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="table-body">
                                 @php
                                     $key = 0;
                                 @endphp
@@ -192,10 +192,13 @@
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            let i = parseInt(document.querySelector('meta[name="key"]')?.getAttribute('content') || 0, 10);
-
+            let i = document.querySelectorAll('.table-add-more tbody tr').length;
+            console.log(i);
             document.querySelector('.btn-add-more').addEventListener('click', function(e) {
                 e.preventDefault();
+                if (i >= 10) {
+                    return;
+                }
                 i++;
                 document.querySelector('.table-add-more tbody').insertAdjacentHTML('beforeend', `
                     <tr>
@@ -233,13 +236,27 @@
                         </td>
                     </tr>
                 `);
+                updateRemoveButtons();
             });
 
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-add-more-rm')) {
                     e.target.closest('tr').remove();
+                    updateRemoveButtons();
                 }
             });
+
+            function updateRemoveButtons() {
+                const rows = document.querySelectorAll('#table-body tr');
+                const removeButtons = document.querySelectorAll('.btn-add-more-rm');
+                if (rows.length === 1) {
+                    removeButtons.forEach(button => button.disabled = true);
+                } else {
+                    removeButtons.forEach(button => button.disabled = false);
+                }
+            }
+
+            updateRemoveButtons();
         });
     </script>
 @endsection

@@ -65,7 +65,7 @@
                                     <th scope="col" class="px-4 py-3">Danh sách giá trị</th>
                                 </tr>
                             </thead>
-                            <tbody data-accordion="open">
+                            <tbody>
                                 @forelse ($attribute->values as $value)
                                     <tr class="border-b">
                                         <td class="border px-4 py-2" colspan="4">
@@ -73,20 +73,22 @@
                                                 <input type="hidden" name="old_stocks[{{ $value->id }}][id]"
                                                     value="{{ $value->id }}">
                                                 <div class="md:col-span-2">
-                                                    <input type="text" name="old_stocks[{{ $value->id }}][value]"
+                                                    <input type="text"
+                                                        name="old_stocks[{{ $value->id }}][attribute_value]"
                                                         placeholder="Tên giá trị" value="{{ $value->value }}"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                                                    @error("old_stocks.{$value->id}.value")
+                                                    @error("old_stocks.{$value->id}.attribute_value")
                                                         <p class="mt-2 text-sm text-red-600 ">
                                                             {{ $message }}
                                                         </p>
                                                     @enderror
                                                 </div>
                                                 <div class="md:col-span-2">
-                                                    <input type="number" name="old_stocks[{{ $value->id }}][quantity]"
+                                                    <input type="number"
+                                                        name="old_stocks[{{ $value->id }}][attribute_quantity]"
                                                         placeholder="Số lượng" value="{{ $value->quantity }}"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                                                    @error("old_stocks.{$value->id}.quantity")
+                                                    @error("old_stocks.{$value->id}.attribute_quantity")
                                                         <p class="mt-2 text-sm text-red-600 ">
                                                             {{ $message }}
                                                         </p>
@@ -94,7 +96,8 @@
                                                 </div>
                                                 <div class="md:col-span-2">
                                                     <div class="grid grid-cols-3">
-                                                        <select name="old_stocks[{{ $value->id }}][attribute_type_price]"
+                                                        <select
+                                                            name="old_stocks[{{ $value->id }}][attribute_type_price]"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:border-primary-600 block w-full p-2.5">
                                                             <option value="1"
                                                                 {{ $value->price_type == 1 ? 'selected' : '' }}>
@@ -151,7 +154,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="table-body">
                             @php
                                 $key = 0;
                             @endphp
@@ -197,10 +200,17 @@
                                                                 Theo phần trăm (%)
                                                             </option>
                                                         </select>
-                                                        <input type="number" name="stocks[0][attribute_price]"
+                                                        <input type="number"
+                                                            name="stocks[{{ $key }}][attribute_price]"
+                                                            value="{{ $stock['attribute_price'] ?? '' }}"
                                                             class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-0 border focus:border-primary-600 border-gray-300 focus:ring-0 col-span-2"
                                                             placeholder="Giá" />
                                                     </div>
+                                                    @error("stocks.{$key}.attribute_price")
+                                                        <p class="mt-2 text-sm text-red-600 ">
+                                                            {{ $message }}
+                                                        </p>
+                                                    @enderror
                                                 </div>
                                                 <div class="md:col-span-1">
                                                     <button type="button"
@@ -231,10 +241,12 @@
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            let i = parseInt(document.querySelector('meta[name="key"]')?.getAttribute('content') || 0, 10);
-
+            let i = document.querySelectorAll('.table-add-more tbody tr').length;
             document.querySelector('.btn-add-more').addEventListener('click', function(e) {
                 e.preventDefault();
+                if (i >= 5) {
+                    return;
+                }
                 i++;
                 document.querySelector('.table-add-more tbody').insertAdjacentHTML('beforeend', `
                     <tr>
