@@ -6,7 +6,6 @@
 @section('content')
     <div class="mx-auto px-0">
         <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
-
             <div>
                 {{-- carousel --}}
                 <div class="relative mb-8 w-full md:mb-12" data-carousel="slide" id="default-carousel">
@@ -34,14 +33,11 @@
                         </span>
                     </button>
                 </div>
-
                 <div class="mt-12 py-8 text-center">
                     <p class="vujahday-script-regular mb-6 text-center text-6xl">Ladybug Pizza</p>
                     <p class="mb-12 uppercase text-gray-500">Ngon đến từng miếng, đậm vị yêu thương</p>
                     @include('partials.clients.categories')
                 </div>
-
-
                 {{-- hot pizza --}}
                 <div class="mb-32">
                     <div class="mb-4 flex items-center justify-between">
@@ -77,15 +73,12 @@
                         @endforeach
                     </div>
                 </div>
-
                 <p class="vujahday-script-regular mb-32 text-center text-6xl">Khám phá</p>
-
                 {{-- Khám phá thực đơn --}}
                 <div class="mb-32 grid grid-cols-1 gap-8 lg:grid-cols-2">
                     <div class="mr-3 flex flex-col items-center text-center">
                         <p class="vujahday-script-regular mb-6 text-3xl lg:text-4xl">
                             Thực đơn của chúng tôi</p>
-
                         <p class="mb-8 font-light">
                             Khám phá các loại Pizza nướng bằng củi, bia Bỉ và các món tráng miệng mới làm mà bạn có
                             thể thưởng thức tại 2 địa điểm của chúng tôi hoặc tại nhà với dịch vụ giao hàng nhanh chóng của
