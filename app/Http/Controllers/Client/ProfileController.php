@@ -352,6 +352,10 @@ class ProfileController extends Controller
 	public function storeLocation(AddressRequest $request)
 	{
 		$data = $request->all();
+		 // Kiểm tra số điện thoại
+		 if (is_null(Auth()->user()->phone) || empty(Auth()->user()->phone)) {
+			return redirect()->route('client.profile.index')->with('error','Bạn cần thêm số điện thoại trong phần tài khoản trước khi thêm địa chỉ mới.');
+		}
 		$addressData = [
 			'user_id' => Auth()->user()->id,
 			'phone' => Auth()->user()->phone,
