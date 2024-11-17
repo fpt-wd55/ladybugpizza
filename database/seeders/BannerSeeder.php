@@ -19,7 +19,7 @@ class BannerSeeder extends Seeder
 
         for ($i = 1; $i <= 8; $i++) {
             Banner::create([
-                'image' => 'banner_' . $i . '.jpg',
+                'image' => 'banner_' . $i . '.webp',
                 'url' => 'https://www.google.com',
                 'is_local_page' => rand(1, 2),
                 'status' => rand(1, 2),
