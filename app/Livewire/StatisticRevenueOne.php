@@ -17,7 +17,7 @@ class StatisticRevenueOne extends Component
 
     public function mount()
     {
-        $this->updateChartStatisticRevenueOne('week');
+        $this->updateChartStatisticRevenueOne('month');
     }
 
     public function updateChartStatisticRevenueOne($timeRange)

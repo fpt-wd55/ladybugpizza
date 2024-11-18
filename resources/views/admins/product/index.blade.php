@@ -223,7 +223,6 @@
                                         onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
                                         class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
                                 </a>
-
                                 <div class="grid grid-flow-row">
                                     <span class="text-sm">{{ $product->name }}</span>
                                     <div class="flex items-center gap-1">

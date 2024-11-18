@@ -2,15 +2,17 @@
 
 namespace App\Livewire;
 
+use App\Models\Evaluation;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class StatisticProductTwo extends Component
 {
     public $selectedTopProduct;
-    public $topOrders;
+    public $topProducts;
 
     public function mount()
     {
@@ -19,48 +21,53 @@ class StatisticProductTwo extends Component
 
     public function updateTopProduct($period)
     {
-        $dateRange = [now()->startOfYear(), now()->endOfYear()];
         switch ($period) {
             case 'mostPurchased':
                 $this->selectedTopProduct = 'Sản phẩm có lượt mua nhiều nhất';
-                $this->topOrders = Order::join('order_items', 'orders.id', '=', 'order_items.order_id')
-                    ->join('products', 'products.id', '=', 'order_items.product_id')
-                    ->whereBetween('orders.completed_at', $dateRange)
-                    ->select(
-                        'products.id',
-                        DB::raw('COUNT(order_items.id) as amount'),
-                        DB::raw('SUM(order_items.quantity) as total')
-                    )
-                    ->groupBy('products.id')
-                    ->orderBy('amount', 'desc')
+                $this->topProducts = Product::withCount('orderItems')
+                    ->orderBy('order_items_count', 'desc')
                     ->limit(10)
-                    ->get(); 
+                    ->get();
                 break;
 
             case 'mostInStock':
                 $this->selectedTopProduct = 'Sản phẩm tồn kho nhiều nhất';
-                $this->topOrders = Order::whereBetween('completed_at', $dateRange)
-                    ->orderBy('amount', 'desc')
+                $datas = DB::table('products as p')
+                    ->leftJoin('categories as c', 'p.category_id', '=', 'c.id')
+                    ->leftJoin('attributes as a', 'a.category_id', '=', 'c.id')
+                    ->leftJoin('attribute_values as av', 'av.attribute_id', '=', 'a.id')
+                    ->select(
+                        'p.id',
+                        DB::raw('IFNULL(SUM(av.quantity), p.quantity) as total')
+                    )
+                    ->groupBy('p.id', 'p.quantity')
+                    ->orderBy('total', 'desc')
                     ->limit(10)
                     ->get();
+                foreach ($datas as $data) {
+                    $product = Product::find($data->id);
+                    $product->total_quantity = $data->total;
+                    $this->topProducts[] = $product;
+                }
+                break; 
+
+                foreach ($datas as $data) {
+                    $product = Product::find($data->id);
+                    $product->total_quantity = $data->total;
+                    $this->topProducts[] = $product;
+                }
                 break;
 
             case 'mostReviewed':
                 $this->selectedTopProduct = 'Sản phẩm có lượt đánh giá cao nhất';
-                $this->topOrders = Order::whereBetween('completed_at', $dateRange)
-                    ->orderBy('amount', 'desc')
-                    ->limit(10)
-                    ->get();
+                $this->topProducts = Product::orderBy('total_rating', 'desc')->limit(10)->get();
                 break;
 
             case 'highestQuality':
                 $this->selectedTopProduct = 'Sản phẩm có chất lượng đánh giá cao nhất';
-                $this->topOrders = Order::whereBetween('completed_at', $dateRange)
-                    ->orderBy('amount', 'desc')
-                    ->limit(10)
-                    ->get();
+                $this->topProducts = Product::orderBy('avg_rating', 'desc')->limit(10)->get();
                 break;
-
+                
             default:
                 break;
         }
