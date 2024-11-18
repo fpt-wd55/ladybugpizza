@@ -19,25 +19,24 @@ class PageSeeder extends Seeder
                 'title' => 'Về chúng tôi',
                 'slug' => 've-chung-toi',
                 'content' => '
-                    <h1>VỀ LADYBUGS PIZZA</h1>
-                    <p>Located in the heart of Savannah’s Starland district in the Starland Yard complex, Pizzeria Vittoria is a Neapolitan-inspired pizzeria showcasing naturally-leavened pizza from chef/owner Kyle Jacovino (The Florence, Five & Ten). At Vittoria, Jacovino draws from his nearly two decades of culinary experience and Italian-American heritage to craft pizzas that are an expression of regionality and his commitment to the Slow Food Movement.</p>
-                    <p>Meticulously crafted with local organic grains sourced from regional millers such as Anson Mills and Lindley Mills, Jacovino’s prized dough ferments for up to 48 hours before being fired in a hand-built Neapolitan Giovanni Acunto brick oven. Baked for 90 seconds between 800 and 825 degrees.</p>
-                    <p>A focal point within the Starland Yard, Vittoria is the only brick-and-mortar space within the complex, conceptualized as a food truck park. Constructed out of a shipping container, the restaurant is a functional canvas for Jacovino’s talent and craft, mirroring the surrounding community’s creative culture. When operational, an adjacent patio invites guests to linger, sharing pies and tipping back glasses of wine and beer.</p>
-                    <h1>Ladybugs Pizza</h1>
-                    <h2>GIỜ MỞ CỬA VÀ ĐỊA ĐIỂM</h2>
-                    <p>35 Downing Street,<br>
-                    New York, NY 10014<br>
-                    917-935-6434</p>
-
-                    <p>We’re located inside the Starland Yard Park. You can find us right on the corner of 40th and Desoto Ave! Look for our shipping container to the right of the entrance!</p>
-
-                    <h3>Giờ Mở Cửa:</h3>
-                    <ul>
-                        <li>Monday - Thursday: 10AM - 8PM</li>
-                        <li>Friday: 12PM - 12AM</li>
-                        <li>Saturday: 11AM - 12AM</li>
-                        <li>Sunday: 11AM - 10PM</li>
-                    </ul>    
+                    <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32 comfortable">
+                    <div class="w-full">
+                    <div class="mt-6 text-center">
+                    <h2 class="vujahday-script-regular mt-12 text-6xl">Ladybug Pizza</h2>
+                    <div class="mb-8">
+                    <p class="mt-12">Nằm ngay trung t&acirc;m Quận Ho&agrave;n Kiếm, H&agrave; Nội, Ladybug Pizza l&agrave; một tiệm pizza phong c&aacute;ch người Napoli, được s&aacute;ng lập bởi đầu bếp Kyle Jacovino. Với gần hai thập kỷ kinh nghiệm trong ng&agrave;nh ẩm thực v&agrave; niềm tự h&agrave;o về di sản &Yacute;, Jacovino đ&atilde; mang đến những chiếc pizza đặc trưng, được l&agrave;m từ bột l&ecirc;n men tự nhi&ecirc;n v&agrave; nướng trong l&ograve; gạch truyền thống của &Yacute;.</p>
+                    <p class="mt-12">Bột của từng chiếc pizza tại Ladybug Pizza được l&agrave;m từ ngũ cốc hữu cơ tuyển chọn từ c&aacute;c nh&agrave; xay l&uacute;a địa phương, ủ men trong v&ograve;ng 48 giờ để tạo ra hương vị độc đ&aacute;o. Pizza được nướng ở nhiệt độ từ 800 đến 825 độ C trong khoảng 90 gi&acirc;y, gi&uacute;p vỏ b&aacute;nh gi&ograve;n rụm b&ecirc;n ngo&agrave;i nhưng vẫn mềm mại b&ecirc;n trong.</p>
+                    <p class="mt-12">Ladybug Pizza nằm trong trung t&acirc;m Quận Ho&agrave;n Kiếm, H&agrave; Nội &ndash; nơi tập trung c&aacute;c quầy ẩm thực v&agrave; xe b&aacute;n đồ ăn lưu động tại H&agrave; Nội. Nh&agrave; h&agrave;ng được thiết kế theo phong c&aacute;ch cổ điển nhưng vẫn tạo ra kh&ocirc;ng gian s&aacute;ng tạo, th&acirc;n thiện, mang đậm n&eacute;t văn h&oacute;a đ&ocirc; thị hiện đại của H&agrave; Nội. Khi hoạt động, kh&aacute;ch h&agrave;ng c&oacute; thể thư gi&atilde;n tại khu vực s&acirc;n ngo&agrave;i trời, c&ugrave;ng thưởng thức pizza v&agrave; thưởng thức c&aacute;c m&oacute;n ăn k&egrave;m đậm vị &Yacute;, tận hưởng kh&ocirc;ng kh&iacute; s&ocirc;i động của th&agrave;nh phố.</p>
+                    </div>
+                    <p class="playwrite-gb-s-regular mb-6 text-lg uppercase">Giờ mở cửa &amp; Địa điểm</p>
+                    <p>35 Đường Downing, <br>New York, NY 10014 <br>917-935-6434</p>
+                    <p>Ch&uacute;ng t&ocirc;i nằm trong khu Starland Yard Park. Bạn c&oacute; thể t&igrave;m thấy ch&uacute;ng t&ocirc;i ngay g&oacute;c đường 40th v&agrave; Desoto Ave! H&atilde;y nh&igrave;n về ph&iacute;a b&ecirc;n phải của cổng v&agrave;o để thấy container của ch&uacute;ng t&ocirc;i!</p>
+                    <div class="mt-8"><span class="font-bold">Thứ Hai - Thứ Năm </span>: 10h s&aacute;ng - 8h tối <br><span class="font-bold">Thứ S&aacute;u</span>: 12h trưa - 12h đ&ecirc;m <br><span class="font-bold">Thứ Bảy</span>: 11h s&aacute;ng - 12h đ&ecirc;m <br><span class="font-bold">Chủ Nhật</span>: 11h s&aacute;ng - 10h tối</div>
+                    </div>
+                    <div class="flex justify-center"><button class="button-primary mt-12 uppercase">Đặt ngay</button></div>
+                    </div>
+                    <div class="mt-10 grid grid-cols-2 gap-4 md:gap-8"><img class="rounded-md" src="{{ asset("storage/uploads/products/pizza/pizza_pesto_burrata.jpeg") }}" alt="" loading="lazy"> <img class="rounded-md" src="{{ asset("storage/uploads/products/pizza/pizza_pesto_burrata.jpeg") }}" alt="" loading="lazy"> <img class="rounded-md" src="{{ asset("storage/uploads/products/pizza/pizza_pesto_burrata.jpeg") }}" alt="" loading="lazy"> <img class="rounded-md" src="{{ asset("storage/uploads/products/pizza/pizza_pesto_burrata.jpeg") }}" alt="" loading="lazy"></div>
+                    </div>    
                 ',
                 'status' => 1,
                 'created_at' => now(),
