@@ -26,12 +26,11 @@
         </div>
         <div wire:ignore class="max-w-full mb-3" id="statistic_order_one">
         </div>
-    </div>
-    <!--Tabs widget -->
+    </div> 
     <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
         <div class="grid grid-cols-2 items-center justify-between pb-4 space-y-3 md:space-y-0 md:space-x-4">
-            <div class="w-full md:w-1/2">
-                <h3 class="font-bold leading-none text-gray-900 text-lg">Top đơn hàng</h3>
+            <div class="w-full">
+                <h3 class="font-bold leading-none text-gray-900 text-lg">Top 10 đơn hàng có giá trị cao nhất</h3>
             </div>
             <div
                 class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-3">
