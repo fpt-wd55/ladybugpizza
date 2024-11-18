@@ -68,7 +68,6 @@
                     </div>
                 </div>
                 {{-- end image --}}
-
                 {{-- status --}}
                 <div class="">
                     <label class="mb-3 mt-1 block text-base font-medium text-gray-900" for="name">Trạng thái</label>
@@ -85,8 +84,6 @@
 
                 </div>
                 {{-- end status --}}
-
-
             </div>
             <div class="mt-7 flex items-center space-x-4">
                 <button class="button-red" type="submit">
