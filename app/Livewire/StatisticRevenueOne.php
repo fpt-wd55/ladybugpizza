@@ -78,18 +78,16 @@ class StatisticRevenueOne extends Component
                 'startDateStatisticRevenueOne.date' => 'Ngày bắt đầu không hợp lệ',
                 'endDateStatisticRevenueOne.required' => 'Vui lòng chọn ngày kết thúc',
                 'endDateStatisticRevenueOne.date' => 'Ngày kết thuc không hợp lệ',
-                'endDateStatisticRevenueOne.after_or_equal' => 'Ngày kết thúc phải sau hoặc bằng ngày bắt đầu',
+                'endDateStatisticRevenueOne.after_or_equal' => 'Ngày kết thúc phải nhỏ hơn hoặc bằng ngày bắt đầu',
             ]
         );
 
         $start = Carbon::parse($this->startDateStatisticRevenueOne);
         $end = Carbon::parse($this->endDateStatisticRevenueOne);
 
-
         $dataTimes = [];
         $this->generateLabelsAndDataTimes($start, $end, 'day', 'Y-m-d', 'd/m/Y', $dataTimes);
         $this->fetchData($dataTimes, 'day');
-
         $this->dispatch('updateChartStatisticRevenueOne', [
             'labels' => $this->labels,
             'revenueDataStatisticRevenueOne' => $this->revenueDataStatisticRevenueOne,
@@ -107,6 +105,8 @@ class StatisticRevenueOne extends Component
 
     private function fetchData($dataTimes, $timeRange)
     {
+        $this->revenueDataStatisticRevenueOne = [];
+        $this->orderDataStatisticRevenueOne = [];
         foreach ($dataTimes as $time) {
             $query = DB::table('orders');
             if ($timeRange === 'year') {
@@ -115,7 +115,7 @@ class StatisticRevenueOne extends Component
                     ->groupBy(DB::raw('YEAR(completed_at), MONTH(completed_at)'));
             } else {
                 $query->whereDate('completed_at', $time)
-                    ->groupBy('completed_at');
+                    ->groupBy(DB::raw('DATE(completed_at)'));
             }
             $this->revenueDataStatisticRevenueOne[] = (int)$query->sum('amount');
             $this->orderDataStatisticRevenueOne[] = $query->count();

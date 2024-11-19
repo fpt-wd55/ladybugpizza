@@ -6,7 +6,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class StatisticProductTwo extends Component
+class StatisticUserThree extends Component
 {
     public $selectedTopProduct;
     public $topProducts;
@@ -46,7 +46,7 @@ class StatisticProductTwo extends Component
                     $product->total_quantity = $data->total;
                     $this->topProducts[] = $product;
                 }
-                break; 
+                break;
 
                 foreach ($datas as $data) {
                     $product = Product::find($data->id);
@@ -64,7 +64,7 @@ class StatisticProductTwo extends Component
                 $this->selectedTopProduct = 'Sản phẩm có chất lượng đánh giá cao nhất';
                 $this->topProducts = Product::orderBy('avg_rating', 'desc')->limit(10)->get();
                 break;
-                
+
             default:
                 break;
         }
@@ -72,6 +72,6 @@ class StatisticProductTwo extends Component
 
     public function render()
     {
-        return view('livewire.statistic-product-two');
+        return view('livewire.statistic-user-three');
     }
 }

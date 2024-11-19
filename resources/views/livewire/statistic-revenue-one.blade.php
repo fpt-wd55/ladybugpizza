@@ -98,7 +98,7 @@
             }
         });
 
-        Livewire.on('updateChartStatisticRevenueOne', (data) => { 
+        Livewire.on('updateChartStatisticRevenueOne', (data) => {
             if (statistic_revenue_one.series.length) {
                 statistic_revenue_one.xAxis[0].setCategories(data[0].labels);
                 statistic_revenue_one.series[0].update({
@@ -109,5 +109,5 @@
                 });
             }
         });
-    })
+    })  
 </script>
