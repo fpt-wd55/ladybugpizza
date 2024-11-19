@@ -47,6 +47,9 @@ class ComboController extends Controller
             $image = $request->file('image');
             $image_name = trim(strtolower($request->sku)) . '_' . pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $image->getClientOriginalExtension();
         }
+        else {
+            $image_name = 'combo-placehoder.jpg';
+        }
 
         $data = [
             'name' => trim($request->name),
@@ -63,10 +66,10 @@ class ComboController extends Controller
             'avg_rating' => 0,
             'total_rating' => 0,
         ];
-        // dd($data);
-
         if (Product::create($data)) {
-            $image->storeAs('public/uploads/combos', $image_name);
+            if(isset($image)){
+                $image->storeAs('public/uploads/combos', $image_name);
+            }
 
             return redirect()->route('admin.combos.index')->with('success', 'Thêm combo thành công');
         } else {
