@@ -14,7 +14,7 @@ class Category extends Model
         'name',
         'slug',
         'image',
-        'status', 
+        'status',
     ];
 
     public function products()
@@ -30,16 +30,5 @@ class Category extends Model
     public function attributes()
     {
         return $this->hasMany(Attribute::class);
-    }
-    public function comboDetails()
-    {
-        return $this->hasManyThrough(
-            ComboDetail::class,
-            Product::class,
-            'category_id',
-            'combo_id',       
-            'id',           
-            'id'              
-        );
     }
 }
