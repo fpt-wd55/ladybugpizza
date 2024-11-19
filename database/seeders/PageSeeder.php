@@ -180,83 +180,105 @@ class PageSeeder extends Seeder
                 'slug' => 'huong-dan-mua-hang',
                 'content' => '
                     <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
-        <div class="card p-4 md:p-8">
-            <h2 class="font-semibold uppercase text-sm md:text-base mb-4">HƯỚNG DẪN MUA HÀNG</h2>
-            {{-- Bước 1 --}}
-            <div class="mb-4">
-                <h3 class="font-semibold text-xs md:text-sm mb-4">Bước 1: Chọn khuyến mãi hoặc sản phẩm
-                    trên thực đơn</h3>
-                <div class="text-sm ps-4 leading-loose tracking-wide mb-4">
-                    <ul class="list-disc ps-4">
-                        <li>Chọn trực tiếp các Chương trình Khuyến mãi phù hợp trên Trang chủ</li>
-                        <li>Chọn sản phẩm phù hợp trên thanh Thực đơn</li>
-                        <li>Hoặc chọn nút Khuyến mãi để tham khảo chi tiết từng khuyến mãi đang áp dụng và chọn sản phẩm
-                            phù
-                            hợp</li>
-                    </ul>
-                </div>
-                <div class="w-full lg:w-2/3 mx-auto mb-4">
-                    <img loading="lazy" src="{{ asset("storage/uploads/banners/banner.jpg") }}" alt=""
-                        class="object-cover w-full h-full rounded-md mb-2">
-                    <p class="text-center italic text-sm">Mô tả hình ảnh</p>
-                </div>
-            </div>
-            {{-- Bước 2A --}}
-            <div class="mb-4">
-                <h3 class="font-semibold text-xs md:text-sm mb-4">Bước 2A: Chọn sản phẩm cho khuyến mãi hoặc chọn sản phẩm riêng lẻ nguyên giá</h3>
-                <div class="text-sm ps-4 leading-loose tracking-wide mb-4">
-                    <ul class="list-disc ps-4">
-                        <li>Chọn trực tiếp các Chương trình Khuyến mãi phù hợp trên Trang chủ.</li>
-                        <li>Chọn sản phẩm phù hợp trên thanh Thực đơn.</li>
-                        <li>Hoặc chọn nút Khuyến mãi để tham khảo chi tiết từng khuyến mãi đang áp dụng và chọn sản phẩm
-                            phù
-                            hợp.</li>
-                    </ul>
-                </div>
-                <div class="w-full lg:w-2/3 mx-auto mb-4">
-                    <img loading="lazy" src="{{ asset("storage/uploads/banners/banner.jpg") }}" alt=""
-                        class="object-cover w-full h-full rounded-md mb-2">
-                    <p class="text-center italic text-sm">Mô tả hình ảnh</p>
-                </div>
-                <div class="text-sm ps-4 leading-loose tracking-wide mb-4">
-                    <ul class="list-disc ps-4">
-                        <li>Hoặc chọn sản phẩm riêng lẻ nguyên giá có trên thanh Thực đơn ở Trang chủ.</li>
-                        <li>Chọn sản phẩm phù hợp và chọn Thêm vào giỏ hàng để từng sản phẩm được ghi nhận vào Giỏ hàng.
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            {{-- Bước 2B --}}
-            <div class="mb-4">
-                <h3 class="font-semibold text-xs md:text-sm mb-4">Bước 2B: Chọn chi tiết sản phẩm (kích thước, đế, nhân,
-                    ghi
-                    chú...) đối với pizza và các sản phẩm đều có thể điều chỉnh theo nhu cầu</h3>
-                <div class="text-sm ps-4 leading-loose tracking-wide mb-4">
-                    <ul class="list-disc ps-4">
-                        <li>Chọn trực tiếp các Chương trình Khuyến mãi phù hợp trên Trang chủ.</li>
-                        <li>Chọn sản phẩm phù hợp trên thanh Thực đơn.</li>
-                        <li>Hoặc chọn nút Khuyến mãi để tham khảo chi tiết từng khuyến mãi đang áp dụng và chọn sản phẩm
-                            phù
-                            hợp.</li>
-                    </ul>
-                </div>
-                <div class="w-full lg:w-2/3 mx-auto mb-4">
-                    <img loading="lazy" src="{{ asset("storage/uploads/banners/banner.jpg") }}" alt=""
-                        class="object-cover w-full h-full rounded-md mb-2">
-                    <p class="text-center italic text-sm">Mô tả hình ảnh</p>
-                </div>
-                <div class="text-sm ps-4 leading-loose tracking-wide mb-4">
-                    <ul class="list-disc ps-4">
-                        <li>Hoặc chọn sản phẩm riêng lẻ nguyên giá có trên thanh Thực đơn ở Trang chủ.</li>
-                        <li>Chọn sản phẩm phù hợp và chọn Thêm vào giỏ hàng để từng sản phẩm được ghi nhận vào Giỏ hàng.
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-    </div>
+                        <div class="card p-4 md:p-8">
+                            <h2 class="font-semibold uppercase text-lg md:text-md mb-4" style="text-align: center;">HƯỚNG DẪN MUA
+                                H&Agrave;NG</h2>
+                            <div class="mb-4">
+                                <h3 class="font-semibold text-sm md:text-md mb-4">Bước 1. Chọn sản phẩm y&ecirc;u th&iacute;ch</h3>
+                                <div class="text-sm md:text-md ps-4 leading-loose tracking-wide mb-4">
+                                    <ul class="list-disc ps-4">
+                                        <li>Truy cập v&agrave;o trang thực đơn của ch&uacute;ng t&ocirc;i.</li>
+                                        <li>Lựa chọn m&oacute;n pizza ph&ugrave; hợp với khẩu vị của bạn, từ c&aacute;c loại truyền thống
+                                            như Margherita, Pepperoni, đến những m&oacute;n đặc biệt như Pizza Hải Sản hay Pizza Chay.</li>
+                                        <li>Ngo&agrave;i pizza, bạn c&oacute; thể th&ecirc;m nước uống, m&oacute;n phụ như khoai t&acirc;y
+                                            chi&ecirc;n hoặc salad để bữa ăn th&ecirc;m trọn vẹn.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <h3 class="font-semibold text-sm md:text-md mb-4">Bước 2. T&ugrave;y chỉnh m&oacute;n ăn</h3>
+                                <div class="text-sm md:text-md ps-4 leading-loose tracking-wide mb-4">
+                                    <ul class="list-disc ps-4">
+                                        <li>Chọn k&iacute;ch thước, loại đế, sốt pizza</li>
+                                        <li>Chọn th&ecirc;m topping (nếu c&oacute;)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <h3 class="font-semibold text-sm md:text-md mb-4">Bước 3. Th&ecirc;m v&agrave;o giỏ h&agrave;ng</h3>
+                                <div class="text-sm md:text-md ps-4 leading-loose tracking-wide mb-4">
+                                    <ul class="list-disc ps-4">
+                                        <li>Sau khi chọn m&oacute;n, nhấn n&uacute;t &ldquo;Th&ecirc;m v&agrave;o giỏ h&agrave;ng&rdquo;.
+                                        </li>
+                                        <li>Kiểm tra lại giỏ h&agrave;ng để chắc chắn rằng bạn đ&atilde; chọn đ&uacute;ng m&oacute;n
+                                            v&agrave; số lượng mong muốn.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <h3 class="font-semibold text-sm md:text-md mb-4">4. Điền th&ocirc;ng tin giao h&agrave;ng</h3>
+                                <div class="text-sm md:text-md ps-4 leading-loose tracking-wide mb-4">
+                                    <ul class="list-disc ps-4">
+                                        <li>Nhấn &ldquo;Thanh to&aacute;n&rdquo; để đi đến trang thanh to&aacute;n.</li>
+                                        <li>Điền đầy đủ th&ocirc;ng tin:
+                                            <ul>
+                                                <li>T&ecirc;n người nhận</li>
+                                                <li>Số điện thoại li&ecirc;n hệ</li>
+                                                <li>Địa chỉ giao h&agrave;ng</li>
+                                                <li>Chọn thời gian giao h&agrave;ng mong muốn (nếu c&oacute;).</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <h3 class="font-semibold text-sm md:text-md mb-4">5. Chọn phương thức thanh to&aacute;n</h3>
+                                <div class="text-sm md:text-md ps-4 leading-loose tracking-wide mb-4">
+                                    <p>Ch&uacute;ng t&ocirc;i hỗ trợ c&aacute;c phương thức thanh to&aacute;n sau:</p>
+                                    <ul class="list-disc ps-4">
+                                        <ul>
+                                            <li>Thanh to&aacute;n khi nhận h&agrave;ng (COD).&nbsp;</li>
+                                            <li>Thanh to&aacute;n qua v&iacute; điện tử Momo</li>
+                                        </ul>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <h3 class="font-semibold text-sm md:text-md mb-4">6. X&aacute;c nhận đơn h&agrave;ng</h3>
+                                <div class="text-sm md:text-md ps-4 leading-loose tracking-wide mb-4">
+                                    <ul class="list-disc ps-4">
+                                        <li>Kiểm tra lại to&agrave;n bộ th&ocirc;ng tin đơn h&agrave;ng.</li>
+                                        <li>Nhấn n&uacute;t <strong>&ldquo;X&aacute;c nhận đặt h&agrave;ng&rdquo;</strong>.</li>
+                                        <li>Hệ thống sẽ gửi một email hoặc tin nhắn x&aacute;c nhận đơn h&agrave;ng của bạn.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <h3 class="font-semibold text-sm md:text-md mb-4">7. Chờ giao h&agrave;ng</h3>
+                                <div class="text-sm md:text-md ps-4 leading-loose tracking-wide mb-4">
+                                    <ul class="list-disc ps-4">
+                                        <li>Đội ngũ của ch&uacute;ng t&ocirc;i sẽ bắt đầu chế biến ngay khi nhận được đơn h&agrave;ng.</li>
+                                        <li>Pizza sẽ được giao đến tận nơi, đảm bảo <strong>n&oacute;ng hổi</strong> v&agrave;
+                                            <strong>đ&uacute;ng giờ</strong>.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <h3 class="font-semibold text-sm md:text-md mb-4">Hỗ trợ kh&aacute;ch h&agrave;ng</h3>
+                                <div class="text-sm md:text-md ps-4 leading-loose tracking-wide mb-4">
+                                    <ul class="list-disc ps-4">
+                                        <li>Nếu cần hỗ trợ hoặc c&oacute; thay đổi về đơn h&agrave;ng, h&atilde;y li&ecirc;n hệ với
+                                            ch&uacute;ng t&ocirc;i qua:
+                                            <ul>
+                                                <li><strong>Hotline</strong>: (+84) 382 606 012</li>
+                                                <li><strong>Email</strong>: lv.thanh137@gmail.com&nbsp;</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 ',
                 'status' => 1,
                 'created_at' => now(),

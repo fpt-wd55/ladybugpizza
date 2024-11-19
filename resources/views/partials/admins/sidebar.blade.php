@@ -107,7 +107,8 @@
                     @svg('tabler-slideshow', 'text-gray-500')
                     <span class="ml-3">Banner</span>
                 </a>
-            </li> 
+            </li>
         </ul>
     </div>
 </aside>
+
