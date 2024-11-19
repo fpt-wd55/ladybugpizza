@@ -33,28 +33,7 @@
             class="flex flex-col space-y-3 border-t px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:space-x-4 lg:space-y-0">
             <div
                 class="flex flex-shrink-0 flex-col space-y-3 md:flex-row md:items-center md:space-x-3 md:space-y-0 lg:justify-end">
-                <div class="flex w-full items-center space-x-3 md:w-full">
-                    <div class="flex w-full items-center">
-                        <button
-                            class="hover:text-primary-700 me-3 flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white py-2 pe-3 ps-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-0 md:w-auto"
-                            data-dropdown-toggle="actionsDropdown" id="actionsDropdownButton" type="button">
-                            @svg('tabler-chevron-down', 'w-5 h-5 me-3')
-                            Hành động
-                        </button>
-                        <h2 class="text-base font-medium italic text-gray-700" id="selectedItems">
-                        </h2>
-                    </div>
-                    <div class="z-10 hidden w-44 divide-y divide-gray-100 rounded bg-white shadow" id="actionsDropdown">
-                        <ul aria-labelledby="actionsDropdownButton" class="py-1 text-sm text-gray-700 dark:text-gray-200">
-                            <li>
-                                <a class="block px-4 py-2 hover:bg-gray-100" href="#">Kích hoạt/Khóa</a>
-                            </li>
-                            <li>
-                                <a class="block px-4 py-2 hover:bg-gray-100" href="#">Xóa tài khoản</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+              
             </div>
             <div
                 class="flex flex-shrink-0 flex-col space-y-3 md:flex-row md:items-center md:space-x-3 md:space-y-0 lg:justify-end">
