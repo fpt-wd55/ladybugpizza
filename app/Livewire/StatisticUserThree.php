@@ -2,67 +2,49 @@
 
 namespace App\Livewire;
 
-use App\Models\Product;
+use App\Models\Membership;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class StatisticUserThree extends Component
 {
-    public $selectedTopProduct;
-    public $topProducts;
+    public $selectedTopUser;
+    public $topUsers;
 
     public function mount()
     {
-        $this->updateTopProduct('mostPurchased');
+        $this->updateTopUser('mostOrder');
     }
 
-    public function updateTopProduct($period)
+    public function updateTopUser($period)
     {
-        switch ($period) {
-            case 'mostPurchased':
-                $this->selectedTopProduct = 'Sản phẩm có lượt mua nhiều nhất';
-                $this->topProducts = Product::withCount('orderItems')
-                    ->orderBy('order_items_count', 'desc')
-                    ->limit(10)
-                    ->get();
-                break;
 
-            case 'mostInStock':
-                $this->selectedTopProduct = 'Sản phẩm tồn kho nhiều nhất';
-                $datas = DB::table('products as p')
-                    ->leftJoin('categories as c', 'p.category_id', '=', 'c.id')
-                    ->leftJoin('attributes as a', 'a.category_id', '=', 'c.id')
-                    ->leftJoin('attribute_values as av', 'av.attribute_id', '=', 'a.id')
-                    ->select(
-                        'p.id',
-                        DB::raw('IFNULL(SUM(av.quantity), p.quantity) as total')
-                    )
-                    ->groupBy('p.id', 'p.quantity')
+        switch ($period) {
+            case 'mostOrder':
+                $this->topUsers = [];
+                $this->selectedTopUser = 'Top người dùng mua hàng nhiều nhất';
+                $datas = User::join('orders', 'users.id', '=', 'orders.user_id')
+                    ->select('users.id', DB::raw('COUNT(orders.id) as total'))
+                    ->groupBy('users.id')
                     ->orderBy('total', 'desc')
                     ->limit(10)
                     ->get();
                 foreach ($datas as $data) {
-                    $product = Product::find($data->id);
-                    $product->total_quantity = $data->total;
-                    $this->topProducts[] = $product;
+                    $this->topUsers[] = User::find($data->id);
                 }
                 break;
 
+            case 'mostPoint':
+                $this->topUsers = [];
+                $this->selectedTopUser = 'Top người dùng có điểm tích lũy cao nhất';
+                $datas = Membership::select('user_id', 'total_spent')
+                    ->orderBy('total_spent', 'desc')
+                    ->limit(10)
+                    ->get();
                 foreach ($datas as $data) {
-                    $product = Product::find($data->id);
-                    $product->total_quantity = $data->total;
-                    $this->topProducts[] = $product;
-                }
-                break;
-
-            case 'mostReviewed':
-                $this->selectedTopProduct = 'Sản phẩm có lượt đánh giá cao nhất';
-                $this->topProducts = Product::orderBy('total_rating', 'desc')->limit(10)->get();
-                break;
-
-            case 'highestQuality':
-                $this->selectedTopProduct = 'Sản phẩm có chất lượng đánh giá cao nhất';
-                $this->topProducts = Product::orderBy('avg_rating', 'desc')->limit(10)->get();
+                    $this->topUsers[] = User::find($data->user_id);
+                } 
                 break;
 
             default:
