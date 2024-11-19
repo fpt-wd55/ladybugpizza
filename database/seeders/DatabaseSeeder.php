@@ -33,16 +33,15 @@ class DatabaseSeeder extends Seeder
             PromotionUserSeeder::class,
             OrderSeeder::class,
             BannerSeeder::class,
-            EvaluationSeeder::class, 
+            EvaluationSeeder::class,
             EvaluationImageSeeder::class,
             PageSeeder::class,
             // ShippingSeeder::class,
             TransactionSeeder::class,
             InvoiceSeeder::class,
-            // ComboDetailSeeder::class,
             FavoriteSeeder::class,
             FaqSeeder::class,
             UserSettingSeeder::class,
-        ]); 
+        ]);
     }
 }
