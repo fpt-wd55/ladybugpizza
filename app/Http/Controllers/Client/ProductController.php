@@ -26,10 +26,9 @@ class ProductController extends Controller
     {
         $categories = Category::all();
 
-        $comboCategory = Category::with(['products.comboDetails.productAttribute.product'])
-    ->where('id', 7)
-    ->first();
-
+        // $comboCategory = Category::with(['products.comboDetails.productAttribute.product'])
+        //     ->where('id', 7)
+        //     ->first();
 
         $products = [];
 
@@ -39,7 +38,7 @@ class ProductController extends Controller
         return view('clients.product.menu', [
             'categories' => $categories,
             'products' => $products,
-            'comboCategory' => $comboCategory
+            // 'comboCategory' => $comboCategory
         ]);
     }
 
@@ -143,9 +142,7 @@ class ProductController extends Controller
      * 
      * @return void
      */
-    public function removeFromCart()
-    {
-    }
+    public function removeFromCart() {}
 
     /**
      * Lấy ra danh sách các sản phẩm yêu thích của người dùng đang đăng nhập
@@ -197,17 +194,18 @@ class ProductController extends Controller
         return back()->with('error', 'Sản phẩm không tồn tại!');
     }
 
-    public function showCombo($slug){
+    public function showCombo($slug)
+    {
         $combo = Product::with(['comboDetails.productAttribute.product'])
-        ->where('slug', $slug)
-        ->where('category_id', 7)
-        ->firstOrFail();
-       // Nhóm các sản phẩm trùng nhau trong combo và tính số lượng
+            ->where('slug', $slug)
+            ->where('category_id', 7)
+            ->firstOrFail();
+        // Nhóm các sản phẩm trùng nhau trong combo và tính số lượng
         $groupedComboDetails = $combo->comboDetails->groupBy('product_attribute_id')->map(function ($details) {
             $detail = $details->first();
             $detail->quantity = $details->count(); // Đếm số lần xuất hiện của sản phẩm
             return $detail;
         });
-       return view('clients.product.detail-combo',compact('combo', 'groupedComboDetails'));
+        return view('clients.product.detail-combo', compact('combo', 'groupedComboDetails'));
     }
 }
