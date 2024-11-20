@@ -116,7 +116,7 @@ class ProductController extends Controller
                     ]);
                 }
             }
- 
+
             $priceProduct = $product->price * $validated['quantity'];
             $priceAttribute = 0;
             foreach ($attributes as $attribute) {
@@ -146,14 +146,7 @@ class ProductController extends Controller
         }
 
         return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại sau!');
-    }
-
-    /**
-     * Xoá một list sản phẩm khỏi giỏ hàng (có thể áp dụng cho việc xoá một sản phẩm cụ thể và clear giỏ hàng)
-     * 
-     * @return void
-     */
-    public function removeFromCart() {}
+    } 
 
     /**
      * Lấy ra danh sách các sản phẩm yêu thích của người dùng đang đăng nhập
