@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->integer('total')->nullable();
-            $table->integer('total_discount')->nullable();
+            // $table->integer('total_discount')->nullable();
             $table->timestamps();
         });
     }
