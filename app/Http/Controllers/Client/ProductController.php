@@ -78,8 +78,10 @@ class ProductController extends Controller
     /**
      * Thêm mới một sản phẩm vào giở hàng
      */
-    public function addToCart(Request $request, $slug)
+    public function addToCart(Request $request, Product $product)
     {
+        dd($product);
+        dd($request->all());
         $product = Product::where('slug', $slug)->firstOrFail();
 
         $cart = Cart::where('user_id', Auth::id())->first();
@@ -126,15 +128,6 @@ class ProductController extends Controller
         }
 
         return back()->with('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
-
-
-
-
-        // $cartItem = CartItem::where('carg_id', $cart->id())->first();
-
-        // dd($cartItem);
-
-
     }
 
     /**
