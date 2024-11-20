@@ -17,7 +17,8 @@
             </div>
             <div class="flex items-center">
                 <a href="https://business.facebook.com/latest/inbox/all/?nav_ref=manage_page_ap_plus_inbox_message_button&asset_id=486082071252967"
-                    target="_blank" class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 ring-0 focus:ring-0">
+                    target="_blank"
+                    class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 ring-0 focus:ring-0">
                     <!-- Chat icon -->
                     @svg('tabler-message-dots', 'text-gray-500')
                 </a>
@@ -75,17 +76,11 @@
                             Xem tất cả
                         </div>
                     </a>
-                </div> 
+                </div>
                 <button type="button" class="flex mx-3 bg-gray-800 rounded-full md:mr-0 ring-0 focus:ring-0"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                     <span class="sr-only">Open user menu</span>
-                    @if (Auth::check() && Auth::user()->avatar && \Storage::exists('uploads/avatars/' . Auth::user()->avatar))
-                        <img src="{{ asset('storage/uploads/avatars/' . Auth::user()->avatar) }}" alt="User Avatar"
-                            class="object-cover w-10 h-10 rounded-full">
-                    @else
-                        <img src="{{ asset('storage/uploads/avatars/user-default.png') }}" alt="Default Avatar"
-                            class="object-cover w-10 h-10 rounded-full">
-                    @endif
+                    <img src="{{ Auth::user()->avatar() }}" class="object-cover w-10 h-10 rounded-full">
                 </button>
                 <!-- User Dropdown menu -->
                 <div class="hidden z-50 my-4 w-56 list-none bg-white rounded divide-y divide-gray-100 shadow text-sm"
@@ -101,8 +96,7 @@
                                 hàng</a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.profiles.index') }}"
-                                class="block py-2 px-4 hover:bg-gray-100">Tài
+                            <a href="{{ route('admin.profiles.index') }}" class="block py-2 px-4 hover:bg-gray-100">Tài
                                 khoản</a>
                         </li>
                         <li>
