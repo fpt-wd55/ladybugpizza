@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Attribute;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AddToCartRequest extends FormRequest
@@ -11,7 +12,7 @@ class AddToCartRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -19,17 +20,25 @@ class AddToCartRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
-        return [
-            'product_id' => ['required', 'exists:products,id'],
-            'quantity' => ['required', 'integer', 'min:1'],
-            'toppings' => ['array'],
-            'toppings.*' => ['exists:toppings,id'],
-            'attributes' => ['array'],
-            'attributes.*.id' => ['required', 'exists:attributes,id'],
-            'attributes.*.value' => ['required', 'exists:attribute_values,id'],
+        $product = $this->route('product');
+        $attributes = Attribute::with('values')
+            ->where('category_id', $product->category->id)
+            ->where('status', 1)
+            ->get();
+
+        $rules = [
+            'quantity' => 'required|integer|min:1',
+            'toppings' => 'nullable|array',
+            'toppings.*' => 'exists:toppings,id',
         ];
+
+        foreach ($attributes as $attribute) {
+            $rules['attributes_' . $attribute->slug] = 'required';
+        }
+
+        return $rules;
     }
 
     /**
@@ -38,6 +47,24 @@ class AddToCartRequest extends FormRequest
      */
     public function messages()
     {
-        return [];
+        $product = $this->route('product');
+        $attributes = Attribute::with('values')
+            ->where('category_id', $product->category->id)
+            ->where('status', 1)
+            ->get();
+
+        $messages = [
+            'quantity.required' => 'Số lượng là bắt buộc.',
+            'quantity.integer' => 'Số lượng phải là một số nguyên.',
+            'quantity.min' => 'Số lượng phải lớn hơn hoặc bằng 1.',
+            'toppings.array' => 'Toppings phải là một mảng.',
+            'toppings.*.exists' => 'Topping không hợp lệ.',
+        ];
+
+        foreach ($attributes as $attribute) {
+            $messages['attributes_' . $attribute->slug . '.required'] = 'Vui lòng chọn phân loại hàng';
+        }
+
+        return $messages;
     }
 }

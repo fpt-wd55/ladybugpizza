@@ -49,8 +49,7 @@ html {
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
-  }
-  
+}
 
 /* flowbite components */
 
@@ -187,7 +186,7 @@ html {
 }
 
 .button-primary {
-    @apply rounded bg-red-600 px-8 py-4 text-sm font-medium text-white shadow-lg transition hover:bg-white hover:text-black
+    @apply rounded bg-red-600 px-8 py-4 text-sm font-medium text-white shadow-lg transition hover:bg-white hover:text-black;
 }
 
 .button-toggle {
@@ -422,7 +421,12 @@ button[aria-selected="true"] {
 }
 
 .comfortable {
-    @apply leading-loose tracking-wider
+    @apply leading-loose tracking-wider;
 }
 
-
+.out-of-stock {
+    opacity: 0.5;
+    color: #d30a0a !important;
+    pointer-events: none;
+}
+ 

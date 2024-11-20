@@ -2,10 +2,10 @@
 
 @section('title', $product->name)
 
-@section('content') 
+@section('content')
     <form action="{{ route('client.product.add-to-cart', $product) }}" method="post">
-        @method('POST')
         @csrf
+        @method('POST')
         <div class="min-h-screen p-4 transition md:p-8 lg:mx-32">
             <div class="mb-8 grid grid-cols-1 gap-4 md:py-8 lg:grid-cols-5">
                 {{-- Product detail --}}
@@ -40,19 +40,22 @@
                             </p>
                             <div class="flex flex-wrap items-center gap-4 md:gap-8">
                                 @foreach ($attribute->values as $index => $value)
-                                    <div class="min-w-32">
-                                        <input {{ $index === 0 ? 'checked' : '' }} class="peer hidden"
-                                            id="attribute_{{ $value->id }}" name="attributes[{{ $attribute->slug }}]"
-                                            data-price="{{ $value->price }}" data-type="{{ $value->price_type }}" required
-                                            type="radio" value="{{ $value->id }}" />
+                                    <div class="min-w-32 {{ $value->quantity <= 0 ? 'out-of-stock' : '' }}">
+                                        <input class="peer hidden" id="attribute_{{ $value->id }}"
+                                            {{ old('attributes_' . $attribute->slug) == $value->id ? 'checked' : '' }}
+                                            name="attributes_{{ $attribute->slug }}" data-price="{{ $value->price }}"
+                                            data-type="{{ $value->price_type }}" type="radio"
+                                            value="{{ $value->id }}" />
                                         <label class="label-peer flex flex-col items-center gap-2"
                                             for="attribute_{{ $value->id }}">
                                             <p class="text-sm font-medium">{{ $value->value }}</p>
-                                            {{-- <p class="text-sm">+ {{ number_format($value->price($product)) }}đ</p> --}}
                                         </label>
                                     </div>
                                 @endforeach
                             </div>
+                            @error('attributes_' . $attribute->slug)
+                                <p class="mt-3 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                     @endforeach
 
@@ -81,8 +84,10 @@
                                         </label>
                                     </div>
                                 @endforeach
-
                             </div>
+                            @error('toppings')
+                                <p class="mt-3 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                     @endif
                 </div>
@@ -134,22 +139,28 @@
         {{-- Add to card bar --}}
         <div class="sticky bottom-16 w-full border-t bg-white p-4 transition lg:bottom-0 lg:px-32">
             <div class="grid grid-cols-3 items-center justify-between">
-                <div class="w-28 py-2 px-3 inline-block bg-white border border-gray-200 rounded-md">
-                    <div class="flex items-center gap-x-1.5">
-                        <button type="button" id="decrement"
-                            class="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                            tabindex="-1" aria-label="Decrease">
-                            @svg('tabler-minus', 'icon-sm')
-                        </button>
-                        <input
-                            class="p-0 w-6 bg-transparent border-0 text-gray-800 text-center focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                            name="quantity" style="-moz-appearance: textfield;" type="number" value="1">
-                        <button type="button" id="increment"
-                            class="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                            tabindex="-1" aria-label="Increase">
-                            @svg('tabler-plus', 'icon-sm')
-                        </button>
+                <div class="block items-center justify-start md:flex">
+                    <div class="w-28 py-2 px-3 inline-block bg-white border border-gray-200 rounded-md">
+                        <div class="flex items-center gap-x-1.5">
+                            <button type="button" id="decrement"
+                                class="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
+                                tabindex="-1" aria-label="Decrease">
+                                @svg('tabler-minus', 'icon-sm')
+                            </button>
+                            <input
+                                class="p-0 w-6 bg-transparent border-0 text-gray-800 text-center focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                name="quantity" style="-moz-appearance: textfield;" type="number" value="1">
+                            <button type="button" id="increment"
+                                class="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
+                                tabindex="-1" aria-label="Increase">
+                                @svg('tabler-plus', 'icon-sm')
+                            </button>
+                        </div>
                     </div>
+                    {{-- <p class="text-sm text-gray-700 py-2 md:p-0 md:ps-5">10 sản phẩm có sẵn</p> --}}
+                    @error('quantity')
+                        <p class="py-2 md:p-0 md:ps-5 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="flex items-center justify-center gap-4">
@@ -199,7 +210,7 @@
         // Cập nhật giá sản phẩm khi thay đổi
         document.addEventListener('DOMContentLoaded', function() {
             const priceElement = document.getElementById('price');
-            const originalPrice = parseInt(priceElement.innerText.replace(/\D/g, '')); // Giá gốc của sản phẩm
+            const originalPrice = parseInt(priceElement.innerText.replace(/\D/g, ''));
             const attributes = document.querySelectorAll('input[name^="attributes"]');
             const toppings = document.querySelectorAll('input[name^="toppings[]"]');
 

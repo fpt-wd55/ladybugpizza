@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('image');
             $table->integer('price');
+            $table->integer('quantity');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
