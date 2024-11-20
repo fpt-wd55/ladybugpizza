@@ -87,6 +87,7 @@ class ProductController extends Controller
             $cartItem = CartItem::create([
                 'cart_id' => $cart->id,
                 'product_id' => $product->id,
+                'price' => 0,
                 'quantity' => $validated['quantity'],
             ]);
 
@@ -105,6 +106,7 @@ class ProductController extends Controller
                     'attribute_value_id' => $validated['attributes_' . $attribute->slug],
                 ]);
             }
+
             // Thêm topping vào CartItemTopping
             if (isset($validated['toppings'])) {
                 foreach ($validated['toppings'] as $topping) {
@@ -114,7 +116,7 @@ class ProductController extends Controller
                     ]);
                 }
             }
-            // Cập nhật giá trị total và total_discount của Cart
+ 
             $priceProduct = $product->price * $validated['quantity'];
             $priceAttribute = 0;
             foreach ($attributes as $attribute) {
@@ -132,6 +134,11 @@ class ProductController extends Controller
                 }
             }
             $amount = $priceProduct + $priceAttribute + $priceTopping;
+
+            // Cập nhật giá của CartItem
+            $cartItem->price = $amount;
+            $cartItem->save();
+            // Cập nhật giá trị total của Cart
             $cart->total += $amount;
             $cart->save();
 

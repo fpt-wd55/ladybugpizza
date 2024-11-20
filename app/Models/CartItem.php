@@ -12,7 +12,7 @@ class CartItem extends Model
     protected $fillable = [
         'cart_id',
         'product_id',
-        // 'price',
+        'price',
         // 'discount_price',
         'quantity',
         // 'amount',
