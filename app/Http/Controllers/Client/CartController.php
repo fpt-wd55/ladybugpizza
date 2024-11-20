@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\CartItemAttribute;
 use App\Models\CartItemTopping;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -30,6 +31,18 @@ class CartController extends Controller
             'cartItems' => $cartItems,
         ]);
     }
+
+    public function delete(CartItem $cartItem)
+    { 
+        if ($cartItem->cart->user_id != Auth::id()) {
+            return redirect()->route('client.home')->with('error', 'Bạn không có quyền xóa sản phẩm này');
+        } else {
+            $cartItem->delete();
+            return redirect()->route('client.cart.index')->with('success', 'Xóa sản phẩm khỏi giỏ hàng thành công');
+        }
+        return redirect()->route('client.cart.index')->with('error', 'Xóa sản phẩm khỏi giỏ hàng thất bại');
+    }
+
     public function checkout()
     {
         return view('clients.cart.checkout');

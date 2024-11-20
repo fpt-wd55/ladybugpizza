@@ -18,21 +18,28 @@
                     <!-- component -->
                     @foreach ($cartItems as $item)
                         <div class="product-card">
-                            <div class="grid grid-cols-4">
+                            <div class="grid grid-cols-4 h-full">
                                 <div class="grid place-items-center">
                                     <img loading="lazy"
                                         src="{{ asset('storage/uploads/products/' . $item->product->image) }}"
                                         onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
                                         class="img-md object-cover rounded-md">
                                 </div>
-                                <div class="w-full col-span-3 flex flex-col space-y-2 p-2">
-                                    <div class="flex justify-between item-center">
+                                <div class="w-full col-span-3 flex flex-col justify-between p-2">
+                                    <div class="flex justify-between item-center mb-1">
                                         <p class="font-bold text-gray-800">{{ $item->product->name }}<span
                                                 class="text-sm font-normal ps-2">
                                                 x{{ $item->quantity }}
                                             </span></p>
                                         <div class="rounded-full text-xs font-medium text-gray-800">
-                                            @svg('tabler-trash-x-filled', 'w-6 h-6 text-red-500')
+                                            <form action="{{ route('client.product.delete-cart-item', $item) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit">
+                                                    @svg('tabler-trash-x-filled', 'w-6 h-6 text-red-500')
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
 
@@ -41,13 +48,13 @@
                                             {{ implode(', ', $item->attributes->pluck('attribute_value.value')->toArray()) }}
                                         </p>
                                         <p class="line-clamp-1">
-                                            Topping:
-                                            @if (isset($item->toppings))
+                                            @if (isset($item->toppings) && count($item->toppings) > 0)
+                                                Topping:
                                                 {{ implode(', ', $item->toppings->pluck('topping.name')->toArray()) }}
                                             @endif
                                         </p>
                                     </div>
-                                    <p class="font-bold text-gray-800">
+                                    <p class="font-bold text-gray-800 mt-2">
                                         {{ number_format($item->price) }}₫
                                     </p>
                                 </div>
@@ -59,7 +66,7 @@
             <div class="flex items-center justify-end gap-2">
                 <a class="button-dark" href="{{ route('client.product.menu') }}">Tiếp tục mua hàng</a>
                 <a class="button-red" href="{{ route('client.cart.checkout') }}">Thanh toán</a>
-            </div> 
+            </div>
         </div>
     </div>
 

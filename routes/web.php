@@ -54,6 +54,7 @@ Route::prefix('/')->group(function () {
     Route::get('/combo/{slug}', [ProductController::class, 'showCombo'])->name('client.product.showCombo');
     Route::post('/product/favorite/{slug}', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
     Route::post('/product/cart/{product}', [ProductController::class, 'addToCart'])->name('client.product.add-to-cart');
+    Route::delete('/product/cart/{cartItem}', [CartController::class, 'delete'])->name('client.product.delete-cart-item');
     Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
     Route::get('/checkout', [CartController::class, 'checkout'])->name('client.cart.checkout');
     Route::post('/checkout', [CartController::class, 'postCheckout'])->name('client.cart.post-checkout');
