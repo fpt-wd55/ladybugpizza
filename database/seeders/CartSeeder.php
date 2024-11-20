@@ -29,7 +29,7 @@ class CartSeeder extends Seeder
             $carts[] = [
                 'user_id' => $user->id,
                 'total' => rand(100, 500) * 1000,
-                'total_discount' => rand(100, 500) * 1000,
+                // 'total_discount' => rand(100, 500) * 1000,
                 'created_at' => $now,
                 'updated_at' => $now,
             ];
