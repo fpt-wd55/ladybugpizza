@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddToCartRequest;
 use App\Models\Category;
 use App\Models\Evaluation;
 use App\Models\Product;
@@ -25,10 +26,6 @@ class ProductController extends Controller
     public function menu()
     {
         $categories = Category::all();
-
-        // $comboCategory = Category::with(['products.comboDetails.productAttribute.product'])
-        //     ->where('id', 7)
-        //     ->first();
 
         $products = [];
 
@@ -80,54 +77,79 @@ class ProductController extends Controller
      */
     public function addToCart(Request $request, Product $product)
     {
-        dd($product);
-        dd($request->all());
-        $product = Product::where('slug', $slug)->firstOrFail();
+        $attributes = Attribute::with('values')
+            ->where('category_id', $product->category->id)
+            ->where('status', 1)
+            ->get();
 
-        $cart = Cart::where('user_id', Auth::id())->first();
-
-        if (!$cart) {
-            $cart = Cart::create([
-                'user_id' => Auth::id(),
-                'total' => 0,
-                'total_discount' => 0,
-            ]);
-        }
-
-        $data = $request->all();
-
-        $attributes = data_get($data, 'attributes', []);
-        $toppings = data_get($data, 'toppings', []);
-
-        $attributePrice = 0;
-        $toppingPrice = 0;
-
+        $rules = [
+            'quantity' => 'required|integer|min:1',
+            'toppings' => 'nullable|array',
+            'toppings.*' => 'exists:toppings,id',
+        ];
         foreach ($attributes as $attribute) {
-            $attributePrice += AttributeValue::find($attribute)->price($product);
+            $rules['attributes_' . $attribute->slug] = 'required';
         }
 
-        foreach ($toppings as $topping) {
-            $toppingPrice += Topping::find($topping)->price;
-        }
-
-        $price = $product->price + $attributePrice + $toppingPrice;
-        $discountPrice = $product->discount_price + $attributePrice + $toppingPrice;
-
-        $cartItem = [
-            'cart_id' => $cart->id,
-            'product_id' => $product->id,
-            'price' => $price,
-            'discount_price' => $discountPrice,
-            'quantity' => $data['quantity'],
-            'amount' => $price * $data['quantity'],
+        $messages = [
+            'quantity.required' => 'Số lượng là bắt buộc.',
+            'quantity.integer' => 'Số lượng phải là một số nguyên.',
+            'quantity.min' => 'Số lượng phải lớn hơn hoặc bằng 1.',
+            'toppings.array' => 'Toppings phải là một mảng.',
+            'toppings.*.exists' => 'Topping không hợp lệ.',
         ];
 
-        if (!CartItem::create($cartItem)) {
-
-            return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại sau!');
+        foreach ($attributes as $attribute) {
+            $messages['attributes_' . $attribute->slug . '.required'] = 'Vui lòng chọn phân loại hàng';
         }
 
-        return back()->with('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
+        $request->validate($rules, $messages);
+
+        // Debugging: Check the incoming request data
+        // $cart = Cart::where('user_id', Auth::id())->first();
+
+        // if (!$cart) {
+        //     $cart = Cart::create([
+        //         'user_id' => Auth::id(),
+        //         'total' => 0,
+        //         'total_discount' => 0,
+        //     ]);
+        // }
+
+        // $data = $request->all();
+
+        // $attributes = data_get($data, 'attributes', []);
+        // $toppings = data_get($data, 'toppings', []);
+
+        // $attributePrice = 0;
+        // $toppingPrice = 0;
+
+        // foreach ($attributes as $attribute) {
+        //     $attributePrice += AttributeValue::find($attribute)->price($product);
+        // }
+
+        // foreach ($toppings as $topping) {
+        //     $toppingPrice += Topping::find($topping)->price;
+        // }
+
+        // $price = $product->price + $attributePrice + $toppingPrice;
+        // $discountPrice = $product->discount_price + $attributePrice + $toppingPrice;
+
+        // $cartItem = [
+        //     'cart_id' => $cart->id,
+        //     'product_id' => $product->id,
+        //     'price' => $price,
+        //     'discount_price' => $discountPrice,
+        //     'quantity' => $data['quantity'],
+        //     'amount' => $price * $data['quantity'],
+        // ];
+
+        // if (!CartItem::create($cartItem)) {
+
+        //     return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại sau!');
+        // }
+
+        // return back()->with('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
     }
 
     /**
