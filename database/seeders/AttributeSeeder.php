@@ -45,7 +45,9 @@ class AttributeSeeder extends Seeder
                 'name' => $name,
                 'slug' => Str::slug($name),
                 'status' => 1,
-                'category_id' => 1,
+                // Sốt: 6 (Gà)
+                'category_id' => $name == 'Sốt' ? 6 : 1,
+                // 'category_id' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
