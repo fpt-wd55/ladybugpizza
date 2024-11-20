@@ -2,8 +2,8 @@
 
 @section('title', $product->name)
 
-@section('content')
-    <form action="{{ route('client.product.add-to-cart', $product->slug) }}" method="post">
+@section('content') 
+    <form action="{{ route('client.product.add-to-cart', $product) }}" method="post">
         @method('POST')
         @csrf
         <div class="min-h-screen p-4 transition md:p-8 lg:mx-32">
