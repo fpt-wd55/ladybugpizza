@@ -34,13 +34,12 @@ class CartController extends Controller
 
     public function delete(CartItem $cartItem)
     { 
-        if ($cartItem->cart->user_id != Auth::id()) {
-            return redirect()->route('client.home')->with('error', 'Bạn không có quyền xóa sản phẩm này');
-        } else {
-            $cartItem->delete();
-            return redirect()->route('client.cart.index')->with('success', 'Xóa sản phẩm khỏi giỏ hàng thành công');
+
+        if(!$cartItem->delete()) {
+            return redirect()->route('client.cart.index')->with('error', 'Xóa sản phẩm khỏi giỏ hàng thất bại');
         }
-        return redirect()->route('client.cart.index')->with('error', 'Xóa sản phẩm khỏi giỏ hàng thất bại');
+        
+        return redirect()->route('client.cart.index')->with('success', 'Xóa sản phẩm khỏi giỏ hàng thành công');
     }
 
     public function checkout()
