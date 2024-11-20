@@ -12,8 +12,7 @@
                 <div class="col-span-5 mb-8 md:flex md:gap-8 lg:col-span-2 lg:block">
                     <div class="mb-8 md:h-80 md:w-80">
                         <a data-fslightbox="gallery" href="{{ asset('storage/uploads/products/' . $product->image) }}">
-                            <img alt="{{ $product->name }}" class="w-full rounded-lg object-cover" loading="lazy"
-                                src="{{ asset('storage/uploads/products/' . $product->image) }}" />
+                            <img alt="{{ $product->name }}" class="w-full rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}" />
                         </a>
                     </div>
                     <div>
@@ -26,7 +25,7 @@
                             </div>
                             <p>({{ $product->avg_rating }})</p>
                         </div>
-                        <p class="comfortable pe-8">{!! $product->description !!}</p>
+                        <p class="comfortable pe-8 text-sm">{!! $product->description !!}</p>
                     </div>
                 </div>
 
@@ -41,13 +40,8 @@
                             <div class="flex flex-wrap items-center gap-4 md:gap-8">
                                 @foreach ($attribute->values as $index => $value)
                                     <div class="min-w-32 {{ $value->quantity <= 0 ? 'out-of-stock' : '' }}">
-                                        <input class="peer hidden" id="attribute_{{ $value->id }}"
-                                            {{ old('attributes_' . $attribute->slug) == $value->id ? 'checked' : '' }}
-                                            name="attributes_{{ $attribute->slug }}" data-price="{{ $value->price }}"
-                                            data-type="{{ $value->price_type }}" type="radio"
-                                            value="{{ $value->id }}" />
-                                        <label class="label-peer flex flex-col items-center gap-2"
-                                            for="attribute_{{ $value->id }}">
+                                        <input {{ old('attributes_' . $attribute->slug) == $value->id ? 'checked' : '' }} class="peer hidden" data-price="{{ $value->price }}" data-type="{{ $value->price_type }}" id="attribute_{{ $value->id }}" name="attributes_{{ $attribute->slug }}" type="radio" value="{{ $value->id }}" />
+                                        <label class="label-peer flex flex-col items-center gap-2" for="attribute_{{ $value->id }}">
                                             <p class="text-sm font-medium">{{ $value->value }}</p>
                                         </label>
                                     </div>
@@ -68,15 +62,9 @@
                             <div class="grid grid-cols-2 gap-4">
                                 @foreach ($toppings as $topping)
                                     <div>
-                                        <input class="peer hidden" id="{{ $topping->slug }}" name="toppings[]"
-                                            data-price="{{ $topping->price }}" type="checkbox"
-                                            value="{{ $topping->id }}">
-                                        <label
-                                            class="flex w-full cursor-pointer items-center justify-start gap-2 overflow-hidden rounded-lg border border-gray-200 bg-white p-2 text-gray-700 transition hover:bg-gray-50 hover:text-gray-600 peer-checked:border-red-600 peer-checked:text-red-600 md:gap-4"
-                                            for="{{ $topping->slug }}">
-                                            <img alt="{{ $topping->name }}"
-                                                class="h-16 w-16 flex-shrink-0 rounded-lg object-cover" loading="lazy"
-                                                src="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
+                                        <input class="peer hidden" data-price="{{ $topping->price }}" id="{{ $topping->slug }}" name="toppings[]" type="checkbox" value="{{ $topping->id }}">
+                                        <label class="flex w-full cursor-pointer items-center justify-start gap-2 overflow-hidden rounded-lg border border-gray-200 bg-white p-2 text-gray-700 transition hover:bg-gray-50 hover:text-gray-600 peer-checked:border-red-600 peer-checked:text-red-600 md:gap-4" for="{{ $topping->slug }}">
+                                            <img alt="{{ $topping->name }}" class="h-16 w-16 flex-shrink-0 rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
                                             <div class="text-sm">
                                                 <p class="mb-2 font-medium">{{ $topping->name }}</p>
                                                 <p>+ {{ number_format($topping->price) }} đ</p>
@@ -99,8 +87,7 @@
                         <div class="mb-12">
                             {{-- info --}}
                             <div class="mb-4 flex items-center gap-4">
-                                <img alt="" class="img-circle img-sm" loading="lazy"
-                                    src="{{ $evaluation->user->avatar() }}">
+                                <img alt="" class="img-circle img-sm" loading="lazy" src="{{ $evaluation->user->avatar() }}">
                                 <div>
                                     <div class="mb-1 flex items-center gap-2">
                                         <p class="text-sm font-medium">{{ $evaluation->user->fullname }}</p>
@@ -120,11 +107,8 @@
                                 <p class="mb-4 text-sm">{{ $evaluation->comment }}</p>
                                 <div class="no-scrollbar flex w-full items-center gap-4 overflow-x-auto">
                                     @for ($i = 0; $i < 5; $i++)
-                                        <a class="min-w-16 min-h-16 max-w-16 max-h-16 overflow-hidden"
-                                            data-fslightbox="gallery"
-                                            href="{{ asset('storage/uploads/products/tiramisu.jpeg') }}">
-                                            <img class="w-full rounded object-cover" loading="lazy"
-                                                src="{{ asset('storage/uploads/products/tiramisu.jpeg') }}">
+                                        <a class="min-w-16 min-h-16 max-w-16 max-h-16 overflow-hidden" data-fslightbox="gallery" href="{{ asset('storage/uploads/products/tiramisu.jpeg') }}">
+                                            <img class="w-full rounded object-cover" loading="lazy" src="{{ asset('storage/uploads/products/tiramisu.jpeg') }}">
                                         </a>
                                     @endfor
                                 </div>
@@ -140,37 +124,30 @@
         <div class="sticky bottom-16 w-full border-t bg-white p-4 transition lg:bottom-0 lg:px-32">
             <div class="grid grid-cols-3 items-center justify-between">
                 <div class="block items-center justify-start md:flex">
-                    <div class="w-28 py-2 px-3 inline-block bg-white border border-gray-200 rounded-md">
+                    <div class="inline-block w-28 rounded-md border border-gray-200 bg-white px-3 py-2">
                         <div class="flex items-center justify-center gap-x-1.5">
-                            <button type="button" id="decrement"
-                                class="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                                tabindex="-1" aria-label="Decrease">
+                            <button aria-label="Decrease" class="size-6 inline-flex items-center justify-center gap-x-2 rounded-md border border-gray-200 bg-white text-sm font-medium text-gray-800 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50" id="decrement" tabindex="-1" type="button">
                                 @svg('tabler-minus', 'icon-sm')
                             </button>
-                            <input
-                                class="p-0 w-6 bg-transparent border-0 text-gray-800 text-center focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                                name="quantity" style="-moz-appearance: textfield;" type="number" value="1">
-                            <button type="button" id="increment"
-                                class="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                                tabindex="-1" aria-label="Increase">
+                            <input class="w-6 border-0 bg-transparent p-0 text-center text-gray-800 focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none" name="quantity" style="-moz-appearance: textfield;" type="number" value="1">
+                            <button aria-label="Increase" class="size-6 inline-flex items-center justify-center gap-x-2 rounded-md border border-gray-200 bg-white text-sm font-medium text-gray-800 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50" id="increment" tabindex="-1" type="button">
                                 @svg('tabler-plus', 'icon-sm')
                             </button>
                         </div>
                     </div>
                     {{-- <p class="text-sm text-gray-700 py-2 md:p-0 md:ps-5">10 sản phẩm có sẵn</p> --}}
                     @error('quantity')
-                        <p class="py-2 md:p-0 md:ps-5 text-sm text-red-600">{{ $message }}</p>
+                        <p class="py-2 text-sm text-red-600 md:p-0 md:ps-5">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div class="flex items-center justify-center gap-4">
                     <p class="text-sm line-through">{{ number_format($product->discount_price) }}đ</p>
-                    <p class="text-lg md:text-xl font-semibold" id="price">{{ number_format($product->price) }}đ</p>
+                    <p class="text-lg font-semibold md:text-xl" id="price">{{ number_format($product->price) }}đ</p>
                 </div>
 
                 <div class="flex items-center justify-end gap-2">
-                    <a class="{{ $favorites->contains($product->id) ? 'button-red' : 'button-light' }}"
-                        href="{{ route('client.product.post-favorite', $product->slug) }}" type="submit">
+                    <a class="{{ $favorites->contains($product->id) ? 'button-red' : 'button-light' }}" href="{{ route('client.product.post-favorite', $product->slug) }}" type="submit">
                         @svg('tabler-heart', 'md:me-2 icon-sm')
                         <span class="hidden md:block">
                             {{ $favorites->contains($product->id) ? 'Đã yêu thích' : 'Yêu thích' }}
