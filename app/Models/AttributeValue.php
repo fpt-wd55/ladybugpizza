@@ -32,4 +32,10 @@ class AttributeValue extends Model
     {
         return round(($this->price_type == 1 ? $this->price : ($this->price * $product->price) / 100) / 1000) * 1000;
     }
+    
+    public function cartItemAttributes()
+    {
+        return $this->hasMany(CartItemAttribute::class);
+    }
+
 }

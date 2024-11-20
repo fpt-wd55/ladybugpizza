@@ -5,28 +5,29 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\CartItem;
-use Illuminate\Http\Request;
+use App\Models\CartItemAttribute;
+use App\Models\CartItemTopping;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-
-        if (!$user) {
+        if (!Auth::user()) {
             return redirect()->route('client.home')->with('error', 'Bạn cần đăng nhập để truy cập trang này');
         }
 
-        $cart = Cart::where('user_id', $user->id)->first();
+        $cart = Cart::where('user_id', Auth::id())->first();
+        $cartItems = CartItem::where('cart_id', $cart->id)->get();
 
-        $cartItems = CartItem::where('cart_id', $cart->id)
-            ->with('toppings')
-            ->with('attributes')
-            ->get();
+        foreach ($cartItems as $cartItem) {
+            $cartItem->attributes = CartItemAttribute::where('cart_item_id', $cartItem->id)->get();
+            $cartItem->toppings = CartItemTopping::where('cart_item_id', $cartItem->id)->get();
+        }
 
         return view('clients.cart.index', [
-            'cartItems' => $cartItems
+            'cart' => $cart,
+            'cartItems' => $cartItems,
         ]);
     }
     public function checkout()
@@ -34,7 +35,5 @@ class CartController extends Controller
         return view('clients.cart.checkout');
     }
 
-    public function postCheckout()
-    {
-    }
+    public function postCheckout() {}
 }

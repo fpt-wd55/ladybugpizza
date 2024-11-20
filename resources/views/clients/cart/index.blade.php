@@ -15,37 +15,79 @@
                     </div>
                 @endif
                 <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <!-- component -->
                     @foreach ($cartItems as $item)
                         <div class="product-card overflow-hidden">
+                            <div class="grid grid-cols-4">
+                                <div class="bg-white grid place-items-center">
+                                    <img loading="lazy"
+                                        src="{{ asset('storage/uploads/products/' . $item->product->image) }}"
+                                        class="img-lg h-full object-cover rounded-md">
+                                </div>
+                                <div class="w-full col-span-3 bg-white flex flex-col space-y-2 ms-3">
+                                    <div class="flex justify-between item-center">
+                                        <p class="font-bold text-gray-800">{{ $item->product->name }}</p>
+                                        <div class="rounded-full text-xs font-medium text-gray-800">
+                                            @svg('tabler-trash-x-filled', 'w-6 h-6 text-red-500')
+                                        </div>
+                                    </div>
+
+                                    <p class="text-sm">
+                                        x{{ $item->quantity }}
+                                    </p>
+                                    <div class="text-sm">
+                                        <p class="line-clamp-1">
+                                            {{ implode(', ', $item->attributes->pluck('attribute_value.value')->toArray()) }}
+                                        </p>
+                                        <p class="line-clamp-1">
+                                            Topping:
+                                            @if (isset($item->toppings))
+                                                {{ implode(', ', $item->toppings->pluck('topping.name')->toArray()) }}
+                                            @endif
+                                        </p>
+                                    </div>
+                                    <p class="text-lg font-bold text-gray-800">
+                                        {{ number_format($item->price) }}₫
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <div class="product-card overflow-hidden">
                             <div class="flex w-full items-start justify-between pe-4">
                                 <div class="flex gap-4">
                                     <img loading="lazy" src="{{ asset('storage/uploads/products/tiramisu.jpeg') }}"
-                                        class="img-md h-full object-cover" alt="">
+                                        class="img-md h-full object-cover">
                                     <div class="text-left py-2">
-                                        <p class="font-medium mb-4">Pizza xúc xích</p>
+                                        <div>
+                                            <p class="line-clamp-1 font-medium">
+                                                {{ $item->product->name }}
+                                            </p>
+                                            <p class="line-clamp-1 text-sm">
+                                                x{{ $item->quantity }}
+                                            </p>
+                                        </div>
                                         <div class="text-sm">
-                                            <p class="line-clamp-1">Đế mỏng, size S</p>
-                                            <p class="line-clamp-1">Topping: Thịt bò, cá hồi</p>
+                                            <p class="line-clamp-1">
+                                                {{ implode(', ', $item->attributes->pluck('attribute_value.value')->toArray()) }}
+                                            </p>
+                                            <p class="line-clamp-1">
+                                                Topping:
+                                                @if (isset($item->toppings))
+                                                    {{ implode(', ', $item->toppings->pluck('topping.name')->toArray()) }}
+                                                @endif
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="pt-2 text-right">
-                                    <div class="mb-4 flex items-center gap-2">
-                                        <span class="line-through text-sm text-gray-600">320,000₫</span>
-                                        <span class="font-medium">300,000₫</span>
+                                    <div class="mb-4">
+                                        <span class="font-medium">{{ number_format($item->price) }}₫</span>
                                     </div>
-                                    <div class="inline-flex rounded-md shadow-sm" role="group">
-                                        <button class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500" id="decrement" type="button">
-                                            @svg('tabler-minus', 'icon-sm')
-                                        </button>
-                                        <input class="w-12 border-b border-t border-gray-200 bg-white px-4 py-1 text-center text-sm font-medium text-gray-900 focus:outline-none" name="quantity" value="1">
-                                        <button class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500" id="increment" type="button">
-                                            @svg('tabler-plus', 'icon-sm')
-                                        </button>
+                                    <div class="w-28 inline-block rounded-md">
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     @endforeach
                 </div>
             </div>
@@ -54,7 +96,7 @@
             <div class="card mb-12 p-4 md:p-8">
                 <div class="mb-8 items-center justify-between gap-8 lg:flex">
                     <div class="mb-4 md:mb-8 lg:mb-0">
-                        <p class="mb-4 font-medium">Bạn có mã giảm giá</p>
+                        <p class="mb-4 font-medium">Bạn có mã giảm giá?</p>
                         <div class="flex items-center gap-2">
                             <input class="input" type="text">
                             <button class="button-red w-32" type="button">Áp dụng</button>

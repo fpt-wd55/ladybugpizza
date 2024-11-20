@@ -141,7 +141,7 @@
             <div class="grid grid-cols-3 items-center justify-between">
                 <div class="block items-center justify-start md:flex">
                     <div class="w-28 py-2 px-3 inline-block bg-white border border-gray-200 rounded-md">
-                        <div class="flex items-center gap-x-1.5">
+                        <div class="flex items-center justify-center gap-x-1.5">
                             <button type="button" id="decrement"
                                 class="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
                                 tabindex="-1" aria-label="Decrease">
