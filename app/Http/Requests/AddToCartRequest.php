@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Attribute as ModelsAttribute;
 use Attribute;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,7 +24,7 @@ class AddToCartRequest extends FormRequest
     public function rules()
     {
         $product = $this->route('product');
-        $attributes = Attribute::with('values')
+        $attributes = ModelsAttribute::with('values')
             ->where('category_id', $product->category->id)
             ->where('status', 1)
             ->get();
@@ -48,17 +49,17 @@ class AddToCartRequest extends FormRequest
     public function messages()
     {
         $product = $this->route('product');
-        $attributes = Attribute::with('values')
+        $attributes = ModelsAttribute::with('values')
             ->where('category_id', $product->category->id)
             ->where('status', 1)
             ->get();
 
         $messages = [
-            'quantity.required' => 'Số lượng là bắt buộc.',
-            'quantity.integer' => 'Số lượng phải là một số nguyên.',
-            'quantity.min' => 'Số lượng phải lớn hơn hoặc bằng 1.',
-            'toppings.array' => 'Toppings phải là một mảng.',
-            'toppings.*.exists' => 'Topping không hợp lệ.',
+            'quantity.required' => 'Vui lòng nhập số lượng',
+            'quantity.integer' => 'Số lượng không hợp lệ',
+            'quantity.min' => 'Số lượng không hợp lệ',
+            'toppings.array' => 'Toppings phải là một mảng',
+            'toppings.*.exists' => 'Topping không hợp lệ',
         ];
 
         foreach ($attributes as $attribute) {
