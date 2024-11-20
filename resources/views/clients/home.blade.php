@@ -28,30 +28,30 @@
             <div>
                 {{-- carousel --}}
                 <!-- <div class="relative mb-8 w-full md:mb-12" data-carousel="slide" id="default-carousel">
-                                                            <div class="relative h-56 overflow-hidden rounded transition md:h-96 lg:h-[540px]">
-                                                                @foreach ($banners as $banner)
+                                                                <div class="relative h-56 overflow-hidden rounded transition md:h-96 lg:h-[540px]">
+                                                                    @foreach ($banners as $banner)
     <link as="image" href="{{ asset('storage/uploads/banners/' . $banner->image) }}" rel="preload">
-                                                                    <div class="hidden transition duration-700" data-carousel-item>
-                                                                        <img alt="{{ $banner->image }}" class="absolute block h-full w-full object-cover" src="{{ asset('storage/uploads/banners/' . $banner->image) }}">
-                                                                    </div>
+                                                                        <div class="hidden transition duration-700" data-carousel-item>
+                                                                            <img alt="{{ $banner->image }}" class="absolute block h-full w-full object-cover" src="{{ asset('storage/uploads/banners/' . $banner->image) }}">
+                                                                        </div>
     @endforeach
-                                                            </div>
-                                                            <div class="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2">
-                                                                @foreach ($banners as $index => $banner)
+                                                                </div>
+                                                                <div class="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2">
+                                                                    @foreach ($banners as $index => $banner)
     <button aria-current="true" class="indicator" data-carousel-slide-to="{{ $index }}" type="button"></button>
     @endforeach
-                                                            </div>
-                                                            <button class="group absolute start-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-prev type="button">
-                                                                <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 text-white">
-                                                                    @svg('tabler-chevron-left', 'icon-sm')
-                                                                </span>
-                                                            </button>
-                                                            <button class="group absolute end-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-next type="button">
-                                                                <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 text-white">
-                                                                    @svg('tabler-chevron-right', 'icon-sm')
-                                                                </span>
-                                                            </button>
-                                                        </div> -->
+                                                                </div>
+                                                                <button class="group absolute start-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-prev type="button">
+                                                                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 text-white">
+                                                                        @svg('tabler-chevron-left', 'icon-sm')
+                                                                    </span>
+                                                                </button>
+                                                                <button class="group absolute end-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-next type="button">
+                                                                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 text-white">
+                                                                        @svg('tabler-chevron-right', 'icon-sm')
+                                                                    </span>
+                                                                </button>
+                                                            </div> -->
 
                 <div class="mt-12 py-8 text-center">
                     <p class="vujahday-script-regular mb-6 text-center text-6xl">Menu</p>
@@ -69,7 +69,9 @@
                             <a class="product-card overflow-hidden md:flex"
                                 href="{{ route('client.product.show', $product->slug) }}">
                                 <img alt="" class="h-48 w-full flex-shrink-0 object-cover md:h-full md:w-1/3"
-                                    loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}">
+                                    loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
+                                    onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
+                                    class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
                                 <div class="p-2 text-sm">
                                     <p class="mb-2 font-semibold">{{ $product->name }}</p>
                                     <div class="mb-2 flex items-center gap-1">
