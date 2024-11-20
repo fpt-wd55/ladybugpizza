@@ -13,7 +13,9 @@
 
                 <a class="product-card relative flex w-full flex-shrink-0 overflow-hidden " href="">
                     <img alt="" class="h-60 w-1/2 flex-shrink-0 object-cover" loading="lazy"
-                        src="{{ asset('storage/uploads/combos/' . $combo->image) }}">
+                        src="{{ asset('storage/uploads/combos/' . $combo->image) }}"
+                        onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
+                                        class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
                     <div class="p-4">
                         <p class="mb-2 text-sm font-semibold md:text-base">{{ $combo->name }}</p>
                         <ul class="list-disc space-y-1 ps-4 text-xs md:text-sm">

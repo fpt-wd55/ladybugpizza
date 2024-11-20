@@ -13,7 +13,9 @@
                     <div class="mb-8 md:h-80 md:w-80">
                         <a data-fslightbox="gallery" href="{{ asset('storage/uploads/products/' . $product->image) }}">
                             <img alt="{{ $product->name }}" class="w-full rounded-lg object-cover" loading="lazy"
-                                src="{{ asset('storage/uploads/products/' . $product->image) }}" />
+                                src="{{ asset('storage/uploads/products/' . $product->image) }}"
+                                onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
+                                class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover" />
                         </a>
                     </div>
                     <div>
