@@ -8,9 +8,10 @@
             <div class="mb-8">
                 <p class="title">GIỎ HÀNG ({{ count($cartItems) }})</p>
                 @if (count($cartItems) == 0)
-                    <div class="card min-h-96 flex flex-col items-center justify-center gap-8 p-4 md:p-8">
-                        @svg('tabler-shopping-bag-exclamation', 'icon-xl text-gray-400')
+                    <div class="card min-h-96 flex flex-col items-center justify-center gap-8 p-4 text-gray-500 md:p-8">
+                        @svg('tabler-shopping-bag-exclamation', 'icon-xl')
                         <p class="text text-center">Giỏ hàng của bạn đang trống</p>
+                        <a class="button-red" href="{{ route('client.product.menu') }}">Thực đơn</a>
                     </div>
                 @else
                     <div class="card min-h-96 gap-8 p-4">
@@ -82,13 +83,12 @@
                 @endif
 
             </div>
-            <div class="flex items-center justify-end gap-2">
-                <a class="button-dark" href="{{ route('client.product.menu') }}">Tiếp tục mua hàng</a>
-                @if (count($cartItems) > 0)
+            @if (count($cartItems) > 0)
+                <div class="flex items-center justify-end gap-2">
+                    <a class="button-dark" href="{{ route('client.product.menu') }}">Tiếp tục mua hàng</a>
                     <a class="button-red" href="{{ route('client.checkout') }}">Thanh toán</a>
-                @endif
-
-            </div>
+                </div>
+            @endif
         </div>
     </div>
 
