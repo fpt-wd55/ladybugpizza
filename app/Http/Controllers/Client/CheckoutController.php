@@ -7,16 +7,13 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\CartItemAttribute;
 use App\Models\CartItemTopping;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CartController extends Controller
+class CheckoutController extends Controller
 {
-    public function index()
+    public function checkout()
     {
-        if (!Auth::user()) {
-            return redirect()->route('client.home')->with('error', 'Bạn cần đăng nhập để truy cập trang này');
-        }
-
         $cart = Cart::where('user_id', Auth::id())->first();
         $cartItems = CartItem::where('cart_id', $cart->id)->get();
 
@@ -25,19 +22,16 @@ class CartController extends Controller
             $cartItem->toppings = CartItemTopping::where('cart_item_id', $cartItem->id)->get();
         }
 
-        return view('clients.cart.index', [
+        $addresses = Auth::user()->addresses;
+        return view('clients.cart.checkout', [
             'cart' => $cart,
             'cartItems' => $cartItems,
+            'addresses' => $addresses,
         ]);
     }
 
-    public function delete(CartItem $cartItem)
+    public function postCheckout()
     {
-
-        if (!$cartItem->delete()) {
-            return redirect()->route('client.cart.index')->with('error', 'Xóa sản phẩm khỏi giỏ hàng thất bại');
-        }
-
-        return redirect()->route('client.cart.index')->with('success', 'Xóa sản phẩm khỏi giỏ hàng thành công');
+        //
     }
 }

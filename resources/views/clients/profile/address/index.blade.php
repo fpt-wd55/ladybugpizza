@@ -27,12 +27,7 @@
                                         <span class="badge-red">Mặc định</span>
                                     @endif
                                 </div>
-                                <div class="text-sm mb-2">
-                                    <div class="flex items-center mb-1">
-                                        <p class="uppercase">{{ $address->user->fullname }}</p>
-                                        <span class="mx-2 h-5 border-l border-gray-300"></span>
-                                        <p class="text-gray-600 text-base">(+84) {{ $address->phone }}</p>
-                                    </div>
+                                <div class="text-sm mb-2"> 
                                     <p class="line-clamp-2 text-gray-600 text-base">{{ $address->detail_address }}, {{ $address->ward }},
                                         {{ $address->district }}, {{ $address->province }}
                                     </p>

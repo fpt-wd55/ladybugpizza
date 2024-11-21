@@ -106,23 +106,23 @@ html {
 }
 
 .input {
-    @apply block w-full text-sm text-gray-900 border py-2 border-gray-300 rounded-lg focus:ring-0 focus:border-[#D30A0A] transition;
+    @apply block w-full text-sm text-gray-900 border py-2 border-gray-300 rounded-md focus:ring-0 focus:border-[#D30A0A] transition;
 }
 
 .input-success {
-    @apply block w-full text-sm text-green-900 border border-green-300 rounded-lg bg-green-50;
+    @apply block w-full text-sm text-green-900 border border-green-300 rounded-md bg-green-50;
 }
 
 .input-error {
-    @apply block w-full text-sm text-[#D30A0A] border border-red-300 rounded-lg bg-red-50;
+    @apply block w-full text-sm text-[#D30A0A] border border-red-300 rounded-md bg-red-50;
 }
 
 .text-area {
-    @apply block w-full text-gray-900 border border-gray-300 rounded-lg;
+    @apply block w-full text-gray-900 border border-gray-300 rounded-md;
 }
 
 .select {
-    @apply bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full;
+    @apply bg-gray-50 border border-gray-300 text-gray-900 rounded-md block w-full;
 }
 
 .input-checkbox {
