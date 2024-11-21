@@ -39,6 +39,9 @@ class OrderSeeder extends Seeder
             $address = Address::where('user_id', $user)->first();
             Order::insert([
                 'user_id' => $user,
+                'fullname' => $faker->name,
+                'phone' => $faker->phoneNumber,
+                'email' => $faker->email,
                 'promotion_id' => null,
                 'amount' => rand(100, 700) * 1000,
                 'address_id' => $address->id,
