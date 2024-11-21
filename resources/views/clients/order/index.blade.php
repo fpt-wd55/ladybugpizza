@@ -253,9 +253,9 @@
 
                 </div>
             @empty
-                <div class="card flex flex-col items-center justify-center gap-8 p-4 md:p-8">
-                    @svg('tabler-shopping-cart-off', 'icon-4xl text-gray-400')
-                    <p class="text-center text-[#D30A0A]">Đơn hàng của bạn đang trống</p>
+                <div class="card flex flex-col items-center justify-center gap-8 p-4 md:p-8 min-h-96 text-gray-500">
+                    @svg('tabler-truck-off', 'icon-xl')
+                    <p class="text-center">Đơn hàng của bạn đang trống</p>
                 </div>
             @endforelse
 
