@@ -6,25 +6,25 @@
     <form action="}" method="post">
         @method('POST')
         @csrf
-        <div class="min-h-screen p-4 transition md:p-4 lg:mx-32">
+        <div class="mt-10 mx-10">
+
+            <p class="inline-block uppercase rounded-t-lg  border-b-2 border-[#D30A0A] text-[#D30A0A]">chi tiết
+                combo</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mx-10 mt-5 mb-16">
 
             {{-- Product detail --}}
-            <div class="no-scrollbar flex w-full items-center gap-4 overflow-x-auto">
+            <div class=" flex  gap-x-4 ">
 
-                <a class="product-card relative flex w-full flex-shrink-0 overflow-hidden " href="">
-                    <img alt="" class="h-60 w-1/2 flex-shrink-0 object-cover" loading="lazy"
+                <a class="product-card relative flex w-full h-52 flex-shrink-0 overflow-hidden " href="">
+                    <img alt="" class="h-52 w-1/2 flex-shrink-0 object-cover" loading="lazy"
                         src="{{ asset('storage/uploads/combos/' . $combo->image) }}">
                     <div class="p-4">
                         <p class="mb-2 text-sm font-semibold md:text-base">{{ $combo->name }}</p>
                         <ul class="list-disc space-y-1 ps-4 text-xs md:text-sm">
-                            @foreach ($combo->comboDetails as $detail)
-                                <li>
-                                    {{ $detail->productAttribute->product->name }} -
-                                    {{ $detail->productAttribute->attributeValue->value }}
-                                </li>
-                            @endforeach
+
                         </ul>
-                        <div class="absolute bottom-4 flex items-center gap-2">
+                        <div class="absolute bottom-4 right-5 flex items-center gap-2">
                             <p class="text-sm text-gray-500 line-through">{{ number_format($combo->discount_price) }} đ</p>
                             <p class="text-lg font-semibold">{{ number_format($combo->price) }} đ</p>
                         </div>
@@ -33,27 +33,17 @@
 
             </div>
 
-            <div class="mt-10">
-                <p class="inline-block uppercase rounded-t-lg mb-3 pb-1 border-b-2 border-[#D30A0A] text-[#D30A0A]">chi tiết
-                    combo</p>
-                <div class="grid grid-cols-2 gap-2">
-                    @foreach ($groupedComboDetails as $detail)
-                        <div class="product-card flex h-[100px] bg-white shadow-md rounded-lg overflow-hidden">
-                            <img alt="Bánh mì ăn liền" class="w-1/3 h-full object-cover" loading="lazy"
-                                src="{{ asset('storage/uploads/products/' . $detail->productAttribute->product->image) }}">
-                            <div class="p-2 flex flex-col justify-between flex-grow text-sm">
-                                <p class="font-semibold">{{ $detail->productAttribute->product->name }}</p>
-                                <div class="hidden md:block">
-                                    <p
-                                        class="{{ empty($detail->productAttribute->product->description) ? 'min-h-12' : '' }} text-xs line-clamp-2">
-                                        {{ $detail->productAttribute->product->description }}
-                                    </p>
-                                </div>
-                                <span title="số lượng"
-                                    class="text-[#D30A0A] font-medium self-end">x{{ $detail->quantity }}</span>
+            <div class="mt-1">
+
+                <div class="grid grid-cols-1 gap-2">
+                    @foreach (explode(',', $combo->description) as $item)
+                        <div class="product-card flex h-11 bg-white shadow-md rounded-lg overflow-hidden">
+                            <div class="flex flex-col justify-center items-center flex-grow text-sm">
+                                <p class="font-semibold">{{ trim($item) }}</p>
                             </div>
                         </div>
                     @endforeach
+
                 </div>
 
             </div>

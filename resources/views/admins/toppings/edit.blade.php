@@ -17,23 +17,15 @@
                     @enderror
                 </div>
                 <div class="w-full h-10 mb-5">
-                    <label class="label-lg">Ảnh</label>
-                    <div>
-                        <input
-                            class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
-                            type="file" name="image">
-                        <a class="shrink-0" data-fslightbox="gallery"
-                            href="{{ asset('storage/uploads/toppings/' . $editTopping->image) }}">
-                            <img loading="lazy" src="{{ asset('storage/uploads/toppings/' . $editTopping->image) }}"
-                                class="img-sm mt-2 img-circle object-cover">
-                        </a>
-                    </div>
-                    @error('image')
+                    <label for="name" class="label-lg">Số lượng</label>
+                    <input type="number" name="quantity" class="input mb-2" value="{{ $editTopping->quantity }}" />
+                    @error('quantity')
                         <span style="color: red">{{ $message }}</span>
                     @enderror
                 </div>
+              
             </div>
-            <div class="flex justify-between gap-2 mt-20 mb-20">
+            <div class="flex justify-between gap-2 mt-10 mb-10">
                 <div class="w-full h-10 mb-5">
                     <label for="price" class="label-lg">Giá</label>
                     <input type="number" name="price" class="input mb-2" value="{{ $editTopping->price }}" />
@@ -55,7 +47,24 @@
                         <span style="color: red">{{ $message }}</span>
                     @enderror
                 </div>
+               
             </div>
+             <div class="w-full h-10 mb-28">
+                    <label class="label-lg">Ảnh</label>
+                    <div>
+                        <input
+                            class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
+                            type="file" name="image">
+                        <a class="shrink-0" data-fslightbox="gallery"
+                            href="{{ asset('storage/uploads/toppings/' . $editTopping->image) }}">
+                            <img loading="lazy" src="{{ asset('storage/uploads/toppings/' . $editTopping->image) }}"
+                                class="img-sm mt-2 img-circle object-cover">
+                        </a>
+                    </div>
+                    @error('image')
+                        <span style="color: red">{{ $message }}</span>
+                    @enderror
+                </div>
             <div
                 class="mb-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                 <button class="button-blue">Cập Nhật</button>

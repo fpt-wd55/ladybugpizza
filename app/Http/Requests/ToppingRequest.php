@@ -34,6 +34,7 @@ class ToppingRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'quantity' => 'required|min:0|numeric',
             'image' => 'required|mimes:jpeg,png,jpg,gif,bmp,svg,webp',
             'price' => 'required|numeric|min:0|',
             'category_id' => 'required',
@@ -44,6 +45,7 @@ class ToppingRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'quantity' => 'required|min:0|numeric',
             'image' => 'mimes:jpeg,png,jpg,gif,bmp,svg,webp',
             'price' => 'required|numeric|min:0|',
             'category_id' => 'required',
@@ -54,6 +56,9 @@ class ToppingRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên không được bỏ trống',   
+            'quantity.required' => 'Số lượng không được bỏ trống',   
+            'quantity.min' => 'Số lượng phải lớn hơn 0',   
+            'quantity.numeric' => 'Giá phải là một số',
             'image.mimes' => 'Ảnh không đúng định dạng',
             'price.required' => 'Giá không được bỏ trống',
             'price.numeric' => 'Giá phải là một số',
