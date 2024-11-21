@@ -185,7 +185,9 @@
                             href="{{ route('client.product.show', $favorite->product->slug) }}">
                             <img alt="{{ $favorite->product->image }}"
                                 class="h-48 w-full flex-shrink-0 object-cover md:h-full md:w-1/3" loading="lazy"
-                                src="{{ asset('storage/uploads/products/' . $favorite->product->image) }}">
+                                src="{{ asset('storage/uploads/products/' . $favorite->product->image) }}"
+                                onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
+                                        class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
                             <div class="p-2 text-sm">
                                 <p class="mb-2 font-semibold">{{ $favorite->product->name }}</p>
                                 <div class="mb-2 flex items-center gap-1">

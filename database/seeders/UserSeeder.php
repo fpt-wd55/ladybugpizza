@@ -147,7 +147,7 @@ class UserSeeder extends Seeder
             Address::create([
                 'user_id' => $user->id,
                 'title' => $faker->name,
-                'phone' => $user->phone,
+                // 'phone' => $user->phone,
                 'province' => $faker->state,
                 'district' => $faker->city,
                 'ward' => $faker->city,

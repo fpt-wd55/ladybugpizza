@@ -10,12 +10,14 @@
                 <ul class="flex">
                     <li class="me-6 min-w-fit">
                         <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->routeIs('client.order.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
-                            href="{{ route('client.order.index') }}">Tất cả <span class="text-[#D30A0A]">({{ $orderStatuses->sum('orders_count') }})</span></a>
+                            href="{{ route('client.order.index') }}">Tất cả <span
+                                class="text-[#D30A0A]">({{ $orderStatuses->sum('orders_count') }})</span></a>
                     </li>
                     @foreach ($orderStatuses as $status)
                         <li class="me-6 min-w-fit">
                             <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
-                                href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }} ({{ $status->orders_count }})</a>
+                                href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }}
+                                ({{ $status->orders_count }})</a>
                         </li>
                     @endforeach
                 </ul>
@@ -27,7 +29,8 @@
                     <div class="" onclick="toggleAccordion({{ $order->id }})">
                         <div class="mb-2 space-y-4 text-sm">
                             <div class="flex items-center">
-                                <p class="sm:text-xs md:text-base font-medium text-[#D30A0A]">#LADYBUG-2024{{ $order->id }}</p>
+                                <p class="sm:text-xs md:text-base font-medium text-[#D30A0A]">
+                                    #LADYBUG-2024{{ $order->id }}</p>
                                 <div class="ms-auto space-x-2">
                                     <span
                                         class="text-xs font-medium px-2.5 py-0.5 rounded text-{{ $order->orderStatus->color }}-700 bg-{{ $order->orderStatus->color }}-100">{{ $order->orderStatus->name }}</span>
@@ -79,7 +82,8 @@
                     {{-- start modal delete --}}
                     <div id="deleteBanner-modal-{{ $order->id }}" tabindex="-1"
                         class="hidden  overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                        <div class="card relative  max-w-[350px] max-h-sm md:max-w-[500px] md:max-h-sm lg:max-w-lg lg:max-h-lg">
+                        <div
+                            class="card relative  max-w-[350px] max-h-sm md:max-w-[500px] md:max-h-sm lg:max-w-lg lg:max-h-lg">
                             <div class="relative bg-white rounded-lg shadow">
                                 <button type="button"
                                     class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
@@ -113,7 +117,8 @@
                                             <input type="radio" name="canceled_reason" value="3"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
-                                            <label class="text-sm">Muốn thay đổi sản phẩm trong đơn hàng (size, topping,...)</label>
+                                            <label class="text-sm">Muốn thay đổi sản phẩm trong đơn hàng (size,
+                                                topping,...)</label>
                                         </div>
                                         <div class="mb-2">
                                             <input type="radio" name="canceled_reason" value="4"
@@ -191,52 +196,54 @@
                                     $groupedProducts = [];
                                     // Lặp qua từng sản phẩm và nhóm chúng
                                     foreach ($order->orderItems as $orderItem) {
-                                       
-                                            $productName = $orderItem->product->name;
-                                            $attributeValue = $orderItem->atrributeValues->map->value->join(', ');
-                                            $toppings = $orderItem->toppingValues->map->name->join(', ');
-                                            // Tạo một key duy nhất để nhóm các sản phẩm trùng nhau
-                                            $key = $productName . '|' . $attributeValue . '|' . $toppings;
-                                            // Nếu key đã tồn tại, tăng số lượng; nếu không, thêm vào mảng
-                                            if (isset($groupedProducts[$key])) {
-                                                $groupedProducts[$key]['quantity'] += 1;
-                                            } else {
-                                                $groupedProducts[$key] = [
-                                                    'product' => $orderItem->product,
-                                                    'attribute' => $attributeValue,
-                                                    'toppings' => $toppings,
-                                                    'quantity' => 1,
-                                                    'price' =>  $orderItem->product->price,
-                                                    'discount_price' => $orderItem->product->discount_price,
-                                                ];
-                                            }
-                                        
+                                        $productName = $orderItem->product->name;
+                                        $attributeValue = $orderItem->atrributeValues->map->value->join(', ');
+                                        $toppings = $orderItem->toppingValues->map->name->join(', ');
+                                        // Tạo một key duy nhất để nhóm các sản phẩm trùng nhau
+                                        $key = $productName . '|' . $attributeValue . '|' . $toppings;
+                                        // Nếu key đã tồn tại, tăng số lượng; nếu không, thêm vào mảng
+                                        if (isset($groupedProducts[$key])) {
+                                            $groupedProducts[$key]['quantity'] += 1;
+                                        } else {
+                                            $groupedProducts[$key] = [
+                                                'product' => $orderItem->product,
+                                                'attribute' => $attributeValue,
+                                                'toppings' => $toppings,
+                                                'quantity' => 1,
+                                                'price' => $orderItem->product->price,
+                                                'discount_price' => $orderItem->product->discount_price,
+                                            ];
+                                        }
                                     }
                                 @endphp
 
                                 <!-- Hiển thị các sản phẩm sau khi đã nhóm -->
                                 @foreach ($groupedProducts as $group)
-                                <div class="product-card overflow-hidden w-auto relative">
-                                    <div class="flex w-full items-center justify-between">
-                                        <div class="flex gap-4">
-                                            <img alt="" class="h-auto w-24 object-cover" loading="lazy"
-                                                src="{{ asset('storage/uploads/products/' . $group['product']->image) }}">
-                                            <div class="py-2 text-left md:min-w-[300px]">
-                                                <p class="mb-2 font-medium">{{ $group['product']->name }}</p>
-                                                <div class="mb-4 text-sm">
-                                                    <p>{{ $group['attribute'] }}</p>
-                                                    <p>Topping: {{ $group['toppings'] }}</p>
-                                                </div>
-                                                <div class="flex items-center gap-2 text-sm">
-                                                    <span class="line-through">{{ number_format($group['discount_price']) }}đ</span>
-                                                    <span class="font-medium">{{ number_format($group['price']) }}đ</span>
+                                    <div class="product-card overflow-hidden w-auto relative">
+                                        <div class="flex w-full items-center justify-between">
+                                            <div class="flex gap-4">
+                                                <img alt="" class="h-auto w-24 object-cover" loading="lazy"
+                                                    src="{{ asset('storage/uploads/products/' . $group['product']->image) }}"
+                                                    onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
+                                                    class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
+                                                <div class="py-2 text-left md:min-w-[300px]">
+                                                    <p class="mb-2 font-medium">{{ $group['product']->name }}</p>
+                                                    <div class="mb-4 text-sm">
+                                                        <p>{{ $group['attribute'] }}</p>
+                                                        <p>Topping: {{ $group['toppings'] }}</p>
+                                                    </div>
+                                                    <div class="flex items-center gap-2 text-sm">
+                                                        <span
+                                                            class="line-through">{{ number_format($group['discount_price']) }}đ</span>
+                                                        <span
+                                                            class="font-medium">{{ number_format($group['price']) }}đ</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <span
+                                            class="absolute bottom-0 right-0 text-[#D30A0A] font-medium p-2">x{{ $group['quantity'] }}</span>
                                     </div>
-                                    <span class="absolute bottom-0 right-0 text-[#D30A0A] font-medium p-2">x{{ $group['quantity'] }}</span>
-                                </div>
-                                
                                 @endforeach
 
                             </div>
@@ -245,9 +252,9 @@
 
                 </div>
             @empty
-                <div class="card flex flex-col items-center justify-center gap-8 p-4 md:p-8">
-                    @svg('tabler-shopping-cart-off', 'icon-4xl text-gray-400')
-                    <p class="text-center text-[#D30A0A]">Đơn hàng của bạn đang trống</p>
+                <div class="card flex flex-col items-center justify-center gap-8 p-4 md:p-8 min-h-96 text-gray-500">
+                    @svg('tabler-truck-off', 'icon-xl')
+                    <p class="text-center">Đơn hàng của bạn đang trống</p>
                 </div>
             @endforelse
 
