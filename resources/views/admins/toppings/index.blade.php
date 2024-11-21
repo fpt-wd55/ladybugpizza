@@ -139,6 +139,7 @@
                         <th scope="col" class="px-4 py-3">Tên</th>
                         <th scope="col" class="px-4 py-3">Ảnh</th>
                         <th scope="col" class="px-4 py-3">Giá</th>
+                        <th scope="col" class="px-4 py-3">Số lượng</th>
                         <th scope="col" class="px-4 py-3">Danh mục</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Hành động </span>
@@ -164,6 +165,8 @@
                                 </a>
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ number_format($topping->price) }}₫
+                            </td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $topping->quantity}}
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
                                 @foreach ($categories as $category)

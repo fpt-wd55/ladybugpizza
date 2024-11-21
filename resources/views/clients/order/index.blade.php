@@ -56,22 +56,21 @@
                                         class="badge-light">{{ \Carbon\Carbon::parse($order->canceled_at)->format('d/m/Y') }}</span>
                                 @endif
                             </div>
-                            <div class="text-right">
-                                <p class="font-light text-sm text-gray-600 line-through">
-                                    {{ number_format($order->amount + $order->shipping_fee) }}đ</p>
-                                <p class="text-base font-medium">
+                            <div class="text-right relative">
+                              
+                                <p class="text-base font-medium absolute top-4 right-0">
                                     {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ
                                 </p>
                             </div>
                         </div>
                         <div class="flex items-center justify-end gap-4">
-                            @if ($order->orderStatus->name !== 'Hoàn thành' && $order->orderStatus->name !== 'Đã hủy')
-                                <a class="link-md"data-modal-target="deleteBanner-modal-{{ $order->id }}"
+                            @if ($order->orderStatus->name !== 'Hoàn thành' && $order->orderStatus->name !== 'Đã hủy' && $order->orderStatus->name !== 'Đã xác nhận' && $order->orderStatus->name !== 'Đang tìm tài xế' && $order->orderStatus->name !== 'Đang giao hàng')
+                                <a class="link-md mt-2"data-modal-target="deleteBanner-modal-{{ $order->id }}"
                                     data-modal-toggle="deleteBanner-modal-{{ $order->id }}" href="#">Huỷ đơn</a>
                             @endif
                             @if ($order->orderStatus->name === 'Hoàn thành')
                                 @if ($order->invoice)
-                                    <a class="link-md"
+                                    <a class="link-md mt-2"
                                         href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
                                         Xem hóa đơn
 
