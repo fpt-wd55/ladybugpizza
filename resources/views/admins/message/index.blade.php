@@ -99,7 +99,6 @@
                     div.classList.add('md:flex', 'items-center', 'justify-center', 'ml-auto', 'text-xs',
                         'text-white',
                         'bg-red-500', 'h-4', 'w-4', 'rounded', 'leading-none');
-
                     if (link) {
                         link.appendChild(div);
                     }
@@ -115,7 +114,6 @@
             .listen('ChatBroadcast', (e) => {
                 console.log(e.message);
             });
-
         // let btnSent = document.querySelector('#btn-sent');
         // let message = document.querySelector('#message');
         // btnSent.addEventListener('click', function(e) {
