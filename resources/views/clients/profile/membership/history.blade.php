@@ -25,53 +25,60 @@
                 {{-- history --}}
 
                 @switch($tab)
-                    @case(null)
                     @case('receive')
                         <div class="card p-4 md:p-8">
-                            @for ($i = 0; $i < 10; $i++)
+                            @forelse ($histories as $history)
                                 <div class="mb-4 border-b border-gray-300">
                                     <button class="flex w-full items-center justify-between py-4">
                                         <span class="text-left text-sm font-normal">
-                                            <p>Ngày 3/10/2024</p>
-                                            <p>Đổi phiếu mua hàng thành công</p>
-                                            <p>Vào lúc 08:00 tại LADYBUGPIZZA</p>
-                                            <p>Bạn đã đổi phiếu mua hàng thành công</p>
+                                            <p class="font-medium text-green-400">{{ $history->description ?? 'Nhận điểm thành công' }}</p>
+                                            <p><span class="font-medium">Ngày :</span> {{ $history->created_at->format('d/m/Y') }}</p>
+                                            <p><span class="font-medium">Vào lúc :</span> {{ $history->created_at->format('H:i:s') }}</p>
+                                            <p></p>
                                         </span>
-                                        <span class="text-red-500 transition" id="icon-1">
-                                            -1234
+                                        <span class="text-green-500 transition">
+                                            @svg('tabler-check')                                        
                                         </span>
                                     </button>
                                 </div>
-                            @endfor
+                            @empty
+                                <p class="text-gray-500">Không có lịch sử nhận điểm nào.</p>
+                            @endforelse
                         </div>
                     @break
 
                     @case('change')
                         <div class="card p-4 md:p-8">
-                            @for ($i = 0; $i < 10; $i++)
+                            @forelse ($histories as $history)
                                 <div class="mb-4 border-b border-gray-300">
                                     <button class="flex w-full items-center justify-between py-4">
                                         <span class="text-left text-sm font-normal">
-                                            <p>Ngày 3/10/10/2024</p>
-                                            <p>Đổi phiếu mua hàng thành công</p>
-                                            <p>Vào lúc 08:00 tại LADYBUGPIZZA</p>
-                                            <p>Bạn đã đổi phiếu mua hàng thành công</p>
+                                            <p class="font-medium text-green-400">{{ $history->description ?? 'Nhận điểm thành công' }}</p>
+                                            <p><span class="font-medium">Ngày :</span> {{ $history->created_at->format('d/m/Y') }}</p>
+                                            <p><span class="font-medium">Vào lúc :</span> {{ $history->created_at->format('H:i:s') }}</p>
                                         </span>
-                                        <span class="text-red-500 transition" id="icon-1">
-                                            -1234
+                                        <span class="text-green-500 transition">
+                                            @svg('tabler-check')
                                         </span>
                                     </button>
                                 </div>
-                            @endfor
+                            @empty
+                                <p class="text-gray-500">Không có lịch sử đổi điểm nào.</p>
+                            @endforelse
                         </div>
                     @break
 
                     @default
-                        <div>
-                            khoong tim thay trang
+                        <div class="text-center">
+                            <p>Không tìm thấy thông tin.</p>
                         </div>
                 @endswitch
+
             </div>
         </div>
+        <div>
+            {{ $histories->links()}}
+        </div>
     </div>
+  
 @endsection

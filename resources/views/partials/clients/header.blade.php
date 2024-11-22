@@ -141,7 +141,6 @@
                     @svg('tabler-x', 'icon-sm')
                 </button>
             </div>
-
             <div class="p-4 md:p-8">
                 <div class="ais-InstantSearch transition">
                     <div id="searchbox"></div>
@@ -151,7 +150,6 @@
         </div>
     </div>
 </div>
-
 @php
     use App\Models\Favorite;
     $favorites = Favorite::where('user_id', Auth::id())->with('product')->get();
