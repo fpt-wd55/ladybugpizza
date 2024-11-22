@@ -12,6 +12,7 @@ use App\Http\Requests\ChangeRequest;
 use App\Http\Requests\InactiveRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Faq;
+use App\Models\Log;
 use App\Models\Membership;
 use App\Models\MembershipRank;
 use Illuminate\Http\Request;
@@ -177,11 +178,31 @@ class ProfileController extends Controller
 
 	public function membershipHistory(Request $request)
 	{
-		$tab = request()->query('tab');
+		// Lấy thông tin người dùng hiện tại
+		$user = auth()->user();
 
-		return view('clients.profile.membership.history', [
-			'tab' => $tab
-		]);
+		// Lấy tab hiện tại, mặc định là 'receive'
+		$tab = $request->get('tab', 'receive');
+	
+		// Lấy dữ liệu lịch sử dựa theo tab
+		if ($tab == 'receive') {
+			$histories = Log::where('user_id', $user->id)
+				->where('action', 'receive_points')
+				->orderBy('created_at', 'desc')
+				->paginate(5)
+				->appends(['tab' => 'receive']); // Thêm tham số tab;
+		} elseif ($tab == 'change') {
+			$histories = Log::where('user_id', $user->id)
+				->where('action', 'exchange_points')
+				->orderBy('created_at', 'desc')
+				->paginate(5)
+				->appends(['tab' => 'change']); // Thêm tham số tab;
+		} else {
+			$histories = collect(); // Nếu tab không hợp lệ, trả về collection rỗng
+		}
+	
+		// Truyền dữ liệu vào view
+		return view('clients.profile.membership.history', compact('histories', 'tab'));
 	}
 
 	public function address()
