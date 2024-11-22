@@ -85,6 +85,12 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="mb-4">
+                                <input id="remember_address" type="checkbox" name="remember_address"
+                                    class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-0">
+                                <label for="remember_address" class="ms-2 text-sm">Lưu lại thông
+                                    tin này cho lần sau</label>
+                            </div>
                         </div>
                         {{-- Thanh toán --}}
                         <div class="mb-5 border rounded-md p-5">
@@ -202,18 +208,19 @@
             const province = document.querySelector('input[name="province"]');
             const district = document.querySelector('input[name="district"]');
             const ward = document.querySelector('input[name="ward"]');
+            const rememberAddress = document.getElementById('remember_address');
 
             const addressesData = @json($addresses);
 
             oldAddress.addEventListener('change', function() {
                 const selectedAddress = addressesData.find(address => address.id == this.value);
-                const fields = [detailAddress, province, district, ward];
+                const fields = [detailAddress, province, district, ward, rememberAddress];
 
                 if (selectedAddress) {
                     detailAddress.value = selectedAddress.detail_address || '';
                     province.value = selectedAddress.province || '';
                     district.value = selectedAddress.district || '';
-                    ward.value = selectedAddress.ward || '';
+                    ward.value = selectedAddress.ward || ''; 
 
                     fields.forEach(field => field.setAttribute('disabled', true));
                 } else {
