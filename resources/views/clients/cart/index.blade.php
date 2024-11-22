@@ -65,7 +65,7 @@
             </div>
             <div class="flex items-center justify-end gap-2">
                 <a class="button-dark" href="{{ route('client.product.menu') }}">Tiếp tục mua hàng</a>
-                <a class="button-red" href="{{ route('client.checkout') }}">Thanh toán</a>
+                <a class="button-red" href="{{ route('checkout') }}">Thanh toán</a>
             </div>
         </div>
     </div>

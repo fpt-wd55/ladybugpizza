@@ -59,8 +59,8 @@ Route::prefix('/')->group(function () {
     Route::post('/product/cart/{product}', [ProductController::class, 'addToCart'])->name('client.product.add-to-cart');
     Route::delete('/product/cart/{cartItem}', [CartController::class, 'delete'])->name('client.product.delete-cart-item');
     // Thanh toán
-    Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('client.checkout');
-    Route::post('/checkout', [CheckoutController::class, 'postCheckout'])->name('client.post-checkout');
+    Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'postCheckout'])->name('post-checkout');
     // Đơn hàng
     Route::get('/order', [OrderController::class, 'index'])->name('client.order.index');
     Route::get('/order/{order}/invoice}', [OrderController::class, 'invoice'])->name('client.order.invoice');

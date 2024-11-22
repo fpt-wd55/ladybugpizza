@@ -7,7 +7,8 @@
         <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
             <div class="mb-12 p-4 md:p-8">
                 <div class="grid grid-cols-1 gap-8 lg:grid-cols-5">
-                    <div class="col-span-3">
+                    <form action="{{ route('post-checkout') }}" method="post" class="col-span-3" id="form-checkout">
+                        @csrf
                         {{-- Thông tin thanh toán --}}
                         <div class="mb-5 border rounded-md p-5">
                             <p class="mb-4 font-bold">Thông tin thanh toán
@@ -17,24 +18,24 @@
                                 <input class="input w-full" name="fullname" type="text"
                                     value="{{ old('fullname') ?? Auth::user()->fullname }}" placeholder="Họ và tên">
                                 @error('fullname')
-                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                    <p class="text-sm text-[#D30A0A] pt-2">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="mb-4 grid grid-cols-12 items-center gap-4">
-                                <div class="col-span-12 lg:col-span-8">
+                            <div class="grid gap-4 mb-4 md:grid-cols-2">
+                                <div>
                                     <p class="mb-2 text-sm font-normal">Email:</p>
                                     <input class="input w-full" name="email" type="text"
                                         value="{{ old('email') ?? Auth::user()->email }}" placeholder="Email">
                                     @error('email')
-                                        <p class="text-sm text-red-500">{{ $message }}</p>
+                                        <p class="text-sm text-[#D30A0A] pt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
-                                <div class="col-span-12 lg:col-span-4">
+                                <div>
                                     <p class="mb-2 text-sm font-normal">Số điện thoại:</p>
                                     <input class="input w-full" name="phone" type="text"
                                         value="{{ old('phone') ?? Auth::user()->phone }}" placeholder="Số điện thoại">
                                     @error('phone')
-                                        <p class="text-sm text-red-500">{{ $message }}</p>
+                                        <p class="text-sm text-[#D30A0A] pt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
@@ -44,49 +45,51 @@
                             <p class="mb-4 font-bold">Địa chỉ nhận hàng</p>
                             <div class="mb-4">
                                 <select class="input" id="old_address" name="old_address">
-                                    <option value="-1" {{ old('old_address') ? 'selected' : '' }}>Chọn địa chỉ </option>
+                                    <option value="-1" {{ old('old_address') ? 'selected' : '' }}>Chọn địa chỉ
+                                    </option>
                                     @foreach ($addresses as $address)
                                         <option value="{{ $address->id }}">{{ $address->title }}</option>
                                     @endforeach
                                 </select>
-                                @error('old_address')
-                                    <p class="text-sm text-red-500">{{ $message }}</p>
-                                @enderror
                             </div>
                             <div class="mb-4">
                                 <p class="mb-2 text-sm font-normal">Địa chỉ chi tiết:
                                 </p>
                                 <input class="input w-full" type="text" name="detail_address"
-                                    placeholder="Địa chỉ chi tiết">
+                                    value="{{ old('detail_address') }}" placeholder="Địa chỉ chi tiết">
                                 @error('detail_address')
-                                    <p class="text-sm text-red-500">{{ $message }}</p>
+                                    <p class="text-sm text-[#D30A0A] pt-2">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="mb-4 grid grid-cols-12 items-center gap-4">
-                                <div class="col-span-12 lg:col-span-4">
+                            <div class="grid gap-4 mb-4 md:grid-cols-2 lg:grid-cols-3">
+                                <div>
                                     <p class="mb-2 text-sm font-normal">Tỉnh/Thành phố:</p>
-                                    <input class="input w-full" type="text" name="province" placeholder="Tỉnh/Thành phố">
+                                    <input class="input w-full" type="text" name="province"
+                                        value="{{ old('province') }}" placeholder="Tỉnh/Thành phố">
                                     @error('province')
-                                        <p class="text-sm text-red-500">{{ $message }}</p>
+                                        <p class="text-sm text-[#D30A0A] pt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
-                                <div class="col-span-6 lg:col-span-4">
+                                <div>
                                     <p class="mb-2 text-sm font-normal">Quận/Huyện:</p>
-                                    <input class="input w-full" type="text" name="district" placeholder="Quận/Huyện">
+                                    <input class="input w-full" type="text" name="district"
+                                        value="{{ old('district') }}" placeholder="Quận/Huyện">
                                     @error('district')
-                                        <p class="text-sm text-red-500">{{ $message }}</p>
+                                        <p class="text-sm text-[#D30A0A] pt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
-                                <div class="col-span-6 lg:col-span-4">
+                                <div>
                                     <p class="mb-2 text-sm font-normal">Phường/Xã:</p>
-                                    <input class="input w-full" type="text" name="ward" placeholder="Phường/Xã">
+                                    <input class="input w-full" type="text" name="ward" value="{{ old('ward') }}"
+                                        placeholder="Phường/Xã">
                                     @error('ward')
-                                        <p class="text-sm text-red-500">{{ $message }}</p>
+                                        <p class="text-sm text-[#D30A0A] pt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
                             <div class="mb-4">
-                                <input id="remember_address" type="checkbox" name="remember_address"
+                                <input id="remember_address" type="checkbox" name="remember_address" value="1"
+                                    {{ old('remember_address') == 1 ? 'checked' : '' }}
                                     class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-0">
                                 <label for="remember_address" class="ms-2 text-sm">Lưu lại thông
                                     tin này cho lần sau</label>
@@ -94,26 +97,23 @@
                         </div>
                         {{-- Thanh toán --}}
                         <div class="mb-5 border rounded-md p-5">
-                            <p class="mb-4 font-bold">Phương thức thanh toán</p>
-                            <div class="flex items-center justify-between">
-                                <div class="mb-4 flex items-center">
-                                    <input class="input-radio me-2" id="default-radio-1" name="default-radio" type="radio"
-                                        value="">
-                                    <label class="text-sm font-normal" for="default-radio-1">Thanh toán khi nhận
-                                        hàng</label>
+                            <p class="mb-2 font-bold">Phương thức thanh toán</p>
+                            @error('payment_method_id')
+                                <p class="text-sm text-[#D30A0A] mb-2">{{ $message }}</p>
+                            @enderror
+                            @foreach ($paymentMethods as $method)
+                                <div class="flex items-center justify-between">
+                                    <div class="mb-4 flex items-center">
+                                        <input class="input-radio me-2" id="payment_method_id_{{ $method->id }}"
+                                            {{ old('payment_method_id') == $method->id ? 'checked' : '' }}
+                                            name="payment_method_id" type="radio" value="{{ $method->id }}">
+                                        <label class="text-sm font-normal"
+                                            for="payment_method_id_{{ $method->id }}">{{ $method->name }}</label>
+                                    </div>
+                                    @svg('tabler-truck', 'icon-lg text-gray-700')
                                 </div>
-                                @svg('tabler-truck', 'icon-lg text-gray-700')
-                            </div>
-                            <hr class="mb-4">
-                            <div class="flex items-center justify-between">
-                                <div class="mb-4 flex items-center">
-                                    <input class="input-radio me-2" id="default-radio-1" name="default-radio" type="radio"
-                                        value="">
-                                    <label class="text-sm font-normal" for="default-radio-1">Ví MoMo</label>
-                                </div>
-                                @svg('tabler-credit-card', 'icon-lg text-gray-700')
-                            </div>
-                            <hr class="mb-4">
+                                <hr class="mb-4">
+                            @endforeach
                             <div class="flex items-center gap-2 text-sm">
                                 <span>Bạn cần trợ giúp?</span>
                                 <a class="link-md" href="{{ route('client.contact') }}">Liên hệ với chúng tôi</a>
@@ -154,45 +154,15 @@
                                 @endforeach
                             </div>
                         </div>
-                    </div>
+                    </form>
                     <div class="col-span-2">
-                        <div class="mb-5 border rounded-md p-5">
-                            <p class="mb-4 font-bold">Đơn hàng của bạn</p>
-                            <div>
-                                <div class="flex items-center gap-2 mb-4">
-                                    <input class="input" placeholder="Mã giảm giá" type="text" name="evaluation">
-                                    <button class="button-red w-32" type="button">Sử dụng</button>
-                                </div>
-                                @error('evaluation')
-                                    <p class="text-sm text-red-500">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <hr class="mb-4">
-                            <div>
-                                <div class="mb-4 flex items-center justify-between gap-32 text-sm">
-                                    <p>Tạm tính</p>
-                                    <p class="font-medium">150,000₫</p>
-                                </div>
-                                <div class="mb-4 flex items-center justify-between gap-32 text-sm">
-                                    <p>Phí vận chuyển</p>
-                                    <p class="font-medium">150,000₫</p>
-                                </div>
-                                <div class="mb-4 flex items-center justify-between gap-32 text-sm">
-                                    <p>Giảm giá</p>
-                                    <p class="font-medium">150,000₫</p>
-                                </div>
-                                <hr class="mb-4">
-                                <div class="mb-4 flex items-center justify-between gap-32">
-                                    <p class="text-sm">Tổng tiền</p>
-                                    <p class="font-medium">150,000₫</p>
-                                </div>
-                            </div>
-                        </div>
+                        @livewire('apply-promotion')
+                        
                         <div class="flex justify-between items-center">
                             <a href="{{ route('client.contact') }}"
                                 class="text-sm font-medium text-gray-800 hover:underline">Giỏ
                                 hàng</a>
-                            <button class="button-red">Thanh toán</button>
+                            <button class="button-red" id="btn-checkout">Thanh toán</button>
                         </div>
                     </div>
                 </div>
@@ -220,7 +190,7 @@
                     detailAddress.value = selectedAddress.detail_address || '';
                     province.value = selectedAddress.province || '';
                     district.value = selectedAddress.district || '';
-                    ward.value = selectedAddress.ward || ''; 
+                    ward.value = selectedAddress.ward || '';
 
                     fields.forEach(field => field.setAttribute('disabled', true));
                 } else {
@@ -230,6 +200,13 @@
                     });
                 }
             });
+        });
+
+        const btnCheckout = document.getElementById('btn-checkout');
+        btnCheckout.addEventListener('click', function(e) {
+            e.preventDefault();
+            const formCheckout = document.getElementById('form-checkout');
+            formCheckout.submit();
         });
     </script>
 @endsection
