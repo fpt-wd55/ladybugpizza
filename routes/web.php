@@ -16,7 +16,6 @@ use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
-use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\ToppingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\GoogleController;
@@ -29,9 +28,7 @@ use App\Http\Controllers\Client\PageController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
-use App\Models\Page;
 use Illuminate\Support\Facades\Route;
-use Laravel\Prompts\Concerns\Fallback;
 
 /*
 |--------------------------------------------------------------------------
@@ -204,7 +201,6 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::post('/memberships/{membership}/status', [MembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
 
     Route::resource('/transactions', TransactionController::class);
-    Route::resource('/shippings', ShippingController::class);
     Route::resource('/pages', AdminPageController::class);
     Route::resource('/logs', LogController::class);
     // profile
