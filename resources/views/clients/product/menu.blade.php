@@ -19,25 +19,28 @@
                     <p class="playwrite-gb-s-regular mb-8 text-2xl">Combo</p>
                     <div class="no-scrollbar flex w-full items-center gap-4 overflow-x-auto">
                         @foreach ($combos as $combo)
-                        <a href="{{ route('client.product.showCombo', $combo->slug) }}"
-                            class="product-card relative flex w-full flex-shrink-0 overflow-hidden md:w-2/3">
-                            <img alt="" class="h-60 w-1/2 flex-shrink-0 object-cover" loading="lazy"
-                                src="{{ asset('storage/uploads/combos/' . $combo->image) }}">
-                            <div class="p-4">
-                                <p class="mb-2 text-sm font-semibold md:text-base">{{ $combo->name }}</p>
-                                <ul class="list-disc space-y-1 ps-4 text-xs md:text-sm">
-                                    @foreach (explode(',', $combo->description) as $item)
-                                        <li>{{ trim($item) }}</li>
-                                    @endforeach
-                                </ul>
-                                <div class="absolute bottom-4 right-5 flex items-center gap-3">
-                                    <p class="text-sm text-gray-500 line-through">{{ number_format($combo->price) }}₫</p>
-                                    <p class="text-lg font-semibold">{{ number_format($combo->discount_price) }}₫</p>
+                            <a href="{{ route('client.product.showCombo', $combo->slug) }}"
+                                class="product-card relative flex w-full flex-shrink-0 overflow-hidden md:w-2/3">
+                                <img alt="" class="h-60 w-1/2 flex-shrink-0 object-cover" loading="lazy"
+                                    src="{{ asset('storage/uploads/combos/' . $combo->image) }}"
+                                    onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
+                                    class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
+                                <div class="p-4">
+                                    <p class="mb-2 text-sm font-semibold md:text-base">{{ $combo->name }}</p>
+                                    <ul class="list-disc space-y-1 ps-4 text-xs md:text-sm">
+                                        @foreach (explode(',', $combo->description) as $item)
+                                            <li>{{ trim($item) }}</li>
+                                        @endforeach
+                                    </ul>
+                                    <div class="absolute bottom-4 right-5 flex items-center gap-3">
+                                        <p class="text-sm text-gray-500 line-through">{{ number_format($combo->price) }}₫
+                                        </p>
+                                        <p class="text-lg font-semibold">{{ number_format($combo->discount_price) }}₫</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    @endforeach
-                    
+                            </a>
+                        @endforeach
+
                     </div>
                 </div>
 
