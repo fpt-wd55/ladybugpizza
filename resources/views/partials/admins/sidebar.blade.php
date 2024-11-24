@@ -79,14 +79,7 @@
                     @svg('tabler-package', 'text-gray-500')
                     <span class="ml-3">Đơn hàng</span>
                 </a>
-            </li>
-            <li>
-                <a class="{{ request()->is('admin/shipping*') ? 'bg-gray-200' : '' }} group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
-                    href="{{ route('admin.shippings.index') }}">
-                    @svg('tabler-truck-delivery', 'text-gray-500')
-                    <span class="ml-3">Giao hàng</span>
-                </a>
-            </li>
+            </li> 
             <li>
                 <a class="{{ request()->is('admin/promotion*') ? 'bg-gray-200' : '' }} group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
                     href="{{ route('admin.promotions.index') }}">

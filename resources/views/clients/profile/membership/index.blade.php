@@ -34,7 +34,7 @@
                         </div>
                     </div>
 
-                    <p class="mb-2 text-sm">Bạn đã kiếm được tổng: {{ $points }} điểm</p>
+                    <p class="mb-2 text-sm">Bạn đã kiếm được: {{ $points }} điểm</p>
                     <p class="text-sm">Điểm hiện tại: {{ $currentPoints }}</p>
                 </div>
 
