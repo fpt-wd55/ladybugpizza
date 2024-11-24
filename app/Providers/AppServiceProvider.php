@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\Admin\SidebarController;
 use App\Http\Controllers\FooterController;
 use App\Http\Controllers\HeaderController;
 use Illuminate\Support\Facades\View;
@@ -29,6 +30,10 @@ class AppServiceProvider extends ServiceProvider
         // Tự động truyền dữ liệu từ FooterController cho view footer
         View::composer('partials.clients.footer', function ($view) {
             $view->with(FooterController::getFooterData());
+        });
+
+        View::composer('partials.admins.sidebar', function ($view) {
+            $view->with(SidebarController::getPendingOrders());
         });
     }
 }

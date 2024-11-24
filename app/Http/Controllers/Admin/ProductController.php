@@ -201,13 +201,14 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
+        $categories = Category::where('status', 1)->get();
         $products = Product::orderBy('id', 'desc')
             ->where('category_id', '!=', 7)
             ->where('name', 'like', '%' . $request->search . '%')
             ->orWhere('sku', 'like', '%' . $request->search . '%')
             ->paginate(10);
         $products->appends(['search' => $request->search]);
-        return view('admins.product.index', compact('products'));
+        return view('admins.product.index', compact('products', 'categories'));
     }
 
     public function evaluation(Product $product)

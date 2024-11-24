@@ -129,7 +129,7 @@ class MembershipController extends Controller
             }
         }
         // Trả về view với dữ liệu memberships
-        return view('admins.memberships.index', compact('memberships'));
+        return view('admins.memberships.index', compact('memberships', 'ranks'));
     }
 
     public function filter(Request $request)
