@@ -74,12 +74,18 @@
                 </ul>
             </li>
             <li>
-                <a class="{{ request()->is('admin/order*') ? 'bg-gray-200' : '' }} group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
+                <a class="{{ request()->is('admin/order*') ? 'bg-gray-200' : '' }} group flex items-center justify-between rounded-lg p-2 text-gray-900 hover:bg-gray-100"
                     href="{{ route('admin.orders.index') }}">
-                    @svg('tabler-package', 'text-gray-500')
-                    <span class="ml-3">Đơn hàng</span>
+                    <div class="flex items-center justify-start">
+                        @svg('tabler-package', 'text-gray-500')
+                        <span class="ml-3">Đơn hàng</span>
+                    </div>
+                    @if ($pendingOrdersCount > 0)
+                        <span
+                            class="bg-red-100 text-red-600 text-xs font-medium px-2.5 py-0.5 rounded-full border border-red-400">{{ $pendingOrdersCount }}</span>
+                    @endif
                 </a>
-            </li> 
+            </li>
             <li>
                 <a class="{{ request()->is('admin/promotion*') ? 'bg-gray-200' : '' }} group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
                     href="{{ route('admin.promotions.index') }}">
@@ -104,4 +110,3 @@
         </ul>
     </div>
 </aside>
-

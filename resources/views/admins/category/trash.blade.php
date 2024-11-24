@@ -37,46 +37,7 @@
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.categories.search') }}">
-                    <div class="relative w-full">
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            @svg('tabler-search', 'w-5 h-5 text-gray-400')
-                        </div>
-                        <input type="text" name="search" class="input ps-10" placeholder="Tìm kiếm..." />
-                    </div>
-                </form>
-                <div class="flex items-center space-x-3 w-full md:w-auto">
-                    <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
-                        class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
-                        type="button">
-                        @svg('tabler-filter-filled', 'w-5 h-5 me-2')
-                        Bộ lọc
-                        @svg('tabler-chevron-down', 'w-5 h-5 ms-3')
-                    </button>
-                    <div id="filterDropdown" class="z-10 hidden w-96 p-3 bg-white rounded-lg shadow">
-                        <form action="{{ route('admin.categories.filter') }}" aria-labelledby="filterDropdownButton">
-                            <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
-                            <ul class="space-y-2 text-sm">
-                                <li class="flex items-center">
-                                    <input id="active" type="checkbox" name="filter_status[]" value="1"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                        @if (in_array(1, request()->input('filter_status', []))) checked @endif>
-                                    <label for="active" class="ml-2 text-sm font-medium text-gray-900">Hoạt động</label>
-                                </li>
-                                <li class="flex items-center">
-                                    <input id="inactive" type="checkbox" name="filter_status[]" value="2"
-                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                        @if (in_array(2, request()->input('filter_status', []))) checked @endif>
-                                    <label for="inactive" class="ml-2 text-sm font-medium text-gray-900">Khóa</label>
-                                </li>
-                            </ul>
-
-                            <button type="submit" class="button-red me-2 w-full mt-5">
-                                Lọc
-                            </button>
-                        </form>
-                    </div>
-                </div>
+                
             </div>
         </div>
         <div class="overflow-x-auto">

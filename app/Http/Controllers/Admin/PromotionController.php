@@ -96,12 +96,13 @@ class PromotionController extends Controller
 
     public function search(Request $request)
     {
+        $ranks = MembershipRank::get();
         $promotions = Promotion::query()
             ->orderBy('quantity', 'desc')
             ->where('code', 'like', '%' . $request->search . '%')
             ->paginate(10);
         $promotions->appends(['search' => $request->search]);
-        return view('admins.promotions.index', compact('promotions'));
+        return view('admins.promotions.index', compact('promotions', 'ranks'));
     }
 
     public function bulkAction(Request $request)
