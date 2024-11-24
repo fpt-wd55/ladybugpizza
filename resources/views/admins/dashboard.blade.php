@@ -27,11 +27,11 @@
     </div>
     {{-- Thống kê người dùng --}}
     <h3 class="my-3 text-base font-bold leading-none text-gray-900 sm:text-xl">Người dùng</h3>
-    <div class="mt-4 grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-3">
+    <div class="grid w-full grid-cols-1 gap-4 xl:grid-cols-2 mb-3">
         @livewire('statistic-user-one')
         @livewire('statistic-user-two')
-        @livewire('statistic-user-three')
     </div>
+    @livewire('statistic-user-three')
     {{-- @livewire('statistic') --}}
 @endsection
 @section('scripts')

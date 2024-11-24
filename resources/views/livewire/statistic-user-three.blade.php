@@ -1,26 +1,51 @@
 <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
     <div class="grid grid-cols-1 items-center justify-between pb-4 space-y-3 md:space-y-0 md:space-x-4">
         <div class="w-full">
-            <div class="flex items-center w-full space-x-3 md:w-auto">
-                <button id="dropdownTopUserLink" data-dropdown-toggle="dropdownTopUser"
-                    data-dropdown-placement="bottom-start"
-                    class="flex items-center justify-start w-full py-2 text-lg font-bold text-gray-900 md:w-auto focus:outline-none hover:text-slate-600 focus:z-10 focus:ring-0">
-                    {{ $selectedTopUser }}
-                    @svg ('tabler-chevron-down', 'w-4 h-4 ml-2 text-gray-500')
-                </button>
-                <!-- Dropdown menu -->
-                <div id="dropdownTopUser"
-                    class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-80">
-                    <ul class="py-2 text-sm text-gray-700">
-                        <li>
-                            <a href="#" wire:click.prevent="updateTopUser('mostOrder')"
-                                class="block px-4 py-2 hover:bg-gray-100">Top người dùng mua hàng nhiều nhất</a>
-                        </li>
-                        <li>
-                            <a href="#" wire:click.prevent="updateTopUser('mostPoint')"
-                                class="block px-4 py-2 hover:bg-gray-100">Top người dùng có điểm tích lũy cao nhất</a>
-                        </li>
-                    </ul>
+            <div class="grid grid-cols-1 lg:grid-cols-3 items-center justify-between pb-4">
+                <div class="w-full col-span-2">
+                    <div class="flex items-center w-full space-x-3 md:w-auto">
+                        <button id="dropdownTopUserLink" data-dropdown-toggle="dropdownTopUser"
+                            data-dropdown-placement="bottom-start"
+                            class="flex items-center justify-start w-full py-2 text-lg font-bold text-gray-900 md:w-auto focus:outline-none hover:text-slate-600 focus:z-10 focus:ring-0">
+                            {{ $nameSelectedTopUser }}
+                            @svg ('tabler-chevron-down', 'w-4 h-4 ml-2 text-gray-500')
+                        </button>
+                        <!-- Dropdown menu -->
+                        <div id="dropdownTopUser"
+                            class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-80">
+                            <ul class="py-2 text-sm text-gray-700">
+                                <li>
+                                    <a href="#" wire:click.prevent="updateSelectionUser('user', 'mostOrder')"
+                                        class="block px-4 py-2 hover:bg-gray-100">Top người dùng mua hàng nhiều nhất</a>
+                                </li>
+                                <li>
+                                    <a href="#" wire:click.prevent="updateSelectionUser('user', 'mostPoint')"
+                                        class="block px-4 py-2 hover:bg-gray-100">Top người dùng có điểm tích lũy cao
+                                        nhất</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-start lg:justify-end w-full md:w-auto mt-3 lg:m-0">
+                    <div class="inline-flex items-center rounded-md bg-slate-100 p-1.5">
+                        <button wire:click.prevent="updateSelectionUser('time', 'day')"
+                            class="rounded {{ $selectedTimeTopUser == 'day' ? 'bg-white' : '' }} px-3 py-1 text-xs font-medium text-black shadow-card hover:bg-white me-1">
+                            Ngày
+                        </button>
+                        <button wire:click.prevent="updateSelectionUser('time', 'week')"
+                            class="rounded {{ $selectedTimeTopUser == 'week' ? 'bg-white' : '' }} px-3 py-1 text-xs font-medium text-black hover:bg-white me-1">
+                            Tuần
+                        </button>
+                        <button wire:click.prevent="updateSelectionUser('time', 'month')"
+                            class="rounded {{ $selectedTimeTopUser == 'month' ? 'bg-white' : '' }} px-3 py-1 text-xs font-medium text-black hover:bg-white me-1">
+                            Tháng
+                        </button>
+                        <button wire:click.prevent="updateSelectionUser('time', 'year')"
+                            class="rounded {{ $selectedTimeTopUser == 'year' ? 'bg-white' : '' }} px-3 py-1 text-xs font-medium text-black hover:bg-white me-1">
+                            Năm
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
