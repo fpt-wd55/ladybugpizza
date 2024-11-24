@@ -178,8 +178,12 @@ class ProfileController extends Controller
 
 	public function membershipHistory(Request $request)
 	{
+		$redirectHome = $this->checkUser();
+		if ($redirectHome) {
+			return $redirectHome;
+		}
 		// Lấy thông tin người dùng hiện tại
-		$user = auth()->user();
+		$user = Auth::user();
 
 		// Lấy tab hiện tại, mặc định là 'receive'
 		$tab = $request->get('tab', 'receive');
