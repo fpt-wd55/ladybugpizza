@@ -26,16 +26,20 @@ class ProductController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function menu()
-    {
-        $categories = Category::all();
+    { 
+        $categories = Category::where('status', 1)
+            ->where('id', '!=', 7)
+            ->whereHas('products', function ($query) {
+                $query->where('status', 1);
+            })
+            ->get();
 
         $products = [];
 
         $products = Product::where('status', 1)
             ->get();
-
-            $combos = Product::where('category_id', 7)
-            ->where('status', 1) 
+        $combos = Product::where('category_id', 7)
+            ->where('status', 1)
             ->orderByDesc('is_featured')
             ->get();
 
@@ -151,7 +155,7 @@ class ProductController extends Controller
         }
 
         return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại sau!');
-    } 
+    }
 
     /**
      * Lấy ra danh sách các sản phẩm yêu thích của người dùng đang đăng nhập
@@ -201,5 +205,5 @@ class ProductController extends Controller
         }
 
         return back()->with('error', 'Sản phẩm không tồn tại!');
-    } 
+    }
 }

@@ -186,7 +186,7 @@ html {
 }
 
 .button-primary {
-    @apply rounded bg-red-600 px-8 py-4 text-sm font-medium text-white shadow-lg transition hover:bg-white hover:text-black;
+    @apply rounded bg-[#C72B26] px-8 py-4 text-sm font-medium text-white shadow-lg transition hover:bg-white hover:text-black;
 }
 
 .button-toggle {
@@ -198,7 +198,7 @@ html {
 }
 
 .button-default {
-    @apply button bg-[#D30A0A] hover:bg-[#AF0808];
+    @apply button bg-[#C72B26] hover:bg-[#AF0808];
 }
 
 .button-dark {
@@ -218,7 +218,7 @@ html {
 }
 
 .button-red {
-    @apply button bg-[#D30A0A] hover:bg-[#AF0808];
+    @apply button bg-[#C72B26] hover:bg-[#AF0808];
 }
 
 .button-blue {

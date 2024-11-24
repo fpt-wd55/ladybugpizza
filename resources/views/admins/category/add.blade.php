@@ -14,8 +14,7 @@
                             class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
                             id="image" name="image" type="file">
                         @error('image')
-                            <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Lỗi! </span>
-                                {{ $message }}</p>
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
@@ -24,8 +23,7 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             placeholder="Ví dụ: Pizza hải sản">
                         @error('name')
-                            <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Lỗi! </span>
-                                {{ $message }}</p>
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="">
