@@ -107,6 +107,13 @@
                     <span class="ml-3">Banner</span>
                 </a>
             </li>
+            <li>
+                <a class="{{ request()->is('admin/banner*') ? 'bg-gray-200' : '' }} group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
+                    href="https://business.facebook.com/latest/inbox/all/?asset_id=486082071252967" target="_blank">
+                    @svg('tabler-message-2', 'text-gray-500')
+                    <span class="ml-3">Trò chuyện</span>
+                </a>
+            </li>
         </ul>
     </div>
 </aside>
