@@ -17,69 +17,79 @@
                         <li class="me-6 min-w-fit">
                             <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
                                 href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }}
-                                ({{ $status->orders_count }})</a>
+                                ({{ $status->orders_count }})
+                            </a>
                         </li>
                     @endforeach
                 </ul>
             </div>
             {{-- Danh sách đơn hàng --}}
             @forelse ($orders as $order)
-
                 <div class="product-card mb-4 p-4 hover:cursor-pointer ">
-                    <div class="" onclick="toggleAccordion({{ $order->id }})">
-                        <div class="mb-2 space-y-4 text-sm">
-                            <div class="flex items-center">
-                                <p class="sm:text-xs md:text-base font-medium text-[#D30A0A]">
-                                    #LADYBUG-2024{{ $order->id }}</p>
-                                <div class="ms-auto space-x-2">
-                                    <span
-                                        class="text-xs font-medium px-2.5 py-0.5 rounded text-{{ $order->orderStatus->color }}-700 bg-{{ $order->orderStatus->color }}-100">{{ $order->orderStatus->name }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-4 flex items-start justify-between">
-                            <div class="flex items-center gap-2">
-                                @if ($order->orderStatus->slug === 'completed')
-                                    <span
-                                        class="badge-light">{{ \Carbon\Carbon::parse($order->completed_at)->format('H:i:s') }}</span>
-                                    <span
-                                        class="badge-light">{{ \Carbon\Carbon::parse($order->completed_at)->format('d/m/Y') }}</span>
-                                @elseif (in_array($order->orderStatus->slug, ['waiting', 'finding_driver', 'shipping', 'confirmed']))
-                                    <span
-                                        class="badge-light">{{ \Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}</span>
-                                    <span
-                                        class="badge-light">{{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}</span>
-                                @elseif ($order->orderStatus->slug === 'cancelled')
-                                    <span
-                                        class="badge-light">{{ \Carbon\Carbon::parse($order->canceled_at)->format('H:i:s') }}</span>
-                                    <span
-                                        class="badge-light">{{ \Carbon\Carbon::parse($order->canceled_at)->format('d/m/Y') }}</span>
-                                @endif
-                            </div>
-                            <div class="text-right relative">
-                              
-                                <p class="text-base font-medium absolute top-4 right-0">
-                                    {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ
-                                </p>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-end gap-4">
-                            @if ($order->orderStatus->name !== 'Hoàn thành' && $order->orderStatus->name !== 'Đã hủy' && $order->orderStatus->name !== 'Đã xác nhận' && $order->orderStatus->name !== 'Đang tìm tài xế' && $order->orderStatus->name !== 'Đang giao hàng')
-                                <a class="link-md mt-2"data-modal-target="deleteBanner-modal-{{ $order->id }}"
-                                    data-modal-toggle="deleteBanner-modal-{{ $order->id }}" href="#">Huỷ đơn</a>
+                    <div class="flex flex-wrap items-center gap-y-4">
+                        <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-base font-medium text-gray-500">Mã đơn hàng:
+                            </dt>
+                            <dd class="mt-1.5 text-base font-semibold text-[#D30A0A]">
+                                #{{ $order->id }}
+                            </dd>
+                        </dl>
+
+                        <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-base font-medium text-gray-500">Ngày đặt hàng:
+                            </dt>
+                            <dd class="mt-1.5 text-base font-semibold text-gray-900">
+                                {{ $order->created_at }}</dd>
+                        </dl>
+
+                        <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-base font-medium text-gray-500">Tổng đơn hàng:
+                            </dt>
+                            <dd class="mt-1.5 text-base font-semibold text-gray-900">
+                                {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ</dd>
+                        </dl>
+
+                        <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-base font-medium text-gray-500">Trạng thái:
+                            </dt>
+                            <dd>
+                                @php
+                                    $colorClasses = [
+                                        'yellow' => 'bg-yellow-500',
+                                        'blue' => 'bg-blue-500',
+                                        'gray' => 'bg-gray-500',
+                                        'green' => 'bg-green-600',
+                                        'red' => 'bg-red-600',
+                                    ];
+
+                                    $colorClass = $colorClasses[$order->orderStatus->color] ?? 'bg-gray-500';
+                                @endphp
+                                <span
+                                    class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white  {{ $colorClass }}">
+                                    {{ $order->orderStatus->name }}
+                                </span>
+                            </dd>
+                        </dl>
+
+                        <div class="w-full grid sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end gap-4">
+                            @if ($order->orderStatus->name == 'Chờ xác nhận')
+                                <button type="button" data-modal-target="deleteBanner-modal-{{ $order->id }}"
+                                    data-modal-toggle="deleteBanner-modal-{{ $order->id }}" class="button-red">Huỷ
+                                    đơn hàng</button>
                             @endif
                             @if ($order->orderStatus->name === 'Hoàn thành')
-                                @if ($order->invoice)
-                                    <a class="link-md mt-2"
-                                        href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
-                                        Xem hóa đơn
-
-                                    </a>
+                                @if ($order->invoice) 
+                                    <a href="{{ route('invoices.show', $order->invoice->invoice_number) }}"
+                                        class="button-red">Xem hóa đơn</a>
                                 @endif
                             @endif
+                            <a href="#" onclick="toggleAccordion({{ $order->id }})"
+                                class="w-full inline-flex justify-center rounded-lg  border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-0 lg:w-auto transition">Xem
+                                chi tiết</a>
                         </div>
                     </div>
-                    {{-- start modal delete --}}
+
+                    {{-- Hủy đơn hàng --}}
                     <div id="deleteBanner-modal-{{ $order->id }}" tabindex="-1"
                         class="hidden  overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                         <div
@@ -165,18 +175,13 @@
                             </div>
                         </div>
                     </div>
-                    {{-- end modal delete --}}
+                    {{-- Chi tiết đơn hàng --}}
                     <div class="max-h-0 overflow-hidden transition" id="content-{{ $order->id }}">
                         <hr class="my-4">
-                        <div class="pb-5 text-sm">
-                            <p class="mb-4 text-base font-medium">Thông tin chi tiết</p>
-                            <div class="flex items-start justify-between">
-                                <div class="mb-4">
-                                    <p class="mb-2 font-medium">Phương thức thanh toán</p>
-                                    <p>{{ $order->paymentMethod->name }}</p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="mb-2 font-medium">Người nhận</p>
+                        <div>
+                            <p class="mb-4 text-base font-medium">Địa chỉ nhận hàng</p>
+                            <div class="flex items-start justify-between mb-4 text-sm">
+                                <div>
                                     <p>{{ $order->user->fullname }}</p>
                                     <p>{{ $order->user->phone }}</p>
                                     <p>{{ $order->address->ward }}, {{ $order->address->district }},
@@ -190,7 +195,7 @@
                         <hr class="my-4">
                         <div class="pb-5 text-sm">
                             <p class="mb-4 text-base font-medium">Danh sách sản phẩm</p>
-                            <div class="grid grid-cols-1 gap-4 md:px-4 lg:grid-cols-2">
+                            <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                                 @php
                                     // Tạo một mảng để nhóm các sản phẩm theo tên, thuộc tính và topping
                                     $groupedProducts = [];
@@ -248,6 +253,46 @@
 
                             </div>
                         </div>
+
+                        <hr class="my-4">
+                        <div class="pb-5 text-sm">
+                            <div class="flex items-start justify-between">
+                                <div class="mb-4">
+                                </div>
+                                <div class="text-right">
+                                    <div>
+                                        <div class="mb-4 flex items-center justify-between gap-32 text-sm">
+                                            <p>Tạm tính</p>
+                                            <p class="font-medium">{{ number_format($order->amount) }}₫</p>
+                                        </div>
+                                        <div class="mb-4 flex items-center justify-between gap-32 text-sm">
+                                            <p>Phí vận chuyển</p>
+                                            <p class="font-medium">{{ number_format($order->shipping_fee) }}₫</p>
+                                        </div>
+                                        <div class="mb-4 flex items-center justify-between gap-32 text-sm">
+                                            <p>Giảm giá</p>
+                                            <p class="font-medium">{{ number_format($order->discount_amount) }}₫</p>
+                                        </div>
+                                        <hr class="mb-2">
+                                        <div class="mb-4 flex items-center justify-between gap-32">
+                                            <p class="text-sm">Tổng tiền</p>
+                                            <p class="font-medium text-[#D30A0A]">
+                                                {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}₫
+                                            </p>
+                                        </div>
+                                        <hr class="mb-2">
+                                        <div class="mb-4 flex items-center justify-between gap-32">
+                                            <p class="text-sm">Phương thức thanh toán</p>
+                                            <p class="font-medium">
+                                                {{ $order->paymentMethod->name }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
 
                 </div>

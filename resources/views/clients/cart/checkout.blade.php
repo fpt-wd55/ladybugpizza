@@ -157,7 +157,6 @@
                     </form>
                     <div class="col-span-2">
                         @livewire('apply-promotion')
-                        
                         <div class="flex justify-between items-center">
                             <a href="{{ route('client.contact') }}"
                                 class="text-sm font-medium text-gray-800 hover:underline">Giỏ
@@ -168,45 +167,45 @@
                 </div>
             </div>
         </div>
-    </form>
-@endsection
-@section('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const oldAddress = document.getElementById('old_address');
-            const detailAddress = document.querySelector('input[name="detail_address"]');
-            const province = document.querySelector('input[name="province"]');
-            const district = document.querySelector('input[name="district"]');
-            const ward = document.querySelector('input[name="ward"]');
-            const rememberAddress = document.getElementById('remember_address');
+        </form>
+    @endsection
+    @section('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const oldAddress = document.getElementById('old_address');
+                const detailAddress = document.querySelector('input[name="detail_address"]');
+                const province = document.querySelector('input[name="province"]');
+                const district = document.querySelector('input[name="district"]');
+                const ward = document.querySelector('input[name="ward"]');
+                const rememberAddress = document.getElementById('remember_address');
 
-            const addressesData = @json($addresses);
+                const addressesData = @json($addresses);
 
-            oldAddress.addEventListener('change', function() {
-                const selectedAddress = addressesData.find(address => address.id == this.value);
-                const fields = [detailAddress, province, district, ward, rememberAddress];
+                oldAddress.addEventListener('change', function() {
+                    const selectedAddress = addressesData.find(address => address.id == this.value);
+                    const fields = [detailAddress, province, district, ward, rememberAddress];
 
-                if (selectedAddress) {
-                    detailAddress.value = selectedAddress.detail_address || '';
-                    province.value = selectedAddress.province || '';
-                    district.value = selectedAddress.district || '';
-                    ward.value = selectedAddress.ward || '';
+                    if (selectedAddress) {
+                        detailAddress.value = selectedAddress.detail_address || '';
+                        province.value = selectedAddress.province || '';
+                        district.value = selectedAddress.district || '';
+                        ward.value = selectedAddress.ward || '';
 
-                    fields.forEach(field => field.setAttribute('disabled', true));
-                } else {
-                    fields.forEach(field => {
-                        field.value = '';
-                        field.removeAttribute('disabled');
-                    });
-                }
+                        fields.forEach(field => field.setAttribute('disabled', true));
+                    } else {
+                        fields.forEach(field => {
+                            field.value = '';
+                            field.removeAttribute('disabled');
+                        });
+                    }
+                });
             });
-        });
 
-        const btnCheckout = document.getElementById('btn-checkout');
-        btnCheckout.addEventListener('click', function(e) {
-            e.preventDefault();
-            const formCheckout = document.getElementById('form-checkout');
-            formCheckout.submit();
-        });
-    </script>
-@endsection
+            const btnCheckout = document.getElementById('btn-checkout');
+            btnCheckout.addEventListener('click', function(e) {
+                e.preventDefault();
+                const formCheckout = document.getElementById('form-checkout');
+                formCheckout.submit();
+            });
+        </script>
+    @endsection
