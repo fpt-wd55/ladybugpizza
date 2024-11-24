@@ -19,7 +19,7 @@
                     <p class="playwrite-gb-s-regular mb-8 text-2xl">Combo</p>
                     <div class="no-scrollbar flex w-full items-center gap-4 overflow-x-auto">
                         @foreach ($combos as $combo)
-                            <a href="{{ route('client.product.showCombo', $combo->slug) }}"
+                            <a href="{{ route('client.product.show', $combo->slug) }}"
                                 class="product-card relative flex w-full flex-shrink-0 overflow-hidden md:w-2/3">
                                 <img alt="" class="h-60 w-1/2 flex-shrink-0 object-cover" loading="lazy"
                                     src="{{ asset('storage/uploads/combos/' . $combo->image) }}"
@@ -40,7 +40,6 @@
                                 </div>
                             </a>
                         @endforeach
-
                     </div>
                 </div>
 
