@@ -63,14 +63,14 @@
                             class="fixed inset-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-modal md:h-full">
                             <div class="relative w-full h-full max-w-2xl md:h-auto">
                                 <!-- Modal content -->
-                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
+                                <div class="relative bg-white rounded-lg shadow">
                                     <!-- Modal header -->
                                     <div class="flex items-start justify-between px-6 py-4 rounded-t">
-                                        <h3 class="text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                        <h3 class="text-lg font-semibold text-gray-500">
                                             Bộ lọc
                                         </h3>
                                         <button type="button"
-                                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                                             data-modal-toggle="filterDropdown">
                                             @svg('tabler-x', 'w-5 h-5')
                                         </button>
@@ -138,7 +138,7 @@
                                     </div>
 
                                     <!-- Modal footer -->
-                                    <div class="flex items-center p-6 space-x-4 rounded-b dark:border-gray-600">
+                                    <div class="flex items-center p-6 space-x-4 rounded-b">
                                         <button type="submit" class="button-red">
                                             Lọc dữ liệu
                                         </button>
@@ -268,16 +268,17 @@
                                             <div
                                                 class="bg-gradient-to-br from-[#bf0808] to-[#f52929] text-white text-center py-8 px-15 rounded-lg shadow-md relative">
                                                 <h3 class="text-lg font-semibold mb-4">
-                                                    <p class="">
-                                                        Giảm @if ($promotion->discount_type == '1')
-                                                            {{ number_format($promotion->discount_value) }}%
-                                                        @elseif ($promotion->discount_type == '2')
-                                                            {{ number_format($promotion->discount_value) }}₫
-                                                        @endif Giảm tối đa
-                                                        {{ number_format($promotion->max_discount) }}₫
+                                                    <p>
+                                                        Giảm
+                                                        {{ $promotion->discount_type == '1' ? $promotion->discount_value . '%' : number_format($promotion->discount_value) . 'đ' }}
+                                                        @if ($promotion->max_discount)
+                                                            Giảm tối đa {{ number_format($promotion->max_discount) }}₫
+                                                        @endif
                                                     </p>
                                                     <p class="mt-1">
-                                                        Đơn Tối Thiểu {{ number_format($promotion->min_order_total) }}₫
+                                                        @if ($promotion->min_order_total)
+                                                            Đơn Tối Thiểu {{ number_format($promotion->min_order_total) }}₫
+                                                        @endif
                                                     </p>
                                                 </h3>
                                                 <div class="flex items-center space-x-2 justify-center">
