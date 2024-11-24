@@ -102,7 +102,7 @@ html {
 }
 
 .label-peer {
-    @apply inline-flex items-center justify-center w-full px-2 py-4 text-gray-700 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-red-500 peer-checked:text-white peer-checked:bg-red-600 hover:text-gray-600 hover:bg-gray-50 transition;
+    @apply inline-flex items-center justify-center w-full p-3 text-gray-700 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-red-500 peer-checked:text-white peer-checked:bg-red-600 hover:text-gray-600 hover:bg-gray-50 transition;
 }
 
 .input {
@@ -428,4 +428,13 @@ button[aria-selected="true"] {
     opacity: 0.5;
     color: #d30a0a !important;
     pointer-events: none;
+}
+
+.product-detail-box {
+    background-image: url("https://www.shakeyspizza.ph/images/pattern8.png");
+    background-repeat: no-repeat;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 22px 24px -30px;
+    background-color: rgb(236, 236, 236);
+    overflow: hidden;
+    padding: 20px;
 }
