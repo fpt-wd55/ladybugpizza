@@ -39,6 +39,13 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="mb-4">
+                                <p class="mb-2 text-sm font-normal">Ghi chú: </p>
+                                <textarea id="notes" rows="4" name="notes" class="text-area"></textarea>
+                                @error('notes')
+                                    <p class="text-sm text-[#D30A0A] pt-2">{{ $message }}</p>
+                                @enderror
+                            </div>
                         </div>
                         {{-- Địa chỉ --}}
                         <div class="mb-5 border rounded-md p-5">
@@ -86,13 +93,6 @@
                                         <p class="text-sm text-[#D30A0A] pt-2">{{ $message }}</p>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="mb-4">
-                                <input id="remember_address" type="checkbox" name="remember_address" value="1"
-                                    {{ old('remember_address') == 1 ? 'checked' : '' }}
-                                    class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-0">
-                                <label for="remember_address" class="ms-2 text-sm">Lưu lại thông
-                                    tin này cho lần sau</label>
                             </div>
                         </div>
                         {{-- Thanh toán --}}
@@ -168,44 +168,49 @@
             </div>
         </div>
         </form>
-    @endsection
-    @section('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const oldAddress = document.getElementById('old_address');
-                const detailAddress = document.querySelector('input[name="detail_address"]');
-                const province = document.querySelector('input[name="province"]');
-                const district = document.querySelector('input[name="district"]');
-                const ward = document.querySelector('input[name="ward"]');
-                const rememberAddress = document.getElementById('remember_address');
+    </div>
+@endsection
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const oldAddress = document.getElementById('old_address');
+            const detailAddress = document.querySelector('input[name="detail_address"]');
+            const province = document.querySelector('input[name="province"]');
+            const district = document.querySelector('input[name="district"]');
+            const ward = document.querySelector('input[name="ward"]');
 
-                const addressesData = @json($addresses);
+            const addressesData = @json($addresses);
 
-                oldAddress.addEventListener('change', function() {
-                    const selectedAddress = addressesData.find(address => address.id == this.value);
-                    const fields = [detailAddress, province, district, ward, rememberAddress];
+            oldAddress.addEventListener('change', function() {
+                const selectedAddress = addressesData.find(address => address.id == this.value);
+                const fields = [detailAddress, province, district, ward];
 
-                    if (selectedAddress) {
-                        detailAddress.value = selectedAddress.detail_address || '';
-                        province.value = selectedAddress.province || '';
-                        district.value = selectedAddress.district || '';
-                        ward.value = selectedAddress.ward || '';
+                if (selectedAddress) {
+                    detailAddress.value = selectedAddress.detail_address || '';
+                    console.log(1);
+                    province.value = selectedAddress.province || '';
+                    district.value = selectedAddress.district || '';
+                    ward.value = selectedAddress.ward || '';
 
-                        fields.forEach(field => field.setAttribute('disabled', true));
-                    } else {
-                        fields.forEach(field => {
-                            field.value = '';
-                            field.removeAttribute('disabled');
-                        });
-                    }
-                });
+                    // add readonly
+                    fields.forEach(field => {
+                        field.setAttribute('readonly', true);
+                    });
+
+                } else {
+                    fields.forEach(field => {
+                        field.value = '';
+                        field.removeAttribute('readonly');
+                    });
+                }
             });
+        });
 
-            const btnCheckout = document.getElementById('btn-checkout');
-            btnCheckout.addEventListener('click', function(e) {
-                e.preventDefault();
-                const formCheckout = document.getElementById('form-checkout');
-                formCheckout.submit();
-            });
-        </script>
-    @endsection
+        const btnCheckout = document.getElementById('btn-checkout');
+        btnCheckout.addEventListener('click', function(e) {
+            e.preventDefault();
+            const formCheckout = document.getElementById('form-checkout');
+            formCheckout.submit();
+        });
+    </script>
+@endsection

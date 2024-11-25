@@ -15,7 +15,7 @@ class ApplyPromotion extends Component
     public $discount = 0;
 
     public function applyPromotion()
-    {  
+    {
         $this->validate([
             'promotion_code' => 'required|string',
         ], [
@@ -62,6 +62,12 @@ class ApplyPromotion extends Component
         if ($promotion->max_discount && $this->discount > $promotion->max_discount) {
             $this->discount = $promotion->max_discount;
         }
+
+        // save promotion to session
+        session()->put('promotion', [
+            'id' => $promotion->id,
+            'discount' => $this->discount,
+        ]);
     }
 
     public function render()
