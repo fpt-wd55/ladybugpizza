@@ -18,17 +18,18 @@ class OrderController extends Controller
     {
         $redirectHome = $this->checkUser();
         if ($redirectHome) {
-            return $redirectHome; 
+            return $redirectHome;
         }
         $status = $request->get('tab');
-        $userId = Auth::id(); 
+        $userId = Auth::id();
         $orders = Order::when($status, function ($query, $status) {
             return $query->whereHas('orderStatus', function ($q) use ($status) {
                 $q->where('slug', $status);
             });
         })
-        ->where('user_id', $userId) 
-        ->paginate(10);
+            ->where('user_id', $userId)
+            ->orderByDesc('created_at')
+            ->get();
         // đếm số lượng order trong tab
         $orderStatuses = OrderStatus::withCount(['orders' => function ($query) use ($userId) {
             $query->where('user_id', $userId);
@@ -38,7 +39,7 @@ class OrderController extends Controller
         return view('clients.order.index', [
             'orderStatuses' => $orderStatuses,
             'invoices' => $invoices,
-            'orders'=> $orders,
+            'orders' => $orders,
         ]);
     }
 
@@ -59,7 +60,7 @@ class OrderController extends Controller
         ]);
     }
 
-    public function postCancel(Order $order , Request $request)
+    public function postCancel(Order $order, Request $request)
     {
         $order = Order::query()->findOrFail($order['id']);
         $reasons = [
@@ -74,12 +75,13 @@ class OrderController extends Controller
         if ($order) {
             $selectedReason = $request->input('canceled_reason');
             $order->canceled_reason = isset($reasons[$selectedReason]) ? $reasons[$selectedReason] : null;
-            $order->order_status_id = 6; 
+            $order->order_status_id = 6;
+            $order->canceled_at = now();
             $order->save();
-    
+
             return redirect()->back()->with('success', 'Hủy đơn hàng thành công');
         }
-    
+
         return redirect()->back()->with('error', 'Hủy đơn hàng thất bại');
     }
 
@@ -88,7 +90,5 @@ class OrderController extends Controller
         return view('clients.order.rate');
     }
 
-    public function postRate()
-    {
-    }
+    public function postRate() {}
 }

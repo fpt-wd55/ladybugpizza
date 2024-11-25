@@ -26,7 +26,7 @@ class ProductController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function menu()
-    { 
+    {
         $categories = Category::where('status', 1)
             ->where('id', '!=', 7)
             ->whereHas('products', function ($query) {
@@ -90,6 +90,12 @@ class ProductController extends Controller
     {
         $validated = $request->validated();
         $cart = Cart::where('user_id', Auth::id())->first();
+        
+        if (!$cart) {
+            $cart = Cart::create([
+                'user_id' => Auth::id(),
+            ]);
+        }
 
         if ($cart) {
             // Thêm sản phẩm vào CartItem

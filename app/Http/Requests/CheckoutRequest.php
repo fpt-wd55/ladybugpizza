@@ -28,8 +28,9 @@ class CheckoutRequest extends FormRequest
             'detail_address' => 'required|string',
             'province' => 'required|string',
             'district' => 'required|string',
-            'ward' => 'required|string', 
+            'ward' => 'required|string',
             'payment_method_id' => 'required|exists:payment_methods,id',
+            'notes' => 'nullable|string',
         ];
     }
 
@@ -46,6 +47,7 @@ class CheckoutRequest extends FormRequest
             'ward.required' => 'Vui lòng chọn Phường/Xã',
             'payment_method_id.required' => 'Vui lòng chọn phương thức thanh toán',
             'payment_method_id.exists' => 'Phương thức thanh toán không khả dụng',
+            'notes.string' => 'Ghi chú không hợp lệ',
         ];
     }
 }

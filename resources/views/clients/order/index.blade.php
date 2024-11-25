@@ -78,14 +78,14 @@
                                     đơn hàng</button>
                             @endif
                             @if ($order->orderStatus->name === 'Hoàn thành')
-                                @if ($order->invoice) 
+                                @if ($order->invoice)
                                     <a href="{{ route('invoices.show', $order->invoice->invoice_number) }}"
                                         class="button-red">Xem hóa đơn</a>
                                 @endif
                             @endif
-                            <a href="#" onclick="toggleAccordion({{ $order->id }})"
+                            <button type="button" onclick="toggleAccordion({{ $order->id }})"
                                 class="w-full inline-flex justify-center rounded-lg  border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-0 lg:w-auto transition">Xem
-                                chi tiết</a>
+                                chi tiết</button>
                         </div>
                     </div>
 
@@ -186,7 +186,10 @@
                                     <p>{{ $order->user->phone }}</p>
                                     <p>{{ $order->address->ward }}, {{ $order->address->district }},
                                         {{ $order->address->province }}</p>
-                                    <p>Ghi chú : {{ $order->address->detail_address }}</p>
+                                    <p>{{ $order->address->detail_address }}</p>
+                                    @if ($order->notes)
+                                        <p>Ghi chú : {{ $order->notes }}</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>

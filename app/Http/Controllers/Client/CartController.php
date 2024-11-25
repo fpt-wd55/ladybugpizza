@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\CartItemAttribute;
 use App\Models\CartItemTopping;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -18,6 +19,12 @@ class CartController extends Controller
         }
 
         $cart = Cart::where('user_id', Auth::id())->first();
+        if (!$cart) {
+            $cart = Cart::create([
+                'user_id' => Auth::id(),
+            ]);
+        }
+
         $cartItems = CartItem::where('cart_id', $cart->id)->get();
 
         foreach ($cartItems as $cartItem) {
