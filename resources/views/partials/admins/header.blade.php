@@ -80,7 +80,13 @@
                 <button type="button" class="flex mx-3 bg-gray-800 rounded-full md:mr-0 ring-0 focus:ring-0"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                     <span class="sr-only">Open user menu</span>
-                    <img src="{{ Auth::user()->avatar() }}" class="object-cover w-10 h-10 rounded-full">
+                    @if (Auth::user()->avatar && file_exists(public_path('storage/uploads/avatars/' . Auth::user()->avatar)))
+                        <img src="{{ asset('storage/uploads/avatars/' . Auth::user()->avatar) }}"
+                            alt="User Avatar" class="w-10 h-10 object-cover rounded-full">
+                    @else
+                        <img src="{{ asset('storage/uploads/avatars/user-default.png') }}"
+                            class="w-10 h-10 object-cover rounded-full">
+                    @endif
                 </button>
                 <!-- User Dropdown menu -->
                 <div class="hidden z-50 my-4 w-56 list-none bg-white rounded divide-y divide-gray-100 shadow text-sm"
