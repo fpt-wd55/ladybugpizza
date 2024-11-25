@@ -12,6 +12,7 @@ use App\Http\Requests\ChangeRequest;
 use App\Http\Requests\InactiveRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Faq;
+use App\Models\Log;
 use App\Models\Membership;
 use App\Models\MembershipRank;
 use Illuminate\Http\Request;
@@ -177,11 +178,35 @@ class ProfileController extends Controller
 
 	public function membershipHistory(Request $request)
 	{
-		$tab = request()->query('tab');
+		$redirectHome = $this->checkUser();
+		if ($redirectHome) {
+			return $redirectHome;
+		}
+		// Lấy thông tin người dùng hiện tại
+		$user = Auth::user();
 
-		return view('clients.profile.membership.history', [
-			'tab' => $tab
-		]);
+		// Lấy tab hiện tại, mặc định là 'receive'
+		$tab = $request->get('tab', 'receive');
+
+		// Lấy dữ liệu lịch sử dựa theo tab
+		if ($tab == 'receive') {
+			$histories = Log::where('user_id', $user->id)
+				->where('action', 'receive_points')
+				->orderBy('created_at', 'desc')
+				->paginate(5)
+				->appends(['tab' => 'receive']); // Thêm tham số tab;
+		} elseif ($tab == 'change') {
+			$histories = Log::where('user_id', $user->id)
+				->where('action', 'exchange_points')
+				->orderBy('created_at', 'desc')
+				->paginate(5)
+				->appends(['tab' => 'change']); // Thêm tham số tab;
+		} else {
+			$histories = collect(); // Nếu tab không hợp lệ, trả về collection rỗng
+		}
+
+		// Truyền dữ liệu vào view
+		return view('clients.profile.membership.history', compact('histories', 'tab'));
 	}
 
 	public function address()
@@ -192,9 +217,9 @@ class ProfileController extends Controller
 		}
 		$user = Auth::user();
 		$addresses = Address::where('user_id', $user->id)
-		->with('user')
-		->orderBy('is_default', 'desc')
-		->paginate(6);
+			->with('user')
+			->orderBy('is_default', 'desc')
+			->paginate(6);
 		return view('clients.profile.address.index', compact('addresses'));
 	}
 
@@ -245,8 +270,7 @@ class ProfileController extends Controller
 	public function promotion()
 	{
 		$myCodes = PromotionUser::where('user_id', Auth::user()->id)
-			->with('promotion')
-			->paginate(10);
+			->with('promotion')->get();
 
 		$countMyCodes = PromotionUser::where('user_id', Auth::user()->id)->count();
 
@@ -257,8 +281,7 @@ class ProfileController extends Controller
 			->where(function ($query) use ($userRankId) {
 				$query->where('is_global', '!=', 2)
 					->orWhere('rank_id', $userRankId);
-			})
-			->paginate(10);
+			})->get();
 
 		$currentPoint = Auth::user()->membership->points ?? 0;
 
@@ -325,7 +348,7 @@ class ProfileController extends Controller
 		return view('clients.profile.address.add');
 	}
 
-	public function updateLocation(AddressRequest $request , Address $address)
+	public function updateLocation(AddressRequest $request, Address $address)
 	{
 		$data = $request->all();
 		// dd($data);
@@ -352,9 +375,9 @@ class ProfileController extends Controller
 	public function storeLocation(AddressRequest $request)
 	{
 		$data = $request->all();
-		 // Kiểm tra số điện thoại
-		 if (is_null(Auth()->user()->phone) || empty(Auth()->user()->phone)) {
-			return redirect()->route('client.profile.index')->with('error','Bạn cần thêm số điện thoại trong phần tài khoản trước khi thêm địa chỉ mới.');
+		// Kiểm tra số điện thoại
+		if (is_null(Auth()->user()->phone) || empty(Auth()->user()->phone)) {
+			return redirect()->route('client.profile.index')->with('error', 'Bạn cần thêm số điện thoại trong phần tài khoản trước khi thêm địa chỉ mới.');
 		}
 		$addressData = [
 			'user_id' => Auth()->user()->id,
@@ -430,12 +453,11 @@ class ProfileController extends Controller
 
 		$id = $address['id'];
 
-        if (Address::destroy($id)) {
-            return redirect()->back()->with('success', 'Xóa địa thành công');
-        } else {
-            return redirect()->back()->with('error', 'Xóa địa chỉ thất bại');
-        }
-		
+		if (Address::destroy($id)) {
+			return redirect()->back()->with('success', 'Xóa địa thành công');
+		} else {
+			return redirect()->back()->with('error', 'Xóa địa chỉ thất bại');
+		}
 	}
 	public function setDefaultAddress(Address $address)
 	{

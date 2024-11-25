@@ -15,6 +15,7 @@ class Topping extends Model
         'slug',
         'image',
         'price',
+        'quantity',
         'category_id'
     ];
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddToCartRequest;
 use App\Models\Category;
 use App\Models\Evaluation;
 use App\Models\Product;
@@ -13,6 +14,8 @@ use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\CartItemAttribute;
+use App\Models\CartItemTopping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,22 +26,27 @@ class ProductController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function menu()
-    {
-        $categories = Category::all();
-
-        // $comboCategory = Category::with(['products.comboDetails.productAttribute.product'])
-        //     ->where('id', 7)
-        //     ->first();
+    { 
+        $categories = Category::where('status', 1)
+            ->where('id', '!=', 7)
+            ->whereHas('products', function ($query) {
+                $query->where('status', 1);
+            })
+            ->get();
 
         $products = [];
 
         $products = Product::where('status', 1)
             ->get();
+        $combos = Product::where('category_id', 7)
+            ->where('status', 1)
+            ->orderByDesc('is_featured')
+            ->get();
 
         return view('clients.product.menu', [
             'categories' => $categories,
             'products' => $products,
-            // 'comboCategory' => $comboCategory
+            'combos' => $combos
         ]);
     }
 
@@ -78,71 +86,76 @@ class ProductController extends Controller
     /**
      * Thêm mới một sản phẩm vào giở hàng
      */
-    public function addToCart(Request $request, $slug)
+    public function addToCart(AddToCartRequest $request, Product $product)
     {
-        $product = Product::where('slug', $slug)->firstOrFail();
-
+        $validated = $request->validated();
         $cart = Cart::where('user_id', Auth::id())->first();
 
-        if (!$cart) {
-            $cart = Cart::create([
-                'user_id' => Auth::id(),
-                'total' => 0,
-                'total_discount' => 0,
+        if ($cart) {
+            // Thêm sản phẩm vào CartItem
+            $cartItem = CartItem::create([
+                'cart_id' => $cart->id,
+                'product_id' => $product->id,
+                'price' => 0,
+                'quantity' => $validated['quantity'],
             ]);
+
+            if (!$cartItem) {
+                return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại sau!');
+            }
+
+            // Thêm thuộc tính vào CartItemAttribute
+            $attributes = Attribute::with('values')
+                ->where('category_id', $product->category->id)
+                ->where('status', 1)
+                ->get();
+            foreach ($attributes as $attribute) {
+                CartItemAttribute::create([
+                    'cart_item_id' => $cartItem->id,
+                    'attribute_value_id' => $validated['attributes_' . $attribute->slug],
+                ]);
+            }
+
+            // Thêm topping vào CartItemTopping
+            if (isset($validated['toppings'])) {
+                foreach ($validated['toppings'] as $topping) {
+                    CartItemTopping::create([
+                        'cart_item_id' => $cartItem->id,
+                        'topping_id' => $topping,
+                    ]);
+                }
+            }
+
+            $priceProduct = $product->price * $validated['quantity'];
+            $priceAttribute = 0;
+            foreach ($attributes as $attribute) {
+                $att = AttributeValue::find($validated['attributes_' . $attribute->slug]);
+                if ($att->price_type == 1) {
+                    $priceAttribute += $att->price;
+                } else {
+                    $priceAttribute += $product->price * $att->price / 100;
+                }
+            }
+            $priceTopping = 0;
+            if (isset($validated['toppings'])) {
+                foreach ($validated['toppings'] as $topping) {
+                    $priceTopping += Topping::find($topping)->price;
+                }
+            }
+            $amount = $priceProduct + $priceAttribute + $priceTopping;
+
+            // Cập nhật giá của CartItem
+            $cartItem->price = $amount;
+            $cartItem->save();
+            // Cập nhật giá trị total của Cart
+            $cart->total += $amount;
+            $cart->save();
+
+            return back()->with('success', 'Thêm sản phẩm vào giỏ hàng thành công!');
         }
 
-        $data = $request->all();
-
-        $attributes = data_get($data, 'attributes', []);
-        $toppings = data_get($data, 'toppings', []);
-
-        $attributePrice = 0;
-        $toppingPrice = 0;
-
-        foreach ($attributes as $attribute) {
-            $attributePrice += AttributeValue::find($attribute)->price($product);
-        }
-
-        foreach ($toppings as $topping) {
-            $toppingPrice += Topping::find($topping)->price;
-        }
-
-        $price = $product->price + $attributePrice + $toppingPrice;
-        $discountPrice = $product->discount_price + $attributePrice + $toppingPrice;
-
-        $cartItem = [
-            'cart_id' => $cart->id,
-            'product_id' => $product->id,
-            'price' => $price,
-            'discount_price' => $discountPrice,
-            'quantity' => $data['quantity'],
-            'amount' => $price * $data['quantity'],
-        ];
-
-        if (!CartItem::create($cartItem)) {
-
-            return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại sau!');
-        }
-
-        return back()->with('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
-
-
-
-
-        // $cartItem = CartItem::where('carg_id', $cart->id())->first();
-
-        // dd($cartItem);
-
-
+        return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại sau!');
     }
-
-    /**
-     * Xoá một list sản phẩm khỏi giỏ hàng (có thể áp dụng cho việc xoá một sản phẩm cụ thể và clear giỏ hàng)
-     * 
-     * @return void
-     */
-    public function removeFromCart() {}
 
     /**
      * Lấy ra danh sách các sản phẩm yêu thích của người dùng đang đăng nhập
@@ -192,20 +205,5 @@ class ProductController extends Controller
         }
 
         return back()->with('error', 'Sản phẩm không tồn tại!');
-    }
-
-    public function showCombo($slug)
-    {
-        $combo = Product::with(['comboDetails.productAttribute.product'])
-            ->where('slug', $slug)
-            ->where('category_id', 7)
-            ->firstOrFail();
-        // Nhóm các sản phẩm trùng nhau trong combo và tính số lượng
-        $groupedComboDetails = $combo->comboDetails->groupBy('product_attribute_id')->map(function ($details) {
-            $detail = $details->first();
-            $detail->quantity = $details->count(); // Đếm số lần xuất hiện của sản phẩm
-            return $detail;
-        });
-        return view('clients.product.detail-combo', compact('combo', 'groupedComboDetails'));
     }
 }

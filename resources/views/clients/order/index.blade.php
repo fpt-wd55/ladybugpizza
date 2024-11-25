@@ -10,77 +10,90 @@
                 <ul class="flex">
                     <li class="me-6 min-w-fit">
                         <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->routeIs('client.order.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
-                            href="{{ route('client.order.index') }}">Tất cả <span class="text-[#D30A0A]">({{ $orderStatuses->sum('orders_count') }})</span></a>
+                            href="{{ route('client.order.index') }}">Tất cả <span
+                                class="text-[#D30A0A]">({{ $orderStatuses->sum('orders_count') }})</span></a>
                     </li>
                     @foreach ($orderStatuses as $status)
                         <li class="me-6 min-w-fit">
                             <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
-                                href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }} ({{ $status->orders_count }})</a>
+                                href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }}
+                                ({{ $status->orders_count }})
+                            </a>
                         </li>
                     @endforeach
                 </ul>
             </div>
             {{-- Danh sách đơn hàng --}}
             @forelse ($orders as $order)
-
                 <div class="product-card mb-4 p-4 hover:cursor-pointer ">
-                    <div class="" onclick="toggleAccordion({{ $order->id }})">
-                        <div class="mb-2 space-y-4 text-sm">
-                            <div class="flex items-center">
-                                <p class="sm:text-xs md:text-base font-medium text-[#D30A0A]">#LADYBUG-2024{{ $order->id }}</p>
-                                <div class="ms-auto space-x-2">
-                                    <span
-                                        class="text-xs font-medium px-2.5 py-0.5 rounded text-{{ $order->orderStatus->color }}-700 bg-{{ $order->orderStatus->color }}-100">{{ $order->orderStatus->name }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-4 flex items-start justify-between">
-                            <div class="flex items-center gap-2">
-                                @if ($order->orderStatus->slug === 'completed')
-                                    <span
-                                        class="badge-light">{{ \Carbon\Carbon::parse($order->completed_at)->format('H:i:s') }}</span>
-                                    <span
-                                        class="badge-light">{{ \Carbon\Carbon::parse($order->completed_at)->format('d/m/Y') }}</span>
-                                @elseif (in_array($order->orderStatus->slug, ['waiting', 'finding_driver', 'shipping', 'confirmed']))
-                                    <span
-                                        class="badge-light">{{ \Carbon\Carbon::parse($order->created_at)->format('H:i:s') }}</span>
-                                    <span
-                                        class="badge-light">{{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}</span>
-                                @elseif ($order->orderStatus->slug === 'cancelled')
-                                    <span
-                                        class="badge-light">{{ \Carbon\Carbon::parse($order->canceled_at)->format('H:i:s') }}</span>
-                                    <span
-                                        class="badge-light">{{ \Carbon\Carbon::parse($order->canceled_at)->format('d/m/Y') }}</span>
-                                @endif
-                            </div>
-                            <div class="text-right">
-                                <p class="font-light text-sm text-gray-600 line-through">
-                                    {{ number_format($order->amount + $order->shipping_fee) }}đ</p>
-                                <p class="text-base font-medium">
-                                    {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ
-                                </p>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-end gap-4">
-                            @if ($order->orderStatus->name !== 'Hoàn thành' && $order->orderStatus->name !== 'Đã hủy')
-                                <a class="link-md"data-modal-target="deleteBanner-modal-{{ $order->id }}"
-                                    data-modal-toggle="deleteBanner-modal-{{ $order->id }}" href="#">Huỷ đơn</a>
+                    <div class="flex flex-wrap items-center gap-y-4">
+                        <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-base font-medium text-gray-500">Mã đơn hàng:
+                            </dt>
+                            <dd class="mt-1.5 text-base font-semibold text-[#D30A0A]">
+                                #{{ $order->id }}
+                            </dd>
+                        </dl>
+
+                        <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-base font-medium text-gray-500">Ngày đặt hàng:
+                            </dt>
+                            <dd class="mt-1.5 text-base font-semibold text-gray-900">
+                                {{ $order->created_at }}</dd>
+                        </dl>
+
+                        <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-base font-medium text-gray-500">Tổng đơn hàng:
+                            </dt>
+                            <dd class="mt-1.5 text-base font-semibold text-gray-900">
+                                {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ</dd>
+                        </dl>
+
+                        <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
+                            <dt class="text-base font-medium text-gray-500">Trạng thái:
+                            </dt>
+                            <dd>
+                                @php
+                                    $colorClasses = [
+                                        'yellow' => 'bg-yellow-500',
+                                        'blue' => 'bg-blue-500',
+                                        'gray' => 'bg-gray-500',
+                                        'green' => 'bg-green-600',
+                                        'red' => 'bg-red-600',
+                                    ];
+
+                                    $colorClass = $colorClasses[$order->orderStatus->color] ?? 'bg-gray-500';
+                                @endphp
+                                <span
+                                    class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white  {{ $colorClass }}">
+                                    {{ $order->orderStatus->name }}
+                                </span>
+                            </dd>
+                        </dl>
+
+                        <div class="w-full grid sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end gap-4">
+                            @if ($order->orderStatus->name == 'Chờ xác nhận')
+                                <button type="button" data-modal-target="deleteBanner-modal-{{ $order->id }}"
+                                    data-modal-toggle="deleteBanner-modal-{{ $order->id }}" class="button-red">Huỷ
+                                    đơn hàng</button>
                             @endif
                             @if ($order->orderStatus->name === 'Hoàn thành')
-                                @if ($order->invoice)
-                                    <a class="link-md"
-                                        href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
-                                        Xem hóa đơn
-
-                                    </a>
+                                @if ($order->invoice) 
+                                    <a href="{{ route('invoices.show', $order->invoice->invoice_number) }}"
+                                        class="button-red">Xem hóa đơn</a>
                                 @endif
                             @endif
+                            <a href="#" onclick="toggleAccordion({{ $order->id }})"
+                                class="w-full inline-flex justify-center rounded-lg  border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-0 lg:w-auto transition">Xem
+                                chi tiết</a>
                         </div>
                     </div>
-                    {{-- start modal delete --}}
+
+                    {{-- Hủy đơn hàng --}}
                     <div id="deleteBanner-modal-{{ $order->id }}" tabindex="-1"
                         class="hidden  overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                        <div class="card relative  max-w-[350px] max-h-sm md:max-w-[500px] md:max-h-sm lg:max-w-lg lg:max-h-lg">
+                        <div
+                            class="card relative  max-w-[350px] max-h-sm md:max-w-[500px] md:max-h-sm lg:max-w-lg lg:max-h-lg">
                             <div class="relative bg-white rounded-lg shadow">
                                 <button type="button"
                                     class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
@@ -114,7 +127,8 @@
                                             <input type="radio" name="canceled_reason" value="3"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
-                                            <label class="text-sm">Muốn thay đổi sản phẩm trong đơn hàng (size, topping,...)</label>
+                                            <label class="text-sm">Muốn thay đổi sản phẩm trong đơn hàng (size,
+                                                topping,...)</label>
                                         </div>
                                         <div class="mb-2">
                                             <input type="radio" name="canceled_reason" value="4"
@@ -161,18 +175,13 @@
                             </div>
                         </div>
                     </div>
-                    {{-- end modal delete --}}
+                    {{-- Chi tiết đơn hàng --}}
                     <div class="max-h-0 overflow-hidden transition" id="content-{{ $order->id }}">
                         <hr class="my-4">
-                        <div class="pb-5 text-sm">
-                            <p class="mb-4 text-base font-medium">Thông tin chi tiết</p>
-                            <div class="flex items-start justify-between">
-                                <div class="mb-4">
-                                    <p class="mb-2 font-medium">Phương thức thanh toán</p>
-                                    <p>{{ $order->paymentMethod->name }}</p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="mb-2 font-medium">Người nhận</p>
+                        <div>
+                            <p class="mb-4 text-base font-medium">Địa chỉ nhận hàng</p>
+                            <div class="flex items-start justify-between mb-4 text-sm">
+                                <div>
                                     <p>{{ $order->user->fullname }}</p>
                                     <p>{{ $order->user->phone }}</p>
                                     <p>{{ $order->address->ward }}, {{ $order->address->district }},
@@ -186,69 +195,111 @@
                         <hr class="my-4">
                         <div class="pb-5 text-sm">
                             <p class="mb-4 text-base font-medium">Danh sách sản phẩm</p>
-                            <div class="grid grid-cols-1 gap-4 md:px-4 lg:grid-cols-2">
+                            <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                                 @php
                                     // Tạo một mảng để nhóm các sản phẩm theo tên, thuộc tính và topping
                                     $groupedProducts = [];
                                     // Lặp qua từng sản phẩm và nhóm chúng
                                     foreach ($order->orderItems as $orderItem) {
-                                       
-                                            $productName = $orderItem->product->name;
-                                            $attributeValue = $orderItem->atrributeValues->map->value->join(', ');
-                                            $toppings = $orderItem->toppingValues->map->name->join(', ');
-                                            // Tạo một key duy nhất để nhóm các sản phẩm trùng nhau
-                                            $key = $productName . '|' . $attributeValue . '|' . $toppings;
-                                            // Nếu key đã tồn tại, tăng số lượng; nếu không, thêm vào mảng
-                                            if (isset($groupedProducts[$key])) {
-                                                $groupedProducts[$key]['quantity'] += 1;
-                                            } else {
-                                                $groupedProducts[$key] = [
-                                                    'product' => $orderItem->product,
-                                                    'attribute' => $attributeValue,
-                                                    'toppings' => $toppings,
-                                                    'quantity' => 1,
-                                                    'price' =>  $orderItem->product->price,
-                                                    'discount_price' => $orderItem->product->discount_price,
-                                                ];
-                                            }
-                                        
+                                        $productName = $orderItem->product->name;
+                                        $attributeValue = $orderItem->atrributeValues->map->value->join(', ');
+                                        $toppings = $orderItem->toppingValues->map->name->join(', ');
+                                        // Tạo một key duy nhất để nhóm các sản phẩm trùng nhau
+                                        $key = $productName . '|' . $attributeValue . '|' . $toppings;
+                                        // Nếu key đã tồn tại, tăng số lượng; nếu không, thêm vào mảng
+                                        if (isset($groupedProducts[$key])) {
+                                            $groupedProducts[$key]['quantity'] += 1;
+                                        } else {
+                                            $groupedProducts[$key] = [
+                                                'product' => $orderItem->product,
+                                                'attribute' => $attributeValue,
+                                                'toppings' => $toppings,
+                                                'quantity' => 1,
+                                                'price' => $orderItem->product->price,
+                                                'discount_price' => $orderItem->product->discount_price,
+                                            ];
+                                        }
                                     }
                                 @endphp
 
                                 <!-- Hiển thị các sản phẩm sau khi đã nhóm -->
                                 @foreach ($groupedProducts as $group)
-                                <div class="product-card overflow-hidden w-auto relative">
-                                    <div class="flex w-full items-center justify-between">
-                                        <div class="flex gap-4">
-                                            <img alt="" class="h-auto w-24 object-cover" loading="lazy"
-                                                src="{{ asset('storage/uploads/products/' . $group['product']->image) }}">
-                                            <div class="py-2 text-left md:min-w-[300px]">
-                                                <p class="mb-2 font-medium">{{ $group['product']->name }}</p>
-                                                <div class="mb-4 text-sm">
-                                                    <p>{{ $group['attribute'] }}</p>
-                                                    <p>Topping: {{ $group['toppings'] }}</p>
-                                                </div>
-                                                <div class="flex items-center gap-2 text-sm">
-                                                    <span class="line-through">{{ number_format($group['discount_price']) }}đ</span>
-                                                    <span class="font-medium">{{ number_format($group['price']) }}đ</span>
+                                    <div class="product-card overflow-hidden w-auto relative">
+                                        <div class="flex w-full items-center justify-between">
+                                            <div class="flex gap-4">
+                                                <img alt="" class="h-auto w-24 object-cover" loading="lazy"
+                                                    src="{{ asset('storage/uploads/products/' . $group['product']->image) }}"
+                                                    onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
+                                                    class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
+                                                <div class="py-2 text-left md:min-w-[300px]">
+                                                    <p class="mb-2 font-medium">{{ $group['product']->name }}</p>
+                                                    <div class="mb-4 text-sm">
+                                                        <p>{{ $group['attribute'] }}</p>
+                                                        <p>Topping: {{ $group['toppings'] }}</p>
+                                                    </div>
+                                                    <div class="flex items-center gap-2 text-sm">
+                                                        <span
+                                                            class="line-through">{{ number_format($group['discount_price']) }}đ</span>
+                                                        <span
+                                                            class="font-medium">{{ number_format($group['price']) }}đ</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <span
+                                            class="absolute bottom-0 right-0 text-[#D30A0A] font-medium p-2">x{{ $group['quantity'] }}</span>
                                     </div>
-                                    <span class="absolute bottom-0 right-0 text-[#D30A0A] font-medium p-2">x{{ $group['quantity'] }}</span>
-                                </div>
-                                
                                 @endforeach
 
                             </div>
                         </div>
+
+                        <hr class="my-4">
+                        <div class="pb-5 text-sm">
+                            <div class="flex items-start justify-between">
+                                <div class="mb-4">
+                                </div>
+                                <div class="text-right">
+                                    <div>
+                                        <div class="mb-4 flex items-center justify-between gap-32 text-sm">
+                                            <p>Tạm tính</p>
+                                            <p class="font-medium">{{ number_format($order->amount) }}₫</p>
+                                        </div>
+                                        <div class="mb-4 flex items-center justify-between gap-32 text-sm">
+                                            <p>Phí vận chuyển</p>
+                                            <p class="font-medium">{{ number_format($order->shipping_fee) }}₫</p>
+                                        </div>
+                                        <div class="mb-4 flex items-center justify-between gap-32 text-sm">
+                                            <p>Giảm giá</p>
+                                            <p class="font-medium">{{ number_format($order->discount_amount) }}₫</p>
+                                        </div>
+                                        <hr class="mb-2">
+                                        <div class="mb-4 flex items-center justify-between gap-32">
+                                            <p class="text-sm">Tổng tiền</p>
+                                            <p class="font-medium text-[#D30A0A]">
+                                                {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}₫
+                                            </p>
+                                        </div>
+                                        <hr class="mb-2">
+                                        <div class="mb-4 flex items-center justify-between gap-32">
+                                            <p class="text-sm">Phương thức thanh toán</p>
+                                            <p class="font-medium">
+                                                {{ $order->paymentMethod->name }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
 
                 </div>
             @empty
-                <div class="card flex flex-col items-center justify-center gap-8 p-4 md:p-8">
-                    @svg('tabler-shopping-cart-off', 'icon-4xl text-gray-400')
-                    <p class="text-center text-[#D30A0A]">Đơn hàng của bạn đang trống</p>
+                <div class="card flex flex-col items-center justify-center gap-8 p-4 md:p-8 min-h-96 text-gray-500">
+                    @svg('tabler-truck-off', 'icon-xl')
+                    <p class="text-center">Đơn hàng của bạn đang trống</p>
                 </div>
             @endforelse
 

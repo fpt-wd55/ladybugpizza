@@ -53,14 +53,14 @@ class CategoryRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Tên sản danh mục là bắt buộc.',
+            'name.required' => 'Vui lòng nhập tên danh mục.',
             'name.string' => 'Yêu cầu giá trị của name phải là một chuỗi',
             'name.unique' => 'Tên danh mục đã tồn tại.',
             'name.max' => 'Tên danh mục tối đa 255 ký tự.',
             'image.required' => 'Ảnh danh mục là bắt buộc.',
-            'image.image' => 'Ảnh danh mục phải là một hình ảnh.',
-            'image.mimes' => 'Ảnh danh mục phải có định dạng jpeg, png, jpg, gif, svg.',
-            'image.max' => 'Ảnh danh mục tối đa 2048 KB.',
+            'image.image' => 'Ảnh danh mục không hợp lệ.',
+            'image.mimes' => 'Ảnh danh mục không hợp lệ.',
+            'image.max' => 'Ảnh danh mục không hợp lệ.',
         ];
     }
 }

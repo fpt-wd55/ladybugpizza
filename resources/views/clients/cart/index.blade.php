@@ -8,84 +8,96 @@
             <div class="mb-8">
                 <p class="title">GIỎ HÀNG ({{ count($cartItems) }})</p>
                 @if (count($cartItems) == 0)
-                    <div class="card flex flex-col items-center justify-center gap-8 p-4 md:p-8">
-                        @svg('tabler-shopping-bag-exclamation', 'icon-4xl text-gray-400')
-                        <p class="text-center">Giỏ hàng của bạn đang trống</p>
+                    <div class="card min-h-96 flex flex-col items-center justify-center gap-8 p-4 text-gray-500 md:p-8">
+                        @svg('tabler-shopping-bag-exclamation', 'icon-xl')
+                        <p class="text text-center">Giỏ hàng của bạn đang trống</p>
                         <a class="button-red" href="{{ route('client.product.menu') }}">Thực đơn</a>
                     </div>
-                @endif
-                <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                    @foreach ($cartItems as $item)
-                        <div class="product-card overflow-hidden">
-                            <div class="flex w-full items-start justify-between pe-4">
-                                <div class="flex gap-4">
-                                    <img loading="lazy" src="{{ asset('storage/uploads/products/tiramisu.jpeg') }}"
-                                        class="img-md h-full object-cover" alt="">
-                                    <div class="text-left py-2">
-                                        <p class="font-medium mb-4">Pizza xúc xích</p>
-                                        <div class="text-sm">
-                                            <p class="line-clamp-1">Đế mỏng, size S</p>
-                                            <p class="line-clamp-1">Topping: Thịt bò, cá hồi</p>
+                @else
+                    <div class="card min-h-96 gap-8 p-4">
+                        <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                            <!-- component -->
+                            @foreach ($cartItems as $item)
+                                <div class="product-card overflow-hidden">
+                                    <div class="grid h-full grid-cols-4">
+                                        <div class="">
+                                            <img class="img-md min-h-full object-cover" loading="lazy"
+                                                onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
+                                                src="{{ asset('storage/uploads/products/' . $item->product->image) }}">
+                                        </div>
+                                        <div class="col-span-3 flex w-full flex-col justify-between p-2 ps-0">
+                                            <div class="item-center flex justify-between">
+                                                <p class="font-medium text-gray-800">{{ $item->product->name }}
+                                                    <span class="ps-2 text-sm font-normal">
+                                                        <span>x</span>
+                                                        <span>{{ $item->quantity }}</span>
+                                                    </span>
+                                                </p>
+                                                <div class="rounded-full text-xs font-medium text-gray-800">
+                                                    <a data-modal-target="deleteCartItemModal-{{ $item->id }}"
+                                                        data-modal-toggle="deleteCartItemModal-{{ $item->id }}"
+                                                        href="#">
+                                                        @svg('tabler-trash-x-filled', 'w-6 h-6 text-red-500')
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-sm">
+                                                <p class="line-clamp-1">
+                                                    {{ implode(', ', $item->attributes->pluck('attribute_value.value')->toArray()) }}
+                                                </p>
+                                                <p class="line-clamp-1">
+                                                    @if (isset($item->toppings) && count($item->toppings) > 0)
+                                                        Topping:
+                                                        {{ implode(', ', $item->toppings->pluck('topping.name')->toArray()) }}
+                                                    @endif
+                                                </p>
+                                            </div>
+                                            <p class="mt-2 font-medium text-gray-800">
+                                                {{ number_format($item->price) }}₫
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="pt-2 text-right">
-                                    <div class="mb-4 flex items-center gap-2">
-                                        <span class="line-through text-sm text-gray-600">320,000₫</span>
-                                        <span class="font-medium">300,000₫</span>
-                                    </div>
-                                    <div class="inline-flex rounded-md shadow-sm" role="group">
-                                        <button class="rounded-s-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500" id="decrement" type="button">
-                                            @svg('tabler-minus', 'icon-sm')
-                                        </button>
-                                        <input class="w-12 border-b border-t border-gray-200 bg-white px-4 py-1 text-center text-sm font-medium text-gray-900 focus:outline-none" name="quantity" value="1">
-                                        <button class="rounded-e-lg border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-500" id="increment" type="button">
-                                            @svg('tabler-plus', 'icon-sm')
-                                        </button>
+                                <div aria-hidden="true"
+                                    class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full"
+                                    id="deleteCartItemModal-{{ $item->id }}" tabindex="-1">
+                                    <div class="relative h-auto w-full max-w-md p-4">
+                                        <div class="relative rounded-lg bg-white p-4 shadow sm:p-5">
+                                            <div class="mb-8 flex flex-col items-center justify-center gap-4 text-sm">
+                                                <div>@svg('tabler-alert-triangle', 'icon-2xl text-red-500')</div>
+                                                <p>Xác nhận xoá sản phẩm khỏi giỏ hàng</p>
+                                            </div>
+                                            <div class="flex items-center gap-4">
+                                                <form action="{{ route('client.product.delete-cart-item', $item) }}"
+                                                    class="w-full" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button class="button-red w-full" type="submit">
+                                                        @svg('tabler-trash-x-filled', 'w-5 h-5')
+                                                    </button>
+                                                </form>
+                                                <button class="button-dark w-full"
+                                                    data-modal-hide="deleteCartItemModal-{{ $item->id }}"
+                                                    type="button">
+                                                    Huỷ
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endif
+
             </div>
-
-            {{-- Aplly discount code --}}
-            <div class="card mb-12 p-4 md:p-8">
-                <div class="mb-8 items-center justify-between gap-8 lg:flex">
-                    <div class="mb-4 md:mb-8 lg:mb-0">
-                        <p class="mb-4 font-medium">Bạn có mã giảm giá</p>
-                        <div class="flex items-center gap-2">
-                            <input class="input" type="text">
-                            <button class="button-red w-32" type="button">Áp dụng</button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="mb-4 flex items-center justify-between gap-32 text-sm">
-                            <p class="">Tổng tiền sản phẩm</p>
-                            <p class="font-medium">150,000₫</p>
-                        </div>
-                        <div class="mb-4 flex items-center justify-between gap-32 text-sm">
-                            <p class="">Phí vận chuyển</p>
-                            <p class="font-medium">150,000₫</p>
-                        </div>
-                        <div class="mb-4 flex items-center justify-between gap-32 text-sm">
-                            <p class="">Giảm giá</p>
-                            <p class="font-medium">150,000₫</p>
-                        </div>
-                        <hr class="mb-4">
-                        <div class="mb-4 flex items-center justify-between gap-32">
-                            <p class="font-medium">Tổng thanh toán</p>
-                            <p class="font-medium">150,000₫</p>
-                        </div>
-                    </div>
-                </div>
-
+            @if (count($cartItems) > 0)
                 <div class="flex items-center justify-end gap-2">
                     <a class="button-dark" href="{{ route('client.product.menu') }}">Tiếp tục mua hàng</a>
-                    <a class="button-red" href="{{ route('client.cart.checkout') }}">Thanh toán</a>
+                    <a class="button-red" href="{{ route('checkout') }}">Thanh toán</a>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 

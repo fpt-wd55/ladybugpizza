@@ -16,21 +16,19 @@ use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
-use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\ToppingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\WebController;
 use App\Http\Controllers\Client\CartController;
+use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\PageController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
-use App\Models\Page;
 use Illuminate\Support\Facades\Route;
-use Laravel\Prompts\Concerns\Fallback;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,12 +49,15 @@ Route::prefix('/')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('client.home');
     Route::get('/menu', [ProductController::class, 'menu'])->name('client.product.menu');
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('client.product.show');
-    Route::get('/combo/{slug}', [ProductController::class, 'showCombo'])->name('client.product.showCombo');
     Route::post('/product/favorite/{slug}', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
-    Route::post('/product/cart/{slug}', [ProductController::class, 'addToCart'])->name('client.product.add-to-cart');
+    // Giỏ hàng
     Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
-    Route::get('/checkout', [CartController::class, 'checkout'])->name('client.cart.checkout');
-    Route::post('/checkout', [CartController::class, 'postCheckout'])->name('client.cart.post-checkout');
+    Route::post('/product/cart/{product}', [ProductController::class, 'addToCart'])->name('client.product.add-to-cart');
+    Route::delete('/product/cart/{cartItem}', [CartController::class, 'delete'])->name('client.product.delete-cart-item');
+    // Thanh toán
+    Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'postCheckout'])->name('post-checkout');
+    // Đơn hàng
     Route::get('/order', [OrderController::class, 'index'])->name('client.order.index');
     Route::get('/order/{order}/invoice}', [OrderController::class, 'invoice'])->name('client.order.invoice');
     Route::patch('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
@@ -78,7 +79,7 @@ Route::prefix('/')->group(function () {
     Route::put('/settings/update/{id}', [ProfileController::class, 'updateStatus'])->name('client.settings.update');
     Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
     Route::post('/profile/promotion/{id}', [ProfileController::class, 'redeemPromotion'])->name('client.profile.redeem-promotion');
-    Route::get('/contact', [PageController::class, 'contact'])->name('client.contact'); 
+    Route::get('/contact', [PageController::class, 'contact'])->name('client.contact');
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
     Route::get('/favorites', [ProductController::class, 'favorites'])->name('client.product.favorites');
     Route::get('product/{slug}/favorite', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
@@ -111,7 +112,6 @@ Route::prefix('/auth')->group(function () {
     Route::post('/recovery', [WebController::class, 'postRecovery'])->name('auth.post-recovery');
     Route::post('/user-info', [WebController::class, 'postUserInfo'])->name('auth.post-user-info');
 });
-
 
 Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function () {
     Route::get('/', function () {
@@ -200,7 +200,6 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::post('/memberships/{membership}/status', [MembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
 
     Route::resource('/transactions', TransactionController::class);
-    Route::resource('/shippings', ShippingController::class);
     Route::resource('/pages', AdminPageController::class);
     Route::resource('/logs', LogController::class);
     // profile
@@ -217,7 +216,6 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/page/restore/{id}', [AdminPageController::class, 'resPage'])->name('resPage');
     Route::delete('/page/forceDestroy/{id}', [AdminPageController::class, 'forceDestroy'])->name('forceDestroy.pages');
     Route::get('/page/export', [AdminPageController::class, 'export'])->name('page.export');
-
 });
 
 // Share route

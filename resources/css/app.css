@@ -49,8 +49,7 @@ html {
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
-  }
-  
+}
 
 /* flowbite components */
 
@@ -103,27 +102,27 @@ html {
 }
 
 .label-peer {
-    @apply inline-flex items-center justify-center w-full px-2 py-4 text-gray-700 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-red-500 peer-checked:text-white peer-checked:bg-red-600 hover:text-gray-600 hover:bg-gray-50 transition;
+    @apply inline-flex items-center justify-center w-full p-3 text-gray-700 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-red-500 peer-checked:text-white peer-checked:bg-red-600 hover:text-gray-600 hover:bg-gray-50 transition;
 }
 
 .input {
-    @apply block w-full text-sm text-gray-900 border py-2 border-gray-300 rounded-lg focus:ring-0 focus:border-[#D30A0A] transition;
+    @apply block w-full text-sm text-gray-900 border py-2 border-gray-300 rounded-md focus:ring-0 focus:border-[#D30A0A] transition;
 }
 
 .input-success {
-    @apply block w-full text-sm text-green-900 border border-green-300 rounded-lg bg-green-50;
+    @apply block w-full text-sm text-green-900 border border-green-300 rounded-md bg-green-50;
 }
 
 .input-error {
-    @apply block w-full text-sm text-[#D30A0A] border border-red-300 rounded-lg bg-red-50;
+    @apply block w-full text-sm text-[#D30A0A] border border-red-300 rounded-md bg-red-50;
 }
 
 .text-area {
-    @apply block w-full text-gray-900 border border-gray-300 rounded-lg;
+    @apply block w-full text-gray-900 border border-gray-300 rounded-md;
 }
 
 .select {
-    @apply bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full;
+    @apply bg-gray-50 border border-gray-300 text-gray-900 rounded-md block w-full;
 }
 
 .input-checkbox {
@@ -187,7 +186,7 @@ html {
 }
 
 .button-primary {
-    @apply rounded bg-red-600 px-8 py-4 text-sm font-medium text-white shadow-lg transition hover:bg-white hover:text-black
+    @apply rounded bg-[#C72B26] px-8 py-4 text-sm font-medium text-white shadow-lg transition hover:bg-white hover:text-black;
 }
 
 .button-toggle {
@@ -199,7 +198,7 @@ html {
 }
 
 .button-default {
-    @apply button bg-[#D30A0A] hover:bg-[#AF0808];
+    @apply button bg-[#C72B26] hover:bg-[#AF0808];
 }
 
 .button-dark {
@@ -219,7 +218,7 @@ html {
 }
 
 .button-red {
-    @apply button bg-[#D30A0A] hover:bg-[#AF0808];
+    @apply button bg-[#C72B26] hover:bg-[#AF0808];
 }
 
 .button-blue {
@@ -422,7 +421,20 @@ button[aria-selected="true"] {
 }
 
 .comfortable {
-    @apply leading-loose tracking-wider
+    @apply leading-loose tracking-wider;
 }
 
+.out-of-stock {
+    opacity: 0.5;
+    color: #d30a0a !important;
+    pointer-events: none;
+}
 
+.product-detail-box {
+    background-image: url("https://www.shakeyspizza.ph/images/pattern8.png");
+    background-repeat: no-repeat;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 22px 24px -30px;
+    background-color: rgb(236, 236, 236);
+    overflow: hidden;
+    padding: 20px;
+}

@@ -16,11 +16,7 @@
                 </a>
             </div>
             <div class="flex items-center">
-                <a href="https://business.facebook.com/latest/inbox/all/?nav_ref=manage_page_ap_plus_inbox_message_button&asset_id=486082071252967"
-                    target="_blank" class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 ring-0 focus:ring-0">
-                    <!-- Chat icon -->
-                    @svg('tabler-message-dots', 'text-gray-500')
-                </a>
+                
                 <!-- Notifications -->
                 <button type="button" data-dropdown-toggle="notification-dropdown"
                     class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 ring-0 focus:ring-0">
@@ -76,88 +72,10 @@
                         </div>
                     </a>
                 </div>
-                <button data-dropdown-toggle="apps-dropdown" type="button"
-                    class="text-gray-500  hover:bg-gray-100 focus:outline-none focus:ring-0 rounded-lg text-sm p-2.5">
-                    {{ svg('tabler-columns', 'w-6 h-6 text-gray-500') }}
-                </button>
-                {{-- App Dropdown menu --}}
-                <div class="hidden overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg"
-                    id="apps-dropdown">
-                    <div class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50">
-                        Tiện ích
-                    </div>
-                    <div class="grid grid-cols-3 gap-4 p-4">
-                        <a href="{{ route('admin.dashboard') }}"
-                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
-                            @svg('tabler-chart-pie', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
-                            <div class="text-sm text-gray-900 ">Thống kê</div>
-                        </a>
-                        <a href="{{ route('admin.users.index') }}"
-                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
-                            @svg('tabler-user', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
-                            <div class="text-sm text-gray-900 ">Tài khoản</div>
-                        </a>
-                        <a href="{{ route('admin.memberships.index') }}"
-                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
-                            @svg('tabler-slideshow', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
-                            <div class="text-sm text-gray-900 ">Điểm thành viên</div>
-                        </a>
-                        <a href="{{ route('admin.categories.index') }}"
-                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
-                            @svg('tabler-category', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
-                            <div class="text-sm text-gray-900 ">Danh mục</div>
-                        </a>
-                        <a href="{{ route('admin.attributes.index') }}"
-                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
-                            @svg('tabler-sort-deacending-small-big', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
-                            <div class="text-sm text-gray-900 ">Thuộc tính</div>
-                        </a>
-                        <a href="{{ route('admin.products.index') }}"
-                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
-                            @svg('tabler-pizza', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
-                            <div class="text-sm text-gray-900 ">Sản phẩm</div>
-                        </a>
-                        <a href="#" class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
-                            @svg('tabler-pizza', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
-                            <div class="text-sm text-gray-900 ">Combo</div>
-                        </a>
-                        <a href="{{ route('admin.toppings.index') }}"
-                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
-                            @svg('tabler-egg', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
-                            <div class="text-sm text-gray-900 ">Topping</div>
-                        </a>
-                        <a href="{{ route('admin.orders.index') }}"
-                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
-                            @svg('tabler-package', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
-                            <div class="text-sm text-gray-900 ">Đơn hàng</div>
-                        </a>
-                        <a href="{{ route('admin.shippings.index') }}"
-                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
-                            @svg('tabler-truck-delivery', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
-                            <div class="text-sm text-gray-900 ">Giao hàng</div>
-                        </a>
-                        <a href="{{ route('admin.promotions.index') }}"
-                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
-                            @svg('tabler-discount-2', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
-                            <div class="text-sm text-gray-900 ">Mã giảm giá</div>
-                        </a>
-                        <a href="{{ route('admin.banners.index') }}"
-                            class="block p-4 text-center rounded-lg hover:bg-gray-100 group">
-                            @svg('tabler-slideshow', 'text-gray-500 mx-auto mb-1 w-7 h-7 group-hover:text-gray-500')
-                            <div class="text-sm text-gray-900 ">Banner</div>
-                        </a>
-                    </div>
-                </div>
                 <button type="button" class="flex mx-3 bg-gray-800 rounded-full md:mr-0 ring-0 focus:ring-0"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                     <span class="sr-only">Open user menu</span>
-                    @if (Auth::check() && Auth::user()->avatar && \Storage::exists('uploads/avatars/' . Auth::user()->avatar))
-                        <img src="{{ asset('storage/uploads/avatars/' . Auth::user()->avatar) }}" alt="User Avatar"
-                            class="object-cover w-10 h-10 rounded-full">
-                    @else
-                        <img src="{{ asset('storage/uploads/avatars/user-default.png') }}" alt="Default Avatar"
-                            class="object-cover w-10 h-10 rounded-full">
-                    @endif
+                    <img src="{{ Auth::user()->avatar() }}" class="object-cover w-10 h-10 rounded-full">
                 </button>
                 <!-- User Dropdown menu -->
                 <div class="hidden z-50 my-4 w-56 list-none bg-white rounded divide-y divide-gray-100 shadow text-sm"
@@ -173,8 +91,7 @@
                                 hàng</a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.profiles.index') }}"
-                                class="block py-2 px-4 hover:bg-gray-100">Tài
+                            <a href="{{ route('admin.profiles.index') }}" class="block py-2 px-4 hover:bg-gray-100">Tài
                                 khoản</a>
                         </li>
                         <li>

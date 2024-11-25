@@ -22,6 +22,9 @@ class Order extends Model
         'payment_method_id',
         'canceled_at',
         'canceled_reason',
+        'fullname',
+        'phone',
+        'email',
     ];
 
     public function user()
@@ -58,5 +61,4 @@ class Order extends Model
     {
         return $this->hasOne(Invoice::class);
     }
-
 }

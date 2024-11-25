@@ -59,9 +59,9 @@ class AttributeController extends Controller
                     'numeric',
                     function ($attribute, $value, $fail) use ($key, $request) {
                         $typePrice = $request->stocks[$key]['attribute_type_price'];
-                        if ($typePrice == 2 && ($value < 1 || $value > 100)) {
+                        if ($typePrice == 2 && ($value < 0 || $value > 100)) {
                             $fail('Giá trị phải nằm trong khoảng từ 1 đến 100');
-                        } elseif ($typePrice == 1 && $value <= 0) {
+                        } elseif ($typePrice == 1 && $value < 0) {
                             $fail('Giá trị không hợp lệ');
                         }
                     }
@@ -147,9 +147,9 @@ class AttributeController extends Controller
                     'numeric',
                     function ($attribute, $value, $fail) use ($key, $request) {
                         $typePrice = $request->old_stocks[$key]['attribute_type_price'];
-                        if ($typePrice == 2 && ($value < 1 || $value > 100)) {
+                        if ($typePrice == 2 && ($value < 0 || $value > 100)) {
                             $fail('Giá trị phải nằm trong khoảng từ 1 đến 100');
-                        } elseif ($typePrice == 1 && $value <= 0) {
+                        } elseif ($typePrice == 1 && $value < 0) {
                             $fail('Giá trị không hợp lệ');
                         }
                     }
@@ -166,9 +166,9 @@ class AttributeController extends Controller
             $request->validate($oldStockRules, $oldStockMessages);
         } else {
             return redirect()->back()->with(['error' => 'Cập nhật thuộc tính không thành công']);
-        } 
+        }
 
-        if ($request->stocks) { 
+        if ($request->stocks) {
             $stockRules = [];
             $stockMessages = [];
 
@@ -181,9 +181,9 @@ class AttributeController extends Controller
                     'numeric',
                     function ($attribute, $value, $fail) use ($key, $request) {
                         $typePrice = $request->stocks[$key]['attribute_type_price'];
-                        if ($typePrice == 2 && ($value < 1 || $value > 100)) {
+                        if ($typePrice == 2 && ($value < 0 || $value > 100)) {
                             $fail('Giá trị phải nằm trong khoảng từ 1 đến 100');
-                        } elseif ($typePrice == 1 && $value <= 0) {
+                        } elseif ($typePrice == 1 && $value < 0) {
                             $fail('Giá trị không hợp lệ');
                         }
                     }
@@ -308,7 +308,5 @@ class AttributeController extends Controller
         $this->exportExcel(Attribute::all(), 'danhsachthuoctinh');
     }
 
-    public function bulkAction(Request $request)
-    { 
-    }
+    public function bulkAction(Request $request) {}
 }

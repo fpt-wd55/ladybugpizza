@@ -13,7 +13,7 @@ class Cart extends Model
     protected $fillable = [
         'user_id',
         'total',
-        'total_discount',
+        // 'total_discount',
     ];
 
     public function user() {

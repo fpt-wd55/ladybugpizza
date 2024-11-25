@@ -74,17 +74,16 @@
                 </ul>
             </li>
             <li>
-                <a class="{{ request()->is('admin/order*') ? 'bg-gray-200' : '' }} group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
+                <a class="{{ request()->is('admin/order*') ? 'bg-gray-200' : '' }} group flex items-center justify-between rounded-lg p-2 text-gray-900 hover:bg-gray-100"
                     href="{{ route('admin.orders.index') }}">
-                    @svg('tabler-package', 'text-gray-500')
-                    <span class="ml-3">Đơn hàng</span>
-                </a>
-            </li>
-            <li>
-                <a class="{{ request()->is('admin/shipping*') ? 'bg-gray-200' : '' }} group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
-                    href="{{ route('admin.shippings.index') }}">
-                    @svg('tabler-truck-delivery', 'text-gray-500')
-                    <span class="ml-3">Giao hàng</span>
+                    <div class="flex items-center justify-start">
+                        @svg('tabler-package', 'text-gray-500')
+                        <span class="ml-3">Đơn hàng</span>
+                    </div>
+                    @if ($pendingOrdersCount > 0)
+                        <span
+                            class="bg-red-100 text-red-600 text-xs font-medium px-2.5 py-0.5 rounded-full border border-red-400">{{ $pendingOrdersCount }}</span>
+                    @endif
                 </a>
             </li>
             <li>
@@ -95,24 +94,25 @@
                 </a>
             </li>
             <li>
-                <button aria-controls="dropdown-page"
-                    class="group flex w-full items-center rounded-lg p-2 text-gray-900 transition duration-75 hover:bg-gray-100"
-                    data-collapse-toggle="dropdown-page" type="button">
+                <a class="{{ request()->is('admin/page*') ? 'bg-gray-200' : '' }} group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
+                    href="{{ route('admin.pages.index') }}">
                     @svg('tabler-app-window', 'text-gray-500')
-                    <span class="ml-3 flex-1 whitespace-nowrap text-left">Trang</span>
-                    @svg('tabler-chevron-down', 'w-4 h-4 text-gray-500')
-                </button>
-                <ul class="{{ request()->is(['admin/page*', 'admin/banner*']) ? 'block' : 'hidden' }} space-y-2 py-2"
-                    id="dropdown-page">
-                    <li>
-                        <a class="{{ request()->is('admin/page*') ? 'bg-gray-200' : '' }} group flex w-full items-center rounded-lg p-2 pl-11 text-gray-900 transition duration-75 hover:bg-gray-100"
-                            href="{{ route('admin.pages.index') }}">Danh sách trang</a>
-                    </li>
-                    <li>
-                        <a class="{{ request()->is('admin/banner*') ? 'bg-gray-200' : '' }} group flex w-full items-center rounded-lg p-2 pl-11 text-gray-900 transition duration-75 hover:bg-gray-100"
-                            href="{{ route('admin.banners.index') }}">Banner</a>
-                    </li>
-                </ul>
+                    <span class="ml-3">Danh sách trang</span>
+                </a>
+            </li>
+            <li>
+                <a class="{{ request()->is('admin/banner*') ? 'bg-gray-200' : '' }} group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
+                    href="{{ route('admin.banners.index') }}">
+                    @svg('tabler-slideshow', 'text-gray-500')
+                    <span class="ml-3">Banner</span>
+                </a>
+            </li>
+            <li>
+                <a class="{{ request()->is('admin/banner*') ? 'bg-gray-200' : '' }} group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
+                    href="https://business.facebook.com/latest/inbox/all/?asset_id=486082071252967" target="_blank">
+                    @svg('tabler-message-2', 'text-gray-500')
+                    <span class="ml-3">Trò chuyện</span>
+                </a>
             </li>
         </ul>
     </div>

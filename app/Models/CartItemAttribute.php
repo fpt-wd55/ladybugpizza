@@ -19,7 +19,7 @@ class CartItemAttribute extends Model
         return $this->belongsTo(CartItem::class);
     }
 
-    public function attributes()
+    public function attribute_value()
     {
         return $this->belongsTo(AttributeValue::class);
     }

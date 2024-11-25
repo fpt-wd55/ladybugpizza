@@ -129,7 +129,7 @@ class UserController extends Controller
             $avatar_name = time() . '_' . pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $avatar->getClientOriginalExtension();
             $validatedData['avatar'] = $avatar_name;
         }
-        
+
         $data = [
             'username' => $user->username,
             'fullname' => trim($validatedData['fullname']),
@@ -177,7 +177,8 @@ class UserController extends Controller
             ->orWhere('phone', 'like', '%' . $request->search . '%')
             ->paginate(10);
         $users->appends(['search' => $request->search]);
-        return view('admins.user.index', compact('users'));
+        $roles = Role::where('id', '>', 1)->get();
+        return view('admins.user.index', compact('users', 'roles'));
     }
 
     public function filter(Request $request)
@@ -194,8 +195,8 @@ class UserController extends Controller
 
         if (isset($request->filter_gender)) {
             $query->whereIn('gender', $request->filter_gender);
-        } 
-        
+        }
+
         if (isset($request->filter_birthday_start)) {
             $query->where('date_of_birth', '>=', $request->filter_birthday_start);
         }

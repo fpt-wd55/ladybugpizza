@@ -1,36 +1,60 @@
 <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
     <div class="grid grid-cols-1 items-center justify-between pb-4 space-y-3 md:space-y-0 md:space-x-4">
         <div class="w-full">
-            <div class="flex items-center w-full space-x-3 md:w-auto">
-                <button id="dropdownTopProductLink" data-dropdown-toggle="dropdownTopProduct"
-                    data-dropdown-placement="bottom-start"
-                    class="flex items-center justify-start w-full py-2 text-lg font-bold text-gray-900 md:w-auto focus:outline-none hover:text-slate-600 focus:z-10 focus:ring-0">
-                    {{ $selectedTopProduct }}
-                    @svg ('tabler-chevron-down', 'w-4 h-4 ml-2 text-gray-500')
-                </button>
-                <!-- Dropdown menu -->
-                <div id="dropdownTopProduct"
-                    class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-80">
-                    <ul class="py-2 text-sm text-gray-700">
-                        <li>
-                            <a href="#" wire:click.prevent="updateTopProduct('mostPurchased')"
-                                class="block px-4 py-2 hover:bg-gray-100">Sản phẩm có lượt mua nhiều nhất</a>
-                        </li>
-                        <li>
-                            <a href="#" wire:click.prevent="updateTopProduct('mostInStock')"
-                                class="block px-4 py-2 hover:bg-gray-100">Sản phẩm tồn kho nhiều nhất</a>
-                        </li>
-                        <li>
-                            <a href="#" wire:click.prevent="updateTopProduct('mostReviewed')"
-                                class="block px-4 py-2 hover:bg-gray-100">Sản phẩm có <strong>lượt</strong> đánh giá cao
-                                nhất</a>
-                        </li>
-                        <li>
-                            <a href="#" wire:click.prevent="updateTopProduct('highestQuality')"
-                                class="block px-4 py-2 hover:bg-gray-100">Sản phẩm có <strong>chất lượng</strong> đánh
-                                giá cao nhất</a>
-                        </li>
-                    </ul>
+            <div class="grid grid-cols-1 lg:grid-cols-3 items-center justify-between pb-4">
+                <div class="w-full col-span-2">
+                    <div class="flex items-center w-full space-x-3 md:w-auto">
+                        <button id="dropdownTopProductLink" data-dropdown-toggle="dropdownTopProduct"
+                            data-dropdown-placement="bottom-start"
+                            class="flex items-center justify-start w-full py-2 text-lg font-bold text-gray-900 md:w-auto focus:outline-none hover:text-slate-600 focus:z-10 focus:ring-0">
+                            {{ $nameSelectedTopProduct }}
+                            @svg ('tabler-chevron-down', 'w-4 h-4 ml-2 text-gray-500')
+                        </button>
+                        <!-- Dropdown menu -->
+                        <div id="dropdownTopProduct"
+                            class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-80">
+                            <ul class="py-2 text-sm text-gray-700">
+                                <li>
+                                    <a href="#" wire:click.prevent="updateSelection('product', 'mostPurchased')"
+                                        class="block px-4 py-2 hover:bg-gray-100">Sản phẩm có lượt mua nhiều nhất</a>
+                                </li>
+                                <li>
+                                    <a href="#" wire:click.prevent="updateSelection('product', 'mostInStock')"
+                                        class="block px-4 py-2 hover:bg-gray-100">Sản phẩm tồn kho nhiều nhất</a>
+                                </li>
+                                <li>
+                                    <a href="#" wire:click.prevent="updateSelection('product', 'mostReviewed')"
+                                        class="block px-4 py-2 hover:bg-gray-100">Sản phẩm có <strong>lượt</strong> đánh
+                                        giá cao nhất</a>
+                                </li>
+                                <li>
+                                    <a href="#" wire:click.prevent="updateSelection('product', 'highestQuality')"
+                                        class="block px-4 py-2 hover:bg-gray-100">Sản phẩm có <strong>chất
+                                            lượng</strong> đánh giá cao nhất</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-start lg:justify-end w-full md:w-auto mt-3 lg:m-0">
+                    <div class="inline-flex items-center rounded-md bg-slate-100 p-1.5">
+                        <button wire:click.prevent="updateSelection('time', 'day')"
+                            class="rounded {{ $selectedTimeTopProduct == 'day' ? 'bg-white' : '' }} px-3 py-1 text-xs font-medium text-black shadow-card hover:bg-white me-1">
+                            Ngày
+                        </button>
+                        <button wire:click.prevent="updateSelection('time', 'week')"
+                            class="rounded {{ $selectedTimeTopProduct == 'week' ? 'bg-white' : '' }} px-3 py-1 text-xs font-medium text-black hover:bg-white me-1">
+                            Tuần
+                        </button>
+                        <button wire:click.prevent="updateSelection('time', 'month')"
+                            class="rounded {{ $selectedTimeTopProduct == 'month' ? 'bg-white' : '' }} px-3 py-1 text-xs font-medium text-black hover:bg-white me-1">
+                            Tháng
+                        </button>
+                        <button wire:click.prevent="updateSelection('time', 'year')"
+                            class="rounded {{ $selectedTimeTopProduct == 'year' ? 'bg-white' : '' }} px-3 py-1 text-xs font-medium text-black hover:bg-white me-1">
+                            Năm
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
