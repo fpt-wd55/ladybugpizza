@@ -50,8 +50,17 @@
                     <a href="{{ route('client.order.index') }}"> @svg('tabler-truck-delivery', 'icon-md')</a>
 
                     <button class="hover:cursor-pointer">
-                        <img class="img-circle h-8 w-8 object-cover" data-dropdown-toggle="userDropdown" loading="lazy"
-                            src="{{ Auth::user()->avatar() }}">
+                        {{-- <img class="img-circle h-8 w-8 object-cover" data-dropdown-toggle="userDropdown" loading="lazy"
+                            src="{{ Auth::user()->avatar() }}"> --}}
+                        @if (Auth::user()->avatar && file_exists(public_path('storage/uploads/avatars/' . Auth::user()->avatar)))
+                            <img src="{{ asset('storage/uploads/avatars/' . Auth::user()->avatar) }}" alt="User Avatar"
+                                class="img-circle h-10 w-10 object-cover" data-dropdown-toggle="userDropdown"
+                                loading="lazy">
+                        @else
+                            <img src="{{ asset('storage/uploads/avatars/user-default.png') }}"
+                                class="img-circle h-8 w-8 object-cover" data-dropdown-toggle="userDropdown"
+                                loading="lazy">
+                        @endif
                     </button>
 
                     {{-- User dropdown --}}
