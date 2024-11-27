@@ -296,5 +296,4 @@ class ComboController extends Controller
         return view('admins.combo.index', compact('combos'));
     }
 
-
 }
