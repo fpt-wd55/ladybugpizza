@@ -21,9 +21,7 @@
                                 <div class="product-card overflow-hidden">
                                     <div class="grid h-full grid-cols-4">
                                         <div class="">
-                                            <img class="img-md min-h-full object-cover" loading="lazy"
-                                                onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
-                                                src="{{ asset('storage/uploads/products/' . $item->product->image) }}">
+                                            <img class="img-md min-h-full object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $item->product->image) }}">
                                         </div>
                                         <div class="col-span-3 flex w-full flex-col justify-between p-2 ps-0">
                                             <div class="item-center flex justify-between">
@@ -34,9 +32,7 @@
                                                     </span>
                                                 </p>
                                                 <div class="rounded-full text-xs font-medium text-gray-800">
-                                                    <a data-modal-target="deleteCartItemModal-{{ $item->id }}"
-                                                        data-modal-toggle="deleteCartItemModal-{{ $item->id }}"
-                                                        href="#">
+                                                    <a data-modal-target="deleteCartItemModal-{{ $item->id }}" data-modal-toggle="deleteCartItemModal-{{ $item->id }}" href="#">
                                                         @svg('tabler-trash-x-filled', 'w-6 h-6 text-red-500')
                                                     </a>
                                                 </div>
@@ -59,9 +55,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div aria-hidden="true"
-                                    class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full"
-                                    id="deleteCartItemModal-{{ $item->id }}" tabindex="-1">
+                                <div aria-hidden="true" class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full" id="deleteCartItemModal-{{ $item->id }}" tabindex="-1">
                                     <div class="relative h-auto w-full max-w-md p-4">
                                         <div class="relative rounded-lg bg-white p-4 shadow sm:p-5">
                                             <div class="mb-8 flex flex-col items-center justify-center gap-4 text-sm">
@@ -69,17 +63,14 @@
                                                 <p>Xác nhận xoá sản phẩm khỏi giỏ hàng</p>
                                             </div>
                                             <div class="flex items-center gap-4">
-                                                <form action="{{ route('client.product.delete-cart-item', $item) }}"
-                                                    class="w-full" method="post">
+                                                <form action="{{ route('client.product.delete-cart-item', $item) }}" class="w-full" method="post">
                                                     @csrf
                                                     @method('delete')
                                                     <button class="button-red w-full" type="submit">
                                                         @svg('tabler-trash-x-filled', 'w-5 h-5')
                                                     </button>
                                                 </form>
-                                                <button class="button-dark w-full"
-                                                    data-modal-hide="deleteCartItemModal-{{ $item->id }}"
-                                                    type="button">
+                                                <button class="button-dark w-full" data-modal-hide="deleteCartItemModal-{{ $item->id }}" type="button">
                                                     Huỷ
                                                 </button>
                                             </div>

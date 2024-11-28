@@ -1,9 +1,9 @@
-<div class="mb-5 border rounded-md p-5">
+<div class="mb-5 rounded-md border p-5">
     <p class="mb-4 font-bold">Đơn hàng của bạn</p>
     <div>
         <form method="post" wire:submit="applyPromotion">
             @csrf
-            <div class="flex items-center gap-2 mb-2">
+            <div class="mb-2 flex items-center gap-2">
                 <input class="input" placeholder="Mã giảm giá" type="text" wire:model="promotion_code">
                 <button class="button-red w-32" type="submit">
                     <p wire:loading.remove>Sử dụng</p>
@@ -11,10 +11,10 @@
                 </button>
             </div>
             @error('promotion_code')
-                <p class="text-sm text-[#D30A0A] pb-2">{{ $message }}</p>
+                <p class="pb-2 text-sm text-[#D30A0A]">{{ $message }}</p>
             @enderror
             @if (session('promotion_code'))
-                <p class="text-sm text-[#D30A0A] pb-2">{{ session('promotion_code') }}</p>
+                <p class="pb-2 text-sm text-[#D30A0A]">{{ session('promotion_code') }}</p>
             @endif
         </form>
     </div>

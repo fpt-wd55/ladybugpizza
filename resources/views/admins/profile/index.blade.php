@@ -11,15 +11,14 @@
                 @csrf
                 @method('PUT')
                 <div class="flex items-center gap-6 mb-8">
-                    @if ($user->avatar && \Storage::exists('uploads/avatars/' . $user->avatar))
+                    @if ($user->avatar && file_exists(public_path('storage/uploads/avatars/' . $user->avatar)))
                         <img id="avatar-preview" src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}"
                             alt="User Avatar" class="w-10 h-10 object-cover rounded-full">
                     @else
                         <img src="{{ asset('storage/uploads/avatars/user-default.png') }}"
                             class="w-10 h-10 object-cover rounded-full">
                     @endif
-                    <input type="file" id="avatar" name="avatar" class="hidden" accept="image/*"
-                        onchange="previewAvatar(event)">
+                    <input class="hidden" id="avatar" onchange="previewAvatar(event)" name="avatar" type="file">
                     <label for="avatar"
                         class="cursor-pointer px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
                         Chọn ảnh

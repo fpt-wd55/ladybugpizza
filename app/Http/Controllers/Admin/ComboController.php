@@ -25,20 +25,8 @@ class ComboController extends Controller
 
     public function create()
     {
-        $pizzas = Product::where('category_id', 1)->get();
-        $bases = AttributeValue::where('attribute_id', 1)->get();
-        $sizes = AttributeValue::where('attribute_id', 2)->get();
-        $sauces = AttributeValue::where('attribute_id',3)->get();
-        $toppings = Topping::all();
-        $categories = Category::whereNotIn('id', [1,7])->with('products')->get();
-        return view('admins.combo.create', [
-            'pizzas' => $pizzas,
-            'bases' => $bases,
-            'sizes' => $sizes,
-            'sauces' => $sauces,
-            'toppings' => $toppings,
-            'categories' => $categories,
-        ]);
+
+        return view('admins.combo.create');
     }
 
     public function store(ComboRequest $request)
@@ -80,20 +68,8 @@ class ComboController extends Controller
 
     public function edit(Product $combo)
     {
-        $pizzas = Product::where('category_id', 1)->get();
-        $bases = AttributeValue::where('attribute_id', 1)->get();
-        $sizes = AttributeValue::where('attribute_id', 2)->get();
-        $sauces = AttributeValue::where('attribute_id',3)->get();
-        $toppings = Topping::all();
-        $categories = Category::whereNotIn('id', [1,7])->with('products')->get();
         return view('admins.combo.edit', [
             'combo' => $combo,
-            'pizzas' => $pizzas,
-            'bases' => $bases,
-            'sizes' => $sizes,
-            'sauces' => $sauces,
-            'toppings' => $toppings,
-            'categories' => $categories,
         ]);
     }
 
@@ -295,6 +271,5 @@ class ComboController extends Controller
 
         return view('admins.combo.index', compact('combos'));
     }
-
 
 }

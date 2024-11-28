@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             UserSeeder::class,
-            LogSeeder::class, 
+            LogSeeder::class,
             CategorySeeder::class,
             AttributeSeeder::class,
             MembershipRankSeeder::class,
@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             ToppingSeeder::class,
             CartSeeder::class,
-            CartItemSeeder::class, 
+            CartItemSeeder::class,
             PaymentMethodSeeder::class,
             PromotionSeeder::class,
             PromotionUserSeeder::class,
@@ -33,10 +33,10 @@ class DatabaseSeeder extends Seeder
             EvaluationSeeder::class,  
             PageSeeder::class, 
             TransactionSeeder::class,
-            InvoiceSeeder::class, 
+            InvoiceSeeder::class,
             FavoriteSeeder::class,
             FaqSeeder::class,
             UserSettingSeeder::class,
-        ]); 
+        ]);
     }
 }
