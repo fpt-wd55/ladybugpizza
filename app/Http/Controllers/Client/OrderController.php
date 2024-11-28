@@ -14,6 +14,7 @@ use App\Http\Requests\EvaluationRequest;
 use App\Models\Evaluation;
 use App\Models\EvaluationImage;
 use App\Models\Membership;
+use App\Models\MembershipRank;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
@@ -125,6 +126,10 @@ class OrderController extends Controller
                         $membership = Membership::where('user_id', Auth::id())->first();
                         $membership->points = $membership->points + 50;
                         $membership->total_spent = $membership->total_spent + 50;
+                        // Cập nhật rank
+                        $ranks = MembershipRank::all();
+                        $currentRank = $this->updateRank($ranks, $membership->total_spent);
+                        $membership->rank_id = $currentRank->id;
                         $membership->save();
                     }
                 }
