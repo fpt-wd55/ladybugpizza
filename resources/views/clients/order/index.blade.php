@@ -408,8 +408,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             @empty

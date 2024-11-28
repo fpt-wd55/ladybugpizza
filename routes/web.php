@@ -6,14 +6,13 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ComboController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\InvoiceController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\Admin\LogController;
 use App\Http\Controllers\Client\MembershipController;
 use App\Http\Controllers\Admin\MembershipController as AdminMembershipController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PromotionController;
-use App\Http\Controllers\Admin\TransactionController;
-use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\TransactionController; 
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
@@ -61,7 +60,6 @@ Route::prefix('/')->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'postCheckout'])->name('post-checkout');
     // Đơn hàng
     Route::get('/order', [OrderController::class, 'index'])->name('client.order.index');
-    Route::get('/order/{order}/invoice}', [OrderController::class, 'invoice'])->name('client.order.invoice');
     Route::patch('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
     Route::post('/order/{order}/evaluation', [OrderController::class, 'evaluation'])->name('client.order.evaluation');
     Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile.index');
@@ -207,9 +205,6 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/profiles', [AdminProfileController::class, 'index'])->name('profiles.index');
     Route::put('/profiles/{user}', [AdminProfileController::class, 'update'])->name('profiles.update');
 
-    // Chat
-    Route::resource('/chats', MessageController::class);
-    Route::get('/components', [DashboardController::class, 'components']);
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
     // pages
     Route::resource('/pages', AdminPageController::class);

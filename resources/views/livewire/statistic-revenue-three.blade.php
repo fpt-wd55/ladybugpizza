@@ -44,7 +44,8 @@
                                     <p class="truncate font-medium text-gray-900">
                                         Mã đơn hàng: #{{ $order->id }}
                                     </p>
-                                    <span class="text-gray-500">{{ number_format($order->amount) }}₫</span>
+                                    <span
+                                        class="text-gray-500">{{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}₫</span>
                                 </div>
                             </div>
                             <div class="inline-flex items-center font-semibold text-gray-900">

@@ -29,7 +29,7 @@
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                 
+
                 <div class="flex items-center space-x-3 w-full md:w-auto">
                     <button data-modal-target="filterDropdown" data-modal-toggle="filterDropdown"
                         class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
@@ -171,7 +171,8 @@
                                 <p>{{ $order->address->ward }}, {{ $order->address->district }},
                                     {{ $order->address->province }}</p>
                             </td>
-                            <td class="px-4 py-2">{{ number_format($order->amount) }}đ</td>
+                            <td class="px-4 py-2">
+                                {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ</td>
                             <td class="px-4 py-2">
                                 @php
                                     $colorClasses = [
@@ -284,7 +285,7 @@
                                             <div class="flex justify-between">
                                                 <div class="basic-2/3">
                                                     <div class="pl-4">
-                                                        <label class="font-semibold mb-5">Sản phẩm</label> <br>
+                                                        <label class="font-semibold mb-5 text-base">Sản phẩm</label> <br>
                                                         @foreach ($order->orderItems as $orderItem)
                                                             <p class="text-gray-800 font-semibold">
                                                                 {{ $orderItem->product->name }}
@@ -302,11 +303,6 @@
                                                             </p>
                                                         @endforeach
                                                     </div>
-                                                </div>
-                                                <div>
-                                                    <label class="font-semibold">Tổng tiền thanh toán</label>
-                                                    <p>{{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}₫
-                                                    </p>
                                                 </div>
                                             </div>
                                             <div class="flex justify-end">
