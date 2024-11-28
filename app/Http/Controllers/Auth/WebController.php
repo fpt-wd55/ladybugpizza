@@ -12,7 +12,10 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UserInfoRequest;
 use App\Mail\Otp;
 use App\Models\Address;
+use App\Models\Cart;
+use App\Models\Membership;
 use App\Models\User;
+use App\Models\UserSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use GuzzleHttp\Client;
@@ -51,7 +54,6 @@ class WebController extends Controller
 
     public function userInfo()
     {
-
         return view('auths.user-info');
     }
 
@@ -101,11 +103,36 @@ class WebController extends Controller
             'district' => $validated['district'],
             'ward' => $validated['ward'],
             'detail_address' => $validated['address'],
-            'title' => $validated['title'],
+            'title' => 'Địa chỉ mặc định',
             'is_default' => 1,
         ];
 
         Address::create($addressData);
+
+        // Thêm giỏ hàng mặc định cho user
+        Cart::create([
+            'user_id' => $user->id,
+            'total' => 0,
+        ]);
+
+        // Thêm bảng member cho user
+        Membership::create([
+            'user_id' => $user->id,
+            'points' => 0,
+            'rank_id' => 1,
+            'total_spent' => 0,
+        ]);
+
+        // Thêm bảng setting cho user
+        UserSetting::create([
+            'user_id' => $user->id,
+            'email_order' => true,
+            'email_promotions' => true,
+            'email_security' => true,
+            'push_order' => true,
+            'push_promotions' => true,
+            'push_security' => true,
+        ]);
 
         return redirect()->route('auth.login')->with('success', 'Đăng ký thành công');
     }
