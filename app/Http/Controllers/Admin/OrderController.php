@@ -9,6 +9,7 @@ use App\Models\OrderStatus;
 use App\Models\PaymentMethod;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class OrderController extends Controller
 {
@@ -56,7 +57,9 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::findOrFail($id);
-        $statuses = ['Hoàn thành', 'Đang giao hàng', 'Đang tìm tài xế', 'Chờ xác nhận', 'Đã xác nhận', 'Đã hủy'];
+        $statuses = OrderStatus::pluck('name')->toArray();
+
+
         return view('admins.order.edit', compact('order', 'statuses'));
     }
 
@@ -66,18 +69,24 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = Order::findOrFail($id);
+        $statuses = OrderStatus::pluck('name')->toArray();
 
-        // Xác thực dữ liệu
         $request->validate([
-            'status' => 'required|string|in:Hoàn thành,Đang giao hàng,Đang tìm tài xế,Chờ xác nhận,Đã xác nhận,Đã hủy',
+            'status' => ['required', 'string', Rule::in($statuses)],
         ]);
 
-        // Cập nhật trạng thái
-        $order->orderStatus->name = $request->status;
-        $order->orderStatus->save();
+        $orderStatus = OrderStatus::where('name', $request->status)->first();
 
-        return redirect()->route('admin.orders.edit', $id)->with('success', 'Trạng thái đã được cập nhật!');
+        if ($orderStatus) {
+            $order->order_status_id = $orderStatus->id;
+            $order->save();
+
+            return redirect()->route('admin.orders.edit', $id)->with('success', 'Trạng thái đã được cập nhật!');
+        }
+
+        return redirect()->route('admin.orders.edit', $id)->withErrors(['status' => 'Không tìm thấy trạng thái hợp lệ.']);
     }
+
 
     public function export()
     {
@@ -90,11 +99,11 @@ class OrderController extends Controller
 
         if (isset($request->filter_status)) {
             $query->whereIn('order_status_id', $request->filter_status);
-        } 
+        }
 
         if (isset($request->filter_paymentMethod)) {
             $query->whereIn('payment_method_id', $request->filter_paymentMethod);
-        } 
+        }
 
         if (isset($request->filter_amount_min)) {
             $query->where('amount', '>=', $request->filter_amount_min);
@@ -102,7 +111,7 @@ class OrderController extends Controller
 
         if (isset($request->filter_amount_max)) {
             $query->where('amount', '<=', $request->filter_amount_max);
-        }  
+        }
 
         if (isset($request->filter_date_min)) {
             $query->where('created_at', '>=', $request->filter_date_min);
@@ -110,7 +119,7 @@ class OrderController extends Controller
 
         if (isset($request->filter_date_max)) {
             $query->where('created_at', '<=', $request->filter_date_max);
-        }    
+        }
 
         $orders = $query->paginate(10);
 

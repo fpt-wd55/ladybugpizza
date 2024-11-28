@@ -75,7 +75,6 @@ class ApplyPromotion extends Component
         $this->cart = Cart::where('user_id', Auth::id())->first();
         $shipping_fee = 30000;
 
-
         return view('livewire.apply-promotion', [
             'cart' => $this->cart,
             'shipping_fee' => $shipping_fee,

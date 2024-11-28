@@ -22,7 +22,13 @@ class CheckoutController extends Controller
     public function checkout()
     {
         $cart = Cart::where('user_id', Auth::id())->first();
-        $cartItems = CartItem::where('cart_id', $cart->id)->get();
+
+        if ($cart) {
+            $cartItems = CartItem::where('cart_id', $cart->id)->get();
+        } else {
+            $cartItems = collect();
+        }
+
 
         foreach ($cartItems as $cartItem) {
             $cartItem->attributes = CartItemAttribute::where('cart_item_id', $cartItem->id)->get();
@@ -31,6 +37,7 @@ class CheckoutController extends Controller
 
         $addresses = Auth::user()->addresses;
         $paymentMethods = PaymentMethod::all();
+
         return view('clients.cart.checkout', [
             'cart' => $cart,
             'cartItems' => $cartItems,
