@@ -17,10 +17,10 @@ class OrderItemAttribute extends Model
     public function orderItem()
     {
         return $this->belongsTo(OrderItem::class);
-    } 
+    }
 
-    public function attributes()
+    public function attribute_value()
     {
         return $this->belongsTo(AttributeValue::class);
-    } 
+    }
 }

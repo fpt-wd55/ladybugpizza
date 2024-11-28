@@ -1,87 +1,144 @@
 @extends('layouts.shared')
 
-@section('title', 'Hoá đơn')
+@section('title', 'Hoá đơn ' . $invoice->invoice_number)
+
+@section('style')
+    <style>
+        @media print {
+            page-break-inside: avoid;
+
+            body * {
+                visibility: hidden;
+                -webkit-print-color-adjust: exact;
+            }
+
+            #content-invoice,
+            #content-invoice * {
+                visibility: visible;
+                /* Hiển thị phần cần in */
+            }
+
+            #content-invoice {
+                position: absolute;
+                border: none !important;
+                top: 0;
+                left: 0;
+                width: 100%;
+            }
+
+            @page {
+                size: A4;
+                margin: 20px;
+            }
+
+            body {
+                margin: 0;
+            }
+        }
+    </style>
+@endsection
 
 @section('content')
     <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
         <div class="mb-8 flex items-center justify-between">
             <p class="title">Hoá đơn</p>
-            <button class="button-red">
+            <button class="button-red" id="print" onclick="print()" data-invoice-number="{{ $invoice->invoice_number }}">
                 @svg('tabler-printer', 'icon-sm md:icon-md md:me-2')
                 <span class="hidden md:inline-block">In hoá đơn</span>
             </button>
         </div>
-        <div class="card p-4 md:p-8">
+        <div class="card p-4 md:p-8 text-sm" id="content-invoice">
             <div class="flex justify-between mb-4 md:mb-8">
-                <div class="">
-                    <p class="title">COMPANY</p>
-                    <div class="text-sm md:text-base">
-                        <p>Địa chỉ công ty</p>
-                        <p>Thành phố</p>
-                        <p>Việt Nam, 03000</p>
+                <div>
+                    <p class="title">LadybugPizza</p>
+                    <div>
+                        <p>Tòa nhà FPT Polytechnic, 13 phố Trịnh Văn Bô</p>
+                        <p>Phương Canh, Nam Từ Liêm</p>
+                        <p>TP Hà Nội, Việt Nam</p>
                         <p>info@ladybugpizza.com</p>
                     </div>
                 </div>
                 <div class="text-right">
-                    <p class="title">{{$user->fullname}}</p>
-                    <div class="text-sm md:text-base">
-                        <p>{{$order->address->detail_address}}</p>
-                        <p>{{$order->address->ward.', '.$order->address->district.', '.$order->address->province}}</p>
-                        <p>{{$user->email}}</p>
+                    <p class="title">{{ $user->fullname }}</p>
+                    <div>
+                        <p>{{ $order->address->detail_address }}</p>
+                        <p>{{ $order->address->ward . ', ' . $order->address->district . ', ' . $order->address->province }}
+                        </p>
+                        <p>{{ $user->email }}</p>
                     </div>
                 </div>
             </div>
             <div class="mb-4 md:md-8">
-                <p class="title">hoá đơn số {{$invoice->invoice_number}}</p>
+                <p class="title">Hoá đơn {{ $invoice->invoice_number }}</p>
             </div>
-            <div class="">
+            <div>
                 <table class="w-full">
                     <thead>
                         <tr class="border-b">
-                            <th class="text-left title-sm">#</th>
+                            <th class="text-left title-sm">STT</th>
                             <th class="text-left title-sm">Sản phẩm</th>
                             <th class="text-right title-sm">Số lượng</th>
                             <th class="text-right title-sm">Đơn giá</th>
                             <th class="text-right title-sm">Tổng tiền</th>
                         </tr>
                     </thead>
-                    <tbody class=>
-                        @foreach ($orderItems as $item )
+                    <tbody>
+                        @foreach ($orderItems as $item)
                             <tr class="border-b">
-                                <td class="text-left py-4 text-sm md:text-base">1</td>
-                                <td class="text-left py-4 text-sm md:text-base">
-                                    <p class="font-medium">Logo Creation</p>
-                                    <p class="font-light">Đế mỏng, Size S</p>
-                                    <p class="font-light">Topping: Thịt bò, Hành tây</p>
+                                <td class="text-left py-3">
+                                    {{ $loop->iteration }}
                                 </td>
-                                <td class="text-right py-4 text-sm md:text-base">{{ $item->quantity }}</td>
-                                <td class="text-right py-4 text-sm md:text-base">{{ number_format($item->price )}}đ</td>
-                                <td class="text-right py-4 text-sm md:text-base">{{ number_format($item->quantity*$item->price) }}đ</td>
+                                <td class="text-left py-3">
+                                    <p class="font-medium">{{ $item->product->name }}</p>
+                                    <p class="font-light">
+                                        {{ implode(', ', $item->attributes->pluck('attribute_value.value')->toArray()) }}
+                                    </p>
+                                    @if (isset($item->toppings) && count($item->toppings) > 0)
+                                        <p class="font-light">Topping:
+                                            {{ implode(', ', $item->toppings->pluck('topping.name')->toArray()) }}</p>
+                                    @endif
+                                </td>
+                                <td class="text-right py-3">{{ $item->quantity }}</td>
+                                <td class="text-right py-3">{{ number_format($item->price) }}đ</td>
+                                <td class="text-right py-3">
+                                    {{ number_format($item->quantity * $item->price) }}đ</td>
                             </tr>
                         @endforeach
+                        <tr class="border-b">
+                            <td colspan="4" class="text-right font-semibold py-3">Tạm tính</td>
+                            <td class="text-right py-3">{{ number_format($order->amount) }}đ</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td colspan="4" class="text-right font-semibold py-3">Phí vận chuyển</td>
+                            <td class="text-right py-3">{{ number_format($order->shipping_fee) }}đ</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td colspan="4" class="text-right font-semibold py-3">Giảm giá</td>
+                            <td class="text-right py-3">
+                                {{ number_format($order->discount_amount ? $order->discount_amount : '0') }}đ</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td colspan="4" class="text-right font-semibold py-3 uppercase">Tổng thanh toán</td>
+                            <td class="text-right py-3">
+                                {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td colspan="4" class="text-right font-semibold py-3 uppercase">Phương thức thanh toán</td>
+                            <td class="text-right py-3">{{ $order->paymentMethod->name }}</td>
+                        </tr>
                     </tbody>
                 </table>
-                <div class="text-right">
-                    <div class="flex justify-end items-center gap-4 border-b py-2">
-                        <p class="font-semibold text-xs md:text-sm lg:text-base">Tạm tính</p>
-                        <p class="text-right py-4 text-sm md:text-base">1,600,000đ</p>
-                    </div>
-                    <div class="flex justify-end items-center gap-4 border-b py-2">
-                        <p class="font-semibold text-xs md:text-sm lg:text-base">Phí vận chuyển</p>
-                        <p class="text-right py-4 text-sm md:text-base">{{ number_format($order->shipping_fee)}}đ</p>
-                    </div>
-                    <div class="flex justify-end items-center gap-4 border-b py-2">
-                        <p class="font-semibold text-xs md:text-sm lg:text-base">Giảm giá</p>
-                        <p class="text-right py-4 text-sm md:text-base">{{ number_format(($order->discount_amount) ? $order->discount_amount : '0')}}đ</p>
-                    </div>
-                    <div class="flex justify-end items-center gap-4 border-b py-2">
-                        <p class="font-semibold uppercase">Tổng thanh toán</p>
-                        <p class="text-right py-4 text-sm md:text-base">{{ number_format($order->amount)}}đ</p>
-                    </div>
-                </div>
-                <p class="text-center mt-6">Cảm ơn bạn rất nhiều đã đặt hàng tại Ladybug Pizza.Chúng tôi mong được gặp lại
+
+                <p class="text-center mt-6">Cảm ơn bạn rất nhiều đã đặt hàng tại Ladybug Pizza. Chúng tôi mong được gặp lại
                     bạn một lần nữa!</p>
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        document.getElementById('print').addEventListener('click', function() {
+            window.print();
+        });
+    </script>
 @endsection
