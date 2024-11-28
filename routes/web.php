@@ -62,7 +62,7 @@ Route::prefix('/')->group(function () {
     Route::get('/order', [OrderController::class, 'index'])->name('client.order.index');
     Route::get('/order/{order}/invoice}', [OrderController::class, 'invoice'])->name('client.order.invoice');
     Route::patch('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
-    Route::post('/order/{order}/rate}', [OrderController::class, 'postRate'])->name('client.order.rate');
+    Route::post('/order/{order}/evaluation', [OrderController::class, 'evaluation'])->name('client.order.evaluation');
     Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile.index');
     Route::put('/profile/update', [ProfileController::class, 'postUpdate'])->name('client.profile.post-update');
     Route::put('/profile/change-password', [ProfileController::class, 'postChangePassword'])->name('client.profile.post-change-password');

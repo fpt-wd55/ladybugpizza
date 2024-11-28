@@ -10,6 +10,11 @@ use App\Models\OrderStatus;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EvaluationRequest;
+use App\Models\Evaluation;
+use App\Models\EvaluationImage;
+use App\Models\Membership;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -85,10 +90,47 @@ class OrderController extends Controller
         return redirect()->back()->with('error', 'Hủy đơn hàng thất bại');
     }
 
-    public function rate()
+    public function evaluation(EvaluationRequest $request, Order $order)
     {
-        return view('clients.order.rate');
-    }
+        $ratings = $request->input('ratings', []);
+        $comments = $request->input('comments', []);
 
-    public function postRate() {}
+        $order = Order::findOrFail($order->id);
+        $orderItems = $order->orderItems;
+        $productIds = $orderItems->pluck('product_id')->toArray();
+        $products = Product::whereIn('id', $productIds)->get();
+
+        foreach ($products as $product) {
+            if (array_key_exists($product->id, $ratings) && array_key_exists($product->id, $comments)) {
+                $rating = $ratings[$product->id];
+                $comment = $comments[$product->id];
+
+                $evaluation = Evaluation::where('user_id', Auth::id())
+                    ->where('product_id', $product->id)
+                    ->where('order_id', $order->id)
+                    ->first();
+
+                if (!$evaluation) {
+                    $data = [
+                        'user_id' => Auth::id(),
+                        'product_id' => $product->id,
+                        'order_id' => $order->id,
+                        'rating' => $rating,
+                        'comment' => $comment,
+                        'status' => 1,
+                    ];
+
+                    if (Evaluation::create($data)) {
+                        // Xử lý cộng điểm
+                        $membership = Membership::where('user_id', Auth::id())->first();
+                        $membership->points = $membership->points + 50;
+                        $membership->total_spent = $membership->total_spent + 50;
+                        $membership->save();
+                    }
+                }
+            }
+        }
+
+        return redirect()->back()->with('success', 'Đánh giá sản phẩm thành công');
+    }
 }
