@@ -28,6 +28,7 @@ use App\Http\Controllers\Client\PageController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\VNPayController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -220,3 +221,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
 
 // Share route
 Route::get('/invoices/{invoiceNumber}', [InvoiceController::class, 'show'])->name('invoices.show');
+
+// VNPay
+Route::post('/payment', [VNPayController::class, 'createPayment'])->name('payment.create');
+Route::get('/vnpay-return', [VNPayController::class, 'returnPayment'])->name('payment.return');

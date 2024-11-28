@@ -150,7 +150,7 @@
                                                 <input {{ old('payment_method_id') == $method->id ? 'checked' : '' }} class="input-radio me-2" id="payment_method_id_{{ $method->id }}" name="payment_method_id" type="radio" value="{{ $method->id }}">
                                                 <label class="text-sm font-normal" for="payment_method_id_{{ $method->id }}">{{ $method->name }}</label>
                                             </div>
-                                            {{-- neu la momo thi hien thi credict card --}}
+                                            {{-- neu la vnpay thi hien thi credict card --}}
                                             @if ($method->id == 1)
                                                 @svg('tabler-credit-card', 'icon-lg text-gray-700')
                                             @else
