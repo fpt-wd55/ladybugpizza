@@ -8,7 +8,8 @@ use App\Http\Controllers\Admin\ComboController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\LogController;
-use App\Http\Controllers\Admin\MembershipController;
+use App\Http\Controllers\Client\MembershipController;
+use App\Http\Controllers\Admin\MembershipController as AdminMembershipController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\TransactionController;
@@ -67,8 +68,8 @@ Route::prefix('/')->group(function () {
     Route::put('/profile/update', [ProfileController::class, 'postUpdate'])->name('client.profile.post-update');
     Route::put('/profile/change-password', [ProfileController::class, 'postChangePassword'])->name('client.profile.post-change-password');
     Route::put('/profile/inactive', [ProfileController::class, 'postInactive'])->name('client.profile.post-inactive');
-    Route::get('/profile/membership', [ProfileController::class, 'membership'])->name('client.profile.membership');
-    Route::get('/profile/membership/history', [ProfileController::class, 'membershipHistory'])->name('client.profile.membership-history');
+    Route::get('/profile/membership', [MembershipController::class, 'membership'])->name('client.profile.membership');
+    Route::get('/profile/membership/history', [MembershipController::class, 'membershipHistory'])->name('client.profile.membership-history');
     Route::get('/profile/address', [ProfileController::class, 'address'])->name('client.profile.address');
     Route::get('/profile/address/add', [ProfileController::class, 'addLocation'])->name('client.profile.add-location');
     Route::post('/profile/address', [ProfileController::class, 'storeLocation'])->name('client.profile.post-location');
@@ -132,7 +133,6 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/order/filter', [AdminOrderController::class, 'filter'])->name('orders.filter');
     Route::get('/order/search', [AdminOrderController::class, 'search'])->name('orders.search');
     Route::get('/order/export', [AdminOrderController::class, 'export'])->name('orders.export');
-    // Route::resource('/carts', AdminCartController::class);
     // Product
     Route::resource('/products', AdminProductController::class);
     Route::post('product/bulk-action', [AdminProductController::class, 'bulkAction'])->name('products.bulkAction');
@@ -194,11 +194,11 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/promotion/search', [PromotionController::class, 'search'])->name('promotions.search');
     Route::get('/promotion/export', [PromotionController::class, 'export'])->name('promotions.export');
     // Membership
-    Route::resource('/memberships', MembershipController::class);
-    Route::get('/membership/filter', [MembershipController::class, 'filter'])->name('memberships.filter');
-    Route::get('/membership/search', [MembershipController::class, 'search'])->name('memberships.search');
-    Route::get('/membership/export', [MembershipController::class, 'export'])->name('memberships.export');
-    Route::post('/memberships/{membership}/status', [MembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
+    Route::resource('/memberships', AdminMembershipController::class);
+    Route::get('/membership/filter', [AdminMembershipController::class, 'filter'])->name('memberships.filter');
+    Route::get('/membership/search', [AdminMembershipController::class, 'search'])->name('memberships.search');
+    Route::get('/membership/export', [AdminMembershipController::class, 'export'])->name('memberships.export');
+    Route::post('/memberships/{membership}/status', [AdminMembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
 
     Route::resource('/transactions', TransactionController::class);
     Route::resource('/pages', AdminPageController::class);
