@@ -107,14 +107,16 @@
                                 <div>
                                     <div class="mb-1 flex items-center gap-2">
                                         <p class="text-sm font-medium">{{ $evaluation->user->fullname }} |
-                                            {{ $evaluation->created_at }}</p>
+                                            {{ $evaluation->created_at->format('d-m-Y H:i') }}</p>
                                     </div>
                                     <div class="flex items-center gap-1">
-                                        @svg('tabler-star-filled', 'icon-sm text-red-500')
-                                        @svg('tabler-star-filled', 'icon-sm text-red-500')
-                                        @svg('tabler-star-filled', 'icon-sm text-red-500')
-                                        @svg('tabler-star-filled', 'icon-sm text-red-500')
-                                        @svg('tabler-star', 'icon-sm text-red-500')
+                                        @for ($i = 0; $i < 5; $i++)
+                                            @if ($i < $evaluation->rating)
+                                                @svg('tabler-star-filled', 'icon-sm text-red-500')
+                                            @else
+                                                @svg('tabler-star', 'icon-sm text-red-500')
+                                            @endif
+                                        @endfor
                                     </div>
                                 </div>
                             </div>
