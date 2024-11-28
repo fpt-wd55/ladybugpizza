@@ -125,6 +125,9 @@
                             <hr>
                         </div>
                     @endforeach
+                    <div class="p-4">
+                        {{ $evaluations->onEachSide(1)->links() }}
+                    </div>
                 </div>
             </div>
         </div>
