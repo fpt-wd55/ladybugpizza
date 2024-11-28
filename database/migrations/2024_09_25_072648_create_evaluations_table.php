@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->integer('rating');
-            $table->text('comment');  
+            $table->text('comment')->nullable();
             $table->integer('status')->default(0)->comment('1: active, 2: inactive');
-            $table->timestamps(); 
+            $table->timestamps();
         });
     }
 

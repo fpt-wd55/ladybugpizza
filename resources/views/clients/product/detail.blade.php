@@ -10,12 +10,12 @@
             <div class="mb-8 grid grid-cols-1 lg:grid-cols-5">
                 {{-- Product detail --}}
                 <div class="col-span-5 md:flex md:gap-8 lg:col-span-2 lg:block product-detail-box rounded-l-lg">
-                    <div class="mb-8 md:h-80 md:w-80">
+                    <div class="mb-8 md:max-h-80 md:max-w-80">
                         <a data-fslightbox="gallery" href="{{ asset('storage/uploads/products/' . $product->image) }}">
                             <img alt="{{ $product->name }}" class="w-full rounded-lg object-cover" loading="lazy"
                                 src="{{ asset('storage/uploads/products/' . $product->image) }}"
                                 onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
-                                class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover" />
+                                class="mr-3 rounded bg-slate-400 object-cover" />
                         </a>
                     </div>
                     <div>
@@ -99,38 +99,28 @@
                 <div class="card col-span-5 p-4 md:p-8">
                     <p class="title">Đánh giá sản phẩm</p>
                     @foreach ($evaluations as $evaluation)
-                        <div class="mb-12">
+                        <div class="my-5">
                             {{-- info --}}
                             <div class="mb-4 flex items-center gap-4">
                                 <img alt="" class="img-circle img-sm" loading="lazy"
                                     src="{{ $evaluation->user->avatar() }}">
                                 <div>
                                     <div class="mb-1 flex items-center gap-2">
-                                        <p class="text-sm font-medium">{{ $evaluation->user->fullname }}</p>
-                                        <div class="flex items-center gap-1">
-                                            @svg('tabler-star-filled', 'icon-sm text-red-500')
-                                            @svg('tabler-star-filled', 'icon-sm text-red-500')
-                                            @svg('tabler-star-filled', 'icon-sm text-red-500')
-                                            @svg('tabler-star-filled', 'icon-sm text-red-500')
-                                            @svg('tabler-star', 'icon-sm text-red-500')
-                                        </div>
+                                        <p class="text-sm font-medium">{{ $evaluation->user->fullname }} |
+                                            {{ $evaluation->created_at }}</p>
                                     </div>
-                                    <p class="text-sm">{{ $evaluation->created_at }}</p>
+                                    <div class="flex items-center gap-1">
+                                        @svg('tabler-star-filled', 'icon-sm text-red-500')
+                                        @svg('tabler-star-filled', 'icon-sm text-red-500')
+                                        @svg('tabler-star-filled', 'icon-sm text-red-500')
+                                        @svg('tabler-star-filled', 'icon-sm text-red-500')
+                                        @svg('tabler-star', 'icon-sm text-red-500')
+                                    </div>
                                 </div>
                             </div>
                             {{-- content --}}
-                            <div class="mb-4 px-14">
+                            <div class="px-14">
                                 <p class="mb-4 text-sm">{{ $evaluation->comment }}</p>
-                                <div class="no-scrollbar flex w-full items-center gap-4 overflow-x-auto">
-                                    @for ($i = 0; $i < 5; $i++)
-                                        <a class="min-w-16 min-h-16 max-w-16 max-h-16 overflow-hidden"
-                                            data-fslightbox="gallery"
-                                            href="{{ asset('storage/uploads/products/tiramisu.jpeg') }}">
-                                            <img class="w-full rounded object-cover" loading="lazy"
-                                                src="{{ asset('storage/uploads/products/tiramisu.jpeg') }}">
-                                        </a>
-                                    @endfor
-                                </div>
                             </div>
                             <hr>
                         </div>
@@ -160,7 +150,6 @@
                             </button>
                         </div>
                     </div>
-                    {{-- <p class="text-sm text-gray-700 py-2 md:p-0 md:ps-5">10 sản phẩm có sẵn</p> --}}
                     @error('quantity')
                         <p class="py-2 text-sm text-red-600 md:p-0 md:ps-5">{{ $message }}</p>
                     @enderror

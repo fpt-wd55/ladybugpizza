@@ -2,6 +2,7 @@
 
 @section('title', 'Lịch sử đơn hàng')
 @section('content')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <div class="min-h-screen">
         <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
             <p class="title">LỊCH SỬ ĐƠN HÀNG</p>
@@ -73,16 +74,17 @@
 
                         <div class="w-full grid sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end gap-4">
                             @if ($order->orderStatus->name == 'Chờ xác nhận')
-                                <button type="button" data-modal-target="deleteBanner-modal-{{ $order->id }}"
-                                    data-modal-toggle="deleteBanner-modal-{{ $order->id }}" class="button-red">Huỷ
+                                <button type="button" data-modal-target="cancelOrder-modal-{{ $order->id }}"
+                                    data-modal-toggle="cancelOrder-modal-{{ $order->id }}" class="button-red">Huỷ
                                     đơn hàng</button>
                             @endif
-                            @if ($order->orderStatus->name === 'Hoàn thành')
-                                @if ($order->invoice)
-                                    <a href="{{ route('invoices.show', $order->invoice->invoice_number) }}"
-                                        class="button-red">Xem hóa đơn</a>
-                                @endif
+
+                            @if ($order->orderStatus->name === 'Hoàn thành' && $order->evaluations->isEmpty())
+                                <button type="button" data-modal-target="reviewOrder-modal-{{ $order->id }}"
+                                    data-modal-toggle="reviewOrder-modal-{{ $order->id }}" class="button-red">Đánh
+                                    giá</button>
                             @endif
+
                             <button type="button" onclick="toggleAccordion({{ $order->id }})"
                                 class="w-full inline-flex justify-center rounded-lg  border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-0 lg:w-auto transition">Xem
                                 chi tiết</button>
@@ -90,14 +92,14 @@
                     </div>
 
                     {{-- Hủy đơn hàng --}}
-                    <div id="deleteBanner-modal-{{ $order->id }}" tabindex="-1"
+                    <div id="cancelOrder-modal-{{ $order->id }}" tabindex="-1"
                         class="hidden  overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                         <div
-                            class="card relative  max-w-[350px] max-h-sm md:max-w-[500px] md:max-h-sm lg:max-w-lg lg:max-h-lg">
+                            class="card relative max-w-[350px] max-h-sm md:max-w-[500px] md:max-h-sm lg:max-w-lg lg:max-h-lg">
                             <div class="relative bg-white rounded-lg shadow">
                                 <button type="button"
                                     class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-                                    data-modal-hide="deleteBanner-modal-{{ $order->id }}">
+                                    data-modal-hide="cancelOrder-modal-{{ $order->id }}">
                                     @svg('tabler-x', 'w-4 h-4')
                                     <span class="sr-only">Close modal</span>
                                 </button>
@@ -105,7 +107,8 @@
                                 <div class="p-5 bg-white rounded-lg shadow-md">
                                     <h2 class="text-xl font-semibold mb-4">Chọn Lý Do Hủy Đơn Hàng</h2>
                                     <p class="text-sm text-gray-600 mb-4">
-                                        Vui lòng chọn lý do hủy. Với lý do này, bạn sẽ hủy tất cả sản phẩm trong đơn hàng và
+                                        Vui lòng chọn lý do hủy. Với lý do này, bạn sẽ hủy tất cả sản phẩm trong đơn
+                                        hàng và
                                         không thể thay đổi sau đó.
                                     </p>
                                     <form action="{{ route('client.order.cancel', $order) }}" method="POST">
@@ -162,12 +165,10 @@
                                             </div>
                                         </div>
                                         <div class="flex justify-between mt-4">
-                                            <button button data-modal-hide="deleteBanner-modal-{{ $order->id }}"
-                                                type="button"
-                                                class="text-sm px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-lg">Không
+                                            <button button data-modal-hide="cancelOrder-modal-{{ $order->id }}"
+                                                type="button" class="button-gray">Không
                                                 Phải Bây Giờ</button>
-                                            <button type="submit"
-                                                class="text-sm px-4 py-2 bg-[#D30A0A] hover:bg-red-800 text-white rounded-lg">Hủy
+                                            <button type="submit" class="button-red">Hủy
                                                 Đơn Hàng</button>
                                         </div>
                                     </form>
@@ -175,9 +176,125 @@
                             </div>
                         </div>
                     </div>
+
+                    {{-- Đánh giá đơn hàng --}}
+                    <div id="reviewOrder-modal-{{ $order->id }}" tabindex="-1"
+                        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                        <div class="card relative w-full max-w-4xl max-h-full">
+                            <div class="relative bg-white rounded-lg ">
+                                <button type="button"
+                                    class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                    data-modal-hide="reviewOrder-modal-{{ $order->id }}">
+                                    @svg('tabler-x', 'w-4 h-4')
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                                <div class="p-5 bg-white rounded-lg shadow-md">
+                                    <h2 class="text-xl font-semibold mb-4">Đánh giá sản phẩm</h2>
+
+                                    <div class="grid grid-cols-1 gap-4">
+                                        @php
+                                            // Tạo một mảng để nhóm các sản phẩm theo tên, thuộc tính và topping
+                                            $groupedProducts = [];
+                                            // Lặp qua từng sản phẩm và nhóm chúng
+                                            foreach ($order->orderItems as $orderItem) {
+                                                $productName = $orderItem->product->name;
+                                                $attributeValue = $orderItem->atrributeValues->map->value->join(', ');
+                                                $toppings = $orderItem->toppingValues->map->name->join(', ');
+                                                // Tạo một key duy nhất để nhóm các sản phẩm trùng nhau
+                                                $key = $productName . '|' . $attributeValue . '|' . $toppings;
+                                                // Nếu key đã tồn tại, tăng số lượng; nếu không, thêm vào mảng
+                                                $groupedProducts[$key] = [
+                                                    'product' => $orderItem->product,
+                                                    'attribute' => $attributeValue,
+                                                    'toppings' => $toppings,
+                                                ];
+                                            }
+                                        @endphp
+
+                                        <!-- Hiển thị các sản phẩm sau khi đã nhóm -->
+                                        <form action="{{ route('client.order.evaluation', $order) }}" method="POST"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            @foreach ($groupedProducts as $group)
+                                                <div class="border-2 border-gray-300 rounded-lg p-5 mb-4">
+                                                    <div class="product-card overflow-hidden w-auto relative text-sm">
+                                                        <div class="flex w-full items-center justify-between">
+                                                            <div class="flex gap-4">
+                                                                <img alt="" class="h-auto w-24 object-cover"
+                                                                    loading="lazy"
+                                                                    src="{{ asset('storage/uploads/products/' . $group['product']->image) }}"
+                                                                    onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
+                                                                    class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
+                                                                <div class="py-2 text-left md:min-w-[300px]">
+                                                                    <p class="mb-2 font-bold">
+                                                                        {{ $group['product']->name }}
+                                                                    </p>
+                                                                    <div class="mb-4 text-sm">
+                                                                        <p>{{ $group['attribute'] }}</p>
+                                                                        <p>Topping: {{ $group['toppings'] }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-rating-{{ $group['product']->id }}">
+                                                        {{-- Đánh giá sao --}}
+                                                        @error('ratings.' . $group['product']->id)
+                                                            <p class="text-center text-sm text-[#D30A0A] mt-3">
+                                                                {{ $message }}</p>
+                                                        @enderror
+                                                        <div id="rating-star-{{ $group['product']->id }}"F
+                                                            class="flex justify-center items-center my-3">
+                                                            <div class="rating-group inline-flex hover:text-[#D30A0A]">
+                                                                @for ($i = 1; $i <= 5; $i++)
+                                                                    <label aria-label="{{ $i }} star"
+                                                                        class="rating__label cursor-pointer p-1"
+                                                                        for="rating_{{ $group['product']->id }}_{{ $i }}">
+                                                                        <i
+                                                                            class="rating__icon--star text-[#D30A0A] group-hover:text-[#D30A0A] pointer-events-none">
+                                                                            @svg('tabler-star-filled', 'icon-lg')
+                                                                        </i>
+                                                                    </label>
+                                                                    <input class="rating__input"
+                                                                        name="ratings[{{ $group['product']->id }}]"
+                                                                        id="rating_{{ $group['product']->id }}_{{ $i }}"
+                                                                        value="{{ $i }}" type="radio"
+                                                                        @if ($i === 5) checked @endif />
+                                                                @endfor
+                                                            </div>
+                                                        </div>
+                                                        {{-- Comment --}}
+                                                        <div class="mb-4">
+                                                            <textarea rows="6" name="comments[{{ $group['product']->id }}]" class="text-area text-sm resize-none"
+                                                                placeholder="Viết đánh giá..."></textarea>
+                                                            @error('comments.' . $group['product']->id)
+                                                                <p class="text-sm text-[#D30A0A] pt-2">{{ $message }}</p>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                            <div class="flex justify-end items-center mt-4">
+                                                <button type="submit" class="button-red">Đánh
+                                                    giá sản phẩm</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {{-- Chi tiết đơn hàng --}}
                     <div class="max-h-0 overflow-hidden transition" id="content-{{ $order->id }}">
                         <hr class="my-4">
+                        @if ($order->orderStatus->name === 'Hoàn thành' && $order->invoice)
+                            <div class="mb-4 flex">
+                                <a href="{{ route('invoices.show', $order->invoice->invoice_number) }}"
+                                    class="button-red">Xem hóa
+                                    đơn</a>
+                            </div>
+                        @endif
                         <div>
                             <p class="mb-4 text-base font-medium">Địa chỉ nhận hàng</p>
                             <div class="flex items-start justify-between mb-4 text-sm">
@@ -191,6 +308,7 @@
                                         <p>Ghi chú : {{ $order->notes }}</p>
                                     @endif
                                 </div>
+
                             </div>
                         </div>
 
@@ -227,33 +345,29 @@
 
                                 <!-- Hiển thị các sản phẩm sau khi đã nhóm -->
                                 @foreach ($groupedProducts as $group)
-                                    <div class="product-card overflow-hidden w-auto relative">
-                                        <div class="flex w-full items-center justify-between">
-                                            <div class="flex gap-4">
-                                                <img alt="" class="h-auto w-24 object-cover" loading="lazy"
-                                                    src="{{ asset('storage/uploads/products/' . $group['product']->image) }}"
-                                                    onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
-                                                    class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
-                                                <div class="py-2 text-left md:min-w-[300px]">
-                                                    <p class="mb-2 font-medium">{{ $group['product']->name }}</p>
-                                                    <div class="mb-4 text-sm">
-                                                        <p>{{ $group['attribute'] }}</p>
-                                                        <p>Topping: {{ $group['toppings'] }}</p>
-                                                    </div>
-                                                    <div class="flex items-center gap-2 text-sm">
-                                                        <span
-                                                            class="line-through">{{ number_format($group['discount_price']) }}đ</span>
-                                                        <span
-                                                            class="font-medium">{{ number_format($group['price']) }}đ</span>
+                                    <a href="{{ route('client.product.show', $group['product']->slug) }}">
+                                        <div class="product-card overflow-hidden w-auto relative">
+                                            <div class="flex w-full items-center justify-between">
+                                                <div class="flex gap-4">
+                                                    <img alt="" class="h-auto w-24 object-cover" loading="lazy"
+                                                        src="{{ asset('storage/uploads/products/' . $group['product']->image) }}"
+                                                        onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
+                                                        class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
+                                                    <div class="py-2 text-left md:min-w-[300px]">
+                                                        <p class="mb-2 font-medium">{{ $group['product']->name }}</p>
+                                                        <div class="mb-4 text-sm">
+                                                            <p>{{ $group['attribute'] }}</p>
+                                                            <p>Topping: {{ $group['toppings'] }}</p>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
+                                            <span
+                                                class="absolute bottom-0 right-0 text-[#D30A0A] font-medium p-2">x{{ $group['quantity'] }}</span>
                                         </div>
-                                        <span
-                                            class="absolute bottom-0 right-0 text-[#D30A0A] font-medium p-2">x{{ $group['quantity'] }}</span>
-                                    </div>
+                                    </a>
                                 @endforeach
-
                             </div>
                         </div>
 
@@ -297,7 +411,6 @@
 
 
                     </div>
-
                 </div>
             @empty
                 <div class="card flex flex-col items-center justify-center gap-8 p-4 md:p-8 min-h-96 text-gray-500">
