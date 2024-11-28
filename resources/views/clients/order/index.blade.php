@@ -10,11 +10,14 @@
             <div class="no-scrollbar mb-4 overflow-x-auto border-b border-gray-200 text-left text-sm">
                 <ul class="flex">
                     <li class="me-6 min-w-fit">
-                        <a class="{{ request()->routeIs('client.order.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }} inline-block rounded-t-lg border-b-2 pb-2" href="{{ route('client.order.index') }}">Tất cả <span class="text-[#D30A0A]">({{ $orderStatuses->sum('orders_count') }})</span></a>
+                        <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->routeIs('client.order.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
+                            href="{{ route('client.order.index') }}">Tất cả <span
+                                class="text-[#D30A0A]">({{ $orderStatuses->sum('orders_count') }})</span></a>
                     </li>
                     @foreach ($orderStatuses as $status)
                         <li class="me-6 min-w-fit">
-                            <a class="{{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }} inline-block rounded-t-lg border-b-2 pb-2" href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }}
+                            <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
+                                href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }}
                                 ({{ $status->orders_count }})
                             </a>
                         </li>
@@ -23,32 +26,32 @@
             </div>
             {{-- Danh sách đơn hàng --}}
             @forelse ($orders as $order)
-                <div class="product-card mb-4 p-4 hover:cursor-pointer">
+                <div class="product-card mb-4 p-4 hover:cursor-pointer ">
                     <div class="flex flex-wrap items-center gap-y-4">
                         <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                            <dt class="text-sm text-gray-500">Mã đơn hàng:
+                            <dt class="text-base font-medium text-gray-500">Mã đơn hàng:
                             </dt>
-                            <dd class="mt-1.5 text-sm font-medium text-[#D30A0A]">
+                            <dd class="mt-1.5 text-base font-semibold text-[#D30A0A]">
                                 #{{ $order->id }}
                             </dd>
                         </dl>
 
                         <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                            <dt class="text-sm text-gray-500">Thời gian đặt hàng:
+                            <dt class="text-base font-medium text-gray-500">Ngày đặt hàng:
                             </dt>
-                            <dd class="mt-1.5 text-sm font-medium text-gray-900">
+                            <dd class="mt-1.5 text-base font-semibold text-gray-900">
                                 {{ $order->created_at }}</dd>
                         </dl>
 
                         <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                            <dt class="text-sm text-gray-500">Tổng đơn hàng:
+                            <dt class="text-base font-medium text-gray-500">Tổng đơn hàng:
                             </dt>
-                            <dd class="mt-1.5 text-sm font-medium text-gray-900">
+                            <dd class="mt-1.5 text-base font-semibold text-gray-900">
                                 {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ</dd>
                         </dl>
 
                         <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                            <dt class="text-sm text-gray-500">Trạng thái:
+                            <dt class="text-base font-medium text-gray-500">Trạng thái:
                             </dt>
                             <dd>
                                 @php
@@ -62,7 +65,8 @@
 
                                     $colorClass = $colorClasses[$order->orderStatus->color] ?? 'bg-gray-500';
                                 @endphp
-                                <span class="{{ $colorClass }} me-2 mt-1.5 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white">
+                                <span
+                                    class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white  {{ $colorClass }}">
                                     {{ $order->orderStatus->name }}
                                 </span>
                             </dd>
@@ -111,43 +115,61 @@
                                         @csrf
                                         @method('PATCH')
                                         <div class="mb-2">
-                                            <input class="input-radio" id="reason-1" name="canceled_reason" onchange="toggleTextarea({{ $order->id }}, false)" type="radio" value="1">
-                                            <label class="text-sm" for="reason-1">Muốn thay đổi địa chỉ giao hàng</label>
+                                            <input type="radio" name="canceled_reason" value="1"
+                                                class="mr-1 text-[#D30A0A] focus:ring-0"
+                                                onchange="toggleTextarea({{ $order->id }}, false)">
+                                            <label class="text-sm">Muốn thay đổi địa chỉ giao hàng</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input class="input-radio" id="reason-2" name="canceled_reason" onchange="toggleTextarea({{ $order->id }}, false)" type="radio" value="2">
-                                            <label class="text-sm" for="reason-2">Muốn nhập/thay đổi mã Voucher</label>
+                                            <input type="radio" name="canceled_reason" value="2"
+                                                class="mr-1 text-[#D30A0A] focus:ring-0"
+                                                onchange="toggleTextarea({{ $order->id }}, false)">
+                                            <label class="text-sm">Muốn nhập/thay đổi mã Voucher</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input class="input-radio" id="reason-3" name="canceled_reason" onchange="toggleTextarea({{ $order->id }}, false)" type="radio" value="3">
-                                            <label class="text-sm" for="reason-3">Muốn thay đổi sản phẩm trong đơn hàng (size,
+                                            <input type="radio" name="canceled_reason" value="3"
+                                                class="mr-1 text-[#D30A0A] focus:ring-0"
+                                                onchange="toggleTextarea({{ $order->id }}, false)">
+                                            <label class="text-sm">Muốn thay đổi sản phẩm trong đơn hàng (size,
                                                 topping,...)</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input class="input-radio" id="reason-4" name="canceled_reason" onchange="toggleTextarea({{ $order->id }}, false)" type="radio" value="4">
-                                            <label class="text-sm" for="reason-4">Thủ tục thanh toán quá rắc rối</label>
+                                            <input type="radio" name="canceled_reason" value="4"
+                                                class="mr-1 text-[#D30A0A] focus:ring-0"
+                                                onchange="toggleTextarea({{ $order->id }}, false)">
+                                            <label class="text-sm">Thủ tục thanh toán quá rắc rối</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input class="input-radio" id="reason-5" name="canceled_reason" onchange="toggleTextarea({{ $order->id }}, false)" type="radio" value="5">
-                                            <label class="text-sm" for="reason-5">Tìm thấy giá rẻ hơn ở chỗ khác</label>
+                                            <input type="radio" name="canceled_reason" value="5"
+                                                class="mr-1 text-[#D30A0A] focus:ring-0"
+                                                onchange="toggleTextarea({{ $order->id }}, false)">
+                                            <label class="text-sm">Tìm thấy giá rẻ hơn ở chỗ khác</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input class="input-radio" id="reason-6" name="canceled_reason" onchange="toggleTextarea({{ $order->id }}, false)" type="radio" value="6">
-                                            <label class="text-sm" for="reason-6">Đổi ý, không muốn mua nữa</label>
+                                            <input type="radio" name="canceled_reason" value="6"
+                                                class="mr-1 text-[#D30A0A] focus:ring-0"
+                                                onchange="toggleTextarea({{ $order->id }}, false)">
+                                            <label class="text-sm">Đổi ý, không muốn mua nữa</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input class="input-radio" id="otherReason-{{ $order->id }}" name="canceled_reason" onchange="toggleTextarea({{ $order->id }}, true)" type="radio" value="7">
-                                            <label class="text-sm" for="otherReason-{{ $order->id }}">Lý do khác :</label>
-                                            <div class="mt-2">
-                                                <textarea class="text-area" disabled id="OrderNotes-{{ $order->id }}" name="reason" placeholder="Nhập lý do..." rows="4"></textarea>
+                                            <input type="radio" id="otherReason-{{ $order->id }}"
+                                                name="canceled_reason" value="7"
+                                                class="mr-1 text-[#D30A0A] focus:ring-0"
+                                                onchange="toggleTextarea({{ $order->id }}, true)">
+                                            <label class="text-sm" for="otherReason-{{ $order->id }}">Lý do khác
+                                                :</label>
+                                            <div>
+                                                <textarea id="OrderNotes-{{ $order->id }}" name="reason"
+                                                    class="mt-2 w-full rounded-lg border-gray-200 shadow-sm sm:text-sm" rows="4" placeholder="Nhập lý do..."
+                                                    disabled></textarea>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class="flex justify-between mt-4">
                                             <button button data-modal-hide="cancelOrder-modal-{{ $order->id }}"
                                                 type="button" class="button-gray">Không
                                                 Phải Bây Giờ</button>
                                             <button type="submit" class="button-red">Hủy
-                                                Đơn Hàng</button> 
+                                                Đơn Hàng</button>
                                         </div>
                                     </form>
                                 </div>
@@ -275,7 +297,7 @@
                         @endif
                         <div>
                             <p class="mb-4 text-base font-medium">Địa chỉ nhận hàng</p>
-                            <div class="mb-4 flex items-start justify-between text-sm">
+                            <div class="flex items-start justify-between mb-4 text-sm">
                                 <div>
                                     <p>{{ $order->user->fullname }}</p>
                                     <p>{{ $order->user->phone }}</p>
@@ -336,7 +358,8 @@
                                                         <div class="mb-4 text-sm">
                                                             <p>{{ $group['attribute'] }}</p>
                                                             <p>Topping: {{ $group['toppings'] }}</p>
-                                                        </div> 
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -344,8 +367,6 @@
                                                 class="absolute bottom-0 right-0 text-[#D30A0A] font-medium p-2">x{{ $group['quantity'] }}</span>
                                         </div>
                                     </a>
-                                        <span class="absolute bottom-0 right-0 p-2 font-medium text-[#D30A0A]">x{{ $group['quantity'] }}</span>
-                                    </div>
                                 @endforeach
                             </div>
                         </div>
@@ -392,7 +413,7 @@
                     </div>
                 </div>
             @empty
-                <div class="card min-h-96 flex flex-col items-center justify-center gap-8 p-4 text-gray-500 md:p-8">
+                <div class="card flex flex-col items-center justify-center gap-8 p-4 md:p-8 min-h-96 text-gray-500">
                     @svg('tabler-truck-off', 'icon-xl')
                     <p class="text-center">Đơn hàng của bạn đang trống</p>
                 </div>
