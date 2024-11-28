@@ -29,8 +29,7 @@ class UserInfoRequest extends FormRequest
             'address' => 'required|max:255',
             'province' => 'required',
             'district' => 'required',
-            'ward' => 'required',
-            'title' => 'required|max:255',
+            'ward' => 'required', 
         ];
     }
 
@@ -49,9 +48,7 @@ class UserInfoRequest extends FormRequest
             'district.required' => 'Quận/Huyện không được để trống',
             'ward.required' => 'Phường/Xã không được để trống',
             'address.required' => 'Địa chỉ không được để trống',
-            'address.max' => 'Địa chỉ không được quá 255 ký tự',
-            'title.required' => 'Loại địa chỉ không được để trống',
-            'title.max' => 'Loại địa chỉ không được quá 255 ký tự',
+            'address.max' => 'Địa chỉ không được quá 255 ký tự', 
         ];
     }
 }
