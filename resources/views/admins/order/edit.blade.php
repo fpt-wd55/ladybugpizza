@@ -22,7 +22,7 @@
                         @method('PUT')
                         <div class="mb-4">
                             <label class="mb-2 block font-semibold" for="status">Trạng thái</label>
-                            <select class="select" id="status" name="status">
+                            <select class="input" id="status" name="status">
                                 @foreach ($statuses as $status)
                                     <option {{ $order->orderStatus->name === $status ? 'selected' : '' }}
                                         value="{{ $status }}">
