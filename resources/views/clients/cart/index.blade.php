@@ -90,28 +90,5 @@
                 </div>
             @endif
         </div>
-    </div>
-
-    <script>
-        // Lấy các phần tử cần thiết từ DOM
-        const decrementButton = document.getElementById('decrement');
-        const incrementButton = document.getElementById('increment');
-        const quantityInput = document.querySelector('input[name="quantity"]');
-
-        // Thêm sự kiện click cho nút giảm
-        decrementButton.addEventListener('click', () => {
-            let quantity = parseInt(quantityInput.value);
-            if (quantity > 1) { // Đảm bảo số lượng không nhỏ hơn 1
-                quantity -= 1;
-                quantityInput.value = quantity;
-            }
-        });
-
-        // Thêm sự kiện click cho nút tăng
-        incrementButton.addEventListener('click', () => {
-            let quantity = parseInt(quantityInput.value);
-            quantity += 1; // Tăng số lượng lên 1
-            quantityInput.value = quantity;
-        });
-    </script>
+    </div> 
 @endsection
