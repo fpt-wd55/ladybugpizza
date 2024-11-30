@@ -29,7 +29,7 @@
                 <div class="product-card mb-4 p-4 hover:cursor-pointer ">
                     <div class="flex flex-wrap items-center gap-y-4">
                         <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                            <dt class="text-base font-medium text-gray-500">Mã đơn hàng:
+                            <dt class="text-sm text-gray-500">Mã đơn hàng:
                             </dt>
                             <dd class="mt-1.5 text-base font-semibold text-[#D30A0A]">
                                 #{{ $order->id }}
@@ -37,21 +37,21 @@
                         </dl>
 
                         <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                            <dt class="text-base font-medium text-gray-500">Ngày đặt hàng:
+                            <dt class="text-sm text-gray-500">Ngày đặt hàng:
                             </dt>
                             <dd class="mt-1.5 text-base font-semibold text-gray-900">
                                 {{ $order->created_at }}</dd>
                         </dl>
 
                         <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                            <dt class="text-base font-medium text-gray-500">Tổng đơn hàng:
+                            <dt class="text-sm text-gray-500">Tổng đơn hàng:
                             </dt>
                             <dd class="mt-1.5 text-base font-semibold text-gray-900">
                                 {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ</dd>
                         </dl>
 
                         <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                            <dt class="text-base font-medium text-gray-500">Trạng thái:
+                            <dt class="text-sm text-gray-500">Trạng thái:
                             </dt>
                             <dd>
                                 @php
@@ -86,8 +86,9 @@
                             @endif
 
                             <button type="button" onclick="toggleAccordion({{ $order->id }})"
-                                class="w-full inline-flex justify-center rounded-lg  border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-0 lg:w-auto transition">Xem
-                                chi tiết</button>
+                                class="button-light">
+                            @svg('tabler-info-circle', 'w-4 h-4')
+                            </button>
                         </div>
                     </div>
 
@@ -375,7 +376,7 @@
                         <div class="pb-5 text-sm">
                             <div class="flex items-start justify-between">
                                 <div class="mb-4">
-                                    <p>Ghi chú đơn hàng</p>
+                                    <p class="mb-4 text-base font-medium">Ghi chú đơn hàng</p>
                                     <p>{{ $order->notes }}</p>
                                 </div>
                                 <div class="text-right">
