@@ -29,7 +29,7 @@
                                         <p class="mb-2 text-sm font-normal">Họ và tên: </p>
                                         <input class="input w-full" name="fullname" placeholder="Họ và tên" type="text" value="{{ old('fullname') ?? Auth::user()->fullname }}">
                                         @error('fullname')
-                                            <p class="pt-2 text-sm text-[#D30A0A]">{{ $message }}</p>
+                                            <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="mb-4 grid gap-4 md:grid-cols-2">
@@ -37,14 +37,14 @@
                                             <p class="mb-2 text-sm font-normal">Email:</p>
                                             <input class="input w-full" name="email" placeholder="Email" type="text" value="{{ old('email') ?? Auth::user()->email }}">
                                             @error('email')
-                                                <p class="pt-2 text-sm text-[#D30A0A]">{{ $message }}</p>
+                                                <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
                                         <div>
                                             <p class="mb-2 text-sm font-normal">Số điện thoại:</p>
                                             <input class="input w-full" name="phone" placeholder="Số điện thoại" type="text" value="{{ old('phone') ?? Auth::user()->phone }}">
                                             @error('phone')
-                                                <p class="pt-2 text-sm text-[#D30A0A]">{{ $message }}</p>
+                                                <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
                                     </div>
@@ -52,7 +52,7 @@
                                         <p class="mb-2 text-sm font-normal">Ghi chú: </p>
                                         <textarea class="text-area" id="notes" name="notes" rows="4"></textarea>
                                         @error('notes')
-                                            <p class="pt-2 text-sm text-[#D30A0A]">{{ $message }}</p>
+                                            <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
                                 </div>
@@ -74,7 +74,7 @@
                                         </p>
                                         <input class="input w-full" name="detail_address" placeholder="Địa chỉ chi tiết" type="text" value="{{ old('detail_address') }}">
                                         @error('detail_address')
-                                            <p class="pt-2 text-sm text-[#D30A0A]">{{ $message }}</p>
+                                            <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="mb-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -82,21 +82,21 @@
                                             <p class="mb-2 text-sm font-normal">Tỉnh/Thành phố:</p>
                                             <input class="input w-full" name="province" placeholder="Tỉnh/Thành phố" type="text" value="{{ old('province') }}">
                                             @error('province')
-                                                <p class="pt-2 text-sm text-[#D30A0A]">{{ $message }}</p>
+                                                <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
                                         <div>
                                             <p class="mb-2 text-sm font-normal">Quận/Huyện:</p>
                                             <input class="input w-full" name="district" placeholder="Quận/Huyện" type="text" value="{{ old('district') }}">
                                             @error('district')
-                                                <p class="pt-2 text-sm text-[#D30A0A]">{{ $message }}</p>
+                                                <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
                                         <div>
                                             <p class="mb-2 text-sm font-normal">Phường/Xã:</p>
                                             <input class="input w-full" name="ward" placeholder="Phường/Xã" type="text" value="{{ old('ward') }}">
                                             @error('ward')
-                                                <p class="pt-2 text-sm text-[#D30A0A]">{{ $message }}</p>
+                                                <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
                                     </div>
@@ -142,7 +142,7 @@
                                 <div class="mb-5 rounded-md border p-5">
                                     <p class="mb-2 font-bold">Phương thức thanh toán</p>
                                     @error('payment_method_id')
-                                        <p class="mb-2 text-sm text-[#D30A0A]">{{ $message }}</p>
+                                        <p class="mb-2 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                     @foreach ($paymentMethods as $method)
                                         <div class="flex items-center justify-between">

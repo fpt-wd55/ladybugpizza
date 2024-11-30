@@ -221,6 +221,8 @@
                         <div class="pb-5 text-sm">
                             <div class="flex items-start justify-between">
                                 <div class="mb-4">
+                                    <p>Ghi chú đơn hàng</p>
+                                    <p>{{ $order->notes }}</p>
                                 </div>
                                 <div class="text-right">
                                     <div>
