@@ -73,7 +73,7 @@ class ProfileController extends Controller
 
 
 	public function postChangePassword(ChangeRequest $request)
-	{
+	{ 
 		$user = Auth::user();
 
 		if (!Hash::check($request->current_password, $user->password)) {
