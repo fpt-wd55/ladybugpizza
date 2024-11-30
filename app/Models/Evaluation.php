@@ -31,10 +31,5 @@ class Evaluation extends Model
     public function order()
     {
         return $this->belongsTo(Order::class);
-    }
-
-    public function images()
-    {
-        return $this->hasMany(EvaluationImage::class);
-    }
+    } 
 }

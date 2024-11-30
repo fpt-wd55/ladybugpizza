@@ -61,4 +61,9 @@ class Order extends Model
     {
         return $this->hasOne(Invoice::class);
     }
+
+    public function evaluations()
+    {
+        return $this->hasMany(Evaluation::class);
+    }
 }

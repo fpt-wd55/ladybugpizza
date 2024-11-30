@@ -50,14 +50,13 @@ class CheckoutController extends Controller
     {
         $cart = Cart::where('user_id', Auth::id())->first();
         $cartItems = CartItem::where('cart_id', $cart->id)->get();
-
         foreach ($cartItems as $cartItem) {
             $cartItem->attributes = CartItemAttribute::where('cart_item_id', $cartItem->id)->get();
             $cartItem->toppings = CartItemTopping::where('cart_item_id', $cartItem->id)->get();
         }
 
         // Check address_id
-        if ($request->old_address == -1 && !$request->address_id) {
+        if ($request->old_address == -1) {
             $address = Address::created([
                 'user_id' => Auth::id(),
                 'title' => 'Địa chỉ' . Auth::user()->addresses->count() + 1,
@@ -67,13 +66,15 @@ class CheckoutController extends Controller
                 'detail_address' => $request->detail_address,
                 'is_default' => 0,
             ]);
+        } else {
+            $address = Address::find($request->old_address);
         }
 
         $data = [
             'user_id' => Auth::id(),
             'promotion_id' => session('promotion') ? session('promotion')['id'] : null,
             'amount' => $cart->total,
-            'address_id' => $address->id ?? $request->old_address,
+            'address_id' => $address->id,
             'order_status_id' => 1,
             'discount_amount' => session('promotion') ? session('promotion')['discount'] : 0,
             'shipping_fee' => 30000,

@@ -22,9 +22,10 @@
                         @method('PUT')
                         <div class="mb-4">
                             <label class="mb-2 block font-semibold" for="status">Trạng thái</label>
-                            <select class="select" id="status" name="status">
+                            <select class="input" id="status" name="status">
                                 @foreach ($statuses as $status)
-                                    <option {{ $order->orderStatus->name === $status ? 'selected' : '' }} value="{{ $status }}">
+                                    <option {{ $order->orderStatus->name === $status ? 'selected' : '' }}
+                                        value="{{ $status }}">
                                         {{ $status }}
                                     </option>
                                 @endforeach
@@ -68,8 +69,11 @@
                     <label class="mb-5 font-semibold">Sản phẩm</label> <br>
                     @foreach ($order->orderItems as $orderItem)
                         <div class="flex items-center whitespace-nowrap py-2 text-gray-900">
-                            <a class="shrink-0" data-fslightbox="gallery" href="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
-                                <img class="mr-3 h-8 w-8 rounded object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
+                            <a class="shrink-0" data-fslightbox="gallery"
+                                href="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
+                                <img class="mr-3 h-8 w-8 rounded object-cover" loading="lazy"
+                                    onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
+                                    src="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
                             </a>
                             <div>
                                 <div class="grid grid-flow-row">
@@ -91,7 +95,7 @@
                 {{-- thanh toán --}}
                 <div class="ml-36">
                     <div class="mb-2 flex items-center justify-between gap-32 text-sm">
-                        <p class="">Tổng số tiền sản phẩm</p>
+                        <p class="">Tạm tính</p>
                         <p class="font-medium">{{ number_format($order->amount) }}₫</p>
                     </div>
                     <div class="mb-2 flex items-center justify-between gap-32 text-sm">

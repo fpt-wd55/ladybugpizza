@@ -74,8 +74,10 @@
                                         <span>•
                                             {{ $address->detail_address . ', ' . $address->ward . ', ' . $address->district . ', ' . $address->province }}
                                             @if ($address->is_default == 1)
-                                            <span class="me-2 text-[#D30A0A] inline-flex shrink-0 items-center rounded bg-red-100 px-2 py-0.5 text-xs font-medium">Mặc định</span>
-                                        @endif
+                                                <span
+                                                    class="me-2 text-[#D30A0A] inline-flex shrink-0 items-center rounded bg-red-100 px-2 py-0.5 text-xs font-medium">Mặc
+                                                    định</span>
+                                            @endif
                                         </span>
                                     </div>
                                 </dd>
@@ -159,7 +161,7 @@
                         <dl class="w-1/2 sm:w-1/5 md:flex-1 lg:w-auto">
                             <dt class="text-base font-medium text-gray-500 ">Đơn giá:</dt>
                             <dd class="mt-1.5 text-base font-semibold text-gray-900 ">
-                                {{ number_format($order->amount) }}₫
+                                {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}₫
                             </dd>
                         </dl>
 

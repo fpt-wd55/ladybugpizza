@@ -438,3 +438,13 @@ button[aria-selected="true"] {
     overflow: hidden;
     padding: 20px;
 }
+
+.rating__input {
+    position: absolute !important;
+    left: -9999px !important;
+}
+
+/* if any input is checked, make its following siblings grey */
+.rating__input:checked~.rating__label .rating__icon--star {
+    color: #ddd;
+}

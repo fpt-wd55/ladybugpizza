@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\Transaction;
-use App\Models\User; 
+use App\Models\OrderItemAttribute;
+use App\Models\OrderItemTopping;
+use App\Models\User;
 
 class InvoiceController extends Controller
 {
@@ -19,12 +20,15 @@ class InvoiceController extends Controller
         $invoice = Invoice::where('invoice_number', $invoiceNumber)->first();
         $order = Order::where('id', $invoice->order_id)->first();
         $orderItems = OrderItem::where('order_id', $order->id)->get();
-        $transaction = Transaction::where('id', $invoice->transaction_id)->first();
+
+        foreach ($orderItems as $orderItem) {
+            $orderItem->attributes = OrderItemAttribute::where('order_item_id', $orderItem->id)->get();
+            $orderItem->toppings = OrderItemTopping::where('order_item_id', $orderItem->id)->get();
+        }
         $user = User::where('id', $order->user_id)->first();
         return view('shared.invoice', [
             'invoice' => $invoice,
             'order' => $order,
-            'transaction' => $transaction,
             'user' => $user,
             'orderItems' => $orderItems,
         ]);

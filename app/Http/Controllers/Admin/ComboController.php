@@ -3,16 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ComboRequest;
-use App\Models\Attribute;
-use App\Models\AttributeValue;
+use App\Http\Requests\ComboRequest; 
 use App\Models\Category;
-use App\Models\Product;
-use App\Models\Topping;
+use App\Models\Product; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Evaluation;
-use App\Models\EvaluationImage;
 
 class ComboController extends Controller
 {
@@ -213,10 +209,6 @@ class ComboController extends Controller
     public function evaluation(Product $combo)
     {
         $evaluations = Evaluation::where('product_id', $combo->id)->with('order')->paginate(10);
-
-        foreach ($evaluations as $evaluation) {
-            $evaluation->images = EvaluationImage::where('evaluation_id', $evaluation->id)->get();
-        }
 
         return view('admins.combo.evaluation', compact('combo', 'evaluations'));
     }

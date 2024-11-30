@@ -10,6 +10,11 @@ use App\Models\OrderStatus;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EvaluationRequest;
+use App\Models\Evaluation; 
+use App\Models\Membership;
+use App\Models\MembershipRank;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -41,24 +46,7 @@ class OrderController extends Controller
             'invoices' => $invoices,
             'orders' => $orders,
         ]);
-    }
-
-    public function invoice($invoiceNumber)
-    {
-        $invoice = Invoice::where('invoice_number', $invoiceNumber)->first();
-        $order = Order::where('id', $invoice->order_id)->first();
-        $orderItems = OrderItem::where('order_id', $order->id)->get();
-        $transaction = Transaction::where('id', $invoice->transaction_id)->first();
-        $user = User::where('id', $order->user_id)->first();
-
-        return view('shared.invoice', [
-            'invoice' => $invoice,
-            'order' => $order,
-            'transaction' => $transaction,
-            'user' => $user,
-            'orderItems' => $orderItems,
-        ]);
-    }
+    } 
 
     public function postCancel(Order $order, Request $request)
     {
@@ -85,10 +73,51 @@ class OrderController extends Controller
         return redirect()->back()->with('error', 'Hủy đơn hàng thất bại');
     }
 
-    public function rate()
+    public function evaluation(EvaluationRequest $request, Order $order)
     {
-        return view('clients.order.rate');
-    }
+        $ratings = $request->input('ratings', []);
+        $comments = $request->input('comments', []);
 
-    public function postRate() {}
+        $order = Order::findOrFail($order->id);
+        $orderItems = $order->orderItems;
+        $productIds = $orderItems->pluck('product_id')->toArray();
+        $products = Product::whereIn('id', $productIds)->get();
+
+        foreach ($products as $product) {
+            if (array_key_exists($product->id, $ratings) && array_key_exists($product->id, $comments)) {
+                $rating = $ratings[$product->id];
+                $comment = $comments[$product->id];
+
+                $evaluation = Evaluation::where('user_id', Auth::id())
+                    ->where('product_id', $product->id)
+                    ->where('order_id', $order->id)
+                    ->first();
+
+                if (!$evaluation) {
+                    $data = [
+                        'user_id' => Auth::id(),
+                        'product_id' => $product->id,
+                        'order_id' => $order->id,
+                        'rating' => $rating,
+                        'comment' => $comment,
+                        'status' => 1,
+                    ];
+
+                    if (Evaluation::create($data)) {
+                        // Xử lý cộng điểm
+                        $membership = Membership::where('user_id', Auth::id())->first();
+                        $membership->points = $membership->points + 50;
+                        $membership->total_spent = $membership->total_spent + 50;
+                        // Cập nhật rank
+                        $ranks = MembershipRank::all();
+                        $currentRank = $this->updateRank($ranks, $membership->total_spent);
+                        $membership->rank_id = $currentRank->id;
+                        $membership->save();
+                    }
+                }
+            }
+        }
+
+        return redirect()->back()->with('success', 'Đánh giá sản phẩm thành công');
+    }
 }

@@ -17,11 +17,10 @@
                                                 src="{{ filter_var($item->user->avatar, FILTER_VALIDATE_URL) ? $item->user->avatar : ($item->user->avatar ? asset('storage/uploads/avatars/' . $item->user->avatar) : asset('storage/uploads/avatars/user-default.png')) }}"
                                                 alt="Avatar" class="w-8 h-8 mr-3 img-circle object-cover">
                                             <div class="grid grid-flow-row">
-                                                <span class="text-sm">{{ $item->user->fullname }}</span>
+                                                <span class="text-sm">{{ $item->user->fullname }} |
+                                                    {{ $item->created_at->format('d-m-Y H:i') }}</span>
                                                 <span class="text-sm text-gray-500 flex">
-                                                    <p class="text-sm break-words">
-                                                        {{ $item->created_at->format('d-m-Y H:i') }} |</p>
-                                                    <div class="flex items-center gap-0.5 ms-2">
+                                                    <div class="flex items-center gap-0.5">
                                                         @for ($i = 0; $i < 5; $i++)
                                                             @if ($i < $item->rating)
                                                                 @svg('tabler-star-filled', 'icon-sm text-red-500')
@@ -81,17 +80,6 @@
                                     </div>
                                     <div class="mb-4 px-9 md:px-12 lg:px-14">
                                         <p class="mb-3 text-sm">{{ $item->comment }}</p>
-                                        <div class="flex flex-wrap">
-                                            @foreach ($item->images as $image)
-                                                <a class="shrink-0" data-fslightbox="gallery"
-                                                    href="{{ asset('storage/uploads/evaluations/' . $image->image) }}">
-                                                    <img loading="lazy"
-                                                        src="{{ asset('storage/uploads/evaluations/' . $image->image) }}"
-                                                        onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
-                                                        class="w-14 h-14 me-2 rounded-sm bg-slate-400 object-cover">
-                                                </a>
-                                            @endforeach
-                                        </div>
                                     </div>
                                 </div>
                             @empty

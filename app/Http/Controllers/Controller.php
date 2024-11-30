@@ -62,7 +62,7 @@ class Controller extends BaseController
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
             $sheet->getStyle($columnID)->getAlignment()->setVertical('center');
             $sheet->getStyle($columnID)->getAlignment()->setWrapText(true);
-        } 
+        }
 
         $row = 2;
         foreach ($data as $item) {
@@ -72,8 +72,8 @@ class Controller extends BaseController
                 $columnIndex++;
             }
             $row++;
-        } 
-        
+        }
+
         $writer = new Xlsx($spreadsheet);
 
         header('Content-Type: application/vnd.ms-excel');
@@ -84,13 +84,22 @@ class Controller extends BaseController
         $writer->save('php://output');
     }
     // check User
-    public function checkUser(){
+    public function checkUser()
+    {
         $user = Auth::user();
 
         if (!$user) {
             return redirect()->route('client.home')->with('error', 'Bạn cần đăng nhập để truy cập trang này');
         }
-    } 
-   
+    }
     
+    public function updateRank($ranks, $points)
+    {
+        foreach ($ranks as $rank) {
+            if ($points >= $rank->min_points && ($rank->max_points === null || $points <= $rank->max_points)) {
+                return $rank;
+            }
+        }
+        return null;
+    }
 }

@@ -68,11 +68,7 @@ class ProductController extends Controller
 
         $toppings = Topping::where('category_id', $product->category->id)->get();
 
-        $evaluations = Evaluation::where('product_id', $product->id)->get();
-
-        $evaluations->each(function ($evaluation) {
-            $evaluation->user = User::find($evaluation->user_id);
-        });
+        $evaluations = Evaluation::where('product_id', $product->id)->orderByDesc('created_at')->paginate(5);
 
         return view('clients.product.detail', [
             'product' => $product,
@@ -90,7 +86,7 @@ class ProductController extends Controller
     {
         $validated = $request->validated();
         $cart = Cart::where('user_id', Auth::id())->first();
-        
+
         if (!$cart) {
             $cart = Cart::create([
                 'user_id' => Auth::id(),
