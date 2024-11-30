@@ -26,7 +26,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'fullname' => 'required|string|max:255',
 			'email' => 'required|email|max:255|unique:users,email,'.$profileId,
-			'phone' => 'nullable|string|max:20|unique:users,phone,'.$profileId,
+			'phone' => 'required|string|max:20|unique:users,phone,'.$profileId,
 			'gender' => 'nullable|string',
 			'date_of_birth' => 'nullable|date',
 			'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',

@@ -273,73 +273,44 @@ class ProfileController extends Controller
 	public function storeLocation(AddressRequest $request)
 	{
 		$data = $request->all();
-		// Kiểm tra số điện thoại
-		if (is_null(Auth()->user()->phone) || empty(Auth()->user()->phone)) {
-			return redirect()->route('client.profile.index')->with('error', 'Bạn cần thêm số điện thoại trong phần tài khoản trước khi thêm địa chỉ mới.');
-		}
+		
 		$addressData = [
-			'user_id' => Auth()->user()->id,
-			'phone' => Auth()->user()->phone,
+			'user_id' => Auth()->user()->id, 
 			'province' => $data['province'],
 			'district' => $data['district'],
 			'ward' => $data['ward'],
 			'detail_address' => $data['address'],
 			'title' => $data['title'],
-		];
+		]; 
 
-		// $addressNames = $this->getAddressNamesByCodes(
-		// 	$addressData['provinceCode'],
-		// 	$addressData['districtCode'],
-		// 	$addressData['wardCode']
-		// );
-
-		// if (is_null($addressNames['province']) || is_null($addressNames['district']) || is_null($addressNames['ward'])) {
-		// 	return back()->withErrors(['address' => 'Không thể tìm thấy tên cho mã địa chỉ.']);
-		// }
-
-		// $addressData['province'] = $addressNames['province'];
-		// $addressData['district'] = $addressNames['district'];
-		// $addressData['ward'] = $addressNames['ward'];
-
-		$fullAddress = implode(', ', [
-			$addressData['detail_address'],
-			$addressData['ward'],
-			$addressData['district'],
-			$addressData['province'],
-		]);
-
-		// [$lng, $lat] = $this->convertAddressToCoordinates($fullAddress);
-
-		// $addressData['lng'] = $lng;
-		// $addressData['lat'] = $lat;
 		Address::create($addressData);
 
 		return redirect()->route('client.profile.address')->with('success', 'Thêm địa chỉ thành công');
 	}
 
-	protected function convertAddressToCoordinates($fullAddress)
-	{
-		$client = new Client();
-		try {
-			$response = $client->get('https://nominatim.openstreetmap.org/search', [
-				'query' => [
-					'q' => $fullAddress,
-					'format' => 'json',
-				],
-			]);
-		} catch (\Exception $e) {
-			dd($e->getMessage());
-		}
+	// protected function convertAddressToCoordinates($fullAddress)
+	// {
+	// 	$client = new Client();
+	// 	try {
+	// 		$response = $client->get('https://nominatim.openstreetmap.org/search', [
+	// 			'query' => [
+	// 				'q' => $fullAddress,
+	// 				'format' => 'json',
+	// 			],
+	// 		]);
+	// 	} catch (\Exception $e) {
+	// 		dd($e->getMessage());
+	// 	}
 
-		$data = json_decode($response->getBody(), true);
+	// 	$data = json_decode($response->getBody(), true);
 
-		if (isset($data[0])) {
-			$location = $data[0];
-			return [$location['lon'], $location['lat']];
-		}
+	// 	if (isset($data[0])) {
+	// 		$location = $data[0];
+	// 		return [$location['lon'], $location['lat']];
+	// 	}
 
-		return [null, null];
-	}
+	// 	return [null, null];
+	// }
 
 	public function editLocation(Address $address)
 	{
@@ -421,12 +392,5 @@ class ProfileController extends Controller
 			'district' => $districtName,
 			'ward' => $wardName,
 		];
-	}
-
-
-
-	public function destroyLocation(Request $request)
-	{
-		$client = new Client();
-	}
+	} 
 }
