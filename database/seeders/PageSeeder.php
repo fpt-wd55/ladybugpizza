@@ -48,10 +48,8 @@ class PageSeeder extends Seeder
                 'content' => '
                      <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
                         <div class="card p-4 md:p-8">
-                            {{-- Chính sách giao hàng --}}
                             <section class="mb-4">
                                 <h2 class="font-semibold uppercase text-sm md:text-base mb-4">CHÍNH SÁCH GIAO HÀNG</h2>
-                                {{-- Thông tin thu thập --}}
                                 <div class="mb-4">
                                     <h3 class="font-semibold text-xs md:text-sm mb-4">1. Thông tin thu thập:</h3>
                                     <div class="text-sm ps-4 leading-loose tracking-wide">
@@ -72,7 +70,6 @@ class PageSeeder extends Seeder
                                         </ul>
                                     </div>
                                 </div>
-                                {{-- Mục đích sử dụng thông tin --}}
                                 <div class="mb-4">
                                     <h3 class="font-semibold text-xs md:text-sm mb-4">2. Mục đích sử dụng thông tin:</h3>
                                     <div class="text-sm ps-4 leading-loose tracking-wide">
@@ -96,7 +93,6 @@ class PageSeeder extends Seeder
                                         </ul>
                                     </div>
                                 </div>
-                                {{-- Chia sẻ thông tin --}}
                                 <div class="mb-4">
                                     <h3 class="font-semibold text-xs md:text-sm mb-4">3. Chia sẻ thông tin:</h3>
                                     <div class="text-sm ps-4 leading-loose tracking-wide">
@@ -120,7 +116,6 @@ class PageSeeder extends Seeder
                                         </ul>
                                     </div>
                                 </div>
-                                {{-- Bảo mật thông tin --}}
                                 <div class="mb-4">
                                     <h3 class="font-semibold text-xs md:text-sm mb-4">4. Bảo mật thông tin:</h3>
                                     <div class="text-sm ps-4 leading-loose tracking-wide">
@@ -132,10 +127,8 @@ class PageSeeder extends Seeder
                                     </div>
                                 </div>
                             </section>
-                            {{-- Chính sách bảo mật --}}
                             <section class="mb-4">
                                 <h2 class="font-semibold uppercase text-sm md:text-base mb-4">CHÍNH SÁCH BẢO MẬT</h2>
-                                {{-- Thông tin thu thập --}}
                                 <div class="mb-4">
                                     <h3 class="font-semibold text-xs md:text-sm mb-4">1. Thông tin thu thập:</h3>
                                     <div class="text-sm ps-4 leading-loose tracking-wide">
