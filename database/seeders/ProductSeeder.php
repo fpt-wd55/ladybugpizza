@@ -122,16 +122,17 @@ class ProductSeeder extends Seeder
                 $price = rand(100000, 500000);
 
                 // Create Product
+                $sku = Str::random(10);
                 $createdProduct = Product::create([
                     'name' => $productName,
-                    'slug' => Str::slug($productName),
+                    'slug' => $sku . '-' . Str::slug($productName),
                     'image' => Str::slug($productName) . '.jpeg',
                     'description' => $description,
                     'category_id' => $category->id,
                     'price' => $price,
                     'discount_price' => $price - rand(50000, 10000),
                     'quantity' => rand(10, 100),
-                    'sku' => Str::random(10),
+                    'sku' => $sku,
                     'status' => rand(1, 2),
                     'is_featured' => rand(0, 1),
                     'avg_rating' => rand(1, 5),

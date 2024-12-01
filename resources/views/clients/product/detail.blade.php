@@ -137,28 +137,32 @@
         {{-- Add to card bar --}}
         <div class="sticky bottom-16 w-full border-t bg-white p-4 transition lg:bottom-0 lg:px-32">
             <div class="grid grid-cols-3 items-center justify-between">
-                <div class="block items-center justify-start md:flex">
-                    <div class="inline-block w-28 rounded-md border border-gray-200 bg-white px-3 py-2">
-                        <div class="flex items-center justify-center gap-x-1.5">
-                            <button aria-label="Decrease"
-                                class="size-6 inline-flex items-center justify-center gap-x-2 rounded-md border border-gray-200 bg-white text-sm font-medium text-gray-800 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-                                id="decrement" tabindex="-1" type="button">
-                                @svg('tabler-minus', 'icon-sm')
-                            </button>
-                            <input
-                                class="w-6 border-0 bg-transparent p-0 text-center text-gray-800 focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                                name="quantity" style="-moz-appearance: textfield;" type="number" value="1">
-                            <button aria-label="Increase"
-                                class="size-6 inline-flex items-center justify-center gap-x-2 rounded-md border border-gray-200 bg-white text-sm font-medium text-gray-800 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-                                id="increment" tabindex="-1" type="button">
-                                @svg('tabler-plus', 'icon-sm')
-                            </button>
+                @if ($product->status != 1)
+                    <div></div>
+                @else
+                    <div class="block items-center justify-start md:flex">
+                        <div class="inline-block w-28 rounded-md border border-gray-200 bg-white px-3 py-2">
+                            <div class="flex items-center justify-center gap-x-1.5">
+                                <button aria-label="Decrease"
+                                    class="size-6 inline-flex items-center justify-center gap-x-2 rounded-md border border-gray-200 bg-white text-sm font-medium text-gray-800 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                                    id="decrement" tabindex="-1" type="button">
+                                    @svg('tabler-minus', 'icon-sm')
+                                </button>
+                                <input
+                                    class="w-6 border-0 bg-transparent p-0 text-center text-gray-800 focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                                    name="quantity" style="-moz-appearance: textfield;" type="number" value="1">
+                                <button aria-label="Increase"
+                                    class="size-6 inline-flex items-center justify-center gap-x-2 rounded-md border border-gray-200 bg-white text-sm font-medium text-gray-800 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                                    id="increment" tabindex="-1" type="button">
+                                    @svg('tabler-plus', 'icon-sm')
+                                </button>
+                            </div>
                         </div>
+                        @error('quantity')
+                            <p class="py-2 text-sm text-red-600 md:p-0 md:ps-5">{{ $message }}</p>
+                        @enderror
                     </div>
-                    @error('quantity')
-                        <p class="py-2 text-sm text-red-600 md:p-0 md:ps-5">{{ $message }}</p>
-                    @enderror
-                </div>
+                @endif
 
                 <div class="flex items-center justify-center gap-4">
                     <p class="text-sm line-through">{{ number_format($product->discount_price) }}đ</p>
@@ -173,37 +177,46 @@
                             {{ $favorites->contains($product->id) ? 'Đã yêu thích' : 'Yêu thích' }}
                         </span>
                     </a>
-
-                    <button class="button-red" type="submit">
-                        @svg('tabler-shopping-bag-plus', 'md:me-2 icon-sm')
-                        <span class="hidden md:block">Thêm vào giỏ hàng</span>
-                    </button>
+                    @if ($product->status != 1)
+                        <div></div>
+                    @else
+                        <button class="button-red" type="submit">
+                            @svg('tabler-shopping-bag-plus', 'md:me-2 icon-sm')
+                            <span class="hidden md:block">Thêm vào giỏ hàng</span>
+                        </button>
+                    @endif
                 </div>
+
             </div>
         </div>
     </form>
-    <script>
-        // Lấy các phần tử cần thiết từ DOM
-        const decrementButton = document.getElementById('decrement');
-        const incrementButton = document.getElementById('increment');
-        const quantityInput = document.querySelector('input[name="quantity"]');
+    @if ($product->status == 1)
+        <script>
+            // Lấy các phần tử cần thiết từ DOM
+            const decrementButton = document.getElementById('decrement');
+            const incrementButton = document.getElementById('increment');
+            const quantityInput = document.querySelector('input[name="quantity"]');
 
-        // Thêm sự kiện click cho nút giảm
-        decrementButton.addEventListener('click', () => {
-            let quantity = parseInt(quantityInput.value);
-            if (quantity > 1) { // Đảm bảo số lượng không nhỏ hơn 1
-                quantity -= 1;
+            // Thêm sự kiện click cho nút giảm
+            decrementButton.addEventListener('click', () => {
+                let quantity = parseInt(quantityInput.value);
+                if (quantity > 1) { // Đảm bảo số lượng không nhỏ hơn 1
+                    quantity -= 1;
+                    quantityInput.value = quantity;
+                }
+            });
+
+            // Thêm sự kiện click cho nút tăng
+            incrementButton.addEventListener('click', () => {
+                let quantity = parseInt(quantityInput.value);
+                quantity += 1; // Tăng số lượng lên 1
                 quantityInput.value = quantity;
-            }
-        });
-
-        // Thêm sự kiện click cho nút tăng
-        incrementButton.addEventListener('click', () => {
-            let quantity = parseInt(quantityInput.value);
-            quantity += 1; // Tăng số lượng lên 1
-            quantityInput.value = quantity;
-        });
-
+            });
+        </script>
+    @endif
+@endsection
+@section('scripts')
+    <script>
         // Cập nhật giá sản phẩm khi thay đổi
         document.addEventListener('DOMContentLoaded', function() {
             const priceElement = document.getElementById('price');
@@ -253,5 +266,4 @@
             updatePrice();
         });
     </script>
-
 @endsection
