@@ -4,11 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\MembershipRank;
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
 use App\Models\Promotion;
-use App\Models\User;
 use Illuminate\Support\Str;
-use App\Models\PromotionUser;
 use Carbon\Carbon;
 
 class PromotionSeeder extends Seeder
@@ -26,15 +23,14 @@ class PromotionSeeder extends Seeder
 
             $now = Carbon::now();
             $is_global = rand(1, 2);
-
             // Tạo mới một khuyến mãi
             Promotion::create([
                 'code' => Str::random(8),
                 'points' => rand(1, 10) * 50,
                 'discount_type' => $discount_type,
-                'discount_value' => $discount_value,
-                'start_date' => $now,
-                'end_date' => $now->addDays(90),
+                'discount_value' => $discount_value, 
+                'start_date' => $now->subDays(rand(1, 365)),
+                'end_date' => $now->addDays(rand(1, 365)),
                 'quantity' => rand(1, 100),
                 'min_order_total' => rand(100, 500) * 1000,
                 'max_discount' => rand(100, 500) * 1000,

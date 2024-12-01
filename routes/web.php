@@ -51,7 +51,7 @@ Route::prefix('/')->group(function () {
     Route::middleware('auth.check')->group(function () {
         // Giỏ hàng
         Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
-        Route::post('/product/cart/{product}', [ProductController::class, 'addToCart'])->name('client.product.add-to-cart');
+        Route::post('/product/cart/{product}', [CartController::class, 'addToCart'])->name('client.product.add-to-cart');
         Route::delete('/product/cart/{cartItem}', [CartController::class, 'delete'])->name('client.product.delete-cart-item');
         // Thanh toán
         Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
@@ -218,8 +218,8 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
 Route::get('/invoices/{invoiceNumber}', [InvoiceController::class, 'show'])->name('invoices.show');
 
 // VNPay
-Route::post('/payment', [VNPayController::class, 'createPayment'])->name('payment.create');
-Route::get('/vnpay-return', [VNPayController::class, 'returnPayment'])->name('payment.return');
+// Route::post('/payment', [VNPayController::class, 'createPayment'])->name('payment.create');
+// Route::get('/vnpay-return', [VNPayController::class, 'returnPayment'])->name('payment.return');
 
 Route::fallback(function () {
     return redirect()->route('errors.404');

@@ -11,7 +11,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EvaluationRequest;
-use App\Models\Evaluation; 
+use App\Models\Evaluation;
 use App\Models\Membership;
 use App\Models\MembershipRank;
 use App\Models\Product;
@@ -46,7 +46,7 @@ class OrderController extends Controller
             'invoices' => $invoices,
             'orders' => $orders,
         ]);
-    } 
+    }
 
     public function postCancel(Order $order, Request $request)
     {
@@ -82,7 +82,6 @@ class OrderController extends Controller
         $orderItems = $order->orderItems;
         $productIds = $orderItems->pluck('product_id')->toArray();
         $products = Product::whereIn('id', $productIds)->get();
-
         foreach ($products as $product) {
             if (array_key_exists($product->id, $ratings) && array_key_exists($product->id, $comments)) {
                 $rating = $ratings[$product->id];
@@ -94,30 +93,30 @@ class OrderController extends Controller
                     ->first();
 
                 if (!$evaluation) {
-                    $data = [
+                    Evaluation::create([
                         'user_id' => Auth::id(),
                         'product_id' => $product->id,
                         'order_id' => $order->id,
                         'rating' => $rating,
                         'comment' => $comment,
                         'status' => 1,
-                    ];
-
-                    if (Evaluation::create($data)) {
-                        // Xử lý cộng điểm
-                        $membership = Membership::where('user_id', Auth::id())->first();
-                        $membership->points = $membership->points + 50;
-                        $membership->total_spent = $membership->total_spent + 50;
-                        // Cập nhật rank
-                        $ranks = MembershipRank::all();
-                        $currentRank = $this->updateRank($ranks, $membership->total_spent);
-                        $membership->rank_id = $currentRank->id;
-                        $membership->save();
-                    }
+                    ]);
                 }
             }
         }
+        // Xử lý cộng điểm
+        $points = round((int)($order->amount + $order->shipping_fee - $order->discount_amount) / 1000);
+        $membership = Membership::where('user_id', Auth::id())->first();
+        $membership->points = $membership->points + $points;
+        $membership->total_spent = $membership->total_spent + $points;
+        // Cập nhật rank
+        $ranks = MembershipRank::all();
+        $currentRank = $this->updateRank($ranks, $membership->total_spent);
+        $membership->rank_id = $currentRank->id;
+        if ($membership->save()) {
+            return redirect()->back()->with('success', 'Đánh giá sản phẩm thành công');
+        }
 
-        return redirect()->back()->with('success', 'Đánh giá sản phẩm thành công');
+        return redirect()->back()->with('error', 'Đánh giá sản phẩm thất bại');
     }
 }

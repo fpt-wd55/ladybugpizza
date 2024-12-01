@@ -8,15 +8,13 @@ use App\Models\Category;
 use App\Models\Evaluation;
 use App\Models\Product;
 use App\Models\Topping;
-use App\Models\Favorite;
-use App\Models\User;
+use App\Models\Favorite; 
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\CartItemAttribute;
-use App\Models\CartItemTopping;
-use Illuminate\Http\Request;
+use App\Models\CartItemTopping; 
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -79,85 +77,7 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * Thêm mới một sản phẩm vào giở hàng
-     */
-    public function addToCart(AddToCartRequest $request, Product $product)
-    {
-        $validated = $request->validated();
-        $cart = Cart::where('user_id', Auth::id())->first();
 
-        if (!$cart) {
-            $cart = Cart::create([
-                'user_id' => Auth::id(),
-            ]);
-        }
-
-        if ($cart) {
-            // Thêm sản phẩm vào CartItem
-            $cartItem = CartItem::create([
-                'cart_id' => $cart->id,
-                'product_id' => $product->id,
-                'price' => 0,
-                'quantity' => $validated['quantity'],
-            ]);
-
-            if (!$cartItem) {
-                return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại sau!');
-            }
-
-            // Thêm thuộc tính vào CartItemAttribute
-            $attributes = Attribute::with('values')
-                ->where('category_id', $product->category->id)
-                ->where('status', 1)
-                ->get();
-            foreach ($attributes as $attribute) {
-                CartItemAttribute::create([
-                    'cart_item_id' => $cartItem->id,
-                    'attribute_value_id' => $validated['attributes_' . $attribute->slug],
-                ]);
-            }
-
-            // Thêm topping vào CartItemTopping
-            if (isset($validated['toppings'])) {
-                foreach ($validated['toppings'] as $topping) {
-                    CartItemTopping::create([
-                        'cart_item_id' => $cartItem->id,
-                        'topping_id' => $topping,
-                    ]);
-                }
-            }
-
-            $priceProduct = $product->price * $validated['quantity'];
-            $priceAttribute = 0;
-            foreach ($attributes as $attribute) {
-                $att = AttributeValue::find($validated['attributes_' . $attribute->slug]);
-                if ($att->price_type == 1) {
-                    $priceAttribute += $att->price;
-                } else {
-                    $priceAttribute += $product->price * $att->price / 100;
-                }
-            }
-            $priceTopping = 0;
-            if (isset($validated['toppings'])) {
-                foreach ($validated['toppings'] as $topping) {
-                    $priceTopping += Topping::find($topping)->price;
-                }
-            }
-            $amount = $priceProduct + $priceAttribute + $priceTopping;
-
-            // Cập nhật giá của CartItem
-            $cartItem->price = $amount;
-            $cartItem->save();
-            // Cập nhật giá trị total của Cart
-            $cart->total += $amount;
-            $cart->save();
-
-            return back()->with('success', 'Thêm sản phẩm vào giỏ hàng thành công!');
-        }
-
-        return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại sau!');
-    }
 
     /**
      * Lấy ra danh sách các sản phẩm yêu thích của người dùng đang đăng nhập
