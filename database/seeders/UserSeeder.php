@@ -19,9 +19,10 @@ class UserSeeder extends Seeder
     {
         $now = Carbon::now();
         $faker = Faker::create();
+        $users = User::all();
 
         // Admin
-        $datas = [
+        $data = [
             [
                 'username' => 'quandohong28',
                 'role_id' => 3,
@@ -121,13 +122,13 @@ class UserSeeder extends Seeder
                 'updated_at' => $now,
             ],
         ];
-        foreach ($datas as $data) {
-            $user = User::create($data);
+        foreach ($data as $item) {
+            $user = User::create($item);
         }
 
         // Client
         for ($i = 0; $i < 50; $i++) {
-            $datas = [
+            $data = [
                 'username' => $faker->userName,
                 'role_id' => 2,
                 'email' => $faker->email,
@@ -142,20 +143,8 @@ class UserSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ];
-            $user = User::create($datas);
+            User::create($data);
 
-            Address::create([
-                'user_id' => $user->id,
-                'title' => $faker->name,
-                // 'phone' => $user->phone,
-                'province' => $faker->state,
-                'district' => $faker->city,
-                'ward' => $faker->city,
-                'detail_address' => $faker->address,
-                'is_default' => true,
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
         }
     }
 }
