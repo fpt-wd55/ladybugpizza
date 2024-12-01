@@ -77,7 +77,7 @@ class ProfileController extends Controller
 		$user = Auth::user();
 
 		if (!Hash::check($request->current_password, $user->password)) {
-			return back()->with('current_password', 'Mật khẩu hiện tại không đúng');
+			return back()->withErrors(['current_password' => 'Mật khẩu hiện tại không đúng']);
 		}
 
 		$user->password = Hash::make($request->new_password);
