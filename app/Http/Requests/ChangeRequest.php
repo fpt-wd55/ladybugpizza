@@ -24,7 +24,7 @@ class ChangeRequest extends FormRequest
         return [
             'current_password' => 'required',
             'new_password' => 'required|min:8|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&]).{8,}$/',
-            'new_password_confirmation' => 'required|same:new_password',
+            'new_password_confirmation' => 'required|same:new_password|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&]).{8,}$/',
         ];
     }
     public function messages(): array
@@ -36,6 +36,7 @@ class ChangeRequest extends FormRequest
             'new_password.regex' => 'Mật khẩu phải chứa ít nhất 1 ký tự viết hoa, 1 ký tự số và 1 ký tự đặc biệt',
             'new_password_confirmation.required' => 'Vui lòng nhập lại mật khẩu mới.',
             'new_password_confirmation.same' => 'Mật khẩu nhập lại không khớp',
+            'new_password_confirmation.regex' => 'Mật khẩu phải chứa ít nhất 1 ký tự viết hoa, 1 ký tự số và 1 ký tự đặc biệt',
         ];
     }
 }
