@@ -120,19 +120,33 @@
         <div class="p-4 border-b bg-gray-50">
             <!-- Các tab điều hướng -->
             <ul class="flex">
-                <li class="me-6 min-w-fit">
+                <li class="me-6 min-w-fit relative mx-4">
                     <a aria-current="page"
-                        class="inline-block rounded-t-lg pb-1 border-b-2 {{ request()->routeIs('admin.orders.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
-                        href="{{ route('admin.orders.index') }}">Tất cả</a>
+                        class="inline-block rounded-t-lg pb-1 border-b-2 {{ request()->routeIs('admin.orders.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A]' : 'border-transparent' }}"
+                        href="{{ route('admin.orders.index') }}">
+                        Tất cả
+                    </a>
+                    @if ($totalOrders > 0)
+                        <span class="badge-noti -top-2">
+                            {{ $totalOrders }}
+                        </span>
+                    @endif
                 </li>
                 @foreach ($orderStatuses as $status)
-                    <li class="me-6 min-w-fit">
+                    <li class="me-6 min-w-fit relative mx-4">
                         <a aria-current="page"
-                            class="inline-block rounded-t-lg border-b-2 pb-1 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
-                            href="{{ route('admin.orders.index', ['tab' => $status->slug]) }}">{{ $status->name }}</a>
+                            class="inline-block rounded-t-lg border-b-2 pb-1 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A]' : 'border-transparent' }}"
+                            href="{{ route('admin.orders.index', ['tab' => $status->slug]) }}">
+                            {{ $status->name }}
+                        </a>
+                        @if ($status->orders_count > 0)
+                            <span class="badge-noti -top-2">
+                                {{ $status->orders_count }}</span>
+                        @endif
                     </li>
                 @endforeach
             </ul>
+
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-500">

@@ -122,6 +122,10 @@ class User extends Authenticatable
         return $this->role_id == 3;
     }
 
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
         public function avatar()
         {
             if (filter_var($this->avatar, FILTER_VALIDATE_URL)) {
