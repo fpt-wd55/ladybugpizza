@@ -75,19 +75,19 @@
                         <div class="w-full grid sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end gap-4">
                             @if ($order->orderStatus->name == 'Chờ xác nhận')
                                 <button type="button" data-modal-target="cancelOrder-modal-{{ $order->id }}"
-                                    data-modal-toggle="cancelOrder-modal-{{ $order->id }}" class="button-red">Huỷ
+                                    data-modal-toggle="cancelOrder-modal-{{ $order->id }}" class="button-red w-full">Huỷ
                                     đơn hàng</button>
                             @endif
 
                             @if ($order->orderStatus->name === 'Hoàn thành' && $order->evaluations->isEmpty())
                                 <button type="button" data-modal-target="reviewOrder-modal-{{ $order->id }}"
-                                    data-modal-toggle="reviewOrder-modal-{{ $order->id }}" class="button-red">Đánh
+                                    data-modal-toggle="reviewOrder-modal-{{ $order->id }}"
+                                    class="button-red w-full">Đánh
                                     giá</button>
                             @endif
 
-                            <button type="button" onclick="toggleAccordion({{ $order->id }})"
-                                class="button-light">
-                            @svg('tabler-info-circle', 'w-4 h-4')
+                            <button type="button" onclick="toggleAccordion({{ $order->id }})" class="button-light">
+                                @svg('tabler-info-circle', 'w-4 h-4')
                             </button>
                         </div>
                     </div>

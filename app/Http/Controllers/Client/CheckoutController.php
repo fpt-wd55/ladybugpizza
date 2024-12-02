@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Client;
- 
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckoutRequest;
 use App\Models\Address;
+use App\Models\AttributeValue;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\CartItemAttribute;
@@ -14,6 +15,8 @@ use App\Models\OrderItem;
 use App\Models\OrderItemAttribute;
 use App\Models\OrderItemTopping;
 use App\Models\PaymentMethod;
+use App\Models\Product;
+use App\Models\Topping;
 use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
@@ -56,9 +59,9 @@ class CheckoutController extends Controller
 
         // Check address_id
         if ($request->old_address == -1) {
-            $address = Address::created([
+            $address = Address::create([
                 'user_id' => Auth::id(),
-                'title' => 'Địa chỉ' . Auth::user()->addresses->count() + 1,
+                'title' => 'Địa chỉ ' . Auth::user()->addresses->count() + 1,
                 'province' => $request->province,
                 'district' => $request->district,
                 'ward' => $request->ward,
@@ -96,21 +99,37 @@ class CheckoutController extends Controller
                     'price' => $cartItem->price,
                 ]);
 
-                if ($cartItem->attributes) {
+                if ($cartItem->attributes && count($cartItem->attributes) > 0) {
                     foreach ($cartItem->attributes as $attribute) {
                         OrderItemAttribute::create([
                             'order_item_id' => $orderItem->id,
                             'attribute_value_id' => $attribute->attribute_value_id,
                         ]);
+
+                        // Trừ số lượng thuộc tính 
+                        $attributeValue = AttributeValue::find($attribute->attribute_value_id);
+                        $attributeValue->quantity -= $cartItem->quantity;
+                        $attributeValue->save();
                     }
+                } else {
+                    // Trừ số lượng sản phẩm
+                    $product = Product::find($cartItem->product_id);
+                    $product->quantity -= $cartItem->quantity;
+                    $product->save();
                 }
 
-                if ($cartItem->toppings) {
+
+                if ($cartItem->toppings && count($cartItem->toppings) > 0) {
                     foreach ($cartItem->toppings as $topping) {
                         OrderItemTopping::create([
                             'order_item_id' => $orderItem->id,
                             'topping_id' => $topping->topping_id,
                         ]);
+
+                        // Trừ số lượng topping
+                        $topping = Topping::find($topping->topping_id);
+                        $topping->quantity -= $cartItem->quantity;
+                        $topping->save();
                     }
                 }
             }

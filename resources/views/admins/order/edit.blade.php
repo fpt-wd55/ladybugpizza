@@ -11,7 +11,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {{-- Giá trị 1 --}}
                 <div>
                     <h2 class="mb-4 text-lg font-semibold">Tổng quan</h2>
@@ -30,6 +30,13 @@
                                     </option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="mb-4" id="canceled_reason">
+                            <p class="mb-2 text-sm font-normal">Lý do hủy đơn: </p>
+                            <textarea class="text-area" name="canceled_reason" rows="4">{{ $order->canceled_reason }}</textarea>
+                            @error('canceled_reason')
+                                <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="mt-6 flex justify-start gap-2">
                             <button class="button-red" type="submit">Cập nhật</button>
@@ -63,7 +70,7 @@
             </div>
             <hr class="my-4 w-full">
             {{-- SẢN PHẨM --}}
-            <div class="grid grid-cols-2">
+            <div class="grid grid-cols-1 md:grid-cols-2">
                 {{-- sản phẩm --}}
                 <div>
                     <label class="mb-5 font-semibold">Sản phẩm</label> <br>
@@ -93,7 +100,7 @@
                     @endforeach
                 </div>
                 {{-- thanh toán --}}
-                <div class="ml-36">
+                <div class="mt-5 md:mt-0 md:ml-36">
                     <div class="mb-2 flex items-center justify-between gap-32 text-sm">
                         <p class="">Tạm tính</p>
                         <p class="font-medium">{{ number_format($order->amount) }}₫</p>
@@ -116,4 +123,26 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusSelect = document.getElementById('status');
+            const permissionSelect = document.getElementById('canceled_reason');
+
+            function toggleForm() {
+                if (statusSelect.value === 'Đã hủy') {
+                    permissionSelect.style.display = 'block';
+                } else {
+                    permissionSelect.style.display = 'none';
+                }
+            }
+
+            statusSelect.addEventListener('change', function() {
+                toggleForm();
+            });
+
+            toggleForm();
+        });
+    </script>
 @endsection

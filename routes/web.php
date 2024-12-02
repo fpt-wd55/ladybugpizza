@@ -60,6 +60,7 @@ Route::prefix('/')->group(function () {
         Route::get('/order', [OrderController::class, 'index'])->name('client.order.index');
         Route::patch('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
         Route::post('/order/{order}/evaluation', [OrderController::class, 'evaluation'])->name('client.order.evaluation');
+        // Profile
         Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile.index');
         Route::put('/profile/update', [ProfileController::class, 'postUpdate'])->name('client.profile.post-update');
         Route::put('/profile/change-password', [ProfileController::class, 'postChangePassword'])->name('client.profile.post-change-password');
@@ -77,6 +78,7 @@ Route::prefix('/')->group(function () {
         Route::put('/settings/update/{id}', [ProfileController::class, 'updateStatus'])->name('client.settings.update');
         Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
         Route::post('/profile/promotion/{id}', [ProfileController::class, 'redeemPromotion'])->name('client.profile.redeem-promotion');
+        // Favorite
         Route::get('/favorites', [ProductController::class, 'favorites'])->name('client.product.favorites');
         Route::get('product/{slug}/favorite', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
     });
