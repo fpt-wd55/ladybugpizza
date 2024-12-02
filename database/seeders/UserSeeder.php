@@ -4,8 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
-use App\Models\User;
-use App\Models\Role;
+use App\Models\User; 
 use App\Models\Address;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -32,9 +31,7 @@ class UserSeeder extends Seeder
                 'google_id' => null,
                 'date_of_birth' => '2004-04-28',
                 'gender' => 1,
-                'status' => 1,
-                'created_at' => $now,
-                'updated_at' => $now,
+                'status' => 1, 
             ],
             [
                 'username' => 'lv.thanh137',
@@ -46,9 +43,7 @@ class UserSeeder extends Seeder
                 'google_id' => null,
                 'date_of_birth' => '2004-07-13',
                 'gender' => 1,
-                'status' => 1,
-                'created_at' => $now,
-                'updated_at' => $now,
+                'status' => 1, 
             ],
             [
                 'username' => 'duynguyenhuu2004',
@@ -60,9 +55,7 @@ class UserSeeder extends Seeder
                 'google_id' => null,
                 'date_of_birth' => '2004-05-20',
                 'gender' => 1,
-                'status' => 1,
-                'created_at' => $now,
-                'updated_at' => $now,
+                'status' => 1, 
             ],
             [
                 'username' => 'trantrunghieu422',
@@ -74,9 +67,7 @@ class UserSeeder extends Seeder
                 'google_id' => null,
                 'date_of_birth' => '2004-04-22',
                 'gender' => 1,
-                'status' => 1,
-                'created_at' => $now,
-                'updated_at' => $now,
+                'status' => 1, 
             ],
             [
                 'username' => 'vohuutuan04',
@@ -88,9 +79,7 @@ class UserSeeder extends Seeder
                 'google_id' => null,
                 'date_of_birth' => '2004-04-04',
                 'gender' => 1,
-                'status' => 1,
-                'created_at' => $now,
-                'updated_at' => $now,
+                'status' => 1, 
             ],
             [
                 'username' => 'nguynhuyen111',
@@ -102,9 +91,7 @@ class UserSeeder extends Seeder
                 'google_id' => null,
                 'date_of_birth' => '2004-11-11',
                 'gender' => 2,
-                'status' => 1,
-                'created_at' => $now,
-                'updated_at' => $now,
+                'status' => 1, 
             ],
             [
                 'username' => 'tranthihaaaa9423',
@@ -116,9 +103,7 @@ class UserSeeder extends Seeder
                 'google_id' => null,
                 'date_of_birth' => '2004-07-13',
                 'gender' => 2,
-                'status' => 1,
-                'created_at' => $now,
-                'updated_at' => $now,
+                'status' => 1, 
             ],
         ];
         foreach ($datas as $data) {
@@ -138,23 +123,18 @@ class UserSeeder extends Seeder
                 'avatar' => '1729568995_343744107_234811302553749_4497007258387566233_n.jpg',
                 'date_of_birth' => $faker->date,
                 'gender' => rand(1, 3),
-                'status' => 1,
-                'created_at' => $now,
-                'updated_at' => $now,
+                'status' => 1, 
             ];
             $user = User::create($datas);
 
             Address::create([
                 'user_id' => $user->id,
-                'title' => $faker->name,
-                // 'phone' => $user->phone,
+                'title' => $faker->name, 
                 'province' => $faker->state,
                 'district' => $faker->city,
                 'ward' => $faker->city,
                 'detail_address' => $faker->address,
-                'is_default' => true,
-                'created_at' => $now,
-                'updated_at' => $now,
+                'is_default' => true, 
             ]);
         }
     }
