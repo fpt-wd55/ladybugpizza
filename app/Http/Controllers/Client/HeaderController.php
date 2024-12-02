@@ -21,13 +21,18 @@ class HeaderController extends Controller
     {
         // Danh sách các trang
         $pages = Page::where('status', 1)->get();
-        // Số lượng sản phẩm yêu thích
-        $favorites = Favorite::where('user_id', Auth::id())->count();
-        $countFavorites = $favorites;
-        // Số lượng sản phẩm trong giỏ hàng
-        $cart = Cart::where('user_id', Auth::id())->first();
-        $cartItems = CartItem::where('cart_id', $cart->id)->get();
-        $countCartItems = $cartItems->count();
-        return compact('pages', 'countFavorites', 'countCartItems');
+        // check user login
+        if (!Auth::check()) {
+            return compact('pages');
+        } else {
+            // Số lượng sản phẩm yêu thích
+            $favorites = Favorite::where('user_id', Auth::id())->count();
+            $countFavorites = $favorites;
+            // Số lượng sản phẩm trong giỏ hàng
+            $cart = Cart::where('user_id', Auth::id())->first();
+            $cartItems = CartItem::where('cart_id', $cart->id)->get();
+            $countCartItems = $cartItems->count();
+            return compact('pages', 'countFavorites', 'countCartItems');
+        }
     }
 }
