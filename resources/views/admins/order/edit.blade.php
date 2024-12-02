@@ -6,11 +6,6 @@
     <div class="mt-5 overflow-hidden bg-white shadow sm:rounded-lg">
         <div class="container mx-auto ml-4 p-6">
             <h1 class="mb-4 text-2xl font-semibold">Đặt hàng</h1>
-            @if (session('success'))
-                <div class="mb-4 rounded bg-green-100 p-4 text-green-800">
-                    {{ session('success') }}
-                </div>
-            @endif
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {{-- Giá trị 1 --}}
                 <div>
@@ -24,9 +19,10 @@
                             <label class="mb-2 block font-semibold" for="status">Trạng thái</label>
                             <select class="input" id="status" name="status">
                                 @foreach ($statuses as $status)
-                                    <option {{ $order->orderStatus->name === $status ? 'selected' : '' }}
-                                        value="{{ $status }}">
-                                        {{ $status }}
+                                    <option {{ $order->orderStatus->name === $status->name ? 'selected' : '' }}
+                                        value="{{ $status->name }}"
+                                        {{ $order->orderStatus->id > $status->id ? 'disabled' : '' }}>
+                                        {{ $status->name }}
                                     </option>
                                 @endforeach
                             </select>

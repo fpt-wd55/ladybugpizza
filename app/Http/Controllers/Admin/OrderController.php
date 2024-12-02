@@ -57,7 +57,7 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::findOrFail($id);
-        $statuses = OrderStatus::pluck('name')->toArray();
+        $statuses = OrderStatus::get();
 
         return view('admins.order.edit', compact('order', 'statuses'));
     }
@@ -82,6 +82,10 @@ class OrderController extends Controller
 
         $orderStatus = OrderStatus::where('name', $request->status)->first();
 
+        if ($orderStatus->id < $order->order_status_id) {
+            return redirect()->back()->with('error', 'Cập nhật đơn hàng không thành công.');
+        }
+
         if ($orderStatus) {
             $order->order_status_id = $orderStatus->id;
             if ($orderStatus->slug == 'canceled') {
@@ -90,10 +94,10 @@ class OrderController extends Controller
             }
             $order->save();
 
-            return redirect()->route('admin.orders.edit', $id)->with('success', 'Trạng thái đã được cập nhật!');
+            return redirect()->back()->with('success', 'Cập nhật đơn hàng thành công.');
         }
 
-        return redirect()->route('admin.orders.edit', $id)->withErrors(['status' => 'Không tìm thấy trạng thái hợp lệ.']);
+        return redirect()->back()->with('error', 'Cập nhật đơn hàng không thành công.');
     }
 
 
