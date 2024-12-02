@@ -57,8 +57,7 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::findOrFail($id);
-        $statuses = OrderStatus::pluck('name')->toArray();
-
+        $statuses = OrderStatus::get();
 
         return view('admins.order.edit', compact('order', 'statuses'));
     }
@@ -73,18 +72,32 @@ class OrderController extends Controller
 
         $request->validate([
             'status' => ['required', 'string', Rule::in($statuses)],
+            'canceled_reason' => 'nullable|string',
+        ], [
+            'status.required' => 'Trạng thái không được để trống.',
+            'status.string' => 'Trạng thái không hợp lệ.',
+            'status.in' => 'Trạng thái không hợp lệ.',
+            'canceled_reason.string' => 'Lý do hủy không đúng định dạng.',
         ]);
 
         $orderStatus = OrderStatus::where('name', $request->status)->first();
 
-        if ($orderStatus) {
-            $order->order_status_id = $orderStatus->id;
-            $order->save();
-
-            return redirect()->route('admin.orders.edit', $id)->with('success', 'Trạng thái đã được cập nhật!');
+        if ($orderStatus->id < $order->order_status_id) {
+            return redirect()->back()->with('error', 'Cập nhật đơn hàng không thành công.');
         }
 
-        return redirect()->route('admin.orders.edit', $id)->withErrors(['status' => 'Không tìm thấy trạng thái hợp lệ.']);
+        if ($orderStatus) {
+            $order->order_status_id = $orderStatus->id;
+            if ($orderStatus->slug == 'canceled') {
+                $order->canceled_reason = $request->canceled_reason;
+                $order->canceled_at = now();
+            }
+            $order->save();
+
+            return redirect()->back()->with('success', 'Cập nhật đơn hàng thành công.');
+        }
+
+        return redirect()->back()->with('error', 'Cập nhật đơn hàng không thành công.');
     }
 
 

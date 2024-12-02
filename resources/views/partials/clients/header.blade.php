@@ -44,14 +44,20 @@
                     data-modal-toggle="searchModal">@svg('tabler-search', 'icon-md')</button>
 
                 @if (Auth::user())
-                    <a data-modal-target="favoriteProductModal" data-modal-toggle="favoriteProductModal" href="#">
-                        @svg('tabler-heart', 'icon-md')</a>
-                    <a href="{{ route('client.cart.index') }}"> @svg('tabler-shopping-bag', 'icon-md')</a>
-                    <a href="{{ route('client.order.index') }}"> @svg('tabler-truck-delivery', 'icon-md')</a>
+                    <a data-modal-target="favoriteProductModal" data-modal-toggle="favoriteProductModal" href="#"
+                        class="flex items-center justify-center">
+                        @svg('tabler-heart', 'icon-md')
+                        <p class="ps-1 text-sm font-medium text-[#D30A0A]">{{ '(' . $countFavorites . ')' }}</p>
+                    </a>
+                    <a href="{{ route('client.cart.index') }}" class="flex items-center justify-center">
+                        @svg('tabler-shopping-bag', 'icon-md')
+                        <p class="ps-1 text-sm font-medium text-[#D30A0A]">{{ '(' . $countCartItems . ')' }}</p>
+                    </a>
+                    <a href="{{ route('client.order.index') }}">
+                        @svg('tabler-truck-delivery', 'icon-md')
+                    </a>
 
                     <button class="hover:cursor-pointer">
-                        {{-- <img class="img-circle h-8 w-8 object-cover" data-dropdown-toggle="userDropdown" loading="lazy"
-                            src="{{ Auth::user()->avatar() }}"> --}}
                         @if (Auth::user()->avatar && file_exists(public_path('storage/uploads/avatars/' . Auth::user()->avatar)))
                             <img src="{{ asset('storage/uploads/avatars/' . Auth::user()->avatar) }}" alt="User Avatar"
                                 class="img-circle h-10 w-10 object-cover" data-dropdown-toggle="userDropdown"

@@ -67,7 +67,9 @@
                                             <option {{ old('old_address') ? 'selected' : '' }} value="-1">Chọn địa chỉ
                                             </option>
                                             @foreach ($addresses as $address)
-                                                <option value="{{ $address->id }}">{{ $address->title }}</option>
+                                                <option value="{{ $address->id }}"
+                                                    {{ old('old_address') == $address->id ? 'selected' : '' }}>
+                                                    {{ $address->title }}</option>
                                             @endforeach
                                         </select>
                                     </div>

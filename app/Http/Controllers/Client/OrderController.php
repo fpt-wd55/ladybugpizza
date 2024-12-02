@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Models\User;
 use App\Models\Order;
 use App\Models\Invoice;
 use App\Models\OrderItem;
-use App\Models\OrderStatus;
-use App\Models\Transaction;
+use App\Models\OrderStatus; 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EvaluationRequest;
+use App\Models\AttributeValue;
 use App\Models\Evaluation;
 use App\Models\Membership;
 use App\Models\MembershipRank;
+use App\Models\OrderItemAttribute;
+use App\Models\OrderItemTopping;
 use App\Models\Product;
+use App\Models\Topping;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -51,6 +53,12 @@ class OrderController extends Controller
     public function postCancel(Order $order, Request $request)
     {
         $order = Order::query()->findOrFail($order['id']);
+        $orderItems = OrderItem::where('order_id', $order->id)->get();
+        foreach ($orderItems as $orderItem) {
+            $orderItem->attributes = OrderItemAttribute::where('order_item_id', $orderItem->id)->get();
+            $orderItem->toppings = OrderItemTopping::where('order_item_id', $orderItem->id)->get();
+        }
+
         $reasons = [
             1 => 'Muốn thay đổi địa chỉ giao hàng',
             2 => 'Muốn nhập/thay đổi mã Voucher',
@@ -58,7 +66,7 @@ class OrderController extends Controller
             4 => 'Thủ tục thanh toán quá rắc rối',
             5 => 'Tìm thấy giá rẻ hơn ở chỗ khác',
             6 => 'Đổi ý, không muốn mua nữa',
-            7 => $request->input('reason'), // lý do khác
+            7 => $request->input('reason'),
         ];
         if ($order) {
             $selectedReason = $request->input('canceled_reason');
@@ -66,6 +74,29 @@ class OrderController extends Controller
             $order->order_status_id = 6;
             $order->canceled_at = now();
             $order->save();
+
+            // Trả lại số lượng sản phẩm
+            foreach ($orderItems as $orderItem) {
+                if ($orderItem->attributes && count($orderItem->attributes) > 0) {
+                    foreach ($orderItem->attributes as $attribute) {
+                        $attributeValue = AttributeValue::find($attribute->attribute_value_id);
+                        $attributeValue->quantity += $orderItem->quantity;
+                        $attributeValue->save();
+                    }
+                } else {
+                    $product = Product::find($orderItem->product_id);
+                    $product->quantity += $orderItem->quantity;
+                    $product->save();
+                }
+
+                if ($orderItem->toppings && count($orderItem->toppings) > 0) {
+                    foreach ($orderItem->toppings as $topping) {
+                        $topping = Topping::find($topping->topping_id);
+                        $topping->quantity += $orderItem->quantity;
+                        $topping->save();
+                    }
+                }
+            }
 
             return redirect()->back()->with('success', 'Hủy đơn hàng thành công');
         }
