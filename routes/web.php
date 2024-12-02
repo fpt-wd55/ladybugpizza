@@ -84,15 +84,7 @@ Route::prefix('/')->group(function () {
         Route::get('product/{slug}/favorite', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
     });
 
-    Route::get('/contact', [PageController::class, 'contact'])->name('client.contact');
-    Route::get('/check-send-email', function () {
-        $order = Order::find(1);
-        $dataOrder = [
-            'fullname' => 'Le Van Thanh',
-            'order' => $order,
-        ];
-        return view('mails.order-confirm', ['dataOrder' => $dataOrder]);
-    });
+    Route::get('/contact', [PageController::class, 'contact'])->name('client.contact'); 
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
     Route::get('/{slug}', [PageController::class, 'dynamicPage'])->name('client.dynamic-page');
 });
