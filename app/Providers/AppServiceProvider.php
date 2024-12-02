@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\Admin\HeaderController as AdminHeaderController;
 use App\Http\Controllers\Admin\SidebarController;
 use App\Http\Controllers\Client\HeaderController;
 use App\Http\Controllers\FooterController;
@@ -35,6 +36,10 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('partials.admins.sidebar', function ($view) {
             $view->with(SidebarController::getPendingOrders());
+        });
+
+        View::composer('partials.admins.header', function ($view) {
+            $view->with(AdminHeaderController::getNotifications());
         });
     }
 }

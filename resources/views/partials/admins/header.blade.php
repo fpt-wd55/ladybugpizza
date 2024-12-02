@@ -16,13 +16,15 @@
                 </a>
             </div>
             <div class="flex items-center">
-                
                 <!-- Notifications -->
                 <button type="button" data-dropdown-toggle="notification-dropdown"
                     class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 ring-0 focus:ring-0">
                     <span class="sr-only">Xem thông báo</span>
                     <!-- Bell icon -->
                     @svg('tabler-bell', 'w-6 h-6 text-gray-500')
+                    @if ($notifications > 0)
+                        <span class="top-0 badge-noti">{{ $notifications }}</span>
+                    @endif
                 </button>
                 <!-- Dropdown menu -->
                 <div class="hidden overflow-hidden z-50 my-4 max-w-sm list-none bg-white rounded divide-y divide-gray-100 shadow-lg text-sm"
@@ -76,8 +78,8 @@
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                     <span class="sr-only">Open user menu</span>
                     @if (Auth::user()->avatar && file_exists(public_path('storage/uploads/avatars/' . Auth::user()->avatar)))
-                        <img src="{{ asset('storage/uploads/avatars/' . Auth::user()->avatar) }}"
-                            alt="User Avatar" class="w-10 h-10 object-cover rounded-full">
+                        <img src="{{ asset('storage/uploads/avatars/' . Auth::user()->avatar) }}" alt="User Avatar"
+                            class="w-10 h-10 object-cover rounded-full">
                     @else
                         <img src="{{ asset('storage/uploads/avatars/user-default.png') }}"
                             class="w-10 h-10 object-cover rounded-full">

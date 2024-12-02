@@ -18,19 +18,19 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $status = $request->get('tab'); // Change 'status' to 'tab'
+        $status = $request->get('tab');
 
-        $orders = Order::query() // Change 'Order::all()' to 'Order::query()'
+        $orders = Order::query()
             ->when($status, function ($query, $status) {
                 return $query->whereHas('orderStatus', function ($query) use ($status) {
                     return $query->where('slug', $status);
                 });
             })->latest('id')->paginate(10);
-
-        $orderStatuses = OrderStatus::all();
+        $orderStatuses = OrderStatus::withCount(['orders'])->get();
+        $totalOrders = Order::count();
         $paymentMethods = PaymentMethod::all();
         $invoices = Invoice::all();
-        return view('admins.order.index', compact('orders', 'invoices', 'orderStatuses', 'paymentMethods'));
+        return view('admins.order.index', compact('orders', 'invoices', 'orderStatuses', 'paymentMethods', 'totalOrders'));
     }
 
     /**
