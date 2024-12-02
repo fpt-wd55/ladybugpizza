@@ -18,9 +18,10 @@ class UserSeeder extends Seeder
     {
         $now = Carbon::now();
         $faker = Faker::create();
+        $users = User::all();
 
         // Admin
-        $datas = [
+        $data = [
             [
                 'username' => 'quandohong28',
                 'role_id' => 3,
@@ -106,13 +107,13 @@ class UserSeeder extends Seeder
                 'status' => 1, 
             ],
         ];
-        foreach ($datas as $data) {
-            $user = User::create($data);
+        foreach ($data as $item) {
+            $user = User::create($item);
         }
 
         // Client
         for ($i = 0; $i < 50; $i++) {
-            $datas = [
+            $data = [
                 'username' => $faker->userName,
                 'role_id' => 2,
                 'email' => $faker->email,
@@ -125,7 +126,7 @@ class UserSeeder extends Seeder
                 'gender' => rand(1, 3),
                 'status' => 1, 
             ];
-            $user = User::create($datas);
+            User::create($data);
 
             Address::create([
                 'user_id' => $user->id,

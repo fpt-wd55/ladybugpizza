@@ -86,8 +86,11 @@
                             <label class="w-32 text-sm font-medium">Ngày sinh:</label>
                             <input class="input" name="date_of_birth" type="date" value="{{ old('date_of_birth', $user->date_of_birth) }}">
                         </div>
+                        @error('date_of_birth')
+                        <p class="text-right text-sm text-red-500">{{ $message }}</p>
+                    @enderror
 
-                        <div class="mb-6 flex justify-end">
+                        <div class="mt-4 mb-6 flex justify-end">
                             <button class="button-red" type="submit">
                                 @svg('tabler-cloud-upload', 'icon-sm me-2')
                                 Cập nhật

@@ -72,7 +72,7 @@
                 <button type="submit" class="button-red">
                     Cập Nhật
                 </button>
-                <a href="{{ route('client.profile.address') }}" class="button-gray">
+                <a href="{{ route('client.profile.address') }}" class="button-dark">
                     Quay lại
                 </a>
             </div>

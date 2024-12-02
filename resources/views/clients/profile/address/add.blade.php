@@ -46,7 +46,7 @@
                     {{-- <select name="ward" id="ward" class="input">
                         <option value="">Chọn xã/phường</option>
                     </select> --}}
-                    <input type="text" name="ward" id="ward" value="{{ old('ward') }}" placeholder="VD: Phường Phú Đô" class="mt-2 mb-2 input">
+                    <input type="text" name="ward" id="ward" value="{{ old('ward') }}" placeholder="VD: Phường Phương Canh" class="mt-2 mb-2 input">
                     @error('ward')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
@@ -56,7 +56,7 @@
                         chỉ
                         chi tiết</label>
                     <textarea type="text" name="address" id="address" value="{{ old('address') }}" class="text-area"
-                        placeholder="VD: Số 4 ngõ 2 ngách 14 đường Cầu Diễn"></textarea>
+                        placeholder="VD: Số 30 Trịnh Văn Bô"></textarea>
                     @error('address')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
@@ -66,7 +66,7 @@
                 <button type="submit" class="button-red">
                     Thêm mới
                 </button>
-                <a href="{{ route('client.profile.address') }}" class="button-gray">
+                <a href="{{ route('client.profile.address') }}" class="button-dark">
                     Quay lại
                 </a>
             </div>
