@@ -29,6 +29,7 @@ use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\VNPayController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -83,7 +84,7 @@ Route::prefix('/')->group(function () {
         Route::get('product/{slug}/favorite', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
     });
 
-    Route::get('/contact', [PageController::class, 'contact'])->name('client.contact');
+    Route::get('/contact', [PageController::class, 'contact'])->name('client.contact'); 
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
     Route::get('/{slug}', [PageController::class, 'dynamicPage'])->name('client.dynamic-page');
 });
