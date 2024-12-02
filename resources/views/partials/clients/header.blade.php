@@ -4,8 +4,7 @@
             {{-- Logo --}}
             <ul class="flex items-center gap-4">
                 <a class="md:flex md:items-center" href="{{ route('client.home') }}">
-                    <img alt="" class="img-sm" loading="lazy"
-                        src="{{ asset('storage/uploads/logo/logo.svg') }}">
+                    <img alt="" class="img-sm" loading="lazy" src="{{ asset('storage/uploads/logo/logo.svg') }}">
                 </a>
 
                 <div class="hidden items-center gap-4 lg:flex">
@@ -47,11 +46,19 @@
                     <a data-modal-target="favoriteProductModal" data-modal-toggle="favoriteProductModal" href="#"
                         class="flex items-center justify-center">
                         @svg('tabler-heart', 'icon-md')
-                        <p class="ps-1 text-sm font-medium text-[#D30A0A]">{{ '(' . $countFavorites . ')' }}</p>
+                        @if ($countFavorites > 0)
+                            <p
+                                class="inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-[#D30A0A] border-2 border-white rounded-full">
+                                {{ $countFavorites }}</p>
+                        @endif
                     </a>
                     <a href="{{ route('client.cart.index') }}" class="flex items-center justify-center">
                         @svg('tabler-shopping-bag', 'icon-md')
-                        <p class="ps-1 text-sm font-medium text-[#D30A0A]">{{ '(' . $countCartItems . ')' }}</p>
+                        @if ($countCartItems > 0)
+                            <p
+                                class="inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-[#D30A0A] border-2 border-white rounded-full">
+                                {{ $countCartItems }}</p>
+                        @endif
                     </a>
                     <a href="{{ route('client.order.index') }}">
                         @svg('tabler-truck-delivery', 'icon-md')
