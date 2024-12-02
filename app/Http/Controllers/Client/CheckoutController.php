@@ -31,7 +31,6 @@ class CheckoutController extends Controller
             $cartItems = collect();
         }
 
-
         foreach ($cartItems as $cartItem) {
             $cartItem->attributes = CartItemAttribute::where('cart_item_id', $cartItem->id)->get();
             $cartItem->toppings = CartItemTopping::where('cart_item_id', $cartItem->id)->get();
