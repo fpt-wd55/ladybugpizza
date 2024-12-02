@@ -29,6 +29,7 @@ use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\VNPayController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -84,6 +85,14 @@ Route::prefix('/')->group(function () {
     });
 
     Route::get('/contact', [PageController::class, 'contact'])->name('client.contact');
+    Route::get('/check-send-email', function () {
+        $order = Order::find(1);
+        $dataOrder = [
+            'fullname' => 'Le Van Thanh',
+            'order' => $order,
+        ];
+        return view('mails.order-confirm', ['dataOrder' => $dataOrder]);
+    });
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
     Route::get('/{slug}', [PageController::class, 'dynamicPage'])->name('client.dynamic-page');
 });

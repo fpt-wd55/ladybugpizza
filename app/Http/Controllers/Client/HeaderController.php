@@ -30,7 +30,11 @@ class HeaderController extends Controller
             $countFavorites = $favorites;
             // Số lượng sản phẩm trong giỏ hàng
             $cart = Cart::where('user_id', Auth::id())->first();
-            $cartItems = CartItem::where('cart_id', $cart->id)->get();
+            if ($cart !== null) {
+                $cartItems = CartItem::where('cart_id', $cart->id)->get();
+            } else { 
+                $cartItems = collect();  
+            }
             $countCartItems = $cartItems->count();
             return compact('pages', 'countFavorites', 'countCartItems');
         }

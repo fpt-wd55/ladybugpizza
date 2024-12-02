@@ -76,7 +76,7 @@
         <div class="text-center">
             <div class="welcome-section">
                 <div class="app-name">
-                    Lazzybug Pizza
+                    Ladybug Pizza
                 </div>
             </div>
         </div>

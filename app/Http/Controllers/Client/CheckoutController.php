@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckoutRequest;
+use App\Mail\Order as MailOrder;
 use App\Models\Address;
 use App\Models\AttributeValue;
 use App\Models\Cart;
@@ -18,6 +19,7 @@ use App\Models\PaymentMethod;
 use App\Models\Product;
 use App\Models\Topping;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
@@ -135,6 +137,15 @@ class CheckoutController extends Controller
 
             $cart->delete();
             session()->forget('promotion');
+
+            // Gửi mail thông báo đặt hàng 
+            $dataOrder = [
+                'fullname' => $request->fullname,
+                'order' => $order,
+            ];
+
+            Mail::to($request->email)->send(new MailOrder($dataOrder));
+
             return redirect()->route('client.order.index')->with('success', 'Đặt hàng thành công');
         } else {
             return redirect()->back()->with('error', 'Đặt hàng thất bại');
