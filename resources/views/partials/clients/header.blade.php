@@ -45,20 +45,23 @@
                 @if (Auth::user())
                     <a data-modal-target="favoriteProductModal" data-modal-toggle="favoriteProductModal" href="#"
                         class="flex items-center justify-center">
-                        @svg('tabler-heart', 'icon-md')
-                        @if ($countFavorites > 0)
-                            <p
-                                class="inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-[#D30A0A] border-2 border-white rounded-full">
-                                {{ $countFavorites }}</p>
-                        @endif
+                        <div class="relative">
+                            @svg('tabler-heart', 'icon-md')
+                            @if ($countFavorites > 0)
+                                <p class="-top-3 -right-4 badge-noti">
+                                    {{ $countFavorites }}</p>
+                            @endif
+                        </div>
                     </a>
-                    <a href="{{ route('client.cart.index') }}" class="flex items-center justify-center">
-                        @svg('tabler-shopping-bag', 'icon-md')
-                        @if ($countCartItems > 0)
-                            <p
-                                class="inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-[#D30A0A] border-2 border-white rounded-full">
-                                {{ $countCartItems }}</p>
-                        @endif
+                    <a href="{{ route('client.cart.index') }}" class="relative flex items-center justify-center">
+                        <div class="relative">
+                            @svg('tabler-shopping-bag', 'icon-md')
+                            @if ($countCartItems > 0)
+                                <p class="-top-3 -right-4 badge-noti">
+                                    {{ $countCartItems }}
+                                </p>
+                            @endif
+                        </div>
                     </a>
                     <a href="{{ route('client.order.index') }}">
                         @svg('tabler-truck-delivery', 'icon-md')
