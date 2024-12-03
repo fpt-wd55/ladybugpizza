@@ -8,18 +8,28 @@
             <p class="title">LỊCH SỬ ĐƠN HÀNG</p>
             {{-- tabs --}}
             <div class="no-scrollbar mb-4 overflow-x-auto border-b border-gray-200 text-left text-sm">
-                <ul class="flex">
-                    <li class="me-6 min-w-fit">
-                        <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->routeIs('client.order.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
-                            href="{{ route('client.order.index') }}">Tất cả <span
-                                class="text-[#D30A0A]">({{ $orderStatuses->sum('orders_count') }})</span></a>
+                <ul class="flex gap-2">
+                    <li class="mt-2 me-6 min-w-fit relative mx-4">
+                        <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->routeIs('client.order.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A]' : 'border-transparent' }}"
+                            href="{{ route('client.order.index') }}">
+                            Tất cả
+                        </a>
+                        @if ($orderStatuses->sum('orders_count') > 0)
+                            <span class="badge-noti -top-2">
+                                {{ $orderStatuses->sum('orders_count') }}
+                            </span>
+                        @endif
                     </li>
                     @foreach ($orderStatuses as $status)
-                        <li class="me-6 min-w-fit">
+                        <li class="mt-3 me-6 relative min-w-fit">
                             <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
                                 href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }}
-                                ({{ $status->orders_count }})
                             </a>
+                            @if ($status->orders_count > 0)
+                                <span class="badge-noti -top-2">
+                                    {{ $status->orders_count }}
+                                </span>
+                            @endif
                         </li>
                     @endforeach
                 </ul>
@@ -47,7 +57,8 @@
                             <dt class="text-sm text-gray-500">Tổng đơn hàng:
                             </dt>
                             <dd class="mt-1.5 text-base font-semibold text-gray-900">
-                                {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ</dd>
+                                {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ
+                            </dd>
                         </dl>
 
                         <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
@@ -269,7 +280,8 @@
                                                             <textarea rows="6" name="comments[{{ $group['product']->id }}]" class="text-area text-sm resize-none"
                                                                 placeholder="Viết đánh giá..."></textarea>
                                                             @error('comments.' . $group['product']->id)
-                                                                <p class="text-sm text-[#D30A0A] pt-2">{{ $message }}</p>
+                                                                <p class="text-sm text-[#D30A0A] pt-2">{{ $message }}
+                                                                </p>
                                                             @enderror
                                                         </div>
                                                     </div>
@@ -371,13 +383,14 @@
                                 @endforeach
                             </div>
                         </div>
-
                         <hr class="my-4">
                         <div class="pb-5 text-sm">
-                            <div class="flex items-start justify-between">
+                            <div class="flex items-start justify-between gap-3">
                                 <div class="mb-4">
                                     <p class="mb-4 text-base font-medium">Ghi chú đơn hàng</p>
-                                    <p>{{ $order->notes }}</p>
+                                    <p>
+                                        {{ $order->notes }}
+                                    </p>
                                 </div>
                                 <div class="text-right">
                                     <div>
