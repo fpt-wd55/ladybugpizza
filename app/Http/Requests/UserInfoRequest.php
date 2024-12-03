@@ -27,13 +27,14 @@ class UserInfoRequest extends FormRequest
             'gender' => 'required|in:1,2,3',
             'avatar' => 'required|mimes:jpeg,png,jpg,gif,bmp,svg,webp|max:2048',
             'address' => 'required|max:255',
-            'province' => 'required',
-            'district' => 'required',
-            'ward' => 'required', 
+            'province' => 'required|string|max:255',
+            'district' => 'required|string|max:255',
+            'ward' => 'required|string|max:255',
         ];
     }
 
-    public function messages():array {
+    public function messages(): array
+    {
         return [
             'fullname.required' => 'Họ và tên không được để trống',
             'date_of_birth.required' => 'Ngày sinh không được để trống',
@@ -48,7 +49,7 @@ class UserInfoRequest extends FormRequest
             'district.required' => 'Quận/Huyện không được để trống',
             'ward.required' => 'Phường/Xã không được để trống',
             'address.required' => 'Địa chỉ không được để trống',
-            'address.max' => 'Địa chỉ không được quá 255 ký tự', 
+            'address.max' => 'Địa chỉ không được quá 255 ký tự',
         ];
     }
 }

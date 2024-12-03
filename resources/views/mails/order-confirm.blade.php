@@ -63,9 +63,9 @@
                                         <p style="font-size: 16px; color: #666; margin: 0;">
                                             {{ $dataOrder['order']->fullname }}<br>
                                             {{ $dataOrder['order']->address->detail_address }}<br>
-                                            {{ $dataOrder['order']->address->ward }},
-                                            {{ $dataOrder['order']->address->district }},
-                                            {{ $dataOrder['order']->address->province }}<br>
+                                            {{ $dataOrder['order']->ward->name_with_type }},
+                                            {{ $dataOrder['order']->district->name_with_type }},
+                                            {{ $dataOrder['order']->province->name_with_type }}<br>
                                         </p>
                                     </td>
                                     <!-- Cột 2 -->

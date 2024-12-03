@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Models\Order;
 use App\Models\Invoice;
 use App\Models\OrderItem;
-use App\Models\OrderStatus; 
+use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EvaluationRequest;
@@ -18,6 +18,9 @@ use App\Models\OrderItemTopping;
 use App\Models\Product;
 use App\Models\Topping;
 use Illuminate\Support\Facades\Auth;
+use Vanthao03596\HCVN\Models\Province;
+use Vanthao03596\HCVN\Models\District;
+use Vanthao03596\HCVN\Models\Ward;
 
 class OrderController extends Controller
 {
@@ -37,6 +40,15 @@ class OrderController extends Controller
             ->where('user_id', $userId)
             ->orderByDesc('created_at')
             ->get();
+
+        // get address order
+        $orders->map(function ($order) {
+            $order->province =  Province::find($order->address->province);
+            $order->district = District::find($order->address->district);
+            $order->ward = Ward::find($order->address->ward);
+            return $order;
+        });
+
         // đếm số lượng order trong tab
         $orderStatuses = OrderStatus::withCount(['orders' => function ($query) use ($userId) {
             $query->where('user_id', $userId);

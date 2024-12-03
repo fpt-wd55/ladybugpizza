@@ -26,9 +26,9 @@ class CheckoutRequest extends FormRequest
             'email' => 'required|email',
             'phone' => 'required|string',
             'detail_address' => 'required|string',
-            'province' => 'required|string',
-            'district' => 'required|string',
-            'ward' => 'required|string',
+            'province' => 'required|string|max:255',
+            'district' => 'required|string|max:255',
+            'ward' => 'required|string|max:255',
             'payment_method_id' => 'required|exists:payment_methods,id',
             'notes' => 'nullable|string',
         ];

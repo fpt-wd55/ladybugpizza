@@ -8,8 +8,12 @@ use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\PaymentMethod;
 use App\Models\Role;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Vanthao03596\HCVN\Models\Province;
+use Vanthao03596\HCVN\Models\District;
+use Vanthao03596\HCVN\Models\Ward;
 
 class OrderController extends Controller
 {
@@ -26,6 +30,15 @@ class OrderController extends Controller
                     return $query->where('slug', $status);
                 });
             })->latest('id')->paginate(10);
+
+        // get address order
+        $orders->map(function ($order) {
+            $order->province =  Province::find($order->address->province);
+            $order->district = District::find($order->address->district);
+            $order->ward = Ward::find($order->address->ward);
+            return $order;
+        });
+
         $orderStatuses = OrderStatus::withCount(['orders'])->get();
         $totalOrders = Order::count();
         $paymentMethods = PaymentMethod::all();
@@ -57,7 +70,13 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::findOrFail($id);
+
         $statuses = OrderStatus::get();
+
+        // get address order 
+        $order->province =  Province::find($order->address->province);
+        $order->district = District::find($order->address->district);
+        $order->ward = Ward::find($order->address->ward);
 
         return view('admins.order.edit', compact('order', 'statuses'));
     }
@@ -93,6 +112,16 @@ class OrderController extends Controller
                 $order->canceled_at = now();
             }
             $order->save();
+
+            // Tao hoa don neu trang thai hoan thanh
+            if ($orderStatus->slug == 'completed') {
+                $transaction = Transaction::where('order_id', $order->id)->first();
+                Invoice::create([
+                    'order_id' => $order->id,
+                    'invoice_number' => 'INV_' . $order->id,
+                    'transaction_id' => $transaction->id,
+                ]);
+            }
 
             return redirect()->back()->with('success', 'Cập nhật đơn hàng thành công.');
         }

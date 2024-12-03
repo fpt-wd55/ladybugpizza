@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Models\Address;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Vanthao03596\HCVN\Models\Province;
+use Vanthao03596\HCVN\Models\District;
+use Vanthao03596\HCVN\Models\Ward;
 
 class UserController extends Controller
 {
@@ -15,7 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(10);
+        $users = User::orderBy('id', 'desc')->paginate(10);
         $roles = Role::where('id', '>', 1)->get();
         return view('admins.user.index', compact('users', 'roles'));
     }
@@ -52,7 +56,7 @@ class UserController extends Controller
             $avatar_name = time() . '_' . pathinfo($avatar->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $avatar->getClientOriginalExtension();
             $validatedData['avatar'] = $avatar_name;
         }
-        $data = [
+        $dataUser = [
             'username' => trim($validatedData['username']),
             'fullname' => trim($validatedData['fullname']),
             'email' => trim($validatedData['email']),
@@ -66,9 +70,23 @@ class UserController extends Controller
             'status' => $validatedData['status'],
         ];
 
-        if (User::create($data)) {
+        $user = User::create($dataUser);
+
+        if ($user) {
             // Xu ly upload anh
             $avatar->storeAs('public/uploads/avatars', $avatar_name);
+
+            // Xu ly dia chi
+            $dataAddress = [
+                'user_id' => $user->id,
+                'title' => 'Địa chỉ mặc định',
+                'province' => $validatedData['province'],
+                'district' => $validatedData['district'],
+                'ward' => $validatedData['ward'],
+                'detail_address' => $validatedData['detail_address'],
+                'is_default' => 1,
+            ];
+            Address::create($dataAddress);
 
             return redirect()->route('admin.users.index')->with('success', 'Thêm mới tài khoản thành công');
         } else {
@@ -82,6 +100,13 @@ class UserController extends Controller
     public function show(User $user)
     {
         $addresses = $user->addresses;
+        // get address
+        foreach ($addresses as $address) {
+            $address->province = Province::find($address->province);
+            $address->district = District::find($address->district);
+            $address->ward = Ward::find($address->ward);
+        }
+
         $orders = $user->orders()->paginate(5);
         $evaluations = $user->evaluations;
         $favorites = null;

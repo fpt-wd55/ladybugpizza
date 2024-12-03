@@ -18,8 +18,12 @@ use App\Models\OrderItemTopping;
 use App\Models\PaymentMethod;
 use App\Models\Product;
 use App\Models\Topping;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Vanthao03596\HCVN\Models\Province;
+use Vanthao03596\HCVN\Models\District;
+use Vanthao03596\HCVN\Models\Ward;
 
 class CheckoutController extends Controller
 {
@@ -71,6 +75,19 @@ class CheckoutController extends Controller
             ]);
         } else {
             $address = Address::find($request->old_address);
+
+            // Kiểm tra địa chỉ cũ và địa chỉ mới có giống nhau không
+            if ($address->province != $request->province || $address->district != $request->district || $address->ward != $request->ward || $address->detail_address != $request->detail_address) {
+                $address = Address::create([
+                    'user_id' => Auth::id(),
+                    'title' => 'Địa chỉ ' . Auth::user()->addresses->count() + 1,
+                    'province' => $request->province,
+                    'district' => $request->district,
+                    'ward' => $request->ward,
+                    'detail_address' => $request->detail_address,
+                    'is_default' => 0,
+                ]);
+            }
         }
 
         $data = [
@@ -119,7 +136,6 @@ class CheckoutController extends Controller
                     $product->save();
                 }
 
-
                 if ($cartItem->toppings && count($cartItem->toppings) > 0) {
                     foreach ($cartItem->toppings as $topping) {
                         OrderItemTopping::create([
@@ -135,9 +151,24 @@ class CheckoutController extends Controller
                 }
             }
 
+            // Tao transaction
+            Transaction::create([
+                'user_id' => Auth::id(),
+                'order_id' => $order->id,
+                'transaction_code' => $order->payment_method_id == 1 ? 'VNP_' . $order->id : 'COD_' . $order->id,
+                'transaction_date' => now(),
+                'payment_method_id' => $order->payment_method_id,
+                'amount' => $order->amount + $order->shipping_fee - $order->discount_amount,
+                'status' => 1,
+            ]);
+
             $cart->delete();
             session()->forget('promotion');
 
+            // Lấy thông tin địa chỉ
+            $order->province =  Province::find($order->address->province);
+            $order->district = District::find($order->address->district);
+            $order->ward = Ward::find($order->address->ward);
             // Gửi mail thông báo đặt hàng 
             $dataOrder = [
                 'fullname' => $request->fullname,

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,10 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Artisan::call('hcvn:install');
         $this->call([
             RoleSeeder::class,
-            UserSeeder::class,
-            AddressSeeder::class,
+            UserSeeder::class, 
             LogSeeder::class,
             CategorySeeder::class,
             AttributeSeeder::class,
@@ -24,14 +25,14 @@ class DatabaseSeeder extends Seeder
             OrderStatusSeeder::class,
             ProductSeeder::class,
             ToppingSeeder::class,
-            CartSeeder::class, 
+            CartSeeder::class,
             PaymentMethodSeeder::class,
             PromotionSeeder::class,
             PromotionUserSeeder::class,
             OrderSeeder::class,
             BannerSeeder::class,
-            EvaluationSeeder::class,  
-            PageSeeder::class, 
+            EvaluationSeeder::class,
+            PageSeeder::class,
             TransactionSeeder::class,
             InvoiceSeeder::class,
             FavoriteSeeder::class,

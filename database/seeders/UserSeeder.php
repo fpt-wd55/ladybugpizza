@@ -4,10 +4,13 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
-use App\Models\User; 
+use App\Models\User;
 use App\Models\Address;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Vanthao03596\HCVN\Models\Province;
+use Vanthao03596\HCVN\Models\District;
+use Vanthao03596\HCVN\Models\Ward;
 
 class UserSeeder extends Seeder
 {
@@ -16,10 +19,10 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $now = Carbon::now();
         $faker = Faker::create();
-        $users = User::all();
-
+        // Get data
+        $province = Province::find(1);
+        $districts = $province->districts;
         // Admin
         $data = [
             [
@@ -30,9 +33,10 @@ class UserSeeder extends Seeder
                 'phone' => '0362303364',
                 'password' => Hash::make('quandohong28@gmail.com'),
                 'google_id' => null,
+                'avatar' => 'admin-default.png',
                 'date_of_birth' => '2004-04-28',
                 'gender' => 1,
-                'status' => 1, 
+                'status' => 1,
             ],
             [
                 'username' => 'lv.thanh137',
@@ -42,9 +46,10 @@ class UserSeeder extends Seeder
                 'phone' => '0382606012',
                 'password' => Hash::make('lv.thanh137@gmail.com'),
                 'google_id' => null,
+                'avatar' => 'admin-default.png',
                 'date_of_birth' => '2004-07-13',
                 'gender' => 1,
-                'status' => 1, 
+                'status' => 1,
             ],
             [
                 'username' => 'duynguyenhuu2004',
@@ -54,9 +59,10 @@ class UserSeeder extends Seeder
                 'phone' => '0372881768',
                 'password' => Hash::make('duynguyenhuu2004@gmail.com'),
                 'google_id' => null,
+                'avatar' => 'admin-default.png',
                 'date_of_birth' => '2004-05-20',
                 'gender' => 1,
-                'status' => 1, 
+                'status' => 1,
             ],
             [
                 'username' => 'trantrunghieu422',
@@ -66,9 +72,10 @@ class UserSeeder extends Seeder
                 'phone' => '0326239019',
                 'password' => Hash::make('Hieucoi1qaz@'),
                 'google_id' => null,
+                'avatar' => 'admin-default.png',
                 'date_of_birth' => '2004-04-22',
                 'gender' => 1,
-                'status' => 1, 
+                'status' => 1,
             ],
             [
                 'username' => 'vohuutuan04',
@@ -78,9 +85,10 @@ class UserSeeder extends Seeder
                 'phone' => '0799123089',
                 'password' => Hash::make('vohuutuan04@gmail.com'),
                 'google_id' => null,
+                'avatar' => 'admin-default.png',
                 'date_of_birth' => '2004-04-04',
                 'gender' => 1,
-                'status' => 1, 
+                'status' => 1,
             ],
             [
                 'username' => 'nguynhuyen111',
@@ -90,9 +98,10 @@ class UserSeeder extends Seeder
                 'phone' => '0982381200',
                 'password' => Hash::make('nguynhuyen111@gmail.com'),
                 'google_id' => null,
+                'avatar' => 'admin-default.png',
                 'date_of_birth' => '2004-11-11',
                 'gender' => 2,
-                'status' => 1, 
+                'status' => 1,
             ],
             [
                 'username' => 'tranthihaaaa9423',
@@ -102,9 +111,10 @@ class UserSeeder extends Seeder
                 'phone' => '0395730904',
                 'password' => Hash::make('tranthihaaaa9423@gmail.com'),
                 'google_id' => null,
+                'avatar' => 'admin-default.png',
                 'date_of_birth' => '2004-07-13',
                 'gender' => 2,
-                'status' => 1, 
+                'status' => 1,
             ],
         ];
         foreach ($data as $item) {
@@ -114,28 +124,30 @@ class UserSeeder extends Seeder
         // Client
         for ($i = 0; $i < 50; $i++) {
             $data = [
-                'username' => $faker->userName,
+                'username' => $faker->unique()->userName,
                 'role_id' => 2,
                 'email' => $faker->email,
                 'fullname' => $faker->name,
                 'phone' => $faker->phoneNumber,
                 'password' => Hash::make('password'),
                 'google_id' => null,
-                'avatar' => '1729568995_343744107_234811302553749_4497007258387566233_n.jpg',
+                'avatar' => 'user-default.png',
                 'date_of_birth' => $faker->date,
                 'gender' => rand(1, 3),
-                'status' => 1, 
+                'status' => 1,
             ];
-            User::create($data);
+            $user = User::create($data);
 
+            $district = $districts->random();
+            $ward = $district->wards->random();
             Address::create([
                 'user_id' => $user->id,
-                'title' => $faker->name, 
-                'province' => $faker->state,
-                'district' => $faker->city,
-                'ward' => $faker->city,
+                'title' => $faker->name,
+                'province' => $province->code,
+                'district' => $district->code,
+                'ward'  => $ward->code,
                 'detail_address' => $faker->address,
-                'is_default' => true, 
+                'is_default' => true,
             ]);
         }
     }

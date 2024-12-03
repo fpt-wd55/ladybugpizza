@@ -76,8 +76,9 @@
                                     <div class="mb-4">
                                         <p class="mb-2 text-sm font-normal">Địa chỉ chi tiết:
                                         </p>
-                                        <input class="input w-full" name="detail_address" placeholder="Địa chỉ chi tiết"
-                                            type="text" value="{{ old('detail_address') }}">
+                                        <input class="input w-full" name="detail_address"
+                                            placeholder="VD: Số 4 ngõ 2 ngách 14 đường Cầu Diễn" type="text"
+                                            value="{{ old('detail_address') }}">
                                         @error('detail_address')
                                             <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
@@ -85,24 +86,26 @@
                                     <div class="mb-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                                         <div>
                                             <p class="mb-2 text-sm font-normal">Tỉnh/Thành phố:</p>
-                                            <input class="input w-full" name="province" placeholder="Tỉnh/Thành phố"
-                                                type="text" value="{{ old('province') }}">
+                                            <select name="province" id="province" class="mt-2 mb-2 input" disabled>
+                                            </select>
                                             @error('province')
                                                 <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
                                         <div>
                                             <p class="mb-2 text-sm font-normal">Quận/Huyện:</p>
-                                            <input class="input w-full" name="district" placeholder="Quận/Huyện"
-                                                type="text" value="{{ old('district') }}">
+                                            <select name="district" id="district" class="mt-2 mb-2 input">
+                                                <option value="">Chọn quận/huyện</option>
+                                            </select>
                                             @error('district')
                                                 <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
                                         <div>
                                             <p class="mb-2 text-sm font-normal">Phường/Xã:</p>
-                                            <input class="input w-full" name="ward" placeholder="Phường/Xã"
-                                                type="text" value="{{ old('ward') }}">
+                                            <select name="ward" id="ward" class="mt-2 mb-2 input">
+                                                <option value="">Chọn phường/xã</option>
+                                            </select>
                                             @error('ward')
                                                 <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
@@ -191,46 +194,70 @@
     @endif
 @endsection
 @section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const oldAddress = document.getElementById('old_address');
-            const detailAddress = document.querySelector('input[name="detail_address"]');
-            const province = document.querySelector('input[name="province"]');
-            const district = document.querySelector('input[name="district"]');
-            const ward = document.querySelector('input[name="ward"]');
-
+        $(document).ready(function() {
+            const provinceSelect = $('#province');
+            const districtSelect = $('#district');
+            const wardSelect = $('#ward');
+            const oldAddress = $('#old_address');
+            const detailAddress = $('input[name="detail_address"]');
             const addressesData = @json($addresses);
 
-            oldAddress.addEventListener('change', function() {
-                const selectedAddress = addressesData.find(address => address.id == this.value);
-                const fields = [detailAddress, province, district, ward];
+            const provinceCode = '01'; // Mã cố định của Hà Nội
+            provinceSelect.append(new Option('Hà Nội', provinceCode)).val(provinceCode).prop('disabled', false);
 
-                if (selectedAddress) {
-                    detailAddress.value = selectedAddress.detail_address || '';
-                    console.log(1);
-                    province.value = selectedAddress.province || '';
-                    district.value = selectedAddress.district || '';
-                    ward.value = selectedAddress.ward || '';
+            // Helper function to load options for a select element
+            const loadOptions = (url, selectElement, placeholder, selectedValue) => {
+                selectElement.empty().append(new Option(placeholder, '')).prop('disabled', true);
 
-                    // add readonly
-                    fields.forEach(field => {
-                        field.setAttribute('readonly', true);
-                    });
-
-                } else {
-                    fields.forEach(field => {
-                        field.value = '';
-                        field.removeAttribute('readonly');
+                if (url) {
+                    $.getJSON(url, function(data) {
+                        selectElement.prop('disabled', false);
+                        data.forEach(item => {
+                            selectElement.append(new Option(item.name, item.code));
+                        });
+                        if (selectedValue) selectElement.val(selectedValue);
                     });
                 }
+            };
+
+            const resetFields = () => {
+                detailAddress.val('');
+                districtSelect.empty().append(new Option('Chọn Quận/Huyện', '')).prop('disabled', true);
+                wardSelect.empty().append(new Option('Chọn Phường/Xã', '')).prop('disabled', true);
+            };
+
+            oldAddress.change(function() {
+                const selectedAddress = addressesData.find(address => address.id == this.value);
+
+                if (selectedAddress) {
+                    detailAddress.val(selectedAddress.detail_address || '');
+                    loadOptions(`/api/districts/${selectedAddress.province}`, districtSelect,
+                        'Chọn Quận/Huyện', selectedAddress.district);
+                    loadOptions(`/api/wards/${selectedAddress.district}`, wardSelect, 'Chọn Phường/Xã',
+                        selectedAddress.ward);
+                } else {
+                    resetFields();
+                    loadOptions(`/api/districts/${provinceCode}`, districtSelect, 'Chọn Quận/Huyện');
+                }
+            });
+
+            // Load initial districts
+            loadOptions(`/api/districts/${provinceCode}`, districtSelect, 'Chọn Quận/Huyện');
+
+            // Load wards when a district is selected
+            districtSelect.change(function() {
+                const districtCode = $(this).val();
+                loadOptions(districtCode ? `/api/wards/${districtCode}` : null, wardSelect,
+                    'Chọn Phường/Xã');
+            });
+
+            $('#btn-checkout').click(function(e) {
+                e.preventDefault();
+                $('#form-checkout').submit();
             });
         });
-
-        const btnCheckout = document.getElementById('btn-checkout');
-        btnCheckout.addEventListener('click', function(e) {
-            e.preventDefault();
-            const formCheckout = document.getElementById('form-checkout');
-            formCheckout.submit();
-        });
     </script>
+
 @endsection

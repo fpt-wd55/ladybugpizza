@@ -167,8 +167,8 @@
                             <td class="px-4 py-2">{{ $order->user->fullname }}</td>
                             <td class="px-4 py-2">
                                 <p>{{ $order->address->detail_address }}</p>
-                                <p>{{ $order->address->ward }}, {{ $order->address->district }},
-                                    {{ $order->address->province }}</p>
+                                <p>{{ $order->ward->name_with_type }}, {{ $order->district->name_with_type }},
+                                    {{ $order->province->name_with_type }}</p>
                             </td>
                             <td class="px-4 py-2">
                                 {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ</td>
@@ -251,8 +251,9 @@
                                             <label class="font-semibold">Thông tin thanh toán</label>
                                             <p class="text-gray-800 mt-4">{{ $order->user->fullname }}</p>
                                             <p class="text-gray-800">{{ $order->address->detail_address }}</p>
-                                            <p class="text-gray-800">{{ $order->address->ward }}</p>
-                                            <p class="text-gray-800">{{ $order->address->district }}</p>
+                                            <p class="text-gray-800">{{ $order->ward->name_with_type }},
+                                                {{ $order->district->name_with_type }},
+                                                {{ $order->province->name_with_type }}</p>
                                         </div>
                                         {{-- Email --}}
                                         <div class="pl-4 rounded-lg">

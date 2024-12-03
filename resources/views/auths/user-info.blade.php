@@ -56,33 +56,26 @@
                     <div class="md:flex w-full grid-cols-3 gap-4">
                         <div class="mb-4 py-4 w-full">
                             <label for="province" class="min-h-5">Tỉnh/Thành phố:*</label>
-                            {{-- <select name="province" id="province" class="mt-2 mb-2 input" onchange="getProvinces(event)">
-                            <option value="">Chọn tỉnh/thành phố</option>
-                        </select> --}}
-                            <input type="text" name="province" id="province" value="{{ old('province') }}"
-                                placeholder="VD: Hà Nội" class="mt-2 mb-2 input">
+                            <select name="province" id="province" class="mt-2 mb-2 input" disabled>
+                            </select>
                             @error('province')
                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="mb-4 py-4 w-full">
                             <label for="district">Quận/Huyện:*</label>
-                            {{-- <select name="district" id="district" class="mt-2 mb-2 input" onchange="getDistricts(event)">
-                            <option value="">Chọn quận/huyện</option>
-                        </select> --}}
-                            <input type="text" name="district" id="district" value="{{ old('district') }}"
-                                placeholder="VD: Quận Nam Từ Liêm" class="mt-2 mb-2 input">
+                            <select name="district" id="district" class="mt-2 mb-2 input">
+                                <option value="">Chọn quận/huyện</option>
+                            </select>
                             @error('district')
                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="mb-4 py-4 w-full">
                             <label for="ward">Phường/Xã:*</label>
-                            {{-- <select name="ward" id="ward" class="mt-2 mb-2 input">
-                            <option value="">Chọn phường/xã</option>
-                        </select> --}}
-                            <input type="text" name="ward" id="ward" value="{{ old('ward') }}"
-                                placeholder="VD: Phường Phú Đô" class="mt-2 mb-2 input">
+                            <select name="ward" id="ward" class="mt-2 mb-2 input">
+                                <option value="">Chọn phường/xã</option>
+                            </select>
                             @error('ward')
                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                             @enderror
@@ -90,10 +83,10 @@
                     </div>
                     <div class="flex justify-between w-full grid-cols-2 gap-4">
                         <div class="mb-4 py-4 w-full">
-                            <label class="font-medium" for="address">Địa chỉ chi tiết</label>
-                            <input type="text" name="address" id="address" class="mt-2 mb-2 input"
-                                placeholder="VD: Số 4 ngõ 2 ngách 14 đường Cầu Diễn" value="{{ old('address') }}">
-                            @error('address')
+                            <label class="font-medium" for="detail_address">Địa chỉ chi tiết</label>
+                            <input type="text" name="detail_address" id="detail_address" class="mt-2 mb-2 input"
+                                placeholder="VD: Số 4 ngõ 2 ngách 14 đường Cầu Diễn" value="{{ old('detail_address') }}">
+                            @error('detail_address')
                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                             @enderror
                         </div>
@@ -107,59 +100,58 @@
             </div>
         </div>
     </div>
-
+@endsection
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        import {
-            fetchProvinces,
-            fetchDistricts,
-            fetchWards
-        } from "{{ asset('js/location.js') }}";
+        $(document).ready(function() {
+            // Load provinces on page load
+            // $.getJSON('/api/provinces', function(data) {
+            //     const provinceSelect = $('#province');
+            //     data.forEach(province => {
+            //         provinceSelect.append(new Option(province.name, province.code));
+            //     });
+            // });
 
-        document.addEventListener("DOMContentLoaded", function() {
-            fetchProvinces().then((data) => {
-                let provinces = data;
-                let provinceSelect = document.getElementById("province");
-                provinces.forEach((value) => {
-                    let option = document.createElement("option");
-                    option.value = value.code;
-                    option.text = value.name;
-                    provinceSelect.appendChild(option);
+            // Cố định Hà Nội
+            const provinceSelect = $('#province');
+            provinceSelect.append(new Option('Hà Nội', '01')).val('01').prop('disabled', false);
+
+            // Load districts when a province is selected
+            // $('#province').change(function() {
+            const provinceCode = '01'; // Mã cố định của Hà Nội
+            const districtSelect = $('#district');
+            districtSelect.empty().append(new Option('Chọn Quận/Huyện', '')).prop('disabled', true);
+
+            if (provinceCode) {
+                $.getJSON(`/api/districts/${provinceCode}`, function(data) {
+                    districtSelect.prop('disabled', false);
+                    data.forEach(district => {
+                        districtSelect.append(new Option(district.name, district.code));
+                    });
                 });
+            }
+
+            // Reset wards
+            $('#ward').empty().append(new Option('Chọn Phường/Xã', '')).prop('disabled', true);
+            // });
+
+            // Load wards when a district is selected
+            $('#district').change(function() {
+                const districtCode = $(this).val();
+                const wardSelect = $('#ward');
+                wardSelect.empty().append(new Option('Chọn Phường/Xã', '')).prop('disabled', true);
+
+                if (districtCode) {
+                    $.getJSON(`/api/wards/${districtCode}`, function(data) {
+                        wardSelect.prop('disabled', false);
+                        data.forEach(ward => {
+                            wardSelect.append(new Option(ward.name, ward.code));
+                        });
+                    });
+                }
             });
-
-            window.getProvinces = function(event) {
-                let provinceID = event.target.value;
-                fetchDistricts(provinceID).then((data) => {
-                    let districts = data.districts;
-                    let districtSelect = document.getElementById("district");
-                    districtSelect.innerHTML = `<option value="">Chọn quận/huyện</option>`;
-                    districts.forEach((value) => {
-                        let option = document.createElement("option");
-                        option.value = value.code;
-                        option.text = value.name;
-                        districtSelect.appendChild(option);
-                    });
-                });
-
-                document.getElementById("ward").innerHTML = `<option value="">Chọn phường/xã</option>`;
-            };
-
-            window.getDistricts = function(event) {
-                let districtID = event.target.value;
-                fetchWards(districtID).then((data) => {
-                    let wards = data.wards;
-                    let wardSelect = document.getElementById("ward");
-                    wardSelect.innerHTML = `<option value="">Chọn phường/xã</option>`;
-                    wards.forEach((value) => {
-                        let option = document.createElement("option");
-                        option.value = value.code;
-                        option.text = value.name;
-                        wardSelect.appendChild(option);
-                    });
-                });
-            };
         });
     </script>
-
 
 @endsection

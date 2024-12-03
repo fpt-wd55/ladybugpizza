@@ -302,11 +302,11 @@
                                 <div>
                                     <p>{{ $order->user->fullname }}</p>
                                     <p>{{ $order->user->phone }}</p>
-                                    <p>{{ $order->address->ward }}, {{ $order->address->district }},
-                                        {{ $order->address->province }}</p>
                                     <p>{{ $order->address->detail_address }}</p>
+                                    <p>{{ $order->ward->name_with_type }}, {{ $order->district->name_with_type }},
+                                        {{ $order->province->name_with_type }}</p>
                                     @if ($order->notes)
-                                        <p>Ghi chú : {{ $order->notes }}</p>
+                                        <p><strong>Ghi chú :</strong> {{ $order->notes }}</p>
                                     @endif
                                 </div>
 
@@ -376,34 +376,32 @@
                         <div class="pb-5 text-sm">
                             <div class="flex items-start justify-between">
                                 <div class="mb-4">
-                                    <p class="mb-4 text-base font-medium">Ghi chú đơn hàng</p>
-                                    <p>{{ $order->notes }}</p>
                                 </div>
                                 <div class="text-right">
                                     <div>
                                         <div class="mb-4 flex items-center justify-between gap-32 text-sm">
-                                            <p>Tạm tính</p>
-                                            <p class="font-medium">{{ number_format($order->amount) }}₫</p>
+                                            <p class="text-start">Tạm tính</p>
+                                            <p class="font-medium text-end">{{ number_format($order->amount) }}₫</p>
                                         </div>
                                         <div class="mb-4 flex items-center justify-between gap-32 text-sm">
-                                            <p>Phí vận chuyển</p>
-                                            <p class="font-medium">{{ number_format($order->shipping_fee) }}₫</p>
+                                            <p class="text-start">Phí vận chuyển</p>
+                                            <p class="font-medium text-end">{{ number_format($order->shipping_fee) }}₫</p>
                                         </div>
                                         <div class="mb-4 flex items-center justify-between gap-32 text-sm">
-                                            <p>Giảm giá</p>
-                                            <p class="font-medium">{{ number_format($order->discount_amount) }}₫</p>
+                                            <p class="text-start">Giảm giá</p>
+                                            <p class="font-medium text-end">{{ number_format($order->discount_amount) }}₫</p>
                                         </div>
                                         <hr class="mb-2">
                                         <div class="mb-4 flex items-center justify-between gap-32">
-                                            <p class="text-sm">Tổng tiền</p>
-                                            <p class="font-medium text-[#D30A0A]">
+                                            <p class="text-sm text-start">Tổng tiền</p>
+                                            <p class="font-medium text-end text-[#D30A0A]">
                                                 {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}₫
                                             </p>
                                         </div>
                                         <hr class="mb-2">
                                         <div class="mb-4 flex items-center justify-between gap-32">
-                                            <p class="text-sm">Phương thức thanh toán</p>
-                                            <p class="font-medium">
+                                            <p class="text-sm text-start">Phương thức thanh toán</p>
+                                            <p class="font-medium text-end">
                                                 {{ $order->paymentMethod->name }}
                                             </p>
                                         </div>
