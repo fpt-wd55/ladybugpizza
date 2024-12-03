@@ -31,7 +31,9 @@ use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\VNPayController;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
-
+use Vanthao03596\HCVN\Models\Province;
+use Vanthao03596\HCVN\Models\District;
+use Vanthao03596\HCVN\Models\Ward;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -84,7 +86,7 @@ Route::prefix('/')->group(function () {
         Route::get('product/{slug}/favorite', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
     });
 
-    Route::get('/contact', [PageController::class, 'contact'])->name('client.contact'); 
+    Route::get('/contact', [PageController::class, 'contact'])->name('client.contact');
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
     Route::get('/{slug}', [PageController::class, 'dynamicPage'])->name('client.dynamic-page');
 });
@@ -96,6 +98,20 @@ Route::prefix('/errors')->group(function () {
     Route::get('/502', [ErrorController::class, 'badGateway'])->name('errors.502');
     Route::get('/503', [ErrorController::class, 'serviceUnavailable'])->name('errors.503');
     Route::get('/504', [ErrorController::class, 'gatewayTimeout'])->name('errors.504');
+});
+
+Route::prefix('api')->group(function () {
+    Route::get('/provinces', function () {
+        return Province::select('id', 'name', 'code')->get();
+    })->name('api.provinces');
+
+    Route::get('/districts/{provinceCode}', function ($provinceCode) {
+        return District::where('parent_code', $provinceCode)->select('id', 'name', 'code')->get();
+    })->name('api.districts');
+
+    Route::get('/wards/{districtCode}', function ($districtCode) {
+        return Ward::where('parent_code', $districtCode)->select('id', 'name', 'code')->get();
+    })->name('api.wards');
 });
 
 Route::prefix('/auth')->group(function () {

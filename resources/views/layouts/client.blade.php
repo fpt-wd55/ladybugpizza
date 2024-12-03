@@ -20,7 +20,7 @@
     @include('partials.clients.header')
 
     @include('partials.clients.alert')
-    <div class="">
+    <div>
         @yield('content')
     </div>
 

@@ -7,20 +7,18 @@ use App\Http\Requests\AddressRequest;
 use App\Models\Address;
 use App\Models\Promotion;
 use App\Models\PromotionUser;
-use GuzzleHttp\Client;
 use App\Http\Requests\ChangeRequest;
 use App\Http\Requests\InactiveRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\Faq;
-use App\Models\Log;
-use App\Models\Membership;
-use App\Models\MembershipRank;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\UserSetting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Vanthao03596\HCVN\Models\Province;
+use Vanthao03596\HCVN\Models\District;
+use Vanthao03596\HCVN\Models\Ward;
 
 class ProfileController extends Controller
 {
@@ -71,9 +69,8 @@ class ProfileController extends Controller
 		return redirect()->route('client.profile.index')->with('success', 'Cập nhật thông tin thành công');
 	}
 
-
 	public function postChangePassword(ChangeRequest $request)
-	{ 
+	{
 		$user = Auth::user();
 
 		if (!Hash::check($request->current_password, $user->password)) {
@@ -105,19 +102,22 @@ class ProfileController extends Controller
 		return redirect()->route('client.home')->with('success', 'Tài khoản của bạn đã bị vô hiệu hóa');
 	}
 
-
-
 	public function address()
 	{
 		$redirectHome = $this->checkUser();
 		if ($redirectHome) {
 			return $redirectHome;
 		}
-		$user = Auth::user();
-		$addresses = Address::where('user_id', $user->id)
+		$addresses = Address::where('user_id', Auth::user()->id)
 			->with('user')
 			->orderBy('is_default', 'desc')
-			->paginate(6);
+			->paginate(5);
+
+		foreach ($addresses as $address) {
+			$address->province = Province::find($address->province);
+			$address->district = District::find($address->district);
+			$address->ward = Ward::find($address->ward);
+		}
 		return view('clients.profile.address.index', compact('addresses'));
 	}
 
@@ -147,6 +147,7 @@ class ProfileController extends Controller
 
 		return view('clients.profile.settings', compact('userSetting'));
 	}
+
 	public function updateStatus(Request $request, string $id)
 	{
 		$settings = UserSetting::query()->findOrFail($id);
@@ -246,10 +247,18 @@ class ProfileController extends Controller
 		return view('clients.profile.address.add');
 	}
 
+	public function editLocation(Address $address)
+	{
+		$province = Province::find($address->province);
+		$districts = $province->districts;
+		$district = District::find($address->district);
+		$wards = $district->wards;
+		return view('clients.profile.address.edit', compact('address', 'province', 'districts', 'wards'));
+	}
+
 	public function updateLocation(AddressRequest $request, Address $address)
 	{
 		$data = $request->all();
-		// dd($data);
 		$addressData = [
 			'user_id' => Auth()->user()->id,
 			'phone' => Auth()->user()->phone,
@@ -259,62 +268,26 @@ class ProfileController extends Controller
 			'detail_address' => $data['address'],
 			'title' => $data['title'],
 		];
-		$fullAddress = implode(', ', [
-			$addressData['detail_address'],
-			$addressData['ward'],
-			$addressData['district'],
-			$addressData['province'],
-		]);
 		$address->update($addressData);
 
-		return redirect()->route('client.profile.address')->with('success', 'Cập nhật địa chỉ thành công');
+		return redirect()->back()->with('success', 'Cập nhật địa chỉ thành công');
 	}
 
 	public function storeLocation(AddressRequest $request)
 	{
 		$data = $request->all();
-		
+
 		$addressData = [
-			'user_id' => Auth()->user()->id, 
+			'user_id' => Auth()->user()->id,
 			'province' => $data['province'],
 			'district' => $data['district'],
 			'ward' => $data['ward'],
 			'detail_address' => $data['address'],
 			'title' => $data['title'],
-		]; 
-
+		];
 		Address::create($addressData);
 
 		return redirect()->route('client.profile.address')->with('success', 'Thêm địa chỉ thành công');
-	}
-
-	// protected function convertAddressToCoordinates($fullAddress)
-	// {
-	// 	$client = new Client();
-	// 	try {
-	// 		$response = $client->get('https://nominatim.openstreetmap.org/search', [
-	// 			'query' => [
-	// 				'q' => $fullAddress,
-	// 				'format' => 'json',
-	// 			],
-	// 		]);
-	// 	} catch (\Exception $e) {
-	// 		dd($e->getMessage());
-	// 	}
-
-	// 	$data = json_decode($response->getBody(), true);
-
-	// 	if (isset($data[0])) {
-	// 		$location = $data[0];
-	// 		return [$location['lon'], $location['lat']];
-	// 	}
-
-	// 	return [null, null];
-	// }
-
-	public function editLocation(Address $address)
-	{
-		return view('clients.profile.address.edit', compact('address'));
 	}
 
 	public function deleteLocation(Address $address)
@@ -337,60 +310,4 @@ class ProfileController extends Controller
 
 		return redirect()->back()->with('success', 'Địa chỉ mặc định đã được cập nhật.');
 	}
-
-	private function getAddressNamesByCodes($provinceCode, $districtCode, $wardCode)
-	{
-		$response = file_get_contents("https://provinces.open-api.vn/api/");
-		$provinces = json_decode($response, true);
-		$provinceName = null;
-
-		foreach ($provinces as $province) {
-			if ($province['code'] == $provinceCode) {
-				$provinceName = $province['name'];
-				break;
-			}
-		}
-
-		$response = file_get_contents("https://provinces.open-api.vn/api/p/{$provinceCode}?depth=2");
-		$districts = json_decode($response, true);
-
-		if (!is_array($districts)) {
-			return ['province' => $provinceName, 'district' => null, 'ward' => null];
-		}
-
-		$districtName = null;
-
-		if (isset($districts['districts']) && is_array($districts['districts'])) {
-			foreach ($districts['districts'] as $district) {
-				if (isset($district['code']) && $district['code'] == $districtCode) {
-					$districtName = $district['name'];
-					break;
-				}
-			}
-		}
-
-		$response = file_get_contents("https://provinces.open-api.vn/api/d/{$districtCode}?depth=2");
-		$wards = json_decode($response, true);
-
-		if (!is_array($wards)) {
-			return ['province' => $provinceName, 'district' => $districtName, 'ward' => null];
-		}
-
-		$wardName = null;
-
-		if (isset($wards['wards']) && is_array($wards['wards'])) {
-			foreach ($wards['wards'] as $ward) {
-				if (isset($ward['code']) && $ward['code'] == $wardCode) {
-					$wardName = $ward['name'];
-					break;
-				}
-			}
-		}
-
-		return [
-			'province' => $provinceName,
-			'district' => $districtName,
-			'ward' => $wardName,
-		];
-	} 
 }

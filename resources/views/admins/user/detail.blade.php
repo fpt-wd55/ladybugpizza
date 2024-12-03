@@ -72,7 +72,7 @@
                                 <dd class="mt-2 text-gray-500">
                                     <div class="flex">
                                         <span>•
-                                            {{ $address->detail_address . ', ' . $address->ward . ', ' . $address->district . ', ' . $address->province }}
+                                            {{ $address->detail_address . ', ' . $address->ward->name_with_type . ', ' . $address->district->name_with_type . ', ' . $address->province->name_with_type }}
                                             @if ($address->is_default == 1)
                                                 <span
                                                     class="me-2 text-[#D30A0A] inline-flex shrink-0 items-center rounded bg-red-100 px-2 py-0.5 text-xs font-medium">Mặc
@@ -130,7 +130,7 @@
                     </div>
                 </div>
                 <div class="flex items-start">
-                    <a href="{{ url()->previous() }}" class="button-gray me-2">
+                    <a href="{{ route('admin.users.index') }}" class="button-gray me-2">
                         @svg('tabler-arrow-back-up', 'h-5 w-5 text-white me-2')
                         Quay lại
                     </a>

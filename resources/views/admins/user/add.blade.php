@@ -204,13 +204,6 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 ">Tỉnh/Thành</label>
                                 <select id="province" name="province"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                    <option selected disabled>Tỉnh/Thành</option>
-                                    <option value="1" {{ old('province') == 1 ? 'selected' : '' }}>Nam
-                                    </option>
-                                    <option value="2" {{ old('province') == 2 ? 'selected' : '' }}>Nữ
-                                    </option>
-                                    <option value="3" {{ old('province') == 3 ? 'selected' : '' }}>Khác
-                                    </option>
                                 </select>
                                 @error('province')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -223,13 +216,7 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 ">Huyện/Tỉnh</label>
                                 <select id="district" name="district"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                    <option selected disabled>Huyện/Tỉnh</option>
-                                    <option value="1" {{ old('district') == 1 ? 'selected' : '' }}>Nam
-                                    </option>
-                                    <option value="2" {{ old('district') == 2 ? 'selected' : '' }}>Nữ
-                                    </option>
-                                    <option value="3" {{ old('district') == 3 ? 'selected' : '' }}>Khác
-                                    </option>
+                                    <option value="">Chọn quận/huyện</option>
                                 </select>
                                 @error('district')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -242,13 +229,7 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 ">Phường/Xã</label>
                                 <select id="ward" name="ward"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                    <option selected disabled>Huyện/Tỉnh</option>
-                                    <option value="1" {{ old('ward') == 1 ? 'selected' : '' }}>Nam
-                                    </option>
-                                    <option value="2" {{ old('ward') == 2 ? 'selected' : '' }}>Nữ
-                                    </option>
-                                    <option value="3" {{ old('ward') == 3 ? 'selected' : '' }}>Khác
-                                    </option>
+                                    <option value="">Chọn phường/xã</option>
                                 </select>
                                 @error('ward')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -259,9 +240,10 @@
                         </div>
                     </div>
                     <div class="sm:col-span-2">
-                        <label for="detail_address" class="block mb-2 text-sm font-medium text-gray-900 ">Địa chỉ</label>
-                        <input type="text" name="detail_address" id="detail_address" placeholder="Địa chỉ"
-                            value="{{ old('detail_address') }}"
+                        <label for="detail_address" class="block mb-2 text-sm font-medium text-gray-900 ">Địa chỉ chi
+                            tiết</label>
+                        <input type="text" name="detail_address" id="detail_address"
+                            placeholder="VD: Số 4 ngõ 2 ngách 14 đường Cầu Diễn" value="{{ old('detail_address') }}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                         @error('detail_address')
                             <p class="mt-2 text-sm text-red-600 ">
@@ -283,6 +265,7 @@
     </div>
 @endsection
 @section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const adminRole = document.getElementById('adminRole');
@@ -301,6 +284,56 @@
             userRole.addEventListener('change', toggleForm);
 
             toggleForm();
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Load provinces on page load
+            // $.getJSON('/api/provinces', function(data) {
+            //     const provinceSelect = $('#province');
+            //     data.forEach(province => {
+            //         provinceSelect.append(new Option(province.name, province.code));
+            //     });
+            // });
+
+            // Cố định Hà Nội
+            const provinceSelect = $('#province');
+            provinceSelect.append(new Option('Hà Nội', '01')).val('01').prop('disabled', false);
+
+            // Load districts when a province is selected
+            // $('#province').change(function() {
+            const provinceCode = '01'; // Mã cố định của Hà Nội
+            const districtSelect = $('#district');
+            districtSelect.empty().append(new Option('Chọn Quận/Huyện', '')).prop('disabled', true);
+
+            if (provinceCode) {
+                $.getJSON(`/api/districts/${provinceCode}`, function(data) {
+                    districtSelect.prop('disabled', false);
+                    data.forEach(district => {
+                        districtSelect.append(new Option(district.name, district.code));
+                    });
+                });
+            }
+
+            // Reset wards
+            $('#ward').empty().append(new Option('Chọn Phường/Xã', '')).prop('disabled', true);
+            // });
+
+            // Load wards when a district is selected
+            $('#district').change(function() {
+                const districtCode = $(this).val();
+                const wardSelect = $('#ward');
+                wardSelect.empty().append(new Option('Chọn Phường/Xã', '')).prop('disabled', true);
+
+                if (districtCode) {
+                    $.getJSON(`/api/wards/${districtCode}`, function(data) {
+                        wardSelect.prop('disabled', false);
+                        data.forEach(ward => {
+                            wardSelect.append(new Option(ward.name, ward.code));
+                        });
+                    });
+                }
+            });
         });
     </script>
 @endsection

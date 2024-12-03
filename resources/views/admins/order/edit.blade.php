@@ -45,8 +45,9 @@
                     <h3 class="mb-2 text-lg font-semibold">Thanh toán</h3>
                     <p>{{ $order->user->fullname }}</p>
                     <p>{{ $order->address->detail_address }}</p>
-                    <p class="mb-2">{{ $order->address->ward }}, {{ $order->address->district }},
-                        {{ $order->address->province }}</p>
+                    <p class="mb-2">{{ $order->ward->name_with_type }},
+                        {{ $order->district->name_with_type }},
+                        {{ $order->province->name_with_type }}</p>
                     <label class="font-semibold">Địa chỉ email</label>
                     <p class="mb-2">{{ $order->user->email }}</p>
                     <label class="font-semibold">Số điện thoại</label>
@@ -56,10 +57,6 @@
                 {{-- Giá trị 3 --}}
                 <div>
                     <h4 class="mb-2 text-lg font-semibold">Giao hàng</h4>
-                    <p>{{ $order->user->fullname }}</p>
-                    <p>{{ $order->address->detail_address }}</p>
-                    <p class="mb-2">{{ $order->address->ward }}, {{ $order->address->district }},
-                        {{ $order->address->province }}</p>
                     <label class="font-semibold">Ghi chú</label>
                     <p class="mb-2">{{ $order->notes }}</p>
                 </div>
