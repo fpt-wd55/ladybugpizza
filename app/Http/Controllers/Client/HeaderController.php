@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Favorite;
+use App\Models\Order;
 use App\Models\Page;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,11 +33,12 @@ class HeaderController extends Controller
             $cart = Cart::where('user_id', Auth::id())->first();
             if ($cart !== null) {
                 $cartItems = CartItem::where('cart_id', $cart->id)->get();
-            } else { 
-                $cartItems = collect();  
+            } else {
+                $cartItems = collect();
             }
             $countCartItems = $cartItems->count();
-            return compact('pages', 'countFavorites', 'countCartItems');
+            $countOrders = Order::where('user_id', Auth::id())->count();
+            return compact('pages', 'countFavorites', 'countCartItems', 'countOrders');
         }
     }
 }

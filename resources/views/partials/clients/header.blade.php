@@ -63,8 +63,15 @@
                             @endif
                         </div>
                     </a>
-                    <a href="{{ route('client.order.index') }}">
-                        @svg('tabler-truck-delivery', 'icon-md')
+                    <a href="{{ route('client.order.index') }}" class="relative flex items-center justify-center">
+                        <div class="relative">
+                            @svg('tabler-truck-delivery', 'icon-md')
+                            @if ($countOrders > 0)
+                                <p class="-top-3 -right-4 badge-noti">
+                                    {{ $countOrders }}
+                                </p>
+                            @endif
+                        </div>
                     </a>
 
                     <button class="hover:cursor-pointer">
