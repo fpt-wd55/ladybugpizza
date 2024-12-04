@@ -26,7 +26,8 @@
                         @csrf
                         <input type="hidden" name="selected_ids" id="selectedIds" value="">
                         <div id="actionButtons" class="hidden">
-                            <button type="submit" name="action" value="restore" class="button-green me-2">Khôi phục</button>
+                            <button type="submit" name="action" value="restore" class="button-green me-2">Khôi
+                                phục</button>
                             <button type="submit" name="action" value="force_delete" class="button-red me-2">Xóa vĩnh
                                 viễn</button>
                             <h2 class="font-medium text-gray-700 text-base italic items-center flex" id="selectedItems">
@@ -37,7 +38,7 @@
             </div>
             <div
                 class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                
+
             </div>
         </div>
         <div class="overflow-x-auto">
@@ -86,14 +87,12 @@
                                     @svg('tabler-restore')
                                 </a>
 
-
                                 <a href="#" data-modal-target="delete-modal-{{ $item->id }}"
                                     data-modal-toggle="delete-modal-{{ $item->id }}"
                                     class="cursor-pointer block px-1 text-sm  text-gray-500 hover:text-red-500 "
                                     title="Delete">
                                     @svg('tabler-trash-x-filled')
                                 </a>
-
 
                             </td>
                         </tr>
@@ -112,7 +111,7 @@
                                         <div class="flex justify-center">
                                             @svg('tabler-arrow-back-up-double', 'w-12 h-12 text-green-600 text-center mb-2 ')
                                         </div>
-                                        <h3 class="mb-5 font-normal">Bạn có muốn khôi phục Danh mục này không?</h3>
+                                        <h3 class="mb-5 font-normal">Bạn có muốn khôi phục danh mục này không?</h3>
 
                                         <form action="{{ route('admin.trash.cateRestore', $item->id) }}" method="POST">
                                             @csrf
@@ -146,7 +145,7 @@
                                         <div class="flex justify-center">
                                             @svg('tabler-trash', 'w-12 h-12 text-red-600 text-center mb-2')
                                         </div>
-                                        <h3 class="mb-5 font-normal">Bạn có muốn xóa vĩnh viễn Danh mục này không?</h3>
+                                        <h3 class="mb-5 font-normal">Bạn có muốn xóa vĩnh viễn danh mục này không?</h3>
 
                                         <form action="{{ route('admin.trash.cateDelete', $item->id) }}" method="POST">
                                             @csrf
@@ -158,7 +157,7 @@
 
                                         <button data-modal-hide="delete-modal-{{ $item->id }}" type="button"
                                             class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Không,
-                                            trở lạo</button>
+                                            trở lại</button>
                                     </div>
                                 </div>
                             </div>
