@@ -102,7 +102,7 @@ class WebController extends Controller
             'province' => $validated['province'],
             'district' => $validated['district'],
             'ward' => $validated['ward'],
-            'detail_address' => $validated['address'],
+            'detail_address' => $validated['detail_address'],
             'title' => 'Địa chỉ mặc định',
             'is_default' => 1,
         ];

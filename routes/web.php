@@ -124,12 +124,12 @@ Route::prefix('/auth')->group(function () {
     Route::get('/get-otp', [WebController::class, 'getOtp'])->name('auth.get-otp');
     Route::get('/recovery', [WebController::class, 'recovery'])->name('auth.recovery');
     Route::get('/user-info', [WebController::class, 'userInfo'])->name('auth.user-info');
+    Route::post('/user-info', [WebController::class, 'postUserInfo'])->name('auth.post-user-info');
     Route::post('/login', [WebController::class, 'postLogin'])->name('auth.post-login');
     Route::post('/register', [WebController::class, 'postRegister'])->name('auth.post-register');
     Route::post('/forgot-password', [WebController::class, 'postForgotPassword'])->name('auth.post-forgot-password');
     Route::post('/get-otp', [WebController::class, 'postGetOtp'])->name('auth.post-get-otp');
     Route::post('/recovery', [WebController::class, 'postRecovery'])->name('auth.post-recovery');
-    Route::post('/user-info', [WebController::class, 'postUserInfo'])->name('auth.post-user-info');
 });
 
 Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function () {
