@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="flex-grow">
-                    @foreach ($addresses as $address)
+                    @forelse ($addresses as $address)
                         <div class="card mb-4 flex justify-between p-4">
                             <div>
                                 <div class="mb-2 flex items-center gap-4">
@@ -88,7 +88,13 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                        @empty       
+                                <div
+                                    class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                                    @svg('tabler-map-cancel', 'w-20 h-20 text-gray-400')
+                                    <p class="mt-4 text-gray-500 text-sm">Chưa có địa chỉ</p>
+                                </div>
+                    @endforelse
 
                 </div>
                 <div class="p-1">
