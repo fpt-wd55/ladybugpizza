@@ -5,6 +5,9 @@ namespace App\Livewire;
 use App\Models\Order;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Vanthao03596\HCVN\Models\Province;
+use Vanthao03596\HCVN\Models\District;
+use Vanthao03596\HCVN\Models\Ward;
 
 class StatisticOrderThree extends Component
 {
@@ -14,7 +17,7 @@ class StatisticOrderThree extends Component
 
     public function mount()
     {
-        $this->updateChartStatisticOrderThree('province');
+        $this->updateChartStatisticOrderThree('district');
     }
 
     public function updateChartStatisticOrderThree($area)
@@ -29,6 +32,19 @@ class StatisticOrderThree extends Component
             ->orderByDesc(DB::raw('COUNT(orders.id)'))
             ->get();
 
+        $areaNames = [];
+        if ($area == 'province') {
+            $areaNames = Province::pluck('name_with_type', 'code')->toArray();
+        } elseif ($area == 'district') {
+            $areaNames = District::pluck('name_with_type', 'code')->toArray();
+        } elseif ($area == 'ward') {
+            $areaNames =  Ward::pluck('name_with_type', 'code')->toArray();
+        }
+
+        $datas->transform(function ($item) use ($areaNames, $area) {
+            $item->{$area} = $areaNames[$item->{$area}] ?? 'Không xác định';
+            return $item;
+        });
 
         $this->orderDataStatisticOrderThree = $datas->take(10)->map(function ($data) use ($area) {
             return [$data->$area, $data->count];

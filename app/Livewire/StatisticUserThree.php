@@ -17,7 +17,7 @@ class StatisticUserThree extends Component
     public function mount()
     {
         $this->updateTopUser('mostOrder', 'month');
-        $this->nameSelectedTopUser = 'Sản phẩm có lượt mua nhiều nhất';
+        $this->nameSelectedTopUser = 'Top người dùng mua hàng nhiều nhất';
         $this->selectedTopUser = 'mostOrder';
         $this->selectedTimeTopUser = 'month';
     }
@@ -65,8 +65,6 @@ class StatisticUserThree extends Component
         $date = now();
         $this->selectedTimeTopUser = $time;
         switch ($time) {
-            case 'day':
-                return [$date->copy()->startOfDay(), $date->copy()->endOfDay()];
             case 'week':
                 return [$date->copy()->startOfWeek(), $date->copy()->endOfWeek()];
             case 'month':
