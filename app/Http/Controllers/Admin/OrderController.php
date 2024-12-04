@@ -165,6 +165,14 @@ class OrderController extends Controller
 
         $orders = $query->paginate(10);
 
+        // get address order
+        $orders->map(function ($order) {
+            $order->province =  Province::find($order->address->province);
+            $order->district = District::find($order->address->district);
+            $order->ward = Ward::find($order->address->ward);
+            return $order;
+        });
+
         $orders->appends(['filter_role' => $request->filter_role]);
         $orders->appends(['filter_status' => $request->filter_status]);
         $orders->appends(['filter_gender' => $request->filter_gender]);

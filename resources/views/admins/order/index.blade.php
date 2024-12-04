@@ -125,7 +125,7 @@
                         class="inline-block rounded-t-lg pb-1 border-b-2 {{ request()->routeIs('admin.orders.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A]' : 'border-transparent' }}"
                         href="{{ route('admin.orders.index') }}">
                         Tất cả
-                        @if ($totalOrders > 0)
+                        @if (isset($totalOrders) && $totalOrders > 0)
                             <span class="text-white bg-[#D30A0A] text-xs font-medium ms-1 px-1 rounded-full">
                                 {{ $totalOrders }}
                             </span>
