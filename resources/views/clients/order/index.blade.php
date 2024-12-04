@@ -9,7 +9,7 @@
             {{-- tabs --}}
             <div class="no-scrollbar mb-4 overflow-x-auto border-b border-gray-200 text-left text-sm">
                 <ul class="flex gap-2">
-                    <li class="mt-2 me-6 min-w-fit relative mx-4">
+                    <li class="mt-3 me-6 min-w-fit relative mx-4">
                         <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->routeIs('client.order.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A]' : 'border-transparent' }}"
                             href="{{ route('client.order.index') }}">
                             Tất cả
