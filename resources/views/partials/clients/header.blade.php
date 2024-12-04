@@ -4,8 +4,7 @@
             {{-- Logo --}}
             <ul class="flex items-center gap-4">
                 <a class="md:flex md:items-center" href="{{ route('client.home') }}">
-                    <img alt="" class="img-sm" loading="lazy"
-                        src="{{ asset('storage/uploads/logo/logo.svg') }}">
+                    <img alt="" class="img-sm" loading="lazy" src="{{ asset('storage/uploads/logo/logo.svg') }}">
                 </a>
 
                 <div class="hidden items-center gap-4 lg:flex">
@@ -46,15 +45,33 @@
                 @if (Auth::user())
                     <a data-modal-target="favoriteProductModal" data-modal-toggle="favoriteProductModal" href="#"
                         class="flex items-center justify-center">
-                        @svg('tabler-heart', 'icon-md')
-                        <p class="ps-1 text-sm font-medium text-[#D30A0A]">{{ '(' . $countFavorites . ')' }}</p>
+                        <div class="relative">
+                            @svg('tabler-heart', 'icon-md')
+                            @if ($countFavorites > 0)
+                                <p class="-top-3 -right-4 badge-noti">
+                                    {{ $countFavorites }}</p>
+                            @endif
+                        </div>
                     </a>
-                    <a href="{{ route('client.cart.index') }}" class="flex items-center justify-center">
-                        @svg('tabler-shopping-bag', 'icon-md')
-                        <p class="ps-1 text-sm font-medium text-[#D30A0A]">{{ '(' . $countCartItems . ')' }}</p>
+                    <a href="{{ route('client.cart.index') }}" class="relative flex items-center justify-center">
+                        <div class="relative">
+                            @svg('tabler-shopping-bag', 'icon-md')
+                            @if ($countCartItems > 0)
+                                <p class="-top-3 -right-4 badge-noti">
+                                    {{ $countCartItems }}
+                                </p>
+                            @endif
+                        </div>
                     </a>
-                    <a href="{{ route('client.order.index') }}">
-                        @svg('tabler-truck-delivery', 'icon-md')
+                    <a href="{{ route('client.order.index') }}" class="relative flex items-center justify-center">
+                        <div class="relative">
+                            @svg('tabler-truck-delivery', 'icon-md')
+                            @if ($countOrders > 0)
+                                <p class="-top-3 -right-4 badge-noti">
+                                    {{ $countOrders }}
+                                </p>
+                            @endif
+                        </div>
                     </a>
 
                     <button class="hover:cursor-pointer">
