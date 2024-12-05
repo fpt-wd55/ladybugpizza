@@ -72,7 +72,7 @@ class OrderController extends Controller
 
         if ($validator->fails()) {
             // Xử lý khi validate thất bại
-            return redirect()->back()->with('error', 'Bạn chưa chọn lý do hủy đơn hàng !');
+            return redirect()->back()->with('error', 'Bạn chưa chọn lý do hủy đơn hàng!');
         }
 
         $order = Order::query()->findOrFail($order['id']);
