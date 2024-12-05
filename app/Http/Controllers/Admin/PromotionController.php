@@ -8,6 +8,8 @@ use App\Models\Category;
 use App\Models\MembershipRank;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class PromotionController extends Controller
 {
@@ -19,7 +21,7 @@ class PromotionController extends Controller
         $ranks = MembershipRank::get();
 
         $promotions = Promotion::query()
-            ->orderBy('quantity', 'desc')
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
         return view('admins.promotions.index', compact('promotions', 'ranks'));
     }
@@ -38,6 +40,19 @@ class PromotionController extends Controller
     public function store(PromotionRequest $request)
     {
         $data = $request->all();
+        if (strpos($data['is_global'], '|') !== false) {
+            [$data['is_global'], $data['rank_id']] = explode('|', $data['is_global']);
+        } else {
+            $data['rank_id'] = null;
+        }
+        if ($data['is_global'] == 1) {
+            $data['rank_id'] = null;
+        } else {
+            if (!isset($data['rank_id']) || empty($data['rank_id'])) {
+                return back()->withErrors(['rank_id' => 'Vui lòng chọn cấp bậc nếu không áp dụng cho tất cả.']);
+            }
+        }
+        $data['code'] = strtoupper(Str::random(5)) . strtolower(Str::random(5));
         if (Promotion::query()->create($data)) {
             return redirect()->route('admin.promotions.index')->with('success', 'Thêm mã giảm giá thành công');
         } else {
@@ -70,7 +85,18 @@ class PromotionController extends Controller
     public function update(PromotionRequest $request, Promotion $promotion)
     {
         $data = $request->all();
-
+        if (strpos($data['is_global'], '|') !== false) {
+            [$data['is_global'], $data['rank_id']] = explode('|', $data['is_global']);
+        } else {
+            $data['rank_id'] = null;
+        }
+        if ($data['is_global'] == 1) {
+            $data['rank_id'] = null;
+        } else {
+            if (!isset($data['rank_id']) || empty($data['rank_id'])) {
+                return back()->withErrors(['rank_id' => 'Vui lòng chọn cấp bậc nếu không áp dụng cho tất cả.']);
+            }
+        }
         if ($promotion->update($data)) {
             return redirect()->back()->with('success', 'Cập nhật mã giảm giá thành công');
         } else {
