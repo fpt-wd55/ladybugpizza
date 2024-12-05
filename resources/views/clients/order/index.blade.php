@@ -118,14 +118,16 @@
                                 {{-- lý do hủy --}}
                                 <div class="p-5 bg-white rounded-lg shadow-md">
                                     <h2 class="text-xl font-semibold mb-4">Chọn Lý Do Hủy Đơn Hàng</h2>
-                                    <p class="text-sm text-gray-600 mb-4">
+                                    <p class="text-sm text-gray-600 mb-2">
                                         Vui lòng chọn lý do hủy. Với lý do này, bạn sẽ hủy tất cả sản phẩm trong đơn
                                         hàng và
                                         không thể thay đổi sau đó.
                                     </p>
+
                                     <form action="{{ route('client.order.cancel', $order) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
+
                                         <div class="mb-2">
                                             <input type="radio" name="canceled_reason" value="1"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
