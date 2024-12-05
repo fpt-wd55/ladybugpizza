@@ -53,13 +53,6 @@ class OrderStatusSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
-            [
-                'name' => 'Thanh toán thất bại',
-                'slug' =>  'failed',
-                'color' => 'orange',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]
         ];
 
         foreach ($statuses as $status) {

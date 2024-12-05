@@ -83,7 +83,7 @@ class OrderController extends Controller
         if ($order) {
             $selectedReason = $request->input('canceled_reason');
             $order->canceled_reason = isset($reasons[$selectedReason]) ? $reasons[$selectedReason] : null;
-            $order->order_status_id = 6;
+            $order->order_status_id = 5;
             $order->canceled_at = now();
             $order->save();
 
