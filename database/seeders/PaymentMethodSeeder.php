@@ -24,6 +24,12 @@ class PaymentMethodSeeder extends Seeder
                 'updated_at' => $now,
             ],
             [
+                'name' => 'Thanh toán online qua VNPAY',
+                'description' => 'Thanh toán online qua VNPAY',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
                 'name' => 'Thanh toán khi giao hàng (COD)',
                 'description' => 'Thanh toán khi giao hàng (COD)',
                 'created_at' => $now,
