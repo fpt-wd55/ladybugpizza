@@ -9,17 +9,17 @@
             <form action="{{ route('admin.promotions.store') }}" class="w-full" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="w-full mb-2 grid grid-cols-3 gap-2">
-                    {{-- code --}}
+                    {{-- name --}}
                     <div>
-                        <label for="code" class="label-lg">Tên <span class="text-red-500">*</span></label>
-                        <input type="text" name="code" class="input h-10 mb-2" value="{{ old('code') }}" />
-                        @error('code')
+                        <label for="name" class="label-lg">Tên <span class="text-red-500">*</span></label>
+                        <input type="text" name="name" class="input h-10 mb-2" value="{{ old('name') }}" />
+                        @error('name')
                             <span style="color: red ">{{ $message }}</span>
                         @enderror
                     </div>
                     {{-- description --}}
                     <div>
-                        <label for="points" class="label-lg">Điểm <span class="text-red-500">*</span></label>
+                        <label for="points" class="label-lg">Điểm</label>
                         <input type="number" name="points" class="input h-10 mb-2" value="{{ old('points') }}" />
                         @error('points')
                             <span style="color: red ">{{ $message }}</span>
@@ -118,27 +118,28 @@
                     <div>
                         <label for="is_global" class="label-lg">Đối tượng áp dụng <span
                                 class="text-red-500">*</span></label>
-                        <select name="is_global"
-                            class="mb-2 block w-full text-sm text-gray-500 
-                               bg-transparent border-0 border-b-2 border-gray-200 appearance-none 
-                               dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                        <select name="is_global" class="select">
                             <option value="">Chọn</option>
-                            <option value="2"
-                                {{ old('is_global', $promotion->is_global ?? '') == '2' ? 'selected' : '' }}>Tất cả
-                            </option>
                             <option value="1"
-                                {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>Thành viên
+                                {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>
+                                Tất cả</option>
+                            <option value="2|1"
+                                {{ old('rank_id', $promotion->rank_id ?? '') == '1' ? 'selected' : '' }}>Rank đồng
                             </option>
-                            {{-- <option value="1" {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>Rank bạc</option>                   
-                        <option value="1" {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>Rank vàng</option>                   
-                        <option value="1" {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>Rank kim cương</option>                    --}}
+                            <option value="2|2"
+                                {{ old('rank_id', $promotion->rank_id ?? '') == '2' ? 'selected' : '' }}>Rank bạc
+                            </option>
+                            <option value="2|3"
+                                {{ old('rank_id', $promotion->rank_id ?? '') == '3' ? 'selected' : '' }}>Rank vàng
+                            </option>
+                            <option value="2|4"
+                                {{ old('rank_id', $promotion->rank_id ?? '') == '4' ? 'selected' : '' }}>Rank kim cương
+                            </option>
                         </select>
-
                         @error('is_global')
                             <span style="color: red">{{ $message }}</span>
                         @enderror
                     </div>
-
                 </div>
                 <div
                     class="mt-14 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
