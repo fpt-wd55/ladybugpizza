@@ -37,7 +37,7 @@
                                 công
                             </h2>
                             <p style="margin: 15px 0 0; font-size: 16px; color: #666;">Xin chào
-                                {{ $dataOrder['fullname'] }}</p>
+                                {{ $dataOrder['order']->fullname }}</p>
                             <p style="margin: 10px 0 0; font-size: 16px; color: #666; line-height: 1.5;">
                                 Cảm ơn bạn đã đặt hàng tại Ladybug Pizza. Đơn hàng của bạn đã được xác nhận và sẽ được
                                 giao sớm,

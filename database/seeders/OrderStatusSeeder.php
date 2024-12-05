@@ -33,13 +33,6 @@ class OrderStatusSeeder extends Seeder
                 'updated_at' => $now,
             ],
             [
-                'name' => 'Đang tìm tài xế',
-                'slug' => 'finding_driver',
-                'color' => 'gray',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
-            [
                 'name' => 'Đang giao hàng',
                 'slug' => 'shipping',
                 'color' => 'gray',
@@ -57,6 +50,13 @@ class OrderStatusSeeder extends Seeder
                 'name' => 'Đã hủy',
                 'slug' => 'cancelled',
                 'color' => 'red',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'name' => 'Thanh toán thất bại',
+                'slug' =>  'failed',
+                'color' => 'orange',
                 'created_at' => $now,
                 'updated_at' => $now,
             ]

@@ -25,6 +25,7 @@ use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\PageController;
+use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
@@ -59,6 +60,8 @@ Route::prefix('/')->group(function () {
         // Thanh toán
         Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
         Route::post('/checkout', [CheckoutController::class, 'postCheckout'])->name('post-checkout');
+        Route::get('/vnpay_return', [CheckoutController::class, 'vnpayReturn'])->name('vnpay_return');
+        Route::get('/thank_you', [CheckoutController::class, 'thankYou'])->name('thank_you');
         // Đơn hàng
         Route::get('/order', [OrderController::class, 'index'])->name('client.order.index');
         Route::patch('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
