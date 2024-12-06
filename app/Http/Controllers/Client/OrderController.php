@@ -146,7 +146,10 @@ class OrderController extends Controller
         Invoice::create($dataInvoice);
 
         // Gửi email cảm ơn 
-        Mail::to($order->email)->send(new MailOrder($order, 'Cảm ơn bạn đã mua hàng tại cửa hàng chúng tôi', 'mails.orders.completed'));
+        $userSetting = $order->user->setting;
+        if ($userSetting->email_order) {
+            Mail::to($order->email)->send(new MailOrder($order, 'Cảm ơn bạn đã mua hàng tại cửa hàng chúng tôi', 'mails.orders.completed'));
+        }
 
         return redirect()->back()->with('success', 'Xác nhận đã nhận hàng thành công');
     }

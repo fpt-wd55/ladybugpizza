@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Mail\Order as MailOrder;
 use App\Models\Invoice;
 use App\Models\Order;
-use Illuminate\Console\Command; 
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
 class AutoConfirmOrders extends Command
@@ -37,8 +37,10 @@ class AutoConfirmOrders extends Command
             ];
             Invoice::create($dataInvoice);
 
-            // Gửi email cảm ơn
-            Mail::to($order->email)->send(new MailOrder($order, 'Cảm ơn bạn đã mua hàng tại cửa hàng chúng tôi', 'mails.orders.completed'));
+            $userSetting = $order->user->setting;
+            if ($userSetting->email_order) {
+                Mail::to($order->email)->send(new MailOrder($order, 'Cảm ơn bạn đã mua hàng tại cửa hàng chúng tôi', 'mails.orders.completed'));
+            }
         }
     }
 }

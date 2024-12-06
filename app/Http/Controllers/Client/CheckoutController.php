@@ -252,15 +252,15 @@ class CheckoutController extends Controller
 
     private function sendPaymentConfirmationEmail($order)
     {
-        // Lấy thông tin địa chỉ
-        $order->province =  Province::find($order->address->province);
-        $order->district = District::find($order->address->district);
-        $order->ward = Ward::find($order->address->ward);
-
-        // Gửi email xác nhận đặt hàng 
-        $subject = 'Thông báo xác nhận đơn hàng #' . $order->id;
-
-        Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.waiting'));
+        $userSetting = $order->user->setting;
+        if ($userSetting->email_order) {
+            // Lấy thông tin địa chỉ
+            $order->province =  Province::find($order->address->province);
+            $order->district = District::find($order->address->district);
+            $order->ward = Ward::find($order->address->ward);
+            $subject = 'Thông báo xác nhận đơn hàng #' . $order->id;
+            Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.waiting'));
+        }
     }
 
     public function execPostRequest($url, $data)
