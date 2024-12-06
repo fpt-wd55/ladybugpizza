@@ -27,7 +27,6 @@ use App\Http\Controllers\Client\PageController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
-use App\Models\Order as ModelsOrder;
 use Illuminate\Support\Facades\Route;
 use Vanthao03596\HCVN\Models\Province;
 use Vanthao03596\HCVN\Models\District;
@@ -50,7 +49,7 @@ Route::prefix('/')->group(function () {
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('client.product.show');
 
     Route::middleware('auth.check')->group(function () {
-        // Giỏ hàng
+        // Giỏ hàng 
         Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
         Route::post('/product/cart/{product}', [CartController::class, 'addToCart'])->name('client.product.add-to-cart');
         Route::delete('/product/cart/{cartItem}', [CartController::class, 'delete'])->name('client.product.delete-cart-item');
@@ -133,7 +132,7 @@ Route::prefix('/auth')->group(function () {
     Route::post('/recovery', [WebController::class, 'postRecovery'])->name('auth.post-recovery');
 });
 
-Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function () {
+Route::prefix('/admin')->middleware(['admin'])->name('admin.')->group(function () {
     Route::get('/', function () {
         return redirect()->route('admin.dashboard');
     });
@@ -235,10 +234,6 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
 
 // Share route
 Route::get('/invoices/{invoiceNumber}', [InvoiceController::class, 'show'])->name('invoices.show');
-
-// VNPay
-// Route::post('/payment', [VNPayController::class, 'createPayment'])->name('payment.create');
-// Route::get('/vnpay-return', [VNPayController::class, 'returnPayment'])->name('payment.return');
 
 Route::fallback(function () {
     return redirect()->route('errors.404');
