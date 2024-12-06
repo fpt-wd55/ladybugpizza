@@ -40,6 +40,13 @@ class OrderStatusSeeder extends Seeder
                 'updated_at' => $now,
             ],
             [
+                'name' => 'Đã giao hàng',
+                'slug' => 'delivered',
+                'color' => 'purple',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
                 'name' => 'Hoàn thành',
                 'slug' => 'completed',
                 'color' => 'green',

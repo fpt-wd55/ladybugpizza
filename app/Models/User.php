@@ -74,12 +74,7 @@ class User extends Authenticatable
     public function promotions()
     {
         return $this->hasMany(Promotion::class, 'promotion_users');
-    }
-
-    public function transactions()
-    {
-        return $this->hasMany(Transaction::class);
-    }
+    } 
 
     public function evaluations()
     {

@@ -7,13 +7,13 @@ use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\PaymentMethod;
-use App\Models\Role;
-use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Vanthao03596\HCVN\Models\Province;
 use Vanthao03596\HCVN\Models\District;
 use Vanthao03596\HCVN\Models\Ward;
+use App\Mail\ThankYouOrder;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -87,7 +87,8 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = Order::findOrFail($id);
-        $statuses = OrderStatus::pluck('name')->toArray();
+        $currentStatus = $order->orderStatus;
+        $statuses = OrderStatus::pluck('slug')->toArray();
 
         $request->validate([
             'status' => ['required', 'string', Rule::in($statuses)],
@@ -99,36 +100,45 @@ class OrderController extends Controller
             'canceled_reason.string' => 'Lý do hủy không đúng định dạng.',
         ]);
 
-        $orderStatus = OrderStatus::where('name', $request->status)->first();
+        $newStatus = OrderStatus::where('slug', $request->status)->first();
 
-        if ($orderStatus->id < $order->order_status_id) {
+        if (!$newStatus || $newStatus->id < $currentStatus->id) {
             return redirect()->back()->with('error', 'Cập nhật đơn hàng không thành công.');
         }
 
-        if ($orderStatus) {
-            $order->order_status_id = $orderStatus->id;
-            if ($orderStatus->slug == 'canceled') {
-                $order->canceled_reason = $request->canceled_reason;
-                $order->canceled_at = now();
-            }
-            $order->save();
-
-            // Tao hoa don neu trang thai hoan thanh
-            if ($orderStatus->slug == 'completed') {
-                $transaction = Transaction::where('order_id', $order->id)->first();
-                Invoice::create([
-                    'order_id' => $order->id,
-                    'invoice_number' => 'INV_' . $order->id,
-                    'transaction_id' => $transaction->id,
-                ]);
-            }
-
-            return redirect()->back()->with('success', 'Cập nhật đơn hàng thành công.');
+        $nonCancellableStatuses = ['shipping', 'delivered', 'completed'];
+        if (in_array($currentStatus->slug, $nonCancellableStatuses) && $newStatus->slug === 'cancelled') {
+            return redirect()->back()->with('error', 'Cập nhật đơn hàng không thành công.');
         }
 
-        return redirect()->back()->with('error', 'Cập nhật đơn hàng không thành công.');
-    }
+        $order->order_status_id = $newStatus->id;
+        if ($newStatus->slug == 'canceled') {
+            $order->canceled_reason = $request->canceled_reason;
+            $order->canceled_at = now();
+        }
 
+        if ($newStatus->slug == 'completed') {
+            $order->completed_at = now();
+
+            // Tạo hóa đơn
+            $dataInvoice = [
+                'order_id' => $order->id,
+                'invoice_number' => 'INV' . now()->format('Ymd') . '-' . $order->id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+            Invoice::create($dataInvoice);
+        }
+
+        // Gửi email cảm ơn
+        if ($newStatus->slug == 'completed' && $currentStatus->slug != 'completed') {
+            Mail::to($order->email)->send(new ThankYouOrder($order));
+        }
+
+        $order->save();
+
+        return redirect()->back()->with('success', 'Cập nhật đơn hàng thành công.');
+    }
 
     public function export()
     {
