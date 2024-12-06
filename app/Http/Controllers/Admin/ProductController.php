@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Category;
-use App\Models\Evaluation;
+use App\Models\Evaluation; 
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -97,6 +97,12 @@ class ProductController extends Controller
             $image_name = trim(strtolower($request->sku)) . '_' . pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $image->getClientOriginalExtension();
         }
 
+        // Xử lý số lượng sản phẩm
+        if ($request->category_id) {
+            $category = Category::find($request->category_id);
+            $quantity = $category->attributes->count() > 0 ? 0 : $request->quantity;
+        }
+
         // Dữ liệu
         $data = [
             'name' => trim($request->name),
@@ -106,7 +112,7 @@ class ProductController extends Controller
             'category_id' => trim($request->category_id),
             'price' => $request->price,
             'discount_price' => $request->discount_price ?? 0,
-            'quantity' => $request->quantity,
+            'quantity' => $quantity,
             'sku' => trim(strtoupper($request->sku)),
             'status' => isset($request->status) ? $request->status : 2,
             'is_featured' => isset($request->is_featured) ? $request->is_featured : 2,
@@ -119,7 +125,7 @@ class ProductController extends Controller
             // Xử lý lưu ảnh
             if ($request->hasFile('image')) {
                 $image->storeAs('public/uploads/products', $image_name);
-                // Kiểm tra tồn tại ảnh cũ
+                // Kiểm tra tồn tại ảnh cũ 
                 if (file_exists(storage_path('app/public/uploads/products/' . $old_image))) {
                     unlink(storage_path('app/public/uploads/products/' . $old_image));
                 }
