@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Invoice;
 use App\Models\Order;
 use Illuminate\Console\Command;
-use Carbon\Carbon;
+use App\Mail\ThankYouOrder;
+use Illuminate\Support\Facades\Mail;
 
 class AutoConfirmOrders extends Command
 {
@@ -13,21 +15,30 @@ class AutoConfirmOrders extends Command
 
     public function handle()
     {
-        // Khoảng thời gian tối đa để đơn hàng ở trạng thái pending (e.g., 24 giờ)
-        $timeLimit = now()->subHours(24);
+        // Thời gian giới hạn để xác nhận đơn hàng (24 giờ)
+        $timeLimit = now()->subDay();
 
-        // Lấy các đơn hàng chưa xử lý (pending) và quá thời gian cho phép
-        $orders = Order::where('order_status_id', 'pending')
-            ->where('created_at', '<=', $timeLimit)
+        // Lấy các đơn hàng đã giao mà chưa hoàn thành
+        $orders = Order::where('order_status_id', 4)
+            ->where('updated_at', '<=', $timeLimit)
             ->get();
 
         foreach ($orders as $order) {
             // Cập nhật trạng thái đơn hàng
-            $order->status = 'processing'; // Xác nhận đơn hàng
+            $order->order_status_id = 5;
             $order->save();
 
-            // Log hoặc thông báo
-            $this->info("Đơn hàng ID {$order->id} đã được tự động xác nhận.");
+            // Tạo hóa đơn
+            $dataInvoice = [
+                'order_id' => $order->id,
+                'invoice_number' => 'INV' . now()->format('Ymd') . '-' . $order->id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+            Invoice::create($dataInvoice);
+
+            // Gửi email cảm ơn
+            Mail::to($order->email)->send(new ThankYouOrder($order));
         }
     }
 }

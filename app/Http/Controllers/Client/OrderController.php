@@ -21,8 +21,9 @@ use Illuminate\Support\Facades\Auth;
 use Vanthao03596\HCVN\Models\District;
 use Vanthao03596\HCVN\Models\Province;
 use App\Http\Requests\EvaluationRequest;
-use App\Http\Requests\CancelOrderRequest;
+use App\Mail\ThankYouOrder;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -127,6 +128,27 @@ class OrderController extends Controller
         }
 
         return redirect()->back()->with('success', 'Hủy đơn hàng thành công');
+    }
+
+    public function confirmReceived(Order $order)
+    {
+        $order = Order::findOrFail($order->id);
+        $order->order_status_id = 5;
+        $order->save();
+
+        // Tạo hóa đơn
+        $dataInvoice = [
+            'order_id' => $order->id,
+            'invoice_number' => 'INV' . now()->format('Ymd') . '-' . $order->id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+        Invoice::create($dataInvoice);
+
+        // Gửi email cảm ơn
+        Mail::to($order->email)->send(new ThankYouOrder($order));
+
+        return redirect()->back()->with('success', 'Xác nhận đã nhận hàng thành công');
     }
 
     public function evaluation(EvaluationRequest $request, Order $order)

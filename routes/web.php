@@ -11,8 +11,7 @@ use App\Http\Controllers\Admin\LogController;
 use App\Http\Controllers\Client\MembershipController;
 use App\Http\Controllers\Admin\MembershipController as AdminMembershipController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
-use App\Http\Controllers\Admin\PromotionController;
-use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\PromotionController; 
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
@@ -27,7 +26,8 @@ use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\PageController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
-use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\ErrorController; 
+use App\Models\Order as ModelsOrder;
 use Illuminate\Support\Facades\Route;
 use Vanthao03596\HCVN\Models\Province;
 use Vanthao03596\HCVN\Models\District;
@@ -58,9 +58,10 @@ Route::prefix('/')->group(function () {
         Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
         Route::post('/checkout', [CheckoutController::class, 'postCheckout'])->name('post-checkout');
         Route::get('/thank_you', [CheckoutController::class, 'thankYou'])->name('thank_you');
-        // Đơn hàng
+        // Đơn hàng 
         Route::get('/order', [OrderController::class, 'index'])->name('client.order.index');
-        Route::patch('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
+        Route::put('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
+        Route::put('order/{order}/received', [OrderController::class, 'confirmReceived'])->name('client.order.received');
         Route::post('/order/{order}/evaluation', [OrderController::class, 'evaluation'])->name('client.order.evaluation');
         // Profile
         Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile.index');
@@ -215,7 +216,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/membership/search', [AdminMembershipController::class, 'search'])->name('memberships.search');
     Route::get('/membership/export', [AdminMembershipController::class, 'export'])->name('memberships.export');
     Route::post('/memberships/{membership}/status', [AdminMembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
- 
+
     Route::resource('/pages', AdminPageController::class);
     Route::resource('/logs', LogController::class);
     // profile

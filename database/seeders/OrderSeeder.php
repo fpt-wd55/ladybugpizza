@@ -49,7 +49,7 @@ class OrderSeeder extends Seeder
                 'address_id' => $address->id,
                 'discount_amount' => rand(0, 10000),
                 'shipping_fee' => 30000,
-                'completed_at' => $faker->dateTimeBetween('-1 year', 'now'),
+                'completed_at' => $order_status_id == 5 ? $faker->dateTimeBetween('-1 year', 'now') : null,
                 'notes' => $faker->text,
                 'payment_method_id' => $paymentMethods->random()->id,
                 'order_status_id' => $order_status_id,

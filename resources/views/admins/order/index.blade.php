@@ -165,7 +165,7 @@
                 <tbody>
                     @forelse ($orders as $order)
                         <tr class="border-b hover:bg-gray-100">
-                            <td class="px-4 py-2">{{ $order->user->fullname }}</td>
+                            <td class="px-4 py-2">{{ $order->fullname }}</td>
                             <td class="px-4 py-2">
                                 <p>{{ $order->address->detail_address }}</p>
                                 <p>{{ $order->ward->name_with_type }}, {{ $order->district->name_with_type }},
@@ -230,7 +230,7 @@
                                             </button>
                                         </div>
                                         <div class="flex justify-start items-center">
-                                            @if ($order->orderStatus->name === 'Hoàn thành')
+                                            @if ($order->orderStatus->slug === 'completed')
                                                 @if ($order->invoice)
                                                     <a
                                                         href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
@@ -250,7 +250,7 @@
                                         {{-- user_id --}}
                                         <div class="pl-4 rounded-lg ">
                                             <label class="font-semibold">Thông tin thanh toán</label>
-                                            <p class="text-gray-800 mt-4">{{ $order->user->fullname }}</p>
+                                            <p class="text-gray-800 mt-4">{{ $order->fullname }}</p>
                                             <p class="text-gray-800">{{ $order->address->detail_address }}</p>
                                             <p class="text-gray-800">{{ $order->ward->name_with_type }},
                                                 {{ $order->district->name_with_type }},
@@ -259,19 +259,19 @@
                                         {{-- Email --}}
                                         <div class="pl-4 rounded-lg">
                                             <label class="font-semibold">Email</label>
-                                            <p class="text-gray-800">{{ $order->user->email }}</p>
+                                            <p class="text-gray-800">{{ $order->email }}</p>
                                         </div>
                                         {{-- SĐT --}}
                                         <div class="pl-4 rounded-lg">
                                             <label class="font-semibold">Số điện thoại</label>
-                                            <p class="text-gray-800">{{ $order->user->phone }}</p>
+                                            <p class="text-gray-800">{{ $order->phone }}</p>
                                         </div>
                                         {{-- hình thức thanh toán --}}
                                         <div class="pl-4 rounded-lg ">
                                             <label class="font-semibold">Hình thức thanh toán</label>
                                             <p class="text-gray-800">{{ $order->paymentMethod->name }}</p>
                                         </div>
-                                        @if ($order->orderStatus->name === 'Đã hủy')
+                                        @if ($order->orderStatus->slug === 'cancelled')
                                             <div class="pl-4 rounded-lg ">
                                                 <label class="font-semibold">Lí do hủy đơn</label>
                                                 <p class="text-gray-800">{{ $order->canceled_reason }}</p>
