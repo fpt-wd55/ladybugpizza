@@ -5,94 +5,58 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cảm ơn</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-    <link rel="stylesheet" href="/style.css">
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 0;
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container-sec {
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 100%;
-        }
-
-        .otp-code {
-            font-size: 24px;
-            font-weight: bold;
-            background-color: #f8f9fa;
-            padding: 15px;
-            text-align: center;
-            border-radius: 8px;
-            border: 1px dashed #D30A0A;
-            color: #FF0000;
-        }
-
-        .footer-text {
-            color: #6c757d;
-            font-size: 14px;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .welcome-section {
-            background: #FF0000;
-            padding: 30px;
-            border-radius: 4px;
-            color: #fff;
-            text-align: center;
-        }
-
-        .app-name {
-            font-size: 30px;
-            font-weight: 800;
-            margin: 7px 0px;
-        }
-
-        .verify-text {
-            margin-top: 15px;
-            font-size: 25px;
-        }
-    </style>
+    <link href="{{ asset('favicon.svg') }}" rel="shortcut icon" type="image/x-icon">
 </head>
 
-<body>
-    <div class="container-sec">
-        <div class="text-center">
-            <div class="welcome-section">
-                <div class="app-name">
-                    Ladybug Pizza
-                </div>
-            </div>
-        </div>
-        <p class="mt-4">Cảm ơn đã liên hệ với chúng tôi</p>
-        <p>Xin chào {{ $contactData['fullname'] }},</p>
-        <p>Cảm ơn bạn đã gửi thông tin đến chúng tôi. Chúng tôi đã nhận được tin nhắn với tiêu đề
-            <strong>"{{ $contactData['title'] }}"</strong>.
-        </p>
-        <p>Với nội dung là: {{ $contactData['message'] }}.</p>
-        <p>Nếu bạn cần thêm hỗ trợ, xin đừng ngần ngại liên hệ với chúng tôi.</p>
-        <p>Trân trọng.</p>
-    </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+<body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: 'Open Sans', Arial, sans-serif;">
+    <table role="presentation"
+        style="width: 100%; height: 100%; background-color: #f5f5f5; text-align: center; border-collapse: collapse;">
+        <tr>
+            <td align="center" style="padding: 20px;">
+                <table role="presentation"
+                    style="max-width: 800px; width: 100%; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-collapse: collapse;">
+                    <tr>
+                        <td style="text-align: center; padding: 30px; border-bottom: 1px solid #e5e5e5;">
+                            <a href="{{ route('client.home') }}" target="_blank"><img
+                                    src="https://i.pinimg.com/736x/fa/8c/db/fa8cdb4f3033201dbae31a860f59e32e.jpg"
+                                    alt="Ladybug Pizza" style="border-radius: 50%; width: 70px; height: 70px;"></a>
+                            <a href="{{ route('client.home') }}" style="text-decoration: none" target="_blank">
+                                <p style="color: #D30A0A; font-size: 22px; font-weight: bold; margin: 0">
+                                    Ladybug
+                                    Pizza</p>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 30px; text-align: center; border-bottom: 1px solid #e5e5e5;">
+                            <h2 style="margin: 0; font-size: 18px; font-weight: bold; color: #0E9F6E;">Cảm ơn đã liên hệ
+                                với chúng tôi
+                            </h2>
+                            <p style="margin: 15px 0 0; font-size: 16px; color: #666;">Xin chào
+                                {{ $contactData['fullname'] }}</p>
+                            <p style="margin: 10px 0 0; font-size: 16px; color: #666; line-height: 1.5;">
+                                Cảm ơn bạn đã gửi thông tin đến chúng tôi. Chúng tôi đã nhận được tin nhắn với tiêu đề
+                                là:
+                            </p>
+                            <p style="margin: 10px 0 0; font-size: 16px; color: #666; line-height: 1.5;">
+                                <strong>"{{ $contactData['title'] }}"</strong>.
+                            </p>
+                            <p style="margin: 10px 0 0; font-size: 16px; color: #666; line-height: 1.5;">Kèm theo nội dung
+                                là: {{ $contactData['message'] }}.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; padding: 20px; font-size: 14px; color: #999;">
+                            <p style="margin: 0;">
+                                Nếu bạn cần tư vấn hoặc hỗ trợ thêm vui lòng liên hệ qua email: <a
+                                    href="mailto:ladybugpizza@gmail.com" style="text-decoration:none; color:#000"
+                                    target="_blank">ladybugpizza@gmail.com</a></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>
