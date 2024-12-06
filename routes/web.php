@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\LogController;
 use App\Http\Controllers\Client\MembershipController;
 use App\Http\Controllers\Admin\MembershipController as AdminMembershipController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
-use App\Http\Controllers\Admin\PromotionController; 
+use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
@@ -26,7 +26,7 @@ use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\PageController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
-use App\Http\Controllers\ErrorController; 
+use App\Http\Controllers\ErrorController;
 use App\Models\Order as ModelsOrder;
 use Illuminate\Support\Facades\Route;
 use Vanthao03596\HCVN\Models\Province;
@@ -57,7 +57,8 @@ Route::prefix('/')->group(function () {
         // Thanh toán
         Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
         Route::post('/checkout', [CheckoutController::class, 'postCheckout'])->name('post-checkout');
-        Route::get('/thank_you', [CheckoutController::class, 'thankYou'])->name('thank_you');
+        Route::get('/return-momo', [CheckoutController::class, 'returnMomo'])->name('return_momo');
+        Route::get('/thank-you/{order}', [CheckoutController::class, 'thankYou'])->name('thank_you');
         // Đơn hàng 
         Route::get('/order', [OrderController::class, 'index'])->name('client.order.index');
         Route::put('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');

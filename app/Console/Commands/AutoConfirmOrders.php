@@ -14,10 +14,9 @@ class AutoConfirmOrders extends Command
     protected $description = 'Tự động xác nhận đơn hàng nếu không ai bấm hoàn thành';
 
     public function handle()
-    {
+    {   
         // Thời gian giới hạn để xác nhận đơn hàng (24 giờ)
         $timeLimit = now()->subDay();
-
         // Lấy các đơn hàng đã giao mà chưa hoàn thành
         $orders = Order::where('order_status_id', 4)
             ->where('updated_at', '<=', $timeLimit)

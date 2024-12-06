@@ -187,6 +187,10 @@ class CartController extends Controller
     {
         $cartItems = CartItem::where('cart_id', $cart->id)->get();
 
+        if ($cartItems->isEmpty()) {
+            return;
+        }
+
         // Xóa sản phẩm đã ngừng bán
         foreach ($cartItems as $cartItem) {
             $product = Product::find($cartItem->product_id);
