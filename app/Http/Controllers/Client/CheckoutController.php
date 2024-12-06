@@ -101,7 +101,7 @@ class CheckoutController extends Controller
             'shipping_fee' => (int)30000,
             'notes' => $request->notes ?? null,
             'payment_method_id' => $request->payment_method_id,
-            'cancelled_at' => null,
+            'canceled_at' => null,
             'cancelled_reason' => null,
             'fullname' => $request->fullname,
             'phone' => $request->phone,
