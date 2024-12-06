@@ -34,7 +34,7 @@
                         <div class="grid gap-4 mb-4 sm:grid-cols-3">
                             <div>
                                 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên sản
-                                    phẩm</label>
+                                    phẩm <span class="text-red-500">*</span></label>
                                 <input type="text" name="name" id="name" placeholder="Tên sản phẩm"
                                     value="{{ old('name') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -46,7 +46,7 @@
                             </div>
                             <div>
                                 <label for="sku" class="block mb-2 text-sm font-medium text-gray-900 ">Mã sản
-                                    phẩm</label>
+                                    phẩm <span class="text-red-500">*</span></label>
                                 <input type="text" name="sku" id="sku" placeholder="Mã sản phẩm"
                                     value="{{ old('sku') }}" maxlength="15"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -58,11 +58,11 @@
                             </div>
                             <div>
                                 <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 ">Danh
-                                    mục</label>
+                                    mục <span class="text-red-500">*</span></label>
                                 <select id="category_id" name="category_id"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
                                     <option value="" {{ old('category_id') ? '' : 'selected' }} disabled>
-                                        Danh mục</option>
+                                        Chọn danh mục</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
                                             data-has-attribute="{{ count($category->attributes) }}"
@@ -84,7 +84,7 @@
                         <div class="grid gap-4 mb-4 sm:grid-cols-3">
                             <div>
                                 <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá bán thường
-                                    (₫)</label>
+                                    (₫) <span class="text-red-500">*</span></label>
                                 <input type="number" name="price" id="price" value="{{ old('price') }}"
                                     placeholder="Giá bán thường"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -96,7 +96,7 @@
                             </div>
                             <div>
                                 <label for="discount_price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá khuyến
-                                    mãi (₫)</label>
+                                    mãi (₫) <span class="text-red-500">*</span></label>
                                 <input type="number" name="discount_price" id="discount_price" placeholder="Giá khuyến mãi"
                                     value="{{ old('discount_price') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -153,7 +153,7 @@
                     {{-- Mo ta san pham --}}
                     <div class="sm:col-span-2">
                         <label for="description" class="block mb-2 text-sm font-medium text-gray-900">Mô tả sản
-                            phẩm</label>
+                            phẩm <span class="text-red-500">*</span></label>
                         <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50">
                             <textarea id="wysiwygeditor" name="description">{{ old('description') }}</textarea>
                         </div>
@@ -186,7 +186,8 @@
                 if (hasAttribute == 0) {
                     quantity.innerHTML = `
                         <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số
-                            lượng</label>
+                            lượng <span
+                                class="text-red-500">*</span></label>
                         <input type="number" name="quantity" value="{{ old('quantity') ?? 0 }}"
                             placeholder="Số lượng"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">

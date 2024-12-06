@@ -159,6 +159,7 @@
                             </div>
                         </th>
                         <th scope="col" class="px-4 py-3">Tên mã giảm giá</th>
+                        <th scope="col" class="px-4 py-3">Mã giảm giá</th>
                         <th scope="col" class="px-4 py-3">Loại giảm giá</th>
                         <th scope="col" class="px-4 py-3">Giá trị giảm giá</th>
                         <th scope="col" class="px-4 py-3">Số lượng</th>
@@ -177,7 +178,8 @@
                                         class="table-item-checkbox w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
                                 </div>
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap uppercase">{{ $promotion->code }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->name }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">{{ $promotion->code }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
                                 @if ($promotion->discount_type == '1')
                                     Giảm theo %
@@ -210,9 +212,11 @@
                                                 data-modal-toggle="detail-modal-{{ $promotion->id }}">Chi tiết </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('admin.promotions.edit', $promotion->id) }}"
-                                                class="cursor-pointer block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Cập
-                                                nhật</a>
+                                            @if (!$promotion->orders()->where('order_status_id', 4)->exists())
+                                                <a href="{{ route('admin.promotions.edit', $promotion->id) }}"
+                                                    class="cursor-pointer block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Cập
+                                                    nhật</a>
+                                            @endif
                                         </li>
                                         <li>
                                             <a href="#" data-modal-target="delete-modal-{{ $promotion->id }}"
@@ -259,7 +263,7 @@
 
                         {{-- detail modal --}}
                         <div id="detail-modal-{{ $promotion->id }}" tabindex="-1" aria-hidden="true"
-                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+                            class="hidden overflow-y-auto overflow-x-hidden fixed top-10 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
                             <div class="relative p-4 w-full max-w-md max-h-full">
                                 <div
                                     class="relative p-4 bg-white rounded-lg shadow sm:p-5 h-full overflow-y-auto no-scrollbar">
@@ -302,6 +306,12 @@
                                         <div class="grid grid-cols-1 gap-4 content-between">
                                             <div class="space-y-4">
                                                 <div class="rounded-lg">
+                                                    <label class="font-semibold">Tên mã giảm giá</label>
+                                                    <p class="text-gray-800 mt-3">
+                                                        {{ $promotion->name }}
+                                                    </p>
+                                                </div>
+                                                <div class="rounded-lg">
                                                     <label class="font-semibold">Hạn sử dụng mã</label>
                                                     <p class="text-gray-800 mt-3">
                                                         {{ \Carbon\Carbon::parse($promotion->start_date)->format('d/m/Y H:i') }}
@@ -309,21 +319,24 @@
                                                         {{ \Carbon\Carbon::parse($promotion->end_date)->format('d/m/Y H:i') }}
                                                     </p>
                                                 </div>
-                                                <div class="rounded-lg">
-                                                    <label class="font-semibold">Số lượng</label>
-                                                    <p class="text-gray-800 mt-3">
-                                                        {{ $promotion->quantity }}
-                                                    </p>
-                                                </div>
-                                                <div class="rounded-lg">
-                                                    <label class="font-semibold">Đối tượng sử dụng</label>
-                                                    <p class="text-gray-800 mt-3">
-                                                        @if ($promotion->is_global == '1')
-                                                            Tất cả
-                                                        @else
-                                                            Thành viên {{ $promotion->rank->name }}
-                                                        @endif
-                                                    </p>
+                                                <div class="flex items-center gap-16">
+                                                    <div class="rounded-lg">
+                                                        <label class="font-semibold">Số lượng</label>
+                                                        <p class="text-gray-800 mt-3">
+                                                            {{ $promotion->quantity }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="rounded-lg">
+                                                        <label class="font-semibold">Đối tượng sử dụng</label>
+                                                        <p class="text-gray-800 mt-3">
+                                                            @if ($promotion->is_global == '1')
+                                                                Tất cả
+                                                            @else
+                                                                Thành viên
+                                                                {{ $promotion->rank?->name ?? 'Không xác định' }}
+                                                            @endif
+                                                        </p>
+                                                    </div>
                                                 </div>
                                                 <div class="rounded-lg">
                                                     <label class="font-semibold">Trạng thái</label>

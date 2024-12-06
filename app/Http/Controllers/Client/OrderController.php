@@ -95,12 +95,13 @@ class OrderController extends Controller
             5 => 'Tìm thấy giá rẻ hơn ở chỗ khác',
             6 => 'Đổi ý, không muốn mua nữa',
             7 => $request->input('reason'),
-        ];
+        ]; 
+      
         $selectedReason = $request->input('canceled_reason');
         $order->canceled_reason = isset($reasons[$selectedReason]) ? $reasons[$selectedReason] : null;
         $order->order_status_id = 6;
         $order->canceled_at = now();
-        $order->save();
+        $order->save(); 
 
         // Trả lại số lượng sản phẩm
         foreach ($orderItems as $orderItem) {

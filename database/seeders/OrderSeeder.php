@@ -38,6 +38,7 @@ class OrderSeeder extends Seeder
             $user = $users->random()->id;
             $address = Address::where('user_id', $user)->first();
             Order::insert([
+                'code' => 'LDB_' . $faker->unique()->numberBetween(1000, 9999),
                 'user_id' => $user,
                 'fullname' => $faker->name,
                 'phone' => $faker->phoneNumber,

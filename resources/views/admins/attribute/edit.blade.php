@@ -12,7 +12,7 @@
                     <div class="grid gap-4 sm:grid-cols-3">
                         <div>
                             <label for="attribute_name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên thuộc
-                                tính</label>
+                                tính <span class="text-red-500">*</span></label>
                             <input type="text" name="attribute_name" id="attribute_name" placeholder="Tên thuộc tính"
                                 value="{{ old('attribute_name', $attribute->name) }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -23,9 +23,10 @@
                             @enderror
                         </div>
                         <div>
-                            <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 ">Danh mục</label>
+                            <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 ">Danh mục <span
+                                    class="text-red-500">*</span></label>
                             <select class="w-full h-10 mb-2 select" name="category_id">
-                                <option selected disabled>Danh mục</option>
+                                <option selected disabled>Chọn danh mục</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}"
                                         {{ old('category_id', $attribute->category_id) == $category->id ? 'selected' : '' }}>
