@@ -17,9 +17,7 @@ use App\Models\OrderItemAttribute;
 use App\Models\OrderItemTopping;
 use App\Models\PaymentMethod;
 use App\Models\Product;
-use App\Models\Topping;
-use App\Models\Transaction;
-use Exception;
+use App\Models\Topping; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -32,6 +30,11 @@ class CheckoutController extends Controller
     public function checkout()
     {
         $cart = Cart::where('user_id', Auth::id())->first();
+
+        if ($cart) {
+            $cartController = new CartController();
+            $cartController->updateCart($cart);
+        }
 
         if ($cart) {
             $cartItems = CartItem::where('cart_id', $cart->id)->get();
