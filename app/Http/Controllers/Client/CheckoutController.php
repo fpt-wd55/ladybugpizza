@@ -121,9 +121,8 @@ class CheckoutController extends Controller
             $orderInfo = "Thanh toán online qua MoMo";
             $amount = (int) ($data['amount'] + $data['shipping_fee'] - $data['discount_amount']);
             $orderId = $data['code'];
-            // $amount = 10000;
-            $redirectUrl = route('thank_you');
-            $ipnUrl = route('thank_you');
+            $redirectUrl = route('return_momo');
+            $ipnUrl = route('return_momo');
             $extraData = "";
 
             $requestId = time() . "";
@@ -156,9 +155,7 @@ class CheckoutController extends Controller
             // Gửi mail thông báo đặt hàng 
             $this->sendPaymentConfirmationEmail($order);
 
-            return view('clients.cart.thank_you', [
-                'order' => $order,
-            ]);
+            return redirect()->route('thank_you', $order->code);
         }
     }
 
@@ -210,7 +207,9 @@ class CheckoutController extends Controller
                 }
             }
 
-            $cart->delete();
+            // Xóa sản phẩm khỏi giỏ hàng
+            CartItem::where('cart_id', $cart->id)->delete();
+
             session()->forget('promotion');
             session()->forget('orderData');
         }
@@ -218,7 +217,7 @@ class CheckoutController extends Controller
         return $order;
     }
 
-    public function thankYou(Request $request)
+    public function returnMomo(Request $request)
     {
         // Kiểm tra nếu yêu cầu đến từ IPN (callback server)
         if ($request->has('transId')) {
@@ -232,22 +231,28 @@ class CheckoutController extends Controller
                 $order->order_status_id = 1;
                 $order->save();
 
-                // Lấy thông tin địa chỉ
-                $order->province =  Province::find($order->address->province);
-                $order->district = District::find($order->address->district);
-                $order->ward = Ward::find($order->address->ward);
-
                 $this->sendPaymentConfirmationEmail($order);
 
-                return view('clients.cart.thank_you', [
-                    'order' => $order,
-                ]);
+                return redirect()->route('thank_you', $order->code);
             } else {
                 return redirect()->route('client.order.index')->with('error', 'Thanh toán thất bại');
             }
         }
 
         return redirect()->route('client.order.index');
+    }
+
+    public function thankYou($order)
+    {
+        $order = Order::where('code', $order)->first();
+        // Lấy thông tin địa chỉ
+        $order->province =  Province::find($order->address->province);
+        $order->district = District::find($order->address->district);
+        $order->ward = Ward::find($order->address->ward);
+
+        return view('clients.cart.thank_you', [
+            'order' => $order,
+        ]);
     }
 
     private function sendPaymentConfirmationEmail($order)

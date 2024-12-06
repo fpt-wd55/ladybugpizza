@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Category;
-use App\Models\Evaluation; 
+use App\Models\Evaluation;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -279,11 +279,12 @@ class ProductController extends Controller
         }
 
         if (isset($request->filter_is_featured)) {
-            $query->whereIn('is_featured', $request->filter_is_featured);
+            $query->where('is_featured', $request->filter_is_featured);
         }
-
+        // filter_is_featured
+        // filter_product_discount
         if (isset($request->filter_product_discount)) {
-            $query->whereIn('discount_price', '>', 0);
+            $query->where('discount_price', '>', 0);
         }
 
         if (isset($request->filter_rating)) {

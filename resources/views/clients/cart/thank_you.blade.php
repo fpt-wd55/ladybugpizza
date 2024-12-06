@@ -37,9 +37,10 @@
                 </dl>
             </div>
             <div class="flex items-center space-x-4">
-                <a href="{{ route('client.product.menu') }}" class="button-red">Tiếp
+                <a href="{{ route('client.order.index') }}" class="button-red">Quản lý đơn hàng</a>
+                <a href="{{ route('client.product.menu') }}" class="button-light">Tiếp
                     tục mua hàng</a>
-                <a>
+
             </div>
     </section>
 @endsection
