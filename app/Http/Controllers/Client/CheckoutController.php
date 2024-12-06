@@ -80,7 +80,7 @@ class CheckoutController extends Controller
             if ($address->province != $request->province || $address->district != $request->district || $address->ward != $request->ward || $address->detail_address != $request->detail_address) {
                 $address = Address::create([
                     'user_id' => Auth::id(),
-                    'title' => 'Địa chỉ ' . Auth::user()->addresses->count() + 1,
+                    'title' => 'Địa chỉ gần đây' . Auth::user()->addresses->count() + 1,
                     'province' => $request->province,
                     'district' => $request->district,
                     'ward' => $request->ward,

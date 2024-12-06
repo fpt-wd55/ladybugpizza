@@ -113,16 +113,6 @@ class OrderController extends Controller
             }
             $order->save();
 
-            // Tao hoa don neu trang thai hoan thanh
-            if ($orderStatus->slug == 'completed') {
-                $transaction = Transaction::where('order_id', $order->id)->first();
-                Invoice::create([
-                    'order_id' => $order->id,
-                    'invoice_number' => 'INV_' . $order->id,
-                    'transaction_id' => $transaction->id,
-                ]);
-            }
-
             return redirect()->back()->with('success', 'Cập nhật đơn hàng thành công.');
         }
 

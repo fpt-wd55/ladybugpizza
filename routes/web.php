@@ -215,8 +215,7 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/membership/search', [AdminMembershipController::class, 'search'])->name('memberships.search');
     Route::get('/membership/export', [AdminMembershipController::class, 'export'])->name('memberships.export');
     Route::post('/memberships/{membership}/status', [AdminMembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
-
-    Route::resource('/transactions', TransactionController::class);
+ 
     Route::resource('/pages', AdminPageController::class);
     Route::resource('/logs', LogController::class);
     // profile

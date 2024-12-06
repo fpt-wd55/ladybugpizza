@@ -11,17 +11,11 @@ class Invoice extends Model
     use HasFactory;
     protected $fillable = [
         'order_id',
-        'invoice_number',
-        'transaction_id',
+        'invoice_number', 
     ];
 
     public function order()
     {
         return $this->belongsTo(Order::class);
-    }
-
-    public function transaction()
-    {
-        return $this->belongsTo(Transaction::class);
-    }
+    } 
 }

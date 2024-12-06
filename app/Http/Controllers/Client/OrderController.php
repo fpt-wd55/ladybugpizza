@@ -77,8 +77,8 @@ class OrderController extends Controller
 
         $order = Order::query()->findOrFail($order['id']);
 
-        if ($order->orderStatus->id != 1 || isset($order)) {
-            return redirect()->back()->with('error', 'Đơn hàng đã xác nhận không thể hủy');
+        if ($order->order_status_id != 1) {
+            return redirect()->back()->with('error', 'Không thể hủy đơn hàng này!');
         }
 
         $orderItems = OrderItem::where('order_id', $order->id)->get();
@@ -95,13 +95,13 @@ class OrderController extends Controller
             5 => 'Tìm thấy giá rẻ hơn ở chỗ khác',
             6 => 'Đổi ý, không muốn mua nữa',
             7 => $request->input('reason'),
-        ]; 
-      
+        ];
+
         $selectedReason = $request->input('canceled_reason');
         $order->canceled_reason = isset($reasons[$selectedReason]) ? $reasons[$selectedReason] : null;
         $order->order_status_id = 6;
         $order->canceled_at = now();
-        $order->save(); 
+        $order->save();
 
         // Trả lại số lượng sản phẩm
         foreach ($orderItems as $orderItem) {

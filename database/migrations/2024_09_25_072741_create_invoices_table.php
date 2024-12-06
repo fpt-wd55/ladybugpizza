@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
-            $table->string('invoice_number');
-            $table->foreignId('transaction_id')->constrained()->onDelete('cascade');
+            $table->string('invoice_number'); 
             $table->timestamps();
         });
     }
