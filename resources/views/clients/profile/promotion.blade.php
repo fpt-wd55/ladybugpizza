@@ -35,6 +35,9 @@
                                 <div class="product-card flex items-start justify-between p-4">
                                     <div class="space-y-2 text-sm">
                                         <p class="font-medium">
+                                            <span class="code me-2 uppercase">{{ $code->promotion->name }}</span>
+                                        </p>
+                                        <p class="font-medium">
                                             <span class="code me-2 uppercase">{{ $code->promotion->code }}</span>
                                         </p>
                                         <p class="font-medium">
@@ -61,7 +64,7 @@
                                     </div>
                                 </div>
                             @endforeach
-                        </div> 
+                        </div>
                     @break
 
                     @case('redeem-code')
@@ -72,6 +75,9 @@
                             @foreach ($redeemCodes as $code)
                                 <div class="product-card flex items-start justify-between p-4">
                                     <div class="space-y-2 text-sm">
+                                        <p class="font-medium">
+                                            <span class="code me-2 uppercase">{{ $code->name }}</span>
+                                        </p>
                                         <p class="font-medium">
                                             Giảm
                                             {{ $code->discount_type == '1' ? $code->discount_value . '%' : number_format($code->discount_value) . 'đ' }}
@@ -101,7 +107,8 @@
                                     </form>
                                 </div>
                             @endforeach
-                        </div>  
+                        </div>
+
                         @default
                     @endswitch
                 </div>
