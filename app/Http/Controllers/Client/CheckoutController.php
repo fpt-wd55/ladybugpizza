@@ -258,7 +258,7 @@ class CheckoutController extends Controller
             $order->province =  Province::find($order->address->province);
             $order->district = District::find($order->address->district);
             $order->ward = Ward::find($order->address->ward);
-            $subject = 'Thông báo xác nhận đơn hàng #' . $order->id;
+            $subject = 'Thông báo xác nhận đơn hàng #' . $order->code;
             Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.waiting'));
         }
     }
