@@ -54,7 +54,7 @@
                                     href="{{ asset('storage/uploads/combos/' . $combo->image) }}">
                                     <img loading="lazy" class="w-20 h-20 rounded-md object-cover"
                                         src="{{ asset('storage/uploads/combos/' . $combo->image) }}"
-                                        onerror="this.src='{{ asset('storage/uploads/combos/product-placehoder.jpg') }}'">
+                                        onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'">
                                 </a>
                                 <div class="flex items-center justify-center w-full mb-4 ">
                                     <label for="dropzone-file"
