@@ -128,10 +128,7 @@ class WebController extends Controller
             'user_id' => $user->id,
             'email_order' => true,
             'email_promotions' => true,
-            'email_security' => true,
-            'push_order' => true,
-            'push_promotions' => true,
-            'push_security' => true,
+            'email_security' => true, 
         ]);
 
         return redirect()->route('auth.login')->with('success', 'Đăng ký thành công');

@@ -13,13 +13,17 @@ class Order extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $dataOrder;
+    public $data;
+    public $subject;
+    public $view;
     /**
      * Create a new message instance.
      */
-    public function __construct($dataOrder)
+    public function __construct($data, $subject, $view)
     {
-        $this->dataOrder = $dataOrder;
+        $this->data = $data;
+        $this->subject = $subject;
+        $this->view = $view;
     }
 
     /**
@@ -28,7 +32,7 @@ class Order extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Thông báo xác nhận đơn hàng #' . $this->dataOrder['order']->id,
+            subject: $this->subject,
         );
     }
 
@@ -38,8 +42,8 @@ class Order extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.order-confirm',
-            with: ['order' => $this->dataOrder]
+            view: $this->view,
+            with: ['order' => $this->data]
         );
     }
 
