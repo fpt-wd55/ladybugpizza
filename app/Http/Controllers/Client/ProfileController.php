@@ -169,14 +169,19 @@ class ProfileController extends Controller
 	public function promotion()
 	{
 		$myCodes = PromotionUser::where('user_id', Auth::user()->id)
-			->with('promotion')->get();
+            ->whereHas('promotion', function ($query) {$query->where('end_date', '>=', now());})
+            ->with('promotion')->get();
 
-		$countMyCodes = PromotionUser::where('user_id', Auth::user()->id)->count();
+
+        $countMyCodes = PromotionUser::where('user_id', Auth::user()->id)
+        ->whereHas('promotion', function ($query) {$query->where('end_date', '>=', now());})
+        ->count();
 
 		$userRankId = Auth::user()->membership->rank_id;
 
 		$redeemCodes = Promotion::where('status', 1)
 			->where('quantity', '>', 0)
+            ->where('end_date', '>=', now())
 			->where(function ($query) use ($userRankId) {
 				$query->where('is_global', '!=', 2)
 					->orWhere('rank_id', $userRankId);
