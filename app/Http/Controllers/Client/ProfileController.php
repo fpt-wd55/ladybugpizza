@@ -10,12 +10,14 @@ use App\Models\PromotionUser;
 use App\Http\Requests\ChangeRequest;
 use App\Http\Requests\InactiveRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Mail\Auth as MailAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\UserSetting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Vanthao03596\HCVN\Models\Province;
 use Vanthao03596\HCVN\Models\District;
 use Vanthao03596\HCVN\Models\Ward;
@@ -78,11 +80,18 @@ class ProfileController extends Controller
 		}
 
 		$user->password = Hash::make($request->new_password);
-		if (!$user->save()) {
-			return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
+		if ($user->save()) {
+			$userSetting = $user->setting;
+			if ($userSetting->email_order) {
+				//  Gửi email thông báo thay đổi mật khẩu
+				$subject = 'Thông báo thay đổi mật khẩu';
+				Mail::to($user->email)->send(new MailAuth(null, $subject, 'mails.change_password'));
+			}
+
+			return redirect()->back()->with('success', 'Mật khẩu đã được thay đổi thành công.');
 		}
 
-		return redirect()->back()->with('success', 'Mật khẩu đã được thay đổi thành công.');
+		return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
 	}
 
 	public function postInactive(InactiveRequest $request)
@@ -94,12 +103,12 @@ class ProfileController extends Controller
 		}
 
 		$user->status = 2;
-		if (!$user->save()) {
+		if ($user->save()) {
 			Auth::logout();
-			return redirect()->route('client.home')->with('error', 'Đã có lỗi xảy ra');
+			return redirect()->route('client.home')->with('success', 'Tài khoản của bạn đã bị vô hiệu hóa');
 		}
 
-		return redirect()->route('client.home')->with('success', 'Tài khoản của bạn đã bị vô hiệu hóa');
+		return redirect()->route('client.home')->with('error', 'Đã có lỗi xảy ra');
 	}
 
 	public function address()
@@ -136,7 +145,7 @@ class ProfileController extends Controller
 			$userSetting->user_id = auth()->id();
 			$userSetting->email_order = true;
 			$userSetting->email_promotions = true;
-			$userSetting->email_security = true; 
+			$userSetting->email_security = true;
 
 			// Lưu vào cơ sở dữ liệu
 			$userSetting->save();
@@ -151,7 +160,7 @@ class ProfileController extends Controller
 		if ($settings) {
 			$settings->email_order = $request->has('email_order') ? 1 : 0;
 			$settings->email_promotions = $request->has('email_promotions') ? 1 : 0;
-			$settings->email_security = $request->has('email_security') ? 1 : 0; 
+			$settings->email_security = $request->has('email_security') ? 1 : 0;
 			$settings->save();
 
 			return redirect()->back()->with('success', 'Cài đặt đã được cập nhật!');
@@ -163,19 +172,23 @@ class ProfileController extends Controller
 	public function promotion()
 	{
 		$myCodes = PromotionUser::where('user_id', Auth::user()->id)
-            ->whereHas('promotion', function ($query) {$query->where('end_date', '>=', now());})
-            ->with('promotion')->get();
+			->whereHas('promotion', function ($query) {
+				$query->where('end_date', '>=', now());
+			})
+			->with('promotion')->get();
 
 
-        $countMyCodes = PromotionUser::where('user_id', Auth::user()->id)
-        ->whereHas('promotion', function ($query) {$query->where('end_date', '>=', now());})
-        ->count();
+		$countMyCodes = PromotionUser::where('user_id', Auth::user()->id)
+			->whereHas('promotion', function ($query) {
+				$query->where('end_date', '>=', now());
+			})
+			->count();
 
 		$userRankId = Auth::user()->membership->rank_id;
 
 		$redeemCodes = Promotion::where('status', 1)
 			->where('quantity', '>', 0)
-            ->where('end_date', '>=', now())
+			->where('end_date', '>=', now())
 			->where(function ($query) use ($userRankId) {
 				$query->where('is_global', '!=', 2)
 					->orWhere('rank_id', $userRankId);
@@ -238,7 +251,7 @@ class ProfileController extends Controller
 		}
 
 		return back()->with('success', 'Bạn đã đổi mã giảm giá thành công');
-	} 
+	}
 
 	public function addLocation()
 	{
