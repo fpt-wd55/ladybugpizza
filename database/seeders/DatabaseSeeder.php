@@ -34,8 +34,7 @@ class DatabaseSeeder extends Seeder
             EvaluationSeeder::class,
             PageSeeder::class,
             TransactionSeeder::class,
-            InvoiceSeeder::class,
-            FavoriteSeeder::class,
+            InvoiceSeeder::class, 
             FaqSeeder::class,
             UserSettingSeeder::class,
         ]);

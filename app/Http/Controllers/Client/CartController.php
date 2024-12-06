@@ -16,31 +16,17 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    /**
-     * Hiển thị trang giỏ hàng 
-     */
     public function index()
     {
-        if (!Auth::user()) {
-            return redirect()->route('client.home')->with('error', 'Bạn cần đăng nhập để truy cập trang này');
-        }
+        $cart = Cart::firstOrCreate(
+            ['user_id' => Auth::id()],
+            ['user_id' => Auth::id()]
+        );
 
-        $cart = Cart::where('user_id', Auth::id())->first();
-        if (!$cart) {
-            $cart = Cart::create([
-                'user_id' => Auth::id(),
-            ]);
-        }
+        // Cập nhật lại giỏ hàng khi có sự thay đổi (giá, số lượng, ...)
+        $this->updateCart($cart);
 
         $cartItems = CartItem::where('cart_id', $cart->id)->get();
-
-        // Kiem tra status san pham
-        foreach ($cartItems as $cartItem) {
-            $product = Product::find($cartItem->product_id);
-            if ($product->status != 1) {
-                $cartItem->delete();
-            }
-        }
 
         foreach ($cartItems as $cartItem) {
             $cartItem->attributes = CartItemAttribute::where('cart_item_id', $cartItem->id)->get();
@@ -53,9 +39,6 @@ class CartController extends Controller
         ]);
     }
 
-    /**
-     * Thêm mới một sản phẩm vào giở hàng
-     */
     public function addToCart(AddToCartRequest $request, Product $product)
     {
         $validated = $request->validated();
@@ -130,15 +113,15 @@ class CartController extends Controller
 
     private function calculateItemPrice($product, $validated, $attributes)
     {
-        $priceProduct = $product->price * $validated['quantity'];
+        $priceProduct = $product->price;
         $priceAttribute = 0;
+        $priceTopping = 0;
 
         foreach ($attributes as $attribute) {
             $att = AttributeValue::find($validated['attributes_' . $attribute->slug]);
             $priceAttribute += ($att->price_type == 1) ? $att->price : $product->price * $att->price / 100;
         }
 
-        $priceTopping = 0;
         if (isset($validated['toppings'])) {
             foreach ($validated['toppings'] as $topping) {
                 $priceTopping += Topping::find($topping)->price;
@@ -188,16 +171,53 @@ class CartController extends Controller
         return true; // Tất cả topping khớp
     }
 
-    /**
-     * Xóa một sản phẩm khỏi giỏ hàng
-     */
     public function delete(CartItem $cartItem)
     {
+        if ($cartItem->delete()) {
+            $cart = Cart::find(Auth::id());
+            $this->updateCart($cart);
 
-        if (!$cartItem->delete()) {
-            return redirect()->route('client.cart.index')->with('error', 'Xóa sản phẩm khỏi giỏ hàng thất bại');
+            return redirect()->route('client.cart.index')->with('success', 'Xóa sản phẩm khỏi giỏ hàng thành công');
         }
 
-        return redirect()->route('client.cart.index')->with('success', 'Xóa sản phẩm khỏi giỏ hàng thành công');
+        return redirect()->route('client.cart.index')->with('error', 'Xóa sản phẩm khỏi giỏ hàng thất bại');
+    }
+
+    public function updateCart($cart)
+    {
+        $cartItems = CartItem::where('cart_id', $cart->id)->get();
+
+        // Xóa sản phẩm đã ngừng bán
+        foreach ($cartItems as $cartItem) {
+            $product = Product::find($cartItem->product_id);
+            if ($product->status != 1) {
+                $cartItem->delete();
+            }
+        }
+
+        foreach ($cartItems as $cartItem) {
+            $priceProduct = $cartItem->product->price;
+            $priceAttribute = 0;
+            $priceTopping = 0;
+
+            if ($cartItem->attributes) {
+                foreach ($cartItem->attributes as $attribute) {
+                    $att = AttributeValue::find($attribute->attribute_value_id);
+                    $priceAttribute += ($att->price_type == 1) ? $att->price : $cartItem->product->price * $att->price / 100;
+                }
+            }
+
+            if ($cartItem->toppings) {
+                foreach ($cartItem->toppings as $topping) {
+                    $priceTopping += Topping::find($topping->topping_id)->price;
+                }
+            }
+
+            $cartItem->price = ($priceProduct + $priceAttribute + $priceTopping) * $cartItem->quantity;
+            $cartItem->save();
+        }
+
+        $cart->total = $cart->items->sum('price');
+        $cart->save();
     }
 }

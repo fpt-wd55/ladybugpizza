@@ -32,4 +32,4 @@ The ABB:
 Số thẻ: 9704250000099991
 Tháng / Năm phát hành: 01/13
 Tên: NGUYEN VAN A
-Mã OTP: 123456
+Mã OTP: 123456  
