@@ -117,7 +117,7 @@
                 </form>
             </div>
         </div>
-        <div class="p-4 border-b bg-gray-50">
+        <div class="no-scrollbar mb-4 overflow-x-auto  border-gray-200 text-left">
             <!-- Các tab điều hướng -->
             <ul class="flex">
                 <li class="me-6 min-w-fit relative mx-4">
@@ -156,7 +156,7 @@
                         <th class="px-4 py-3">Tên người dùng</th>
                         <th class="px-4 py-3">Địa chỉ</th>
                         <th class="px-4 py-3">Tổng số tiền</th>
-                        <th class="px-4 py-3">Trạng thái</th>
+                        <th class="md:px-4 py-3">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only uppercase">Hành động </span>
                         </th>
@@ -165,15 +165,15 @@
                 <tbody>
                     @forelse ($orders as $order)
                         <tr class="border-b hover:bg-gray-100">
-                            <td class="px-4 py-2">{{ $order->fullname }}</td>
-                            <td class="px-4 py-2">
+                            <td class="md:px-4 md:py-2">{{ $order->fullname }}</td>
+                            <td class="md:px-4 md:py-2">
                                 <p>{{ $order->address->detail_address }}</p>
                                 <p>{{ $order->ward->name_with_type }}, {{ $order->district->name_with_type }},
                                     {{ $order->province->name_with_type }}</p>
                             </td>
-                            <td class="px-4 py-2">
+                            <td class="md:px-4 md:py-2">
                                 {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ</td>
-                            <td class="px-4 py-2">
+                            <td class="md:px-4 md:py-2">
                                 @php
                                     $colorClasses = [
                                         'yellow' => 'bg-yellow-500',
@@ -221,7 +221,7 @@
                                     class="relative p-5 md:p-8 bg-white rounded-lg shadow h-[480px] overflow-y-auto no-scrollbar">
                                     <div class="space-y-4">
                                         <div class="flex justify-between items-center">
-                                            <h1 class="text-xl font-semibold">Đơn hàng #{{ $order->id }}</h1>
+                                            <h1 class="text-xl font-semibold">Đơn hàng #{{ $order->code }}</h1>
                                             <button type="button"
                                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
                                                 data-modal-hide="order-modal-{{ $order->id }}">

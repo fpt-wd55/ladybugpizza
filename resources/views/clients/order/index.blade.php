@@ -42,7 +42,7 @@
                             <dt class="text-sm text-gray-500">Mã đơn hàng:
                             </dt>
                             <dd class="mt-1.5 text-base font-semibold text-[#D30A0A]">
-                                #{{ $order->id }}
+                                #{{ $order->code }}
                             </dd>
                         </dl>
 
