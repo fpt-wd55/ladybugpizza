@@ -17,7 +17,7 @@ use App\Models\OrderItemAttribute;
 use App\Models\OrderItemTopping;
 use App\Models\PaymentMethod;
 use App\Models\Product;
-use App\Models\Topping; 
+use App\Models\Topping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -101,8 +101,8 @@ class CheckoutController extends Controller
             'shipping_fee' => (int)30000,
             'notes' => $request->notes ?? null,
             'payment_method_id' => $request->payment_method_id,
-            'canceled_at' => null,
-            'canceled_reason' => null,
+            'cancelled_at' => null,
+            'cancelled_reason' => null,
             'fullname' => $request->fullname,
             'phone' => $request->phone,
             'email' => $request->email,
@@ -257,12 +257,10 @@ class CheckoutController extends Controller
         $order->district = District::find($order->address->district);
         $order->ward = Ward::find($order->address->ward);
 
-        // Gửi email xác nhận đặt hàng
-        $data = [
-            'order' => $order,
-        ];
+        // Gửi email xác nhận đặt hàng 
+        $subject = 'Thông báo xác nhận đơn hàng #' . $order->id;
 
-        Mail::to($order->email)->send(new MailOrder($data));
+        Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.waiting'));
     }
 
     public function execPostRequest($url, $data)

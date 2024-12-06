@@ -54,7 +54,7 @@ class OrderSeeder extends Seeder
                 'payment_method_id' => $paymentMethods->random()->id,
                 'order_status_id' => $order_status_id,
                 'canceled_at' => $order_status_id == 6 ? $faker->dateTimeBetween('-1 year', 'now') : null,
-                'canceled_reason' => $order_status_id == 6 ? $faker->text : null,
+                'cancelled_reason' => $order_status_id == 6 ? $faker->text : null,
                 'created_at' => $faker->dateTimeBetween('-1 year', 'now'),
                 'updated_at' =>  $faker->dateTimeBetween('-1 year', 'now'),
             ]);

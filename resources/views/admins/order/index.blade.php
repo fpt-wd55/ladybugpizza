@@ -274,7 +274,7 @@
                                         @if ($order->orderStatus->slug === 'cancelled')
                                             <div class="pl-4 rounded-lg ">
                                                 <label class="font-semibold">Lí do hủy đơn</label>
-                                                <p class="text-gray-800">{{ $order->canceled_reason }}</p>
+                                                <p class="text-gray-800">{{ $order->cancelled_reason }}</p>
                                             </div>
                                         @endif
                                         <hr class="w-full">

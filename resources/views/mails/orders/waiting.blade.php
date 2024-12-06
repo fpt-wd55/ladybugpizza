@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cảm ơn bạn đã đặt hàng tại cửa hàng chúng tôi</title>
+    <title>Thông báo xác nhận đơn hàng</title>
     <link href="{{ asset('favicon.svg') }}" rel="shortcut icon" type="image/x-icon">
 </head>
 
@@ -33,26 +33,50 @@
                     <!-- Body -->
                     <tr>
                         <td style="padding: 30px; text-align: center; border-bottom: 1px solid #e5e5e5;">
-                            <h2 style="margin: 0; font-size: 18px; font-weight: bold; color: #0E9F6E;">Cảm ơn bạn đã mua
-                                hàng tại Ladybug Pizza! 🍕
+                            <h2 style="margin: 0; font-size: 18px; font-weight: bold; color: #0E9F6E;">Đặt hàng thành
+                                công
                             </h2>
-                            <p style="margin: 15px 0 0; font-size: 16px; color: #666;; line-height: 1.5;">Xin chào
-                                {{ $dataOrder->fullname }} <br>
-                                Chúng tôi xin gửi lời cảm ơn chân thành vì bạn đã chọn Ladybug Pizza để thưởng thức bữa
-                                ăn tuyệt vời! 🍕💖
-                            </p>
+                            <p style="margin: 15px 0 0; font-size: 16px; color: #666;">Xin chào
+                                {{ $order->fullname }}</p>
                             <p style="margin: 10px 0 0; font-size: 16px; color: #666; line-height: 1.5;">
-                                Chúng tôi hy vọng bạn đã có một trải nghiệm tuyệt vời và hài lòng với món ăn của mình.
-                                Chúng tôi luôn cố gắng mang đến những chiếc pizza ngon nhất với chất lượng tuyệt vời và
-                                dịch vụ thân thiện. Mỗi lần bạn đặt hàng, đó là một niềm vui lớn đối với chúng tôi!
-                            </p>
-                            <p style="margin: 10px 0 0; font-size: 16px; color: #666; line-height: 1.5;">
-                                Cảm ơn bạn đã đồng hành cùng Ladybug Pizza. Chúng tôi hy vọng sẽ được phục vụ bạn thêm
-                                nhiều lần nữa!
+                                Cảm ơn bạn đã đặt hàng tại Ladybug Pizza. Đơn hàng của bạn đã được xác nhận và sẽ được
+                                giao sớm,
+                                chúng tôi sẽ cho bạn biết khi nó bắt đầu di chuyển.
                             </p>
                             <a href="{{ route('client.product.menu') }}" target="_blank"
                                 style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #D30A0A; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 16px;">Khám
                                 phá thực đơn</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 30px; border-bottom: 1px solid #e5e5e5;">
+                            <h2
+                                style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold; color: #595959; text-transform: uppercase;">
+                                Thông tin khách hàng
+                            </h2>
+                            <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                    <!-- Cột 1 -->
+                                    <td style="width: 50%; vertical-align: top; padding-right: 10px;">
+                                        <h2 style="font-size: 16px; color: #7e7e7e;">Địa chỉ giao hàng</h2>
+                                        <p style="font-size: 16px; color: #666; margin: 0;">
+                                            {{ $order->fullname }}<br>
+                                            {{ $order->address->detail_address }}<br>
+                                            {{ $order->ward->name_with_type }},
+                                            {{ $order->district->name_with_type }},
+                                            {{ $order->province->name_with_type }}<br>
+                                        </p>
+                                    </td>
+                                    <!-- Cột 2 -->
+                                    <td style="width: 50%; vertical-align: top; padding-left: 10px;">
+                                        <h2 style="font-size: 16px; color: #7e7e7e;">Phương thức thanh toán</h2>
+                                        <p style="font-size: 16px; color: #666; margin: 0;">
+                                            {{ $order->paymentMethod->name }}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
 

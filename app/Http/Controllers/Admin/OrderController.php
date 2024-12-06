@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Order as MailOrder;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\OrderStatus;
@@ -12,7 +13,6 @@ use Illuminate\Validation\Rule;
 use Vanthao03596\HCVN\Models\Province;
 use Vanthao03596\HCVN\Models\District;
 use Vanthao03596\HCVN\Models\Ward;
-use App\Mail\ThankYouOrder;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
@@ -92,12 +92,12 @@ class OrderController extends Controller
 
         $request->validate([
             'status' => ['required', 'string', Rule::in($statuses)],
-            'canceled_reason' => 'nullable|string',
+            'cancelled_reason' => 'nullable|string',
         ], [
             'status.required' => 'Trạng thái không được để trống.',
             'status.string' => 'Trạng thái không hợp lệ.',
             'status.in' => 'Trạng thái không hợp lệ.',
-            'canceled_reason.string' => 'Lý do hủy không đúng định dạng.',
+            'cancelled_reason.string' => 'Lý do hủy không đúng định dạng.',
         ]);
 
         $newStatus = OrderStatus::where('slug', $request->status)->first();
@@ -112,14 +112,13 @@ class OrderController extends Controller
         }
 
         $order->order_status_id = $newStatus->id;
-        if ($newStatus->slug == 'canceled') {
-            $order->canceled_reason = $request->canceled_reason;
+        if ($newStatus->slug == 'cancelled') { 
+            $order->cancelled_reason = $request->cancelled_reason;
             $order->canceled_at = now();
         }
 
         if ($newStatus->slug == 'completed') {
             $order->completed_at = now();
-
             // Tạo hóa đơn
             $dataInvoice = [
                 'order_id' => $order->id,
@@ -130,12 +129,58 @@ class OrderController extends Controller
             Invoice::create($dataInvoice);
         }
 
-        // Gửi email cảm ơn
-        if ($newStatus->slug == 'completed' && $currentStatus->slug != 'completed') {
-            Mail::to($order->email)->send(new ThankYouOrder($order));
+        $order->save();
+
+        // Gửi email câp nhật trạng thái 
+        $userSetting = $order->user->setting;
+        if ($userSetting->email_order) {
+            switch ($newStatus->slug) {
+                case 'waiting':
+                    if ($currentStatus->slug != 'waiting') {
+                        $subject = 'Thông báo xác nhận đơn hàng #' . $order->code;
+                        Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.waiting'));
+                    }
+                    break;
+                case 'confirmed':
+                    if ($currentStatus->slug != 'confirmed') {
+                        // Lấy thông tin địa chỉ
+                        $order->province =  Province::find($order->address->province);
+                        $order->district = District::find($order->address->district);
+                        $order->ward = Ward::find($order->address->ward);
+                        $subject = 'Đơn hàng #' . $order->code . ' đã được xác nhận';
+                        Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.confirmed'));
+                    }
+                    break;
+                case 'shipping':
+                    if ($currentStatus->slug != 'shipping') {
+                        $subject = 'Đơn hàng #' . $order->code . ' đã được giao cho đơn vị vận chuyển';
+                        Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.shipping'));
+                    }
+                    break;
+                case 'delivered':
+                    if ($currentStatus->slug != 'delivered') {
+                        $subject = 'Đơn hàng #' . $order->code . ' đã được giao thành công';
+                        Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.delivered'));
+                    }
+                    break;
+                case 'completed':
+                    if ($currentStatus->slug != 'completed') {
+                        $subject = 'Cảm ơn bạn đã mua hàng tại cửa hàng chúng tôi';
+                        Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.completed'));
+                    }
+                    break;
+                case 'cancelled':
+                    if ($currentStatus->slug != 'cancelled') {
+                        $subject = 'Đơn hàng #' . $order->code . ' đã bị hủy';
+                        Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.cancelled'));
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
-        $order->save();
+
 
         return redirect()->back()->with('success', 'Cập nhật đơn hàng thành công.');
     }

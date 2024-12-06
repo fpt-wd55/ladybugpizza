@@ -14,8 +14,10 @@ class UserSetting extends Model
         'email_order',
         'email_promotions',
         'email_security',
-        'push_order',
-        'push_promotions',
-        'push_security',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -136,10 +136,7 @@ class ProfileController extends Controller
 			$userSetting->user_id = auth()->id();
 			$userSetting->email_order = true;
 			$userSetting->email_promotions = true;
-			$userSetting->email_security = true;
-			$userSetting->push_order = true;
-			$userSetting->push_promotions = true;
-			$userSetting->push_security = true;
+			$userSetting->email_security = true; 
 
 			// Lưu vào cơ sở dữ liệu
 			$userSetting->save();
@@ -154,10 +151,7 @@ class ProfileController extends Controller
 		if ($settings) {
 			$settings->email_order = $request->has('email_order') ? 1 : 0;
 			$settings->email_promotions = $request->has('email_promotions') ? 1 : 0;
-			$settings->email_security = $request->has('email_security') ? 1 : 0;
-			$settings->push_order = $request->has('push_order') ? 1 : 0;
-			$settings->push_promotions = $request->has('push_promotions') ? 1 : 0;
-			$settings->push_security = $request->has('push_security') ? 1 : 0;
+			$settings->email_security = $request->has('email_security') ? 1 : 0; 
 			$settings->save();
 
 			return redirect()->back()->with('success', 'Cài đặt đã được cập nhật!');
@@ -244,8 +238,7 @@ class ProfileController extends Controller
 		}
 
 		return back()->with('success', 'Bạn đã đổi mã giảm giá thành công');
-	}
-
+	} 
 
 	public function addLocation()
 	{
@@ -306,6 +299,7 @@ class ProfileController extends Controller
 			return redirect()->back()->with('error', 'Xóa địa chỉ thất bại');
 		}
 	}
+
 	public function setDefaultAddress(Address $address)
 	{
 		Address::where('user_id', $address->user_id)->update(['is_default' => 0]);

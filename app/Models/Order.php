@@ -22,7 +22,7 @@ class Order extends Model
         'note',
         'payment_method_id',
         'canceled_at',
-        'canceled_reason',
+        'cancelled_reason',
         'fullname',
         'phone',
         'email',

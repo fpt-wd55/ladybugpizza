@@ -14,17 +14,14 @@ class UserSettingSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::where('role_id', 2)->get();
+        $users = User::all();
 
         foreach ($users as $user) {
             UserSetting::create([
                 'user_id' => $user->id,
                 'email_order' => rand(0, 1),
                 'email_promotions' => rand(0, 1),
-                'email_security' => rand(0, 1),
-                'push_order' => rand(0, 1),
-                'push_promotions' => rand(0, 1),
-                'push_security' => rand(0, 1),
+                'email_security' => rand(0, 1), 
             ]);
         }
     }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Thông báo xác nhận đơn hàng</title>
+    <title>Đơn hàng đã được giao cho đơn vị vận chuyển</title>
     <link href="{{ asset('favicon.svg') }}" rel="shortcut icon" type="image/x-icon">
 </head>
 
@@ -33,15 +33,18 @@
                     <!-- Body -->
                     <tr>
                         <td style="padding: 30px; text-align: center; border-bottom: 1px solid #e5e5e5;">
-                            <h2 style="margin: 0; font-size: 18px; font-weight: bold; color: #0E9F6E;">Đặt hàng thành
-                                công
-                            </h2>
-                            <p style="margin: 15px 0 0; font-size: 16px; color: #666;">Xin chào
-                                {{ $dataOrder['order']->fullname }}</p>
+                            <h2 style="margin: 0; font-size: 18px; font-weight: bold; color: #0E9F6E;">Đơn hàng của bạn
+                                đang được giao! 🚚</h2>
+                            <p style="margin: 15px 0 0; font-size: 16px; color: #666; line-height: 1.5;">Xin chào
+                                {{ $order->fullname }},</p>
                             <p style="margin: 10px 0 0; font-size: 16px; color: #666; line-height: 1.5;">
-                                Cảm ơn bạn đã đặt hàng tại Ladybug Pizza. Đơn hàng của bạn đã được xác nhận và sẽ được
-                                giao sớm,
-                                chúng tôi sẽ cho bạn biết khi nó bắt đầu di chuyển.
+                                Chúng tôi vui mừng thông báo rằng đơn hàng của bạn đang trên đường đến với bạn. 🍕💨
+                            </p>
+                            <p style="margin: 10px 0 0; font-size: 16px; color: #666; line-height: 1.5;">
+                                Hãy chuẩn bị để thưởng thức những chiếc pizza ngon lành từ Ladybug Pizza!
+                            </p>
+                            <p style="margin: 10px 0 0; font-size: 16px; color: #666; line-height: 1.5;">
+                                Cảm ơn bạn đã tin tưởng và lựa chọn chúng tôi!
                             </p>
                             <a href="{{ route('client.product.menu') }}" target="_blank"
                                 style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #D30A0A; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 16px;">Khám
@@ -49,36 +52,6 @@
                         </td>
                     </tr>
 
-                    <tr>
-                        <td style="padding: 30px; border-bottom: 1px solid #e5e5e5;">
-                            <h2
-                                style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold; color: #595959; text-transform: uppercase;">
-                                Thông tin khách hàng
-                            </h2>
-                            <table role="presentation" style="width: 100%; border-collapse: collapse;">
-                                <tr>
-                                    <!-- Cột 1 -->
-                                    <td style="width: 50%; vertical-align: top; padding-right: 10px;">
-                                        <h2 style="font-size: 16px; color: #7e7e7e;">Địa chỉ giao hàng</h2>
-                                        <p style="font-size: 16px; color: #666; margin: 0;">
-                                            {{ $dataOrder['order']->fullname }}<br>
-                                            {{ $dataOrder['order']->address->detail_address }}<br>
-                                            {{ $dataOrder['order']->ward->name_with_type }},
-                                            {{ $dataOrder['order']->district->name_with_type }},
-                                            {{ $dataOrder['order']->province->name_with_type }}<br>
-                                        </p>
-                                    </td>
-                                    <!-- Cột 2 -->
-                                    <td style="width: 50%; vertical-align: top; padding-left: 10px;">
-                                        <h2 style="font-size: 16px; color: #7e7e7e;">Phương thức thanh toán</h2>
-                                        <p style="font-size: 16px; color: #666; margin: 0;">
-                                            {{ $dataOrder['order']->paymentMethod->name }}
-                                        </p>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
 
                     <!-- Footer -->
                     <tr>
