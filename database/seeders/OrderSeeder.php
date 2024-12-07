@@ -34,16 +34,16 @@ class OrderSeeder extends Seeder
         $attributes = AttributeValue::all();
         $toppings = Topping::all();
 
-        for ($i = 1; $i < 500; $i++) {
-            $user = $users->random()->id;
-            $address = Address::where('user_id', $user)->first();
+        for ($i = 1; $i < 200; $i++) {
+            $user = $users->random();
+            $address = Address::where('user_id', $user->id)->first();
             $order_status_id = $orderStatuses->random()->id;
             Order::insert([
                 'code' => 'LDB' . $faker->unique()->numberBetween(1000, 9999),
-                'user_id' => $user,
-                'fullname' => $faker->name,
-                'phone' => $faker->phoneNumber,
-                'email' => $faker->email,
+                'user_id' => $user->id,
+                'fullname' => $user->fullname,
+                'phone' => $user->phone,
+                'email' => $user->email,
                 'promotion_id' => null,
                 'amount' => rand(100, 700) * 1000,
                 'address_id' => $address->id,

@@ -127,7 +127,7 @@ class UserSeeder extends Seeder
                 'username' => $faker->unique()->userName,
                 'role_id' => 2,
                 'email' => $faker->email,
-                'fullname' => $faker->name,
+                'fullname' => $faker->safeEmail,
                 'phone' => $faker->phoneNumber,
                 'password' => Hash::make('password'),
                 'google_id' => null,
