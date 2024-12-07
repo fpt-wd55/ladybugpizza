@@ -112,7 +112,7 @@ class OrderController extends Controller
         }
 
         $order->order_status_id = $newStatus->id;
-        if ($newStatus->slug == 'cancelled') { 
+        if ($newStatus->slug == 'cancelled') {
             $order->cancelled_reason = $request->cancelled_reason;
             $order->canceled_at = now();
         }
@@ -208,14 +208,14 @@ class OrderController extends Controller
 
         if (isset($request->filter_amount_max)) {
             $query->where('amount', '<=', $request->filter_amount_max);
-        }
+        } 
 
         if (isset($request->filter_date_min)) {
-            $query->where('created_at', '>=', $request->filter_date_min);
+            $query->whereDate('created_at', '>=', $request->filter_date_min);
         }
 
         if (isset($request->filter_date_max)) {
-            $query->where('created_at', '<=', $request->filter_date_max);
+            $query->whereDate('created_at', '<=', $request->filter_date_max);
         }
 
         $orders = $query->paginate(10);
