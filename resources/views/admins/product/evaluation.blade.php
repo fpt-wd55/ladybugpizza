@@ -14,7 +14,7 @@
                                     <div class="mb-2 flex justify-center md:gap-1 lg:gap-4">
                                         <div class="flex items-center p-2 text-gray-900 whitespace-nowrap">
                                             <img loading="lazy"
-                                                src="{{ filter_var($item->user->avatar, FILTER_VALIDATE_URL) ? $item->user->avatar : ($item->user->avatar ? asset('storage/uploads/avatars/' . $item->user->avatar) : asset('storage/uploads/avatars/user-default.png')) }}"
+                                                src="{{ filter_var($item->user->avatar, FILTER_VALIDATE_URL) ? $item->user->avatar : ($item->user->avatar ? asset('storage/uploads/avatars/' . $item->user->avatar) : asset('storage/uploads/avatars/user-default-1.png')) }}"
                                                 alt="Avatar" class="w-8 h-8 mr-3 img-circle object-cover">
                                             <div class="grid grid-flow-row">
                                                 <span class="text-sm">{{ $item->user->fullname }} |

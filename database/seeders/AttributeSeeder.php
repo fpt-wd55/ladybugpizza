@@ -14,8 +14,7 @@ class AttributeSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
-        $now = Carbon::now();
+    { 
         $attibutes = [
             'Loại đế' => [
                 'Đế mỏng',
@@ -43,12 +42,8 @@ class AttributeSeeder extends Seeder
             $attribute = Attribute::create([
                 'name' => $name,
                 'slug' => Str::slug($name),
-                'status' => 1,
-                // Sốt: 6 (Gà)
-                'category_id' => $name == 'Sốt' ? 6 : 1,
-                // 'category_id' => 1,
-                'created_at' => $now,
-                'updated_at' => $now,
+                'status' => 1, 
+                'category_id' => $name == 'Sốt' ? 6 : 1,  
             ]);
 
 
@@ -60,9 +55,7 @@ class AttributeSeeder extends Seeder
                     'value' => $value,
                     'quantity' => rand(0, 100),
                     'price' => ($price_type == 1) ? rand(5, 10) * 1000 : rand(5, 10),
-                    'price_type' => $price_type,
-                    'created_at' => $now,
-                    'updated_at' => $now,
+                    'price_type' => $price_type, 
                 ]);
             }
         }

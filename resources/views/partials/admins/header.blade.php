@@ -81,7 +81,7 @@
                         <img src="{{ asset('storage/uploads/avatars/' . Auth::user()->avatar) }}" alt="User Avatar"
                             class="w-10 h-10 object-cover rounded-full">
                     @else
-                        <img src="{{ asset('storage/uploads/avatars/user-default.png') }}"
+                        <img src="{{ asset('storage/uploads/avatars/user-default-1.png') }}"
                             class="w-10 h-10 object-cover rounded-full">
                     @endif
                 </button>
