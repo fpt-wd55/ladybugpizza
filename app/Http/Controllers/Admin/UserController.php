@@ -223,11 +223,11 @@ class UserController extends Controller
         }
 
         if (isset($request->filter_birthday_start)) {
-            $query->where('date_of_birth', '>=', $request->filter_birthday_start);
+            $query->whereDate('date_of_birth', '>=', $request->filter_birthday_start);
         }
 
         if (isset($request->filter_birthday_end)) {
-            $query->where('date_of_birth', '<=', $request->filter_birthday_end);
+            $query->whereDate('date_of_birth', '<=', $request->filter_birthday_end);
         }
 
         $users = $query->paginate(10);
