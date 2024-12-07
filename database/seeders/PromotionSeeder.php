@@ -61,9 +61,7 @@ class PromotionSeeder extends Seeder
                 'max_discount' => rand(100, 500) * 1000,
                 'is_global' => $is_global,
                 'rank_id' => $is_global == 1 ? null : $ranks->random()->id,
-                'status' => 1,
-                'created_at' => $now,
-                'updated_at' => $now,
+                'status' => 1, 
             ]);
         }
     }

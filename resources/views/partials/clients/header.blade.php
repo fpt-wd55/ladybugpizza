@@ -80,7 +80,7 @@
                                 class="img-circle h-10 w-10 object-cover" data-dropdown-toggle="userDropdown"
                                 loading="lazy">
                         @else
-                            <img src="{{ asset('storage/uploads/avatars/user-default.png') }}"
+                            <img src="{{ asset('storage/uploads/avatars/user-default-1.png') }}"
                                 class="img-circle h-8 w-8 object-cover" data-dropdown-toggle="userDropdown"
                                 loading="lazy">
                         @endif
