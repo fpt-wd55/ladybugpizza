@@ -8,8 +8,8 @@
         </div>
         <form action="{{ route('client.profile.post-location') }}" method="POST">
             @csrf
-            <div class="grid gap-4 mb-4 sm:grid-cols-2">
-                <div class="col-span-2">
+            <div class="grid gap-4 mb-4 grid-cols-3">
+                <div class="col-span-3">
                     <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Loại
                         địa chỉ</label>
                     <input type="text" name="title" id="title" value="{{ old('title') }}" class="input"
@@ -19,44 +19,35 @@
                     @enderror
                 </div>
                 <div>
-                    <label for="province" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tỉnh/Thành
-                        phố:*</label>
-                    {{-- <select name="province" id="province" class="input">
-                        <option value="">Chọn tỉnh/thành phố</option>
-                    </select> --}}
-                    <input type="text" name="province" id="province" value="{{ old('province') }}" placeholder="VD: Hà Nội" class="mt-2 mb-2 input">
+                    <label for="province" class="min-h-5">Tỉnh/Thành phố:*</label>
+                    <select name="province" id="province" class="mt-2 mb-2 input" disabled>
+                    </select>
                     @error('province')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
                 <div>
-                    <label for="district"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quận/Huyện:*</label>
-                    {{-- <select name="district" id="district" class="input">
-                        <option value="">Chọn quận/huyện</option>
-                    </select> --}}
-                    <input type="text" name="district" id="district" value="{{ old('district') }}" placeholder="VD: Quận Nam Từ Liêm" class="mt-2 mb-2 input">
+                    <label for="district">Quận/Huyện:*</label>
+                    <select name="district" id="district" class="mt-2 mb-2 input">
+                    </select>
                     @error('district')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
                 <div>
-                    <label for="ward"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Xã/Phường:*</label>
-                    {{-- <select name="ward" id="ward" class="input">
-                        <option value="">Chọn xã/phường</option>
-                    </select> --}}
-                    <input type="text" name="ward" id="ward" value="{{ old('ward') }}" placeholder="VD: Phường Phú Đô" class="mt-2 mb-2 input">
+                    <label for="ward">Phường/Xã:*</label>
+                    <select name="ward" id="ward" class="mt-2 mb-2 input">
+                    </select>
                     @error('ward')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
-                <div class="col-span-2">
+                <div class="col-span-3">
                     <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Địa
                         chỉ
                         chi tiết</label>
                     <textarea type="text" name="address" id="address" value="{{ old('address') }}" class="text-area"
-                        placeholder="VD: Số 4 ngõ 2 ngách 14 đường Cầu Diễn"></textarea>
+                        placeholder="VD: Số 30 Trịnh Văn Bô"></textarea>
                     @error('address')
                         <p class="text-red-500 text-sm">{{ $message }}</p>
                     @enderror
@@ -66,10 +57,64 @@
                 <button type="submit" class="button-red">
                     Thêm mới
                 </button>
-                <a href="{{ route('client.profile.address') }}" class="button-gray">
+                <a href="{{ route('client.profile.address') }}" class="button-dark">
                     Quay lại
                 </a>
             </div>
         </form>
     </div>
+@endsection
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Load provinces on page load
+            // $.getJSON('/api/provinces', function(data) {
+            //     const provinceSelect = $('#province');
+            //     data.forEach(province => {
+            //         provinceSelect.append(new Option(province.name, province.code));
+            //     });
+            // });
+
+            // Cố định Hà Nội
+            const provinceSelect = $('#province');
+            provinceSelect.append(new Option('Hà Nội', '01')).val('01').prop('disabled', false);
+
+            // Load districts when a province is selected
+            // $('#province').change(function() {
+            const provinceCode = '01'; // Mã cố định của Hà Nội
+            const districtSelect = $('#district');
+            districtSelect.empty().append(new Option('Chọn Quận/Huyện', '')).prop('disabled', true);
+
+            if (provinceCode) {
+                $.getJSON(`/api/districts/${provinceCode}`, function(data) {
+                    districtSelect.prop('disabled', false);
+                    data.forEach(district => {
+                        districtSelect.append(new Option(district.name, district.code));
+                    });
+                });
+            }
+
+            // Reset wards
+            $('#ward').empty().append(new Option('Chọn Phường/Xã', '')).prop('disabled', true);
+            // });
+
+            // Load wards when a district is selected
+            $('#district').change(function() {
+                const districtCode = $(this).val();
+                const wardSelect = $('#ward');
+                wardSelect.empty().append(new Option('Chọn Phường/Xã', '')).prop('disabled', true);
+
+                if (districtCode) {
+                    $.getJSON(`/api/wards/${districtCode}`, function(data) {
+                        wardSelect.prop('disabled', false);
+                        data.forEach(ward => {
+                            wardSelect.append(new Option(ward.name, ward.code));
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+
 @endsection

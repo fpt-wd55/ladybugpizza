@@ -8,18 +8,28 @@
             <p class="title">LỊCH SỬ ĐƠN HÀNG</p>
             {{-- tabs --}}
             <div class="no-scrollbar mb-4 overflow-x-auto border-b border-gray-200 text-left text-sm">
-                <ul class="flex">
-                    <li class="me-6 min-w-fit">
-                        <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->routeIs('client.order.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
-                            href="{{ route('client.order.index') }}">Tất cả <span
-                                class="text-[#D30A0A]">({{ $orderStatuses->sum('orders_count') }})</span></a>
+                <ul class="flex gap-2">
+                    <li class="mt-3 me-6 min-w-fit relative mx-4">
+                        <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->routeIs('client.order.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A]' : 'border-transparent' }}"
+                            href="{{ route('client.order.index') }}">
+                            Tất cả
+                        </a>
+                        @if ($orderStatuses->sum('orders_count') > 0)
+                            <span class="badge-noti -top-2">
+                                {{ $orderStatuses->sum('orders_count') }}
+                            </span>
+                        @endif
                     </li>
                     @foreach ($orderStatuses as $status)
-                        <li class="me-6 min-w-fit">
+                        <li class="mt-3 me-6 relative min-w-fit">
                             <a class="inline-block rounded-t-lg border-b-2 pb-2 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
                                 href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }}
-                                ({{ $status->orders_count }})
                             </a>
+                            @if ($status->orders_count > 0)
+                                <span class="badge-noti -top-2">
+                                    {{ $status->orders_count }}
+                                </span>
+                            @endif
                         </li>
                     @endforeach
                 </ul>
@@ -29,29 +39,30 @@
                 <div class="product-card mb-4 p-4 hover:cursor-pointer ">
                     <div class="flex flex-wrap items-center gap-y-4">
                         <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                            <dt class="text-base font-medium text-gray-500">Mã đơn hàng:
+                            <dt class="text-sm text-gray-500">Mã đơn hàng:
                             </dt>
                             <dd class="mt-1.5 text-base font-semibold text-[#D30A0A]">
-                                #{{ $order->id }}
+                                #{{ $order->code }}
                             </dd>
                         </dl>
 
                         <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                            <dt class="text-base font-medium text-gray-500">Ngày đặt hàng:
+                            <dt class="text-sm text-gray-500">Ngày đặt hàng:
                             </dt>
                             <dd class="mt-1.5 text-base font-semibold text-gray-900">
                                 {{ $order->created_at }}</dd>
                         </dl>
 
                         <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                            <dt class="text-base font-medium text-gray-500">Tổng đơn hàng:
+                            <dt class="text-sm text-gray-500">Tổng đơn hàng:
                             </dt>
                             <dd class="mt-1.5 text-base font-semibold text-gray-900">
-                                {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ</dd>
+                                {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ
+                            </dd>
                         </dl>
 
                         <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
-                            <dt class="text-base font-medium text-gray-500">Trạng thái:
+                            <dt class="text-sm text-gray-500">Trạng thái:
                             </dt>
                             <dd>
                                 @php
@@ -73,21 +84,61 @@
                         </dl>
 
                         <div class="w-full grid sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end gap-4">
-                            @if ($order->orderStatus->name == 'Chờ xác nhận')
+                            @if ($order->orderStatus->slug == 'waiting')
                                 <button type="button" data-modal-target="cancelOrder-modal-{{ $order->id }}"
-                                    data-modal-toggle="cancelOrder-modal-{{ $order->id }}" class="button-red">Huỷ
+                                    data-modal-toggle="cancelOrder-modal-{{ $order->id }}" class="button-red w-full">Huỷ
                                     đơn hàng</button>
                             @endif
 
-                            @if ($order->orderStatus->name === 'Hoàn thành' && $order->evaluations->isEmpty())
+                            @if ($order->orderStatus->slug == 'delivered')
+                                <button type="button" data-modal-target="confirmReceived-modal-{{ $order->id }}"
+                                    data-modal-toggle="confirmReceived-modal-{{ $order->id }}"
+                                    class="button-red w-full">
+                                    Đã nhận hàng
+                                </button>
+                            @endif
+
+                            @if ($order->orderStatus->slug === 'completed' && $order->evaluations->isEmpty())
                                 <button type="button" data-modal-target="reviewOrder-modal-{{ $order->id }}"
-                                    data-modal-toggle="reviewOrder-modal-{{ $order->id }}" class="button-red">Đánh
+                                    data-modal-toggle="reviewOrder-modal-{{ $order->id }}"
+                                    class="button-red w-full">Đánh
                                     giá</button>
                             @endif
 
-                            <button type="button" onclick="toggleAccordion({{ $order->id }})"
-                                class="w-full inline-flex justify-center rounded-lg  border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-0 lg:w-auto transition">Xem
-                                chi tiết</button>
+                            <button type="button" onclick="toggleAccordion({{ $order->id }})" class="button-light">
+                                @svg('tabler-info-circle', 'w-4 h-4')
+                            </button>
+                        </div>
+                    </div>
+
+                    {{-- Đã nhận được hàng --}}
+                    <div id="confirmReceived-modal-{{ $order->id }}" tabindex="-1"
+                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                        <div class="relative p-4 w-full max-w-md max-h-full">
+                            <div class="relative bg-white rounded-lg shadow">
+                                <button type="button"
+                                    class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                    data-modal-hide="confirmReceived-modal-{{ $order->id }}">
+                                    @svg('tabler-x', 'w-4 h-4')
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                                <div class="p-10 text-center">
+                                    <div class="flex justify-center">
+                                        @svg('tabler-checks', 'w-12 h-12 text-green-600 text-center mb-2')
+                                    </div>
+                                    <h3 class="mb-7 font-normal">
+                                        Bạn có chắc chắn đã nhận được hàng?
+                                    </h3>
+
+                                    <form action="{{ route('client.order.received', $order) }}" method="POST" class="flex justify-center items-center">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="button-red">
+                                            Xác nhận đã nhận hàng
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -106,54 +157,56 @@
                                 {{-- lý do hủy --}}
                                 <div class="p-5 bg-white rounded-lg shadow-md">
                                     <h2 class="text-xl font-semibold mb-4">Chọn Lý Do Hủy Đơn Hàng</h2>
-                                    <p class="text-sm text-gray-600 mb-4">
+                                    <p class="text-sm text-gray-600 mb-2">
                                         Vui lòng chọn lý do hủy. Với lý do này, bạn sẽ hủy tất cả sản phẩm trong đơn
                                         hàng và
                                         không thể thay đổi sau đó.
                                     </p>
+
                                     <form action="{{ route('client.order.cancel', $order) }}" method="POST">
                                         @csrf
-                                        @method('PATCH')
+                                        @method('PUT')
+
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="1"
+                                            <input type="radio" name="cancelled_reason" value="1"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Muốn thay đổi địa chỉ giao hàng</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="2"
+                                            <input type="radio" name="cancelled_reason" value="2"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Muốn nhập/thay đổi mã Voucher</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="3"
+                                            <input type="radio" name="cancelled_reason" value="3"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Muốn thay đổi sản phẩm trong đơn hàng (size,
                                                 topping,...)</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="4"
+                                            <input type="radio" name="cancelled_reason" value="4"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Thủ tục thanh toán quá rắc rối</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="5"
+                                            <input type="radio" name="cancelled_reason" value="5"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Tìm thấy giá rẻ hơn ở chỗ khác</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="6"
+                                            <input type="radio" name="cancelled_reason" value="6"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Đổi ý, không muốn mua nữa</label>
                                         </div>
                                         <div class="mb-2">
                                             <input type="radio" id="otherReason-{{ $order->id }}"
-                                                name="canceled_reason" value="7"
+                                                name="cancelled_reason" value="7"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, true)">
                                             <label class="text-sm" for="otherReason-{{ $order->id }}">Lý do khác
@@ -268,7 +321,8 @@
                                                             <textarea rows="6" name="comments[{{ $group['product']->id }}]" class="text-area text-sm resize-none"
                                                                 placeholder="Viết đánh giá..."></textarea>
                                                             @error('comments.' . $group['product']->id)
-                                                                <p class="text-sm text-[#D30A0A] pt-2">{{ $message }}</p>
+                                                                <p class="text-sm text-[#D30A0A] pt-2">{{ $message }}
+                                                                </p>
                                                             @enderror
                                                         </div>
                                                     </div>
@@ -288,7 +342,7 @@
                     {{-- Chi tiết đơn hàng --}}
                     <div class="max-h-0 overflow-hidden transition" id="content-{{ $order->id }}">
                         <hr class="my-4">
-                        @if ($order->orderStatus->name === 'Hoàn thành' && $order->invoice)
+                        @if ($order->orderStatus->name === 'completed' && $order->invoice)
                             <div class="mb-4 flex">
                                 <a href="{{ route('invoices.show', $order->invoice->invoice_number) }}"
                                     class="button-red">Xem hóa
@@ -301,11 +355,11 @@
                                 <div>
                                     <p>{{ $order->user->fullname }}</p>
                                     <p>{{ $order->user->phone }}</p>
-                                    <p>{{ $order->address->ward }}, {{ $order->address->district }},
-                                        {{ $order->address->province }}</p>
                                     <p>{{ $order->address->detail_address }}</p>
+                                    <p>{{ $order->ward->name_with_type }}, {{ $order->district->name_with_type }},
+                                        {{ $order->province->name_with_type }}</p>
                                     @if ($order->notes)
-                                        <p>Ghi chú : {{ $order->notes }}</p>
+                                        <p><strong>Ghi chú :</strong> {{ $order->notes }}</p>
                                     @endif
                                 </div>
 
@@ -370,39 +424,37 @@
                                 @endforeach
                             </div>
                         </div>
-
                         <hr class="my-4">
                         <div class="pb-5 text-sm">
-                            <div class="flex items-start justify-between">
+                            <div class="flex items-start justify-between gap-3">
                                 <div class="mb-4">
-                                    <p>Ghi chú đơn hàng</p>
-                                    <p>{{ $order->notes }}</p>
                                 </div>
                                 <div class="text-right">
                                     <div>
                                         <div class="mb-4 flex items-center justify-between gap-32 text-sm">
-                                            <p>Tạm tính</p>
-                                            <p class="font-medium">{{ number_format($order->amount) }}₫</p>
+                                            <p class="text-start">Tạm tính</p>
+                                            <p class="font-medium text-end">{{ number_format($order->amount) }}₫</p>
                                         </div>
                                         <div class="mb-4 flex items-center justify-between gap-32 text-sm">
-                                            <p>Phí vận chuyển</p>
-                                            <p class="font-medium">{{ number_format($order->shipping_fee) }}₫</p>
+                                            <p class="text-start">Phí vận chuyển</p>
+                                            <p class="font-medium text-end">{{ number_format($order->shipping_fee) }}₫</p>
                                         </div>
                                         <div class="mb-4 flex items-center justify-between gap-32 text-sm">
-                                            <p>Giảm giá</p>
-                                            <p class="font-medium">{{ number_format($order->discount_amount) }}₫</p>
+                                            <p class="text-start">Giảm giá</p>
+                                            <p class="font-medium text-end">{{ number_format($order->discount_amount) }}₫
+                                            </p>
                                         </div>
                                         <hr class="mb-2">
                                         <div class="mb-4 flex items-center justify-between gap-32">
-                                            <p class="text-sm">Tổng tiền</p>
-                                            <p class="font-medium text-[#D30A0A]">
+                                            <p class="text-sm text-start">Tổng tiền</p>
+                                            <p class="font-medium text-end text-[#D30A0A]">
                                                 {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}₫
                                             </p>
                                         </div>
                                         <hr class="mb-2">
                                         <div class="mb-4 flex items-center justify-between gap-32">
-                                            <p class="text-sm">Phương thức thanh toán</p>
-                                            <p class="font-medium">
+                                            <p class="text-sm text-start">Phương thức thanh toán</p>
+                                            <p class="font-medium text-end">
                                                 {{ $order->paymentMethod->name }}
                                             </p>
                                         </div>

@@ -75,7 +75,7 @@
                                             </div>
                                             <p
                                                 class="{{ empty($product->description) ? 'min-h-12' : '' }} mb-4 line-clamp-2">
-                                                {{ $product->description }}</p>
+                                                {!! $product->description !!}</p>
                                             <div class="bottom-4 flex items-center gap-3">
                                                 <p class="text-xs text-gray-500 line-through">
                                                     {{ number_format($product->discount_price) }}₫

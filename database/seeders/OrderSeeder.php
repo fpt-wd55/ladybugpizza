@@ -37,7 +37,9 @@ class OrderSeeder extends Seeder
         for ($i = 1; $i < 500; $i++) {
             $user = $users->random()->id;
             $address = Address::where('user_id', $user)->first();
+            $order_status_id = $orderStatuses->random()->id;
             Order::insert([
+                'code' => 'LDB' . $faker->unique()->numberBetween(1000, 9999),
                 'user_id' => $user,
                 'fullname' => $faker->name,
                 'phone' => $faker->phoneNumber,
@@ -46,13 +48,13 @@ class OrderSeeder extends Seeder
                 'amount' => rand(100, 700) * 1000,
                 'address_id' => $address->id,
                 'discount_amount' => rand(0, 10000),
-                'shipping_fee' => 25000,
-                'completed_at' => $faker->dateTimeBetween('-1 year', 'now'),
+                'shipping_fee' => 30000,
+                'completed_at' => $order_status_id == 5 ? $faker->dateTimeBetween('-1 year', 'now') : null,
                 'notes' => $faker->text,
                 'payment_method_id' => $paymentMethods->random()->id,
-                'order_status_id' => $orderStatuses->random()->id,
-                'canceled_at' => rand(0, 1) ? $faker->dateTimeBetween('-1 year', 'now') : null,
-                'canceled_reason' => rand(0, 1) ? $faker->text : null,
+                'order_status_id' => $order_status_id,
+                'canceled_at' => $order_status_id == 6 ? $faker->dateTimeBetween('-1 year', 'now') : null,
+                'cancelled_reason' => $order_status_id == 6 ? $faker->text : null,
                 'created_at' => $faker->dateTimeBetween('-1 year', 'now'),
                 'updated_at' =>  $faker->dateTimeBetween('-1 year', 'now'),
             ]);

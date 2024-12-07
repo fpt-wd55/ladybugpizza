@@ -29,10 +29,6 @@
                 </div>
                 <div class="flex items-center justify-start lg:justify-end w-full md:w-auto mt-3 lg:m-0">
                     <div class="inline-flex items-center rounded-md bg-slate-100 p-1.5">
-                        <button wire:click.prevent="updateSelectionUser('time', 'day')"
-                            class="rounded {{ $selectedTimeTopUser == 'day' ? 'bg-white' : '' }} px-3 py-1 text-xs font-medium text-black shadow-card hover:bg-white me-1">
-                            Ngày
-                        </button>
                         <button wire:click.prevent="updateSelectionUser('time', 'week')"
                             class="rounded {{ $selectedTimeTopUser == 'week' ? 'bg-white' : '' }} px-3 py-1 text-xs font-medium text-black hover:bg-white me-1">
                             Tuần

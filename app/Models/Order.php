@@ -11,6 +11,7 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
+        'code',
         'user_id',
         'promotion_id',
         'amount',
@@ -21,7 +22,7 @@ class Order extends Model
         'note',
         'payment_method_id',
         'canceled_at',
-        'canceled_reason',
+        'cancelled_reason',
         'fullname',
         'phone',
         'email',

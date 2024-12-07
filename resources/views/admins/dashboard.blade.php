@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('title', 'Dashboard')
 @section('content')
     {{ Breadcrumbs::render('admin.dashboard') }}
 
@@ -32,7 +33,6 @@
         @livewire('statistic-user-two')
     </div>
     @livewire('statistic-user-three')
-    {{-- @livewire('statistic') --}}
 @endsection
 @section('scripts')
     <script src="https://code.highcharts.com/highcharts.js"></script>

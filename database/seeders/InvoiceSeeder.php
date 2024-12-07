@@ -19,12 +19,10 @@ class InvoiceSeeder extends Seeder
         $now = Carbon::now();
 
         $orders = Order::where('order_status_id', 5)->pluck('id')->toArray();
-        foreach ($orders as $order) {
-            $transaction = Transaction::where('order_id', $order)->first();
+        foreach ($orders as $order) { 
             Invoice::insert([
                 'order_id' => $order,
-                'invoice_number' => 'INV_' . Str::random(5),
-                'transaction_id' => $transaction->id,
+                'invoice_number' => 'INV' . Str::random(5), 
                 'created_at' => $now,
                 'updated_at' => $now,
             ]); 

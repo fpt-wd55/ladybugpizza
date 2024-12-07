@@ -12,7 +12,7 @@
                     <div class="grid gap-4 mb-4 sm:grid-cols-3">
                         <div>
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên
-                                combo</label>
+                                combo <span class="text-red-500">*</span></label>
                             <input type="text" name="name" id="name" placeholder="Tên combo"
                                 value="{{ old('name', $combo->name) }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -24,7 +24,7 @@
                         </div>
                         <div>
                             <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá bán thường
-                                (₫)</label>
+                                (₫) <span class="text-red-500">*</span></label>
                             <input type="number" name="price" id="price" value="{{ old('price', $combo->price) }}"
                                 placeholder="Giá bán thường" min="0"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -36,7 +36,7 @@
                         </div>
                         <div>
                             <label for="discount_price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá khuyến
-                                mãi (₫)</label>
+                                mãi (₫) <span class="text-red-500">*</span></label>
                             <input type="number" name="discount_price" id="discount_price" placeholder="Giá khuyến mãi"
                                 value="{{ old('discount_price', $combo->discount_price) }}" min="0"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -52,9 +52,9 @@
                             <div class="flex gap-3">
                                 <a class="shrink-0" data-fslightbox="gallery"
                                     href="{{ asset('storage/uploads/combos/' . $combo->image) }}">
-                                    <img loading="lazy" class="w-20 h-20 rounded-md"
+                                    <img loading="lazy" class="w-20 h-20 rounded-md object-cover"
                                         src="{{ asset('storage/uploads/combos/' . $combo->image) }}"
-                                        onerror="this.src='{{ asset('storage/uploads/combos/product-placehoder.jpg') }}'">
+                                        onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'">
                                 </a>
                                 <div class="flex items-center justify-center w-full mb-4 ">
                                     <label for="dropzone-file"
@@ -77,7 +77,8 @@
                                 </p>
                             @enderror
                             <div>
-                                <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số lượng</label>
+                                <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số lượng <span
+                                        class="text-red-500">*</span></label>
                                 <input type="number" name="quantity" id="quantity"
                                     value="{{ old('quantity', $combo->quantity) }}" placeholder="Số lượng" min="0"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -88,7 +89,8 @@
                                 @enderror
                             </div>
                             <div class="mt-3">
-                                <label for="sku" class="block mb-2 text-sm font-medium text-gray-900 ">Mã combo</label>
+                                <label for="sku" class="block mb-2 text-sm font-medium text-gray-900 ">Mã combo <span
+                                        class="text-red-500">*</span></label>
                                 <input type="text" name="sku" id="sku" value="{{ old('sku', $combo->sku) }}"
                                     placeholder="Mã combo"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">

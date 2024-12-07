@@ -53,16 +53,15 @@
                     <p class="title">LadybugPizza</p>
                     <div>
                         <p>Tòa nhà FPT Polytechnic, 13 phố Trịnh Văn Bô</p>
-                        <p>Phương Canh, Nam Từ Liêm</p>
-                        <p>TP Hà Nội, Việt Nam</p>
-                        <p>info@ladybugpizza.com</p>
+                        <p>Phường Phương Canh, Quận Nam Từ Liêm, Thành phố Hà Nội</p>
+                        <p>ladybugpizza@gmail.com</p>
                     </div>
                 </div>
                 <div class="text-right">
                     <p class="title">{{ $user->fullname }}</p>
                     <div>
                         <p>{{ $order->address->detail_address }}</p>
-                        <p>{{ $order->address->ward . ', ' . $order->address->district . ', ' . $order->address->province }}
+                        <p>{{ $order->ward->name_with_type . ', ' . $order->district->name_with_type . ', ' . $order->province->name_with_type }}
                         </p>
                         <p>{{ $user->email }}</p>
                     </div>

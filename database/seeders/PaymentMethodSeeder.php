@@ -15,17 +15,17 @@ class PaymentMethodSeeder extends Seeder
     public function run(): void
     {
         $now = Carbon::now();
-        
+
         PaymentMethod::insert([
             [
-                'name' => 'Ví Momo',
-                'description' => 'Thanh toán qua Momo',
+                'name' => 'Thanh toán online qua ví MoMo',
+                'description' => 'Thanh toán online qua ví MoMo',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
                 'name' => 'Thanh toán khi giao hàng (COD)',
-                'description' => 'Thanh toán khi nhận hàng',
+                'description' => 'Thanh toán khi giao hàng (COD)',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],

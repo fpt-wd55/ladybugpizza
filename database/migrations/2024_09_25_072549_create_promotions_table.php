@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('promotions', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->string('code')->unique();
             $table->integer('points')->default(0);
             $table->integer('discount_type')->default(1)->comment('1: percent, 2: amount');

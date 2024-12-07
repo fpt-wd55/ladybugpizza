@@ -33,16 +33,16 @@ class OrderStatusSeeder extends Seeder
                 'updated_at' => $now,
             ],
             [
-                'name' => 'Đang tìm tài xế',
-                'slug' => 'finding_driver',
+                'name' => 'Đang giao hàng',
+                'slug' => 'shipping',
                 'color' => 'gray',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
-                'name' => 'Đang giao hàng',
-                'slug' => 'shipping',
-                'color' => 'gray',
+                'name' => 'Đã giao hàng',
+                'slug' => 'delivered',
+                'color' => 'purple',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
@@ -59,7 +59,7 @@ class OrderStatusSeeder extends Seeder
                 'color' => 'red',
                 'created_at' => $now,
                 'updated_at' => $now,
-            ]
+            ],
         ];
 
         foreach ($statuses as $status) {

@@ -3,7 +3,7 @@
 
 @section('content')
     {{ Breadcrumbs::render('admin.orders.index') }}
-    <div class="mt-5 bg-white shadow sm:rounded-lg overflow-hidden">
+    <div class="mt-5 bg-white shadow sm:rounded-lg">
         <div
             class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
             <div class="flex items-center flex-1 space-x-4">
@@ -117,22 +117,37 @@
                 </form>
             </div>
         </div>
-        <div class="p-4 border-b bg-gray-50">
+        <div class="no-scrollbar mb-4 overflow-x-auto  border-gray-200 text-left">
             <!-- Các tab điều hướng -->
             <ul class="flex">
-                <li class="me-6 min-w-fit">
+                <li class="me-6 min-w-fit relative mx-4">
                     <a aria-current="page"
-                        class="inline-block rounded-t-lg pb-1 border-b-2 {{ request()->routeIs('admin.orders.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
-                        href="{{ route('admin.orders.index') }}">Tất cả</a>
+                        class="inline-block rounded-t-lg pb-1 border-b-2 {{ request()->routeIs('admin.orders.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A]' : 'border-transparent' }}"
+                        href="{{ route('admin.orders.index') }}">
+                        Tất cả
+                        @if (isset($totalOrders) && $totalOrders > 0)
+                            <span class="text-white bg-[#D30A0A] text-xs font-medium ms-1 px-1 rounded-full">
+                                {{ $totalOrders }}
+                            </span>
+                        @endif
+                    </a>
                 </li>
                 @foreach ($orderStatuses as $status)
-                    <li class="me-6 min-w-fit">
+                    <li class="me-6 min-w-fit relative mx-4">
                         <a aria-current="page"
-                            class="inline-block rounded-t-lg border-b-2 pb-1 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }}"
-                            href="{{ route('admin.orders.index', ['tab' => $status->slug]) }}">{{ $status->name }}</a>
+                            class="inline-block rounded-t-lg border-b-2 pb-1 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A]' : 'border-transparent' }}"
+                            href="{{ route('admin.orders.index', ['tab' => $status->slug]) }}">
+                            {{ $status->name }}
+                            @if ($status->orders_count > 0)
+                                <span class="text-white bg-[#D30A0A] text-xs font-medium ms-1 px-1 rounded-full">
+                                    {{ $status->orders_count }}
+                                </span>
+                            @endif
+                        </a>
                     </li>
                 @endforeach
             </ul>
+
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-500">
@@ -141,7 +156,7 @@
                         <th class="px-4 py-3">Tên người dùng</th>
                         <th class="px-4 py-3">Địa chỉ</th>
                         <th class="px-4 py-3">Tổng số tiền</th>
-                        <th class="px-4 py-3">Trạng thái</th>
+                        <th class="md:px-4 py-3">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only uppercase">Hành động </span>
                         </th>
@@ -150,15 +165,15 @@
                 <tbody>
                     @forelse ($orders as $order)
                         <tr class="border-b hover:bg-gray-100">
-                            <td class="px-4 py-2">{{ $order->user->fullname }}</td>
-                            <td class="px-4 py-2">
+                            <td class="md:px-4 md:py-2">{{ $order->fullname }}</td>
+                            <td class="md:px-4 md:py-2">
                                 <p>{{ $order->address->detail_address }}</p>
-                                <p>{{ $order->address->ward }}, {{ $order->address->district }},
-                                    {{ $order->address->province }}</p>
+                                <p>{{ $order->ward->name_with_type }}, {{ $order->district->name_with_type }},
+                                    {{ $order->province->name_with_type }}</p>
                             </td>
-                            <td class="px-4 py-2">
+                            <td class="md:px-4 md:py-2">
                                 {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ</td>
-                            <td class="px-4 py-2">
+                            <td class="md:px-4 md:py-2">
                                 @php
                                     $colorClasses = [
                                         'yellow' => 'bg-yellow-500',
@@ -206,7 +221,7 @@
                                     class="relative p-5 md:p-8 bg-white rounded-lg shadow h-[480px] overflow-y-auto no-scrollbar">
                                     <div class="space-y-4">
                                         <div class="flex justify-between items-center">
-                                            <h1 class="text-xl font-semibold">Đơn hàng #{{ $order->id }}</h1>
+                                            <h1 class="text-xl font-semibold">Đơn hàng #{{ $order->code }}</h1>
                                             <button type="button"
                                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
                                                 data-modal-hide="order-modal-{{ $order->id }}">
@@ -215,7 +230,7 @@
                                             </button>
                                         </div>
                                         <div class="flex justify-start items-center">
-                                            @if ($order->orderStatus->name === 'Hoàn thành')
+                                            @if ($order->orderStatus->slug === 'completed')
                                                 @if ($order->invoice)
                                                     <a
                                                         href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
@@ -235,30 +250,31 @@
                                         {{-- user_id --}}
                                         <div class="pl-4 rounded-lg ">
                                             <label class="font-semibold">Thông tin thanh toán</label>
-                                            <p class="text-gray-800 mt-4">{{ $order->user->fullname }}</p>
+                                            <p class="text-gray-800 mt-4">{{ $order->fullname }}</p>
                                             <p class="text-gray-800">{{ $order->address->detail_address }}</p>
-                                            <p class="text-gray-800">{{ $order->address->ward }}</p>
-                                            <p class="text-gray-800">{{ $order->address->district }}</p>
+                                            <p class="text-gray-800">{{ $order->ward->name_with_type }},
+                                                {{ $order->district->name_with_type }},
+                                                {{ $order->province->name_with_type }}</p>
                                         </div>
                                         {{-- Email --}}
                                         <div class="pl-4 rounded-lg">
                                             <label class="font-semibold">Email</label>
-                                            <p class="text-gray-800">{{ $order->user->email }}</p>
+                                            <p class="text-gray-800">{{ $order->email }}</p>
                                         </div>
                                         {{-- SĐT --}}
                                         <div class="pl-4 rounded-lg">
                                             <label class="font-semibold">Số điện thoại</label>
-                                            <p class="text-gray-800">{{ $order->user->phone }}</p>
+                                            <p class="text-gray-800">{{ $order->phone }}</p>
                                         </div>
                                         {{-- hình thức thanh toán --}}
                                         <div class="pl-4 rounded-lg ">
                                             <label class="font-semibold">Hình thức thanh toán</label>
                                             <p class="text-gray-800">{{ $order->paymentMethod->name }}</p>
                                         </div>
-                                        @if ($order->orderStatus->name === 'Đã hủy')
+                                        @if ($order->orderStatus->slug === 'cancelled')
                                             <div class="pl-4 rounded-lg ">
                                                 <label class="font-semibold">Lí do hủy đơn</label>
-                                                <p class="text-gray-800">{{ $order->canceled_reason }}</p>
+                                                <p class="text-gray-800">{{ $order->cancelled_reason }}</p>
                                             </div>
                                         @endif
                                         <hr class="w-full">

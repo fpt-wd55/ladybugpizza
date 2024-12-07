@@ -176,8 +176,8 @@
                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
                             </div>
                         </th>
-                        <th scope="col" class="px-4 py-3">Mã combo</th>
                         <th scope="col" class="px-4 py-3">Combo</th>
+                        <th scope="col" class="px-4 py-3">Mã combo</th>
                         <th scope="col" class="px-4 py-3 text-center">Giá</th>
                         <th scope="col" class="px-4 py-3 text-center">Số lượng</th>
                         <th scope="col" class="px-4 py-3 text-center">Trạng thái</th>
@@ -196,13 +196,11 @@
                                         class="table-item-checkbox w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
                                 </div>
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
-                                {{ $combo->sku }}</td>
                             <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap shrink-0">
                                 <a class="shrink-0" data-fslightbox="gallery"
                                     href="{{ asset('storage/uploads/combos/' . $combo->image) }}">
                                     <img loading="lazy" src="{{ asset('storage/uploads/combos/' . $combo->image) }}"
-                                        onerror="this.src='{{ asset('storage/uploads/combos/product-placehoder.jpg') }}'"
+                                        onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
                                         class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
                                 </a>
                                 <div class="grid grid-flow-row">
@@ -222,6 +220,8 @@
                                     </div>
                                 </div>
                             </td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                                {{ $combo->sku }}</td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
                                 <div class="grid grid-flow-row">
                                     @if ($combo->discount_price == 0)

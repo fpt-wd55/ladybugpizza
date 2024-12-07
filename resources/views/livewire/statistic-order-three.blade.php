@@ -65,7 +65,7 @@
                     color: '#FFFFFF',
                     inside: true,
                     verticalAlign: 'top',
-                    format: '{point.y}',
+                    format: '{point.y} đơn hàng',
                 }
             }]
         });
@@ -79,4 +79,3 @@
         });
     })
 </script>
-

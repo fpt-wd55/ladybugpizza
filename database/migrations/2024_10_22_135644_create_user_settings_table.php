@@ -17,9 +17,9 @@ return new class extends Migration
             $table->boolean('email_order')->default(true);
             $table->boolean('email_promotions')->default(true);
             $table->boolean('email_security')->default(true);
-            $table->boolean('push_order')->default(true);
-            $table->boolean('push_promotions')->default(true);
-            $table->boolean('push_security')->default(true);
+            // $table->boolean('push_order')->default(true);
+            // $table->boolean('push_promotions')->default(true);
+            // $table->boolean('push_security')->default(true);
             $table->timestamps();
         });
     }

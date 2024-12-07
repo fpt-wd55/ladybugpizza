@@ -10,16 +10,6 @@
                     <div class="mb-4 font-semibold text-lg">
                         Liên hệ với chúng tôi
                     </div>
-                    @session('success')
-                        <div class="alert-success mt-2">
-                            {{ session('success') }}
-                        </div>
-                    @endsession
-                    @session('error')
-                        <div class="alert-error mt-2">
-                            {{ session('error') }}
-                        </div>
-                    @endsession
                 </div>
                 <form action="{{ route('client.post-contact') }}" method="POST">
                     @csrf
@@ -74,12 +64,12 @@
                     </div>
                 </form>
             </div>
-            
+
             <div class="hidden md:block max-h-[662px]">
                 <img loading="lazy" class="w-full h-full object-cover" src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}"
                     alt="Ảnh sản phẩm">
             </div>
-            
+
         </div>
     </div>
 @endsection

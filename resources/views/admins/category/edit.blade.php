@@ -9,7 +9,8 @@
                 @method('PUT')
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
                     <div>
-                        <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Hình ảnh</label>
+                        <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Hình ảnh <span
+                                class="text-red-500">*</span></label>
                         <div class="flex items-center text-gray-900 whitespace-nowrap ">
                             <a class="shrink-0" data-fslightbox="gallery"
                                 href="{{ asset('storage/uploads/categories/' . $category->image) }}">
@@ -26,7 +27,8 @@
                         @enderror
                     </div>
                     <div>
-                        <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Tên danh mục</label>
+                        <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Tên danh mục <span
+                                class="text-red-500">*</span></label>
                         <input type="text" name="name" id="name" value="{{ $category->name }}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                         @error('name')

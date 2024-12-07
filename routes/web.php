@@ -12,7 +12,6 @@ use App\Http\Controllers\Client\MembershipController;
 use App\Http\Controllers\Admin\MembershipController as AdminMembershipController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PromotionController;
-use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
@@ -28,9 +27,10 @@ use App\Http\Controllers\Client\PageController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
-use App\Http\Controllers\VNPayController;
 use Illuminate\Support\Facades\Route;
-
+use Vanthao03596\HCVN\Models\Province;
+use Vanthao03596\HCVN\Models\District;
+use Vanthao03596\HCVN\Models\Ward;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,17 +49,21 @@ Route::prefix('/')->group(function () {
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('client.product.show');
 
     Route::middleware('auth.check')->group(function () {
-        // Giỏ hàng
+        // Giỏ hàng 
         Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
-        Route::post('/product/cart/{product}', [ProductController::class, 'addToCart'])->name('client.product.add-to-cart');
+        Route::post('/product/cart/{product}', [CartController::class, 'addToCart'])->name('client.product.add-to-cart');
         Route::delete('/product/cart/{cartItem}', [CartController::class, 'delete'])->name('client.product.delete-cart-item');
         // Thanh toán
         Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
         Route::post('/checkout', [CheckoutController::class, 'postCheckout'])->name('post-checkout');
-        // Đơn hàng
+        Route::get('/return-momo', [CheckoutController::class, 'returnMomo'])->name('return_momo');
+        Route::get('/thank-you/{order}', [CheckoutController::class, 'thankYou'])->name('thank_you');
+        // Đơn hàng 
         Route::get('/order', [OrderController::class, 'index'])->name('client.order.index');
-        Route::patch('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
+        Route::put('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
+        Route::put('order/{order}/received', [OrderController::class, 'confirmReceived'])->name('client.order.received');
         Route::post('/order/{order}/evaluation', [OrderController::class, 'evaluation'])->name('client.order.evaluation');
+        // Profile
         Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile.index');
         Route::put('/profile/update', [ProfileController::class, 'postUpdate'])->name('client.profile.post-update');
         Route::put('/profile/change-password', [ProfileController::class, 'postChangePassword'])->name('client.profile.post-change-password');
@@ -77,6 +81,7 @@ Route::prefix('/')->group(function () {
         Route::put('/settings/update/{id}', [ProfileController::class, 'updateStatus'])->name('client.settings.update');
         Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
         Route::post('/profile/promotion/{id}', [ProfileController::class, 'redeemPromotion'])->name('client.profile.redeem-promotion');
+        // Favorite
         Route::get('/favorites', [ProductController::class, 'favorites'])->name('client.product.favorites');
         Route::get('product/{slug}/favorite', [ProductController::class, 'postFavorite'])->name('client.product.post-favorite');
     });
@@ -95,6 +100,20 @@ Route::prefix('/errors')->group(function () {
     Route::get('/504', [ErrorController::class, 'gatewayTimeout'])->name('errors.504');
 });
 
+Route::prefix('api')->group(function () {
+    Route::get('/provinces', function () {
+        return Province::select('id', 'name', 'code')->get();
+    })->name('api.provinces');
+
+    Route::get('/districts/{provinceCode}', function ($provinceCode) {
+        return District::where('parent_code', $provinceCode)->select('id', 'name', 'code')->get();
+    })->name('api.districts');
+
+    Route::get('/wards/{districtCode}', function ($districtCode) {
+        return Ward::where('parent_code', $districtCode)->select('id', 'name', 'code')->get();
+    })->name('api.wards');
+});
+
 Route::prefix('/auth')->group(function () {
     Route::get('/google', [GoogleController::class, 'redirect'])->name('auth.google.redirect');
     Route::get('/google/call-back', [GoogleController::class, 'callback'])->name('auth.google.callback');
@@ -105,15 +124,15 @@ Route::prefix('/auth')->group(function () {
     Route::get('/get-otp', [WebController::class, 'getOtp'])->name('auth.get-otp');
     Route::get('/recovery', [WebController::class, 'recovery'])->name('auth.recovery');
     Route::get('/user-info', [WebController::class, 'userInfo'])->name('auth.user-info');
+    Route::post('/user-info', [WebController::class, 'postUserInfo'])->name('auth.post-user-info');
     Route::post('/login', [WebController::class, 'postLogin'])->name('auth.post-login');
     Route::post('/register', [WebController::class, 'postRegister'])->name('auth.post-register');
     Route::post('/forgot-password', [WebController::class, 'postForgotPassword'])->name('auth.post-forgot-password');
     Route::post('/get-otp', [WebController::class, 'postGetOtp'])->name('auth.post-get-otp');
     Route::post('/recovery', [WebController::class, 'postRecovery'])->name('auth.post-recovery');
-    Route::post('/user-info', [WebController::class, 'postUserInfo'])->name('auth.post-user-info');
 });
 
-Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function () {
+Route::prefix('/admin')->middleware(['admin'])->name('admin.')->group(function () {
     Route::get('/', function () {
         return redirect()->route('admin.dashboard');
     });
@@ -198,7 +217,6 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/membership/export', [AdminMembershipController::class, 'export'])->name('memberships.export');
     Route::post('/memberships/{membership}/status', [AdminMembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
 
-    Route::resource('/transactions', TransactionController::class);
     Route::resource('/pages', AdminPageController::class);
     Route::resource('/logs', LogController::class);
     // profile
@@ -216,10 +234,6 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
 
 // Share route
 Route::get('/invoices/{invoiceNumber}', [InvoiceController::class, 'show'])->name('invoices.show');
-
-// VNPay
-Route::post('/payment', [VNPayController::class, 'createPayment'])->name('payment.create');
-Route::get('/vnpay-return', [VNPayController::class, 'returnPayment'])->name('payment.return');
 
 Route::fallback(function () {
     return redirect()->route('errors.404');

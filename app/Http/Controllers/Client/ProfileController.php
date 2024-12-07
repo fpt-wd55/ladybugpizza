@@ -7,20 +7,20 @@ use App\Http\Requests\AddressRequest;
 use App\Models\Address;
 use App\Models\Promotion;
 use App\Models\PromotionUser;
-use GuzzleHttp\Client;
 use App\Http\Requests\ChangeRequest;
 use App\Http\Requests\InactiveRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\Faq;
-use App\Models\Log;
-use App\Models\Membership;
-use App\Models\MembershipRank;
+use App\Mail\Auth as MailAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\UserSetting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Vanthao03596\HCVN\Models\Province;
+use Vanthao03596\HCVN\Models\District;
+use Vanthao03596\HCVN\Models\Ward;
 
 class ProfileController extends Controller
 {
@@ -71,21 +71,27 @@ class ProfileController extends Controller
 		return redirect()->route('client.profile.index')->with('success', 'Cập nhật thông tin thành công');
 	}
 
-
 	public function postChangePassword(ChangeRequest $request)
 	{
 		$user = Auth::user();
 
 		if (!Hash::check($request->current_password, $user->password)) {
-			return back()->with('current_password', 'Mật khẩu hiện tại không đúng');
+			return back()->withErrors(['current_password' => 'Mật khẩu hiện tại không đúng']);
 		}
 
 		$user->password = Hash::make($request->new_password);
-		if (!$user->save()) {
-			return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
+		if ($user->save()) {
+			$userSetting = $user->setting;
+			if ($userSetting->email_order) {
+				//  Gửi email thông báo thay đổi mật khẩu
+				$subject = 'Thông báo thay đổi mật khẩu';
+				Mail::to($user->email)->send(new MailAuth(null, $subject, 'mails.change_password'));
+			}
+
+			return redirect()->back()->with('success', 'Mật khẩu đã được thay đổi thành công.');
 		}
 
-		return redirect()->back()->with('success', 'Mật khẩu đã được thay đổi thành công.');
+		return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
 	}
 
 	public function postInactive(InactiveRequest $request)
@@ -97,15 +103,13 @@ class ProfileController extends Controller
 		}
 
 		$user->status = 2;
-		if (!$user->save()) {
+		if ($user->save()) {
 			Auth::logout();
-			return redirect()->route('client.home')->with('error', 'Đã có lỗi xảy ra');
+			return redirect()->route('client.home')->with('success', 'Tài khoản của bạn đã bị vô hiệu hóa');
 		}
 
-		return redirect()->route('client.home')->with('success', 'Tài khoản của bạn đã bị vô hiệu hóa');
+		return redirect()->route('client.home')->with('error', 'Đã có lỗi xảy ra');
 	}
-
-
 
 	public function address()
 	{
@@ -113,11 +117,16 @@ class ProfileController extends Controller
 		if ($redirectHome) {
 			return $redirectHome;
 		}
-		$user = Auth::user();
-		$addresses = Address::where('user_id', $user->id)
+		$addresses = Address::where('user_id', Auth::user()->id)
 			->with('user')
 			->orderBy('is_default', 'desc')
-			->paginate(6);
+			->paginate(5);
+
+		foreach ($addresses as $address) {
+			$address->province = Province::find($address->province);
+			$address->district = District::find($address->district);
+			$address->ward = Ward::find($address->ward);
+		}
 		return view('clients.profile.address.index', compact('addresses'));
 	}
 
@@ -137,9 +146,6 @@ class ProfileController extends Controller
 			$userSetting->email_order = true;
 			$userSetting->email_promotions = true;
 			$userSetting->email_security = true;
-			$userSetting->push_order = true;
-			$userSetting->push_promotions = true;
-			$userSetting->push_security = true;
 
 			// Lưu vào cơ sở dữ liệu
 			$userSetting->save();
@@ -147,6 +153,7 @@ class ProfileController extends Controller
 
 		return view('clients.profile.settings', compact('userSetting'));
 	}
+
 	public function updateStatus(Request $request, string $id)
 	{
 		$settings = UserSetting::query()->findOrFail($id);
@@ -154,9 +161,6 @@ class ProfileController extends Controller
 			$settings->email_order = $request->has('email_order') ? 1 : 0;
 			$settings->email_promotions = $request->has('email_promotions') ? 1 : 0;
 			$settings->email_security = $request->has('email_security') ? 1 : 0;
-			$settings->push_order = $request->has('push_order') ? 1 : 0;
-			$settings->push_promotions = $request->has('push_promotions') ? 1 : 0;
-			$settings->push_security = $request->has('push_security') ? 1 : 0;
 			$settings->save();
 
 			return redirect()->back()->with('success', 'Cài đặt đã được cập nhật!');
@@ -168,14 +172,23 @@ class ProfileController extends Controller
 	public function promotion()
 	{
 		$myCodes = PromotionUser::where('user_id', Auth::user()->id)
+			->whereHas('promotion', function ($query) {
+				$query->where('end_date', '>=', now());
+			})
 			->with('promotion')->get();
 
-		$countMyCodes = PromotionUser::where('user_id', Auth::user()->id)->count();
+
+		$countMyCodes = PromotionUser::where('user_id', Auth::user()->id)
+			->whereHas('promotion', function ($query) {
+				$query->where('end_date', '>=', now());
+			})
+			->count();
 
 		$userRankId = Auth::user()->membership->rank_id;
 
 		$redeemCodes = Promotion::where('status', 1)
 			->where('quantity', '>', 0)
+			->where('end_date', '>=', now())
 			->where(function ($query) use ($userRankId) {
 				$query->where('is_global', '!=', 2)
 					->orWhere('rank_id', $userRankId);
@@ -240,16 +253,23 @@ class ProfileController extends Controller
 		return back()->with('success', 'Bạn đã đổi mã giảm giá thành công');
 	}
 
-
 	public function addLocation()
 	{
 		return view('clients.profile.address.add');
 	}
 
+	public function editLocation(Address $address)
+	{
+		$province = Province::find($address->province);
+		$districts = $province->districts;
+		$district = District::find($address->district);
+		$wards = $district->wards;
+		return view('clients.profile.address.edit', compact('address', 'province', 'districts', 'wards'));
+	}
+
 	public function updateLocation(AddressRequest $request, Address $address)
 	{
 		$data = $request->all();
-		// dd($data);
 		$addressData = [
 			'user_id' => Auth()->user()->id,
 			'phone' => Auth()->user()->phone,
@@ -259,91 +279,26 @@ class ProfileController extends Controller
 			'detail_address' => $data['address'],
 			'title' => $data['title'],
 		];
-		$fullAddress = implode(', ', [
-			$addressData['detail_address'],
-			$addressData['ward'],
-			$addressData['district'],
-			$addressData['province'],
-		]);
 		$address->update($addressData);
 
-		return redirect()->route('client.profile.address')->with('success', 'Cập nhật địa chỉ thành công');
+		return redirect()->back()->with('success', 'Cập nhật địa chỉ thành công');
 	}
 
 	public function storeLocation(AddressRequest $request)
 	{
 		$data = $request->all();
-		// Kiểm tra số điện thoại
-		if (is_null(Auth()->user()->phone) || empty(Auth()->user()->phone)) {
-			return redirect()->route('client.profile.index')->with('error', 'Bạn cần thêm số điện thoại trong phần tài khoản trước khi thêm địa chỉ mới.');
-		}
+
 		$addressData = [
 			'user_id' => Auth()->user()->id,
-			'phone' => Auth()->user()->phone,
 			'province' => $data['province'],
 			'district' => $data['district'],
 			'ward' => $data['ward'],
 			'detail_address' => $data['address'],
 			'title' => $data['title'],
 		];
-
-		// $addressNames = $this->getAddressNamesByCodes(
-		// 	$addressData['provinceCode'],
-		// 	$addressData['districtCode'],
-		// 	$addressData['wardCode']
-		// );
-
-		// if (is_null($addressNames['province']) || is_null($addressNames['district']) || is_null($addressNames['ward'])) {
-		// 	return back()->withErrors(['address' => 'Không thể tìm thấy tên cho mã địa chỉ.']);
-		// }
-
-		// $addressData['province'] = $addressNames['province'];
-		// $addressData['district'] = $addressNames['district'];
-		// $addressData['ward'] = $addressNames['ward'];
-
-		$fullAddress = implode(', ', [
-			$addressData['detail_address'],
-			$addressData['ward'],
-			$addressData['district'],
-			$addressData['province'],
-		]);
-
-		// [$lng, $lat] = $this->convertAddressToCoordinates($fullAddress);
-
-		// $addressData['lng'] = $lng;
-		// $addressData['lat'] = $lat;
 		Address::create($addressData);
 
 		return redirect()->route('client.profile.address')->with('success', 'Thêm địa chỉ thành công');
-	}
-
-	protected function convertAddressToCoordinates($fullAddress)
-	{
-		$client = new Client();
-		try {
-			$response = $client->get('https://nominatim.openstreetmap.org/search', [
-				'query' => [
-					'q' => $fullAddress,
-					'format' => 'json',
-				],
-			]);
-		} catch (\Exception $e) {
-			dd($e->getMessage());
-		}
-
-		$data = json_decode($response->getBody(), true);
-
-		if (isset($data[0])) {
-			$location = $data[0];
-			return [$location['lon'], $location['lat']];
-		}
-
-		return [null, null];
-	}
-
-	public function editLocation(Address $address)
-	{
-		return view('clients.profile.address.edit', compact('address'));
 	}
 
 	public function deleteLocation(Address $address)
@@ -357,6 +312,7 @@ class ProfileController extends Controller
 			return redirect()->back()->with('error', 'Xóa địa chỉ thất bại');
 		}
 	}
+
 	public function setDefaultAddress(Address $address)
 	{
 		Address::where('user_id', $address->user_id)->update(['is_default' => 0]);
@@ -365,68 +321,5 @@ class ProfileController extends Controller
 		$address->save();
 
 		return redirect()->back()->with('success', 'Địa chỉ mặc định đã được cập nhật.');
-	}
-
-	private function getAddressNamesByCodes($provinceCode, $districtCode, $wardCode)
-	{
-		$response = file_get_contents("https://provinces.open-api.vn/api/");
-		$provinces = json_decode($response, true);
-		$provinceName = null;
-
-		foreach ($provinces as $province) {
-			if ($province['code'] == $provinceCode) {
-				$provinceName = $province['name'];
-				break;
-			}
-		}
-
-		$response = file_get_contents("https://provinces.open-api.vn/api/p/{$provinceCode}?depth=2");
-		$districts = json_decode($response, true);
-
-		if (!is_array($districts)) {
-			return ['province' => $provinceName, 'district' => null, 'ward' => null];
-		}
-
-		$districtName = null;
-
-		if (isset($districts['districts']) && is_array($districts['districts'])) {
-			foreach ($districts['districts'] as $district) {
-				if (isset($district['code']) && $district['code'] == $districtCode) {
-					$districtName = $district['name'];
-					break;
-				}
-			}
-		}
-
-		$response = file_get_contents("https://provinces.open-api.vn/api/d/{$districtCode}?depth=2");
-		$wards = json_decode($response, true);
-
-		if (!is_array($wards)) {
-			return ['province' => $provinceName, 'district' => $districtName, 'ward' => null];
-		}
-
-		$wardName = null;
-
-		if (isset($wards['wards']) && is_array($wards['wards'])) {
-			foreach ($wards['wards'] as $ward) {
-				if (isset($ward['code']) && $ward['code'] == $wardCode) {
-					$wardName = $ward['name'];
-					break;
-				}
-			}
-		}
-
-		return [
-			'province' => $provinceName,
-			'district' => $districtName,
-			'ward' => $wardName,
-		];
-	}
-
-
-
-	public function destroyLocation(Request $request)
-	{
-		$client = new Client();
 	}
 }

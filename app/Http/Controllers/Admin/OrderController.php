@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Order as MailOrder;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\PaymentMethod;
-use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Vanthao03596\HCVN\Models\Province;
+use Vanthao03596\HCVN\Models\District;
+use Vanthao03596\HCVN\Models\Ward;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -18,19 +22,28 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $status = $request->get('tab'); // Change 'status' to 'tab'
+        $status = $request->get('tab');
 
-        $orders = Order::query() // Change 'Order::all()' to 'Order::query()'
+        $orders = Order::query()
             ->when($status, function ($query, $status) {
                 return $query->whereHas('orderStatus', function ($query) use ($status) {
                     return $query->where('slug', $status);
                 });
             })->latest('id')->paginate(10);
 
-        $orderStatuses = OrderStatus::all();
+        // get address order
+        $orders->map(function ($order) {
+            $order->province =  Province::find($order->address->province);
+            $order->district = District::find($order->address->district);
+            $order->ward = Ward::find($order->address->ward);
+            return $order;
+        });
+
+        $orderStatuses = OrderStatus::withCount(['orders'])->get();
+        $totalOrders = Order::count();
         $paymentMethods = PaymentMethod::all();
         $invoices = Invoice::all();
-        return view('admins.order.index', compact('orders', 'invoices', 'orderStatuses', 'paymentMethods'));
+        return view('admins.order.index', compact('orders', 'invoices', 'orderStatuses', 'paymentMethods', 'totalOrders'));
     }
 
     /**
@@ -57,8 +70,13 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::findOrFail($id);
-        $statuses = OrderStatus::pluck('name')->toArray();
 
+        $statuses = OrderStatus::get();
+
+        // get address order 
+        $order->province =  Province::find($order->address->province);
+        $order->district = District::find($order->address->district);
+        $order->ward = Ward::find($order->address->ward);
 
         return view('admins.order.edit', compact('order', 'statuses'));
     }
@@ -69,24 +87,103 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = Order::findOrFail($id);
-        $statuses = OrderStatus::pluck('name')->toArray();
+        $currentStatus = $order->orderStatus;
+        $statuses = OrderStatus::pluck('slug')->toArray();
 
         $request->validate([
             'status' => ['required', 'string', Rule::in($statuses)],
+            'cancelled_reason' => 'nullable|string',
+        ], [
+            'status.required' => 'Trạng thái không được để trống.',
+            'status.string' => 'Trạng thái không hợp lệ.',
+            'status.in' => 'Trạng thái không hợp lệ.',
+            'cancelled_reason.string' => 'Lý do hủy không đúng định dạng.',
         ]);
 
-        $orderStatus = OrderStatus::where('name', $request->status)->first();
+        $newStatus = OrderStatus::where('slug', $request->status)->first();
 
-        if ($orderStatus) {
-            $order->order_status_id = $orderStatus->id;
-            $order->save();
-
-            return redirect()->route('admin.orders.edit', $id)->with('success', 'Trạng thái đã được cập nhật!');
+        if (!$newStatus || $newStatus->id < $currentStatus->id) {
+            return redirect()->back()->with('error', 'Cập nhật đơn hàng không thành công.');
         }
 
-        return redirect()->route('admin.orders.edit', $id)->withErrors(['status' => 'Không tìm thấy trạng thái hợp lệ.']);
-    }
+        $nonCancellableStatuses = ['shipping', 'delivered', 'completed'];
+        if (in_array($currentStatus->slug, $nonCancellableStatuses) && $newStatus->slug === 'cancelled') {
+            return redirect()->back()->with('error', 'Cập nhật đơn hàng không thành công.');
+        }
 
+        $order->order_status_id = $newStatus->id;
+        if ($newStatus->slug == 'cancelled') { 
+            $order->cancelled_reason = $request->cancelled_reason;
+            $order->canceled_at = now();
+        }
+
+        if ($newStatus->slug == 'completed') {
+            $order->completed_at = now();
+            // Tạo hóa đơn
+            $dataInvoice = [
+                'order_id' => $order->id,
+                'invoice_number' => 'INV' . now()->format('Ymd') . '-' . $order->id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+            Invoice::create($dataInvoice);
+        }
+
+        $order->save();
+
+        // Gửi email câp nhật trạng thái 
+        $userSetting = $order->user->setting;
+        if ($userSetting->email_order) {
+            switch ($newStatus->slug) {
+                case 'waiting':
+                    if ($currentStatus->slug != 'waiting') {
+                        $subject = 'Thông báo xác nhận đơn hàng #' . $order->code;
+                        Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.waiting'));
+                    }
+                    break;
+                case 'confirmed':
+                    if ($currentStatus->slug != 'confirmed') {
+                        // Lấy thông tin địa chỉ
+                        $order->province =  Province::find($order->address->province);
+                        $order->district = District::find($order->address->district);
+                        $order->ward = Ward::find($order->address->ward);
+                        $subject = 'Đơn hàng #' . $order->code . ' đã được xác nhận';
+                        Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.confirmed'));
+                    }
+                    break;
+                case 'shipping':
+                    if ($currentStatus->slug != 'shipping') {
+                        $subject = 'Đơn hàng #' . $order->code . ' đã được giao cho đơn vị vận chuyển';
+                        Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.shipping'));
+                    }
+                    break;
+                case 'delivered':
+                    if ($currentStatus->slug != 'delivered') {
+                        $subject = 'Đơn hàng #' . $order->code . ' đã được giao thành công';
+                        Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.delivered'));
+                    }
+                    break;
+                case 'completed':
+                    if ($currentStatus->slug != 'completed') {
+                        $subject = 'Cảm ơn bạn đã mua hàng tại cửa hàng chúng tôi';
+                        Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.completed'));
+                    }
+                    break;
+                case 'cancelled':
+                    if ($currentStatus->slug != 'cancelled') {
+                        $subject = 'Đơn hàng #' . $order->code . ' đã bị hủy';
+                        Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.cancelled'));
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+
+        return redirect()->back()->with('success', 'Cập nhật đơn hàng thành công.');
+    }
 
     public function export()
     {
@@ -122,6 +219,14 @@ class OrderController extends Controller
         }
 
         $orders = $query->paginate(10);
+
+        // get address order
+        $orders->map(function ($order) {
+            $order->province =  Province::find($order->address->province);
+            $order->district = District::find($order->address->district);
+            $order->ward = Ward::find($order->address->ward);
+            return $order;
+        });
 
         $orders->appends(['filter_role' => $request->filter_role]);
         $orders->appends(['filter_status' => $request->filter_status]);

@@ -4,90 +4,52 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Xác thực OTP</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-    <link rel="stylesheet" href="/style.css">
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 0;
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container-sec {
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 100%;
-        }
-
-        .otp-code {
-            font-size: 24px;
-            font-weight: bold;
-            background-color: #f8f9fa;
-            padding: 15px;
-            text-align: center;
-            border-radius: 8px;
-            border: 1px dashed #D30A0A;
-            color: #FF0000;
-        }
-
-        .footer-text {
-            color: #6c757d;
-            font-size: 14px;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .welcome-section {
-            background: #FF0000;
-            padding: 30px;
-            border-radius: 4px;
-            color: #fff;
-            text-align: center;
-        }
-
-        .app-name {
-            font-size: 30px;
-            font-weight: 800;
-            margin: 7px 0px;
-        }
-
-        .verify-text {
-            margin-top: 15px;
-            font-size: 25px;
-        }
-    </style>
+    <title>
+        <?php $subject; ?>
+    </title>
+    <link href="{{ asset('favicon.svg') }}" rel="shortcut icon" type="image/x-icon">
 </head>
 
-<body>
-    <div class="container-sec">
-        <div class="text-center">
-            <div class="welcome-section">
-                <div class="app-name">
-                    Lazzybug Pizza
-                </div>
-            </div>
-        </div>
-        <p class="mt-4">Mã OTP của bạn là:</p>
-        <div class="otp-code">{{ $otp }}</div>
-        <p class="mt-4">Vì lý do bảo mật, mã này chỉ tồn tại trong 10 phút.</p>
-    </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+<body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: 'Open Sans', Arial, sans-serif;">
+    <table role="presentation"
+        style="width: 100%; height: 100%; background-color: #f5f5f5; text-align: center; border-collapse: collapse;">
+        <tr>
+            <td align="center" style="padding: 20px;">
+                <table role="presentation"
+                    style="max-width: 800px; width: 100%; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-collapse: collapse;">
+                    <tr>
+                        <td style="text-align: center; padding: 30px; border-bottom: 1px solid #e5e5e5;">
+                            <a href="{{ route('client.home') }}" target="_blank"><img
+                                    src="https://i.pinimg.com/736x/fa/8c/db/fa8cdb4f3033201dbae31a860f59e32e.jpg"
+                                    alt="Ladybug Pizza" style="border-radius: 50%; width: 70px; height: 70px;"></a>
+                            <a href="{{ route('client.home') }}" style="text-decoration: none" target="_blank">
+                                <p style="color: #D30A0A; font-size: 22px; font-weight: bold; margin: 0">
+                                    Ladybug
+                                    Pizza</p>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 30px; text-align: center; border-bottom: 1px solid #e5e5e5;">
+                            <p style="margin: 15px 0 0; font-size: 16px; color: #666;">Mã OTP của bạn là:
+                                {{ $otp }}</p>
+                            <p style="margin: 10px 0 0; font-size: 16px; color: #666; line-height: 1.5;">
+                                Vì lý do bảo mật, mã này chỉ tồn tại trong 10 phút.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center; padding: 20px; font-size: 14px; color: #999;">
+                            <p style="margin: 0;">
+                                Nếu bạn cần tư vấn hoặc hỗ trợ vui lòng liên hệ qua email: <a
+                                    href="mailto:ladybugpizza@gmail.com" style="text-decoration:none; color:#000"
+                                    target="_blank">ladybugpizza@gmail.com</a></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>

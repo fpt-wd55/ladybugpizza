@@ -12,7 +12,7 @@
                         <div class="grid gap-4 mb-4 md:grid-cols-2 lg:grid-cols-3">
                             <div>
                                 <label for="username" class="block mb-2 text-sm font-medium text-gray-900 ">Tên tài
-                                    khoản</label>
+                                    khoản <span class="text-red-500">*</span></label>
                                 <input type="text" name="username" id="username" placeholder="Tên tài khoản"
                                     value="{{ old('username') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -24,7 +24,7 @@
                             </div>
                             <div>
                                 <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 ">Họ và
-                                    tên</label>
+                                    tên <span class="text-red-500">*</span></label>
                                 <input type="text" name="fullname" id="fullname" placeholder="Họ và tên"
                                     value="{{ old('fullname') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -35,7 +35,8 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Mật khẩu</label>
+                                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Mật khẩu <span
+                                        class="text-red-500">*</span></label>
                                 <input type="password" name="password" id="password" placeholder="Mật khẩu"
                                     value="{{ old('password') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -50,7 +51,8 @@
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 md:grid-cols-2">
                             <div>
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email</label>
+                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email <span
+                                        class="text-red-500">*</span></label>
                                 <input type="text" name="email" id="email" placeholder="email@domain.com"
                                     value="{{ old('email') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -62,7 +64,7 @@
                             </div>
                             <div>
                                 <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Số điện
-                                    thoại</label>
+                                    thoại <span class="text-red-500">*</span></label>
                                 <input type="text" name="phone" id="phone" placeholder="0123456789"
                                     value="{{ old('phone') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -78,7 +80,7 @@
                         <div class="grid gap-4 mb-4 md:grid-cols-2 lg:grid-cols-3">
                             <div>
                                 <label class="block mb-2 text-sm font-medium text-gray-900" for="file_input">Ảnh đại
-                                    diện</label>
+                                    diện <span class="text-red-500">*</span></label>
                                 <input name="avatar"
                                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
                                     aria-describedby="file_input_help" id="file_input" type="file">
@@ -90,7 +92,7 @@
                             </div>
                             <div>
                                 <label for="date_of_birth" class="block mb-2 text-sm font-medium text-gray-900 ">Ngày
-                                    sinh</label>
+                                    sinh <span class="text-red-500">*</span></label>
                                 <input type="date" name="date_of_birth" id="date_of_birth"
                                     value="{{ old('date_of_birth') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
@@ -102,7 +104,7 @@
                             </div>
                             <div>
                                 <label for="gender" class="block mb-4 text-sm font-medium text-gray-900">Giới
-                                    tính</label>
+                                    tính <span class="text-red-500">*</span></label>
                                 <div class="flex flex-wrap items-center">
                                     <div class="flex items-center mr-4">
                                         <input id="male" type="radio" value="1" name="gender"
@@ -153,7 +155,7 @@
                             </div>
                             <div>
                                 <label class="block mb-3 text-sm font-medium text-gray-900 ">Vai
-                                    trò</label>
+                                    trò <span class="text-red-500">*</span></label>
                                 <div class="flex flex-wrap mb-2">
                                     <div class="flex items-center mb-4 mr-4">
                                         <input id="adminRole" type="radio" value="1" name="roleSelect"
@@ -200,17 +202,10 @@
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 sm:grid-cols-3">
                             <div>
-                                <label for="province"
-                                    class="block mb-2 text-sm font-medium text-gray-900 ">Tỉnh/Thành</label>
+                                <label for="province" class="block mb-2 text-sm font-medium text-gray-900 ">Tỉnh/Thành
+                                    <span class="text-red-500">*</span></label>
                                 <select id="province" name="province"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                    <option selected disabled>Tỉnh/Thành</option>
-                                    <option value="1" {{ old('province') == 1 ? 'selected' : '' }}>Nam
-                                    </option>
-                                    <option value="2" {{ old('province') == 2 ? 'selected' : '' }}>Nữ
-                                    </option>
-                                    <option value="3" {{ old('province') == 3 ? 'selected' : '' }}>Khác
-                                    </option>
                                 </select>
                                 @error('province')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -219,17 +214,11 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="district"
-                                    class="block mb-2 text-sm font-medium text-gray-900 ">Huyện/Tỉnh</label>
+                                <label for="district" class="block mb-2 text-sm font-medium text-gray-900 ">Huyện/Tỉnh
+                                    <span class="text-red-500">*</span></label>
                                 <select id="district" name="district"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                    <option selected disabled>Huyện/Tỉnh</option>
-                                    <option value="1" {{ old('district') == 1 ? 'selected' : '' }}>Nam
-                                    </option>
-                                    <option value="2" {{ old('district') == 2 ? 'selected' : '' }}>Nữ
-                                    </option>
-                                    <option value="3" {{ old('district') == 3 ? 'selected' : '' }}>Khác
-                                    </option>
+                                    <option value="">Chọn quận/huyện</option>
                                 </select>
                                 @error('district')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -238,17 +227,11 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="ward"
-                                    class="block mb-2 text-sm font-medium text-gray-900 ">Phường/Xã</label>
+                                <label for="ward" class="block mb-2 text-sm font-medium text-gray-900 ">Phường/Xã
+                                    <span class="text-red-500">*</span></label>
                                 <select id="ward" name="ward"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                    <option selected disabled>Huyện/Tỉnh</option>
-                                    <option value="1" {{ old('ward') == 1 ? 'selected' : '' }}>Nam
-                                    </option>
-                                    <option value="2" {{ old('ward') == 2 ? 'selected' : '' }}>Nữ
-                                    </option>
-                                    <option value="3" {{ old('ward') == 3 ? 'selected' : '' }}>Khác
-                                    </option>
+                                    <option value="">Chọn phường/xã</option>
                                 </select>
                                 @error('ward')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -259,9 +242,10 @@
                         </div>
                     </div>
                     <div class="sm:col-span-2">
-                        <label for="detail_address" class="block mb-2 text-sm font-medium text-gray-900 ">Địa chỉ</label>
-                        <input type="text" name="detail_address" id="detail_address" placeholder="Địa chỉ"
-                            value="{{ old('detail_address') }}"
+                        <label for="detail_address" class="block mb-2 text-sm font-medium text-gray-900 ">Địa chỉ chi
+                            tiết <span class="text-red-500">*</span></label>
+                        <input type="text" name="detail_address" id="detail_address"
+                            placeholder="VD: Số 4 ngõ 2 ngách 14 đường Cầu Diễn" value="{{ old('detail_address') }}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                         @error('detail_address')
                             <p class="mt-2 text-sm text-red-600 ">
@@ -283,6 +267,7 @@
     </div>
 @endsection
 @section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const adminRole = document.getElementById('adminRole');
@@ -301,6 +286,56 @@
             userRole.addEventListener('change', toggleForm);
 
             toggleForm();
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Load provinces on page load
+            // $.getJSON('/api/provinces', function(data) {
+            //     const provinceSelect = $('#province');
+            //     data.forEach(province => {
+            //         provinceSelect.append(new Option(province.name, province.code));
+            //     });
+            // });
+
+            // Cố định Hà Nội
+            const provinceSelect = $('#province');
+            provinceSelect.append(new Option('Hà Nội', '01')).val('01').prop('disabled', false);
+
+            // Load districts when a province is selected
+            // $('#province').change(function() {
+            const provinceCode = '01'; // Mã cố định của Hà Nội
+            const districtSelect = $('#district');
+            districtSelect.empty().append(new Option('Chọn Quận/Huyện', '')).prop('disabled', true);
+
+            if (provinceCode) {
+                $.getJSON(`/api/districts/${provinceCode}`, function(data) {
+                    districtSelect.prop('disabled', false);
+                    data.forEach(district => {
+                        districtSelect.append(new Option(district.name, district.code));
+                    });
+                });
+            }
+
+            // Reset wards
+            $('#ward').empty().append(new Option('Chọn Phường/Xã', '')).prop('disabled', true);
+            // });
+
+            // Load wards when a district is selected
+            $('#district').change(function() {
+                const districtCode = $(this).val();
+                const wardSelect = $('#ward');
+                wardSelect.empty().append(new Option('Chọn Phường/Xã', '')).prop('disabled', true);
+
+                if (districtCode) {
+                    $.getJSON(`/api/wards/${districtCode}`, function(data) {
+                        wardSelect.prop('disabled', false);
+                        data.forEach(ward => {
+                            wardSelect.append(new Option(ward.name, ward.code));
+                        });
+                    });
+                }
+            });
         });
     </script>
 @endsection

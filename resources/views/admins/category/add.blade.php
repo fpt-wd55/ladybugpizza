@@ -9,7 +9,8 @@
                 @csrf
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
                     <div>
-                        <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Hình ảnh</label>
+                        <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Hình ảnh <span
+                                class="text-red-500">*</span></label>
                         <input
                             class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
                             id="image" name="image" type="file">
@@ -18,7 +19,8 @@
                         @enderror
                     </div>
                     <div>
-                        <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Tên danh mục</label>
+                        <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Tên danh mục <span
+                                class="text-red-500">*</span></label>
                         <input type="text" name="name" id="name" value="{{ old('name') }}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             placeholder="Ví dụ: Pizza hải sản">

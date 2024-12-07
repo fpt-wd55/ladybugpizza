@@ -35,6 +35,7 @@ class PromotionRequest extends FormRequest
         return [
             'code' => 'required|max:10|unique:promotions,code',
             'points' => 'required|numeric|min:0',
+            'name' => 'required',
             'discount_type' => 'required|numeric|in:1,2',
             'discount_value' => [
                 'required',
@@ -51,7 +52,8 @@ class PromotionRequest extends FormRequest
             'quantity' => 'required|integer|min:0',
             'min_order_total' => 'nullable|numeric|min:0',
             'max_discount' => 'nullable|numeric|min:0',
-            'is_global' => 'required',
+            'is_global' => 'required|string',
+            'rank_id' => 'nullable|integer',
             'status' => 'nullable',
         ];
     }
@@ -61,6 +63,7 @@ class PromotionRequest extends FormRequest
     {
         $promotionId = $this->route('promotion') ? $this->route('promotion')->id : null;
         return [
+            'name' => 'required',
             'code' => 'required|max:10|unique:promotions,code,' . $promotionId,
             'points' => 'required|numeric|min:0',
             'discount_type' => 'required|numeric|in:1,2',
@@ -77,9 +80,10 @@ class PromotionRequest extends FormRequest
             'start_date' => ['required', 'before_or_equal:end_date'],
             'end_date' => ['required', 'after_or_equal:start_date'],
             'quantity' => 'required|integer|min:1',
-            'min_order_total' => 'nullable|numeric|min:0',
-            'max_discount' => 'nullable|numeric|min:0',
-            'is_global' => 'required',
+            'min_order_total' => 'nullable|numeric',
+            'max_discount' => 'nullable|numeric',
+            'is_global' => 'required|string',
+            'rank_id' => 'nullable|integer',
             'status' => 'nullable',
         ];
     }
@@ -87,11 +91,11 @@ class PromotionRequest extends FormRequest
     public function messages()
     {
         return [
-            'code.required' => "Bạn cần nhập tên cho mã giảm giá",
+            'name.required' => "Bạn cần nhập tên cho mã giảm giá",
+            'code.required' => "Bạn cần nhập mã giảm giá",
             'code.max' => "Tên mã giảm giá không thể quá 10 kí tự",
             'code.unique' => "Tên mã giảm giá đã tồn tại",
             'points.required' => "Bạn cần nhập điểm cho mã giảm giá",
-            'points.min' => "Điểm phải lớn hơn 0",
             'points.numeric' => "Điểm phải là một số",
             'discount_type.required' => "Bạn cần chọn loại giảm giá",
             'discount_value.min' => "Giá trị giảm giá không thể là số âm",

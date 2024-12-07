@@ -6,12 +6,7 @@
     <div class="mt-5 overflow-hidden bg-white shadow sm:rounded-lg">
         <div class="container mx-auto ml-4 p-6">
             <h1 class="mb-4 text-2xl font-semibold">Đặt hàng</h1>
-            @if (session('success'))
-                <div class="mb-4 rounded bg-green-100 p-4 text-green-800">
-                    {{ session('success') }}
-                </div>
-            @endif
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {{-- Giá trị 1 --}}
                 <div>
                     <h2 class="mb-4 text-lg font-semibold">Tổng quan</h2>
@@ -24,12 +19,21 @@
                             <label class="mb-2 block font-semibold" for="status">Trạng thái</label>
                             <select class="input" id="status" name="status">
                                 @foreach ($statuses as $status)
-                                    <option {{ $order->orderStatus->name === $status ? 'selected' : '' }}
-                                        value="{{ $status }}">
-                                        {{ $status }}
+                                    <option {{ $order->orderStatus->slug === $status->slug ? 'selected' : '' }}
+                                        value="{{ $status->slug }}"
+                                        {{ in_array($order->orderStatus->slug, ['shipping', 'delivered', 'completed']) && $status->slug === 'cancelled' ? 'disabled' : '' }}
+                                        {{ $order->orderStatus->id > $status->id ? 'disabled' : '' }}>
+                                        {{ $status->name }}
                                     </option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="mb-4" id="cancelled_reason">
+                            <p class="mb-2 text-sm font-normal">Lý do hủy đơn: </p>
+                            <textarea class="text-area" name="cancelled_reason" rows="4">{{ $order->cancelled_reason ?? null }}</textarea>
+                            @error('cancelled_reason')
+                                <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="mt-6 flex justify-start gap-2">
                             <button class="button-red" type="submit">Cập nhật</button>
@@ -40,30 +44,31 @@
                 {{-- Giá trị 2 --}}
                 <div>
                     <h3 class="mb-2 text-lg font-semibold">Thanh toán</h3>
-                    <p>{{ $order->user->fullname }}</p>
+                    <p>{{ $order->fullname }}</p>
                     <p>{{ $order->address->detail_address }}</p>
-                    <p class="mb-2">{{ $order->address->ward }}, {{ $order->address->district }},
-                        {{ $order->address->province }}</p>
+                    <p class="mb-2">{{ $order->ward->name_with_type }},
+                        {{ $order->district->name_with_type }},
+                        {{ $order->province->name_with_type }}</p>
                     <label class="font-semibold">Địa chỉ email</label>
-                    <p class="mb-2">{{ $order->user->email }}</p>
+                    <p class="mb-2">{{ $order->email }}</p>
                     <label class="font-semibold">Số điện thoại</label>
-                    <p>{{ $order->user->phone }}</p>
+                    <p>{{ $order->phone }}</p>
 
                 </div>
                 {{-- Giá trị 3 --}}
                 <div>
                     <h4 class="mb-2 text-lg font-semibold">Giao hàng</h4>
-                    <p>{{ $order->user->fullname }}</p>
-                    <p>{{ $order->address->detail_address }}</p>
-                    <p class="mb-2">{{ $order->address->ward }}, {{ $order->address->district }},
-                        {{ $order->address->province }}</p>
-                    <label class="font-semibold">Ghi chú</label>
-                    <p class="mb-2">{{ $order->notes }}</p>
+                    <label class="font-semibold">Phương thức thanh toán</label>
+                    <p class="mb-2">{{ $order->paymentMethod->name }}</p>
+                    @if ($order->notes)
+                        <label class="font-semibold">Ghi chú</label>
+                        <p class="mb-2">{{ $order->notes }}</p>
+                    @endif
                 </div>
             </div>
             <hr class="my-4 w-full">
             {{-- SẢN PHẨM --}}
-            <div class="grid grid-cols-2">
+            <div class="grid grid-cols-1 md:grid-cols-2">
                 {{-- sản phẩm --}}
                 <div>
                     <label class="mb-5 font-semibold">Sản phẩm</label> <br>
@@ -93,7 +98,7 @@
                     @endforeach
                 </div>
                 {{-- thanh toán --}}
-                <div class="ml-36">
+                <div class="mt-5 md:mt-0 md:ml-36">
                     <div class="mb-2 flex items-center justify-between gap-32 text-sm">
                         <p class="">Tạm tính</p>
                         <p class="font-medium">{{ number_format($order->amount) }}₫</p>
@@ -116,4 +121,27 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusSelect = document.getElementById('status');
+            const permissionSelect = document.getElementById('cancelled_reason');
+            console.log(statusSelect);
+
+            function toggleForm() {
+                if (statusSelect.value === 'cancelled') {
+                    permissionSelect.style.display = 'block';
+                } else {
+                    permissionSelect.style.display = 'none';
+                }
+            }
+
+            statusSelect.addEventListener('change', function() {
+                toggleForm();
+            });
+
+            toggleForm();
+        });
+    </script>
 @endsection

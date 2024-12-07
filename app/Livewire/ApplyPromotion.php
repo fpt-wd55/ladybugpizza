@@ -15,7 +15,7 @@ class ApplyPromotion extends Component
     public $discount = 0;
 
     public function applyPromotion()
-    {
+    { 
         $this->validate([
             'promotion_code' => 'required|string',
         ], [

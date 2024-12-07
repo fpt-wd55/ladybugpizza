@@ -2,15 +2,15 @@
 
 namespace Database\Seeders;
 
+use App\Models\AttributeValue;
 use App\Models\Cart;
-use App\Models\ProductAttribute;
+use App\Models\CartItem;
+use App\Models\CartItemAttribute;
+use App\Models\CartItemTopping;
+use App\Models\Product;
 use App\Models\Topping;
 use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
-use Illuminate\Support\Facades\DB;
 
 class CartSeeder extends Seeder
 {
@@ -19,22 +19,16 @@ class CartSeeder extends Seeder
      */
     public function run(): void
     {
-        $now = Carbon::now();
-
         $users = User::all();
-
-        $carts = [];
+        $products = Product::where('category_id', 1)
+            ->where('status', 1)
+            ->get();
 
         foreach ($users as $user) {
-            $carts[] = [
+            $cart = Cart::create([
                 'user_id' => $user->id,
-                'total' => rand(100, 500) * 1000,
-                // 'total_discount' => rand(100, 500) * 1000,
-                'created_at' => $now,
-                'updated_at' => $now,
-            ];
+                'total' => 0,
+            ]);
         }
-
-        Cart::insert($carts);
     }
 }
