@@ -35,7 +35,7 @@
                                 <div class="product-card flex items-start justify-between p-4">
                                     <div class="space-y-2 text-sm">
                                         <p class="font-medium">
-                                            <span class="code me-2 uppercase">{{ $code->promotion->name }}</span>
+                                            <span class=" me-2 uppercase">{{ $code->promotion->name }}</span>
                                         </p>
                                         <p class="font-medium">
                                             <span class="code me-2 uppercase">{{ $code->promotion->code }}</span>
