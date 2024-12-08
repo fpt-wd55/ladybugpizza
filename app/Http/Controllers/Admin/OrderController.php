@@ -91,13 +91,11 @@ class OrderController extends Controller
         $statuses = OrderStatus::pluck('slug')->toArray();
 
         $request->validate([
-            'status' => ['required', 'string', Rule::in($statuses)],
-            'cancelled_reason' => 'nullable|string',
+            'status' => ['required', 'string', Rule::in($statuses)], 
         ], [
             'status.required' => 'Trạng thái không được để trống.',
             'status.string' => 'Trạng thái không hợp lệ.',
-            'status.in' => 'Trạng thái không hợp lệ.',
-            'cancelled_reason.string' => 'Lý do hủy không đúng định dạng.',
+            'status.in' => 'Trạng thái không hợp lệ.', 
         ]);
 
         $newStatus = OrderStatus::where('slug', $request->status)->first();
@@ -113,6 +111,9 @@ class OrderController extends Controller
 
         $order->order_status_id = $newStatus->id;
         if ($newStatus->slug == 'cancelled') {
+            if (!isset($request->cancelled_reason)) {
+                return redirect()->back()->with('error', 'Vui lòng nhập lý do hủy.');
+            }
             $order->cancelled_reason = $request->cancelled_reason;
             $order->canceled_at = now();
         }

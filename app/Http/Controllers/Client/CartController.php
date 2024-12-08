@@ -48,7 +48,6 @@ class CartController extends Controller
             return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại sau!');
         }
 
-        // Kiem tra xem san pham da co trong gio hang chua 
         $cartItems = CartItem::where('cart_id', $cart->id)
             ->where('product_id', $product->id)
             ->get();
@@ -63,7 +62,6 @@ class CartController extends Controller
             $checkToppings = $this->checkToppings($cartItem, $validated);
 
             if ($checkAttributes && $checkToppings) {
-                // Cập nhật số lượng và giá nếu tìm thấy CartItem phù hợp
                 $cartItem->quantity += $validated['quantity'];
                 $amount = $this->calculateItemPrice($product, $validated, $attributes);
                 $cartItem->price += $amount;
@@ -76,7 +74,6 @@ class CartController extends Controller
             }
         }
 
-        // Thêm sản phẩm vào CartItem
         $cartItem = CartItem::create([
             'cart_id' => $cart->id,
             'product_id' => $product->id,
@@ -109,26 +106,6 @@ class CartController extends Controller
         $cart->save();
 
         return back()->with('success', 'Thêm sản phẩm vào giỏ hàng thành công!');
-    }
-
-    private function calculateItemPrice($product, $validated, $attributes)
-    {
-        $priceProduct = $product->price;
-        $priceAttribute = 0;
-        $priceTopping = 0;
-
-        foreach ($attributes as $attribute) {
-            $att = AttributeValue::find($validated['attributes_' . $attribute->slug]);
-            $priceAttribute += ($att->price_type == 1) ? $att->price : $product->price * $att->price / 100;
-        }
-
-        if (isset($validated['toppings'])) {
-            foreach ($validated['toppings'] as $topping) {
-                $priceTopping += Topping::find($topping)->price;
-            }
-        }
-
-        return ($priceProduct + $priceAttribute + $priceTopping) * $validated['quantity'];
     }
 
     private function checkAttributes($cartItem, $validated, $attributes)
@@ -183,6 +160,26 @@ class CartController extends Controller
         return redirect()->route('client.cart.index')->with('error', 'Xóa sản phẩm khỏi giỏ hàng thất bại');
     }
 
+    private function calculateItemPrice($product, $validated, $attributes)
+    {
+        $priceProduct = $product->discount_price == 0 ? $product->price : $product->discount_price;
+        $priceAttribute = 0;
+        $priceTopping = 0;
+
+        foreach ($attributes as $attribute) {
+            $att = AttributeValue::find($validated['attributes_' . $attribute->slug]);
+            $priceAttribute += ($att->price_type == 1) ? $att->price : $priceProduct * $att->price / 100;
+        }
+
+        if (isset($validated['toppings'])) {
+            foreach ($validated['toppings'] as $topping) {
+                $priceTopping += Topping::find($topping)->price;
+            }
+        }
+
+        return ($priceProduct + $priceAttribute + $priceTopping) * $validated['quantity'];
+    }
+
     public function updateCart($cart)
     {
         $cartItems = CartItem::where('cart_id', $cart->id)->get();
@@ -200,14 +197,14 @@ class CartController extends Controller
         }
 
         foreach ($cartItems as $cartItem) {
-            $priceProduct = $cartItem->product->price;
+            $priceProduct = $cartItem->product->discount_price == 0 ? $cartItem->product->price : $cartItem->product->discount_price;
             $priceAttribute = 0;
             $priceTopping = 0;
 
             if ($cartItem->attributes) {
                 foreach ($cartItem->attributes as $attribute) {
                     $att = AttributeValue::find($attribute->attribute_value_id);
-                    $priceAttribute += ($att->price_type == 1) ? $att->price : $cartItem->product->price * $att->price / 100;
+                    $priceAttribute += ($att->price_type == 1) ? $att->price : $priceProduct * $att->price / 100;
                 }
             }
 

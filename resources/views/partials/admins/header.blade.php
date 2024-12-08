@@ -128,11 +128,11 @@
     <div class="relative h-auto w-full max-w-2xl p-4">
         <div class="relative rounded-lg bg-white p-4 shadow sm:p-5">
             <div class="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5">
-                <h3 class="font-semibold text-gray-900 dark:text-white">
+                <h3 class="font-semibold text-gray-900 ">
                     Đăng xuất
                 </h3>
                 <button
-                    class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                    class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900  "
                     data-modal-toggle="logoutModal" type="button">
                     @svg('tabler-x', 'icon-sm')
                 </button>

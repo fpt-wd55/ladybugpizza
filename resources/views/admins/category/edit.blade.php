@@ -22,7 +22,7 @@
                                 id="image" name="image" type="file">
                         </div>
                         @error('image')
-                            <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Lỗi! </span>
+                            <p class="mt-2 text-sm text-red-600"><span class="font-medium">Lỗi! </span>
                                 {{ $message }}</p>
                         @enderror
                     </div>
@@ -32,7 +32,7 @@
                         <input type="text" name="name" id="name" value="{{ $category->name }}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                         @error('name')
-                            <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Lỗi! </span>
+                            <p class="mt-2 text-sm text-red-600"><span class="font-medium">Lỗi! </span>
                                 {{ $message }}</p>
                         @enderror
                     </div>
@@ -44,7 +44,7 @@
                                 <input type="checkbox" id="status-toggle" name="status" class="sr-only peer"
                                     {{ $category->status == 1 ? 'checked' : '' }} value="1">
                                 <div
-                                    class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                                    class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue-600">
                                 </div>
 
                             </label>

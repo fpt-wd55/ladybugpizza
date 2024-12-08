@@ -4,13 +4,14 @@ namespace Database\Seeders;
 
 use App\Models\Address;
 use App\Models\AttributeValue;
+use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderStatus;
 use App\Models\PaymentMethod;
-use App\Models\Product; 
+use App\Models\Product;
 use App\Models\Topping;
-use App\Models\User; 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
@@ -80,6 +81,27 @@ class OrderSeeder extends Seeder
                     ]);
                 }
             }
+        }
+
+        $timeLimit = now()->subDay();
+        $orders = Order::where('order_status_id', 4)
+            ->where('updated_at', '<=', $timeLimit)
+            ->get();
+
+        foreach ($orders as $order) {
+            // Cập nhật trạng thái đơn hàng
+            $order->order_status_id = 5;
+            $order->completed_at = now();
+            $order->save();
+
+            // Tạo hóa đơn
+            $dataInvoice = [
+                'order_id' => $order->id,
+                'invoice_number' => 'INV' . now()->format('Ymd') . '-' . $order->id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+            Invoice::create($dataInvoice); 
         }
     }
 }

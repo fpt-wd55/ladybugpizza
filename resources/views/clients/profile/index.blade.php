@@ -166,10 +166,10 @@
                                 <div class="relative h-auto w-full max-w-md p-4">
                                     <div class="relative rounded-lg bg-white p-4 shadow sm:p-5">
                                         <div class="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5">
-                                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                            <h3 class="text-lg font-semibold text-gray-900 ">
                                                 Hủy kích hoạt tài khoản
                                             </h3>
-                                            <button class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="inactiveModal" type="button">
+                                            <button class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 " data-modal-toggle="inactiveModal" type="button">
                                                 @svg('tabler-x', 'icon-sm')
                                             </button>
                                         </div>
@@ -179,7 +179,7 @@
                                             @method('PUT')
                                             <div class="mb-12 grid gap-4 sm:grid-cols-2">
                                                 <div class="col-span-2">
-                                                    <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white" for="name">Mật
+                                                    <label class="mb-2 block text-sm font-medium text-gray-900 " for="name">Mật
                                                         khẩu</label>
                                                     <input class="input" id="name" name="password" placeholder="" type="password" value="">
                                                     @error('password')

@@ -30,7 +30,8 @@ class AttributeValue extends Model
 
     public function price($product)
     {
-        return round(($this->price_type == 1 ? $this->price : ($this->price * $product->price) / 100) / 1000) * 1000;
+        $priceProduct = $product->discount_price == 0 ? $product->price : $product->discount_price;
+        return round(($this->price_type == 1 ? $this->price : ($this->price * $priceProduct) / 100) / 1000) * 1000;
     }
     
     public function cartItemAttributes()
