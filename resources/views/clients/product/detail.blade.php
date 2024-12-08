@@ -138,7 +138,9 @@
         <div class="sticky bottom-16 w-full border-t bg-white p-4 transition lg:bottom-0 lg:px-32">
             <div class="grid grid-cols-3 items-center justify-between">
                 @if ($product->status != 1)
-                    <div></div>
+                    <div>
+                        <p class="text-[#D30A0A] text-sm">Sản phẩm đã tạm ngưng kinh doanh</p>
+                    </div>
                 @else
                     <div class="block items-center justify-start md:flex">
                         <div class="inline-block w-28 rounded-md border border-gray-200 bg-white px-3 py-2">
@@ -165,8 +167,14 @@
                 @endif
 
                 <div class="flex items-center justify-center gap-4">
-                    <p class="text-sm line-through">{{ number_format($product->discount_price) }}đ</p>
-                    <p class="text-lg font-semibold md:text-xl" id="price">{{ number_format($product->price) }}đ</p>
+                    @if ($product->discount_price == 0)
+                        <p class="text-lg font-semibold md:text-xl" id="price">
+                            {{ number_format($product->price) }}đ</p>
+                    @else
+                        <p class="text-sm line-through">{{ number_format($product->price) }}đ</p>
+                        <p class="text-lg font-semibold md:text-xl" id="price">
+                            {{ number_format($product->discount_price) }}đ</p>
+                    @endif
                 </div>
 
                 <div class="flex items-center justify-end gap-2">

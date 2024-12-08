@@ -47,7 +47,7 @@
                         <div class="mb-4 py-4 w-full">
                             <label class="font-medium" for="avatar">Ảnh đại diện </label>
                             <input type="file" name="avatar" id="small_size"
-                                class=" mt-2 block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                                class=" mt-2 block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none ">
                             @error('avatar')
                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                             @enderror

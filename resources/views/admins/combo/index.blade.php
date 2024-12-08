@@ -65,13 +65,13 @@
                         aria-hidden="true"
                         class="fixed inset-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-modal md:h-full">
                         <div class="relative w-full h-full max-w-2xl md:h-auto">
-                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
+                            <div class="relative bg-white rounded-lg shadow ">
                                 <div class="flex items-start justify-between px-6 py-4 rounded-t">
-                                    <h3 class="text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                    <h3 class="text-lg font-semibold text-gray-500 ">
                                         Bộ lọc
                                     </h3>
                                     <button type="button"
-                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
                                         data-modal-toggle="filterDropdown">
                                         @svg('tabler-x', 'w-5 h-5')
                                     </button>
@@ -155,7 +155,7 @@
                                         @endfor
                                     </ul>
                                 </div>
-                                <div class="flex items-center p-6 space-x-4 rounded-b dark:border-gray-600">
+                                <div class="flex items-center p-6 space-x-4 rounded-b ">
                                     <button type="submit" class="button-red">
                                         Lọc combo
                                     </button>

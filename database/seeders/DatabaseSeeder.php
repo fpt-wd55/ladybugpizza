@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             MembershipRankSeeder::class,
             MembershipSeeder::class,
             OrderStatusSeeder::class,
-            ProductSeeder::class, // Check Check Check
+            ProductSeeder::class, 
             ToppingSeeder::class,
             PromotionSeeder::class,
             PromotionUserSeeder::class,

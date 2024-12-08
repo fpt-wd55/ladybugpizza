@@ -25,7 +25,7 @@
 
         <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
 
-            <div> 
+            <div>
                 <div class="mt-12 py-8 text-center">
                     <p class="vujahday-script-regular mb-6 text-center text-6xl">Menu</p>
                     @include('partials.clients.categories')
@@ -63,9 +63,16 @@
                                     <p class="{{ empty($product->description) ? 'min-h-12' : '' }} mb-4 line-clamp-2">
                                         {{ $product->description }}</p>
                                     <div class="bottom-4 flex items-center gap-3">
-                                        <p class="text-xs text-gray-500 line-through">{{ number_format($product->price) }}₫
-                                        </p>
-                                        <p class="font-semibold">{{ number_format($product->discount_price) }}₫</p>
+                                        @if ($product->discount_price == 0)
+                                            <p class="font-semibold">
+                                                {{ number_format($product->price) }}₫
+                                            </p>
+                                        @else
+                                            <p class="text-xs text-gray-500 line-through">
+                                                {{ number_format($product->price) }}₫
+                                            </p>
+                                            <p class="font-semibold">{{ number_format($product->discount_price) }}₫</p>
+                                        @endif
                                     </div>
                                 </div>
                             </a>

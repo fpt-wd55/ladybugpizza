@@ -17,34 +17,34 @@
             <span class="text-xs">Menu</span>
         </button>
 
-        <div aria-labelledby="drawer-right-label" class="fixed bottom-16 right-0 z-10 w-80 translate-x-full overflow-y-auto bg-white p-4 pt-16 transition-transform dark:bg-gray-800" id="menu" tabindex="-1">
+        <div aria-labelledby="drawer-right-label" class="fixed bottom-16 right-0 z-10 w-80 translate-x-full overflow-y-auto bg-white p-4 pt-16 transition-transform  " id="menu" tabindex="-1">
             <h5 class="text-gray-7 mb-4 inline-flex items-center text-sm" id="drawer-right-label">
                 Menu
             </h5>
-            <button aria-controls="menu" class="absolute end-2.5 top-2.5 inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white" data-drawer-hide="menu" type="button">
+            <button aria-controls="menu" class="absolute end-2.5 top-2.5 inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900  " data-drawer-hide="menu" type="button">
                 @svg('tabler-x', 'icon-sm')
             </button>
             <ul class="space-y-2 text-sm font-medium">
                 <li>
-                    <a class="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white" href="{{ route('client.dynamic-page', 've-chung-toi') }}">
+                    <a class="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 " href="{{ route('client.dynamic-page', 've-chung-toi') }}">
                         @svg('tabler-info-circle', 'icon-sm mr-2')
                         <span>Về chúng tôi</span>
                     </a>
                 </li>
                 <li>
-                    <a class="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white" href="{{ route('client.contact') }}">
+                    <a class="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 " href="{{ route('client.contact') }}">
                         @svg('tabler-phone', 'icon-sm mr-2')
                         <span>Liên hệ</span>
                     </a>
                 </li>
                 <li>
-                    <a class="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white" href="{{ route('client.dynamic-page', 'huong-dan-mua-hang') }}">
+                    <a class="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 " href="{{ route('client.dynamic-page', 'huong-dan-mua-hang') }}">
                         @svg('tabler-help', 'icon-sm mr-2')
                         <span>Hướng dẫn mua hàng</span>
                     </a>
                 </li>
                 <li>
-                    <a class="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white" href="{{ route('client.dynamic-page', 'chinh-sach-va-dieu-khoan') }}">
+                    <a class="flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 " href="{{ route('client.dynamic-page', 'chinh-sach-va-dieu-khoan') }}">
                         @svg('tabler-shield-check', 'icon-sm mr-2')
                         <span>Chính sách và điều khoản</span>
                     </a>

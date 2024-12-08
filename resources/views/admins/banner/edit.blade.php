@@ -15,7 +15,7 @@
                         class="focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900"
                         id="name" name="url" type="text" value="{{ $banner->url }}">
                     @error('url')
-                        <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Lỗi! </span>
+                        <p class="mt-2 text-sm text-red-600  "><span class="font-medium">Lỗi! </span>
                             {{ $message }}
                         </p>
                     @enderror
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     @error('is_local_page')
-                        <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Lỗi! </span>
+                        <p class="mt-2 text-sm text-red-600  "><span class="font-medium">Lỗi! </span>
                             {{ $message }}
                         </p>
                     @enderror
@@ -76,7 +76,7 @@
                             <input {{ $banner->status == 1 ? 'checked' : '' }} class="peer sr-only" id="status-toggle"
                                 name="status" type="checkbox" value="1">
                             <div
-                                class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-red-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none dark:border-gray-600 dark:bg-gray-700">
+                                class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-red-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none ">
                             </div>
 
                         </label>
