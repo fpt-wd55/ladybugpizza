@@ -6,7 +6,7 @@
     <section class="bg-white py-8 antialiased md:py-16">
         <div class="mx-auto max-w-2xl px-4 2xl:px-0">
             <h2 class="text-xl md:text-lg font-semibold text-green-600 mb-2">Cảm ơn bạn đã đặt hàng!</h2>
-            <p class="text-gray-500 mb-6 md:mb-8">Đơn hàng số <span class="text-[#D30A0A]">#{{ $order->id }}</span> sẽ được
+            <p class="text-gray-500 mb-6 md:mb-8">Đơn hàng số <span class="text-[#D30A0A]">#{{ $order->code }}</span> sẽ được
                 xử lý trong vòng 24
                 giờ trong ngày
                 làm việc. Chúng tôi sẽ thông báo cho bạn qua email khi đơn hàng của bạn đã được chuyển đi.</p>
@@ -37,9 +37,10 @@
                 </dl>
             </div>
             <div class="flex items-center space-x-4">
-                <a href="{{ route('client.product.menu') }}" class="button-red">Tiếp
+                <a href="{{ route('client.order.index') }}" class="button-red">Quản lý đơn hàng</a>
+                <a href="{{ route('client.product.menu') }}" class="button-light">Tiếp
                     tục mua hàng</a>
-                <a>
+
             </div>
     </section>
 @endsection

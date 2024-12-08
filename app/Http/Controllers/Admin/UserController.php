@@ -173,8 +173,18 @@ class UserController extends Controller
             // Xu ly upload anh va xoa anh cu
             if ($request->hasFile('avatar')) {
                 $avatar->storeAs('public/uploads/avatars', $avatar_name);
-                // if has file old avatar and old avatar is not default
-                if ($old_avatar != 'user-default.png' && $old_avatar != null) {
+
+                if ($old_avatar != null) {
+                    $is_default_avatar = false;
+                    for ($i = 1; $i <= 20; $i++) {
+                        if ($old_avatar == 'user-default-' . $i . '.png') {
+                            $is_default_avatar = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!$is_default_avatar) {
                     try {
                         unlink(storage_path('app/public/uploads/avatars/' . $old_avatar));
                     } catch (\Throwable $th) {
@@ -223,11 +233,11 @@ class UserController extends Controller
         }
 
         if (isset($request->filter_birthday_start)) {
-            $query->where('date_of_birth', '>=', $request->filter_birthday_start);
+            $query->whereDate('date_of_birth', '>=', $request->filter_birthday_start);
         }
 
         if (isset($request->filter_birthday_end)) {
-            $query->where('date_of_birth', '<=', $request->filter_birthday_end);
+            $query->whereDate('date_of_birth', '<=', $request->filter_birthday_end);
         }
 
         $users = $query->paginate(10);

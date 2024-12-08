@@ -13,6 +13,7 @@ class HomeController extends Controller
 
         $products = Product::where('is_featured', 1)
             ->where('category_id', 1)
+            ->where('status', 1)
             ->limit(6)
             ->get();
 

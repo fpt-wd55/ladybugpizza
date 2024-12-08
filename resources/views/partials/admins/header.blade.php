@@ -16,7 +16,7 @@
                 </a>
             </div>
             <div class="flex items-center">
-                <!-- Notifications -->
+                {{-- <!-- Notifications -->
                 <button type="button" data-dropdown-toggle="notification-dropdown"
                     class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 ring-0 focus:ring-0">
                     <span class="sr-only">Xem thông báo</span>
@@ -26,7 +26,7 @@
                         <span class="top-0 badge-noti">{{ $notifications }}</span>
                     @endif
                 </button>
-                <!-- Dropdown menu -->
+                <!-- Thong bao -->
                 <div class="hidden overflow-hidden z-50 my-4 max-w-sm list-none bg-white rounded divide-y divide-gray-100 shadow-lg text-sm"
                     id="notification-dropdown">
                     <div class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50">
@@ -73,7 +73,7 @@
                             Xem tất cả
                         </div>
                     </a>
-                </div>
+                </div> --}}
                 <button type="button" class="flex mx-3 bg-gray-800 rounded-full md:mr-0 ring-0 focus:ring-0"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                     <span class="sr-only">Open user menu</span>
@@ -81,7 +81,7 @@
                         <img src="{{ asset('storage/uploads/avatars/' . Auth::user()->avatar) }}" alt="User Avatar"
                             class="w-10 h-10 object-cover rounded-full">
                     @else
-                        <img src="{{ asset('storage/uploads/avatars/user-default.png') }}"
+                        <img src="{{ asset('storage/uploads/avatars/user-default-1.png') }}"
                             class="w-10 h-10 object-cover rounded-full">
                     @endif
                 </button>
@@ -102,10 +102,10 @@
                             <a href="{{ route('admin.profiles.index') }}" class="block py-2 px-4 hover:bg-gray-100">Tài
                                 khoản</a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="#" class="block py-2 px-4 hover:bg-gray-100">Cài
                                 đặt</a>
-                        </li>
+                        </li> --}}
                     </ul>
                     <ul class="py-1 text-gray-500" aria-labelledby="dropdown">
                         <li>

@@ -12,7 +12,6 @@ use App\Http\Controllers\Client\MembershipController;
 use App\Http\Controllers\Admin\MembershipController as AdminMembershipController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PromotionController;
-use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
@@ -50,17 +49,19 @@ Route::prefix('/')->group(function () {
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('client.product.show');
 
     Route::middleware('auth.check')->group(function () {
-        // Giỏ hàng
+        // Giỏ hàng 
         Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
         Route::post('/product/cart/{product}', [CartController::class, 'addToCart'])->name('client.product.add-to-cart');
         Route::delete('/product/cart/{cartItem}', [CartController::class, 'delete'])->name('client.product.delete-cart-item');
         // Thanh toán
         Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
         Route::post('/checkout', [CheckoutController::class, 'postCheckout'])->name('post-checkout');
-        Route::get('/thank_you', [CheckoutController::class, 'thankYou'])->name('thank_you');
-        // Đơn hàng
+        Route::get('/return-momo', [CheckoutController::class, 'returnMomo'])->name('return_momo');
+        Route::get('/thank-you/{order}', [CheckoutController::class, 'thankYou'])->name('thank_you');
+        // Đơn hàng 
         Route::get('/order', [OrderController::class, 'index'])->name('client.order.index');
-        Route::patch('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
+        Route::put('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
+        Route::put('order/{order}/received', [OrderController::class, 'confirmReceived'])->name('client.order.received');
         Route::post('/order/{order}/evaluation', [OrderController::class, 'evaluation'])->name('client.order.evaluation');
         // Profile
         Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile.index');
@@ -131,7 +132,7 @@ Route::prefix('/auth')->group(function () {
     Route::post('/recovery', [WebController::class, 'postRecovery'])->name('auth.post-recovery');
 });
 
-Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function () {
+Route::prefix('/admin')->middleware(['admin'])->name('admin.')->group(function () {
     Route::get('/', function () {
         return redirect()->route('admin.dashboard');
     });
@@ -216,7 +217,6 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
     Route::get('/membership/export', [AdminMembershipController::class, 'export'])->name('memberships.export');
     Route::post('/memberships/{membership}/status', [AdminMembershipController::class, 'updateStatus'])->name('memberships.updateStatus');
 
-    Route::resource('/transactions', TransactionController::class);
     Route::resource('/pages', AdminPageController::class);
     Route::resource('/logs', LogController::class);
     // profile
@@ -234,10 +234,6 @@ Route::prefix('admin')->middleware(['admin'])->name('admin.')->group(function ()
 
 // Share route
 Route::get('/invoices/{invoiceNumber}', [InvoiceController::class, 'show'])->name('invoices.show');
-
-// VNPay
-// Route::post('/payment', [VNPayController::class, 'createPayment'])->name('payment.create');
-// Route::get('/vnpay-return', [VNPayController::class, 'returnPayment'])->name('payment.return');
 
 Route::fallback(function () {
     return redirect()->route('errors.404');

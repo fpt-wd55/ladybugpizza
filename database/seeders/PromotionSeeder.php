@@ -41,11 +41,12 @@ class PromotionSeeder extends Seeder
 
 
         for ($i = 0; $i < 20; $i++) {
+            $now = Carbon::now();
             $discount_type = rand(1, 2);
             $discount_value = $discount_type == 1 ? rand(10, 50) : rand(50000, 100000);
-
-            $now = Carbon::now();
             $is_global = rand(1, 2);
+            $start_date = $now->startOfYear()->addDays(rand(0, 364));
+            $end_date = $start_date->copy()->addMonths(3);
             // Tạo mới một khuyến mãi
             Promotion::create([
                 'name' => $discountNames[array_rand($discountNames)],
@@ -53,16 +54,14 @@ class PromotionSeeder extends Seeder
                 'points' => rand(1, 10) * 50,
                 'discount_type' => $discount_type,
                 'discount_value' => $discount_value,
-                'start_date' => $now->subDays(rand(1, 365)),
-                'end_date' => $now->addDays(rand(1, 365)),
+                'start_date' => $start_date,
+                'end_date' => $end_date,
                 'quantity' => rand(1, 100),
                 'min_order_total' => rand(100, 500) * 1000,
                 'max_discount' => rand(100, 500) * 1000,
                 'is_global' => $is_global,
                 'rank_id' => $is_global == 1 ? null : $ranks->random()->id,
-                'status' => 1,
-                'created_at' => $now,
-                'updated_at' => $now,
+                'status' => 1, 
             ]);
         }
     }

@@ -175,11 +175,11 @@ class PromotionController extends Controller
         }
 
         if (isset($request->filter_date_min)) {
-            $query->where('start_date', '>=', $request->filter_date_min);
+            $query->whereDate('start_date', '>=', $request->filter_date_min);
         }
 
         if (isset($request->filter_date_max)) {
-            $query->where('end_date', '<=', $request->filter_date_max);
+            $query->whereDate('end_date', '<=', $request->filter_date_max);
         }
 
         $promotions = $query->paginate(10);

@@ -21,8 +21,9 @@ use Illuminate\Support\Facades\Auth;
 use Vanthao03596\HCVN\Models\District;
 use Vanthao03596\HCVN\Models\Province;
 use App\Http\Requests\EvaluationRequest;
-use App\Http\Requests\CancelOrderRequest;
+use App\Mail\Order as MailOrder; 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -67,7 +68,7 @@ class OrderController extends Controller
     public function postCancel(Order $order, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'canceled_reason' => 'required',
+            'cancelled_reason' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -77,8 +78,8 @@ class OrderController extends Controller
 
         $order = Order::query()->findOrFail($order['id']);
 
-        if ($order->orderStatus->id != 1 || isset($order)) {
-            return redirect()->back()->with('error', 'Đơn hàng đã xác nhận không thể hủy');
+        if ($order->order_status_id != 1) {
+            return redirect()->back()->with('error', 'Không thể hủy đơn hàng này!');
         }
 
         $orderItems = OrderItem::where('order_id', $order->id)->get();
@@ -95,13 +96,13 @@ class OrderController extends Controller
             5 => 'Tìm thấy giá rẻ hơn ở chỗ khác',
             6 => 'Đổi ý, không muốn mua nữa',
             7 => $request->input('reason'),
-        ]; 
-      
-        $selectedReason = $request->input('canceled_reason');
-        $order->canceled_reason = isset($reasons[$selectedReason]) ? $reasons[$selectedReason] : null;
+        ];
+
+        $selectedReason = $request->input('cancelled_reason');
+        $order->cancelled_reason = isset($reasons[$selectedReason]) ? $reasons[$selectedReason] : null;
         $order->order_status_id = 6;
         $order->canceled_at = now();
-        $order->save(); 
+        $order->save();
 
         // Trả lại số lượng sản phẩm
         foreach ($orderItems as $orderItem) {
@@ -127,6 +128,30 @@ class OrderController extends Controller
         }
 
         return redirect()->back()->with('success', 'Hủy đơn hàng thành công');
+    }
+
+    public function confirmReceived(Order $order)
+    {
+        $order = Order::findOrFail($order->id);
+        $order->order_status_id = 5;
+        $order->save();
+
+        // Tạo hóa đơn
+        $dataInvoice = [
+            'order_id' => $order->id,
+            'invoice_number' => 'INV' . now()->format('Ymd') . '-' . $order->id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+        Invoice::create($dataInvoice);
+
+        // Gửi email cảm ơn 
+        $userSetting = $order->user->setting;
+        if ($userSetting->email_order) {
+            Mail::to($order->email)->send(new MailOrder($order, 'Cảm ơn bạn đã mua hàng tại cửa hàng chúng tôi', 'mails.orders.completed'));
+        }
+
+        return redirect()->back()->with('success', 'Xác nhận đã nhận hàng thành công');
     }
 
     public function evaluation(EvaluationRequest $request, Order $order)

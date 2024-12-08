@@ -20,12 +20,9 @@ class CartSeeder extends Seeder
     public function run(): void
     {
         $users = User::all();
-        $products = Product::where('category_id', 1)
-            ->where('status', 1)
-            ->get();
 
         foreach ($users as $user) {
-            $cart = Cart::create([
+            Cart::create([
                 'user_id' => $user->id,
                 'total' => 0,
             ]);

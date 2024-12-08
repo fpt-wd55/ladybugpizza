@@ -36,33 +36,57 @@
                         <input type="text" name="search" class="input ps-10" placeholder="Tìm kiếm..." />
                     </div>
                 </form>
-                <div class="flex items-center space-x-3 w-full md:w-auto">
-                    <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
+                <div class="flex items-center w-full md:w-auto">
+                    <button data-modal-target="filterDropdown" data-modal-toggle="filterDropdown"
                         class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
                         type="button">
                         @svg('tabler-filter-filled', 'w-5 h-5 me-2')
                         Bộ lọc
-                        @svg('tabler-chevron-down', 'w-5 h-5 ms-3')
                     </button>
-                    <div id="filterDropdown" class="z-10 hidden w-96 p-3 bg-white rounded-lg shadow">
-                        <form action="{{ route('admin.memberships.filter') }}" aria-labelledby="filterDropdownButton">
-                            <h6 class="mb-3 text-sm font-medium text-gray-900">Thứ hạng</h6>
-                            <ul class="space-y-2 text-sm">
-                                @foreach ($ranks as $rank)
-                                    <li class="flex items-center">
-                                        <input type="checkbox" name="filter_rank[]" value="{{ $rank->id }}"
-                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                            @if (in_array($rank->id, request()->input('filter_rank', []))) checked @endif>
-                                        <label for="admin"
-                                            class="ml-2 text-sm font-medium text-gray-900">{{ $rank->name }}</label>
-                                    </li>
-                                @endforeach
-                            </ul>
-                            <button type="submit" class="button-red w-full mt-5">
-                                Lọc
-                            </button>
-                        </form>
-                    </div>
+                    <form action="{{ route('admin.memberships.filter') }}" method="get" id="filterDropdown" tabindex="-1"
+                        aria-hidden="true"
+                        class="fixed inset-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-modal md:h-full">
+                        <div class="relative w-full h-full max-w-2xl md:h-auto">
+                            <!-- Modal content -->
+                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
+                                <!-- Modal header -->
+                                <div class="flex items-start justify-between px-6 py-4 rounded-t">
+                                    <h3 class="text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                        Bộ lọc
+                                    </h3>
+                                    <button type="button"
+                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        data-modal-toggle="filterDropdown">
+                                        @svg('tabler-x', 'w-5 h-5')
+                                    </button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="px-4 md:px-6">
+                                    <h6 class="my-3 text-sm font-medium text-gray-900">Thứ hạng</h6>
+                                    <ul class="space-y-2 text-sm">
+                                        <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+                                            @foreach ($ranks as $rank)
+                                                <li class="flex items-center">
+                                                    <input type="checkbox" name="filter_rank[]" value="{{ $rank->id }}"
+                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
+                                                        @if (in_array($rank->id, request()->input('filter_rank', []))) checked @endif>
+                                                    <label for="admin"
+                                                        class="ml-2 text-sm font-medium text-gray-900">{{ $rank->name }}</label>
+                                                </li>
+                                            @endforeach
+                                        </div>
+                                    </ul>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="flex items-center p-6 space-x-4 rounded-b dark:border-gray-600">
+                                    <button type="submit" class="button-red">
+                                        Lọc dữ liệu
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

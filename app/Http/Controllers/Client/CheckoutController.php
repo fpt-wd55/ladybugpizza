@@ -17,7 +17,7 @@ use App\Models\OrderItemAttribute;
 use App\Models\OrderItemTopping;
 use App\Models\PaymentMethod;
 use App\Models\Product;
-use App\Models\Topping; 
+use App\Models\Topping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -80,7 +80,7 @@ class CheckoutController extends Controller
             if ($address->province != $request->province || $address->district != $request->district || $address->ward != $request->ward || $address->detail_address != $request->detail_address) {
                 $address = Address::create([
                     'user_id' => Auth::id(),
-                    'title' => 'Địa chỉ ' . Auth::user()->addresses->count() + 1,
+                    'title' => 'Địa chỉ gần đây' . Auth::user()->addresses->count() + 1,
                     'province' => $request->province,
                     'district' => $request->district,
                     'ward' => $request->ward,
@@ -102,7 +102,7 @@ class CheckoutController extends Controller
             'notes' => $request->notes ?? null,
             'payment_method_id' => $request->payment_method_id,
             'canceled_at' => null,
-            'canceled_reason' => null,
+            'cancelled_reason' => null,
             'fullname' => $request->fullname,
             'phone' => $request->phone,
             'email' => $request->email,
@@ -121,9 +121,8 @@ class CheckoutController extends Controller
             $orderInfo = "Thanh toán online qua MoMo";
             $amount = (int) ($data['amount'] + $data['shipping_fee'] - $data['discount_amount']);
             $orderId = $data['code'];
-            // $amount = 10000;
-            $redirectUrl = route('thank_you');
-            $ipnUrl = route('thank_you');
+            $redirectUrl = route('return_momo');
+            $ipnUrl = route('return_momo');
             $extraData = "";
 
             $requestId = time() . "";
@@ -156,9 +155,7 @@ class CheckoutController extends Controller
             // Gửi mail thông báo đặt hàng 
             $this->sendPaymentConfirmationEmail($order);
 
-            return view('clients.cart.thank_you', [
-                'order' => $order,
-            ]);
+            return redirect()->route('thank_you', $order->code);
         }
     }
 
@@ -210,7 +207,9 @@ class CheckoutController extends Controller
                 }
             }
 
-            $cart->delete();
+            // Xóa sản phẩm khỏi giỏ hàng
+            CartItem::where('cart_id', $cart->id)->delete();
+
             session()->forget('promotion');
             session()->forget('orderData');
         }
@@ -218,7 +217,7 @@ class CheckoutController extends Controller
         return $order;
     }
 
-    public function thankYou(Request $request)
+    public function returnMomo(Request $request)
     {
         // Kiểm tra nếu yêu cầu đến từ IPN (callback server)
         if ($request->has('transId')) {
@@ -232,16 +231,9 @@ class CheckoutController extends Controller
                 $order->order_status_id = 1;
                 $order->save();
 
-                // Lấy thông tin địa chỉ
-                $order->province =  Province::find($order->address->province);
-                $order->district = District::find($order->address->district);
-                $order->ward = Ward::find($order->address->ward);
-
                 $this->sendPaymentConfirmationEmail($order);
 
-                return view('clients.cart.thank_you', [
-                    'order' => $order,
-                ]);
+                return redirect()->route('thank_you', $order->code);
             } else {
                 return redirect()->route('client.order.index')->with('error', 'Thanh toán thất bại');
             }
@@ -250,19 +242,30 @@ class CheckoutController extends Controller
         return redirect()->route('client.order.index');
     }
 
-    private function sendPaymentConfirmationEmail($order)
+    public function thankYou($order)
     {
+        $order = Order::where('code', $order)->first();
         // Lấy thông tin địa chỉ
         $order->province =  Province::find($order->address->province);
         $order->district = District::find($order->address->district);
         $order->ward = Ward::find($order->address->ward);
 
-        // Gửi email xác nhận đặt hàng
-        $data = [
+        return view('clients.cart.thank_you', [
             'order' => $order,
-        ];
+        ]);
+    }
 
-        Mail::to($order->email)->send(new MailOrder($data));
+    private function sendPaymentConfirmationEmail($order)
+    {
+        $userSetting = $order->user->setting;
+        if ($userSetting->email_order) {
+            // Lấy thông tin địa chỉ
+            $order->province =  Province::find($order->address->province);
+            $order->district = District::find($order->address->district);
+            $order->ward = Ward::find($order->address->ward);
+            $subject = 'Thông báo xác nhận đơn hàng #' . $order->code;
+            Mail::to($order->email)->send(new MailOrder($order, $subject, 'mails.orders.waiting'));
+        }
     }
 
     public function execPostRequest($url, $data)

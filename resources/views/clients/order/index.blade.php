@@ -42,7 +42,7 @@
                             <dt class="text-sm text-gray-500">Mã đơn hàng:
                             </dt>
                             <dd class="mt-1.5 text-base font-semibold text-[#D30A0A]">
-                                #{{ $order->id }}
+                                #{{ $order->code }}
                             </dd>
                         </dl>
 
@@ -84,13 +84,21 @@
                         </dl>
 
                         <div class="w-full grid sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end gap-4">
-                            @if ($order->orderStatus->name == 'Chờ xác nhận')
+                            @if ($order->orderStatus->slug == 'waiting')
                                 <button type="button" data-modal-target="cancelOrder-modal-{{ $order->id }}"
                                     data-modal-toggle="cancelOrder-modal-{{ $order->id }}" class="button-red w-full">Huỷ
                                     đơn hàng</button>
                             @endif
 
-                            @if ($order->orderStatus->name === 'Hoàn thành' && $order->evaluations->isEmpty())
+                            @if ($order->orderStatus->slug == 'delivered')
+                                <button type="button" data-modal-target="confirmReceived-modal-{{ $order->id }}"
+                                    data-modal-toggle="confirmReceived-modal-{{ $order->id }}"
+                                    class="button-red w-full">
+                                    Đã nhận hàng
+                                </button>
+                            @endif
+
+                            @if ($order->orderStatus->slug === 'completed' && $order->evaluations->isEmpty())
                                 <button type="button" data-modal-target="reviewOrder-modal-{{ $order->id }}"
                                     data-modal-toggle="reviewOrder-modal-{{ $order->id }}"
                                     class="button-red w-full">Đánh
@@ -100,6 +108,37 @@
                             <button type="button" onclick="toggleAccordion({{ $order->id }})" class="button-light">
                                 @svg('tabler-info-circle', 'w-4 h-4')
                             </button>
+                        </div>
+                    </div>
+
+                    {{-- Đã nhận được hàng --}}
+                    <div id="confirmReceived-modal-{{ $order->id }}" tabindex="-1"
+                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                        <div class="relative p-4 w-full max-w-md max-h-full">
+                            <div class="relative bg-white rounded-lg shadow">
+                                <button type="button"
+                                    class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                    data-modal-hide="confirmReceived-modal-{{ $order->id }}">
+                                    @svg('tabler-x', 'w-4 h-4')
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                                <div class="p-10 text-center">
+                                    <div class="flex justify-center">
+                                        @svg('tabler-checks', 'w-12 h-12 text-green-600 text-center mb-2')
+                                    </div>
+                                    <h3 class="mb-7 font-normal">
+                                        Bạn có chắc chắn đã nhận được hàng?
+                                    </h3>
+
+                                    <form action="{{ route('client.order.received', $order) }}" method="POST" class="flex justify-center items-center">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="button-red">
+                                            Xác nhận đã nhận hàng
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -126,48 +165,48 @@
 
                                     <form action="{{ route('client.order.cancel', $order) }}" method="POST">
                                         @csrf
-                                        @method('PATCH')
+                                        @method('PUT')
 
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="1"
+                                            <input type="radio" name="cancelled_reason" value="1"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Muốn thay đổi địa chỉ giao hàng</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="2"
+                                            <input type="radio" name="cancelled_reason" value="2"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Muốn nhập/thay đổi mã Voucher</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="3"
+                                            <input type="radio" name="cancelled_reason" value="3"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Muốn thay đổi sản phẩm trong đơn hàng (size,
                                                 topping,...)</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="4"
+                                            <input type="radio" name="cancelled_reason" value="4"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Thủ tục thanh toán quá rắc rối</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="5"
+                                            <input type="radio" name="cancelled_reason" value="5"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Tìm thấy giá rẻ hơn ở chỗ khác</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input type="radio" name="canceled_reason" value="6"
+                                            <input type="radio" name="cancelled_reason" value="6"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, false)">
                                             <label class="text-sm">Đổi ý, không muốn mua nữa</label>
                                         </div>
                                         <div class="mb-2">
                                             <input type="radio" id="otherReason-{{ $order->id }}"
-                                                name="canceled_reason" value="7"
+                                                name="cancelled_reason" value="7"
                                                 class="mr-1 text-[#D30A0A] focus:ring-0"
                                                 onchange="toggleTextarea({{ $order->id }}, true)">
                                             <label class="text-sm" for="otherReason-{{ $order->id }}">Lý do khác
@@ -303,7 +342,7 @@
                     {{-- Chi tiết đơn hàng --}}
                     <div class="max-h-0 overflow-hidden transition" id="content-{{ $order->id }}">
                         <hr class="my-4">
-                        @if ($order->orderStatus->name === 'Hoàn thành' && $order->invoice)
+                        @if ($order->orderStatus->name === 'completed' && $order->invoice)
                             <div class="mb-4 flex">
                                 <a href="{{ route('invoices.show', $order->invoice->invoice_number) }}"
                                     class="button-red">Xem hóa
@@ -402,7 +441,8 @@
                                         </div>
                                         <div class="mb-4 flex items-center justify-between gap-32 text-sm">
                                             <p class="text-start">Giảm giá</p>
-                                            <p class="font-medium text-end">{{ number_format($order->discount_amount) }}₫</p>
+                                            <p class="font-medium text-end">{{ number_format($order->discount_amount) }}₫
+                                            </p>
                                         </div>
                                         <hr class="mb-2">
                                         <div class="mb-4 flex items-center justify-between gap-32">

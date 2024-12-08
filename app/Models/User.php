@@ -76,11 +76,6 @@ class User extends Authenticatable
         return $this->hasMany(Promotion::class, 'promotion_users');
     }
 
-    public function transactions()
-    {
-        return $this->hasMany(Transaction::class);
-    }
-
     public function evaluations()
     {
         return $this->hasMany(Evaluation::class);
@@ -126,12 +121,18 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notification::class);
     }
-        public function avatar()
-        {
-            if (filter_var($this->avatar, FILTER_VALIDATE_URL)) {
-                return $this->avatar;
-            }
 
-            return $this->avatar ? asset('storage/uploads/avatars/' . $this->avatar) : asset('images/default-avatar.jpg');
+    public function avatar()
+    {
+        if (filter_var($this->avatar, FILTER_VALIDATE_URL)) {
+            return $this->avatar;
         }
+
+        return $this->avatar ? asset('storage/uploads/avatars/' . $this->avatar) : asset('images/default-avatar.png');
+    }
+ 
+    public function setting()
+    {   
+        return $this->hasOne(UserSetting::class);
+    }
 }

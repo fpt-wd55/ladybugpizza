@@ -17,9 +17,8 @@ class EvaluationSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
-        $now = Carbon::now();
-        $faker = Faker::create();
+    { 
+        $faker = Faker::create('vi_VN');
 
         $products = Product::pluck('id')->toArray();
         $users = User::where('role_id', 2)->get();
@@ -53,9 +52,9 @@ class EvaluationSeeder extends Seeder
                     'order_id' => $orders->random()->id,
                     'rating' => rand(1, 5),
                     'comment' => $comment,
-                    'status' => 1,
-                    'created_at' => $now,
-                    'updated_at' => $now,
+                    'status' => 1, 
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
                 ]);
             }
         }

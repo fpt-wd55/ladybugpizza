@@ -27,7 +27,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->foreignId('payment_method_id')->constrained()->onDelete('cascade');
             $table->foreignId('order_status_id')->constrained()->onDelete('cascade');
-            $table->text('canceled_reason')->nullable();
+            $table->text('cancelled_reason')->nullable();
             $table->timestamp('canceled_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -13,9 +13,7 @@ class ToppingSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
-        $now = Carbon::now();
-
+    {  
         $toppings = [
             'Phô Mai Sữa Dê',
             'Phô Mai Mozzarella',
@@ -43,9 +41,7 @@ class ToppingSeeder extends Seeder
                 'image' => Str::slug($topping) . '.jpeg',
                 'price' => rand(10, 50) * 1000,
                 'quantity' => rand(10, 50),
-                'category_id' => 1,
-                'created_at' => $now,
-                'updated_at' => $now,
+                'category_id' => 1, 
             ]);
         }
     }
