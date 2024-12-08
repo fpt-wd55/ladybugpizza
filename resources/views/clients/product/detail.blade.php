@@ -135,7 +135,7 @@
         </div>
 
         {{-- Add to card bar --}}
-        <div class="sticky bottom-16 w-full border-t bg-white p-4 transition lg:bottom-0 lg:px-32">
+        <div class="sticky bottom-16 w-full border-t bg-white p-4 transition lg:bottom-0  md:px-32">
             <div class="grid grid-cols-3 items-center justify-between">
                 @if ($product->status != 1)
                     <div>
@@ -143,7 +143,7 @@
                     </div>
                 @else
                     <div class="block items-center justify-start md:flex">
-                        <div class="inline-block w-28 rounded-md border border-gray-200 bg-white px-3 py-2">
+                        <div class="inline-block w-20 md:w-28 rounded-md border border-gray-200 bg-white px-3 py-2">
                             <div class="flex items-center justify-center gap-x-1.5">
                                 <button aria-label="Decrease"
                                     class="size-6 inline-flex items-center justify-center gap-x-2 rounded-md border border-gray-200 bg-white text-sm font-medium text-gray-800 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
@@ -177,7 +177,7 @@
                     @endif
                 </div>
 
-                <div class="flex items-center justify-end gap-2">
+                <div class="flex items-center justify-end gap-1 md:gap-2">
                     <a class="{{ $favorites->contains($product->id) ? 'button-red' : 'button-light' }}"
                         href="{{ route('client.product.post-favorite', $product->slug) }}" type="submit">
                         @svg('tabler-heart', 'md:me-2 icon-sm')
