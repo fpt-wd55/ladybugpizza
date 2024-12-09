@@ -17,7 +17,7 @@
                             <span style="color: red ">{{ $message }}</span>
                         @enderror
                     </div>
-                    {{-- description --}}
+                    {{-- points --}}
                     <div>
                         <label for="points" class="label-lg">Điểm</label>
                         <input type="number" name="points" class="input h-10 mb-2" value="{{ old('points') }}" />
@@ -118,7 +118,7 @@
                     <div>
                         <label for="is_global" class="label-lg">Đối tượng áp dụng <span
                                 class="text-red-500">*</span></label>
-                        <select name="is_global" class="select">
+                        <select name="is_global" class="select mb-2">
                             <option value="">Chọn</option>
                             <option value="1"
                                 {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>

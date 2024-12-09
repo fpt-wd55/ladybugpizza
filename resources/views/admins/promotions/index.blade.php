@@ -211,18 +211,18 @@
                                                 data-modal-target="detail-modal-{{ $promotion->id }}"
                                                 data-modal-toggle="detail-modal-{{ $promotion->id }}">Chi tiết </a>
                                         </li>
-                                        <li>
-                                            @if (!$promotion->orders()->where('order_status_id', 4)->exists())
+                                        @if (!$promotion->orders()->exists())
+                                            <li>
                                                 <a href="{{ route('admin.promotions.edit', $promotion->id) }}"
                                                     class="cursor-pointer block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Cập
                                                     nhật</a>
-                                            @endif
-                                        </li>
-                                        <li>
-                                            <a href="#" data-modal-target="delete-modal-{{ $promotion->id }}"
-                                                data-modal-toggle="delete-modal-{{ $promotion->id }}"
-                                                class="cursor-pointer block py-2 px-4 text-sm text-red-500 hover:bg-gray-100">Xóa</a>
-                                        </li>
+                                            </li>
+                                            <li>
+                                                <a href="#" data-modal-target="delete-modal-{{ $promotion->id }}"
+                                                    data-modal-toggle="delete-modal-{{ $promotion->id }}"
+                                                    class="cursor-pointer block py-2 px-4 text-sm text-red-500 hover:bg-gray-100">Xóa</a>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                             </td>
