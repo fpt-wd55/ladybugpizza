@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         Artisan::call('hcvn:install');
         $this->call([
+            PageSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
             AddressSeeder::class,
@@ -33,7 +34,6 @@ class DatabaseSeeder extends Seeder
             OrderSeeder::class,
             BannerSeeder::class,
             EvaluationSeeder::class,
-            PageSeeder::class,
             InvoiceSeeder::class,
             FaqSeeder::class,
             UserSettingSeeder::class,

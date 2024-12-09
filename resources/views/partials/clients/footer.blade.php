@@ -27,8 +27,9 @@
                 </li>
                 @foreach ($pages as $page)
                     <li>
-                        <a class="text-sm transition hover:text-red-500" href="{{ route('client.dynamic-page', $page->slug) }}">{{ $page->title }}</a>
-                        </li>
+                        <a class="text-sm transition hover:text-red-500"
+                            href="{{ route('client.dynamic-page', $page->slug) }}">{{ $page->title }}</a>
+                    </li>
                 @endforeach
             </ul>
         </div>
