@@ -8,7 +8,7 @@
             <form action="{{ route('admin.combos.update', $combo) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <div class="grid gap-4 mb-4 sm:grid-cols-1">
+                <div class="grid gap-4 mb-2 sm:grid-cols-1">
                     <div class="grid gap-4 mb-4 sm:grid-cols-3">
                         <div>
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên
@@ -49,6 +49,8 @@
                     </div>
                     <div class="grid gap-4 mb-4 sm:grid-cols-2">
                         <div>
+                            <label for="is_featured" class="block mb-2 text-sm font-medium text-gray-900 ">Ảnh combo <span
+                                    class="text-red-500">*</span></label>
                             <div class="flex gap-3">
                                 <a class="shrink-0" data-fslightbox="gallery"
                                     href="{{ asset('storage/uploads/combos/' . $combo->image) }}">
@@ -139,7 +141,9 @@
                             </div>
                         </div>
                         <div>
-                            <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50">
+                            <label for="is_featured" class="block mb-2 text-sm font-medium text-gray-900 ">Mô tả <span
+                                    class="text-red-500">*</span></label>
+                            <div class="w-full border border-gray-200 rounded-lg bg-gray-50">
                                 <textarea id="wysiwygeditor" name="description">{{ old('description', $combo->description) }}</textarea>
                             </div>
                             @error('description')
