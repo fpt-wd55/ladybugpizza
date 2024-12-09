@@ -21,7 +21,7 @@ class BannerRequest extends FormRequest
      */
     public function rules(): array
     {
-      
+
         if ($this->isMethod('post')) {
             return $this->forCreate();
         } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
@@ -55,7 +55,7 @@ class BannerRequest extends FormRequest
         return [
             'image.required' => 'Bắt buộc chọn ảnh.',
             'image.mimes' => 'Ảnh bắt buộc phải đúng định dạng.',
-            'url.required' => 'url chưa nhập.',
+            'url.required' => 'Url chưa nhập.',
             'url.string' => 'Yêu cầu giá trị của url phải là một chuỗi.',
             'is_local_page.required' => 'Bắt buộc chọn local page.',
         ];
