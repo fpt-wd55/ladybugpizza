@@ -17,6 +17,8 @@ use App\Models\OrderItemAttribute;
 use App\Models\OrderItemTopping;
 use App\Models\PaymentMethod;
 use App\Models\Product;
+use App\Models\Promotion;
+use App\Models\PromotionUser;
 use App\Models\Topping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -210,7 +212,15 @@ class CheckoutController extends Controller
             // Xóa sản phẩm khỏi giỏ hàng
             CartItem::where('cart_id', $cart->id)->delete();
 
-            session()->forget('promotion');
+            // Xóa mã giảm giá khỏi bảng promotion_users nếu tồn tại mã giảm giá
+            if (session('promotion')) {
+                $promotion = PromotionUser::where('promotion_id', session('promotion')['id'])->where('user_id', Auth::id())->first();
+                if ($promotion) { 
+                    $promotion->delete();
+                }
+                session()->forget('promotion');
+            }
+
             session()->forget('orderData');
         }
 
