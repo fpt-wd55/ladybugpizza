@@ -110,14 +110,10 @@ class PromotionController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Promotion $promotion)
-<<<<<<< HEAD
-    { 
-=======
     {
         if ($promotion->orders()->exists()) {
             return redirect()->back()->with('error', 'Không thể xóa mã giảm giá đã được áp dụng cho đơn hàng!');
         }
->>>>>>> 6c70ab5c8dd55df0222fc92f92cab77be2cd74af
         if ($promotion->delete()) {
             return redirect()->back()->with('success', 'Xóa mã giảm giá thành công');
         } else {
