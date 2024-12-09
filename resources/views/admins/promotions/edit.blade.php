@@ -13,8 +13,9 @@
                 <div class="w-full mb-2 grid grid-cols-3 gap-2">
                     {{-- name --}}
                     <div>
-                        <label for="name" class="label-lg">Tên <span class="text-red-500">*</span></label>
-                        <input type="text" name="name" class="input h-10 mb-2" value="{{ $editPromotion->name }}" />
+                        <label for="name" class="label-lg">Tên mã giảm giá <span class="text-red-500">*</span></label>
+                        <input type="text" name="name" class="input h-10 mb-2" value="{{ $editPromotion->name }}"
+                            placeholder="VD: Pizza yêu thích giảm 10%" />
                         @error('name')
                             <span style="color: red ">{{ $message }}</span>
                         @enderror
@@ -22,7 +23,8 @@
                     {{-- description --}}
                     <div>
                         <label for="points" class="label-lg">Điểm</span></label>
-                        <input type="number" name="points" class="input h-10 mb-2" value="{{ $editPromotion->points }}" />
+                        <input type="number" name="points" class="input h-10 mb-2" value="{{ $editPromotion->points }}"
+                            placeholder="VD: 50" />
                         @error('points')
                             <span style="color: red ">{{ $message }}</span>
                         @enderror
@@ -52,7 +54,7 @@
                     <div>
                         <label for="discount_value" class="label-lg">Giá trị giảm giá <span
                                 class="text-red-500">*</span></label>
-                        <input type="text" name="discount_value" class="input h-10 mb-2"
+                        <input type="text" name="discount_value" class="input h-10 mb-2" placeholder="VD: 10"
                             value="{{ $editPromotion->discount_value }}" />
                         @error('discount_value')
                             <span style="color: red ">{{ $message }}</span>
@@ -80,7 +82,7 @@
                     <div>
                         <label for="quantity" class="label-lg">Số lượng <span class="text-red-500">*</span></label>
                         <input type="number" name="quantity" class="input h-10 mb-2"
-                            value="{{ $editPromotion->quantity }}" />
+                            value="{{ $editPromotion->quantity }}" placeholder="VD: 14" />
                         @error('quantity')
                             <span style="color: red ">{{ $message }}</span>
                         @enderror
@@ -88,7 +90,7 @@
                     {{-- min_order_total --}}
                     <div>
                         <label for=" min_order_total" class="label-lg">Đơn hàng tối thiểu (₫)</label>
-                        <input type="text" name="min_order_total" class="input h-10 mb-2"
+                        <input type="text" name="min_order_total" class="input h-10 mb-2" placeholder="VD: 100000"
                             value="{{ $editPromotion->min_order_total }}" />
                         @error('min_order_total')
                             <span style="color: red ">{{ $message }}</span>
@@ -97,7 +99,7 @@
                     {{-- max_discount --}}
                     <div>
                         <label for="max_discount" class="label-lg">Giảm tối đa (₫)</label>
-                        <input type="text" name="max_discount" class="input h-10 mb-2"
+                        <input type="text" name="max_discount" class="input h-10 mb-2" placeholder="VD: 50000"
                             value="{{ $editPromotion->max_discount }}" />
                         @error('max_discount')
                             <span style="color: red ">{{ $message }}</span>
@@ -125,7 +127,7 @@
                     </div>
                     <div>
                         <label for="code" class="label-lg">Mã giảm giá <span class="text-red-500">*</span></label>
-                        <input type="text" name="code" class="input h-10 mb-2"
+                        <input type="text" name="code" class="input h-10 mb-2" placeholder="VD: I4o492Pohw"
                             value="{{ $editPromotion->code }}" />
                         @error('code')
                             <span style="color: red ">{{ $message }}</span>

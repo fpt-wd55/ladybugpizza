@@ -21,7 +21,7 @@ Breadcrumbs::for('admin.users.create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('admin.users.edit', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('admin.users.index');
-    $trail->push('Chỉnh sửa', route('admin.users.edit', $user));
+    $trail->push('Cập nhật', route('admin.users.edit', $user));
 });
 
 Breadcrumbs::for('admin.users.show', function (BreadcrumbTrail $trail, $user) {
@@ -42,7 +42,7 @@ Breadcrumbs::for('admin.categories.create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('admin.categories.edit', function (BreadcrumbTrail $trail, $category) {
     $trail->parent('admin.categories.index');
-    $trail->push('Chỉnh sửa', route('admin.categories.edit', $category));
+    $trail->push('Cập nhật', route('admin.categories.edit', $category));
 });
 
 Breadcrumbs::for('admin.trash.listcate', function (BreadcrumbTrail $trail) {
@@ -63,7 +63,7 @@ Breadcrumbs::for('admin.combos.create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('admin.combos.edit', function (BreadcrumbTrail $trail, $combo) {
     $trail->parent('admin.combos.index');
-    $trail->push('Chỉnh sửa', route('admin.combos.edit', $combo));
+    $trail->push('Cập nhật', route('admin.combos.edit', $combo));
 });
 
 
@@ -111,7 +111,7 @@ Breadcrumbs::for('admin.attributes.create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('admin.attributes.edit', function (BreadcrumbTrail $trail, $attribute) {
     $trail->parent('admin.attributes.index');
-    $trail->push('Chỉnh sửa', route('admin.attributes.edit', $attribute));
+    $trail->push('Cập nhật', route('admin.attributes.edit', $attribute));
 });
 
 Breadcrumbs::for('admin.trash-attributes', function (BreadcrumbTrail $trail) {
@@ -131,7 +131,7 @@ Breadcrumbs::for('admin.banners.create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('admin.banners.edit', function (BreadcrumbTrail $trail, $banner) {
     $trail->parent('admin.banners.index');
-    $trail->push('Chỉnh sửa', route('admin.banners.edit', $banner));
+    $trail->push('Cập nhật', route('admin.banners.edit', $banner));
 });
 
 Breadcrumbs::for('admin.trash.listBanner', function (BreadcrumbTrail $trail) {
@@ -167,11 +167,11 @@ Breadcrumbs::for('admin.promotions.edit', function (BreadcrumbTrail $trail, $pro
 // Đơn hàng
 Breadcrumbs::for('admin.orders.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
-    $trail->push('Đơn hàng', route('admin.promotions.index'));
+    $trail->push('Đơn hàng', route('admin.orders.index'));
 });
 Breadcrumbs::for('admin.orders.edit', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.orders.index');
-    $trail->push('Sửa trạng thái đơn hàng', route('admin.promotions.index'));
+    $trail->push('Cập nhật', route('admin.orders.index'));
 });
 
 // Product
@@ -187,7 +187,7 @@ Breadcrumbs::for('admin.products.create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('admin.products.edit', function (BreadcrumbTrail $trail, $product) {
     $trail->parent('admin.products.index');
-    $trail->push('Chỉnh sửa', route('admin.products.edit', $product));
+    $trail->push('Cập nhật', route('admin.products.edit', $product));
 });
 
 Breadcrumbs::for('admin.products.show', function (BreadcrumbTrail $trail, $product) {
@@ -202,7 +202,7 @@ Breadcrumbs::for('admin.product.trash', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('admin.products.evaluation', function (BreadcrumbTrail $trail, $product) {
     $trail->parent('admin.products.index');
-    $trail->push('Đánh giá sản phẩm', route('admin.products.evaluation', $product));
+    $trail->push('Đánh giá', route('admin.products.evaluation', $product));
 });
 
 // Chat
@@ -226,7 +226,7 @@ Breadcrumbs::for('admin.pages.create', function (BreadcrumbTrail $trail) {
 });
 Breadcrumbs::for('admin.pages.edit', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.pages.index');
-    $trail->push('Sửa', route('admin.pages.index'));
+    $trail->push('Cập nhật', route('admin.pages.index'));
 });
 Breadcrumbs::for('admin.trash-pages', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.pages.index');

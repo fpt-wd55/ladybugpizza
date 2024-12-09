@@ -16,7 +16,7 @@
                     class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                     <a href="{{ route('admin.toppings.create') }}" class="button-blue">
                         @svg('tabler-plus', 'w-5 h-5 mr-2')
-                        Thêm Topping
+                        Thêm topping
                     </a>
                     <a href="{{ route('admin.trash-topping') }}" class="button-red">
                         @svg('tabler-trash', 'w-5 h-5 mr-2')

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Cập nhật đơn hàng')
+@section('title', 'Đơn hàng | Cập nhật')
 
 @section('content')
     {{ Breadcrumbs::render('admin.orders.edit') }}
@@ -37,7 +37,7 @@
                             @enderror
                         </div>
                         <div class="mt-6 flex justify-start gap-2">
-                            <button class="button-red" type="submit">Cập nhật</button>
+                            <button class="button-red" type="submit">Cập nhật đơn hàng</button>
                             <a class="button-gray" href="{{ route('admin.orders.index') }}">Quay lại</a>
                         </div>
                     </form>
@@ -135,7 +135,7 @@
                 } else {
                     permissionSelect.style.display = 'none';
                 }
- 
+
                 setTimeout(() => {
                     permissionSelect.style.transition = 'all 0.5s';
                 }, 100);

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Người dùng | Chi tiết')
+@section('title', 'Tài khoản | Chi tiết')
 @section('content')
     {{ Breadcrumbs::render('admin.users.show', $user) }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden p-4">
