@@ -83,6 +83,9 @@ class PromotionController extends Controller
      */
     public function update(PromotionRequest $request, Promotion $promotion)
     {
+        if ($promotion->orders()->exists()) {
+            return redirect()->back()->with('error', 'Không thể cập nhật mã giảm giá đã được áp dụng cho đơn hàng!');
+        }
         $data = $request->all();
         if (strpos($data['is_global'], '|') !== false) {
             [$data['is_global'], $data['rank_id']] = explode('|', $data['is_global']);
@@ -108,6 +111,9 @@ class PromotionController extends Controller
      */
     public function destroy(Promotion $promotion)
     {
+        if ($promotion->orders()->exists()) {
+            return redirect()->back()->with('error', 'Không thể xóa mã giảm giá đã được áp dụng cho đơn hàng!');
+        }
         if ($promotion->delete()) {
             return redirect()->back()->with('success', 'Xóa mã giảm giá thành công');
         } else {
