@@ -36,7 +36,7 @@
     </div>
     <hr>
     <div class="flex items-center justify-between pt-4">
-        <p class="text-center text-sm">© 2021 Ladybug Pizza. All rights reserved.</p>
+        <p class="text-center text-sm">© 2024 Ladybug Pizza. All rights reserved.</p>
         <div class="flex items-center gap-4">
             <a class="transition hover:text-red-500" href="#" target="_blank">@svg('tabler-brand-facebook', 'icon-md')</a>
             <a class="transition hover:text-red-500" href="#" target="_blank">@svg('tabler-brand-instagram', 'icon-md')</a>
