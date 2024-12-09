@@ -10,7 +10,8 @@
             <div class="mb-4 grid gap-4 gap-x-5 sm:grid-cols-2">
                 {{-- url --}}
                 <div>
-                    <label class="mb-2 block text-base font-medium text-gray-900" for="url">Url</label>
+                    <label class="mb-2 block text-base font-medium text-gray-900" for="url">Url <span
+                            class="text-red-500">*</span></label>
                     <input
                         class="focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900"
                         id="name" name="url" type="text" value="{{ $banner->url }}">
@@ -23,7 +24,8 @@
                 {{-- end url --}}
                 {{-- local page --}}
                 <div class="">
-                    <label class="mb-3 block text-base font-medium text-gray-900" for="url">Đường dẫn trang</label>
+                    <label class="mb-3 block text-base font-medium text-gray-900" for="url">Đường dẫn trang <span
+                            class="text-red-500">*</span></label>
                     <div class="flex gap-x-3">
                         <div class="">
                             <input {{ $banner->is_local_page == 1 ? 'checked' : '' }} class="input-radio" id="local"
@@ -49,7 +51,8 @@
                 {{-- end local page --}}
                 {{-- image --}}
                 <div class="mb-3">
-                    <label class="mb-2 block text-base font-medium text-gray-900" for="image">Ảnh banner</label>
+                    <label class="mb-2 block text-base font-medium text-gray-900" for="image">Ảnh banner <span
+                            class="text-red-500">*</span></label>
                     <input accept="image/*"
                         class="mb-4 block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none"
                         id="imageInput" name="image" type="file">
