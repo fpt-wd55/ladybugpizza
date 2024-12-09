@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Combo | Thêm combo')
+@section('title', 'Combo | Thêm mới')
 @section('content')
     {{ Breadcrumbs::render('admin.combos.create') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
@@ -12,8 +12,8 @@
                         <div>
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên
                                 combo <span class="text-red-500">*</span></label>
-                            <input type="text" name="name" id="name" placeholder="Tên combo"
-                                value="{{ old('name') }}"
+                            <input type="text" name="name" id="name"
+                                placeholder="VD: Mua 1 Tặng 1 - Tiết Kiệm Nhân Đôi" value="{{ old('name') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                             @error('name')
                                 <p class="mt-2 text-sm text-red-600 ">
@@ -25,7 +25,7 @@
                             <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá bán thường
                                 (₫) <span class="text-red-500">*</span></label>
                             <input type="number" name="price" id="price" value="{{ old('price') }}"
-                                placeholder="Giá bán thường" min="0"
+                                placeholder="VD: 300000" min="0"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                             @error('price')
                                 <p class="mt-2 text-sm text-red-600 ">
@@ -36,7 +36,7 @@
                         <div>
                             <label for="discount_price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá khuyến
                                 mãi (₫) <span class="text-red-500">*</span></label>
-                            <input type="number" name="discount_price" id="discount_price" placeholder="Giá khuyến mãi"
+                            <input type="number" name="discount_price" id="discount_price" placeholder="VD: 270000"
                                 value="{{ old('discount_price') }}" min="0"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                             @error('discount_price')
@@ -49,8 +49,8 @@
                     <div class="grid gap-4 mb-4 sm:grid-cols-2">
                         <div>
                             <div>
-                                <label for="is_featured" class="block mb-2 text-sm font-medium text-gray-900 ">Ảnh combo <span
-                                        class="text-red-500">*</span></label>
+                                <label for="is_featured" class="block mb-2 text-sm font-medium text-gray-900 ">Ảnh combo
+                                    <span class="text-red-500">*</span></label>
                                 <div class="flex items-center justify-center w-full mb-4 ">
                                     <label for="dropzone-file"
                                         class="flex flex-col items-center justify-center w-full h-20 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
@@ -75,7 +75,7 @@
                                 <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số lượng <span
                                         class="text-red-500">*</span></label>
                                 <input type="number" name="quantity" id="quantity" value="{{ old('quantity') }}"
-                                    placeholder="Số lượng" min="0"
+                                    placeholder="VD: 12" min="0"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('quantity')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -87,7 +87,7 @@
                                 <label for="sku" class="block mb-2 text-sm font-medium text-gray-900 ">Mã combo <span
                                         class="text-red-500">*</span></label>
                                 <input type="text" name="sku" id="sku" value="{{ old('sku') }}"
-                                    placeholder="Mã combo"
+                                    placeholder="VD: ZDZ9316939"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('sku')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -148,7 +148,7 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-4 mt-5">
-                    <a href="{{ route('admin.combos.index') }}" class="button-dark">
+                    <a href="{{ route('admin.combos.index') }}" class="button-gray">
                         Quay lại
                     </a>
                     <button type="submit" class="button-blue">

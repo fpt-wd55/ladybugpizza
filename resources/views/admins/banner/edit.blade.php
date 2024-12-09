@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Banner | Chỉnh sửa')
+@section('title', 'Banner | Cập nhật')
 @section('content')
     {{ Breadcrumbs::render('admin.banners.edit', $banner) }}
     <div class="mx-auto p-4">
@@ -14,7 +14,8 @@
                             class="text-red-500">*</span></label>
                     <input
                         class="focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900"
-                        id="name" name="url" type="text" value="{{ $banner->url }}">
+                        id="name" name="url" type="text" value="{{ $banner->url }}"
+                        placeholder="VD: ladybugpizza.vn/banner/">
                     @error('url')
                         <p class="mt-2 text-sm text-red-600  "><span class="font-medium">Lỗi! </span>
                             {{ $message }}
@@ -90,7 +91,7 @@
             </div>
             <div class="mt-7 flex items-center space-x-4">
                 <button class="button-red" type="submit">
-                    Cập Nhật
+                    Cập nhật banner
                 </button>
                 <a href="{{ route('admin.banners.index') }}">
                     <button class="button-gray" type="button">Quay Lại</button>

@@ -12,9 +12,9 @@
                         <div class="grid gap-4 mb-4 sm:grid-cols-3">
                             {{-- tieu de --}}
                             <div>
-                                <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Tiêu đề <span
+                                <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Tiêu đề trang <span
                                         class="text-red-500">*</span></label>
-                                <input type="text" name="title" id="title" placeholder="Tiêu đề"
+                                <input type="text" name="title" id="title" placeholder="VD: Giới thiệu"
                                     value="{{ old('title') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('title')
@@ -26,8 +26,8 @@
                             {{-- đường dẫn --}}
                             <div>
                                 <label for="slug" class="block mb-2 text-sm font-medium text-gray-900 ">Đường
-                                    dẫn <span class="text-red-500">*</span></label>
-                                <input type="text" name="slug" id="slug" placeholder="Đường dẫn"
+                                    dẫn trang <span class="text-red-500">*</span></label>
+                                <input type="text" name="slug" id="slug" placeholder="VD: gioi-thieu"
                                     value="{{ old('slug') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('slug')

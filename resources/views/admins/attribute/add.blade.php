@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Thuộc tính | Thêm thuộc tính')
+@section('title', 'Thuộc tính | Thêm mới')
 @section('content')
     {{ Breadcrumbs::render('admin.attributes.create') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
@@ -12,7 +12,7 @@
                         <div>
                             <label for="attribute_name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên thuộc
                                 tính <span class="text-red-500">*</span></label>
-                            <input type="text" name="attribute_name" id="attribute_name" placeholder="Tên thuộc tính"
+                            <input type="text" name="attribute_name" id="attribute_name" placeholder="VD: Loại đế"
                                 value="{{ old('attribute_name') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                             @error('attribute_name')

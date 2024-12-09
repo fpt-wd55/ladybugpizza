@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Danh sách đơn hàng')
+@section('title', 'Đơn hàng')
 
 @section('content')
     {{ Breadcrumbs::render('admin.orders.index') }}

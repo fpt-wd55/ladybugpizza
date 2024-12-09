@@ -9,7 +9,7 @@
                 <div>
                     <label for="url" class="block mb-2 text-base font-medium text-gray-900 ">Url <span
                             class="text-red-500">*</span></label>
-                    <input type="text" name="url" id="name" value="{{ old('url') }}"
+                    <input type="text" name="url" id="name" value="{{ old('url') }}" placeholder="VD: ladybugpizza.vn/banner/"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:border-primary-600 block w-full p-2.5">
                     @error('url')
                         <p class="mt-2 text-sm text-red-600  "><span class="font-medium">Lỗi! </span>
@@ -78,7 +78,7 @@
             </div>
             <div class="flex items-center space-x-4 mt-7">
                 <button type="submit" class="button-blue">
-                    Thêm mới
+                    Thêm banner
                 </button>
                 <a href="{{ route('admin.banners.index') }}">
                     <button type="button" class="button-gray">Quay Lại</button>

@@ -13,7 +13,7 @@
                             <div>
                                 <label for="username" class="block mb-2 text-sm font-medium text-gray-900 ">Tên tài
                                     khoản <span class="text-red-500">*</span></label>
-                                <input type="text" name="username" id="username" placeholder="Tên tài khoản"
+                                <input type="text" name="username" id="username" placeholder="VD: ladybugpizza"
                                     value="{{ old('username') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('username')
@@ -25,7 +25,7 @@
                             <div>
                                 <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 ">Họ và
                                     tên <span class="text-red-500">*</span></label>
-                                <input type="text" name="fullname" id="fullname" placeholder="Họ và tên"
+                                <input type="text" name="fullname" id="fullname" placeholder="VD: Trần Văn A"
                                     value="{{ old('fullname') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('fullname')
@@ -37,8 +37,7 @@
                             <div>
                                 <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Mật khẩu <span
                                         class="text-red-500">*</span></label>
-                                <input type="password" name="password" id="password" placeholder="Mật khẩu"
-                                    value="{{ old('password') }}"
+                                <input type="password" name="password" id="password" value="{{ old('password') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('password')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -53,7 +52,7 @@
                             <div>
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email <span
                                         class="text-red-500">*</span></label>
-                                <input type="text" name="email" id="email" placeholder="email@domain.com"
+                                <input type="text" name="email" id="email" placeholder="VD: ladybugpizza@gmail.com"
                                     value="{{ old('email') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('email')
@@ -65,7 +64,7 @@
                             <div>
                                 <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Số điện
                                     thoại <span class="text-red-500">*</span></label>
-                                <input type="text" name="phone" id="phone" placeholder="0123456789"
+                                <input type="text" name="phone" id="phone" placeholder="VD: 0123456789"
                                     value="{{ old('phone') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('phone')
