@@ -116,8 +116,8 @@ class ProductController extends Controller
             'sku' => trim(strtoupper($request->sku)),
             'status' => isset($request->status) ? $request->status : 2,
             'is_featured' => isset($request->is_featured) ? $request->is_featured : 2,
-            'avg_rating' => 0,
-            'total_rating' => 0,
+            'avg_rating' => $request->has('avg_rating') ? $request->avg_rating : $product->avg_rating,
+            'total_rating' => $request->has('total_rating') ? $request->total_rating : $product->total_rating,
         ];
 
         // Lưu vào database
@@ -125,7 +125,7 @@ class ProductController extends Controller
             // Xử lý lưu ảnh
             if ($request->hasFile('image')) {
                 $image->storeAs('public/uploads/products', $image_name);
-                // Kiểm tra tồn tại ảnh cũ 
+                // Kiểm tra tồn tại ảnh cũ
                 if (file_exists(storage_path('app/public/uploads/products/' . $old_image))) {
                     unlink(storage_path('app/public/uploads/products/' . $old_image));
                 }
