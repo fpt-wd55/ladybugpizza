@@ -107,7 +107,7 @@ class PromotionController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Promotion $promotion)
-    {
+    { 
         if ($promotion->delete()) {
             return redirect()->back()->with('success', 'Xóa mã giảm giá thành công');
         } else {

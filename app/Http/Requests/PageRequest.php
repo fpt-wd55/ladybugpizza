@@ -38,7 +38,7 @@ class PageRequest extends FormRequest
                 'required',
                 'string',
                 'unique:pages,slug',
-                'regex:/^[a-z0-9-]+$/', // Chỉ chấp nhận chữ cái thường, số và dấu gạch ngang
+                'regex:/^[a-z0-9-]+$/',
             ],
             'content' => 'required'
         ];
@@ -52,7 +52,7 @@ class PageRequest extends FormRequest
             'slug' => [
                 'required',
                 'string',
-                'regex:/^[a-z0-9-]+$/', // Chỉ chấp nhận chữ cái thường, số và dấu gạch ngang
+                'regex:/^[a-z0-9-]+$/',
             ],
             'content' => 'required'
         ];
