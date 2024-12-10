@@ -13,13 +13,16 @@
 
                     <div class="col-span-1 mb-8 flex flex-col items-center gap-4">
                         {{-- update info form --}}
-                        <form action="{{ route('client.profile.post-update') }}" class="mb-8" enctype="multipart/form-data" method="POST">
+                        <form action="{{ route('client.profile.post-update') }}" class="mb-8" enctype="multipart/form-data"
+                            method="POST">
                             @csrf
                             @method('PUT')
-                            <img alt="" id="avatar-preview" class="img-circle img-lg object-cover" height="150" loading="lazy" src="{{ Auth::user()->avatar() }}" width="150">
+                            <img alt="" id="avatar-preview" class="img-circle img-lg object-cover" height="150"
+                                loading="lazy" src="{{ Auth::user()->avatar() }}" width="150">
 
                             <!-- Input để upload file -->
-                            <input class="hidden" id="avatar" onchange="previewAvatar(event)" name="avatar" type="file">
+                            <input class="hidden" id="avatar" onchange="previewAvatar(event)" name="avatar"
+                                type="file">
                             <label class="button-dark mt-4 cursor-pointer" for="avatar">Chọn ảnh</label>
 
                             @error('avatar')
@@ -36,7 +39,8 @@
                         <div class="mb-6">
                             <div class="mb-2 flex items-center gap-8">
                                 <label class="font w-32 text-sm font-medium">Họ và tên:</label>
-                                <input class="input" name="fullname" type="text" value="{{ old('fullname', $user->fullname) }}">
+                                <input class="input" name="fullname" type="text"
+                                    value="{{ old('fullname', $user->fullname) }}">
                             </div>
                             @error('fullname')
                                 <p class="text-right text-sm text-red-500">{{ $message }}</p>
@@ -45,7 +49,8 @@
                         <div class="mb-6">
                             <div class="mb-2 flex items-center gap-8">
                                 <label class="font w-32 text-sm font-medium">Email:</label>
-                                <input class="input" name="email" type="email" value="{{ old('email', $user->email) }}">
+                                <input class="input" name="email" type="email"
+                                    value="{{ old('email', $user->email) }}">
                             </div>
                             @error('email')
                                 <p class="text-right text-sm text-red-500">{{ $message }}</p>
@@ -54,7 +59,8 @@
                         <div class="mb-6">
                             <div class="mb-2 flex items-center gap-8">
                                 <label class="font w-32 text-sm font-medium">Số điện thoại:</label>
-                                <input class="input" name="phone" type="text" value="{{ old('phone', $user->phone) }}">
+                                <input class="input" name="phone" type="text"
+                                    value="{{ old('phone', $user->phone) }}">
                             </div>
                             @error('phone')
                                 <p class="text-right text-sm text-red-500">{{ $message }}</p>
@@ -65,15 +71,18 @@
                                 <p class="font w-32 text-sm font-medium">Giới tính:</p>
                                 <div class="flex items-center gap-4 text-sm">
                                     <label for="male">
-                                        <input {{ $user->gender == 1 ? 'checked' : '' }} class="input-radio" id="male" name="gender" type="radio" value="male">
+                                        <input {{ $user->gender == 1 ? 'checked' : '' }} class="input-radio" id="male"
+                                            name="gender" type="radio" value="1">
                                         Nam
                                     </label>
                                     <label for="female">
-                                        <input {{ $user->gender == 2 ? 'checked' : '' }} class="input-radio" id="female" name="gender" type="radio" value="female">
+                                        <input {{ $user->gender == 2 ? 'checked' : '' }} class="input-radio" id="female"
+                                            name="gender" type="radio" value="2">
                                         Nữ
                                     </label>
                                     <label for="other">
-                                        <input {{ $user->gender == 3 ? 'checked' : '' }} class="input-radio" id="other" name="gender" type="radio" value="other">
+                                        <input {{ $user->gender == 3 ? 'checked' : '' }} class="input-radio" id="other"
+                                            name="gender" type="radio" value="3">
                                         Khác
                                     </label>
                                 </div>
@@ -84,11 +93,12 @@
                         </div>
                         <div class="mb-2 flex items-center gap-8">
                             <label class="w-32 text-sm font-medium">Ngày sinh:</label>
-                            <input class="input" name="date_of_birth" type="date" value="{{ old('date_of_birth', $user->date_of_birth) }}">
+                            <input class="input" name="date_of_birth" type="date"
+                                value="{{ old('date_of_birth', $user->date_of_birth) }}">
                         </div>
                         @error('date_of_birth')
-                        <p class="text-right text-sm text-red-500">{{ $message }}</p>
-                    @enderror
+                            <p class="text-right text-sm text-red-500">{{ $message }}</p>
+                        @enderror
 
                         <div class="mt-4 mb-6 flex justify-end">
                             <button class="button-red" type="submit">
@@ -155,21 +165,27 @@
                                 trữ, bạn có thể khôi phục lại bất kỳ lúc nào</p>
                             <p class="mb-4 text-sm">Chúng tôi sẽ yêu cầu mật khẩu để xác nhận hành động này</p>
                             <div class="mb-6 flex justify-end">
-                                <button class="button-red" data-modal-target="inactiveModal" data-modal-toggle="inactiveModal" type="submit">
+                                <button class="button-red" data-modal-target="inactiveModal"
+                                    data-modal-toggle="inactiveModal" type="submit">
                                     @svg('tabler-lock', 'icon-sm me-2')
                                     Huỷ kích hoạt
                                 </button>
                             </div>
 
                             {{-- Inactive Modal --}}
-                            <div aria-hidden="true" class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full" id="inactiveModal" tabindex="-1">
+                            <div aria-hidden="true"
+                                class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full"
+                                id="inactiveModal" tabindex="-1">
                                 <div class="relative h-auto w-full max-w-md p-4">
                                     <div class="relative rounded-lg bg-white p-4 shadow sm:p-5">
-                                        <div class="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5">
+                                        <div
+                                            class="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5">
                                             <h3 class="text-lg font-semibold text-gray-900 ">
                                                 Hủy kích hoạt tài khoản
                                             </h3>
-                                            <button class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 " data-modal-toggle="inactiveModal" type="button">
+                                            <button
+                                                class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 "
+                                                data-modal-toggle="inactiveModal" type="button">
                                                 @svg('tabler-x', 'icon-sm')
                                             </button>
                                         </div>
@@ -179,9 +195,11 @@
                                             @method('PUT')
                                             <div class="mb-12 grid gap-4 sm:grid-cols-2">
                                                 <div class="col-span-2">
-                                                    <label class="mb-2 block text-sm font-medium text-gray-900 " for="name">Mật
+                                                    <label class="mb-2 block text-sm font-medium text-gray-900 "
+                                                        for="name">Mật
                                                         khẩu</label>
-                                                    <input class="input" id="name" name="password" placeholder="" type="password" value="">
+                                                    <input class="input" id="name" name="password" placeholder=""
+                                                        type="password" value="">
                                                     @error('password')
                                                         <p class="text-sm text-red-500">{{ $message }}</p>
                                                     @enderror
@@ -191,7 +209,8 @@
                                                 <button class="button-red w-full" type="submit">
                                                     Xác nhận
                                                 </button>
-                                                <button class="button-dark w-full" data-modal-hide="inactiveModal" type="button">
+                                                <button class="button-dark w-full" data-modal-hide="inactiveModal"
+                                                    type="button">
                                                     Huỷ
                                                 </button>
                                             </div>

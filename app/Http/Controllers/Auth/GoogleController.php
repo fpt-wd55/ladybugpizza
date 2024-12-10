@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
+use App\Models\Membership;
 use App\Models\User;
+use App\Models\UserSetting;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController extends Controller
@@ -21,15 +25,16 @@ class GoogleController extends Controller
             try {
                 $googleUser = Socialite::driver('google')->user();
             } catch (Exception $e) {
+                Log::error('Google OAuth Error: ' . $e->getMessage());
                 return redirect()->route('auth.login')->with('error', 'Lỗi xác thực từ Google');
             }
 
             $user = User::where('email', $googleUser->email)
-            ->orWhere('google_id', $googleUser->getId())
-            ->first();
+                ->orWhere('google_id', $googleUser->getId())
+                ->first();
 
             if (!$user) {
-                $newUser = User::create([
+                $user = User::create([
                     'fullname' => $googleUser->getName(),
                     'email' => $googleUser->getEmail(),
                     'username' => $this->processString($googleUser->getName()),
@@ -38,7 +43,29 @@ class GoogleController extends Controller
                     'role_id' => 2,
                 ]);
 
-                Auth::login($newUser);
+                // Thêm giỏ hàng mặc định cho user
+                Cart::create([
+                    'user_id' => $user->id,
+                    'total' => 0,
+                ]);
+
+                // Thêm bảng member cho user
+                Membership::create([
+                    'user_id' => $user->id,
+                    'points' => 0,
+                    'rank_id' => 1,
+                    'total_spent' => 0,
+                ]);
+
+                // Thêm bảng setting cho user
+                UserSetting::create([
+                    'user_id' => $user->id,
+                    'email_order' => true,
+                    'email_promotions' => true,
+                    'email_security' => true,
+                ]);
+
+                Auth::login($user);
 
                 return redirect()->route('client.home')->with('success', 'Đăng nhập thành công');
             } else {
@@ -51,25 +78,75 @@ class GoogleController extends Controller
         }
     }
 
-    function processString($input) {
+    function processString($input)
+    {
 
         $transliteration = [
-            'à' => 'a', 'á' => 'a', 'ạ' => 'a', 'ả' => 'a', 'ã' => 'a', 'â' => 'a', 'ầ' => 'a', 'ấ' => 'a', 'ậ' => 'a', 'ẩ' => 'a', 'ẫ' => 'a',
-            'è' => 'e', 'é' => 'e', 'ẹ' => 'e', 'ẻ' => 'e', 'ẽ' => 'e', 'ê' => 'e', 'ề' => 'e', 'ế' => 'e', 'ệ' => 'e', 'ể' => 'e', 'ễ' => 'e',
-            'ì' => 'i', 'í' => 'i', 'ị' => 'i', 'ỉ' => 'i', 'ĩ' => 'i',
-            'ò' => 'o', 'ó' => 'o', 'ọ' => 'o', 'ỏ' => 'o', 'õ' => 'o', 'ô' => 'o', 'ồ' => 'o', 'ố' => 'o', 'ộ' => 'o', 'ổ' => 'o', 'ỗ' => 'o',
-            'ù' => 'u', 'ú' => 'u', 'ụ' => 'u', 'ủ' => 'u', 'ũ' => 'u', 'ư' => 'u', 'ừ' => 'u', 'ứ' => 'u', 'ự' => 'u', 'ử' => 'u', 'ữ' => 'u',
-            'ỳ' => 'y', 'ý' => 'y', 'ỵ' => 'y', 'ỷ' => 'y', 'ỹ' => 'y',
-            'Đ' => 'D', 'đ' => 'd',
+            'à' => 'a',
+            'á' => 'a',
+            'ạ' => 'a',
+            'ả' => 'a',
+            'ã' => 'a',
+            'â' => 'a',
+            'ầ' => 'a',
+            'ấ' => 'a',
+            'ậ' => 'a',
+            'ẩ' => 'a',
+            'ẫ' => 'a',
+            'è' => 'e',
+            'é' => 'e',
+            'ẹ' => 'e',
+            'ẻ' => 'e',
+            'ẽ' => 'e',
+            'ê' => 'e',
+            'ề' => 'e',
+            'ế' => 'e',
+            'ệ' => 'e',
+            'ể' => 'e',
+            'ễ' => 'e',
+            'ì' => 'i',
+            'í' => 'i',
+            'ị' => 'i',
+            'ỉ' => 'i',
+            'ĩ' => 'i',
+            'ò' => 'o',
+            'ó' => 'o',
+            'ọ' => 'o',
+            'ỏ' => 'o',
+            'õ' => 'o',
+            'ô' => 'o',
+            'ồ' => 'o',
+            'ố' => 'o',
+            'ộ' => 'o',
+            'ổ' => 'o',
+            'ỗ' => 'o',
+            'ù' => 'u',
+            'ú' => 'u',
+            'ụ' => 'u',
+            'ủ' => 'u',
+            'ũ' => 'u',
+            'ư' => 'u',
+            'ừ' => 'u',
+            'ứ' => 'u',
+            'ự' => 'u',
+            'ử' => 'u',
+            'ữ' => 'u',
+            'ỳ' => 'y',
+            'ý' => 'y',
+            'ỵ' => 'y',
+            'ỷ' => 'y',
+            'ỹ' => 'y',
+            'Đ' => 'D',
+            'đ' => 'd',
         ];
-    
+
         $input = strtr($input, $transliteration);
-        
+
         $input = preg_replace('/[^a-zA-Z0-9]/', '', $input);
-    
+
         $randomNumber = rand(1, 99);
         $processed = strtolower($input) . $randomNumber;
-    
+
         return $processed;
     }
 }

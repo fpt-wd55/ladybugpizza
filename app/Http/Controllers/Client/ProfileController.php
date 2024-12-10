@@ -38,37 +38,48 @@ class ProfileController extends Controller
 	{
 		$user = Auth::user();
 
-		// Khởi tạo một mảng chứa các trường cần cập nhật
-		$data = [];
 		// Kiểm tra xem người dùng có tải lên avatar không
 		if ($request->hasFile('avatar')) {
 			$file = $request->file('avatar');
-			$name = $file->getClientOriginalName();
-			$file->move('storage/uploads/avatars', $name);
-			$data['avatar'] = $name;
-		}
-		// Xử lý giới tính
-		$gender = null;
-		if ($request->gender == 'male') {
-			$gender = 1;
-		} elseif ($request->gender == 'female') {
-			$gender = 2;
-		} elseif ($request->gender == 'other') {
-			$gender = 3;
+			$name = time() . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $file->getClientOriginalExtension();
 		}
 
-		// Cập nhật thông tin người dùng
-		$data['fullname'] = $request->fullname;
-		$data['email'] = $request->email;
-		$data['phone'] = $request->phone;
-		$data['date_of_birth'] = $request->date_of_birth;
-		$data['gender'] = $gender;
+		// Cập nhật thông tin người dùng  
+		$dataUpdate = [
+			'fullname' => $request->fullname,
+			'email' => $request->email,
+			'phone' => $request->phone,
+			'date_of_birth' => $request->date_of_birth,
+			'gender' => $request->gender,
+			'avatar' => $name ?? $user->avatar,
+		];
 
-		if (!$user->update($data)) {
-			return redirect()->back()->with('error', 'Cập nhật thông tin thất bại');
+		if ($user->update($dataUpdate)) {
+			// Xu ly upload anh va xoa anh cu
+			if ($request->hasFile('avatar')) {
+				$file->storeAs('public/uploads/avatars', $name);
+
+				if ($user->avatar != null) {
+					$is_default_avatar = false;
+					for ($i = 1; $i <= 20; $i++) {
+						if ($user->avatar == 'user-default-' . $i . '.png') {
+							$is_default_avatar = true;
+							break;
+						}
+					}
+				}
+
+				if (!$is_default_avatar) {
+					try {
+						unlink(storage_path('app/public/uploads/avatars/' . $user->avatar));
+					} catch (\Throwable $th) {
+						return redirect()->route('client.profile.index')->with('success', 'Cập nhật thông tin thành công');
+					}
+				}
+			}
+			return redirect()->route('client.profile.index')->with('success', 'Cập nhật thông tin thành công');
 		}
-
-		return redirect()->route('client.profile.index')->with('success', 'Cập nhật thông tin thành công');
+		return redirect()->back()->with('error', 'Cập nhật thông tin thất bại');
 	}
 
 	public function postChangePassword(ChangeRequest $request)

@@ -89,6 +89,8 @@ class WebController extends Controller
             $name = $file->getClientOriginalName();
             $file->move('storage/uploads/avatars', $name);
             $userData['avatar'] = $name;
+        } else {
+            $userData['avatar'] = 'user-default-' . rand(1, 20) . '.png';
         }
 
         $user = User::create(array_merge($userData, [
@@ -128,8 +130,11 @@ class WebController extends Controller
             'user_id' => $user->id,
             'email_order' => true,
             'email_promotions' => true,
-            'email_security' => true, 
+            'email_security' => true,
         ]);
+
+        // remove session
+        $request->session()->forget('register');
 
         return redirect()->route('auth.login')->with('success', 'Đăng ký thành công');
     }

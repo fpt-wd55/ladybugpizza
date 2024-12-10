@@ -10,7 +10,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-
         $products = Product::where('is_featured', 1)
             ->where('category_id', 1)
             ->where('status', 1)

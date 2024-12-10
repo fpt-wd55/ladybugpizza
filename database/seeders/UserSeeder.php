@@ -93,7 +93,7 @@ class UserSeeder extends Seeder
                 'phone' => $item['phone'],
                 'password' => Hash::make($item['email']),
                 'google_id' => null,
-                'avatar' => 'admin-default.png',
+                'avatar' => 'user-default-' . rand(1, 20) . '.png',
                 'date_of_birth' => $item['date_of_birth'],
                 'gender' => $item['gender'],
                 'status' => 1,
