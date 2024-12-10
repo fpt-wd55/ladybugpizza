@@ -75,15 +75,9 @@
                     </a>
 
                     <button class="hover:cursor-pointer">
-                        @if (Auth::user()->avatar && file_exists(public_path('storage/uploads/avatars/' . Auth::user()->avatar)))
-                            <img src="{{ asset('storage/uploads/avatars/' . Auth::user()->avatar) }}" alt="User Avatar"
-                                class="img-circle h-10 w-10 object-cover" data-dropdown-toggle="userDropdown"
-                                loading="lazy">
-                        @else
-                            <img src="{{ asset('storage/uploads/avatars/user-default-1.png') }}"
+                            <img src="{{ Auth::user()->avatar() }}"
                                 class="img-circle h-8 w-8 object-cover" data-dropdown-toggle="userDropdown"
                                 loading="lazy">
-                        @endif
                     </button>
 
                     {{-- User dropdown --}}

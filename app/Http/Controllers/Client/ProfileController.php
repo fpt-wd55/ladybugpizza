@@ -37,7 +37,7 @@ class ProfileController extends Controller
 	public function postUpdate(UpdateUserRequest $request)
 	{
 		$user = Auth::user();
-
+		$old_avatar = $user->avatar;
 		// Kiểm tra xem người dùng có tải lên avatar không
 		if ($request->hasFile('avatar')) {
 			$file = $request->file('avatar');
@@ -57,12 +57,12 @@ class ProfileController extends Controller
 		if ($user->update($dataUpdate)) {
 			// Xu ly upload anh va xoa anh cu
 			if ($request->hasFile('avatar')) {
-				$file->storeAs('public/uploads/avatars', $name);
+				$file->move(storage_path('app/public/uploads/avatars'), $name);
 
-				if ($user->avatar != null) {
+				if ($old_avatar != null) {
 					$is_default_avatar = false;
 					for ($i = 1; $i <= 20; $i++) {
-						if ($user->avatar == 'user-default-' . $i . '.png') {
+						if ($old_avatar == 'user-default-' . $i . '.png') {
 							$is_default_avatar = true;
 							break;
 						}
@@ -71,7 +71,7 @@ class ProfileController extends Controller
 
 				if (!$is_default_avatar) {
 					try {
-						unlink(storage_path('app/public/uploads/avatars/' . $user->avatar));
+						unlink(storage_path('app/public/uploads/avatars/' . $old_avatar));
 					} catch (\Throwable $th) {
 						return redirect()->route('client.profile.index')->with('success', 'Cập nhật thông tin thành công');
 					}

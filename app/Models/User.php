@@ -128,11 +128,11 @@ class User extends Authenticatable
             return $this->avatar;
         }
 
-        return $this->avatar ? asset('storage/uploads/avatars/' . $this->avatar) : asset('images/default-avatar.png');
+        return $this->avatar ? asset('storage/uploads/avatars/' . $this->avatar) : asset('storage/uploads/avatars/user-default-1.png');
     }
- 
+
     public function setting()
-    {   
+    {
         return $this->hasOne(UserSetting::class);
     }
-}
+} 

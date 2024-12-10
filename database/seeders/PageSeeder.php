@@ -30,11 +30,7 @@ class PageSeeder extends Seeder
                     </div>
                     <p class="playwrite-gb-s-regular mb-6 text-lg uppercase">Giờ mở cửa &amp; Địa điểm</p>
                     <div class="mt-8"><span class="font-bold">Thứ Hai - Thứ Năm </span>: 10h s&aacute;ng - 8h tối <br><span class="font-bold">Thứ S&aacute;u</span>: 12h trưa - 12h đ&ecirc;m <br><span class="font-bold">Thứ Bảy</span>: 11h s&aacute;ng - 12h đ&ecirc;m <br><span class="font-bold">Chủ Nhật</span>: 11h s&aacute;ng - 10h tối</div>
-                    </div>
-                    <div class="flex justify-center"><a href="{{ route("client.product.menu") }}"><button class="button-primary mt-12 uppercase">Đặt ngay</button></a></div>
-                    </div>
-                    <div class="mt-10 grid grid-cols-2 gap-4 md:gap-8"><img class="rounded-md" src="{{ asset("storage/uploads/products/pizza/pizza_pesto_burrata.jpeg") }}" alt="" loading="lazy"> <img class="rounded-md" src="{{ asset("storage/uploads/products/pizza/pizza_pesto_burrata.jpeg") }}" alt="" loading="lazy"> <img class="rounded-md" src="{{ asset("storage/uploads/products/pizza/pizza_pesto_burrata.jpeg") }}" alt="" loading="lazy"> <img class="rounded-md" src="{{ asset("storage/uploads/products/pizza/pizza_pesto_burrata.jpeg") }}" alt="" loading="lazy"></div>
-                    </div>    
+                    </div>   
                 ',
                 'status' => 1,
                 'created_at' => now(),

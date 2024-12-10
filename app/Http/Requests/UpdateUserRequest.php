@@ -25,16 +25,17 @@ class UpdateUserRequest extends FormRequest
         $profileId = Auth::id();
         return [
             'fullname' => 'required|string|max:255',
-			'email' => 'required|email|max:255|unique:users,email,'.$profileId,
-			'phone' => 'required|string|digits:10|regex:/^\d+$/|unique:users,phone,'.$profileId,
-			'gender' => 'nullable|string',
-			'date_of_birth' => 'required|date|before_or_equal:today',
-			'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'email' => 'required|email|max:255|unique:users,email,' . $profileId,
+            'phone' => 'required|string|digits:10|regex:/^\d+$/|unique:users,phone,' . $profileId,
+            'gender' => 'nullable|string',
+            'date_of_birth' => 'required|date|before_or_equal:today',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ];
     }
 
-    public function messages():array {
-        return[
+    public function messages(): array
+    {
+        return [
             'fullname.required' => 'Họ và tên không được để trống',
             'fullname.string' => 'Họ và tên phải là chuỗi ký tự',
             'phone.required' => 'Số điện thoại không được để trống',
@@ -49,7 +50,6 @@ class UpdateUserRequest extends FormRequest
             'avatar.max' => 'Dung lượng ảnh đại diện không được vượt quá 2MB',
             'date_of_birth.before_or_equal' => 'Ngày sinh không hợp lệ',
             'date_of_birth.required' => 'Ngày sinh không được để trống',
-            
         ];
     }
 }

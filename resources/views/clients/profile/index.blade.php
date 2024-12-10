@@ -22,7 +22,7 @@
 
                             <!-- Input để upload file -->
                             <input class="hidden" id="avatar" onchange="previewAvatar(event)" name="avatar"
-                                type="file">
+                                type="file" accept="image/*">
                             <label class="button-dark mt-4 cursor-pointer" for="avatar">Chọn ảnh</label>
 
                             @error('avatar')
