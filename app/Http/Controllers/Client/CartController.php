@@ -80,6 +80,7 @@ class CartController extends Controller
             'price' => 0,
             'quantity' => $validated['quantity'],
         ]);
+
         // Thêm attribute vào CartItemAttribute
         foreach ($attributes as $attribute) {
             CartItemAttribute::create([
@@ -145,7 +146,7 @@ class CartController extends Controller
             return false; // Số lượng topping không khớp
         }
 
-        return true; // Tất cả topping khớp
+        return true;
     }
 
     public function delete(CartItem $cartItem)
@@ -201,10 +202,9 @@ class CartController extends Controller
             $priceAttribute = 0;
             $priceTopping = 0;
 
-            if ($cartItem->attributes) {
-                foreach ($cartItem->attributes as $attribute) {
-                    $att = AttributeValue::find($attribute->attribute_value_id);
-                    $priceAttribute += ($att->price_type == 1) ? $att->price : $priceProduct * $att->price / 100;
+            if ($cartItem->attributeValues) {
+                foreach ($cartItem->attributeValues as $attribute) { 
+                    $priceAttribute += ($attribute->price_type == 1) ? $attribute->price : $priceProduct * $attribute->price / 100;
                 }
             }
 
