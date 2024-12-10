@@ -200,4 +200,32 @@ class PromotionController extends Controller
 
         return view('admins.promotions.index', compact('promotions', 'ranks'));
     }
+
+    public function trashPromotion()
+    {
+        $promotions = Promotion::onlyTrashed()->orderBy('id', 'desc')->paginate(10);
+        return view('admins.promotions.trash', compact('promotions'));
+    }
+
+    public function resPromotion($id)
+    {
+        $promotion = Promotion::withTrashed()->find($id);
+
+        if ($promotion->restore()) {
+            return redirect()->back()->with('success', 'Khôi phục sản phẩm thành công');
+        }
+
+        return redirect()->back()->with('error', 'Khôi phục sản phẩm thất bại');
+    }
+
+    public function forceDelete($id)
+    {
+        $promotion = Promotion::withTrashed()->find($id);
+
+        if ($promotion->forceDelete()) {
+            return redirect()->back()->with('success', 'Xóa sản phẩm vĩnh viễn thành công');
+        }
+
+        return redirect()->back()->with('error', 'Xóa sản phẩm thất bại');
+    }
 }
