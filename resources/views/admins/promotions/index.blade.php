@@ -18,7 +18,7 @@
                         @svg('tabler-plus', 'w-5 h-5 mr-2')
                         Thêm mới mã giảm giá
                     </a>
-                    <a href="{{ route('admin.trash.promotions') }}" class="button-red">
+                    <a href="{{ route('admin.promotions.trash') }}" class="button-red">
                         @svg('tabler-trash', 'w-5 h-5 mr-2')
                         Thùng rác
                     </a>

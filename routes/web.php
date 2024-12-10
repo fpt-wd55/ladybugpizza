@@ -207,10 +207,12 @@ Route::prefix('/admin')->middleware(['admin'])->name('admin.')->group(function (
     // Promotion
     Route::resource('/promotions', PromotionController::class);
     Route::get('/promotion/filter', [PromotionController::class, 'filter'])->name('promotions.filter');
-    Route::get('/promotion/trash', [PromotionController::class, 'trashPromotion'])->name('trash.promotions');
+    Route::get('/promotion/trash', [PromotionController::class, 'trashPromotion'])->name('promotions.trash');
     Route::post('promotion/bulk-action', [PromotionController::class, 'bulkAction'])->name('promotions.bulkAction');
     Route::get('/promotion/search', [PromotionController::class, 'search'])->name('promotions.search');
     Route::get('/promotion/export', [PromotionController::class, 'export'])->name('promotions.export');
+    Route::get('/promotion/restore/{id}', [PromotionController::class, 'resPromotion'])->name('resPromotion');
+
     // Membership
     Route::resource('/memberships', AdminMembershipController::class);
     Route::get('/membership/filter', [AdminMembershipController::class, 'filter'])->name('memberships.filter');
