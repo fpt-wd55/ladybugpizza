@@ -106,21 +106,28 @@ class ProfileController extends Controller
 	}
 
 	public function postInactive(InactiveRequest $request)
-	{
-		$user = Auth::user();
+{
+    $user = Auth::user();
 
-		if (!Hash::check($request->input('password'), $user->password)) {
-			return redirect()->back()->with('error', 'Mật khẩu không chính xác');
-		}
+    // Debug: Kiểm tra email
+    if ($request->input('email') !== $user->email) {
+        \Log::error('Email không chính xác');
+        return redirect()->back()->with('error', 'Email không chính xác');
+    }
 
-		$user->status = 2;
-		if ($user->save()) {
-			Auth::logout();
-			return redirect()->route('client.home')->with('success', 'Tài khoản của bạn đã bị vô hiệu hóa');
-		}
+    // Debug: Kiểm tra lưu trạng thái
+    $user->status = 2;
+    if ($user->save()) {
+        Auth::logout();
+        \Log::info('Tài khoản đã bị vô hiệu hóa');
+        return redirect()->route('client.home')->with('success', 'Tài khoản của bạn đã bị vô hiệu hóa');
+    }
 
-		return redirect()->route('client.home')->with('error', 'Đã có lỗi xảy ra');
-	}
+    \Log::error('Đã có lỗi xảy ra khi lưu trạng thái');
+    return redirect()->route('client.home')->with('error', 'Đã có lỗi xảy ra');
+}
+
+
 
 	public function address()
 	{
