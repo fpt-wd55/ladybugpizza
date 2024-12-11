@@ -29,7 +29,7 @@
                 <form action="{{ route('auth.post-login') }}" method="POST">
                     @csrf
                     <div class="mb-4">
-                        <label class="font-medium" for="email">Email</label>
+                        <label class="font-medium" for="email">Email <span class="text-red-500">*</span></label>
                         <input type="text" name="email" id="email" value="{{ old('email') }}"
                             placeholder="VD: lazzybugpizza@gmail.com" class="mt-2 mb-2 input">
                         @error('email')
@@ -37,7 +37,7 @@
                         @enderror
                     </div>
                     <div class="mb-4">
-                        <label class="font-medium" for="password">Mật khẩu</label>
+                        <label class="font-medium" for="password">Mật khẩu <span class="text-red-500">*</span></label>
                         <input type="password" name="password" id="password" class="mt-2 mb-2 input">
                         @error('password')
                             <p class="text-red-500 text-sm">{{ $message }}</p>
@@ -70,8 +70,8 @@
                 </form>
             </div>
             <div class="hidden md:block max-h-[629px]">
-                <img loading="lazy" class="w-full h-full object-cover" src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}"
-                    alt="Ảnh sản phẩm">
+                <img loading="lazy" class="w-full h-full object-cover"
+                    src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}" alt="Ảnh sản phẩm">
             </div>
         </div>
     </div>

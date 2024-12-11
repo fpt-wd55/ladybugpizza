@@ -15,7 +15,8 @@
                     @csrf
                     <div class="md:flex justify-between w-full grid-cols-2 gap-4">
                         <div class="mb-4 py-4 w-full">
-                            <label class="font-medium" for="fullname">Họ và tên </label>
+                            <label class="font-medium" for="fullname">Họ và tên <span
+                                    class="text-red-500">*</span></label>
                             <input type="text" name="fullname" id="fullname" value="{{ old('fullname') }}"
                                 placeholder="VD: Trần Văn A" class="mt-2 mb-2 input">
                             @error('fullname')
@@ -23,7 +24,8 @@
                             @enderror
                         </div>
                         <div class="mb-4 py-4 w-full">
-                            <label class="font-medium" for="date_of_birth">Ngày sinh </label>
+                            <label class="font-medium" for="date_of_birth">Ngày sinh <span
+                                    class="text-red-500">*</span></label>
                             <input type="date" name="date_of_birth" id="date_of_birth" value="{{ old('date_of_birth') }}"
                                 class="mt-2 mb-2 input">
                             @error('date_of_birth')
@@ -33,7 +35,8 @@
                     </div>
                     <div class="md:flex justify-between w-full md:grid-cols-2 gap-4">
                         <div class="mb-4 py-4 w-full">
-                            <label class="font-medium" for="gender">Giới tính </label>
+                            <label class="font-medium" for="gender">Giới tính <span
+                                    class="text-red-500">*</span></label>
                             <select name="gender" id="gender" class="mt-2 mb-2 input" value="{{ old('gender') }}">
                                 <option value="">Chọn giới tính</option>
                                 <option value="1">Nam</option>
@@ -45,7 +48,7 @@
                             @enderror
                         </div>
                         <div class="mb-4 py-4 w-full">
-                            <label class="font-medium" for="avatar">Ảnh đại diện </label>
+                            <label class="font-medium" for="avatar">Ảnh đại diện</label>
                             <input type="file" name="avatar" id="small_size"
                                 class=" mt-2 block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 focus:outline-none ">
                             @error('avatar')
@@ -55,7 +58,8 @@
                     </div>
                     <div class="md:flex w-full grid-cols-3 gap-4">
                         <div class="mb-4 py-4 w-full">
-                            <label for="province" class="min-h-5">Tỉnh/Thành phố:*</label>
+                            <label for="province" class="min-h-5">Tỉnh/Thành phố: <span
+                                    class="text-red-500">*</span></label>
                             <select name="province" id="province" class="mt-2 mb-2 input" disabled>
                             </select>
                             @error('province')
@@ -63,7 +67,7 @@
                             @enderror
                         </div>
                         <div class="mb-4 py-4 w-full">
-                            <label for="district">Quận/Huyện:*</label>
+                            <label for="district">Quận/Huyện: <span class="text-red-500">*</span></label>
                             <select name="district" id="district" class="mt-2 mb-2 input">
                                 <option value="">Chọn quận/huyện</option>
                             </select>
@@ -72,7 +76,7 @@
                             @enderror
                         </div>
                         <div class="mb-4 py-4 w-full">
-                            <label for="ward">Phường/Xã:*</label>
+                            <label for="ward">Phường/Xã: <span class="text-red-500">*</span></label>
                             <select name="ward" id="ward" class="mt-2 mb-2 input">
                                 <option value="">Chọn phường/xã</option>
                             </select>
@@ -83,7 +87,8 @@
                     </div>
                     <div class="flex justify-between w-full grid-cols-2 gap-4">
                         <div class="mb-4 py-4 w-full">
-                            <label class="font-medium" for="detail_address">Địa chỉ chi tiết</label>
+                            <label class="font-medium" for="detail_address">Địa chỉ chi tiết <span
+                                    class="text-red-500">*</span></label>
                             <input type="text" name="detail_address" id="detail_address" class="mt-2 mb-2 input"
                                 placeholder="VD: Số 4 ngõ 2 ngách 14 đường Cầu Diễn" value="{{ old('detail_address') }}">
                             @error('detail_address')

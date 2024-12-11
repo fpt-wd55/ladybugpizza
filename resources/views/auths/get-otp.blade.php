@@ -24,7 +24,7 @@
                     <form action="{{ route('auth.post-get-otp') }}" method="POST">
                         @csrf
                         <div class="mb-4 pt-4">
-                            <label class="font-medium" for="otp">OTP</label>
+                            <label class="font-medium" for="otp">OTP <span class="text-red-500">*</span></label>
                             <input type="text" name="otp" id="otp" value="{{ old('otp') }}"
                                 class="mt-2 mb-2 input" autofocus>
                             @error('otp')
