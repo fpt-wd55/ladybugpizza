@@ -110,6 +110,7 @@
 
 
                         {{-- Change password form --}}
+                        @if (Auth()->user()->google_id == null)
                         <form action="{{ route('client.profile.post-change-password') }}" class="mb-8" method="POST">
                             @csrf
                             @method('PUT')
@@ -155,7 +156,7 @@
                                 </button>
                             </div>
                         </form>
-
+                        @endif
 
                         {{-- Form inactive account --}}
                         <div class="mb-8">
