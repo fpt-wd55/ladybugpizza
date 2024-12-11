@@ -29,7 +29,7 @@ class PageSeeder extends Seeder
                     <p class="mt-12">Không gian tại Ladybug Pizza được thiết kế tinh tế, kết hợp phong cách cổ điển và hiện đại, mang lại sự thoải mái và thân thiện cho khách hàng. Bên cạnh đó, khu vực sân ngoài trời là nơi lý tưởng để bạn vừa thưởng thức pizza, vừa cảm nhận không khí thư thái và sôi động của thành phố.</p>
                     </div>
                     <p class="playwrite-gb-s-regular mb-6 text-lg uppercase">Giờ mở cửa &amp; Địa điểm</p>
-                    <div class="mt-8"><span class="font-bold">Thứ Hai - Thứ Năm </span>: 10h s&aacute;ng - 8h tối <br><span class="font-bold">Thứ S&aacute;u</span>: 12h trưa - 12h đ&ecirc;m <br><span class="font-bold">Thứ Bảy</span>: 11h s&aacute;ng - 12h đ&ecirc;m <br><span class="font-bold">Chủ Nhật</span>: 11h s&aacute;ng - 10h tối</div>
+                    <div class="my-8"><span class="font-bold">Thứ Hai - Thứ Năm </span>: 10h s&aacute;ng - 8h tối <br><span class="font-bold">Thứ S&aacute;u</span>: 12h trưa - 12h đ&ecirc;m <br><span class="font-bold">Thứ Bảy</span>: 11h s&aacute;ng - 12h đ&ecirc;m <br><span class="font-bold">Chủ Nhật</span>: 11h s&aacute;ng - 10h tối</div>
                     </div>   
                 ',
                 'status' => 1,
