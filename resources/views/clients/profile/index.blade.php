@@ -173,41 +173,50 @@
                             </div>
 
                             {{-- Inactive Modal --}}
+                            {{-- Inactive Modal --}}
                             <div aria-hidden="true"
-                            class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full"
-                            id="inactiveModal" tabindex="-1">
-                            <div class="relative h-auto w-full max-w-md p-4">
-                                <div class="relative rounded-lg bg-white p-4 shadow sm:p-5">
-                                    <div class="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5">
-                                        <h3 class="text-lg font-semibold text-gray-900">
-                                            Hủy kích hoạt tài khoản
-                                        </h3>
-                                        <button class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900" data-modal-toggle="inactiveModal" type="button">
-                                            @svg('tabler-x', 'icon-sm')
-                                        </button>
-                                    </div>
-                                    <p class="mb-4 text-sm">Bạn cần nhập email để xác nhận hành vi của mình</p>
-                                    <form action="{{ route('client.profile.post-inactive') }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="mb-12 grid gap-4 sm:grid-cols-2">
-                                            <div class="col-span-2">
-                                                <label class="mb-2 block text-sm font-medium text-gray-900" for="email">Email</label>
-                                                <input class="input" id="email" name="email" placeholder="Nhập email của bạn" type="email" value="">
-                                                @error('email')
-                                                    <p class="text-sm text-red-500">{{ $message }}</p>
-                                                @enderror
+                                class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full"
+                                id="inactiveModal" tabindex="-1">
+                                <div class="relative h-auto w-full max-w-md p-4">
+                                    <div class="relative rounded-lg bg-white p-4 shadow sm:p-5">
+                                        <div
+                                            class="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5">
+                                            <h3 class="text-lg font-semibold text-gray-900">
+                                                Hủy kích hoạt tài khoản
+                                            </h3>
+                                            <button
+                                                class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
+                                                data-modal-toggle="inactiveModal" type="button">
+                                                @svg('tabler-x', 'icon-sm')
+                                            </button>
+                                        </div>
+                                        <p class="mb-4 text-sm">
+                                            Bạn cần nhập email để xác nhận hành động này
+                                        </p>
+                                        <p class="mb-4 text-sm text-[#D30A0A]">
+                                            *Lưu ý: Bạn sẽ không thể sử dụng tài khoản
+                                            của mình sau khi hủy kích hoạt. Vui lòng liên hệ với chúng tôi nếu bạn muốn khôi
+                                            phục tài khoản!
+                                        </p>
+                                        <form action="{{ route('client.profile.post-inactive') }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="mb-12 grid gap-4 sm:grid-cols-2">
+                                                <div class="col-span-2">
+                                                    <input class="input" id="confirm_email" name="confirm_email"
+                                                        placeholder="Nhập email của bạn" type="text">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="flex items-center justify-between space-x-4">
-                                            <button class="button-red w-full" type="submit">Xác nhận</button>
-                                            <button class="button-dark w-full" data-modal-hide="inactiveModal" type="button">Huỷ</button>
-                                        </div>
-                                    </form>
+                                            <div class="flex items-center justify-between space-x-4">
+                                                <button class="button-red w-full" type="submit">Xác nhận</button>
+                                                <button class="button-dark w-full" data-modal-hide="inactiveModal"
+                                                    type="button">Huỷ</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        
+
                         </div>
                     </div>
                 </div>
