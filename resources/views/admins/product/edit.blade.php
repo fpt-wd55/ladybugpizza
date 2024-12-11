@@ -76,6 +76,7 @@
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
                                             data-has-attribute="{{ count($category->attributes) }}"
+                                            data-has-daily-quantity="{{ $category->is_resettable }}"
                                             {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
                                             {{ $category->name }}
                                         </option>
@@ -91,7 +92,7 @@
                     </div>
                     {{-- Gia va so luong --}}
                     <div class="sm:col-span-2">
-                        <div class="grid gap-4 mb-4 sm:grid-cols-3">
+                        <div class="grid gap-4 mb-4 sm:grid-cols-4">
                             <div>
                                 <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá bán thường
                                     (₫) <span class="text-red-500">*</span></label>
@@ -117,6 +118,7 @@
                                 @enderror
                             </div>
                             <div id="quantity"></div>
+                            <div id="daily_quantity"></div>
                         </div>
                     </div>
                     {{-- Trang thai --}}
@@ -192,29 +194,56 @@
         document.addEventListener('DOMContentLoaded', function() {
             const category_id = document.getElementById('category_id');
             const quantity = document.getElementById('quantity');
-            const checkHasAttribute = (hasAttribute) => {
-                if (hasAttribute == 0) {
-                    quantity.innerHTML = `
-                        <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số
-                            lượng</label>
-                        <input type="number" name="quantity" value="{{ old('quantity', $product->quantity) ?? 0 }}"
-                            placeholder="Số lượng"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                        @error('quantity')
-                            <p class="mt-2 text-sm text-red-600 ">
-                                {{ $message }}
-                            </p>
-                        @enderror
-                    `;
+            const daily_quantity = document.getElementById('daily_quantity');
+
+            const checkHasAttribute = (hasAttribute, hasDailyQuantity) => {
+                if (hasDailyQuantity == 1) {
+                    if (hasAttribute == 0) {
+                        quantity.innerHTML = `
+                            <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số
+                                lượng</label>
+                            <input type="number" name="quantity" value="{{ old('quantity', $product->quantity) ?? 0 }}"
+                                placeholder="Số lượng" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            @error('quantity')
+                                <p class="mt-2 text-sm text-red-600 ">{{ $message }}</p>
+                            @enderror
+                        `;
+                        daily_quantity.innerHTML = `
+                            <label for="daily_quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số
+                                lượng hàng ngày <span class="text-red-500">*</span></label>
+                            <input type="number" name="daily_quantity" value="{{ old('daily_quantity', $product->daily_quantity) ?? 0 }}"
+                                placeholder="Số lượng hàng ngày" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            @error('daily_quantity')
+                                <p class="mt-2 text-sm text-red-600 ">{{ $message }}</p>
+                            @enderror
+                        `;
+                    } else {
+                        quantity.innerHTML = '';
+                        daily_quantity.innerHTML = '';
+                    }
                 } else {
-                    quantity.innerHTML = '';
+                    daily_quantity.innerHTML = '';
+                    if (hasAttribute == 0) {
+                        quantity.innerHTML = `
+                            <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số
+                                lượng</label>
+                            <input type="number" name="quantity" value="{{ old('quantity', $product->quantity) ?? 0 }}"
+                                placeholder="Số lượng" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            @error('quantity')
+                                <p class="mt-2 text-sm text-red-600 ">{{ $message }}</p>
+                            @enderror
+                        `;
+                    } else {
+                        quantity.innerHTML = '';
+                    }
                 }
             }
 
             const handleCategoryChange = () => {
                 const selectedOption = category_id.options[category_id.selectedIndex];
                 const hasAttribute = selectedOption.getAttribute('data-has-attribute');
-                checkHasAttribute(hasAttribute);
+                const hasDailyQuantity = selectedOption.getAttribute('data-has-daily-quantity');
+                checkHasAttribute(hasAttribute, hasDailyQuantity);
             };
 
             category_id.addEventListener('change', handleCategoryChange);

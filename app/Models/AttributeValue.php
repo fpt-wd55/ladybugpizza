@@ -13,6 +13,7 @@ class AttributeValue extends Model
     protected $fillable = [
         'attribute_id',
         'value',
+        'daily_quantity',
         'quantity',
         'price',
         'price_type',

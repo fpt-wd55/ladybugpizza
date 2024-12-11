@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('attribute_id')->constrained()->onDelete('cascade');
             $table->string('value');
+            $table->integer('daily_quantity')->nullable();
             $table->integer('quantity')->nullable();
             $table->integer('price')->nullable();
             $table->integer('price_type')->nullable()->comment('1: Fixed, 2: Percentage, Phần trăm tính theo giá trị của sản phẩm');

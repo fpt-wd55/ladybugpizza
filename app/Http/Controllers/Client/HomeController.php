@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\OpeningHour;
 use App\Models\Product;
 
 class HomeController extends Controller
 {
     public function index()
-    {
+    { 
         $products = Product::where('is_featured', 1)
             ->where('category_id', 1)
             ->where('status', 1)

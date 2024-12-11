@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('slug')->unique();
             $table->string('image');
+            $table->integer('is_resettable')->default(1)->comment('1: resetable; 2: not resetable');
             $table->integer('status')->default(1)->comment('1: active; 2: inactive');
             $table->timestamps();
             $table->softDeletes();

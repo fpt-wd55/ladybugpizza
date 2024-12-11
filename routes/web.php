@@ -27,6 +27,7 @@ use App\Http\Controllers\Client\PageController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Client\ProfileController;
 use App\Http\Controllers\ErrorController;
+use App\Models\OpeningHour;
 use Illuminate\Support\Facades\Route;
 use Vanthao03596\HCVN\Models\Province;
 use Vanthao03596\HCVN\Models\District;
@@ -51,16 +52,16 @@ Route::prefix('/')->group(function () {
     Route::middleware('auth.check')->group(function () {
         // Giỏ hàng
         Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
-        Route::post('/product/cart/{product}', [CartController::class, 'addToCart'])->name('client.product.add-to-cart');
+        Route::post('/product/cart/{product}', [CartController::class, 'addToCart'])->middleware('store.open')->name('client.product.add-to-cart');
         Route::delete('/product/cart/{cartItem}', [CartController::class, 'delete'])->name('client.product.delete-cart-item');
         // Thanh toán
-        Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
-        Route::post('/checkout', [CheckoutController::class, 'postCheckout'])->name('post-checkout');
-        Route::get('/return-momo', [CheckoutController::class, 'returnMomo'])->name('return_momo');
-        Route::get('/thank-you/{order}', [CheckoutController::class, 'thankYou'])->name('thank_you');
+        Route::get('/checkout', [CheckoutController::class, 'checkout'])->middleware('store.open')->name('checkout');
+        Route::post('/checkout', [CheckoutController::class, 'postCheckout'])->middleware('store.open')->name('post-checkout');
+        Route::get('/return-momo', [CheckoutController::class, 'returnMomo'])->middleware('store.open')->name('return_momo');
+        Route::get('/thank-you/{order}', [CheckoutController::class, 'thankYou'])->middleware('store.open')->name('thank_you');
         // Đơn hàng
         Route::get('/order', [OrderController::class, 'index'])->name('client.order.index');
-        Route::put('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
+        Route::put('order/{order}/cancel', [OrderController::class, 'postCancel'])->middleware('store.open')->name('client.order.cancel');
         Route::put('order/{order}/received', [OrderController::class, 'confirmReceived'])->name('client.order.received');
         Route::post('/order/{order}/evaluation', [OrderController::class, 'evaluation'])->name('client.order.evaluation');
         // Profile
@@ -76,7 +77,7 @@ Route::prefix('/')->group(function () {
         Route::get('/profile/address/edit/{address}', [ProfileController::class, 'editLocation'])->name('client.profile.edit-location');
         Route::put('/profile/address/update/{address}', [ProfileController::class, 'updateLocation'])->name('client.profile.update-location');
         Route::delete('/profile/address/delete/{address}', [ProfileController::class, 'deleteLocation'])->name('client.profile.delete-location');
-        Route::post('/profile/address/set-defautl/{address}', [ProfileController::class, 'setDefaultAddress'])->name('client.profile.set-address');
+        Route::post('/profile/address/set-default/{address}', [ProfileController::class, 'setDefaultAddress'])->name('client.profile.set-address');
         Route::get('/profile/settings', [ProfileController::class, 'settings'])->name('client.profile.settings');
         Route::put('/settings/update/{id}', [ProfileController::class, 'updateStatus'])->name('client.settings.update');
         Route::get('/profile/promotion', [ProfileController::class, 'promotion'])->name('client.profile.promotion');
@@ -112,6 +113,10 @@ Route::prefix('api')->group(function () {
     Route::get('/wards/{districtCode}', function ($districtCode) {
         return Ward::where('parent_code', $districtCode)->select('id', 'name', 'code')->get();
     })->name('api.wards');
+
+    Route::get('/is-open', function () {
+        return response()->json(['isOpen' => OpeningHour::isOpen()]);
+    });
 });
 
 Route::prefix('/auth')->group(function () {

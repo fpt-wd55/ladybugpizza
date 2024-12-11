@@ -53,6 +53,7 @@ class AttributeSeeder extends Seeder
                 AttributeValue::create([
                     'attribute_id' => $attribute->id,
                     'value' => $value,
+                    'daily_quantity' => rand(0, 100),
                     'quantity' => rand(0, 100),
                     'price' => ($price_type == 1) ? rand(5, 10) * 1000 : rand(5, 10),
                     'price_type' => $price_type, 

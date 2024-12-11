@@ -12,6 +12,7 @@ class Category extends Model
 
     protected $fillable = [
         'name',
+        'is_resettable',
         'slug',
         'image',
         'status',

@@ -20,6 +20,7 @@
     @include('partials.clients.header')
 
     @include('partials.clients.alert')
+    @include('partials.clients.open-hour')
     <div>
         @yield('content')
     </div>

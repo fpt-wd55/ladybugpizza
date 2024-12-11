@@ -20,6 +20,7 @@ class Product extends Model
         'category_id',
         'price',
         'discount_price',
+        'daily_quantity',
         'quantity',
         'sku',
         'status',

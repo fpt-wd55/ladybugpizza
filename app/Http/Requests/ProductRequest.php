@@ -39,7 +39,8 @@ class ProductRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
             'discount_price' => 'nullable|numeric|min:0|lte:price',
-            'quantity' => 'required_if:category_id,!=,null|integer|min:0',
+            'quantity' => 'required_if:category_id,!=,null|integer|min:1',
+            'daily_quantity' => 'required_if:category_id,!=,null|integer|min:1',
             'sku' => 'required|string|min:10|max:15|unique:products,sku',
 
         ];
@@ -49,17 +50,18 @@ class ProductRequest extends FormRequest
     {
         $productId = $this->route('product') ? $this->route('product')->id : null;
         return [
-           'name' => 'required|string|max:255|unique:products,name,' . $productId,
+            'name' => 'required|string|max:255|unique:products,name,' . $productId,
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'description' => 'required|string',
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
             'discount_price' => 'nullable|numeric|min:0|lte:price',
-            'quantity' => 'required_if:category_id,!=,null|integer|min:0',
+            'quantity' => 'required_if:category_id,!=,null|integer|min:1',
+            'daily_quantity' => 'required_if:category_id,!=,null|integer|min:1',
             'sku' => 'required|string|min:10|max:15|unique:products,sku,' . $productId,
         ];
     }
-    
+
 
     public function messages(): array
     {
@@ -85,6 +87,9 @@ class ProductRequest extends FormRequest
             'quantity.required_if' => 'Vui lòng nhập số lượng sản phẩm',
             'quantity.integer' => 'Vui lòng nhập số lượng sản phẩm',
             'quantity.min' => 'Số lượng sản phẩm không được nhỏ hơn 0',
+            'daily_quantity.required_if' => 'Vui lòng nhập số lượng hàng ngày',
+            'daily_quantity.integer' => 'Vui lòng nhập số lượng hàng ngày',
+            'daily_quantity.min' => 'Số lượng hàng ngày không được nhỏ hơn 0',
             'sku.required' => 'Vui lòng nhập SKU',
             'sku.string' => 'SKU phải là chuỗi',
             'sku.min' => 'SKU tối thiểu 10 ký tự',

@@ -40,6 +40,7 @@ class CategoryController extends Controller
         $data = [
             'name' => $request->name,
             'slug' => $this->createSlug($request->name),
+            'is_resettable' => $request->is_resettable ? 1 : 2,
             'image' => $image_name,
             'status' => $request->status ? 1 : 2,
         ];
@@ -79,6 +80,7 @@ class CategoryController extends Controller
             'name' => $request->name,
             'slug' => $this->createSlug($request->name),
             'image' => $image_name,
+            'is_resettable' => $request->is_resettable ? 1 : 2,
             'status' => $request->status ? 1 : 2,
         ];
 

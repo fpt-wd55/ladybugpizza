@@ -45,6 +45,7 @@ class ProductController extends Controller
         if ($request->category_id) {
             $category = Category::find($request->category_id);
             $quantity = $category->attributes->count() > 0 ? 0 : $request->quantity;
+            $dailyQuantity = $category->is_resettable == 2 ? null : $request->daily_quantity;
         }
 
         // Dữ liệu
@@ -56,6 +57,7 @@ class ProductController extends Controller
             'category_id' => trim($request->category_id),
             'price' => $request->price,
             'discount_price' => $request->discount_price ?? 0,
+            'daily_quantity' => $dailyQuantity,
             'quantity' => $quantity,
             'sku' => trim(strtoupper($request->sku)),
             'status' => isset($request->status) ? $request->status : 2,
@@ -101,6 +103,7 @@ class ProductController extends Controller
         if ($request->category_id) {
             $category = Category::find($request->category_id);
             $quantity = $category->attributes->count() > 0 ? 0 : $request->quantity;
+            $dailyQuantity = $category->is_resettable == 2 ? null : $request->daily_quantity;
         }
 
         // Dữ liệu
@@ -112,6 +115,7 @@ class ProductController extends Controller
             'category_id' => trim($request->category_id),
             'price' => $request->price,
             'discount_price' => $request->discount_price ?? 0,
+            'daily_quantity' => $dailyQuantity,
             'quantity' => $quantity,
             'sku' => trim(strtoupper($request->sku)),
             'status' => isset($request->status) ? $request->status : 2,
