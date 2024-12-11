@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class InactiveRequest extends FormRequest
 {
@@ -20,18 +21,27 @@ class InactiveRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
-        return [
-            'password' => 'required|string|min:8',
-        ];
-    }
+{
+    return [
+        'email' => [
+            'required',
+            'email',
+            Rule::exists('users')->where(function ($query) {
+                $query->where('email', request('email'));
+            }),
+        ],
+    ];
+}
 
-    public function messages():array {
-        return[
-            'password.required' => 'Vui lòng nhập mật khẩu.',
-			'password.min' => 'Mật khẩu cũ phải có ít nhất 8 ký tự.',
-        ];
-    }
+public function messages(): array
+{
+    return [
+        'email.required' => 'Vui lòng nhập email.',
+        'email.email' => 'Email không đúng định dạng. Vui lòng nhập đúng định dạng email.',
+        'email.exists' => 'Email này không tồn tại trong hệ thống.',
+    ];
+}
+
 
     
 }

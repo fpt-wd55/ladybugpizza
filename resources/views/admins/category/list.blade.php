@@ -82,7 +82,7 @@
                                 <!-- Modal body -->
                                 <div class="px-4 md:px-6">
                                     <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
-                                    <ul class="space-y-2 text-sm"> 
+                                    <ul class="space-y-2 text-sm">
                                         <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
                                             <li class="flex items-center">
                                                 <input id="active" type="checkbox" name="filter_status[]" value="1"
@@ -175,7 +175,7 @@
 
                                         <li>
                                             <a href="{{ route('admin.categories.edit', $item) }}"
-                                                class="block py-2 px-4 hover:bg-gray-100">Chỉnh sửa</a>
+                                                class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
                                         </li>
                                     </ul>
                                     <div class="py-1">

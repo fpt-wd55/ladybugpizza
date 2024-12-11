@@ -18,6 +18,10 @@
                         @svg('tabler-plus', 'w-5 h-5 mr-2')
                         Thêm mới mã giảm giá
                     </a>
+                    <a href="{{ route('admin.promotions.trash') }}" class="button-red">
+                        @svg('tabler-trash', 'w-5 h-5 mr-2')
+                        Thùng rác
+                    </a>
                     <a href="{{ route('admin.promotions.export') }}"
                         class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
                         @svg('tabler-file-export', 'w-4 h-4 mr-2')
@@ -211,18 +215,18 @@
                                                 data-modal-target="detail-modal-{{ $promotion->id }}"
                                                 data-modal-toggle="detail-modal-{{ $promotion->id }}">Chi tiết </a>
                                         </li>
-                                        <li>
-                                            @if (!$promotion->orders()->where('order_status_id', 4)->exists())
+                                        @if (!$promotion->orders()->exists())
+                                            <li>
                                                 <a href="{{ route('admin.promotions.edit', $promotion->id) }}"
                                                     class="cursor-pointer block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Cập
                                                     nhật</a>
-                                            @endif
-                                        </li>
-                                        <li>
-                                            <a href="#" data-modal-target="delete-modal-{{ $promotion->id }}"
-                                                data-modal-toggle="delete-modal-{{ $promotion->id }}"
-                                                class="cursor-pointer block py-2 px-4 text-sm text-red-500 hover:bg-gray-100">Xóa</a>
-                                        </li>
+                                            </li>
+                                            <li>
+                                                <a href="#" data-modal-target="delete-modal-{{ $promotion->id }}"
+                                                    data-modal-toggle="delete-modal-{{ $promotion->id }}"
+                                                    class="cursor-pointer block py-2 px-4 text-sm text-red-500 hover:bg-gray-100">Xóa</a>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                             </td>

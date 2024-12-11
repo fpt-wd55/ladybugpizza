@@ -89,6 +89,8 @@ class WebController extends Controller
             $name = $file->getClientOriginalName();
             $file->move('storage/uploads/avatars', $name);
             $userData['avatar'] = $name;
+        } else {
+            $userData['avatar'] = 'user-default-' . rand(1, 20) . '.png';
         }
 
         $user = User::create(array_merge($userData, [
@@ -128,8 +130,11 @@ class WebController extends Controller
             'user_id' => $user->id,
             'email_order' => true,
             'email_promotions' => true,
-            'email_security' => true, 
+            'email_security' => true,
         ]);
+
+        // remove session
+        $request->session()->forget('register');
 
         return redirect()->route('auth.login')->with('success', 'Đăng ký thành công');
     }
@@ -221,7 +226,14 @@ class WebController extends Controller
         Session::put('otp_expiry', now()->addMinutes(10));
         $subject = 'Mã Xác Thực OTP';
 
-        Mail::to($user->email)->send(new Otp($otpCode, $subject));
+        if($user->status == 2){
+
+            return back()->with('error', 'Tài khoản của bạn đã bị khóa, vui lòng liên hệ với chúng tôi để được hỗ trợ.');
+        }
+        else
+        {
+            Mail::to($user->email)->send(new Otp($otpCode, $subject));
+        }
 
         return redirect()->route('auth.get-otp')->with('success', 'Mã OTP đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư và nhập mã để tiếp tục.');
     }

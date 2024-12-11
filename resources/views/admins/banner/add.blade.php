@@ -7,20 +7,20 @@
             @csrf
             <div class="grid gap-4 mb-4 sm:grid-cols-2">
                 <div>
-                    <label for="url" class="block mb-2 text-base font-medium text-gray-900 ">Url</label>
-                    <input type="text" name="url" id="name" value="{{ old('url') }}"
+                    <label for="url" class="block mb-2 text-base font-medium text-gray-900 ">Url <span
+                            class="text-red-500">*</span></label>
+                    <input type="text" name="url" id="name" value="{{ old('url') }}" placeholder="VD: ladybugpizza.vn/banner/"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:border-primary-600 block w-full p-2.5">
-
                     @error('url')
                         <p class="mt-2 text-sm text-red-600  "><span class="font-medium">Lỗi! </span>
                             {{ $message }}</p>
                     @enderror
                 </div>
                 <div>
-                    <label for="url" class="block mb-3 text-base font-medium text-gray-900 ">Đường dẫn trang</label>
+                    <label for="url" class="block mb-3 text-base font-medium text-gray-900 ">Đường dẫn trang <span
+                            class="text-red-500">*</span></label>
                     <div class="flex gap-x-3">
-
-                        <div class=" mb-4">
+                        <div class="mb-4">
                             <input id="" type="radio" name="is_local_page"
                                 class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300  rounded-full transition"
                                 value="1">
@@ -44,7 +44,8 @@
                 </div>
 
                 <div>
-                    <label for="name" class="block mb-2 text-base font-medium text-gray-900">Ảnh banner</label>
+                    <label for="name" class="block mb-2 text-base font-medium text-gray-900">Ảnh banner <span
+                            class="text-red-500">*</span></label>
                     <input
                         class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
                         type="file" name="image" value="" id="imageInput" accept="image/*"
@@ -76,11 +77,11 @@
                 </div>
             </div>
             <div class="flex items-center space-x-4 mt-7">
-                <button type="submit" class=" rounded-lg button-blue">
-                    Lưu
+                <button type="submit" class="button-blue">
+                    Thêm banner
                 </button>
                 <a href="{{ route('admin.banners.index') }}">
-                    <button type="button" class="rounded-lg button-green">Quay Lại</button>
+                    <button type="button" class="button-gray">Quay Lại</button>
                 </a>
             </div>
         </form>

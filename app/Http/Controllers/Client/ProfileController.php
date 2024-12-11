@@ -37,38 +37,49 @@ class ProfileController extends Controller
 	public function postUpdate(UpdateUserRequest $request)
 	{
 		$user = Auth::user();
-
-		// Khởi tạo một mảng chứa các trường cần cập nhật
-		$data = [];
+		$old_avatar = $user->avatar;
 		// Kiểm tra xem người dùng có tải lên avatar không
 		if ($request->hasFile('avatar')) {
 			$file = $request->file('avatar');
-			$name = $file->getClientOriginalName();
-			$file->move('storage/uploads/avatars', $name);
-			$data['avatar'] = $name;
-		}
-		// Xử lý giới tính
-		$gender = null;
-		if ($request->gender == 'male') {
-			$gender = 1;
-		} elseif ($request->gender == 'female') {
-			$gender = 2;
-		} elseif ($request->gender == 'other') {
-			$gender = 3;
+			$name = time() . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $file->getClientOriginalExtension();
 		}
 
-		// Cập nhật thông tin người dùng
-		$data['fullname'] = $request->fullname;
-		$data['email'] = $request->email;
-		$data['phone'] = $request->phone;
-		$data['date_of_birth'] = $request->date_of_birth;
-		$data['gender'] = $gender;
+		// Cập nhật thông tin người dùng  
+		$dataUpdate = [
+			'fullname' => $request->fullname,
+			'email' => $request->email,
+			'phone' => $request->phone,
+			'date_of_birth' => $request->date_of_birth,
+			'gender' => $request->gender,
+			'avatar' => $name ?? $user->avatar,
+		];
 
-		if (!$user->update($data)) {
-			return redirect()->back()->with('error', 'Cập nhật thông tin thất bại');
+		if ($user->update($dataUpdate)) {
+			// Xu ly upload anh va xoa anh cu
+			if ($request->hasFile('avatar')) {
+				$file->move(storage_path('app/public/uploads/avatars'), $name);
+
+				if ($old_avatar != null) {
+					$is_default_avatar = false;
+					for ($i = 1; $i <= 20; $i++) {
+						if ($old_avatar == 'user-default-' . $i . '.png') {
+							$is_default_avatar = true;
+							break;
+						}
+					}
+				}
+
+				if (!$is_default_avatar) {
+					try {
+						unlink(storage_path('app/public/uploads/avatars/' . $old_avatar));
+					} catch (\Throwable $th) {
+						return redirect()->route('client.profile.index')->with('success', 'Cập nhật thông tin thành công');
+					}
+				}
+			}
+			return redirect()->route('client.profile.index')->with('success', 'Cập nhật thông tin thành công');
 		}
-
-		return redirect()->route('client.profile.index')->with('success', 'Cập nhật thông tin thành công');
+		return redirect()->back()->with('error', 'Cập nhật thông tin thất bại');
 	}
 
 	public function postChangePassword(ChangeRequest $request)
@@ -95,21 +106,28 @@ class ProfileController extends Controller
 	}
 
 	public function postInactive(InactiveRequest $request)
-	{
-		$user = Auth::user();
+{
+    $user = Auth::user();
 
-		if (!Hash::check($request->input('password'), $user->password)) {
-			return redirect()->back()->with('error', 'Mật khẩu không chính xác');
-		}
+    // Debug: Kiểm tra email
+    if ($request->input('email') !== $user->email) {
+        \Log::error('Email không chính xác');
+        return redirect()->back()->with('error', 'Email không chính xác');
+    }
 
-		$user->status = 2;
-		if ($user->save()) {
-			Auth::logout();
-			return redirect()->route('client.home')->with('success', 'Tài khoản của bạn đã bị vô hiệu hóa');
-		}
+    // Debug: Kiểm tra lưu trạng thái
+    $user->status = 2;
+    if ($user->save()) {
+        Auth::logout();
+        \Log::info('Tài khoản đã bị vô hiệu hóa');
+        return redirect()->route('client.home')->with('success', 'Tài khoản của bạn đã bị vô hiệu hóa');
+    }
 
-		return redirect()->route('client.home')->with('error', 'Đã có lỗi xảy ra');
-	}
+    \Log::error('Đã có lỗi xảy ra khi lưu trạng thái');
+    return redirect()->route('client.home')->with('error', 'Đã có lỗi xảy ra');
+}
+
+
 
 	public function address()
 	{

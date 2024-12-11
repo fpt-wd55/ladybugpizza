@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Tài khoản | Chỉnh sửa')
+@section('title', 'Tài khoản | Cập nhật')
 @section('content')
     {{ Breadcrumbs::render('admin.users.edit', $user) }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
@@ -40,7 +40,7 @@
                         <div>
                             <label for="username" class="block mb-2 text-sm font-medium text-gray-900 ">Tên tài
                                 khoản</label>
-                            <input type="text" name="username" id="username" placeholder="Tên tài khoản"
+                            <input type="text" name="username" id="username" placeholder="VD: ladybugpizza"
                                 value="{{ old('username', $user->username) }}" disabled
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                             @error('username')
@@ -51,8 +51,8 @@
                         </div>
                         <div>
                             <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 ">Họ và
-                                tên</label>
-                            <input type="text" name="fullname" id="fullname" placeholder="Họ và tên"
+                                tên <span class="text-red-500">*</span></label>
+                            <input type="text" name="fullname" id="fullname" placeholder="VD: Trần Văn A"
                                 value="{{ old('fullname', $user->fullname) }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                             @error('fullname')
@@ -64,7 +64,7 @@
                         <div>
                             <label for="new_password" class="block mb-2 text-sm font-medium text-gray-900 ">Mật
                                 khẩu mới</label>
-                            <input type="password" name="new_password" id="new_password" placeholder="Mật khẩu mới"
+                            <input type="password" name="new_password" id="new_password"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                             @error('new_password')
                                 <p class="mt-2 text-sm text-red-600 ">
@@ -73,8 +73,9 @@
                             @enderror
                         </div>
                         <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email</label>
-                            <input type="text" name="email" id="email" placeholder="email@domain.com"
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email <span
+                                    class="text-red-500">*</span></label>
+                            <input type="text" name="email" id="email" placeholder="VD: ladybugpizza@gmail.com"
                                 value="{{ old('email', $user->email) }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                             @error('email')
@@ -85,8 +86,8 @@
                         </div>
                         <div>
                             <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Số điện
-                                thoại</label>
-                            <input type="text" name="phone" id="phone" placeholder="0123456789"
+                                thoại <span class="text-red-500">*</span></label>
+                            <input type="text" name="phone" id="phone" placeholder="VD: 0123456789"
                                 value="{{ old('phone', $user->phone) }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                             @error('phone')
@@ -130,11 +131,11 @@
                     <div class="grid gap-4 mb-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                         <div>
                             <label for="date_of_birth" class="block mb-2 text-sm font-medium text-gray-900 ">Ngày
-                                sinh</label>
+                                sinh <span class="text-red-500">*</span></label>
                             <input type="date" name="date_of_birth" id="date_of_birth"
                                 value="{{ old('date_of_birth', $user->date_of_birth) }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                            @error('date')
+                            @error('date_of_birth')
                                 <p class="mt-2 text-sm text-red-600 ">
                                     {{ $message }}
                                 </p>

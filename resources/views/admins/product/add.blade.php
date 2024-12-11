@@ -35,7 +35,7 @@
                             <div>
                                 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên sản
                                     phẩm <span class="text-red-500">*</span></label>
-                                <input type="text" name="name" id="name" placeholder="Tên sản phẩm"
+                                <input type="text" name="name" id="name" placeholder="VD: Pizza hải sản"
                                     value="{{ old('name') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('name')
@@ -47,7 +47,7 @@
                             <div>
                                 <label for="sku" class="block mb-2 text-sm font-medium text-gray-900 ">Mã sản
                                     phẩm <span class="text-red-500">*</span></label>
-                                <input type="text" name="sku" id="sku" placeholder="Mã sản phẩm"
+                                <input type="text" name="sku" id="sku" placeholder="VD: YSU4247641"
                                     value="{{ old('sku') }}" maxlength="15"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('sku')
@@ -86,7 +86,7 @@
                                 <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá bán thường
                                     (₫) <span class="text-red-500">*</span></label>
                                 <input type="number" name="price" id="price" value="{{ old('price') }}"
-                                    placeholder="Giá bán thường"
+                                    placeholder="VD: 100000"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('price')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -97,7 +97,7 @@
                             <div>
                                 <label for="discount_price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá khuyến
                                     mãi (₫) <span class="text-red-500">*</span></label>
-                                <input type="number" name="discount_price" id="discount_price" placeholder="Giá khuyến mãi"
+                                <input type="number" name="discount_price" id="discount_price" placeholder="VD: 80000"
                                     value="{{ old('discount_price') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                                 @error('discount_price')

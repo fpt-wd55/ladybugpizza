@@ -19,7 +19,8 @@
                 <form action="{{ route('auth.post-register') }}" method="POST">
                     @csrf
                     <div class="mb-4">
-                        <label class="font-medium" for="phone">Số điện thoại</label>
+                        <label class="font-medium" for="phone">Số điện thoại <span
+                                class="text-red-500">*</span></label>
                         <input type="text" name="phone" id="phone" value="{{ old('phone') }}"
                             placeholder="VD: 0123456789" class="mt-2 mb-2 input">
                         @error('phone')
@@ -27,7 +28,7 @@
                         @enderror
                     </div>
                     <div class="mb-4">
-                        <label class="font-medium" for="email">Email</label>
+                        <label class="font-medium" for="email">Email <span class="text-red-500">*</span></label>
                         <input type="text" name="email" id="email" value="{{ old('email') }}"
                             placeholder="VD: lazzybugpizza@gmail.com" class="mt-2 mb-2 input">
                         @error('email')
@@ -35,14 +36,15 @@
                         @enderror
                     </div>
                     <div class="mb-4">
-                        <label class="font-medium" for="password">Mật khẩu</label>
+                        <label class="font-medium" for="password">Mật khẩu <span class="text-red-500">*</span></label>
                         <input type="password" name="password" id="password" class="mt-2 mb-2 input">
                         @error('password')
                             <p class="text-red-500 text-sm">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="mb-4">
-                        <label class="font-medium" for="password_confirmation">Nhập lại mật khẩu</label>
+                        <label class="font-medium" for="password_confirmation">Nhập lại mật khẩu <span
+                                class="text-red-500">*</span></label>
                         <input type="password" name="password_confirmation" id="password_confirmation"
                             class="mt-2 mb-2 input">
                         @error('password_confirmation')
@@ -53,7 +55,8 @@
                         <div class="">
                             <input type="checkbox" name="agree" id="agree" class="input-checkbox mb-1">
                             <label for="agree" class="text-sm ms-1">Khách hàng đồng ý với</label>
-                            <a href="{{ route('client.dynamic-page','chinh-sach-va-dieu-khoan') }}" class="text-red-600 text-sm">chính sách và điều
+                            <a href="{{ route('client.dynamic-page', 'chinh-sach-va-dieu-khoan') }}"
+                                class="text-red-600 text-sm">chính sách và điều
                                 khoản</a>
                         </div>
                         @error('agree')
@@ -75,8 +78,8 @@
                 </form>
             </div>
             <div class="hidden md:block max-h-full">
-                <img loading="lazy" class="w-full h-full object-cover" src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}"
-                    alt="">
+                <img loading="lazy" class="w-full h-full object-cover"
+                    src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}" alt="">
             </div>
         </div>
     </div>

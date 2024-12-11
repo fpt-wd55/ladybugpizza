@@ -266,14 +266,14 @@ class ProductSeeder extends Seeder
                 [
                     'name' => 'Pizza 5 Cheese',
                     'description' => 'Pizza 5 Cheese là bữa tiệc phô mai đích thực với sự kết hợp hoàn hảo của mozzarella, parmesan, cheddar, gouda, và phô mai bleu. Lớp đế bánh giòn tan kết hợp cùng phô mai béo ngậy, thêm một chút húng quế tươi, mang đến hương vị đậm đà, khó quên. Thích hợp cho những buổi gặp mặt bạn bè hoặc dành tặng những người yêu thích phô mai.',
-                    'price' => 70000,
+                    'price' => 170000,
                     'discount_price' => 35000,
                     'quantity' => 0,
                 ],
                 [
                     'name' => 'Pizza Sicilian',
                     'description' => 'Pizza Sicilian mang phong cách Địa Trung Hải với đế bánh dày đặc trưng và hình vuông độc đáo. Lớp sốt cà chua tươi, phô mai mozzarella, thịt xông khói hoặc xúc xích kết hợp hài hòa với rau củ như ớt chuông, hành tây và olive đen, tạo nên hương vị phong phú và đậm đà. Món ăn lý tưởng cho những buổi tụ họp gia đình hay tiệc tùng cùng bạn bè.',
-                    'price' => 70000,
+                    'price' => 170000,
                     'discount_price' => 35000,
                     'quantity' => 0,
                 ],

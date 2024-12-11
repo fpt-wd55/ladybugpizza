@@ -70,6 +70,8 @@ php artisan storage:link
 npm run dev
 
 php artisan serve
+
+php schedule:work
 ```
 
 9. Truy cập trang web:

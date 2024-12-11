@@ -82,7 +82,6 @@
                                             </li>
                                         </div>
                                     </ul>
-
                                     <h6 class="my-3 text-sm font-medium text-gray-900">Trạng thái</h6>
                                     <ul class="space-y-2 text-sm">
                                         <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
@@ -102,7 +101,6 @@
                                             </li>
                                         </div>
                                     </ul>
-
                                 </div>
                                 <!-- Modal footer -->
                                 <div class="flex items-center p-6 space-x-4 rounded-b ">
@@ -116,7 +114,6 @@
                 </div>
             </div>
         </div>
-
         {{-- List banner --}}
         <div class="overflow-x-auto">
             <div class="grid grid-cols-1 gap-3 gap-x-3 px-2 md:grid-cols-3">
@@ -162,7 +159,7 @@
                                                 href="{{ route('admin.banners.edit', $item) }}">Cập nhật</a>
                                         </li>
                                         <li>
-                                            <a class="block px-4 py-2 hover:bg-gray-100"
+                                            <a class="cursor-pointer block py-2 px-4 text-sm text-red-500 hover:bg-gray-100"
                                                 data-modal-target="deleteBanner-modal-{{ $item->id }}"
                                                 data-modal-toggle="deleteBanner-modal-{{ $item->id }}"
                                                 href="#">Xoá</a>
@@ -172,7 +169,6 @@
                             </div>
                         </div>
                     </div>
-
                     {{-- start modal delete --}}
                     <div class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0"
                         id="deleteBanner-modal-{{ $item->id }}" tabindex="-1">

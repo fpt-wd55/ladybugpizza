@@ -90,8 +90,8 @@ class ComboController extends Controller
             'sku' => trim(strtoupper($request->sku)),
             'status' => isset($request->status) ? $request->status : 2,
             'is_featured' => isset($request->is_featured) ? $request->is_featured : 2,
-            'avg_rating' => 0,
-            'total_rating' => 0,
+            'avg_rating' => $request->has('avg_rating') ? $request->avg_rating : $combo->avg_rating,
+            'total_rating' => $request->has('total_rating') ? $request->total_rating : $combo->total_rating,
         ];
 
         if ($combo->update($data)) {

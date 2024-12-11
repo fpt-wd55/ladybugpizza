@@ -128,8 +128,7 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        $validatedData = $request->validated();
-
+        $validatedData = $request->validated(); 
         // Kiem tra role_id
         if ($validatedData['roleSelect'] == 1) {
             $role_id = $validatedData['permissionSelect'];

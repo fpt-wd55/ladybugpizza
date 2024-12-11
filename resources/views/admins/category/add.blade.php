@@ -4,12 +4,12 @@
     {{ Breadcrumbs::render('admin.categories.create') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
         <div class="p-4 mx-auto">
-            <h3 class="mb-4 text-lg font-bold text-gray-900 ">Category</h3>
+            <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm danh mục</h3>
             <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
                     <div>
-                        <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Hình ảnh <span
+                        <label for="name" class="block mb-2 text-base font-medium text-gray-900 ">Hình ảnh danh mục <span
                                 class="text-red-500">*</span></label>
                         <input
                             class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
@@ -23,7 +23,7 @@
                                 class="text-red-500">*</span></label>
                         <input type="text" name="name" id="name" value="{{ old('name') }}"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            placeholder="Ví dụ: Pizza hải sản">
+                            placeholder="Ví dụ: Pizza">
                         @error('name')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror

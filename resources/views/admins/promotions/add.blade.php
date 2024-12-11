@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Thêm mới mã giảm giá')
+@section('title', 'Mã giảm giá | Thêm mới')
 
 @section('content')
     {{ Breadcrumbs::render('admin.promotions.create') }}
@@ -11,16 +11,18 @@
                 <div class="w-full mb-2 grid grid-cols-3 gap-2">
                     {{-- name --}}
                     <div>
-                        <label for="name" class="label-lg">Tên <span class="text-red-500">*</span></label>
-                        <input type="text" name="name" class="input h-10 mb-2" value="{{ old('name') }}" />
+                        <label for="name" class="label-lg">Tên mã giảm giá <span class="text-red-500">*</span></label>
+                        <input type="text" name="name" class="input h-10 mb-2" value="{{ old('name') }}"
+                            placeholder="VD: Pizza yêu thích giảm 10%" />
                         @error('name')
                             <span style="color: red ">{{ $message }}</span>
                         @enderror
                     </div>
-                    {{-- description --}}
+                    {{-- points --}}
                     <div>
                         <label for="points" class="label-lg">Điểm</label>
-                        <input type="number" name="points" class="input h-10 mb-2" value="{{ old('points') }}" />
+                        <input type="number" name="points" class="input h-10 mb-2" value="{{ old('points') }}"
+                            placeholder="VD: 50" />
                         @error('points')
                             <span style="color: red ">{{ $message }}</span>
                         @enderror
@@ -44,7 +46,7 @@
                     <div>
                         <label for="discount_value" class="label-lg">Giá trị giảm giá <span
                                 class="text-red-500">*</span></label>
-                        <input type="text" name="discount_value" class="input h-10 mb-2"
+                        <input type="text" name="discount_value" class="input h-10 mb-2" placeholder="VD: 10"
                             value="{{ old('discount_value') }}" />
                         @error('discount_value')
                             <span style="color: red ">{{ $message }}</span>
@@ -71,7 +73,8 @@
                     {{-- quantity --}}
                     <div>
                         <label for="quantity" class="label-lg">Số lượng <span class="text-red-500">*</span></label>
-                        <input type="number" name="quantity" class="input h-10 mb-2" value="{{ old('quantity') }}" />
+                        <input type="number" name="quantity" class="input h-10 mb-2" value="{{ old('quantity') }}"
+                            placeholder="VD: 14" />
                         @error('quantity')
                             <span style="color: red ">{{ $message }}</span>
                         @enderror
@@ -80,7 +83,7 @@
                     <div>
                         <label for=" min_order_total" class="label-lg">Đơn hàng tối thiểu (₫)</label>
                         <input type="text" name="min_order_total" class="input h-10 mb-2"
-                            value="{{ old('min_order_total') }}" />
+                            value="{{ old('min_order_total') }}" placeholder="VD: 100000" />
                         @error('min_order_total')
                             <span style="color: red ">{{ $message }}</span>
                         @enderror
@@ -88,8 +91,8 @@
                     {{-- max_discount --}}
                     <div>
                         <label for="max_discount" class="label-lg">Giảm tối đa (₫)</label>
-                        <input type="text" name="max_discount" class="input h-10 mb-2"
-                            value="{{ old('max_discount') }}" />
+                        <input type="text" name="max_discount" class="input h-10 mb-2" value="{{ old('max_discount') }}"
+                            placeholder="VD: 50000" />
                         @error('max_discount')
                             <span style="color: red ">{{ $message }}</span>
                         @enderror
@@ -118,7 +121,7 @@
                     <div>
                         <label for="is_global" class="label-lg">Đối tượng áp dụng <span
                                 class="text-red-500">*</span></label>
-                        <select name="is_global" class="select">
+                        <select name="is_global" class="select mb-2">
                             <option value="">Chọn</option>
                             <option value="1"
                                 {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>

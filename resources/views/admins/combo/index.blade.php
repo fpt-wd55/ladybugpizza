@@ -134,11 +134,11 @@
                                     <ul class="space-y-2 text-sm">
                                         @for ($i = 5; $i >= 1; $i--)
                                             <li class="flex items-center">
-                                                <input id="active" type="checkbox" name="filter_rating[]"
+                                                <input id="filter_rating_{{ $i }}" value="{{ $i }}" type="checkbox" name="filter_rating[]"
                                                     value="{{ $i }}"
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
                                                     @if (in_array($i, request()->input('filter_rating', []))) checked @endif>
-                                                <label for="active"
+                                                <label for="filter_rating_{{ $i }}"
                                                     class="ml-2 text-sm font-medium text-gray-900 flex items-center gap-1">
                                                     <div class="flex items-center gap-0.3">
                                                         @for ($j = 1; $j <= $i; $j++)
@@ -343,5 +343,12 @@
 @section('scripts')
     <script>
         tableCheckboxItem('table-checkbox-all', 'table-item-checkbox');
+        document.querySelectorAll('.star-icon').forEach((star, index) => {
+            star.addEventListener('click', () => {
+                const rating = index + 1;
+                const checkbox = document.getElementById('filter_rating_' + rating);
+                checkbox.checked = !checkbox.checked;
+            });
+        });
     </script>
 @endsection

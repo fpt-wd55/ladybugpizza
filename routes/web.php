@@ -49,7 +49,7 @@ Route::prefix('/')->group(function () {
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('client.product.show');
 
     Route::middleware('auth.check')->group(function () {
-        // Giỏ hàng 
+        // Giỏ hàng
         Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
         Route::post('/product/cart/{product}', [CartController::class, 'addToCart'])->name('client.product.add-to-cart');
         Route::delete('/product/cart/{cartItem}', [CartController::class, 'delete'])->name('client.product.delete-cart-item');
@@ -58,7 +58,7 @@ Route::prefix('/')->group(function () {
         Route::post('/checkout', [CheckoutController::class, 'postCheckout'])->name('post-checkout');
         Route::get('/return-momo', [CheckoutController::class, 'returnMomo'])->name('return_momo');
         Route::get('/thank-you/{order}', [CheckoutController::class, 'thankYou'])->name('thank_you');
-        // Đơn hàng 
+        // Đơn hàng
         Route::get('/order', [OrderController::class, 'index'])->name('client.order.index');
         Route::put('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
         Route::put('order/{order}/received', [OrderController::class, 'confirmReceived'])->name('client.order.received');
@@ -207,9 +207,12 @@ Route::prefix('/admin')->middleware(['admin'])->name('admin.')->group(function (
     // Promotion
     Route::resource('/promotions', PromotionController::class);
     Route::get('/promotion/filter', [PromotionController::class, 'filter'])->name('promotions.filter');
+    Route::get('/promotion/trash', [PromotionController::class, 'trashPromotion'])->name('promotions.trash');
     Route::post('promotion/bulk-action', [PromotionController::class, 'bulkAction'])->name('promotions.bulkAction');
     Route::get('/promotion/search', [PromotionController::class, 'search'])->name('promotions.search');
     Route::get('/promotion/export', [PromotionController::class, 'export'])->name('promotions.export');
+    Route::get('/promotion/restore/{id}', [PromotionController::class, 'resPromotion'])->name('resPromotion');
+
     // Membership
     Route::resource('/memberships', AdminMembershipController::class);
     Route::get('/membership/filter', [AdminMembershipController::class, 'filter'])->name('memberships.filter');
