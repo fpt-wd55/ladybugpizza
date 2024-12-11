@@ -21,26 +21,21 @@ class InactiveRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-{
-    return [
-        'email' => [
-            'required',
-            'email',
-            Rule::exists('users')->where(function ($query) {
-                $query->where('email', request('email'));
-            }),
-        ],
-    ];
-}
+    {
+        return [
+            'confirm_email' =>  'required|string|max:255',
+        ];
+    }
 
-public function messages(): array
-{
-    return [
-        'email.required' => 'Vui lòng nhập email.',
-        'email.email' => 'Email không đúng định dạng. Vui lòng nhập đúng định dạng email.',
-        'email.exists' => 'Email này không tồn tại trong hệ thống.',
-    ];
-}
+
+    public function messages(): array
+    {
+        return [
+            'confirm_email.required' => 'Vui lòng nhập email của bạn',
+            'confirm_email.string' => 'Email không hợp lệ',
+            'confirm_email.max' => 'Email không được vượt quá 255 ký tự',
+        ];
+    }
 
 
     
