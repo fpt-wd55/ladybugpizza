@@ -24,7 +24,7 @@
                     <form action="{{ route('auth.post-forgot-password') }}" method="POST">
                         @csrf
                         <div class=" py-4">
-                            <label class="font-medium" for="email">Email</label>
+                            <label class="font-medium" for="email">Email <span class="text-red-500">*</span></label>
                             <input type="email" name="email" id="email" value="{{ old('email') }}"
                                 placeholder="VD: lazzybugpizza@gmail.com" class="mt-2 mb-2 input">
                             @error('email')

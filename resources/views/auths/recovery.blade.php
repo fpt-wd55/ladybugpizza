@@ -25,14 +25,15 @@
                 <form action="{{ route('auth.post-recovery') }}" method="POST">
                     @csrf
                     <div class="mb-4">
-                        <label class="font-medium" for="password">Mật khẩu mới</label>
+                        <label class="font-medium" for="password">Mật khẩu mới <span class="text-red-500">*</span></label>
                         <input type="password" name="password" id="password" class="mt-2 input">
                         @error('password')
                             <p class="text-red-500 text-sm">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="mb-4">
-                        <label class="font-medium" for="password_confirmation">Nhập lại mật khẩu mới</label>
+                        <label class="font-medium" for="password_confirmation">Nhập lại mật khẩu mới <span
+                                class="text-red-500">*</span></label>
                         <input type="password" name="password_confirmation" id="password_confirmation" class="mt-2 input">
                         @error('password_confirmation')
                             <p class="text-red-500 text-sm">{{ $message }}</p>
