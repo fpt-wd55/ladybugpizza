@@ -226,7 +226,14 @@ class WebController extends Controller
         Session::put('otp_expiry', now()->addMinutes(10));
         $subject = 'Mã Xác Thực OTP';
 
-        Mail::to($user->email)->send(new Otp($otpCode, $subject));
+        if($user->status == 2){
+
+            return back()->with('error', 'Tài khoản của bạn đã bị khóa, vui lòng liên hệ với chúng tôi để được hỗ trợ.');
+        }
+        else
+        {
+            Mail::to($user->email)->send(new Otp($otpCode, $subject));
+        }
 
         return redirect()->route('auth.get-otp')->with('success', 'Mã OTP đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư và nhập mã để tiếp tục.');
     }

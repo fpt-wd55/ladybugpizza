@@ -42,10 +42,13 @@
                         Khôi phục mật khẩu
                     </button>
                 </form>
+                <div class="text-sm mb-3 text-center">
+                    <a href="{{ route('auth.get-otp') }}" class="text-red-600">Xác thực OTP</a>
+                </div>
             </div>
             <div class="hidden md:block max-h-[629px]">
-                <img loading="lazy" class="w-full h-full object-cover" src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}"
-                    alt="">
+                <img loading="lazy" class="w-full h-full object-cover"
+                    src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}" alt="">
             </div>
         </div>
     </div>
