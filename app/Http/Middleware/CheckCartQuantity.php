@@ -20,13 +20,13 @@ class CheckCartQuantity
         $cart = Cart::find(Auth::id());
 
         if (!$cart) {
-            return redirect()->route('client.cart.index')->with('error', 'Giỏ hàng của bạn trống.');
+            return redirect()->route('client.cart.index')->with('error', 'Giỏ hàng của bạn trống');
         }
 
         $totalQuantity = $cart->items()->sum('quantity');
 
         if ($totalQuantity >= 20) {
-            return redirect()->route('client.cart.index')->with('error', 'Số lượng sản phẩm trong giỏ hàng không được vượt quá 20.');
+            return redirect()->route('client.cart.index')->with('error', 'Bạn chỉ được thanh toán tối đa 20 sản phẩm trong một đơn hàng');
         }
 
         return $next($request);
