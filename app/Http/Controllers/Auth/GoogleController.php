@@ -33,6 +33,14 @@ class GoogleController extends Controller
                 ->orWhere('google_id', $googleUser->getId())
                 ->first();
 
+            if ($user) {
+                if (!$user->google_id) {
+                    $user->google_id = $googleUser->getId();
+                    $user->avatar = $googleUser->getAvatar();
+                    $user->save();
+                }
+            }
+
             if (!$user) {
                 $user = User::create([
                     'fullname' => $googleUser->getName(),
