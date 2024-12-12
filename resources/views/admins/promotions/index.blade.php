@@ -66,9 +66,7 @@
                             tabindex="-1" aria-hidden="true"
                             class="fixed inset-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-modal md:h-full">
                             <div class="relative w-full h-full max-w-2xl md:h-auto">
-                                <!-- Modal content -->
                                 <div class="relative bg-white rounded-lg shadow">
-                                    <!-- Modal header -->
                                     <div class="flex items-start justify-between px-6 py-4 rounded-t">
                                         <h3 class="text-lg font-semibold text-gray-500">
                                             Bộ lọc
@@ -79,23 +77,24 @@
                                             @svg('tabler-x', 'w-5 h-5')
                                         </button>
                                     </div>
-                                    <!-- Modal body -->
                                     <div class="px-4 md:px-6">
                                         <h6 class="my-3 text-sm font-medium text-gray-900">Loại mã</h6>
                                         <ul class="space-y-2 text-sm">
                                             <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
                                                 <li class="flex items-center">
-                                                    <input type="checkbox" name="filter_discount_type[]" value="1"
+                                                    <input type="checkbox" id="discount-type-1"
+                                                        name="filter_discount_type[]" value="1"
                                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
                                                         @if (in_array(1, request()->input('filter_discount_type', []))) checked @endif>
-                                                    <label for="active"
+                                                    <label for="discount-type-1"
                                                         class="ml-2 text-sm font-medium text-gray-900">Giảm theo %</label>
                                                 </li>
                                                 <li class="flex items-center">
-                                                    <input type="checkbox" name="filter_discount_type[]" value="2"
+                                                    <input type="checkbox" id="discount-type-2"
+                                                        name="filter_discount_type[]" value="2"
                                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
                                                         @if (in_array(2, request()->input('filter_discount_type', []))) checked @endif>
-                                                    <label for="inactive"
+                                                    <label for="discount-type-2"
                                                         class="ml-2 text-sm font-medium text-gray-900">Giảm theo giá
                                                         tiền</label>
                                                 </li>
@@ -105,19 +104,21 @@
                                         <ul class="space-y-2 text-sm">
                                             <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
                                                 <li class="flex items-center">
-                                                    <input type="checkbox" name="filter_range[]" value="0"
+                                                    <input type="checkbox" id="range-0" name="filter_range[]"
+                                                        value="0"
                                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
                                                         @if (in_array(0, request()->input('filter_range', []))) checked @endif>
-                                                    <label for="active"
-                                                        class="ml-2 text-sm font-medium text-gray-900">Chung</label>
+                                                    <label for="range-0"
+                                                        class="ml-2 text-sm font-medium text-gray-900">Tất cả</label>
                                                 </li>
                                                 @foreach ($ranks as $rank)
                                                     <li class="flex items-center">
-                                                        <input type="checkbox" name="filter_range[]"
-                                                            value="{{ $rank->id }}"
+                                                        <input type="checkbox" id="range-{{ $rank->id }}"
+                                                            name="filter_range[]" value="{{ $rank->id }}"
                                                             class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
                                                             @if (in_array($rank->id, request()->input('filter_range', []))) checked @endif>
-                                                        <label class="ml-2 text-sm font-medium text-gray-900">Hạng
+                                                        <label for="range-{{ $rank->id }}"
+                                                            class="ml-2 text-sm font-medium text-gray-900">Thành viên
                                                             {{ $rank->name }}</label>
                                                     </li>
                                                 @endforeach
@@ -140,8 +141,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <!-- Modal footer -->
                                     <div class="flex items-center p-6 space-x-4 rounded-b">
                                         <button type="submit" class="button-red">
                                             Lọc dữ liệu
@@ -231,7 +230,6 @@
                                 </div>
                             </td>
                         </tr>
-                        {{-- delete modal --}}
                         <div id="delete-modal-{{ $promotion->id }}" tabindex="-1"
                             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                             <div class="relative p-4 w-full max-w-md max-h-full">
@@ -263,9 +261,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- end delete modal --}}
-
-                        {{-- detail modal --}}
                         <div id="detail-modal-{{ $promotion->id }}" tabindex="-1" aria-hidden="true"
                             class="hidden overflow-y-auto overflow-x-hidden fixed top-10 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
                             <div class="relative p-4 w-full max-w-md max-h-full">
@@ -363,7 +358,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- end detail modal --}}
                         @empty
                             <td colspan="6" class="text-center py-4 text-base">
                                 <div class="flex flex-col items-center justify-center p-6 rounded-lg bg-white w-full h-80">
