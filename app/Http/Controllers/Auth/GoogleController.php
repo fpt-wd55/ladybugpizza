@@ -78,8 +78,8 @@ class GoogleController extends Controller
                 return redirect()->route('client.home')->with('success', 'Đăng nhập thành công');
             } else {
 
-                if ($user->status === 2) {
-                    return redirect()->route('auth.login')->with('error', 'Tài khoản của bạn đã bị vô hiệu hóa.');
+                if ($user->status == 2) {
+                    return redirect()->route('auth.login')->with('error', 'Tài khoản của bạn đã bị vô hiệu hóa');
                 }
 
                 Auth::login($user);

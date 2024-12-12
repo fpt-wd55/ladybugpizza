@@ -25,7 +25,7 @@ class CheckCartQuantity
 
         $totalQuantity = $cart->items()->sum('quantity');
 
-        if ($totalQuantity >= 20) {
+        if ($totalQuantity > 20) {
             return redirect()->route('client.cart.index')->with('error', 'Bạn chỉ được thanh toán tối đa 20 sản phẩm trong một đơn hàng');
         }
 
