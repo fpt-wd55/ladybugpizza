@@ -49,7 +49,7 @@ class ProductRequest extends FormRequest
     {
         $productId = $this->route('product') ? $this->route('product')->id : null;
         return [
-           'name' => 'required|string|max:255|unique:products,name,' . $productId,
+            'name' => 'required|string|max:255|unique:products,name,' . $productId,
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'description' => 'required|string',
             'category_id' => 'required|exists:categories,id',
@@ -59,7 +59,7 @@ class ProductRequest extends FormRequest
             'sku' => 'required|string|min:10|max:15|unique:products,sku,' . $productId,
         ];
     }
-    
+
 
     public function messages(): array
     {

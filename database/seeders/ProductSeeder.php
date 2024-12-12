@@ -554,11 +554,10 @@ class ProductSeeder extends Seeder
             $products = $dataProduct[$category->slug] ?? [];
 
             foreach ($products as $product => $productData) {
-                // sku 10 characters and unique
                 $sku = $faker->unique()->regexify('[A-Z]{3}[0-9]{7}');
                 Product::create([
                     'name' => $productData['name'],
-                    'slug' => $sku . '-' . Str::slug($productData['name']),
+                    'slug' => Str::slug($productData['name']),
                     'image' => Str::slug($productData['name']) . '.jpeg',
                     'description' => $productData['description'],
                     'category_id' => $category->id,
