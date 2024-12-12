@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 'fullname' => 'Đỗ Hồng Quân',
                 'phone' => '0362303364',
                 'password' => Hash::make('quandohong28@gmail.com'),
-                'date_of_birth' => '2004-04-28',
+                'date_of_birth' => '2002-11-23',
                 'gender' => 1,
             ],
             [

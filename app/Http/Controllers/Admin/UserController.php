@@ -130,10 +130,15 @@ class UserController extends Controller
     public function update(UserRequest $request, User $user)
     {
         $validatedData = $request->validated();
-        $newPassword = $request->new_password;
 
-        if (Hash::check($newPassword, $user->password)) {
-            return back()->with('error', 'Mật khẩu mới không được giống với mật khẩu hiện tại.');
+        if ($user->google_id == null) {
+            $newPassword = $request->new_password;
+
+            if (Hash::check($newPassword, $user->password)) {
+                return back()->with('error', 'Mật khẩu mới không được giống với mật khẩu hiện tại.');
+            }
+        } else {
+            $newPassword = null;
         }
 
         // Kiem tra role_id
@@ -166,8 +171,7 @@ class UserController extends Controller
             'fullname' => trim($validatedData['fullname']),
             'email' => trim($validatedData['email']),
             'phone' => trim($validatedData['phone']),
-            'password' => $validatedData['new_password'] ? bcrypt(trim($validatedData['new_password'])) : $user->password,
-            'google_id' => null,
+            'password' => $newPassword,
             'role_id' => $role_id,
             'avatar' => $validatedData['avatar'],
             'date_of_birth' => $validatedData['date_of_birth'],

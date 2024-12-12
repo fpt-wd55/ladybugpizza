@@ -1,17 +1,14 @@
-<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
+<nav class="fixed top-0 z-50 w-full border-b border-gray-200 bg-white">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
-                <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
-                    type="button"
-                    class="inline-flex items-center p-2 text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none ring-0 focus:ring-0">
+                <button aria-controls="logo-sidebar" class="inline-flex items-center rounded-lg p-2 text-gray-500 ring-0 hover:bg-gray-100 focus:outline-none focus:ring-0 sm:hidden" data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" type="button">
                     <span class="sr-only">Open sidebar</span>
                     @svg('tabler-baseline-density-medium', 'w-6 h-6 text-gray-500')
                 </button>
-                <a href="{{ route('admin.dashboard') }}" class="flex ms-2 md:me-24">
-                    <img alt="" class="img-sm me-3 " loading="lazy"
-                        src="{{ asset('storage/uploads/logo/logo.svg') }}">
-                    <span class="hidden md:block self-center text-lg font-semibold whitespace-nowrap">Ladybug
+                <a class="ms-2 flex md:me-24" href="{{ route('admin.dashboard') }}">
+                    <img alt="" class="img-sm me-3" loading="lazy" src="{{ asset('storage/uploads/logo/logo.svg') }}">
+                    <span class="hidden self-center whitespace-nowrap text-lg font-semibold md:block">Ladybug
                         Pizza</span>
                 </a>
             </div>
@@ -74,32 +71,23 @@
                         </div>
                     </a>
                 </div> --}}
-                <button type="button" class="flex mx-3 bg-gray-800 rounded-full md:mr-0 ring-0 focus:ring-0"
-                    id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
+                <button aria-expanded="false" class="mx-3 flex rounded-full bg-gray-800 ring-0 focus:ring-0 md:mr-0" data-dropdown-toggle="dropdown" id="user-menu-button" type="button">
                     <span class="sr-only">Open user menu</span>
-                    @if (Auth::user()->avatar && file_exists(public_path('storage/uploads/avatars/' . Auth::user()->avatar)))
-                        <img src="{{ asset('storage/uploads/avatars/' . Auth::user()->avatar) }}" alt="User Avatar"
-                            class="w-10 h-10 object-cover rounded-full">
-                    @else
-                        <img src="{{ asset('storage/uploads/avatars/user-default-1.png') }}"
-                            class="w-10 h-10 object-cover rounded-full">
-                    @endif
+                    <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->avatar() }}">
                 </button>
                 <!-- User Dropdown menu -->
-                <div class="hidden z-50 my-4 w-56 list-none bg-white rounded divide-y divide-gray-100 shadow text-sm"
-                    id="dropdown">
-                    <div class="py-3 px-4">
+                <div class="z-50 my-4 hidden w-56 list-none divide-y divide-gray-100 rounded bg-white text-sm shadow" id="dropdown">
+                    <div class="px-4 py-3">
                         <span class="block font-semibold text-gray-900">{{ Auth::user()->fullname }}</span>
-                        <span class="block text-gray-500 truncate">{{ Auth::user()->email }}</span>
+                        <span class="block truncate text-gray-500">{{ Auth::user()->email }}</span>
                     </div>
-                    <ul class="py-1 text-gray-500" aria-labelledby="dropdown">
+                    <ul aria-labelledby="dropdown" class="py-1 text-gray-500">
                         <li>
-                            <a href="{{ route('client.home') }}" target="_blank"
-                                class="block py-2 px-4 hover:bg-gray-100">Trang cửa
+                            <a class="block px-4 py-2 hover:bg-gray-100" href="{{ route('client.home') }}" target="_blank">Trang cửa
                                 hàng</a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.profiles.index') }}" class="block py-2 px-4 hover:bg-gray-100">Tài
+                            <a class="block px-4 py-2 hover:bg-gray-100" href="{{ route('admin.profiles.index') }}">Tài
                                 khoản</a>
                         </li>
                         {{-- <li>
@@ -107,10 +95,9 @@
                                 đặt</a>
                         </li> --}}
                     </ul>
-                    <ul class="py-1 text-gray-500" aria-labelledby="dropdown">
+                    <ul aria-labelledby="dropdown" class="py-1 text-gray-500">
                         <li>
-                            <a href="#" data-modal-target="logoutModal" data-modal-toggle="logoutModal"
-                                class="block py-2 px-4 hover:bg-gray-100 text-red-500">Đăng
+                            <a class="block px-4 py-2 text-red-500 hover:bg-gray-100" data-modal-target="logoutModal" data-modal-toggle="logoutModal" href="#">Đăng
                                 xuất
                             </a>
                         </li>
@@ -122,18 +109,14 @@
 </nav>
 
 {{-- Logout Modal --}}
-<div aria-hidden="true"
-    class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full"
-    id="logoutModal" tabindex="-1">
+<div aria-hidden="true" class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full" id="logoutModal" tabindex="-1">
     <div class="relative h-auto w-full max-w-2xl p-4">
         <div class="relative rounded-lg bg-white p-4 shadow sm:p-5">
             <div class="mb-4 flex items-center justify-between rounded-t border-b pb-4 sm:mb-5">
-                <h3 class="font-semibold text-gray-900 ">
+                <h3 class="font-semibold text-gray-900">
                     Đăng xuất
                 </h3>
-                <button
-                    class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900  "
-                    data-modal-toggle="logoutModal" type="button">
+                <button class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900" data-modal-toggle="logoutModal" type="button">
                     @svg('tabler-x', 'icon-sm')
                 </button>
             </div>
