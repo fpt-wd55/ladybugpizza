@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Vanthao03596\HCVN\Models\Province;
 use Vanthao03596\HCVN\Models\District;
 use Vanthao03596\HCVN\Models\Ward;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -128,7 +129,13 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        $validatedData = $request->validated(); 
+        $validatedData = $request->validated();
+        $newPassword = $request->new_password;
+
+        if (Hash::check($newPassword, $user->password)) {
+            return back()->with('error', 'Mật khẩu mới không được giống với mật khẩu hiện tại.');
+        }
+
         // Kiem tra role_id
         if ($validatedData['roleSelect'] == 1) {
             $role_id = $validatedData['permissionSelect'];
@@ -167,6 +174,8 @@ class UserController extends Controller
             'gender' => $validatedData['gender'],
             'status' => $validatedData['status'],
         ];
+
+
 
         if ($user->update($data)) {
             // Xu ly upload anh va xoa anh cu

@@ -43,7 +43,7 @@ use Vanthao03596\HCVN\Models\Ward;
 */
 
 
-Route::prefix('/')->group(function () {
+Route::prefix('/')->middleware('check_password_change')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('client.home');
     Route::get('/menu', [ProductController::class, 'menu'])->name('client.product.menu');
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('client.product.show');
@@ -132,7 +132,7 @@ Route::prefix('/auth')->group(function () {
     Route::post('/recovery', [WebController::class, 'postRecovery'])->name('auth.post-recovery');
 });
 
-Route::prefix('/admin')->middleware(['admin'])->name('admin.')->group(function () {
+Route::prefix('/admin')->middleware(['admin', 'check_password_change'])->name('admin.')->group(function () {
     Route::get('/', function () {
         return redirect()->route('admin.dashboard');
     });

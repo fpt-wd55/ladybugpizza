@@ -61,8 +61,8 @@ class WebController extends Controller
     {
         $credentials = $request->only('email', 'password');
         $remember = $request->has('remember');
-
         if (Auth::attempt($credentials, $remember)) {
+            Session::put('user_password', $request->password);
 
             return redirect()->route('admin.dashboard')->with('success', 'Đăng nhập thành công');
         }
