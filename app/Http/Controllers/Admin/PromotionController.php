@@ -130,7 +130,8 @@ class PromotionController extends Controller
         $ranks = MembershipRank::get();
         $promotions = Promotion::query()
             ->orderBy('quantity', 'desc')
-            ->where('code', 'like', '%' . $request->search . '%')
+            ->where('name', 'like', '%' . $request->search . '%')
+            ->orWhere('code', 'like', '%' . $request->search . '%')
             ->paginate(10);
         $promotions->appends(['search' => $request->search]);
         return view('admins.promotions.index', compact('promotions', 'ranks'));
@@ -166,24 +167,28 @@ class PromotionController extends Controller
     {
         $query = Promotion::query();
 
-        if (isset($request->filter_discount_type)) {
+        if (!empty($request->filter_discount_type)) {
             $query->whereIn('discount_type', $request->filter_discount_type);
         }
 
-        if (isset($request->filter_range) && in_array(0, $request->filter_range)) {
-            $query->where('is_global', 1);
+        if (!empty($request->filter_range)) {
+            if (in_array(0, $request->filter_range)) {
+                $query->where('is_global', 1);
+            } else {
+                $query->where('is_global', 2);
+                $query->whereIn('rank_id', $request->filter_range);
+            }
         }
 
-        if (isset($request->filter_range) && !in_array(0, $request->filter_range)) {
-            $query->where('is_global', 2);
-            $query->whereIn('rank_id', $request->filter_range);
+        if (empty($request->filter_range)) {
+            $query->whereIn('is_global', [1, 2]);
         }
 
-        if (isset($request->filter_date_min)) {
+        if (!empty($request->filter_date_min)) {
             $query->whereDate('start_date', '>=', $request->filter_date_min);
         }
 
-        if (isset($request->filter_date_max)) {
+        if (!empty($request->filter_date_max)) {
             $query->whereDate('end_date', '<=', $request->filter_date_max);
         }
 
@@ -195,7 +200,7 @@ class PromotionController extends Controller
             'filter_date_min' => $request->filter_date_min,
             'filter_date_max' => $request->filter_date_max,
         ]);
-
+        
         $ranks = MembershipRank::get();
 
         return view('admins.promotions.index', compact('promotions', 'ranks'));
@@ -212,10 +217,10 @@ class PromotionController extends Controller
         $promotion = Promotion::withTrashed()->find($id);
 
         if ($promotion->restore()) {
-            return redirect()->back()->with('success', 'Khôi phục sản phẩm thành công');
+            return redirect()->back()->with('success', 'Khôi phục mã giảm giá thành công');
         }
 
-        return redirect()->back()->with('error', 'Khôi phục sản phẩm thất bại');
+        return redirect()->back()->with('error', 'Khôi phục mã giảm giá thất bại');
     }
 
     public function forceDelete($id)
@@ -223,9 +228,9 @@ class PromotionController extends Controller
         $promotion = Promotion::withTrashed()->find($id);
 
         if ($promotion->forceDelete()) {
-            return redirect()->back()->with('success', 'Xóa sản phẩm vĩnh viễn thành công');
+            return redirect()->back()->with('success', 'Xóa mã giảm giá vĩnh viễn thành công');
         }
 
-        return redirect()->back()->with('error', 'Xóa sản phẩm thất bại');
+        return redirect()->back()->with('error', 'Xóa mã giảm giá thất bại');
     }
 }
