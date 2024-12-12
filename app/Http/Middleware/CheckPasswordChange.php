@@ -18,17 +18,20 @@ class CheckPasswordChange
     {
         if (auth()->check()) {
             $user = auth()->user();
-            $plainPassword = session('user_password');
 
-            if (!Hash::check($plainPassword, $user->password)) {
-                $user->remember_token = null;
-                $user->save();
+            if (!$user->google_id) {
+                $plainPassword = session('user_password');
 
-                session()->invalidate();
-                session()->regenerateToken();
-                auth()->logout();
+                if (!Hash::check($plainPassword, $user->password)) {
+                    $user->remember_token = null;
+                    $user->save();
 
-                return redirect()->route('client.home')->with('error', 'Mật khẩu đã được thay đổi. Vui lòng đăng nhập lại.');
+                    session()->invalidate();
+                    session()->regenerateToken();
+                    auth()->logout();
+
+                    return redirect()->route('client.home')->with('error', 'Mật khẩu đã được thay đổi. Vui lòng đăng nhập lại.');
+                }
             }
         }
 
