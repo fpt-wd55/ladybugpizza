@@ -16,7 +16,7 @@
                     class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                     <a href="{{ route('admin.promotions.create') }}" class="button-blue">
                         @svg('tabler-plus', 'w-5 h-5 mr-2')
-                        Thêm mới mã giảm giá
+                        Thêm mã giảm giá
                     </a>
                     <a href="{{ route('admin.promotions.trash') }}" class="button-red">
                         @svg('tabler-trash', 'w-5 h-5 mr-2')
@@ -165,8 +165,8 @@
                         <th scope="col" class="px-4 py-3">Tên mã giảm giá</th>
                         <th scope="col" class="px-4 py-3">Mã giảm giá</th>
                         <th scope="col" class="px-4 py-3">Loại giảm giá</th>
-                        <th scope="col" class="px-4 py-3">Giá trị giảm giá</th>
-                        <th scope="col" class="px-4 py-3">Số lượng</th>
+                        <th scope="col" class="px-4 py-3 text-center">Giá trị giảm giá</th>
+                        <th scope="col" class="px-4 py-3 text-center">Số lượng</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Hành động</span>
                         </th>
@@ -191,14 +191,14 @@
                                     Giảm theo số tiền
                                 @endif
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
                                 @if ($promotion->discount_type == '1')
                                     {{ number_format($promotion->discount_value) }}%
                                 @elseif ($promotion->discount_type == '2')
                                     {{ number_format($promotion->discount_value) }}₫
                                 @endif
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
                                 {{ number_format($promotion->quantity) }}
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">

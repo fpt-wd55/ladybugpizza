@@ -136,11 +136,11 @@
                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
                             </div>
                         </th>
-                        <th scope="col" class="px-4 py-3">Tên</th>
-                        <th scope="col" class="px-4 py-3">Ảnh</th>
-                        <th scope="col" class="px-4 py-3">Giá</th>
-                        <th scope="col" class="px-4 py-3">Số lượng</th>
-                        <th scope="col" class="px-4 py-3">Danh mục</th>
+                        <th scope="col" class="px-4 py-3 text-left">Tên</th>
+                        <th scope="col" class="px-4 py-3 text-left">Ảnh</th>
+                        <th scope="col" class="px-4 py-3 text-center">Giá</th>
+                        <th scope="col" class="px-4 py-3 text-center">Số lượng</th>
+                        <th scope="col" class="px-4 py-3 text-center">Danh mục</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Hành động </span>
                         </th>
@@ -149,26 +149,27 @@
                 <tbody>
                     @forelse ($toppings as $topping)
                         <tr class="border-b hover:bg-gray-100">
-                            <td class="w-4 px-4 py-3">
+                            <td class="w-4 px-4 py-3 ">
                                 <div class="flex items-center">
                                     <input id="table-item-checkbox-{{ $topping->id }}" type="checkbox"
                                         onclick="event.stopPropagation()" value="{{ $topping->id }}"
                                         class="table-item-checkbox w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
                                 </div>
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $topping->name }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-left">{{ $topping->name }}</td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
                                 <a class="shrink-0" data-fslightbox="gallery"
                                     href="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
                                     <img loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}"
                                         class="img-sm img-circle object-cover">
                                 </a>
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ number_format($topping->price) }}₫
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
+                                {{ number_format($topping->price) }}₫
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $topping->quantity}}
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">{{ $topping->quantity }}
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
                                 @foreach ($categories as $category)
                                     @if ($category->id == $topping->category_id)
                                         <span>{{ $category->name }}</span>
