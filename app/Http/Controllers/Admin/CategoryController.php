@@ -16,7 +16,7 @@ class CategoryController extends Controller
     {
         $category = Category::paginate(10);
 
-        return view('admins.category.list', compact('category'));
+        return view('admins.category.index', compact('category'));
     }
     /**
      * Show the form for creating a new resource.

@@ -178,7 +178,6 @@
                                     class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
                                     data-modal-hide="deleteBanner-modal-{{ $item->id }}" type="button">
                                     @svg('tabler-x', 'w-4 h-4')
-                                    <span class="sr-only">Close modal</span>
                                 </button>
                                 <div class="p-4 text-center md:p-5">
                                     <div class="flex justify-center">

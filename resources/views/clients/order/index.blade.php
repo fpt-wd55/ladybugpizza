@@ -120,7 +120,6 @@
                                     class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
                                     data-modal-hide="confirmReceived-modal-{{ $order->id }}">
                                     @svg('tabler-x', 'w-4 h-4')
-                                    <span class="sr-only">Close modal</span>
                                 </button>
                                 <div class="p-10 text-center">
                                     <div class="flex justify-center">
@@ -152,7 +151,6 @@
                                     class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
                                     data-modal-hide="cancelOrder-modal-{{ $order->id }}">
                                     @svg('tabler-x', 'w-4 h-4')
-                                    <span class="sr-only">Close modal</span>
                                 </button>
                                 {{-- lý do hủy --}}
                                 <div class="p-5 bg-white rounded-lg shadow-md">
@@ -239,7 +237,6 @@
                                     class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
                                     data-modal-hide="reviewOrder-modal-{{ $order->id }}">
                                     @svg('tabler-x', 'w-4 h-4')
-                                    <span class="sr-only">Close modal</span>
                                 </button>
                                 <div class="p-5 bg-white rounded-lg shadow-md">
                                     <h2 class="text-xl font-semibold mb-4">Đánh giá sản phẩm</h2>

@@ -132,7 +132,6 @@
                                     class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
                                     data-modal-hide="update-modal-{{ $user->id }}">
                                     @svg('tabler-x', 'w-4 h-4')
-                                    <span class="sr-only">Close</span>
                                 </button>
                                 <div class="p-4 md:p-5 text-center">
                                     <div class="flex justify-center">
