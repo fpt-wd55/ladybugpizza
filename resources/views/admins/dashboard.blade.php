@@ -11,7 +11,7 @@
     {{-- Thống kê doanh thu; đơn hàng tổng --}}
     @livewire('statistic-revenue-one')
     {{-- Thống kê đơn hàng theo danh mục; top 10 đơn hàng cao nhất --}}
-    <div class="grid w-full grid-cols-1 gap-4 xl:grid-cols-2 mb-3">
+    <div class="mb-3 grid w-full grid-cols-1 gap-4 xl:grid-cols-2">
         @livewire('statistic-order-one')
         @livewire('statistic-revenue-three')
     </div>
@@ -28,7 +28,7 @@
     </div>
     {{-- Thống kê người dùng --}}
     <h3 class="my-3 text-base font-bold leading-none text-gray-900 sm:text-xl">Người dùng</h3>
-    <div class="grid w-full grid-cols-1 gap-4 xl:grid-cols-2 mb-3">
+    <div class="mb-3 grid w-full grid-cols-1 gap-4 xl:grid-cols-2">
         @livewire('statistic-user-one')
         @livewire('statistic-user-two')
     </div>
