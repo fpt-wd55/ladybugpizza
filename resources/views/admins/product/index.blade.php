@@ -200,7 +200,7 @@
                         <th scope="col" class="px-4 py-3 text-center">Giá</th>
                         <th scope="col" class="px-4 py-3 text-center">Số lượng</th>
                         <th scope="col" class="px-4 py-3 text-center">Danh mục</th>
-                        <th scope="col" class="px-4 py-3 text-center">Trạng thái</th>
+                        <th scope="col" class="px-4 py-3">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Hành động</span>
                         </th>
@@ -276,9 +276,13 @@
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
                                 {{ $product->category->name }}
                             </td>
-                            <td
-                                class="px-4 py-2 text-gray-900 whitespace-nowrap text-center font-medium {{ $product->status == 1 ? 'text-green-700' : 'text-red-700' }}">
-                                {{ $product->status == 1 ? 'Hoạt động' : 'Khóa' }}
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
+                                <div class="flex items-center">
+                                    <div
+                                        class="inline-block indicator {{ $product->status == 1 ? 'bg-green-700' : 'bg-red-700' }}">
+                                    </div>
+                                    {{ $product->status == 1 ? 'Hoạt động' : 'Khóa' }}
+                                </div>
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $product->sku }}" data-dropdown-toggle="{{ $product->sku }}-dropdown"

@@ -14,9 +14,9 @@
                 <div class="flex flex-shrink-0 flex-col space-y-3 md:flex-row md:items-center md:space-x-3 md:space-y-0 lg:justify-end">
                     <a class="button-blue" href="{{ route('admin.pages.create') }}">
                         @svg('tabler-plus', 'w-5 h-5 mr-2')
-                        Thêm mới trang
+                        Thêm trang
                     </a>
-                    <a class="flex items-center justify-center rounded-lg bg-red-700 px-4 py-2 text-sm text-white hover:bg-red-800 focus:ring-0" href="{{ route('admin.trash.pages') }}">
+                    <a class="button-red" href="{{ route('admin.trash.pages') }}">
                         @svg('tabler-trash', 'w-5 h-5 mr-2')
                         Thùng rác
                     </a>

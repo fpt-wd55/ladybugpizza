@@ -134,8 +134,8 @@
                                     <ul class="space-y-2 text-sm">
                                         @for ($i = 5; $i >= 1; $i--)
                                             <li class="flex items-center">
-                                                <input id="filter_rating_{{ $i }}" value="{{ $i }}" type="checkbox" name="filter_rating[]"
-                                                    value="{{ $i }}"
+                                                <input id="filter_rating_{{ $i }}" value="{{ $i }}"
+                                                    type="checkbox" name="filter_rating[]" value="{{ $i }}"
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
                                                     @if (in_array($i, request()->input('filter_rating', []))) checked @endif>
                                                 <label for="filter_rating_{{ $i }}"
@@ -180,7 +180,7 @@
                         <th scope="col" class="px-4 py-3">Mã combo</th>
                         <th scope="col" class="px-4 py-3 text-center">Giá</th>
                         <th scope="col" class="px-4 py-3 text-center">Số lượng</th>
-                        <th scope="col" class="px-4 py-3 text-center">Trạng thái</th>
+                        <th scope="col" class="px-4 py-3">Trạng thái</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Hành động</span>
                         </th>
@@ -237,25 +237,17 @@
                                 </div>
                             </td>
                             <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
-                                <span class=" text-xs font-medium">
-                                    @if (count($combo->category->attributes) > 0)
-                                        <span
-                                            class="text-white bg-green-400 inline-flex shrink-0 items-center rounded px-2.5 py-0.5">Thuộc
-                                            tính</span>
-                                    @else
-                                        @if ($combo->quantity == 0)
-                                            <span
-                                                class="text-red-500 bg-yellow-100 inline-flex shrink-0 items-center rounded px-2.5 py-0.5">Hết
-                                                hàng</span>
-                                        @else
-                                            {{ $combo->quantity }}
-                                        @endif
-                                    @endif
+                                <span class="text-xs font-medium">
+                                    {{ $combo->quantity }}
                                 </span>
                             </td>
-                            <td
-                                class="px-4 py-2 text-gray-900 whitespace-nowrap text-center font-medium {{ $combo->status == 1 ? 'text-green-700' : 'text-red-700' }}">
-                                {{ $combo->status == 1 ? 'Hoạt động' : 'Khóa' }}
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap text-center">
+                                <div class="flex items-center">
+                                    <div
+                                        class="inline-block indicator {{ $combo->status == 1 ? 'bg-green-700' : 'bg-red-700' }}">
+                                    </div>
+                                    {{ $combo->status == 1 ? 'Hoạt động' : 'Khóa' }}
+                                </div>
                             </td>
                             <td class="px-4 py-3 flex items-center justify-end">
                                 <button id="{{ $combo->sku }}" data-dropdown-toggle="{{ $combo->sku }}-dropdown"

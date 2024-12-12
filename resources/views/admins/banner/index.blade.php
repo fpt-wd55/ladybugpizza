@@ -12,12 +12,12 @@
             </div>
             <div
                 class="flex flex-shrink-0 flex-col space-y-3 md:flex-row md:items-center md:space-x-3 md:space-y-0 lg:justify-end">
-                <a class="flex items-center justify-center rounded-lg bg-blue-700 px-4 py-2 text-sm text-white hover:bg-blue-800"
+                <a class="button-blue"
                     href="{{ route('admin.banners.create') }}">
                     @svg('tabler-plus', 'w-5 h-5 mr-2')
                     Thêm banner
                 </a>
-                <a class="flex items-center justify-center rounded-lg bg-red-700 px-4 py-2 text-sm text-white hover:bg-red-800"
+                <a class="button-red"
                     href="{{ route('admin.trash.listBanner') }}">
                     @svg('tabler-trash', 'w-5 h-5 mr-2')
                     Thùng rác
