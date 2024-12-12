@@ -126,11 +126,11 @@
                                 <input class="text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" id="table-checkbox-all" type="checkbox">
                             </div>
                         </th>
-                        <th class="px-4 py-3" scope="col">Tên mã giảm giá</th>
                         <th class="px-4 py-3" scope="col">Mã giảm giá</th>
                         <th class="px-4 py-3" scope="col">Loại giảm giá</th>
                         <th class="px-4 py-3 text-center" scope="col">Giá trị giảm giá</th>
                         <th class="px-4 py-3 text-center" scope="col">Số lượng</th>
+                        <th class="px-4 py-3 text-center" scope="col">Lượt sử dụng</th>
                         <th class="px-4 py-3" scope="col">
                             <span class="sr-only">Hành động</span>
                         </th>
@@ -144,9 +144,9 @@
                                     <input class="table-item-checkbox text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" id="table-item-checkbox-{{ $promotion->id }}" onclick="event.stopPropagation()" type="checkbox" value="{{ $promotion->id }}">
                                 </div>
                             </td>
-                            <td class="whitespace-nowrap px-4 py-2 text-gray-900">{{ $promotion->name }}</td>
                             <td class="whitespace-nowrap px-4 py-2 text-gray-900">
-                                <a class="hover:text-red-600" href="#">{{ $promotion->code }}</a>
+                                <a class="font-medium hover:text-red-600" data-modal-target="detail-modal-{{ $promotion->id }}" data-modal-toggle="detail-modal-{{ $promotion->id }}" href="#">{{ $promotion->code }}</a>
+                                <p>{{ $promotion->name }}</p>
                             </td>
                             <td class="whitespace-nowrap px-4 py-2 text-gray-900">
                                 @if ($promotion->discount_type == '1')
@@ -157,13 +157,19 @@
                             </td>
                             <td class="whitespace-nowrap px-4 py-2 text-center text-gray-900">
                                 @if ($promotion->discount_type == '1')
-                                    {{ number_format($promotion->discount_value) }}%
+                                    <div class="space-y-2">
+                                        <span class="badge-red">{{ number_format($promotion->discount_value) }}%</span>
+                                        <p class="badge-light">Giảm tối đa {{ number_format($promotion->max_discount) }}₫</p>
+                                    </div>
                                 @elseif ($promotion->discount_type == '2')
-                                    {{ number_format($promotion->discount_value) }}₫
+                                    <span class="badge-red">{{ number_format($promotion->discount_value) }}₫</span>
                                 @endif
                             </td>
                             <td class="whitespace-nowrap px-4 py-2 text-center text-gray-900">
                                 {{ number_format($promotion->quantity) }}
+                            </td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center text-gray-900">
+                                {{ number_format($promotion->usageCount()) }}
                             </td>
                             <td class="flex items-center justify-end px-4 py-3">
                                 <button class="inline-flex items-center rounded-lg p-0.5 text-center text-sm text-gray-500 hover:text-gray-800 focus:outline-none" data-dropdown-toggle="{{ $promotion->id }}-dropdown" id="{{ $promotion->id }}" type="button">
@@ -176,8 +182,9 @@
                                         </li>
                                         @if (!$promotion->orders()->exists())
                                             <li>
-                                                <a class="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="{{ route('admin.promotions.edit', $promotion->id) }}">Cập
-                                                    nhật</a>
+                                                <a class="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="{{ route('admin.promotions.edit', $promotion->id) }}">
+                                                    Cập nhật
+                                                </a>
                                             </li>
                                             <li>
                                                 <a class="block cursor-pointer px-4 py-2 text-sm text-red-500 hover:bg-gray-100" data-modal-target="delete-modal-{{ $promotion->id }}" data-modal-toggle="delete-modal-{{ $promotion->id }}" href="#">Xóa</a>
@@ -233,8 +240,7 @@
                                                 </h3>
                                                 <div class="flex items-center justify-center space-x-2">
                                                     <span class="rounded-l border border-dashed px-4 py-2" id="promotion-{{ $promotion->code }}">{{ $promotion->code }}</span>
-                                                    <button class="cursor-pointer rounded-r border border-white bg-white px-2 py-2 text-red-600 transition hover:bg-slate-200" data-copy-to-clipboard-content-type="textContent" data-copy-to-clipboard-target="promotion-{{ $promotion->code }}" data-tooltip-target="tooltip-promotion-details">Sao
-                                                        chép</button>
+                                                    <button class="cursor-pointer rounded-r border border-white bg-white px-2 py-2 text-red-600 transition hover:bg-slate-200" data-copy-to-clipboard-content-type="textContent" data-copy-to-clipboard-target="promotion-{{ $promotion->code }}" data-tooltip-target="tooltip-promotion-details" onclick="notiCopied()">Sao chép</button>
                                                 </div>
                                                 <div class="absolute left-0 top-1/2 -ml-6 h-12 w-12 -translate-y-1/2 transform rounded-full bg-white">
                                                 </div>
@@ -317,5 +323,13 @@
         tableCheckboxItem('table-checkbox-all', 'table-item-checkbox');
         const clipboard = FlowbiteInstances.getInstance('CopyClipboard', 'contact-details');
         const tooltip = FlowbiteInstances.getInstance('Tooltip', 'tooltip-contact-details');
+    </script>
+
+    <script>
+        const notiCopied = () => {
+            setTimeout(() => {
+                this.innerText = 'Đã sao chép';
+            }, 1000);
+        }
     </script>
 @endsection

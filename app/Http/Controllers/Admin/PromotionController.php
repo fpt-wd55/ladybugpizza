@@ -73,6 +73,10 @@ class PromotionController extends Controller
      */
     public function edit(Promotion $promotion)
     {
+        if ($promotion->usageCount() > 0) {
+            return redirect()->back()->with('error', 'Không thể chỉnh sửa mã giảm giá đã được áp dụng cho đơn hàng!');
+        }
+
         return view('admins.promotions.edit', [
             'editPromotion' => $promotion,
         ]);
@@ -200,7 +204,7 @@ class PromotionController extends Controller
             'filter_date_min' => $request->filter_date_min,
             'filter_date_max' => $request->filter_date_max,
         ]);
-        
+
         $ranks = MembershipRank::get();
 
         return view('admins.promotions.index', compact('promotions', 'ranks'));

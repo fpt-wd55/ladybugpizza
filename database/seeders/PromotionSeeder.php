@@ -47,6 +47,7 @@ class PromotionSeeder extends Seeder
             $is_global = rand(1, 2);
             $start_date = $now->startOfYear()->addDays(rand(0, 364));
             $end_date = $start_date->copy()->addMonths(3);
+            $max_discount = $discount_type == 2 ? $discount_value : rand(100, 500) * 1000;
             // Tạo mới một khuyến mãi
             Promotion::create([
                 'name' => $discountNames[array_rand($discountNames)],
@@ -58,7 +59,7 @@ class PromotionSeeder extends Seeder
                 'end_date' => $end_date,
                 'quantity' => rand(1, 100),
                 'min_order_total' => rand(100, 500) * 1000,
-                'max_discount' => rand(100, 500) * 1000,
+                'max_discount' => $max_discount,
                 'is_global' => $is_global,
                 'rank_id' => $is_global == 1 ? null : $ranks->random()->id,
                 'status' => 1, 

@@ -36,6 +36,12 @@ class Promotion extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function usageCount()
+    {
+        return $this->orders()->whereNotNull('promotion_id')->count();
+    }
+
+
     public function rank()
     {
         return $this->belongsTo(MembershipRank::class);

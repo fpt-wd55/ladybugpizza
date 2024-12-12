@@ -72,8 +72,8 @@
                                         <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
                                             @foreach ($categories as $category)
                                                 <li class="flex items-center">
-                                                    <input @if (in_array($category->id, request()->input('filter_category', []))) checked @endif class="text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" id="admin" name="filter_category[]" type="checkbox" value="{{ $category->id }}">
-                                                    <label class="ml-2 text-sm font-medium text-gray-900" for="admin">{{ $category->name }}</label>
+                                                    <input @if (in_array($category->id, request()->input('filter_category', []))) checked @endif class="text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" id="{{ $category->id }}" name="filter_category[]" type="checkbox" value="{{ $category->id }}">
+                                                    <label class="ml-2 text-sm font-medium text-gray-900" for="{{ $category->id }}">{{ $category->name }}</label>
                                                 </li>
                                             @endforeach
                                         </div>
@@ -221,8 +221,7 @@
                             <td class="whitespace-nowrap px-4 py-2 text-center text-gray-900">
                                 <span class="text-xs font-medium">
                                     @if (count($product->category->attributes) > 0)
-                                        <span class="inline-flex shrink-0 items-center rounded bg-green-400 px-2.5 py-0.5 text-white">Thuộc
-                                            tính</span>
+                                        <span class="text-lg">∞</span>
                                     @else
                                         @if ($product->quantity == 0)
                                             <span class="inline-flex shrink-0 items-center rounded bg-yellow-100 px-2.5 py-0.5 text-red-500">Hết
