@@ -105,30 +105,25 @@ class ProfileController extends Controller
 		return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
 	}
 
-	
-    public function postInactive(InactiveRequest $request)
-    {
-        $user = Auth::user();
 
+	public function postInactive(InactiveRequest $request)
+	{
+		$user = Auth::user();
 
-        // Debug: Kiểm tra email
-        if (strtolower($request->input('confirm_email')) !== strtolower($user->email)) {
-            return redirect()->back()->with('error', 'Vô hiệu hóa tài khoản không thành công! Vui lòng kiểm tra lại email.');
-        }
+		// Debug: Kiểm tra email
+		if (strtolower($request->input('confirm_email')) !== strtolower($user->email)) {
+			return redirect()->back()->with('error', 'Vô hiệu hóa tài khoản không thành công! Vui lòng kiểm tra lại email.');
+		}
 
+		// Debug: Kiểm tra lưu trạng thái
+		$user->status = 2;
+		if ($user->save()) {
+			Auth::logout();
+			return redirect()->route('client.home')->with('success', 'Tài khoản của bạn đã bị vô hiệu hóa');
+		}
 
-        // Debug: Kiểm tra lưu trạng thái
-        $user->status = 2;
-        if ($user->save()) {
-            Auth::logout();
-            return redirect()->route('client.home')->with('success', 'Tài khoản của bạn đã bị vô hiệu hóa');
-        }
-
-
-        return redirect()->route('client.home')->with('error', 'Đã có lỗi xảy ra');
-    }
-
-
+		return redirect()->route('client.home')->with('error', 'Đã có lỗi xảy ra');
+	}
 
 	public function address()
 	{
