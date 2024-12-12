@@ -7,8 +7,14 @@
         <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
             <div class="mb-8">
                 <p class="title mb-8">GIỎ HÀNG ({{ count($cartItems) }})</p>
-                <div class="mb-4 flex items-end justify-between">
-                    <p class="text-sm font-medium text-red-500 hover:cursor-pointer" id="select-all-cart-items">Chọn tất cả</p>
+                <div class="flex items-center justify-end mb-4">
+                    {{-- <div class="mb-4 flex items-center gap-2">
+                        <input class="input-checkbox" id="check-all" type="checkbox">
+                        <label class="text-sm font-medium text-red-500 hover:cursor-pointer" for="check-all" id="select-all-cart-items">Chọn tất cả</label>
+                    </div> --}}
+                    @if ($errors->has('quantity'))
+                        <p class="text-right text-sm text-red-500">{{ $errors->first('quantity') }}</p>
+                    @endif
                 </div>
                 @if (count($cartItems) == 0)
                     <div class="card min-h-96 flex flex-col items-center justify-center gap-8 p-4 text-gray-500 md:p-8">
@@ -20,9 +26,9 @@
                     <div class="grid grid-cols-1 gap-4">
                         <!-- component -->
                         @foreach ($cartItems as $item)
-                            <div class="product-card flex items-center gap-4 overflow-hidden px-4 py-6">
-                                <input class="input-checkbox" type="checkbox">
-                                <div class="h-24 w-24">
+                            <div class="product-card flex flex-shrink-0 items-center gap-4 overflow-hidden px-4 py-6">
+                                {{-- <input class="input-checkbox cart-item-select" name="next-request" type="checkbox"> --}}
+                                <div class="h-18 w-18">
                                     <img class="img-md min-h-full min-w-full rounded object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $item->product->image) }}">
                                 </div>
                                 <div>
@@ -46,7 +52,7 @@
                                 </div>
 
                                 <div class="ms-auto flex flex-col-reverse items-center justify-center gap-4 lg:flex-row">
-                                    <div class="inline-block w-20 overflow-hidden rounded-md border border-gray-200 bg-white py-1 md:w-28">
+                                    <div class="py-1text-right inline-block w-20 overflow-hidden rounded-md border border-gray-200 bg-white py-1 md:w-28">
                                         <form action="{{ route('client.cart.update-cart-item', $item) }}" class="quantity-control flex items-center justify-between" method="post">
                                             @csrf
                                             @method('PUT')
@@ -59,7 +65,6 @@
                                             </button>
                                         </form>
                                     </div>
-
                                     <div class="mx-auto rounded-full text-xs font-medium text-gray-800">
                                         <a data-modal-target="deleteCartItemModal-{{ $item->id }}" data-modal-toggle="deleteCartItemModal-{{ $item->id }}" href="#">
                                             @svg('tabler-trash', 'w-5 h-5 text-red-500')

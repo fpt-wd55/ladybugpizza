@@ -181,8 +181,17 @@ class CartController extends Controller
         return ($priceProduct + $priceAttribute + $priceTopping) * $validated['quantity'];
     }
 
-    public function updateCartItem(CartItem $cartItem) {
-        $cartItem->quantity = request('quantity');
+    public function updateCartItem(CartItem $cartItem)
+    {
+        $validatedData = request()->validate([
+            'quantity' => 'required|integer|min:1',
+        ], [
+            'quantity.required' => 'Số lượng không được để trống',
+            'quantity.integer' => 'Số lượng phải là một số nguyên',
+            'quantity.min' => 'Số lượng phải lớn hơn hoặc bằng 1',
+        ]);
+
+        $cartItem->quantity = $validatedData['quantity'];
         $cartItem->save();
 
         $cart = Cart::find(Auth::id());
@@ -213,7 +222,7 @@ class CartController extends Controller
             $priceTopping = 0;
 
             if ($cartItem->attributeValues) {
-                foreach ($cartItem->attributeValues as $attribute) { 
+                foreach ($cartItem->attributeValues as $attribute) {
                     $priceAttribute += ($attribute->price_type == 1) ? $attribute->price : $priceProduct * $attribute->price / 100;
                 }
             }
