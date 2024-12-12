@@ -181,6 +181,16 @@ class CartController extends Controller
         return ($priceProduct + $priceAttribute + $priceTopping) * $validated['quantity'];
     }
 
+    public function updateCartItem(CartItem $cartItem) {
+        $cartItem->quantity = request('quantity');
+        $cartItem->save();
+
+        $cart = Cart::find(Auth::id());
+        $this->updateCart($cart);
+
+        return redirect()->route('client.cart.index')->with('success', 'Cập nhật số lượng sản phẩm thành công');
+    }
+
     public function updateCart($cart)
     {
         $cartItems = CartItem::where('cart_id', $cart->id)->get();

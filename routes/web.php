@@ -51,6 +51,7 @@ Route::prefix('/')->middleware('check_password_change')->group(function () {
     Route::middleware('auth.check')->group(function () {
         // Giỏ hàng
         Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
+        Route::put('/cart/update/{cartItem}', [CartController::class, 'updateCartItem'])->name('client.cart.update-cart-item');
         Route::post('/product/cart/{product}', [CartController::class, 'addToCart'])->name('client.product.add-to-cart');
         Route::delete('/product/cart/{cartItem}', [CartController::class, 'delete'])->name('client.product.delete-cart-item');
         // Thanh toán
