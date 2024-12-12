@@ -50,7 +50,7 @@ class ProductController extends Controller
         // Dữ liệu
         $data = [
             'name' => trim($request->name),
-            'slug' => trim(strtolower($request->sku)) . '-' . Str::slug($request->name),
+            'slug' => Str::slug($request->name),
             'image' => $image_name,
             'description' => trim($request->description),
             'category_id' => trim($request->category_id),
@@ -106,7 +106,7 @@ class ProductController extends Controller
         // Dữ liệu
         $data = [
             'name' => trim($request->name),
-            'slug' => trim(strtolower($request->sku)) . '-' . Str::slug($request->name),
+            'slug' => Str::slug($request->name),
             'image' => $image_name,
             'description' => trim($request->description),
             'category_id' => trim($request->category_id),
