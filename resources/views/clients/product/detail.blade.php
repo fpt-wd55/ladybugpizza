@@ -130,11 +130,12 @@
                     <div class="block items-center justify-start md:flex">
                         <div class="inline-block w-20 rounded-md border border-gray-200 bg-white px-3 py-2 md:w-28">
                             <div class="flex items-center justify-center gap-x-1.5">
-                                <button aria-label="Decrease" class="size-6 inline-flex items-center justify-center gap-x-2 rounded-md border border-gray-200 bg-white text-sm font-medium text-gray-800 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50" id="decrement" tabindex="-1" type="button">
+
+                                <button aria-label="Decrease" class="size-6 inline-flex items-center justify-center gap-x-2 bg-white text-sm font-medium text-gray-800 disabled:text-gray-300" id="decrement" tabindex="-1" type="button">
                                     @svg('tabler-minus', 'icon-sm')
                                 </button>
-                                <input class="w-6 border-0 bg-transparent p-0 text-center text-gray-800 focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none" name="quantity" style="-moz-appearance: textfield;" type="number" value="1">
-                                <button aria-label="Increase" class="size-6 inline-flex items-center justify-center gap-x-2 rounded-md border border-gray-200 bg-white text-sm font-medium text-gray-800 hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50" id="increment" tabindex="-1" type="button">
+                                <input class="w-6 border-0 bg-transparent p-0 text-center text-sm font-medium text-gray-800 focus:ring-0" min="1" name="quantity" style="appearance: textfield; -moz-appearance: textfield;" type="number" value="1">
+                                <button aria-label="Increase" class="size-6 inline-flex items-center justify-center gap-x-2 bg-white text-sm font-medium text-gray-800" id="increment" tabindex="-1" type="button">
                                     @svg('tabler-plus', 'icon-sm')
                                 </button>
                             </div>
