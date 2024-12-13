@@ -15,7 +15,7 @@ class ApplyPromotion extends Component
     public $discount = 0;
 
     public function applyPromotion()
-    { 
+    {
         $this->validate([
             'promotion_code' => 'required|string',
         ], [
@@ -66,7 +66,6 @@ class ApplyPromotion extends Component
         // save promotion to session
         session()->put('promotion', [
             'id' => $promotion->id,
-            'discount' => $this->discount,
         ]);
     }
 
