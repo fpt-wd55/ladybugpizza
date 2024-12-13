@@ -51,7 +51,7 @@
                                 </div>
                             </td>
                             <td class="whitespace-nowrap px-4 py-2 uppercase text-gray-900">
-                                <a href="{{ route('admin.pages.edit', $page->id) }}">{{ $page->title }}</a>
+                                <a href="{{ route('admin.pages.edit', $page->id) }}" class="font-medium hover:text-red-600">{{ $page->title }}</a>
                             </td>
                             <td class="whitespace-nowrap px-4 py-2 text-gray-900"> {{ $page->slug }}</td>
                             <td class="whitespace-nowrap px-4 py-2 text-gray-900">
