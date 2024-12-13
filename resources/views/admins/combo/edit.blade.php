@@ -8,14 +8,14 @@
             <form action="{{ route('admin.combos.update', $combo) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <div class="grid gap-4 mb-2 sm:grid-cols-1">
-                    <div class="grid gap-4 mb-4 sm:grid-cols-3">
+                <div class="grid gap-4 mb-4 sm:grid-cols-1">
+                    <div class="grid gap-4 mb-2 sm:grid-cols-3">
                         <div>
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên
+                            <label for="name" class="label-md">Tên
                                 combo <span class="text-red-500">*</span></label>
                             <input type="text" name="name" id="name"
                                 placeholder="VD: Mua 1 Tặng 1 - Tiết Kiệm Nhân Đôi" value="{{ old('name', $combo->name) }}"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                class="input">
                             @error('name')
                                 <p class="mt-2 text-sm text-red-600 ">
                                     {{ $message }}
@@ -23,11 +23,10 @@
                             @enderror
                         </div>
                         <div>
-                            <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá bán thường
+                            <label for="price" class="label-md">Giá bán thường
                                 (₫) <span class="text-red-500">*</span></label>
                             <input type="number" name="price" id="price" value="{{ old('price', $combo->price) }}"
-                                placeholder="VD: 300000" min="0"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                placeholder="VD: 300000" min="0" class="input">
                             @error('price')
                                 <p class="mt-2 text-sm text-red-600 ">
                                     {{ $message }}
@@ -35,11 +34,10 @@
                             @enderror
                         </div>
                         <div>
-                            <label for="discount_price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá khuyến
+                            <label for="discount_price" class="label-md">Giá khuyến
                                 mãi (₫) <span class="text-red-500">*</span></label>
                             <input type="number" name="discount_price" id="discount_price" placeholder="VD: 270000"
-                                value="{{ old('discount_price', $combo->discount_price) }}" min="0"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                value="{{ old('discount_price', $combo->discount_price) }}" min="0" class="input">
                             @error('discount_price')
                                 <p class="mt-2 text-sm text-red-600 ">
                                     {{ $message }}
@@ -49,8 +47,7 @@
                     </div>
                     <div class="grid gap-4 mb-4 sm:grid-cols-2">
                         <div>
-                            <label for="is_featured" class="block mb-2 text-sm font-medium text-gray-900 ">Ảnh combo <span
-                                    class="text-red-500">*</span></label>
+                            <label for="is_featured" class="label-md">Ảnh combo <span class="text-red-500">*</span></label>
                             <div class="flex gap-3">
                                 <a class="shrink-0" data-fslightbox="gallery"
                                     href="{{ asset('storage/uploads/combos/' . $combo->image) }}">
@@ -58,7 +55,7 @@
                                         src="{{ asset('storage/uploads/combos/' . $combo->image) }}"
                                         onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'">
                                 </a>
-                                <div class="flex items-center justify-center w-full mb-4 ">
+                                <div class="flex items-center justify-center w-full mb-4">
                                     <label for="dropzone-file"
                                         class="flex flex-col items-center justify-center w-full h-20 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -79,11 +76,10 @@
                                 </p>
                             @enderror
                             <div>
-                                <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 ">Số lượng <span
-                                        class="text-red-500">*</span></label>
+                                <label for="quantity" class="label-md">Số lượng <span class="text-red-500">*</span></label>
                                 <input type="number" name="quantity" id="quantity"
                                     value="{{ old('quantity', $combo->quantity) }}" placeholder="VD: 12" min="0"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                    class="input">
                                 @error('quantity')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
@@ -91,11 +87,9 @@
                                 @enderror
                             </div>
                             <div class="mt-3">
-                                <label for="sku" class="block mb-2 text-sm font-medium text-gray-900 ">Mã combo <span
-                                        class="text-red-500">*</span></label>
+                                <label for="sku" class="label-md">Mã combo <span class="text-red-500">*</span></label>
                                 <input type="text" name="sku" id="sku" value="{{ old('sku', $combo->sku) }}"
-                                    placeholder="VD: ZDZ9316939"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                    placeholder="VD: ZDZ9316939" class="input">
                                 @error('sku')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
@@ -141,8 +135,7 @@
                             </div>
                         </div>
                         <div>
-                            <label for="is_featured" class="block mb-2 text-sm font-medium text-gray-900 ">Mô tả <span
-                                    class="text-red-500">*</span></label>
+                            <label for="is_featured" class="label-md">Mô tả <span class="text-red-500">*</span></label>
                             <div class="w-full border border-gray-200 rounded-lg bg-gray-50">
                                 <textarea id="wysiwygeditor" name="description">{{ old('description', $combo->description) }}</textarea>
                             </div>

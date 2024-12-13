@@ -10,36 +10,42 @@
                 enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <div class="flex justify-between gap-2">
-                    <div class="w-full mb-5">
-                        <label for="name" class="label-lg">Tên topping <span class="text-red-500">*</span></label>
-                        <input type="text" name="name" id="name" class="input mb-2" placeholder="VD: Xúc xích"
+                <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                    <div class="">
+                        <label for="name" class="label-md">Tên topping <span class="text-red-500">*</span></label>
+                        <input type="text" name="name" id="name" class="input" placeholder="VD: Xúc xích"
                             value="{{ $editTopping->name }}" />
                         @error('name')
-                            <span style="color: red">{{ $message }}</span>
+                            <p class="mt-2 text-sm text-red-600">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
-                    <div class="w-full mb-5">
-                        <label for="quantity" class="label-lg">Số lượng <span class="text-red-500">*</span></label>
-                        <input type="number" name="quantity" id="quantity" class="input mb-2" placeholder="VD: 13"
+                    <div class="">
+                        <label for="quantity" class="label-md">Số lượng <span class="text-red-500">*</span></label>
+                        <input type="number" name="quantity" id="quantity" class="input" placeholder="VD: 13"
                             value="{{ $editTopping->quantity }}" />
                         @error('quantity')
-                            <span style="color: red">{{ $message }}</span>
+                            <p class="mt-2 text-sm text-red-600">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
                 </div>
-                <div class="flex justify-between gap-2 mt-4">
-                    <div class="w-full mb-5">
-                        <label for="price" class="label-lg">Giá <span class="text-red-500">*</span></label>
-                        <input type="number" name="price" id="price" class="input mb-2" placeholder="VD: 18000"
+                <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                    <div class="">
+                        <label for="price" class="label-md">Giá <span class="text-red-500">*</span></label>
+                        <input type="number" name="price" id="price" class="input" placeholder="VD: 18000"
                             value="{{ $editTopping->price }}" />
                         @error('price')
-                            <span style="color: red">{{ $message }}</span>
+                            <p class="mt-2 text-sm text-red-600">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
-                    <div class="w-full mb-5">
-                        <label for="category_id" class="label-lg">Danh mục <span class="text-red-500">*</span></label>
-                        <select class="select w-full mb-2" name="category_id" id="category_id">
+                    <div class="">
+                        <label for="category_id" class="label-md">Danh mục <span class="text-red-500">*</span></label>
+                        <select class="select" name="category_id" id="category_id">
                             <option value="">Chọn </option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}"
@@ -48,11 +54,13 @@
                             @endforeach
                         </select>
                         @error('category_id')
-                            <span style="color: red">{{ $message }}</span>
+                            <p class="mt-2 text-sm text-red-600">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
                 </div>
-                <label for="name" class="label-lg">Ảnh topping <span class="text-red-500">*</span></label>
+                <label for="name" class="label-md">Ảnh topping <span class="text-red-500">*</span></label>
                 <div class="flex gap-3">
                     <a class="shrink-0" data-fslightbox="gallery"
                         href="{{ asset('storage/uploads/toppings/' . $editTopping->image) }}">
@@ -75,7 +83,9 @@
                     </div>
                 </div>
                 @error('image')
-                    <span style="color: red">{{ $message }}</span>
+                    <p class="mt-2 text-sm text-red-600 ">
+                        {{ $message }}
+                    </p>
                 @enderror
                 <div
                     class="mb-4 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
