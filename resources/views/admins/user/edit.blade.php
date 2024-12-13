@@ -16,7 +16,9 @@
                             <img class="h-20 w-20 rounded-full object-cover" loading="lazy" src="{{ $user->avatar() }}">
                         </a>
                         <div class="col-span-2 flex w-full items-center justify-center md:col-span-3 lg:col-span-6">
-                            <label class="flex h-20 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100" for="dropzone-file">
+                            <label
+                                class="flex h-20 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100"
+                                for="dropzone-file">
                                 <div class="flex flex-col items-center justify-center">
                                     @svg('tabler-cloud-upload', 'w-8 h-8 text-gray-400 mb-2')
                                     <p class="mb-2 items-center text-center text-sm text-gray-500">
@@ -37,9 +39,10 @@
                 <div class="sm:col-span-2">
                     <div class="mb-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                         <div>
-                            <label class="mb-2 block text-sm font-medium text-gray-900" for="username">Tên tài
+                            <label class="label-md" for="username">Tên tài
                                 khoản</label>
-                            <input class="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900" disabled id="username" name="username" placeholder="VD: ladybugpizza" type="text" value="{{ old('username', $user->username) }}">
+                            <input class="input" disabled id="username" name="username" placeholder="VD: ladybugpizza"
+                                type="text" value="{{ old('username', $user->username) }}">
                             @error('username')
                                 <p class="mt-2 text-sm text-red-600">
                                     {{ $message }}
@@ -47,9 +50,10 @@
                             @enderror
                         </div>
                         <div>
-                            <label class="mb-2 block text-sm font-medium text-gray-900" for="fullname">Họ và
+                            <label class="label-md" for="fullname">Họ và
                                 tên <span class="text-red-500">*</span></label>
-                            <input class="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900" id="fullname" name="fullname" placeholder="VD: Trần Văn A" type="text" value="{{ old('fullname', $user->fullname) }}">
+                            <input class="input" id="fullname" name="fullname" placeholder="VD: Trần Văn A" type="text"
+                                value="{{ old('fullname', $user->fullname) }}">
                             @error('fullname')
                                 <p class="mt-2 text-sm text-red-600">
                                     {{ $message }}
@@ -58,8 +62,8 @@
                         </div>
                         @if ($user->google_id == null)
                             <div>
-                                <label class="mb-2 block text-sm font-medium text-gray-900" for="new_password">Mật khẩu mới</label>
-                                <input class="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900" id="new_password" name="new_password" type="password">
+                                <label class="label-md" for="new_password">Mật khẩu mới</label>
+                                <input class="input" id="new_password" name="new_password" type="password">
                                 @error('new_password')
                                     <p class="mt-2 text-sm text-red-600">
                                         {{ $message }}
@@ -68,8 +72,9 @@
                             </div>
                         @endif
                         <div>
-                            <label class="mb-2 block text-sm font-medium text-gray-900" for="email">Email <span class="text-red-500">*</span></label>
-                            <input class="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900" id="email" name="email" placeholder="VD: ladybugpizza@gmail.com" type="text" value="{{ old('email', $user->email) }}">
+                            <label class="label-md" for="email">Email <span class="text-red-500">*</span></label>
+                            <input class="input" id="email" name="email" placeholder="VD: ladybugpizza@gmail.com"
+                                type="text" value="{{ old('email', $user->email) }}">
                             @error('email')
                                 <p class="mt-2 text-sm text-red-600">
                                     {{ $message }}
@@ -77,9 +82,10 @@
                             @enderror
                         </div>
                         <div>
-                            <label class="mb-2 block text-sm font-medium text-gray-900" for="phone">Số điện
+                            <label class="label-md" for="phone">Số điện
                                 thoại <span class="text-red-500">*</span></label>
-                            <input class="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900" id="phone" name="phone" placeholder="VD: 0123456789" type="text" value="{{ old('phone', $user->phone) }}">
+                            <input class="input" id="phone" name="phone" placeholder="VD: 0123456789" type="text"
+                                value="{{ old('phone', $user->phone) }}">
                             @error('phone')
                                 <p class="mt-2 text-sm text-red-600">
                                     {{ $message }}
@@ -91,15 +97,18 @@
                                 tính</label>
                             <div class="flex flex-wrap items-center">
                                 <div class="mr-4 flex items-center">
-                                    <input {{ old('gender', $user->gender) == 1 ? 'checked' : '' }} class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:outline-none focus:ring-0" id="male" name="gender" type="radio" value="1">
+                                    <input {{ old('gender', $user->gender) == 1 ? 'checked' : '' }} class="input-radio"
+                                        id="male" name="gender" type="radio" value="1">
                                     <label class="ms-2 text-sm font-medium text-gray-900" for="male">Nam</label>
                                 </div>
                                 <div class="mr-4 flex items-center">
-                                    <input {{ old('gender', $user->gender) == 2 ? 'checked' : '' }} class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:outline-none focus:ring-0" id="female" name="gender" type="radio" value="2">
+                                    <input {{ old('gender', $user->gender) == 2 ? 'checked' : '' }} class="input-radio"
+                                        id="female" name="gender" type="radio" value="2">
                                     <label class="ms-2 text-sm font-medium text-gray-900" for="female">Nữ</label>
                                 </div>
                                 <div class="mr-4 flex items-center">
-                                    <input {{ old('gender', $user->gender) == 3 ? 'checked' : '' }} class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:outline-none focus:ring-0" id="orther" name="gender" type="radio" value="3">
+                                    <input {{ old('gender', $user->gender) == 3 ? 'checked' : '' }} class="input-radio"
+                                        id="orther" name="gender" type="radio" value="3">
                                     <label class="ms-2 text-sm font-medium text-gray-900" for="orther">Khác</label>
                                 </div>
                             </div>
@@ -114,9 +123,10 @@
                 <div class="sm:col-span-2">
                     <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                         <div>
-                            <label class="mb-2 block text-sm font-medium text-gray-900" for="date_of_birth">Ngày
+                            <label class="label-md" for="date_of_birth">Ngày
                                 sinh <span class="text-red-500">*</span></label>
-                            <input class="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900" id="date_of_birth" name="date_of_birth" type="date" value="{{ old('date_of_birth', $user->date_of_birth) }}">
+                            <input class="input" id="date_of_birth" name="date_of_birth" type="date"
+                                value="{{ old('date_of_birth', $user->date_of_birth) }}">
                             @error('date_of_birth')
                                 <p class="mt-2 text-sm text-red-600">
                                     {{ $message }}
@@ -127,8 +137,10 @@
                             <label class="mb-4 block text-sm font-medium text-gray-900" for="status">Trạng
                                 thái</label>
                             <label class="inline-flex cursor-pointer items-center">
-                                <input {{ old('status', $user->status) == 1 ? 'checked' : '' }} class="peer sr-only" name="status" type="checkbox" value="1">
-                                <div class="peer relative h-6 w-11 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-0 rtl:peer-checked:after:-translate-x-full">
+                                <input {{ old('status', $user->status) == 1 ? 'checked' : '' }} class="peer sr-only"
+                                    name="status" type="checkbox" value="1">
+                                <div
+                                    class="peer relative h-6 w-11 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-0 rtl:peer-checked:after:-translate-x-full">
                                 </div>
                                 <span class="ms-3 text-sm font-medium text-gray-900">Hoạt
                                     động</span>
@@ -144,16 +156,20 @@
                 <div class="sm:col-span-2">
                     <div class="mb-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div>
-                            <label class="mb-2 block text-sm font-medium text-gray-900">Vai
+                            <label class="label-md">Vai
                                 trò</label>
                             <div class="flex flex-wrap">
-                                <div class="mb-4 mr-4 flex items-center">
-                                    <input {{ old('roleSelect', $user->role->parent_id) == 1 ? 'checked' : '' }} class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:outline-none focus:ring-0" id="adminRole" name="roleSelect" type="radio" value="1">
+                                <div class="my-3 mr-4 flex items-center">
+                                    <input {{ old('roleSelect', $user->role->parent_id) == 1 ? 'checked' : '' }}
+                                        class="input-radio" id="adminRole" name="roleSelect" type="radio"
+                                        value="1">
                                     <label class="ms-2 text-sm font-medium text-gray-900" for="adminRole">Quản trị
                                         viên</label>
                                 </div>
-                                <div class="mb-4 mr-4 flex items-center">
-                                    <input {{ old('roleSelect', $user->role_id) == 2 ? 'checked' : '' }} class="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:outline-none focus:ring-0" id="userRole" name="roleSelect" type="radio" value="2">
+                                <div class="my-3 mr-4 flex items-center">
+                                    <input {{ old('roleSelect', $user->role_id) == 2 ? 'checked' : '' }}
+                                        class="input-radio" id="userRole" name="roleSelect" type="radio"
+                                        value="2">
                                     <label class="ms-2 text-sm font-medium text-gray-900" for="userRole">Khách
                                         hàng</label>
                                 </div>
@@ -165,12 +181,13 @@
                             @enderror
                         </div>
                         <div id="permissionSelect">
-                            <label class="mb-2 block text-sm font-medium text-gray-900" for="category">Phân
-                                quyền</label>
-                            <select class="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900" name="permissionSelect">
+                            <label class="label-md" for="category">Phân
+                                quyền <span class="text-red-500">*</span></label>
+                            <select class="select" name="permissionSelect">
                                 <option disabled selected>Phân quyền</option>
                                 @foreach ($permissions as $permission)
-                                    <option {{ $user->role_id == $permission->id ? 'selected' : '' }} value="{{ $permission->id }}">
+                                    <option {{ $user->role_id == $permission->id ? 'selected' : '' }}
+                                        value="{{ $permission->id }}">
                                         {{ $permission->name }}
                                     </option>
                                 @endforeach

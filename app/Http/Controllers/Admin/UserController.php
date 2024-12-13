@@ -134,7 +134,11 @@ class UserController extends Controller
         if ($user->google_id == null) {
             $newPassword = $request->new_password;
 
-            if (Hash::check($newPassword, $user->password)) {
+            if ($newPassword == null) {
+                $newPassword = $user->password;
+            }
+
+            if ($user->password !== null && Hash::check($newPassword, $user->password)) {
                 return back()->with('error', 'Mật khẩu mới không được giống với mật khẩu hiện tại.');
             }
         } else {

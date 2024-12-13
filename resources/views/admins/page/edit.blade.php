@@ -11,33 +11,28 @@
                 <div class="grid gap-4 mb-4 sm:grid-cols-3">
                     <div class="sm:col-span-3">
                         <div class="grid gap-4 mb-4 sm:grid-cols-3">
-                            {{-- tieu de --}}
                             <div>
-                                <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Tiêu đề trang <span
+                                <label for="title" class="label-md ">Tiêu đề trang <span
                                         class="text-red-500">*</span></label>
                                 <input type="text" name="title" id="title" placeholder="VD: Giới thiệu"
-                                    value="{{ $page->title }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                    value="{{ $page->title }}" class="input">
                                 @error('title')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
                                     </p>
                                 @enderror
                             </div>
-                            {{-- đường dẫn --}}
                             <div>
-                                <label for="slug" class="block mb-2 text-sm font-medium text-gray-900 ">Đường
+                                <label for="slug" class="label-md ">Đường
                                     dẫn trang <span class="text-red-500">*</span></label>
                                 <input type="text" name="slug" id="slug" placeholder="VD: gioi-thieu"
-                                    value="{{ $page->slug }}" maxlength="15"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                    value="{{ $page->slug }}" maxlength="15" class="input">
                                 @error('slug')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
                                     </p>
                                 @enderror
                             </div>
-                            {{-- Trạng thái --}}
                             <div>
                                 <label for="status" class="block mb-4 text-sm font-medium text-gray-900">Trạng
                                     thái</label>
@@ -57,10 +52,8 @@
                             </div>
                         </div>
                     </div>
-                    {{-- Noi dung --}}
                     <div class="sm:col-span-3">
-                        <label for="content" class="block mb-2 text-sm font-medium text-gray-900">Nội dung <span
-                                class="text-red-500">*</span></label>
+                        <label for="content" class="label-md">Nội dung <span class="text-red-500">*</span></label>
                         <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50">
                             <textarea id="wysiwygeditor" name="content">{{ $page->content }}</textarea>
                         </div>
@@ -71,7 +64,6 @@
                         @enderror
                     </div>
                 </div>
-                {{-- Submit or cancel --}}
                 <div class="flex items-center space-x-4 mt-5">
                     <a href="{{ route('admin.pages.index') }}" class="button-gray">
                         Quay lại
@@ -96,7 +88,7 @@
                             lượng</label>
                         <input type="number" name="quantity" value="{{ old('quantity') ?? 0 }}"
                             placeholder="Số lượng"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            class="input">
                         @error('quantity')
                             <p class="mt-2 text-sm text-red-600 ">
                                 {{ $message }}

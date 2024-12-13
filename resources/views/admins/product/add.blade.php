@@ -7,6 +7,7 @@
             <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm sản phẩm</h3>
             <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                <label for="image" class="label-md">Hình ảnh sản phẩm <span class="text-red-500">*</span></label>
                 <div class="grid gap-4 mb-4 sm:grid-cols-2">
                     {{-- Anh san pham --}}
                     <div class="sm:col-span-2">
@@ -33,11 +34,10 @@
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 mb-4 sm:grid-cols-3">
                             <div>
-                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên sản
+                                <label for="name" class="label-md">Tên sản
                                     phẩm <span class="text-red-500">*</span></label>
                                 <input type="text" name="name" id="name" placeholder="VD: Pizza hải sản"
-                                    value="{{ old('name') }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                    value="{{ old('name') }}" class="input">
                                 @error('name')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
@@ -48,8 +48,7 @@
                                 <label for="sku" class="block mb-2 text-sm font-medium text-gray-900 ">Mã sản
                                     phẩm <span class="text-red-500">*</span></label>
                                 <input type="text" name="sku" id="sku" placeholder="VD: YSU4247641"
-                                    value="{{ old('sku') }}" maxlength="15"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                    value="{{ old('sku') }}" maxlength="15" class="input">
                                 @error('sku')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
@@ -59,8 +58,7 @@
                             <div>
                                 <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 ">Danh
                                     mục <span class="text-red-500">*</span></label>
-                                <select id="category_id" name="category_id"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                <select id="category_id" name="category_id" class="select">
                                     <option value="" {{ old('category_id') ? '' : 'selected' }} disabled>
                                         Chọn danh mục</option>
                                     @foreach ($categories as $category)
@@ -86,8 +84,7 @@
                                 <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá bán thường
                                     (₫) <span class="text-red-500">*</span></label>
                                 <input type="number" name="price" id="price" value="{{ old('price') }}"
-                                    placeholder="VD: 100000"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                    placeholder="VD: 100000" class="input">
                                 @error('price')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
@@ -98,8 +95,7 @@
                                 <label for="discount_price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá khuyến
                                     mãi (₫) <span class="text-red-500">*</span></label>
                                 <input type="number" name="discount_price" id="discount_price" placeholder="VD: 80000"
-                                    value="{{ old('discount_price') }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                    value="{{ old('discount_price') }}" class="input">
                                 @error('discount_price')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
@@ -190,7 +186,7 @@
                                 class="text-red-500">*</span></label>
                         <input type="number" name="quantity" value="{{ old('quantity') ?? 0 }}"
                             placeholder="Số lượng"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            class="input">
                         @error('quantity')
                             <p class="mt-2 text-sm text-red-600 ">
                                 {{ $message }}
