@@ -50,22 +50,22 @@ Route::prefix('/')->middleware('check_password_change')->group(function () {
 
     Route::middleware('auth.check')->group(function () {
         // Giỏ hàng
-        Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index');
+        Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index')->middleware('auth.check');
         Route::put('/cart/update/{cartItem}', [CartController::class, 'updateCartItem'])->name('client.cart.update-cart-item');
         Route::post('/product/cart/{product}', [CartController::class, 'addToCart'])->name('client.product.add-to-cart');
         Route::delete('/product/cart/{cartItem}', [CartController::class, 'delete'])->name('client.product.delete-cart-item');
         // Thanh toán
-        Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout')->middleware('check.cart.quantity');
+        Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout')->middleware('check.cart.quantity', 'auth.check');
         Route::post('/checkout', [CheckoutController::class, 'postCheckout'])->name('post-checkout');
         Route::get('/return-momo', [CheckoutController::class, 'returnMomo'])->name('return_momo');
         Route::get('/thank-you/{order}', [CheckoutController::class, 'thankYou'])->name('thank_you');
         // Đơn hàng
-        Route::get('/order', [OrderController::class, 'index'])->name('client.order.index');
+        Route::get('/order', [OrderController::class, 'index'])->name('client.order.index')->middleware('auth.check');
         Route::put('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
         Route::put('order/{order}/received', [OrderController::class, 'confirmReceived'])->name('client.order.received');
         Route::post('/order/{order}/evaluation', [OrderController::class, 'evaluation'])->name('client.order.evaluation');
         // Profile
-        Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile.index');
+        Route::get('/profile', [ProfileController::class, 'index'])->name('client.profile.index')->middleware('auth.check');
         Route::put('/profile/update', [ProfileController::class, 'postUpdate'])->name('client.profile.post-update');
         Route::put('/profile/change-password', [ProfileController::class, 'postChangePassword'])->name('client.profile.post-change-password');
         Route::put('/profile/inactive', [ProfileController::class, 'postInactive'])->name('client.profile.post-inactive');
