@@ -81,7 +81,7 @@ class BannerController extends Controller
                     unlink(storage_path('app/public/uploads/banners/' . $old_image));
                 }
             }
-            return redirect()->route('admin.banners.index')->with('success', 'Cập nhật banner thành công');
+            return redirect()->back()->with('success', 'Cập nhật banner thành công');
         }else{
             return redirect()->back()->with('error', 'Cập nhật banner thất bại');
         }
