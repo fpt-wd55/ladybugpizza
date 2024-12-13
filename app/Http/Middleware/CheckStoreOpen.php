@@ -2,12 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\OpeningHour;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckUserLoggedIn
+class CheckStoreOpen
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,12 @@ class CheckUserLoggedIn
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth()->check()) {
-            return redirect()->back()->with('error', 'Bạn cần phải đăng nhập để thực hiện hành động này');
+        // Kiểm tra giờ mở cửa
+        if (!OpeningHour::isOpen()) {
+            return redirect()->back()->with('error', 'Vui lòng quay lại sau giờ mở cửa');
         }
 
+        // Tiếp tục xử lý request nếu giờ mở cửa hợp lệ
         return $next($request);
     }
 }

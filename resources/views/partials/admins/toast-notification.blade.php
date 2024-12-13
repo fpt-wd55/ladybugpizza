@@ -37,5 +37,5 @@
         if (toastDanger) {
             toastDanger.remove();
         }
-    }, 5000);
+    }, 3000);
 </script>

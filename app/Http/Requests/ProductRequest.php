@@ -39,7 +39,7 @@ class ProductRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
             'discount_price' => 'nullable|numeric|min:0|lte:price',
-            'quantity' => 'required_if:category_id,!=,null|integer|min:0',
+            'quantity' => 'required_if:category_id,!=,null|integer|min:1',
             'sku' => 'required|string|min:10|max:15|unique:products,sku',
 
         ];
@@ -55,7 +55,7 @@ class ProductRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
             'discount_price' => 'nullable|numeric|min:0|lte:price',
-            'quantity' => 'required_if:category_id,!=,null|integer|min:0',
+            'quantity' => 'required_if:category_id,!=,null|integer|min:1',
             'sku' => 'required|string|min:10|max:15|unique:products,sku,' . $productId,
         ];
     }
