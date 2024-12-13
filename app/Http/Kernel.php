@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'auth.check' => \App\Http\Middleware\CheckUserLoggedIn::class,
         'check_password_change' => \App\Http\Middleware\CheckPasswordChange::class,
+        'store.open' => \App\Http\Middleware\CheckStoreOpen::class,
     ];
 }

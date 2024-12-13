@@ -211,11 +211,6 @@ Breadcrumbs::for('admin.products.evaluation', function (BreadcrumbTrail $trail, 
     $trail->push('Đánh giá', route('admin.products.evaluation', $product));
 });
 
-// Chat
-Breadcrumbs::for('admin.chats.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin.dashboard');
-    $trail->push('Trò chuyện', route('admin.chats.index'));
-});
 // profile
 Breadcrumbs::for('admin.profiles.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
