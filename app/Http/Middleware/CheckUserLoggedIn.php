@@ -16,9 +16,9 @@ class CheckUserLoggedIn
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth()->check()) {
-            // return trang loi khong du quyen
-            return redirect()->route('errors.403');
+        if (!auth()->check()) {
+
+            return redirect()->back()->with('error', 'Bạn cần phải đăng nhập để thực hiện hành động này');
         }
 
         return $next($request);
