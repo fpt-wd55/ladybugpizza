@@ -183,9 +183,7 @@
                         <div id="permissionSelect">
                             <label class="label-md" for="category">Phân
                                 quyền <span class="text-red-500">*</span></label>
-                            <select
-                                class="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900"
-                                name="permissionSelect">
+                            <select class="select" name="permissionSelect">
                                 <option disabled selected>Phân quyền</option>
                                 @foreach ($permissions as $permission)
                                     <option {{ $user->role_id == $permission->id ? 'selected' : '' }}
