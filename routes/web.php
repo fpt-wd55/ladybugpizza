@@ -91,7 +91,7 @@ Route::prefix('/')->middleware('check_password_change')->group(function () {
 
     Route::get('/contact', [PageController::class, 'contact'])->name('client.contact');
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
-    Route::get('/{slug}', [PageController::class, 'dynamicPage'])->name('client.dynamic-page');
+    Route::get('/page/{slug}', [PageController::class, 'dynamicPage'])->name('client.dynamic-page');
 });
 
 Route::prefix('/errors')->group(function () {
