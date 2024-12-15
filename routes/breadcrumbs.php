@@ -180,6 +180,12 @@ Breadcrumbs::for('admin.orders.edit', function (BreadcrumbTrail $trail) {
     $trail->push('Cập nhật', route('admin.orders.index'));
 });
 
+// Giờ mở cửa
+Breadcrumbs::for('admin.opening-hours.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Giờ mở cửa', route('admin.opening-hours.index'));
+});
+
 // Product
 Breadcrumbs::for('admin.products.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');

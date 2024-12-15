@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('opening_hours', function (Blueprint $table) {
             $table->id();
-            $table->string('day_of_week');
+            $table->string('day_of_week')->unique();
             $table->string('name');
             $table->time('open_time');
             $table->time('close_time');
+            $table->boolean('is_open')->default(true);
             $table->timestamps();
         });
     }
