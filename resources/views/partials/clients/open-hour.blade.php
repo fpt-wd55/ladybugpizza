@@ -36,8 +36,12 @@
 </div>
 <script>
     async function showPopup() {
-        const isConfirmed = localStorage.getItem('popupConfirmed');
-        if (!isConfirmed) {
+        const popupTimestamp = sessionStorage.getItem('popupTimestamp');
+        console.log(popupTimestamp);
+        const currentTime = new Date().getTime();
+
+        // Kiểm tra nếu đã lưu thời gian và nó chưa quá 30 phút 
+        if (!popupTimestamp || currentTime - popupTimestamp > 30 * 60 * 1000) {
             const response = await fetch('/api/is-open');
             const data = await response.json();
             if (!data.isOpen) {
@@ -52,7 +56,7 @@
         const modal = document.getElementById('popup-open-hour');
         modal.classList.add('hidden');
         modal.classList.remove('fixed');
-        localStorage.setItem('popupConfirmed', 'true');
+        sessionStorage.setItem('popupTimestamp', new Date().getTime());
     }
     window.onload = showPopup;
 </script>

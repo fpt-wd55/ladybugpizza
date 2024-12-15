@@ -15,6 +15,7 @@ class OpeningHour extends Model
         'name',
         'open_time',
         'close_time',
+        'is_open',
     ];
 
     public static function isOpen()
@@ -24,6 +25,10 @@ class OpeningHour extends Model
         $openingHour = OpeningHour::where('day_of_week', $currentDay)->first();
 
         if (!$openingHour) {
+            return false;
+        }
+
+        if (!$openingHour->is_open) {
             return false;
         }
 

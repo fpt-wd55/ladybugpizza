@@ -10,6 +10,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\Admin\LogController;
 use App\Http\Controllers\Client\MembershipController;
 use App\Http\Controllers\Admin\MembershipController as AdminMembershipController;
+use App\Http\Controllers\Admin\OpeningHourController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
@@ -53,7 +54,7 @@ Route::prefix('/')->middleware('check_password_change')->group(function () {
         // Giỏ hàng
         Route::get('/cart', [CartController::class, 'index'])->name('client.cart.index')->middleware('auth.check');
         Route::put('/cart/update/{cartItem}', [CartController::class, 'updateCartItem'])->name('client.cart.update-cart-item');
-        Route::post('/product/cart/{product}', [CartController::class, 'addToCart'])->middleware('store.open')->name('client.product.add-to-cart');
+        Route::post('/product/cart/{product}', [CartController::class, 'addToCart'])->name('client.product.add-to-cart');
         Route::delete('/product/cart/{cartItem}', [CartController::class, 'delete'])->name('client.product.delete-cart-item');
         // Thanh toán
         Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout')->middleware('check.cart.quantity', 'auth.check', 'store.open');
@@ -61,7 +62,7 @@ Route::prefix('/')->middleware('check_password_change')->group(function () {
         Route::get('/return-momo', [CheckoutController::class, 'returnMomo'])->middleware('store.open')->name('return_momo');
         Route::get('/thank-you/{order}', [CheckoutController::class, 'thankYou'])->middleware('store.open')->name('thank_you');
         // Đơn hàng
-        Route::get('/order', [OrderController::class, 'index'])->name('client.order.index')->middleware('auth.check', 'store.open');
+        Route::get('/order', [OrderController::class, 'index'])->name('client.order.index')->middleware('auth.check');
         Route::put('order/{order}/cancel', [OrderController::class, 'postCancel'])->name('client.order.cancel');
         Route::put('order/{order}/received', [OrderController::class, 'confirmReceived'])->name('client.order.received');
         Route::post('/order/{order}/evaluation', [OrderController::class, 'evaluation'])->name('client.order.evaluation');
@@ -185,7 +186,9 @@ Route::prefix('/admin')->middleware(['admin', 'check_password_change'])->name('a
     Route::get('/combo/evaluation/{combo}', [ComboController::class, 'evaluation'])->name('combos.evaluation');
     Route::put('/combo/evaluation/update/{evaluation}', [ComboController::class, 'evaluationUpdate'])->name('combos.evaluation.update');
     Route::get('/combo/filter', [ComboController::class, 'filter'])->name('combos.filter');
-
+    // Gio mo cua
+    Route::get('/opening-hours', [OpeningHourController::class, 'index'])->name('opening-hours.index');
+    Route::put('/opening-hours/update', [OpeningHourController::class, 'update'])->name('opening-hours.update');
     // Topping
     Route::resource('/toppings', ToppingController::class);
     Route::get('/topping/filter', [ToppingController::class, 'filter'])->name('toppings.filter');
