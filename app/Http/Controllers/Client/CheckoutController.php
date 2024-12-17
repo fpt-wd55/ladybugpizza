@@ -123,7 +123,7 @@ class CheckoutController extends Controller
             'amount' => (int)$cart->total,
             'address_id' => $address->id,
             'order_status_id' => 1,
-            'discount_amount' => session('promotion') ? $discount : 0,
+            'discount_amount' => session('promotion') ? (int)$discount : 0,
             'shipping_fee' => (int)30000,
             'notes' => $request->notes ?? null,
             'payment_method_id' => $request->payment_method_id,

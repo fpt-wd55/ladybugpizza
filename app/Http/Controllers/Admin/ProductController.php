@@ -143,6 +143,8 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         if ($product->delete()) {
+            $product->status = 2;
+            $product->save();
             return redirect()->back()->with('success', 'Xóa sản phẩm thành công');
         } else {
             return redirect()->back()->with('error', 'Xóa sản phẩm thất bại');
