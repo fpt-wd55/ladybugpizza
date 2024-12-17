@@ -176,21 +176,21 @@ class ProductController extends Controller
     /**
      * Force delete the specified resource from storage.
      */
-    public function forceDelete($id)
-    {
-        $product = Product::withTrashed()->find($id);
+    // public function forceDelete($id)
+    // {
+    //     $product = Product::withTrashed()->find($id);
 
-        if ($product) {
-            // Kiểm tra tồn tại ảnh sản phẩm
-            if (file_exists(storage_path('app/public/uploads/products/' . $product->image))) {
-                unlink(storage_path('app/public/uploads/products/' . $product->image));
-            }
-            $product->forceDelete();
-            return redirect()->back()->with('success', 'Xóa sản phẩm thành công');
-        }
+    //     if ($product) {
+    //         // Kiểm tra tồn tại ảnh sản phẩm
+    //         if (file_exists(storage_path('app/public/uploads/products/' . $product->image))) {
+    //             unlink(storage_path('app/public/uploads/products/' . $product->image));
+    //         }
+    //         $product->forceDelete();
+    //         return redirect()->back()->with('success', 'Xóa sản phẩm thành công');
+    //     }
 
-        return redirect()->back()->with('error', 'Xóa sản phẩm thất bại');
-    }
+    //     return redirect()->back()->with('error', 'Xóa sản phẩm thất bại');
+    // }
 
     public function export()
     {
