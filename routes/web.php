@@ -91,7 +91,7 @@ Route::prefix('/')->middleware('check_password_change')->group(function () {
 
     Route::get('/contact', [PageController::class, 'contact'])->name('client.contact');
     Route::post('/contact', [PageController::class, 'postContact'])->name('client.post-contact');
-    Route::get('/{slug}', [PageController::class, 'dynamicPage'])->name('client.dynamic-page');
+    Route::get('/page/{slug}', [PageController::class, 'dynamicPage'])->name('client.dynamic-page');
 });
 
 Route::prefix('/errors')->group(function () {
@@ -168,7 +168,7 @@ Route::prefix('/admin')->middleware(['admin', 'check_password_change'])->name('a
     Route::get('/product/export', [AdminProductController::class, 'export'])->name('products.export');
     Route::get('/product/trash', [AdminProductController::class, 'trash'])->name('trash-products');
     Route::post('/product/restore/{id}', [AdminProductController::class, 'restore'])->name('restore-product');
-    Route::delete('/product/delete/{id}', [AdminProductController::class, 'forceDelete'])->name('delete-product');
+    // Route::delete('/product/delete/{id}', [AdminProductController::class, 'forceDelete'])->name('delete-product');
     // Attribute
     Route::resource('/attributes', AttributeController::class);
     Route::get('/attribute/export', [AttributeController::class, 'export'])->name('attributes.export');
