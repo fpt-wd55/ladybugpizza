@@ -1,12 +1,10 @@
 @extends('layouts.client')
 
-
 @section('title', 'Trang chủ')
 
 @section('content')
     <div class="mx-auto px-0">
-        <div
-            class="relative flex min-h-[calc(100vh-48px)] flex-col-reverse items-center justify-center gap-16 overflow-hidden bg-gray-100 p-8 transition md:px-32 lg:flex-row lg:justify-between lg:px-40">
+        <div class="relative flex min-h-[calc(100vh-48px)] flex-col-reverse items-center justify-center gap-16 overflow-hidden bg-gray-100 p-8 transition md:px-32 lg:flex-row lg:justify-between lg:px-40">
             <div class="z-10 text-center lg:text-left">
                 <p class="vujahday-script-regular mb-8 text-6xl">Ladybug Pizza</p>
                 <p class="playwrite-gb-s-regular mb-12 text-sm uppercase text-gray-500">Thưởng thức pizza ngon lành bổ dưỡng
@@ -14,14 +12,38 @@
                 <a class="button-primary" href="{{ route('client.product.menu') }}">Thực đơn</a>
             </div>
             <div class="z-10 w-60 flex-shrink-0 transition md:w-[400px] lg:w-[520px]">
-                <img alt="" class="w-full transition-transform duration-500 hover:rotate-[90deg] hover:transform"
-                    src="https://static.vecteezy.com/system/resources/previews/024/589/160/non_2x/top-view-pizza-with-ai-generated-free-png.png">
+                <img alt="" class="w-full transition-transform duration-500 hover:rotate-[90deg] hover:transform" src="https://static.vecteezy.com/system/resources/previews/024/589/160/non_2x/top-view-pizza-with-ai-generated-free-png.png">
             </div>
 
             <div class="absolute left-[-80px] top-[-200px] h-96 w-96 rounded-full bg-white"></div>
             <div class="absolute bottom-[-400px] right-[-400px] h-[800px] w-[800px] rounded-full bg-white"></div>
         </div>
 
+        @if ($banners)
+            <div class="flex items-center bg-gray-100 px-4 py-8 transition md:h-screen md:px-8 lg:px-32">
+                <div class="relative w-full" data-carousel="static" id="controls-carousel">
+                    <div class="relative h-56 overflow-hidden rounded-3xl md:h-[560px]">
+                        <!-- Item 1 -->
+                        @foreach ($banners as $banner)
+                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                            <img class="absolute left-1/2 top-1/2 block w-full -translate-x-1/2 -translate-y-1/2" src="{{asset('storage/uploads/banners/' . $banner->image)}}">
+                        </div>
+                        @endforeach
+                    </div>
+                    <!-- Slider controls -->
+                    <button class="group absolute start-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-prev type="button">
+                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none ">
+                            @svg('tabler-chevron-left', 'h-6 w-6 text-white')
+                        </span>
+                    </button>
+                    <button class="group absolute end-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-next type="button">
+                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none ">
+                            @svg('tabler-chevron-right', 'h-6 w-6 text-white')
+                        </span>
+                    </button>
+                </div>
+            </div>
+        @endif
 
         <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
 
@@ -39,12 +61,8 @@
                     </div>
                     <div class="mb-16 grid grid-cols-2 gap-4 lg:grid-cols-3">
                         @foreach ($products as $product)
-                            <a class="product-card overflow-hidden md:flex"
-                                href="{{ route('client.product.show', $product->slug) }}">
-                                <img alt="" class="h-48 w-full flex-shrink-0 object-cover md:h-full md:w-1/3"
-                                    loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
-                                    onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
-                                    class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
+                            <a class="product-card overflow-hidden md:flex" href="{{ route('client.product.show', $product->slug) }}">
+                                <img alt="" class="h-48 w-full flex-shrink-0 object-cover md:h-full md:w-1/3" class="mr-3 h-8 w-8 rounded bg-slate-400 object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $product->image) }}">
                                 <div class="p-2 text-sm">
                                     <p class="mb-2 font-semibold">{{ $product->name }}</p>
                                     <div class="mb-2 flex items-center gap-1">
@@ -106,21 +124,16 @@
                         </div>
                     </div>
 
-                    <img alt="" class="h-full w-full flex-shrink-0 rounded-lg object-cover" loading="lazy"
-                        src="{{ asset('storage/uploads/products/pizza-5-cheese.jpeg') }}">
+                    <img alt="" class="h-full w-full flex-shrink-0 rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/products/pizza-5-cheese.jpeg') }}">
                 </div>
 
                 {{-- Cau chuyen cua chung toi --}}
                 <div class="comfortable grid grid-cols-1 gap-8 lg:grid-cols-2">
                     <div class="grid grid-cols-2 grid-rows-2 gap-4">
-                        <img alt="" class="h-full w-full rounded-lg object-cover" loading="lazy"
-                            src="{{ asset('storage/uploads/products/pizza-margherita.jpeg') }}">
-                        <img alt="" class="h-full w-full rounded-lg object-cover" loading="lazy"
-                            src="{{ asset('storage/uploads/products/pizza-4-cheese.jpeg') }}">
-                        <img alt="" class="h-full w-full rounded-lg object-cover" loading="lazy"
-                            src="{{ asset('storage/uploads/products/pizza-burrata-cay.jpeg') }}">
-                        <img alt="" class="h-full w-full rounded-lg object-cover" loading="lazy"
-                            src="{{ asset('storage/uploads/products/pizza-ca-hoi.jpg') }}">
+                        <img alt="" class="h-full w-full rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/products/pizza-margherita.jpeg') }}">
+                        <img alt="" class="h-full w-full rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/products/pizza-4-cheese.jpeg') }}">
+                        <img alt="" class="h-full w-full rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/products/pizza-burrata-cay.jpeg') }}">
+                        <img alt="" class="h-full w-full rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/products/pizza-ca-hoi.jpg') }}">
                     </div>
                     <div class="text-center">
                         <p class="playwrite-gb-s-regular mb-6 text-lg uppercase">Câu chuyện của chúng tôi</p>
