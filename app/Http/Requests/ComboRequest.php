@@ -45,7 +45,6 @@ class ComboRequest extends FormRequest
             'discount_price.min' => 'Giá giảm không được nhỏ hơn 0',
             'discount_price.lt' => 'Giá giảm phải nhỏ hơn giá gốc',
             'discount_price.lte' => 'Giá giảm phải nhỏ hơn hoặc bằng giá gốc',
-            'image.required' => 'Vui lòng chọn ảnh',
             'image.mimes' => 'Ảnh phải có định dạng jpeg, png, jpg, gif, svg, webp',
             'image.max' => 'Ảnh không được vượt quá 2048 KB',
             'quantity.required' => 'Vui lòng nhập số lượng',
