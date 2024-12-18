@@ -20,7 +20,7 @@
                         @svg('tabler-trash', 'w-5 h-5 mr-2')
                         Thùng rác
                     </a>
-                    <a class="hover:text-primary-700 flex flex-shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-0" href="{{ route('admin.page.export') }}">
+                    <a class="button-light" href="{{ route('admin.page.export') }}">
                         @svg('tabler-file-export', 'w-4 h-4 mr-2')
                         Xuất dữ liệu
                     </a>

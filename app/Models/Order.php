@@ -67,4 +67,9 @@ class Order extends Model
     {
         return $this->hasMany(Evaluation::class);
     }
+
+    public function total()
+    {
+        return $this->amount + $this->shipping_fee - $this->discount_amount;
+    }
 }

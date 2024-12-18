@@ -18,7 +18,7 @@
                     @svg('tabler-trash', 'w-5 h-5 mr-2')
                     Thùng rác
                 </a>
-                <button class="hover:text-primary-700 flex flex-shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-0" type="button">
+                <button class="button-light" type="button">
                     @svg('tabler-file-export', 'w-4 h-4 mr-2')
                     Xuất dữ liệu
                 </button>
@@ -49,7 +49,7 @@
                     </div>
                 </form>
                 <div class="flex w-full items-center md:w-auto">
-                    <button class="hover:text-primary-700 flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-0 md:w-auto" data-modal-target="filterDropdown" data-modal-toggle="filterDropdown" type="button">
+                    <button class="flex w-full items-center justify-center button-light" data-modal-target="filterDropdown" data-modal-toggle="filterDropdown" type="button">
                         @svg('tabler-filter-filled', 'w-5 h-5 me-2')
                         Bộ lọc
                     </button>
