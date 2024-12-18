@@ -15,6 +15,7 @@ class Page extends Model
         'slug',
         'content',
         'status',
+        'type',
     ];
 
     public function images()

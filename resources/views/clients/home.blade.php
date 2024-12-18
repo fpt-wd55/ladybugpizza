@@ -25,19 +25,19 @@
                     <div class="relative h-56 overflow-hidden rounded-3xl md:h-[560px]">
                         <!-- Item 1 -->
                         @foreach ($banners as $banner)
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img class="absolute left-1/2 top-1/2 block w-full -translate-x-1/2 -translate-y-1/2" src="{{asset('storage/uploads/banners/' . $banner->image)}}">
-                        </div>
+                            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                                <img class="absolute left-1/2 top-1/2 block w-full -translate-x-1/2 -translate-y-1/2" src="{{ asset('storage/uploads/banners/' . $banner->image) }}">
+                            </div>
                         @endforeach
                     </div>
                     <!-- Slider controls -->
                     <button class="group absolute start-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-prev type="button">
-                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none ">
+                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none">
                             @svg('tabler-chevron-left', 'h-6 w-6 text-white')
                         </span>
                     </button>
                     <button class="group absolute end-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none" data-carousel-next type="button">
-                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none ">
+                        <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none">
                             @svg('tabler-chevron-right', 'h-6 w-6 text-white')
                         </span>
                     </button>
@@ -116,10 +116,9 @@
                         </p>
                         <a class="button-primary mb-8" href="{{ route('client.product.menu') }}">Đặt ngay</a>
                         <div class="">
-                            <p class="font-semibold">Dịch vụ bữa trưa</p>
-                            <p class="mb-4">Từ 11am đến 3pm </p>
-                            <p class="font-semibold">Dịch vụ bữa tối</p>
-                            <p class="mb-4">Từ 5pm đến 10pm</p>
+                            <p class="font-semibold">Phục vụ cả ngày</p>
+                            <p class="">Từ {{ $todayOpeningHour->open_time }} đến {{ $todayOpeningHour->close_time }} </p>
+                            <span onclick="showPopup()" class="text-red-600 text-sm hover:cursor-pointer hover:underline">Xem giờ mở cửa</span>
                             <p class="mb-8">Xin lưu ý rằng gọi món lần cuối là 30 phút trước giờ đóng cửa</p>
                         </div>
                     </div>

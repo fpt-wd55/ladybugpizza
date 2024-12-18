@@ -33,6 +33,7 @@ class PageSeeder extends Seeder
                     </div>   
                 ',
                 'status' => 1,
+                'type' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -159,6 +160,7 @@ class PageSeeder extends Seeder
                     </div>
                 ',
                 'status' => 1,
+                'type' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -268,6 +270,7 @@ class PageSeeder extends Seeder
                     </div>
                 ',
                 'status' => 1,
+                'type' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
