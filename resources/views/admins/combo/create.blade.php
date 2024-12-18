@@ -72,7 +72,7 @@
                             <div>
                                 <label for="quantity" class="label-md">Số lượng <span class="text-red-500">*</span></label>
                                 <input type="number" name="quantity" id="quantity" value="{{ old('quantity') }}"
-                                    placeholder="VD: 12" min="0" class="input">
+                                    placeholder="VD: 12" class="input">
                                 @error('quantity')
                                     <p class="mt-2 text-sm text-red-600">
                                         {{ $message }}
