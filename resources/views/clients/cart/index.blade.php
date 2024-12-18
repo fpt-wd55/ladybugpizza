@@ -38,7 +38,8 @@
                                         </a>
                                         @if ($item->product->status == 2 || $item->product->delete_at != null || $item->product->category->deleted_at != null)
                                             <span class="badge-red">Ngừng kinh doanh</span>
-                                        @elseif ($item->product->quantity <= 0)
+                                        @endif
+                                        @if (optional($item->product)->quantity === 0)
                                             <span class="badge-red">Hết hàng</span>
                                         @endif
                                     </div>

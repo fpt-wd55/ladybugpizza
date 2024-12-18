@@ -22,13 +22,13 @@ class CheckCartQuantity
 
         foreach ($cartItems as $item) {
             if ($item->product->status == 2 || $item->product->delete_at != null || $item->product->category->deleted_at != null) {
-                return redirect()->route('client.cart.index')->with('error', 'Sản phẩm ' . $item->product->name . ' đã ngừng kinh doanh');
+                return redirect()->route('client.cart.index')->with('error', $item->product->name . ' đã ngừng kinh doanh');
             }
         }
 
         foreach ($cartItems as $item) {
             if ($item->product->quantity != null && $item->quantity > $item->product->quantity) {
-                return redirect()->route('client.cart.index')->with('error', 'Sản phẩm ' . $item->product->name . ' chỉ còn ' . $item->product->quantity . ' sản phẩm');
+                return redirect()->route('client.cart.index')->with('error', $item->product->name . ' chỉ còn ' . $item->product->quantity . ' sản phẩm');
             }
         }
 
