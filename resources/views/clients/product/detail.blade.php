@@ -12,7 +12,10 @@
                 <div class="product-detail-box col-span-5 rounded-l-lg md:flex md:gap-8 lg:col-span-2 lg:block">
                     <div class="md:max-w-80 mb-8 md:max-h-80">
                         <a data-fslightbox="gallery" href="{{ asset('storage/uploads/products/' . $product->image) }}">
-                            <img alt="{{ $product->name }}" class="w-full rounded-lg object-cover" class="mr-3 rounded bg-slate-400 object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $product->image) }}" />
+                            <img alt="{{ $product->name }}" class="w-full rounded-lg object-cover"
+                                 class="mr-3 rounded bg-slate-400 object-cover" loading="lazy"
+                                 onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
+                                 src="{{ asset('storage/uploads/products/' . $product->image) }}"/>
                         </a>
                     </div>
                     <div>
@@ -23,7 +26,7 @@
                                     @svg($i < $product->avg_rating ? 'tabler-star-filled' : 'tabler-star', 'icon-md text-red-500')
                                 @endfor
                             </div>
-                            <p>({{ $product->avg_rating }})</p>
+                            <a href="#comment"><p>({{ $product->avg_rating }})</p></a>
                         </div>
                         <p class="comfortable pe-8 text-sm">{!! $product->description !!}</p>
                     </div>
@@ -40,15 +43,20 @@
                             <div class="flex flex-wrap items-center gap-4 md:gap-8">
                                 @foreach ($attribute->values as $index => $value)
                                     <div class="min-w-32 {{ $value->quantity <= 0 ? 'out-of-stock' : '' }}">
-                                        <input {{ old('attributes_' . $attribute->slug) == $value->id ? 'checked' : '' }} class="peer hidden" data-price="{{ $value->price }}" data-type="{{ $value->price_type }}" id="attribute_{{ $value->id }}" name="attributes_{{ $attribute->slug }}" type="radio" value="{{ $value->id }}" />
-                                        <label class="label-peer flex flex-col items-center gap-2" for="attribute_{{ $value->id }}">
+                                        <input
+                                            {{ old('attributes_' . $attribute->slug) == $value->id ? 'checked' : '' }} class="peer hidden"
+                                            data-price="{{ $value->price }}" data-type="{{ $value->price_type }}"
+                                            id="attribute_{{ $value->id }}" name="attributes_{{ $attribute->slug }}"
+                                            type="radio" value="{{ $value->id }}"/>
+                                        <label class="label-peer flex flex-col items-center gap-2"
+                                               for="attribute_{{ $value->id }}">
                                             <p class="text-sm font-medium">{{ $value->value }}</p>
                                         </label>
                                     </div>
                                 @endforeach
                             </div>
                             @error('attributes_' . $attribute->slug)
-                                <p class="mt-3 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-3 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
                     @endforeach
@@ -62,9 +70,15 @@
                             <div class="grid grid-cols-2 gap-4">
                                 @foreach ($toppings as $topping)
                                     <div>
-                                        <input class="peer hidden" data-price="{{ $topping->price }}" id="{{ $topping->slug }}" name="toppings[]" type="checkbox" value="{{ $topping->id }}">
-                                        <label class="flex w-full cursor-pointer items-center justify-start gap-2 overflow-hidden rounded-lg border border-gray-200 bg-white p-2 text-gray-700 transition hover:bg-gray-50 hover:text-gray-600 peer-checked:border-red-600 peer-checked:text-red-600 md:gap-4" for="{{ $topping->slug }}">
-                                            <img alt="{{ $topping->name }}" class="h-16 w-16 flex-shrink-0 rounded-lg object-cover" loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
+                                        <input class="peer hidden" data-price="{{ $topping->price }}"
+                                               id="{{ $topping->slug }}" name="toppings[]" type="checkbox"
+                                               value="{{ $topping->id }}">
+                                        <label
+                                            class="flex w-full cursor-pointer items-center justify-start gap-2 overflow-hidden rounded-lg border border-gray-200 bg-white p-2 text-gray-700 transition hover:bg-gray-50 hover:text-gray-600 peer-checked:border-red-600 peer-checked:text-red-600 md:gap-4"
+                                            for="{{ $topping->slug }}">
+                                            <img alt="{{ $topping->name }}"
+                                                 class="h-16 w-16 flex-shrink-0 rounded-lg object-cover" loading="lazy"
+                                                 src="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
                                             <div class="text-sm">
                                                 <p class="mb-2 font-medium">{{ $topping->name }}</p>
                                                 <p>+ {{ number_format($topping->price) }} đ</p>
@@ -74,21 +88,22 @@
                                 @endforeach
                             </div>
                             @error('toppings')
-                                <p class="mt-3 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-3 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
                     @endif
                 </div>
             </div>
-            <div class="mb-8 grid grid-cols-1 gap-4 lg:grid-cols-5">
+            <div class="mb-8 grid grid-cols-1 gap-4 lg:grid-cols-5" id="comment">
                 {{-- Đánh giá --}}
                 <div class="card col-span-5 p-4 md:p-8">
                     <p class="title">Đánh giá sản phẩm</p>
-                    @foreach ($evaluations as $evaluation)
+                    @forelse ($evaluations as $evaluation)
                         <div class="my-5">
                             {{-- info --}}
                             <div class="mb-4 flex items-center gap-4">
-                                <img alt="" class="img-circle img-sm" loading="lazy" src="{{ $evaluation->user->avatar() }}">
+                                <img alt="" class="img-circle img-sm" loading="lazy"
+                                     src="{{ $evaluation->user->avatar() }}">
                                 <div>
                                     <div class="mb-1 flex items-center gap-2">
                                         <p class="text-sm font-medium">{{ $evaluation->user->fullname }} |
@@ -111,7 +126,13 @@
                             </div>
                             <hr>
                         </div>
-                    @endforeach
+                    @empty
+                        <td class="py-4 text-center text-base" colspan="6">
+                            <div class="flex h-80 w-full flex-col items-center justify-center rounded-lg bg-white p-6">
+                                <p class="mt-4 text-sm text-gray-500">Sản phẩm chưa có đánh giá</p>
+                            </div>
+                        </td>
+                    @endforelse
                     <div class="p-4">
                         {{ $evaluations->onEachSide(1)->links() }}
                     </div>
@@ -131,17 +152,24 @@
                         <div class="inline-block w-20 rounded-md border border-gray-200 bg-white px-3 py-2 md:w-28">
                             <div class="flex items-center justify-center gap-x-1.5">
 
-                                <button aria-label="Decrease" class="size-6 inline-flex items-center justify-center gap-x-2 bg-white text-sm font-medium text-gray-800 disabled:text-gray-300" id="decrement" tabindex="-1" type="button">
+                                <button aria-label="Decrease"
+                                        class="size-6 inline-flex items-center justify-center gap-x-2 bg-white text-sm font-medium text-gray-800 disabled:text-gray-300"
+                                        id="decrement" tabindex="-1" type="button">
                                     @svg('tabler-minus', 'icon-sm')
                                 </button>
-                                <input class="w-6 border-0 bg-transparent p-0 text-center text-sm font-medium text-gray-800 focus:ring-0" min="1" name="quantity" style="appearance: textfield; -moz-appearance: textfield;" type="number" value="1">
-                                <button aria-label="Increase" class="size-6 inline-flex items-center justify-center gap-x-2 bg-white text-sm font-medium text-gray-800" id="increment" tabindex="-1" type="button">
+                                <input
+                                    class="w-6 border-0 bg-transparent p-0 text-center text-sm font-medium text-gray-800 focus:ring-0"
+                                    min="1" name="quantity" style="appearance: textfield; -moz-appearance: textfield;"
+                                    type="number" value="1">
+                                <button aria-label="Increase"
+                                        class="size-6 inline-flex items-center justify-center gap-x-2 bg-white text-sm font-medium text-gray-800"
+                                        id="increment" tabindex="-1" type="button">
                                     @svg('tabler-plus', 'icon-sm')
                                 </button>
                             </div>
                         </div>
                         @error('quantity')
-                            <p class="py-2 text-sm text-red-600 md:p-0 md:ps-5">{{ $message }}</p>
+                        <p class="py-2 text-sm text-red-600 md:p-0 md:ps-5">{{ $message }}</p>
                         @enderror
                     </div>
                 @endif
@@ -158,7 +186,8 @@
                 </div>
 
                 <div class="flex items-center justify-end gap-1 md:gap-2">
-                    <a class="{{ $favorites->contains($product->id) ? 'button-red' : 'button-light' }}" href="{{ route('client.product.post-favorite', $product->slug) }}" type="submit">
+                    <a class="{{ $favorites->contains($product->id) ? 'button-red' : 'button-light' }}"
+                       href="{{ route('client.product.post-favorite', $product->slug) }}" type="submit">
                         @svg('tabler-heart', 'md:me-2 icon-sm')
                         <span class="hidden md:block">
                             {{ $favorites->contains($product->id) ? 'Đã yêu thích' : 'Yêu thích' }}
@@ -205,7 +234,7 @@
 @section('scripts')
     <script>
         // Cập nhật giá sản phẩm khi thay đổi
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const priceElement = document.getElementById('price');
             const originalPrice = parseInt(priceElement.innerText.replace(/\D/g, ''));
             const attributes = document.querySelectorAll('input[name^="attributes"]');
