@@ -55,14 +55,7 @@ class ProductSeeder extends Seeder
                     'price' => 45000,
                     'discount_price' => 0,
                     'quantity' => rand(50, 150),
-                ],
-                [
-                    'name' => 'Pain Suisse Thuỵ Sĩ',
-                    'description' => 'Bánh mềm xốp với sô-cô-la và hạt hạnh nhân, thích hợp cho cà phê sáng hoặc trà chiều, mang đến hương vị ngọt ngào.',
-                    'price' => 65000,
-                    'discount_price' => 5000,
-                    'quantity' => rand(50, 150),
-                ],
+                ], 
                 [
                     'name' => 'Tart Chocolate',
                     'description' => 'Bánh tart với vỏ giòn và nhân sô-cô-la đen mịn, một món tráng miệng hấp dẫn cho các dịp đặc biệt.',
@@ -222,14 +215,14 @@ class ProductSeeder extends Seeder
                     'quantity' => 0,
                 ],
                 [
-                    'name' => 'Pizza Napoli Loại 1',
+                    'name' => 'Pizza Pesto Napoli Loại 1',
                     'description' => 'Pizza Napoli Loại 1 mang đến hương vị đặc trưng của ẩm thực Ý với đế bánh mềm mại, sốt cà chua tươi và phô mai mozzarella. Điểm nhấn là cá cơm mặn mà và ô liu đen, tạo nên sự hòa quyện giữa các hương vị. Lý tưởng cho những bữa ăn gia đình và tiệc tùng!',
                     'price' => 170000,
                     'discount_price' => 50000,
                     'quantity' => 0,
                 ],
                 [
-                    'name' => 'Pizza Napoli Loại 2',
+                    'name' => 'Pizza Pesto Napoli Loại 2',
                     'description' => 'Pizza Napoli Loại 2 là sự kết hợp mới lạ giữa hương vị truyền thống và sáng tạo. Đế bánh giòn rụm phủ sốt cà chua tươi, phô mai mozzarella, thịt xông khói, nấm tươi và ớt chuông sắc màu. Hương vị đậm đà, hài hòa giữa ngọt, mặn và béo ngậy sẽ chinh phục bạn ngay từ miếng đầu tiên. Đây là lựa chọn hoàn hảo cho những bữa tiệc hoặc bữa ăn gia đình.',
                     'price' => 170000,
                     'discount_price' => 50000,
@@ -248,14 +241,7 @@ class ProductSeeder extends Seeder
                     'price' => 200000,
                     'discount_price' => 65000,
                     'quantity' => 0,
-                ],
-                [
-                    'name' => 'Pizza Nấm Truffle Hảo Hạng',
-                    'description' => 'Pizza Nấm Truffle Hảo Hạng mang đến trải nghiệm ẩm thực đẳng cấp với lớp sốt kem mịn, phô mai mozzarella béo ngậy và nấm truffle thơm lừng. Từng miếng bánh còn được tô điểm bằng lát nấm tươi và chút húng quế, mang lại sự tươi mới và độc đáo. Đây là lựa chọn lý tưởng cho những buổi tối lãng mạn hoặc tự thưởng bản thân sau một ngày bận rộn.',
-                    'price' => 200000,
-                    'discount_price' => 35000,
-                    'quantity' => 0,
-                ],
+                ], 
                 [
                     'name' => 'Pizza Marinara',
                     'description' => 'Pizza Marinara mang hương vị biển cả tươi mới, với tôm, mực, và sò điệp trên lớp đế bánh giòn tan, phủ sốt cà chua ngọt chua hài hòa. Hương thơm của tỏi, dầu ô liu, và húng quế tươi làm tăng thêm sức hút cho món ăn này. Một lựa chọn tuyệt vời cho những tín đồ hải sản hoặc những dịp đặc biệt cùng gia đình và bạn bè.',
