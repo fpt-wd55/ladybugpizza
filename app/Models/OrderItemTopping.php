@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderItemTopping extends Model
 {
@@ -21,6 +22,6 @@ class OrderItemTopping extends Model
 
     public function topping()
     {
-        return $this->belongsTo(Topping::class);
+        return $this->belongsTo(Topping::class)->withTrashed();
     }
 }

@@ -317,15 +317,13 @@ class ProfileController extends Controller
 
 	public function deleteLocation(Address $address)
 	{
-
-		$id = $address['id'];
-
-		if (Address::destroy($id)) {
-			return redirect()->back()->with('success', 'Xóa địa thành công');
+		if ($address->delete()) {
+			return redirect()->back()->with('success', 'Xóa địa chỉ thành công');
 		} else {
 			return redirect()->back()->with('error', 'Xóa địa chỉ thất bại');
 		}
 	}
+
 
 	public function setDefaultAddress(Address $address)
 	{

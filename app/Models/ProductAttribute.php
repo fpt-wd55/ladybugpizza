@@ -24,7 +24,7 @@ class ProductAttribute extends Model
 
     public function attributeValue()
     {
-        return $this->belongsTo(AttributeValue::class);
+        return $this->belongsTo(AttributeValue::class)->withTrashed();
     }
 
     public function carts()
