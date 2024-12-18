@@ -18,6 +18,7 @@ class CategoryController extends Controller
 
         return view('admins.category.index', compact('category'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -31,7 +32,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        // Xử lý hình ảnh 
+        // Xử lý hình ảnh
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_name = time() . '_' . pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $image->getClientOriginalExtension();
@@ -53,6 +54,7 @@ class CategoryController extends Controller
 
         return redirect()->back()->with('error', 'Thêm danh mục thất bại');
     }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -117,7 +119,7 @@ class CategoryController extends Controller
         return view('admins.category.trash', compact('deletedCategories'));
     }
 
-    public function trashRestore(String $id)
+    public function trashRestore(string $id)
     {
         $restoreCate = Category::withTrashed()->find($id);
 
@@ -130,20 +132,20 @@ class CategoryController extends Controller
         }
     }
 
-    public function trashForce(String $id)
-    {
-        $forceCategories = Category::withTrashed()->find($id);
-        $old_image = $forceCategories->image;
-        if ($forceCategories) {
-            if ($old_image != null) {
-                unlink(storage_path('app/public/uploads/categories/' . $old_image));
-            }
-            $forceCategories->forceDelete();
-            return redirect()->back()->with('success', 'Danh mục đã xóa vĩnh viễn');
-        } else {
-            return redirect()->back()->with('error', 'Xóa vĩnh viễn danh mục thất bại');
-        }
-    }
+//    public function trashForce(String $id)
+//    {
+//        $forceCategories = Category::withTrashed()->find($id);
+//        $old_image = $forceCategories->image;
+//        if ($forceCategories) {
+//            if ($old_image != null) {
+//                unlink(storage_path('app/public/uploads/categories/' . $old_image));
+//            }
+//            $forceCategories->forceDelete();
+//            return redirect()->back()->with('success', 'Danh mục đã xóa vĩnh viễn');
+//        } else {
+//            return redirect()->back()->with('error', 'Xóa vĩnh viễn danh mục thất bại');
+//        }
+//    }
     public function export()
     {
         $categories = Category::all();
