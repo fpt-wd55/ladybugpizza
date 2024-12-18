@@ -32,11 +32,11 @@
                                     <img class="img-md min-h-full min-w-full rounded object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $item->product->image) }}">
                                 </div>
                                 <div>
-                                    <div class="flex items-center gap-2 mb-2">
+                                    <div class="mb-2 flex items-center gap-2">
                                         <a href="{{ route('client.product.show', $item->product->slug) }}">
                                             <p class="font-medium text-gray-800">{{ $item->product->name }}</p>
                                         </a>
-                                        @if ($item->product->status == 2 || $item->product->delete_at != null)
+                                        @if ($item->product->status == 2 || $item->product->delete_at != null || $item->product->category->deleted_at != null)
                                             <span class="badge-red">Ngừng kinh doanh</span>
                                         @elseif ($item->product->quantity <= 0)
                                             <span class="badge-red">Hết hàng</span>

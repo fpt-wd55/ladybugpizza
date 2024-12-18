@@ -21,6 +21,6 @@ class CartItemTopping extends Model
 
     public function topping()
     {
-        return $this->belongsTo(Topping::class);
+        return $this->belongsTo(Topping::class)->withTrashed();
     }
 }

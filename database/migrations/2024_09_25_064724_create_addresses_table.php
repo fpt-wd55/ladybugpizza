@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('detail_address');
             $table->boolean('is_default')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -21,7 +21,7 @@ class CheckCartQuantity
         $cartItems = $cart->items;
 
         foreach ($cartItems as $item) {
-            if ($item->product->status == 2 || $item->product->delete_at != null) {
+            if ($item->product->status == 2 || $item->product->delete_at != null || $item->product->category->deleted_at != null) {
                 return redirect()->route('client.cart.index')->with('error', 'Sản phẩm ' . $item->product->name . ' đã ngừng kinh doanh');
             }
         }
