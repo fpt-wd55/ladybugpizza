@@ -83,6 +83,15 @@ class UserSeeder extends Seeder
                 'date_of_birth' => '2004-07-13',
                 'gender' => 2,
             ],
+            [
+                'username' => 'admin',
+                'email' => 'admin.ladybugpizza@gmail.com',
+                'fullname' => 'LadybugPizza Admin',
+                'phone' => '0999988888',
+                'password' => Hash::make('admin.ladybugpizza@gmail.com'),
+                'date_of_birth' => '2024-12-20',
+                'gender' => 1,
+            ]
         ];
         foreach ($dataAdmin as $item) {
             User::create([
