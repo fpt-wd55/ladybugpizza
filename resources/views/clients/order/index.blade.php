@@ -233,12 +233,14 @@
                                                             <div class="flex gap-4">
                                                                 <img alt="" class="h-auto w-24 object-cover" class="mr-3 h-8 w-8 rounded bg-slate-400 object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $group['product']->image) }}">
                                                                 <div class="py-2 text-left md:min-w-[300px]">
-                                                                    <p class="mb-2 font-bold">
+                                                                    <p class="mb-2 font-medium">
                                                                         {{ $group['product']->name }}
                                                                     </p>
                                                                     <div class="mb-4 text-sm">
                                                                         <p>{{ $group['attribute'] }}</p>
-                                                                        <p>Topping: {{ $group['toppings'] }}</p>
+                                                                        @if ($group['toppings'])
+                                                                            <p>Topping: {{ $group['toppings'] }}</p>
+                                                                        @endif
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -352,9 +354,10 @@
                                                         <p class="mb-2 font-medium">{{ $group['product']->name }}</p>
                                                         <div class="mb-4 text-sm">
                                                             <p>{{ $group['attribute'] }}</p>
-                                                            <p>Topping: {{ $group['toppings'] }}</p>
+                                                            @if ($group['toppings'])
+                                                                <p>Topping: {{ $group['toppings'] }}</p>
+                                                            @endif
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>

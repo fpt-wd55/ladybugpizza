@@ -26,7 +26,7 @@
                                     @svg($i < $product->avg_rating ? 'tabler-star-filled' : 'tabler-star', 'icon-md text-red-500')
                                 @endfor
                             </div>
-                            <a href="#comment"><p>({{ $product->avg_rating }})</p></a>
+                            <a href="#comment"><p>({{ $product->evalutions->count() }})</p></a>
                         </div>
                         <p class="comfortable pe-8 text-sm">{!! $product->description !!}</p>
                     </div>
