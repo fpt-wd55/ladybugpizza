@@ -18,6 +18,28 @@ class CheckCartQuantity
     public function handle(Request $request, Closure $next)
     {
         $cart = Cart::find(Auth::id());
+        $cartItems = $cart->items;
+
+        foreach ($cartItems as $item) {
+            if ($item->product->status == 2 || $item->product->delete_at != null) {
+                return redirect()->route('client.cart.index')->with('error', 'Sản phẩm ' . $item->product->name . ' đã ngừng kinh doanh');
+            }
+        }
+
+        foreach ($cartItems as $item) {
+            if ($item->product->quantity != null && $item->quantity > $item->product->quantity) {
+                return redirect()->route('client.cart.index')->with('error', 'Sản phẩm ' . $item->product->name . ' chỉ còn ' . $item->product->quantity . ' sản phẩm');
+            }
+        }
+
+        foreach ($cartItems as $item) {
+            $product = $item->product;
+            if (!is_null($product->quantity) && $product->quantity <= 0) {
+                return redirect()
+                    ->route('client.cart.index')
+                    ->with('error', $product->name . ' đã hết hàng');
+            }
+        }
 
         if (!$cart) {
             return redirect()->route('client.cart.index')->with('error', 'Giỏ hàng của bạn trống');

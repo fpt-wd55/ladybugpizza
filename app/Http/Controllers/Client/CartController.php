@@ -27,6 +27,7 @@ class CartController extends Controller
         $this->updateCart($cart);
 
         $cartItems = CartItem::where('cart_id', $cart->id)->get();
+        // dd($cartItems);
 
         foreach ($cartItems as $cartItem) {
             $cartItem->attributes = CartItemAttribute::where('cart_item_id', $cartItem->id)->get();

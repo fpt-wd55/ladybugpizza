@@ -7,7 +7,7 @@
         <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
             <div class="mb-8">
                 <p class="title mb-8">GIỎ HÀNG ({{ count($cartItems) }})</p>
-                <div class="flex items-center justify-end mb-4">
+                <div class="mb-4 flex items-center justify-end">
                     {{-- <div class="mb-4 flex items-center gap-2">
                         <input class="input-checkbox" id="check-all" type="checkbox">
                         <label class="text-sm font-medium text-red-500 hover:cursor-pointer" for="check-all" id="select-all-cart-items">Chọn tất cả</label>
@@ -32,9 +32,16 @@
                                     <img class="img-md min-h-full min-w-full rounded object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $item->product->image) }}">
                                 </div>
                                 <div>
-                                    <a href="{{ route('client.product.show', $item->product->slug) }}">
-                                        <p class="mb-2 font-medium text-gray-800">{{ $item->product->name }}</p>
-                                    </a>
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <a href="{{ route('client.product.show', $item->product->slug) }}">
+                                            <p class="font-medium text-gray-800">{{ $item->product->name }}</p>
+                                        </a>
+                                        @if ($item->product->status == 2 || $item->product->delete_at != null)
+                                            <span class="badge-red">Ngừng kinh doanh</span>
+                                        @elseif ($item->product->quantity <= 0)
+                                            <span class="badge-red">Hết hàng</span>
+                                        @endif
+                                    </div>
                                     <div class="text-sm">
                                         <p class="line-clamp-1">
                                             {{ implode(', ', $item->attributes->pluck('attribute_value.value')->toArray()) }}
