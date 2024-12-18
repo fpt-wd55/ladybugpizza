@@ -11,14 +11,16 @@
                 </h2>
             </div>
             <div class="flex flex-shrink-0 flex-col space-y-3 md:flex-row md:items-center md:space-x-3 md:space-y-0 lg:justify-end">
-                <button class="flex w-full items-center justify-center button-light" data-modal-target="filterDropdown" data-modal-toggle="filterDropdown" type="button">
-                    @svg('tabler-filter-filled', 'w-5 h-5 me-2')
-                    Bộ lọc
-                </button>
-                <a class="button-light" href="{{ route('admin.orders.export') }}">
-                    @svg('tabler-file-export', 'w-4 h-4 mr-2')
-                    Xuất dữ liệu
-                </a>
+                <div class="flex items-center justify-end gap-3">
+                    <button class="button-light flex w-full items-center justify-center" data-modal-target="filterDropdown" data-modal-toggle="filterDropdown" type="button">
+                        @svg('tabler-filter-filled', 'w-5 h-5 me-2')
+                        Bộ lọc
+                    </button>
+                    <a class="button-light flex w-full items-center justify-center min-w-40" href="{{ route('admin.orders.export') }}">
+                        @svg('tabler-file-export', 'w-5 h-5 me-2')
+                        Xuất dữ liệu
+                    </a>
+                </div>
                 <form action="{{ route('admin.orders.filter') }}" aria-hidden="true" class="fixed inset-0 z-50 hidden h-modal w-full overflow-y-auto overflow-x-hidden p-4 md:h-full" id="filterDropdown" method="get" tabindex="-1">
                     <div class="relative h-full w-full max-w-2xl md:h-auto">
                         <!-- Modal content -->
@@ -140,10 +142,12 @@
                                 <a class="mb-2 font-medium text-gray-800 hover:text-red-600" href="{{ route('admin.users.show', $order->user->id) }}">{{ $order->fullname }}</a>
                                 <p>{{ $order->address->detail_address }}</p>
                                 <p>{{ $order->ward->name_with_type }}, {{ $order->district->name_with_type }},
-                                    {{ $order->province->name_with_type }}</p>
+                                    {{ $order->province->name_with_type }}
+                                </p>
                             </td>
                             <td class="md:px-4 md:py-2">
-                                {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ</td>
+                                {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ
+                            </td>
                             <td class="md:px-4 md:py-2">
                                 @php
                                     $colorClasses = [
@@ -211,7 +215,8 @@
                                             <p class="text-gray-800">{{ $order->address->detail_address }}</p>
                                             <p class="text-gray-800">{{ $order->ward->name_with_type }},
                                                 {{ $order->district->name_with_type }},
-                                                {{ $order->province->name_with_type }}</p>
+                                                {{ $order->province->name_with_type }}
+                                            </p>
                                         </div>
                                         {{-- Email --}}
                                         <div class="rounded-lg pl-4">
