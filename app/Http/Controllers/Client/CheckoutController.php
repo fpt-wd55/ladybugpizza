@@ -145,7 +145,7 @@ class CheckoutController extends Controller
             $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
 
             $orderInfo = "Thanh toán online qua MoMo";
-            $amount = (int) ($data['amount'] + $data['shipping_fee'] - $data['discount_amount']);
+            $amount = (int)($data['amount'] + $data['shipping_fee'] - $data['discount_amount']);
             $orderId = $data['code'];
             $redirectUrl = route('return_momo');
             $ipnUrl = route('return_momo');
@@ -178,7 +178,7 @@ class CheckoutController extends Controller
         } else {
             // Tạo đơn hàng
             $order = $this->createOrder(session('orderData'));
-            // Gửi mail thông báo đặt hàng 
+            // Gửi mail thông báo đặt hàng
             $this->sendPaymentConfirmationEmail($order);
 
             return redirect()->route('thank_you', $order->code);
@@ -199,6 +199,11 @@ class CheckoutController extends Controller
             $cart = Cart::where('user_id', Auth::id())->first();
             $cartItems = CartItem::where('cart_id', $cart->id)->get();
             foreach ($cartItems as $cartItem) {
+                $cartItem->attributes = CartItemAttribute::where('cart_item_id', $cartItem->id)->get();
+                $cartItem->toppings = CartItemTopping::where('cart_item_id', $cartItem->id)->get();
+            }
+
+            foreach ($cartItems as $cartItem) {
                 $orderItem = OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $cartItem->product_id,
@@ -213,7 +218,7 @@ class CheckoutController extends Controller
                             'attribute_value_id' => $attribute->attribute_value_id,
                         ]);
 
-                        // Trừ số lượng thuộc tính 
+                        // Trừ số lượng thuộc tính
                         $attributeValue = AttributeValue::find($attribute->attribute_value_id);
                         $attributeValue->quantity -= $cartItem->quantity;
                         $attributeValue->save();
@@ -287,7 +292,7 @@ class CheckoutController extends Controller
     {
         $order = Order::where('code', $order)->first();
         // Lấy thông tin địa chỉ
-        $order->province =  Province::find($order->address->province);
+        $order->province = Province::find($order->address->province);
         $order->district = District::find($order->address->district);
         $order->ward = Ward::find($order->address->ward);
 
@@ -301,7 +306,7 @@ class CheckoutController extends Controller
         $userSetting = $order->user->setting;
         if ($userSetting->email_order) {
             // Lấy thông tin địa chỉ
-            $order->province =  Province::find($order->address->province);
+            $order->province = Province::find($order->address->province);
             $order->district = District::find($order->address->district);
             $order->ward = Ward::find($order->address->ward);
             $subject = 'Thông báo xác nhận đơn hàng #' . $order->code;

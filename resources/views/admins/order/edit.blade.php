@@ -4,8 +4,8 @@
 @section('content')
     {{ Breadcrumbs::render('admin.orders.edit') }}
     <div class="mt-5 overflow-hidden bg-white shadow sm:rounded-lg">
-        <div class="container mx-auto ml-4 p-6">
-            <h1 class="mb-4 text-2xl font-semibold">Đặt hàng</h1>
+        <div class="mx-auto mb-3 p-6">
+            <h1 class="mb-4 text-2xl font-semibold">Đơn hàng #{{$order->code}}</h1>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {{-- Giá trị 1 --}}
                 <div>
@@ -30,10 +30,11 @@
                             </select>
                         </div>
                         <div class="mb-4" id="cancelled_reason">
-                            <p class="mb-2 text-sm font-normal">Lý do hủy đơn: <span class="text-red-600">*</span> </p>
-                            <textarea class="text-area" name="cancelled_reason" rows="4">{{ $order->cancelled_reason ?? null }}</textarea>
+                            <p class="mb-2 text-sm font-normal">Lý do hủy đơn: <span class="text-red-600">*</span></p>
+                            <textarea class="text-area" name="cancelled_reason"
+                                      rows="4">{{ $order->cancelled_reason ?? null }}</textarea>
                             @error('cancelled_reason')
-                                <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
+                            <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="mt-6 flex justify-start gap-2">
@@ -61,6 +62,10 @@
                     <h4 class="mb-2 text-lg font-semibold">Giao hàng</h4>
                     <label class="font-semibold">Phương thức thanh toán</label>
                     <p class="mb-2">{{ $order->paymentMethod->name }}</p>
+                    @if($order->promotion_id)
+                        <label class="font-semibold">Mã giảm giá</label>
+                        <p class="mb-2">{{ strtoupper($order->promotion->code) }}</p>
+                    @endif
                     @if ($order->notes)
                         <label class="font-semibold">Ghi chú</label>
                         <p class="mb-2">{{ $order->notes }}</p>
@@ -74,16 +79,20 @@
                 <div>
                     <label class="mb-5 font-semibold">Sản phẩm</label> <br>
                     @foreach ($order->orderItems as $orderItem)
-                        <div class="flex items-center whitespace-nowrap py-2 text-gray-900">
+                        <div class="flex items-center py-2 text-gray-900">
                             <a class="shrink-0" data-fslightbox="gallery"
-                                href="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
+                               href="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
                                 <img class="mr-3 h-8 w-8 rounded object-cover" loading="lazy"
-                                    onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
-                                    src="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
+                                     onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
+                                     src="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
                             </a>
-                            <div>
+                            <div class="w-full">
                                 <div class="grid grid-flow-row">
-                                    <span class="text-sm">{{ $orderItem->product->name }}</span>
+                                    <p class="flex justify-between">
+                                        <span class="text-sm">{{ $orderItem->product->name }}<span
+                                                class="font-medium text-red-600 ps-2">x{{$orderItem->quantity}}</span></span>
+                                        <span class="font-medium">{{ number_format($orderItem->quantity * $orderItem->price) }}₫</span>
+                                    </p>
                                     <span class="text-sm text-gray-500">
                                         @if ($orderItem->atrributeValues->count() > 0)
                                             {{ $orderItem->atrributeValues->map->value->join(', ') }}
@@ -125,7 +134,7 @@
 @endsection
 @section('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const statusSelect = document.getElementById('status');
             const permissionSelect = document.getElementById('cancelled_reason');
 
@@ -141,7 +150,7 @@
                 }, 100);
             }
 
-            statusSelect.addEventListener('change', function() {
+            statusSelect.addEventListener('change', function () {
                 toggleForm();
             });
 

@@ -101,7 +101,7 @@ class OrderSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
-            Invoice::create($dataInvoice); 
+            Invoice::create($dataInvoice);
         }
     }
 }
