@@ -15,14 +15,11 @@
                 <div class="mb-4 border-b border-gray-200 text-center text-sm font-medium text-gray-500">
                     <ul class="-mb-px flex flex-wrap">
                         <li class="me-2">
-                            <a aria-current="page"
-                                class="{{ request('tab') == 'my-code' || request('tab') == null ? 'border-b-red-600 text-red-600' : '' }} inline-block rounded-t-lg border-b-2 px-4 pb-2"
-                                href="{{ route('client.profile.promotion', ['tab' => 'my-code']) }}">Mã giảm giá của tôi
+                            <a aria-current="page" class="{{ request('tab') == 'my-code' || request('tab') == null ? 'border-b-red-600 text-red-600' : '' }} inline-block rounded-t-lg border-b-2 px-4 pb-2" href="{{ route('client.profile.promotion', ['tab' => 'my-code']) }}">Mã giảm giá của tôi
                                 ({{ $countMyCodes }})</a>
                         </li>
                         <li class="me-2">
-                            <a class="{{ request('tab') == 'redeem-code' ? 'border-b-red-600 text-red-600' : '' }} inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2"
-                                href="{{ route('client.profile.promotion', ['tab' => 'redeem-code']) }}">Đổi mã giảm giá</a>
+                            <a class="{{ request('tab') == 'redeem-code' ? 'border-b-red-600 text-red-600' : '' }} inline-block rounded-t-lg border-b-2 border-transparent px-4 pb-2" href="{{ route('client.profile.promotion', ['tab' => 'redeem-code']) }}">Đổi mã giảm giá</a>
                         </li>
                     </ul>
                 </div>
@@ -35,10 +32,10 @@
                                 <div class="product-card flex items-start justify-between p-4">
                                     <div class="space-y-2 text-sm">
                                         <p class="font-medium">
-                                            <span class=" me-2 uppercase">{{ $code->promotion->name }}</span>
+                                            <span class="me-2 uppercase">{{ $code->promotion->name }}</span>
                                         </p>
                                         <p class="font-medium">
-                                            <span class="code me-2 uppercase">{{ $code->promotion->code }}</span>
+                                            <span class="badge-red uppercase code">{{ $code->promotion->code }}</span>
                                         </p>
                                         <p class="font-medium">
                                             Giảm
@@ -95,13 +92,16 @@
                                             -
                                             {{ \Carbon\Carbon::parse($code->end_date)->format('d/m/Y H:i') }}</p>
                                     </div>
-                                    <form action="{{ route('client.profile.redeem-promotion', ['id' => $code->id]) }}"
-                                        method="POST">
+                                    <form action="{{ route('client.profile.redeem-promotion', ['id' => $code->id]) }}" method="POST">
                                         @csrf
                                         <div>
                                             <button class="button-red">
-                                                <span class="inline-flex items-center text-amber-300">{{ $code->points }}
-                                                    @svg('tabler-coins', 'icon-sm ms-2')</span>
+                                                @if ($code->points == 0)
+                                                    <span class="text-amber-300">Nhận ngay</span>
+                                                @else
+                                                    <span class="inline-flex items-center text-amber-300">{{ $code->points }}
+                                                        @svg('tabler-coins', 'icon-sm ms-2')</span>
+                                                @endif
                                             </button>
                                         </div>
                                     </form>
