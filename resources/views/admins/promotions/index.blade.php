@@ -50,7 +50,7 @@
                         </div>
                     </form>
                     <div class="flex w-full items-center space-x-3 md:w-auto">
-                        <button class="flex w-full items-center justify-center button-light" data-modal-target="filterDropdown" data-modal-toggle="filterDropdown" type="button">
+                        <button class="button-light flex w-full items-center justify-center" data-modal-target="filterDropdown" data-modal-toggle="filterDropdown" type="button">
                             @svg('tabler-filter-filled', 'w-5 h-5 me-2')
                             Bộ lọc
                         </button>
@@ -80,7 +80,7 @@
                                                 </li>
                                             </div>
                                         </ul>
-                                        <h6 class="my-3 text-sm font-medium text-gray-900">Phạm vi</h6>
+                                        <h6 class="my-3 text-sm font-medium text-gray-900">Đối tượng sử dụng</h6>
                                         <ul class="space-y-2 text-sm">
                                             <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
                                                 <li class="flex items-center">
@@ -96,7 +96,7 @@
                                                 @endforeach
                                             </div>
                                         </ul>
-                                        <h6 class="my-3 text-sm font-medium text-gray-900">Thời gian</h6>
+                                        <h6 class="my-3 text-sm font-medium text-gray-900">Hạn sử dụng</h6>
                                         <div class="flex items-center">
                                             <div>
                                                 <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 ps-3 text-sm text-gray-900 focus:ring-0" name="filter_date_min" placeholder="1.000 đ" type="date" value="{{ request()->input('filter_date_min') }}">
@@ -127,7 +127,7 @@
                             </div>
                         </th>
                         <th class="px-4 py-3" scope="col">Mã giảm giá</th>
-                        <th class="px-4 py-3" scope="col">Loại giảm giá</th>
+                        <th class="px-4 py-3" scope="col">Chi tiết</th>
                         <th class="px-4 py-3 text-center" scope="col">Giá trị giảm giá</th>
                         <th class="px-4 py-3 text-center" scope="col">Số lượng</th>
                         <th class="px-4 py-3 text-center" scope="col">Lượt sử dụng</th>
@@ -149,17 +149,18 @@
                                 <p>{{ $promotion->name }}</p>
                             </td>
                             <td class="whitespace-nowrap px-4 py-2 text-gray-900">
-                                @if ($promotion->discount_type == '1')
-                                    Giảm theo %
-                                @elseif ($promotion->discount_type == '2')
-                                    Giảm theo số tiền
-                                @endif
+                                <p class="mb-2">Giảm tối đa <span class="badge-red">{{ number_format($promotion->max_discount) }}₫</span></p>
+                                <p class="">Áp dụng cho @if ($promotion->is_global == '1')
+                                        <span class="badge-default">Tất cả</span>
+                                    @else
+                                        <span class="badge-default">Thành viên {{ $promotion->rank?->name ?? 'Không xác định' }}</span>
+                                    @endif
+                                </p>
                             </td>
                             <td class="whitespace-nowrap px-4 py-2 text-center text-gray-900">
                                 @if ($promotion->discount_type == '1')
                                     <div class="space-y-2">
                                         <span class="badge-red">{{ number_format($promotion->discount_value) }}%</span>
-                                        <p class="badge-light">Giảm tối đa {{ number_format($promotion->max_discount) }}₫</p>
                                     </div>
                                 @elseif ($promotion->discount_type == '2')
                                     <span class="badge-red">{{ number_format($promotion->discount_value) }}₫</span>

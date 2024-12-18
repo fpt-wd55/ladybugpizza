@@ -72,8 +72,7 @@
                                 <div class="z-10 hidden w-44 divide-y divide-gray-100 rounded bg-white shadow" id="{{ $page->id }}-dropdown">
                                     <ul aria-labelledby="{{ $page->id }}" class="py-1 text-sm text-gray-700">
                                         <li>
-                                            <a class="block px-4 py-2 hover:bg-gray-100" href="{{ url($page->slug) }}" target="_blank">Chi
-                                                tiết </a>
+                                            <a class="block px-4 py-2 hover:bg-gray-100" href="{{ route('client.dynamic-page', $page->slug) }}" target="_blank">Xem trước</a>
                                         </li>
                                         <li>
                                             <a class="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="{{ route('admin.pages.edit', $page->id) }}">Cập
