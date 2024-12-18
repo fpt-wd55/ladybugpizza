@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\Route;
 use Vanthao03596\HCVN\Models\Province;
 use Vanthao03596\HCVN\Models\District;
 use Vanthao03596\HCVN\Models\Ward;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -174,13 +175,13 @@ Route::prefix('/admin')->middleware(['admin', 'check_password_change'])->name('a
     Route::get('/attribute/export', [AttributeController::class, 'export'])->name('attributes.export');
     Route::get('/attribute/trash', [AttributeController::class, 'trashAttribute'])->name('trash-attributes');
     Route::post('/attribute/restore/{id}', [AttributeController::class, 'restoreAttribute'])->name('restore-attribute');
-    Route::delete('/attribute/delete/{id}', [AttributeController::class, 'deleteAttribute'])->name('delete-attribute');
+//    Route::delete('/attribute/delete/{id}', [AttributeController::class, 'deleteAttribute'])->name('delete-attribute');
     // Combo
     Route::resource('/combos', ComboController::class);
     Route::get('/combo/export', [ComboController::class, 'export'])->name('combos.export');
     Route::get('/combo/trash', [ComboController::class, 'trashCombo'])->name('trash-combos');
     Route::post('/combo/restore-/{id}', [ComboController::class, 'restoreCombo'])->name('restore-combo');
-    Route::delete('/combo/delete/{id}', [ComboController::class, 'forceDelete'])->name('delete-combo');
+//    Route::delete('/combo/delete/{id}', [ComboController::class, 'forceDelete'])->name('delete-combo');
     Route::post('combo/bulk-action', [ComboController::class, 'bulkAction'])->name('combos.bulkAction');
     Route::get('/combo/search', [ComboController::class, 'search'])->name('combos.search');
     Route::get('/combo/evaluation/{combo}', [ComboController::class, 'evaluation'])->name('combos.evaluation');
@@ -197,7 +198,7 @@ Route::prefix('/admin')->middleware(['admin', 'check_password_change'])->name('a
     Route::get('/topping/export', [ToppingController::class, 'export'])->name('toppings.export');
     Route::get('/topping/trash', [ToppingController::class, 'trashTopping'])->name('trash-topping');
     Route::get('/topping/restore/{id}', [ToppingController::class, 'resTopping'])->name('resTopping');
-    Route::delete('/topping/delete/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
+//    Route::delete('/topping/delete/{id}', [ToppingController::class, 'forceDestroy'])->name('forceDelete-Toppings');
     // Categories
     Route::resource('/categories', CategoryController::class);
     Route::get('/category/search', [CategoryController::class, 'search'])->name('categories.search');
@@ -206,7 +207,7 @@ Route::prefix('/admin')->middleware(['admin', 'check_password_change'])->name('a
     Route::get('/category/export', [CategoryController::class, 'export'])->name('categories.export');
     Route::get('/category/trash', [CategoryController::class, 'trashCategory'])->name('trash.listcate');
     Route::post('/category/restore/{id}', [CategoryController::class, 'trashRestore'])->name('trash.cateRestore');
-    Route::post('/category/delete/{id}', [CategoryController::class, 'trashForce'])->name('trash.cateDelete');
+//    Route::post('/category/delete/{id}', [CategoryController::class, 'trashForce'])->name('trash.cateDelete');
     // Banner
     Route::resource('/banners', BannerController::class);
     Route::get('/banner/export', [BannerController::class, 'export'])->name('banners.export');
@@ -214,6 +215,7 @@ Route::prefix('/admin')->middleware(['admin', 'check_password_change'])->name('a
     Route::post('/banner/restore/{id}', [BannerController::class, 'trashRestore'])->name('trash.bannerRestore');
     Route::post('/banner/delete/{id}', [BannerController::class, 'trashForce'])->name('trash.bannerDelete');
     Route::get('/banner/filter', [BannerController::class, 'filter'])->name('banner.filter');
+
     // Promotion
     Route::resource('/promotions', PromotionController::class);
     Route::get('/promotion/filter', [PromotionController::class, 'filter'])->name('promotions.filter');

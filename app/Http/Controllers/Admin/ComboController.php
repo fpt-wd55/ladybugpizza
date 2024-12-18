@@ -135,20 +135,20 @@ class ComboController extends Controller
         return redirect()->back()->with('error', 'Khôi phục combo thất bại');
     }
 
-    public function forceDelete($id)
-    {
-        $combo = Product::withTrashed()->find($id);
-
-        if ($combo) {
-            if (file_exists(storage_path('app/public/uploads/combos/' . $combo->image))) {
-                unlink(storage_path('app/public/uploads/combos/' . $combo->image));
-            }
-            $combo->forceDelete();
-            return redirect()->back()->with('success', 'Xóa sản phẩm thành công');
-        }
-
-        return redirect()->back()->with('error', 'Xóa sản phẩm thất bại');
-    }
+//    public function forceDelete($id)
+//    {
+//        $combo = Product::withTrashed()->find($id);
+//
+//        if ($combo) {
+//            if (file_exists(storage_path('app/public/uploads/combos/' . $combo->image))) {
+//                unlink(storage_path('app/public/uploads/combos/' . $combo->image));
+//            }
+//            $combo->forceDelete();
+//            return redirect()->back()->with('success', 'Xóa sản phẩm thành công');
+//        }
+//
+//        return redirect()->back()->with('error', 'Xóa sản phẩm thất bại');
+//    }
 
     public function bulkAction(Request $request)
     {
