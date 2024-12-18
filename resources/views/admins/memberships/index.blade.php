@@ -82,7 +82,6 @@
                     <th class="text-xs md:px-0 md:py-0 md:text-sm lg:px-4 lg:py-3" scope="col">Tài khoản</th>
                     <th class="px-0 py-0 text-xs md:text-sm lg:py-3" scope="col">Họ và tên</th>
                     <th class="text-center text-xs md:px-0 md:py-0 md:text-sm lg:px-4 lg:py-3" scope="col">Thứ hạng</th>
-                    <th class="px-0 py-0 text-xs md:text-sm lg:py-3" scope="col">Điểm</th>
                     <th class="text-xs md:px-0 md:py-0 md:text-sm lg:px-4 lg:py-3" scope="col">
                         <span class="sr-only">Actions</span>
                     </th>
@@ -112,12 +111,6 @@
                             </p>
                         </div>
                     </td>
-                    <td class="whitespace-nowrap text-gray-900">
-                        <p class="mb-2">Tổng điểm: <span class="badge-default">{{ $membership->total_spent }}</span></p>
-                        <p>Điểm còn lại: <span class="badge-gray">{{ $membership->points }}</span></p>
-                    </td>
-
-
                     <td class="items-center lg:px-4 lg:py-3">
                         <button class="hidden items-center rounded-lg p-0.5 text-center text-sm text-gray-500 hover:text-gray-800 focus:outline-none md:block" data-dropdown-toggle="{{ $membership->id }}-dropdown" id="{{ $membership->id }}" type="button">
                             @svg('tabler-dots', 'w-5 h-5')
