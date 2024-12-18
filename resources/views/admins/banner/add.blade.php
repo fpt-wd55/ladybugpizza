@@ -57,10 +57,17 @@
             </div>
             <div>
                 <label for="name" class="label-md">Ảnh banner <span class="text-red-500">*</span></label>
-                <input
-                    class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
-                    type="file" name="image" value="" id="imageInput" accept="image/*"
-                    onchange="previewImage(event)">
+                <label for="dropzone-file"
+                    class="flex flex-col items-center justify-center w-full h-20 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        @svg('tabler-cloud-upload', 'w-8 h-8 text-gray-400 mb-2')
+                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Nhấn để tải lên</span>
+                            hoặc kéo thả
+                            vào đây
+                        </p>
+                    </div>
+                    <input id="dropzone-file" name="image" type="file" class="hidden" />
+                </label>
                 @error('image')
                     <p class="mt-2 text-sm text-red-600">
                         {{ $message }}

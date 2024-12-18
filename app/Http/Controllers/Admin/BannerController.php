@@ -159,4 +159,22 @@ class BannerController extends Controller
         return view('admins.banner.index', compact('banners'));
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->search;
+    
+        $banners = Banner::orderBy('status', 'desc');
+    
+        // Chỉ thêm điều kiện tìm kiếm nếu $search không rỗng
+        if (!empty($search)) {
+            $banners = $banners->where('url', 'like', '%' . $search . '%');
+        }
+    
+        $banners = $banners->paginate(6);
+        $banners->appends(['search' => $search]);
+    
+        return view('admins.banner.index', compact('banners'));
+    }
+    
+
 }

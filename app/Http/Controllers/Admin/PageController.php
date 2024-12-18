@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PageRequest;
 use App\Models\Page;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route as FacadesRoute;
 
 class PageController extends Controller
@@ -122,5 +123,16 @@ class PageController extends Controller
     public function export()
     {
         $this->exportExcel(Page::all(), 'danhsachtrang');
+    }
+    public function search(Request $request){
+
+        $pages = Page::latest('id')
+        ->where('title', 'like', '%' . $request->search . '%')
+        ->orWhere('slug', 'like', '%' . $request->search . '%')
+        ->paginate(10);
+        // dd($banners);
+    $pages->appends(['search' => $request->search]);
+    return view('admins.page.index', compact('pages'));
+
     }
 }
