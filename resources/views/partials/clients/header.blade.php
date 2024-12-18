@@ -75,21 +75,15 @@
                     </a>
 
                     <button class="hover:cursor-pointer">
-                        @if (Auth::user()->avatar && file_exists(public_path('storage/uploads/avatars/' . Auth::user()->avatar)))
-                            <img src="{{ asset('storage/uploads/avatars/' . Auth::user()->avatar) }}" alt="User Avatar"
-                                class="img-circle h-10 w-10 object-cover" data-dropdown-toggle="userDropdown"
-                                loading="lazy">
-                        @else
-                            <img src="{{ asset('storage/uploads/avatars/user-default.png') }}"
+                            <img src="{{ Auth::user()->avatar() }}"
                                 class="img-circle h-8 w-8 object-cover" data-dropdown-toggle="userDropdown"
                                 loading="lazy">
-                        @endif
                     </button>
 
                     {{-- User dropdown --}}
                     <div class="z-10 hidden w-64 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow"
                         id="userDropdown">
-                        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                        <div class="px-4 py-3 text-sm text-gray-900 ">
                             <p class="font-medium">{{ Auth::user()->fullname }}</p>
                             <p class="truncate">{{ Auth::user()->email }}</p>
                         </div>
@@ -158,13 +152,13 @@
     class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0"
     id="searchModal" tabindex="-1">
     <div class="relative max-h-full w-full max-w-2xl p-4">
-        <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
-            <div class="flex items-center justify-between rounded-t border-b p-4 dark:border-gray-600 md:p-5">
-                <p class="font-semibold text-gray-900 dark:text-white">
+        <div class="relative rounded-lg bg-white shadow ">
+            <div class="flex items-center justify-between rounded-t border-b p-4  md:p-5">
+                <p class="font-semibold text-gray-900 ">
                     Tìm kiếm
                 </p>
                 <button
-                    class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                    class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 "
                     data-modal-hide="searchModal" type="button">
                     @svg('tabler-x', 'icon-sm')
                 </button>
@@ -185,11 +179,11 @@
         class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0"
         id="favoriteProductModal" tabindex="-1">
         <div class="relative max-h-full w-full max-w-2xl p-4">
-            <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
-                <div class="flex items-center justify-between rounded-t border-b p-4 dark:border-gray-600 md:p-5">
-                    <p class="font-semibold text-gray-900 dark:text-white">Sản phẩm yêu thích của tôi</p>
+            <div class="relative rounded-lg bg-white shadow ">
+                <div class="flex items-center justify-between rounded-t border-b p-4  md:p-5">
+                    <p class="font-semibold text-gray-900 ">Sản phẩm yêu thích của tôi</p>
                     <button
-                        class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                        class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 "
                         data-modal-hide="favoriteProductModal" type="button">
                         @svg('tabler-x', 'icon-sm')
                     </button>

@@ -8,13 +8,13 @@ use App\Models\Category;
 use App\Models\Evaluation;
 use App\Models\Product;
 use App\Models\Topping;
-use App\Models\Favorite; 
+use App\Models\Favorite;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\CartItemAttribute;
-use App\Models\CartItemTopping; 
+use App\Models\CartItemTopping;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -55,7 +55,7 @@ class ProductController extends Controller
      */
     public function show($slug)
     {
-        $product = Product::where('slug', $slug)->first();
+        $product = Product::withTrashed()->where('slug', $slug)->first();
 
         $attributes = Attribute::with('values')
             ->where('category_id', $product->category->id)

@@ -15,7 +15,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('orders:auto-confirm')->everyMinute();
+        // $schedule->command('inspire')->hourly();
+        $schedule->command('update:expired-promotions')->everyMinute();
+        $schedule->command('orders:auto-confirm')->everyTenMinutes();
     }
 
     /**

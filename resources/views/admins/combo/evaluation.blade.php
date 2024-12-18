@@ -14,7 +14,7 @@
                                     <div class="mb-2 flex justify-center md:gap-1 lg:gap-4">
                                         <div class="flex items-center p-2 text-gray-900 whitespace-nowrap">
                                             <img loading="lazy"
-                                                src="{{ filter_var($item->user->avatar, FILTER_VALIDATE_URL) ? $item->user->avatar : ($item->user->avatar ? asset('storage/uploads/avatars/' . $item->user->avatar) : asset('storage/uploads/avatars/user-default.png')) }}"
+                                                src="{{ filter_var($item->user->avatar, FILTER_VALIDATE_URL) ? $item->user->avatar : ($item->user->avatar ? asset('storage/uploads/avatars/' . $item->user->avatar) : asset('storage/uploads/avatars/user-default-1.png')) }}"
                                                 alt="Avatar" class="w-8 h-8 mr-3 img-circle object-cover">
                                             <div class="grid grid-flow-row">
                                                 <span class="text-sm">{{ $item->user->fullname }} |
@@ -66,7 +66,7 @@
                                                                                 {{ $item->status == 1 ? 'checked' : '' }}
                                                                                 onchange="this.form.submit()">
                                                                             <div
-                                                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none  rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                                                                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none  rounded-full peer   peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all   peer-checked:bg-blue-600">
                                                                             </div>
                                                                         </label>
                                                                     </form>

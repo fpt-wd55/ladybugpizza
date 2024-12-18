@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->integer('price');
             $table->integer('discount_price')->default(0);
-            $table->integer('quantity')->nullable();
+            $table->integer('quantity')->nullable()->default(null)->comment('null: unlimited');
             $table->string('sku')->unique();
             $table->tinyInteger('status')->default(1)->comment('1: Hoạt động; 2: khóa');
             $table->tinyInteger('is_featured')->default(2)->comment('1: yes; 0: no');

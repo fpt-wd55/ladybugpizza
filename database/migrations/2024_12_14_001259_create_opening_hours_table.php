@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('page_images', function (Blueprint $table) {
+        Schema::create('opening_hours', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('page_id')->constrained()->onDelete('cascade');
-            $table->string('image');
+            $table->string('day_of_week')->unique();
+            $table->string('name');
+            $table->time('open_time');
+            $table->time('close_time');
+            $table->boolean('is_open')->default(true);
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('page_images');
+        Schema::dropIfExists('opening_hours');
     }
 };

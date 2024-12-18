@@ -50,7 +50,7 @@ class ProductController extends Controller
         // Dữ liệu
         $data = [
             'name' => trim($request->name),
-            'slug' => trim(strtolower($request->sku)) . '-' . Str::slug($request->name),
+            'slug' => Str::slug($request->name),
             'image' => $image_name,
             'description' => trim($request->description),
             'category_id' => trim($request->category_id),
@@ -106,7 +106,7 @@ class ProductController extends Controller
         // Dữ liệu
         $data = [
             'name' => trim($request->name),
-            'slug' => trim(strtolower($request->sku)) . '-' . Str::slug($request->name),
+            'slug' => Str::slug($request->name),
             'image' => $image_name,
             'description' => trim($request->description),
             'category_id' => trim($request->category_id),
@@ -116,8 +116,8 @@ class ProductController extends Controller
             'sku' => trim(strtoupper($request->sku)),
             'status' => isset($request->status) ? $request->status : 2,
             'is_featured' => isset($request->is_featured) ? $request->is_featured : 2,
-            'avg_rating' => 0,
-            'total_rating' => 0,
+            'avg_rating' => $request->has('avg_rating') ? $request->avg_rating : $product->avg_rating,
+            'total_rating' => $request->has('total_rating') ? $request->total_rating : $product->total_rating,
         ];
 
         // Lưu vào database
@@ -125,7 +125,7 @@ class ProductController extends Controller
             // Xử lý lưu ảnh
             if ($request->hasFile('image')) {
                 $image->storeAs('public/uploads/products', $image_name);
-                // Kiểm tra tồn tại ảnh cũ 
+                // Kiểm tra tồn tại ảnh cũ
                 if (file_exists(storage_path('app/public/uploads/products/' . $old_image))) {
                     unlink(storage_path('app/public/uploads/products/' . $old_image));
                 }
@@ -143,6 +143,8 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         if ($product->delete()) {
+            $product->status = 2;
+            $product->save();
             return redirect()->back()->with('success', 'Xóa sản phẩm thành công');
         } else {
             return redirect()->back()->with('error', 'Xóa sản phẩm thất bại');
@@ -176,21 +178,21 @@ class ProductController extends Controller
     /**
      * Force delete the specified resource from storage.
      */
-    public function forceDelete($id)
-    {
-        $product = Product::withTrashed()->find($id);
+    // public function forceDelete($id)
+    // {
+    //     $product = Product::withTrashed()->find($id);
 
-        if ($product) {
-            // Kiểm tra tồn tại ảnh sản phẩm
-            if (file_exists(storage_path('app/public/uploads/products/' . $product->image))) {
-                unlink(storage_path('app/public/uploads/products/' . $product->image));
-            }
-            $product->forceDelete();
-            return redirect()->back()->with('success', 'Xóa sản phẩm thành công');
-        }
+    //     if ($product) {
+    //         // Kiểm tra tồn tại ảnh sản phẩm
+    //         if (file_exists(storage_path('app/public/uploads/products/' . $product->image))) {
+    //             unlink(storage_path('app/public/uploads/products/' . $product->image));
+    //         }
+    //         $product->forceDelete();
+    //         return redirect()->back()->with('success', 'Xóa sản phẩm thành công');
+    //     }
 
-        return redirect()->back()->with('error', 'Xóa sản phẩm thất bại');
-    }
+    //     return redirect()->back()->with('error', 'Xóa sản phẩm thất bại');
+    // }
 
     public function export()
     {

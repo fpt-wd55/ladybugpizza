@@ -9,8 +9,8 @@ use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    // use HasFactory, SoftDeletes, Searchable;
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
+    // use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -30,7 +30,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class)->withTrashed();
     }
 
     public function evalutions()

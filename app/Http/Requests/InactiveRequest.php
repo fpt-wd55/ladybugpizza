@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class InactiveRequest extends FormRequest
 {
@@ -22,16 +23,20 @@ class InactiveRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'password' => 'required|string|min:8',
+            'confirm_email' =>  'required|string|max:255',
         ];
     }
 
-    public function messages():array {
-        return[
-            'password.required' => 'Vui lòng nhập mật khẩu.',
-			'password.min' => 'Mật khẩu cũ phải có ít nhất 8 ký tự.',
+
+    public function messages(): array
+    {
+        return [
+            'confirm_email.required' => 'Vui lòng nhập email của bạn',
+            'confirm_email.string' => 'Email không hợp lệ',
+            'confirm_email.max' => 'Email không được vượt quá 255 ký tự',
         ];
     }
+
 
     
 }

@@ -25,6 +25,7 @@ class AutoConfirmOrders extends Command
         foreach ($orders as $order) {
             // Cập nhật trạng thái đơn hàng
             $order->order_status_id = 5;
+            $order->completed_at = now();
             $order->save();
 
             // Tạo hóa đơn

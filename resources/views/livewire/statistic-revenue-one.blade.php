@@ -35,11 +35,7 @@
 <script>
     document.addEventListener('livewire:init', () => {
         const statistic_revenue_one = Highcharts.chart('statistic_revenue_one', {
-            chart: {
-                zooming: {
-                    type: 'xy'
-                }
-            },
+            chart: {},
             credits: {
                 enabled: false
             },
@@ -84,7 +80,6 @@
                 tooltip: {
                     valueSuffix: ' đơn'
                 }
-
             }, {
                 name: 'Doanh thu',
                 type: 'spline',
@@ -109,5 +104,5 @@
                 });
             }
         });
-    })  
+    })
 </script>

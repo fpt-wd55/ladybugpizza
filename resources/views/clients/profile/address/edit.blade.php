@@ -12,7 +12,7 @@
             @method('PUT')
             <div class="grid gap-4 mb-4 grid-cols-3">
                 <div class="col-span-3">
-                    <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Loại
+                    <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Loại
                         địa chỉ</label>
                     <input type="text" name="title" id="title" value="{{ old('title', $address->title) }}"
                         class="input" placeholder="VD: Nhà riêng">

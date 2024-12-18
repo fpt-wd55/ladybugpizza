@@ -1,43 +1,34 @@
 @extends('layouts.admin')
-@section('title', 'Danh sách đơn hàng')
+@section('title', 'Đơn hàng')
 
 @section('content')
     {{ Breadcrumbs::render('admin.orders.index') }}
     <div class="mt-5 bg-white shadow sm:rounded-lg">
-        <div
-            class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
-            <div class="flex items-center flex-1 space-x-4">
-                <h2 class="font-medium text-gray-700 text-base">
+        <div class="flex flex-col space-y-3 px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:space-x-4 lg:space-y-0">
+            <div class="flex flex-1 items-center space-x-4">
+                <h2 class="text-base font-medium text-gray-700">
                     Đơn hàng
                 </h2>
             </div>
-            <div
-                class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <button data-modal-target="filterDropdown" data-modal-toggle="filterDropdown"
-                    class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
-                    type="button">
+            <div class="flex flex-shrink-0 flex-col space-y-3 md:flex-row md:items-center md:space-x-3 md:space-y-0 lg:justify-end">
+                <button class="flex w-full items-center justify-center button-light" data-modal-target="filterDropdown" data-modal-toggle="filterDropdown" type="button">
                     @svg('tabler-filter-filled', 'w-5 h-5 me-2')
                     Bộ lọc
                 </button>
-                <a href="{{ route('admin.orders.export') }}"
-                    class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
+                <a class="button-light" href="{{ route('admin.orders.export') }}">
                     @svg('tabler-file-export', 'w-4 h-4 mr-2')
                     Xuất dữ liệu
                 </a>
-                <form action="{{ route('admin.orders.filter') }}" method="get" id="filterDropdown" tabindex="-1"
-                    aria-hidden="true"
-                    class="fixed inset-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-modal md:h-full">
-                    <div class="relative w-full h-full max-w-2xl md:h-auto">
+                <form action="{{ route('admin.orders.filter') }}" aria-hidden="true" class="fixed inset-0 z-50 hidden h-modal w-full overflow-y-auto overflow-x-hidden p-4 md:h-full" id="filterDropdown" method="get" tabindex="-1">
+                    <div class="relative h-full w-full max-w-2xl md:h-auto">
                         <!-- Modal content -->
-                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
+                        <div class="relative rounded-lg bg-white shadow">
                             <!-- Modal header -->
-                            <div class="flex items-start justify-between px-6 py-4 rounded-t">
-                                <h3 class="text-lg font-semibold text-gray-500 dark:text-gray-400">
+                            <div class="flex items-start justify-between rounded-t px-6 py-4">
+                                <h3 class="text-lg font-semibold text-gray-500">
                                     Bộ lọc
                                 </h3>
-                                <button type="button"
-                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                    data-modal-toggle="filterDropdown">
+                                <button class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900" data-modal-toggle="filterDropdown" type="button">
                                     @svg('tabler-x', 'w-5 h-5')
                                 </button>
                             </div>
@@ -48,11 +39,8 @@
                                     <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
                                         @foreach ($orderStatuses as $status)
                                             <li class="flex items-center">
-                                                <input type="checkbox" name="filter_status[]" value="{{ $status->id }}"
-                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                    @if (in_array($status->id, request()->input('filter_status', []))) checked @endif>
-                                                <label for="active"
-                                                    class="ml-2 text-sm font-medium text-gray-900">{{ $status->name }}</label>
+                                                <input @if (in_array($status->id, request()->input('filter_status', []))) checked @endif class="text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" name="filter_status[]" type="checkbox" value="{{ $status->id }}">
+                                                <label class="ml-2 text-sm font-medium text-gray-900" for="active">{{ $status->name }}</label>
                                             </li>
                                         @endforeach
                                     </div>
@@ -62,12 +50,8 @@
                                     <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
                                         @foreach ($paymentMethods as $paymentMethod)
                                             <li class="flex items-center">
-                                                <input type="checkbox" name="filter_paymentMethod[]"
-                                                    value="{{ $paymentMethod->id }}"
-                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                    @if (in_array($paymentMethod->id, request()->input('filter_paymentMethod', []))) checked @endif>
-                                                <label for="active"
-                                                    class="ml-2 text-sm font-medium text-gray-900">{{ $paymentMethod->name }}</label>
+                                                <input @if (in_array($paymentMethod->id, request()->input('filter_paymentMethod', []))) checked @endif class="text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" name="filter_paymentMethod[]" type="checkbox" value="{{ $paymentMethod->id }}">
+                                                <label class="ml-2 text-sm font-medium text-gray-900" for="active">{{ $paymentMethod->name }}</label>
                                             </li>
                                         @endforeach
                                     </div>
@@ -75,40 +59,28 @@
                                 <h6 class="my-3 text-sm font-medium text-gray-900">Tổng đơn hàng</h6>
                                 <div class="flex items-center">
                                     <div>
-                                        <input name="filter_amount_min" type="number"
-                                            value="{{ request()->input('filter_amount_min') }}"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                            placeholder="1.000 đ">
+                                        <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 ps-3 text-sm text-gray-900 focus:ring-0" name="filter_amount_min" placeholder="1.000 đ" type="number" value="{{ request()->input('filter_amount_min') }}">
                                     </div>
                                     <span class="mx-4 text-gray-500">-</span>
                                     <div>
-                                        <input name="filter_amount_max" type="number"
-                                            value="{{ request()->input('filter_amount_max') }}"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                            placeholder="100.000.000 đ">
+                                        <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 ps-3 text-sm text-gray-900 focus:ring-0" name="filter_amount_max" placeholder="100.000.000 đ" type="number" value="{{ request()->input('filter_amount_max') }}">
                                     </div>
                                 </div>
                                 <h6 class="my-3 text-sm font-medium text-gray-900">Ngày đặt hàng</h6>
                                 <div class="flex items-center">
                                     <div>
-                                        <input name="filter_date_min" type="date"
-                                            value="{{ request()->input('filter_date_min') }}"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                            placeholder="mm/dd/yyyy">
+                                        <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 ps-3 text-sm text-gray-900 focus:ring-0" name="filter_date_min" placeholder="mm/dd/yyyy" type="date" value="{{ request()->input('filter_date_min') }}">
                                     </div>
                                     <span class="mx-4 text-gray-500">-</span>
                                     <div>
-                                        <input name="filter_date_max" type="date"
-                                            value="{{ request()->input('filter_date_max') }}"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                            placeholder="mm/dd/yyyy">
+                                        <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 ps-3 text-sm text-gray-900 focus:ring-0" name="filter_date_max" placeholder="mm/dd/yyyy" type="date" value="{{ request()->input('filter_date_max') }}">
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Modal footer -->
-                            <div class="flex items-center p-6 space-x-4 rounded-b">
-                                <button type="submit" class="button-red">
+                            <div class="flex items-center space-x-4 rounded-b p-6">
+                                <button class="button-red" type="submit">
                                     Lọc dữ liệu
                                 </button>
                             </div>
@@ -117,29 +89,25 @@
                 </form>
             </div>
         </div>
-        <div class="no-scrollbar mb-4 overflow-x-auto  border-gray-200 text-left">
+        <div class="no-scrollbar mb-4 overflow-x-auto border-gray-200 text-left">
             <!-- Các tab điều hướng -->
             <ul class="flex">
-                <li class="me-6 min-w-fit relative mx-4">
-                    <a aria-current="page"
-                        class="inline-block rounded-t-lg pb-1 border-b-2 {{ request()->routeIs('admin.orders.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A]' : 'border-transparent' }}"
-                        href="{{ route('admin.orders.index') }}">
+                <li class="relative mx-4 me-6 min-w-fit">
+                    <a aria-current="page" class="{{ request()->routeIs('admin.orders.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A]' : 'border-transparent' }} inline-block rounded-t-lg border-b-2 pb-1" href="{{ route('admin.orders.index') }}">
                         Tất cả
                         @if (isset($totalOrders) && $totalOrders > 0)
-                            <span class="text-white bg-[#D30A0A] text-xs font-medium ms-1 px-1 rounded-full">
+                            <span class="ms-1 rounded-full bg-[#D30A0A] px-1 text-xs font-medium text-white">
                                 {{ $totalOrders }}
                             </span>
                         @endif
                     </a>
                 </li>
                 @foreach ($orderStatuses as $status)
-                    <li class="me-6 min-w-fit relative mx-4">
-                        <a aria-current="page"
-                            class="inline-block rounded-t-lg border-b-2 pb-1 {{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A]' : 'border-transparent' }}"
-                            href="{{ route('admin.orders.index', ['tab' => $status->slug]) }}">
+                    <li class="relative mx-4 me-6 min-w-fit">
+                        <a aria-current="page" class="{{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A]' : 'border-transparent' }} inline-block rounded-t-lg border-b-2 pb-1" href="{{ route('admin.orders.index', ['tab' => $status->slug]) }}">
                             {{ $status->name }}
                             @if ($status->orders_count > 0)
-                                <span class="text-white bg-[#D30A0A] text-xs font-medium ms-1 px-1 rounded-full">
+                                <span class="ms-1 rounded-full bg-[#D30A0A] px-1 text-xs font-medium text-white">
                                     {{ $status->orders_count }}
                                 </span>
                             @endif
@@ -150,14 +118,14 @@
 
         </div>
         <div class="overflow-x-auto">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="bg-gray-50 text-gray-700 uppercase">
+            <table class="w-full text-left text-sm text-gray-500">
+                <thead class="bg-gray-50 uppercase text-gray-700">
                     <tr>
-                        <th class="px-4 py-3">Tên người dùng</th>
-                        <th class="px-4 py-3">Địa chỉ</th>
+                        <th class="px-4 py-3">Mã đơn hàng</th>
+                        <th class="px-4 py-3">Thông tin khách hàng</th>
                         <th class="px-4 py-3">Tổng số tiền</th>
-                        <th class="md:px-4 py-3">Trạng thái</th>
-                        <th scope="col" class="px-4 py-3">
+                        <th class="py-3 md:px-4">Trạng thái</th>
+                        <th class="px-4 py-3" scope="col">
                             <span class="sr-only uppercase">Hành động </span>
                         </th>
                     </tr>
@@ -165,8 +133,11 @@
                 <tbody>
                     @forelse ($orders as $order)
                         <tr class="border-b hover:bg-gray-100">
-                            <td class="md:px-4 md:py-2">{{ $order->fullname }}</td>
                             <td class="md:px-4 md:py-2">
+                                <a class="font-medium text-gray-800 hover:text-red-600" data-modal-target="order-modal-{{ $order->id }}" data-modal-toggle="order-modal-{{ $order->id }}" href="#">#{{ $order->code }}</a>
+                            </td>
+                            <td class="md:px-4 md:py-2">
+                                <a class="mb-2 font-medium text-gray-800 hover:text-red-600" href="{{ route('admin.users.show', $order->user->id) }}">{{ $order->fullname }}</a>
                                 <p>{{ $order->address->detail_address }}</p>
                                 <p>{{ $order->ward->name_with_type }}, {{ $order->district->name_with_type }},
                                     {{ $order->province->name_with_type }}</p>
@@ -185,28 +156,21 @@
 
                                     $colorClass = $colorClasses[$order->orderStatus->color] ?? 'bg-gray-500';
                                 @endphp
-                                <span
-                                    class="me-2 mt-1.5 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white  {{ $colorClass }}">
+                                <span class="{{ $colorClass }} me-2 mt-1.5 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white">
                                     {{ $order->orderStatus->name }}
                                 </span>
                             </td>
-                            <td class="px-4 py-3 flex items-center justify-end">
-                                <button id="{{ $order->id }}" data-dropdown-toggle="{{ $order->id }}-dropdown"
-                                    class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
-                                    type="button">
+                            <td class="flex items-center justify-end px-4 py-3">
+                                <button class="inline-flex items-center rounded-lg p-0.5 text-center text-sm text-gray-500 hover:text-gray-800 focus:outline-none" data-dropdown-toggle="{{ $order->id }}-dropdown" id="{{ $order->id }}" type="button">
                                     @svg('tabler-dots', 'w-5 h-5')
                                 </button>
-                                <div id="{{ $order->id }}-dropdown"
-                                    class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
-                                    <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $order->id }}">
+                                <div class="z-10 hidden w-44 divide-y divide-gray-100 rounded bg-white shadow" id="{{ $order->id }}-dropdown">
+                                    <ul aria-labelledby="{{ $order->id }}" class="py-1 text-sm text-gray-700">
                                         <li>
-                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100"
-                                                data-modal-target="order-modal-{{ $order->id }}"
-                                                data-modal-toggle="order-modal-{{ $order->id }}">Chi tiết </a>
+                                            <a class="block px-4 py-2 hover:bg-gray-100" data-modal-target="order-modal-{{ $order->id }}" data-modal-toggle="order-modal-{{ $order->id }}" href="#">Chi tiết </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('admin.orders.edit', $order->id) }}"
-                                                class="block py-2 px-4 hover:bg-gray-100">Cập nhật
+                                            <a class="block px-4 py-2 hover:bg-gray-100" href="{{ route('admin.orders.edit', $order->id) }}">Cập nhật
                                             </a>
                                         </li>
                                     </ul>
@@ -214,65 +178,58 @@
                             </td>
                         </tr>
                         {{-- order modal --}}
-                        <div id="order-modal-{{ $order->id }}" tabindex="-1" aria-hidden="true"
-                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
-                            <div class="relative p-4 w-full max-w-5xl h-auto">
-                                <div
-                                    class="relative p-5 md:p-8 bg-white rounded-lg shadow h-[480px] overflow-y-auto no-scrollbar">
+                        <div aria-hidden="true" class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full" id="order-modal-{{ $order->id }}" tabindex="-1">
+                            <div class="relative h-auto w-full max-w-5xl p-4">
+                                <div class="no-scrollbar relative h-[480px] overflow-y-auto rounded-lg bg-white p-5 shadow md:p-8">
                                     <div class="space-y-4">
-                                        <div class="flex justify-between items-center">
+                                        <div class="flex items-center justify-between">
                                             <h1 class="text-xl font-semibold">Đơn hàng #{{ $order->code }}</h1>
-                                            <button type="button"
-                                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-                                                data-modal-hide="order-modal-{{ $order->id }}">
+                                            <button class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900" data-modal-hide="order-modal-{{ $order->id }}" type="button">
                                                 @svg('tabler-x', 'w-4 h-4')
-                                                <span class="sr-only">Close modal</span>
                                             </button>
                                         </div>
-                                        <div class="flex justify-start items-center">
+                                        <div class="flex items-center justify-start">
                                             @if ($order->orderStatus->slug === 'completed')
                                                 @if ($order->invoice)
-                                                    <a
-                                                        href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
+                                                    <a href="{{ route('invoices.show', $order->invoice->invoice_number) }}">
                                                         <button class="button-red">Xem hóa đơn</button>
                                                     </a>
                                                 @endif
                                             @endif
                                         </div>
                                         <hr class="w-full">
-                                        <div class="pl-4 rounded-lg">
+                                        <div class="rounded-lg pl-4">
                                             <label class="font-semibold">Trạng thái đơn hàng</label>
-                                            <p
-                                                class="mx-2 mt-1.5 inline-block shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white  {{ $colorClass }}">
+                                            <p class="{{ $colorClass }} mx-2 mt-1.5 inline-block shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white">
                                                 {{ $order->orderStatus->name }}
                                             </p>
                                         </div>
                                         {{-- user_id --}}
-                                        <div class="pl-4 rounded-lg ">
+                                        <div class="rounded-lg pl-4">
                                             <label class="font-semibold">Thông tin thanh toán</label>
-                                            <p class="text-gray-800 mt-4">{{ $order->fullname }}</p>
+                                            <p class="mt-4 text-gray-800">{{ $order->fullname }}</p>
                                             <p class="text-gray-800">{{ $order->address->detail_address }}</p>
                                             <p class="text-gray-800">{{ $order->ward->name_with_type }},
                                                 {{ $order->district->name_with_type }},
                                                 {{ $order->province->name_with_type }}</p>
                                         </div>
                                         {{-- Email --}}
-                                        <div class="pl-4 rounded-lg">
+                                        <div class="rounded-lg pl-4">
                                             <label class="font-semibold">Email</label>
                                             <p class="text-gray-800">{{ $order->email }}</p>
                                         </div>
                                         {{-- SĐT --}}
-                                        <div class="pl-4 rounded-lg">
+                                        <div class="rounded-lg pl-4">
                                             <label class="font-semibold">Số điện thoại</label>
                                             <p class="text-gray-800">{{ $order->phone }}</p>
                                         </div>
                                         {{-- hình thức thanh toán --}}
-                                        <div class="pl-4 rounded-lg ">
+                                        <div class="rounded-lg pl-4">
                                             <label class="font-semibold">Hình thức thanh toán</label>
                                             <p class="text-gray-800">{{ $order->paymentMethod->name }}</p>
                                         </div>
                                         @if ($order->orderStatus->slug === 'cancelled')
-                                            <div class="pl-4 rounded-lg ">
+                                            <div class="rounded-lg pl-4">
                                                 <label class="font-semibold">Lí do hủy đơn</label>
                                                 <p class="text-gray-800">{{ $order->cancelled_reason }}</p>
                                             </div>
@@ -282,21 +239,15 @@
                                         <div class="flex justify-between">
                                             <div class="basic-2/3">
                                                 <div class="pl-4">
-                                                    <label class="font-semibold mb-5 text-base">Sản phẩm</label> <br>
+                                                    <label class="mb-5 text-base font-semibold">Sản phẩm</label> <br>
                                                     @foreach ($order->orderItems as $orderItem)
-                                                        <div
-                                                            class="flex items-center whitespace-nowrap py-2 text-gray-900">
-                                                            <a class="shrink-0" data-fslightbox="gallery"
-                                                                href="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
-                                                                <img class="mr-3 h-8 w-8 rounded object-cover"
-                                                                    loading="lazy"
-                                                                    onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
-                                                                    src="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
+                                                        <div class="flex items-center whitespace-nowrap py-2 text-gray-900">
+                                                            <a class="shrink-0" data-fslightbox="gallery" href="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
+                                                                <img class="mr-3 h-8 w-8 rounded object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
                                                             </a>
                                                             <div>
                                                                 <div class="grid grid-flow-row">
-                                                                    <span
-                                                                        class="text-sm">{{ $orderItem->product->name }}</span>
+                                                                    <span class="text-sm">{{ $orderItem->product->name }}</span>
                                                                     <span class="text-sm text-gray-500">
                                                                         @if ($orderItem->atrributeValues->count() > 0)
                                                                             {{ $orderItem->atrributeValues->map->value->join(', ') }}
@@ -319,10 +270,10 @@
                         </div>
                         {{-- end order modal --}}
                     @empty
-                        <td colspan="6" class="text-center py-4 text-base">
-                            <div class="flex flex-col items-center justify-center p-6 rounded-lg bg-white w-full h-80">
+                        <td class="py-4 text-center text-base" colspan="6">
+                            <div class="flex h-80 w-full flex-col items-center justify-center rounded-lg bg-white p-6">
                                 @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
-                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                                <p class="mt-4 text-sm text-gray-500">Dữ liệu trống</p>
                             </div>
                         </td>
                     @endforelse

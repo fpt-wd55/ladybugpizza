@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Vanthao03596\HCVN\Models\Province;
 use Vanthao03596\HCVN\Models\District;
 use Vanthao03596\HCVN\Models\Ward;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -130,6 +131,20 @@ class UserController extends Controller
     {
         $validatedData = $request->validated();
 
+        if ($user->google_id == null) {
+            $newPassword = $request->new_password;
+
+            if ($newPassword == null) {
+                $newPassword = $user->password;
+            }
+
+            if ($user->password !== null && Hash::check($newPassword, $user->password)) {
+                return back()->with('error', 'Mật khẩu mới không được giống với mật khẩu hiện tại.');
+            }
+        } else {
+            $newPassword = null;
+        }
+
         // Kiem tra role_id
         if ($validatedData['roleSelect'] == 1) {
             $role_id = $validatedData['permissionSelect'];
@@ -160,8 +175,7 @@ class UserController extends Controller
             'fullname' => trim($validatedData['fullname']),
             'email' => trim($validatedData['email']),
             'phone' => trim($validatedData['phone']),
-            'password' => $validatedData['new_password'] ? bcrypt(trim($validatedData['new_password'])) : $user->password,
-            'google_id' => null,
+            'password' => $newPassword,
             'role_id' => $role_id,
             'avatar' => $validatedData['avatar'],
             'date_of_birth' => $validatedData['date_of_birth'],
@@ -169,12 +183,24 @@ class UserController extends Controller
             'status' => $validatedData['status'],
         ];
 
+
+
         if ($user->update($data)) {
             // Xu ly upload anh va xoa anh cu
             if ($request->hasFile('avatar')) {
                 $avatar->storeAs('public/uploads/avatars', $avatar_name);
-                // if has file old avatar and old avatar is not default
-                if ($old_avatar != 'user-default.png' && $old_avatar != null) {
+
+                if ($old_avatar != null) {
+                    $is_default_avatar = false;
+                    for ($i = 1; $i <= 20; $i++) {
+                        if ($old_avatar == 'user-default-' . $i . '.png') {
+                            $is_default_avatar = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!$is_default_avatar) {
                     try {
                         unlink(storage_path('app/public/uploads/avatars/' . $old_avatar));
                     } catch (\Throwable $th) {

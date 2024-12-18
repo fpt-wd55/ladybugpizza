@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Banner; 
+use App\Models\Banner;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BannerRequest;
@@ -46,12 +46,12 @@ class BannerController extends Controller
             'status' => $request->status ? 1 : 2,
         ];
         if( Banner::create($data)){
-            return redirect()->route('admin.banners.index')->with('success', 'thêm thành công');
+            return redirect()->route('admin.banners.index')->with('success', 'Thêm banner thành công');
         }else{
-            return redirect()->back()->with('error', 'Thêm thất bại');
+            return redirect()->back()->with('error', 'Thêm banner thất bại');
         }
 
-    } 
+    }
 
     public function edit(Banner $banner)
     {
@@ -62,7 +62,7 @@ class BannerController extends Controller
     {
         $data = $request->except('image');
         $old_image = $banner->image;
-        // nếu chọn ảnh mới  
+        // nếu chọn ảnh mới
         if ($request->hasFile('image')) {
             $banner_image = $request->file('image');
             $banner_name = 'topping_' . pathinfo($banner_image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $banner_image->getClientOriginalExtension();
@@ -81,9 +81,9 @@ class BannerController extends Controller
                     unlink(storage_path('app/public/uploads/banners/' . $old_image));
                 }
             }
-            return redirect()->route('admin.banners.index')->with('success', 'Cập nhật thành công');
+            return redirect()->back()->with('success', 'Cập nhật banner thành công');
         }else{
-            return redirect()->back()->with('error', 'Cập nhật thất bại');
+            return redirect()->back()->with('error', 'Cập nhật banner thất bại');
         }
     }
 
@@ -94,9 +94,9 @@ class BannerController extends Controller
     {
         $id = $banner['id'];
         if(Banner::destroy($id)){
-            return redirect()->back()->with('success', 'Xóa thành công');
+            return redirect()->back()->with('success', 'Xóa banner thành công');
         }else{
-            return redirect()->back()->with('error', 'Xóa thất bại');
+            return redirect()->back()->with('error', 'Xóa banner thất bại');
         }
 
     }
@@ -122,7 +122,7 @@ class BannerController extends Controller
         }else{
             return back()->with('error', 'Xóa vĩnh viễn thất bại !');
         }
-        
+
     }
 
     // khôi phục
@@ -140,23 +140,23 @@ class BannerController extends Controller
     public function export(){
         $this->exportExcel(Banner::all(), 'danhsachbanner');
     }
-    // bộ lọc 
+    // bộ lọc
     public function filter(Request $request)
-{
-    $query = Banner::query();
+    {
+        $query = Banner::query();
 
-    if (isset($request->filter_is_local_page)) {
-        $query->whereIn('is_local_page', $request->filter_is_local_page);
+        if (isset($request->filter_is_local_page)) {
+            $query->whereIn('is_local_page', $request->filter_is_local_page);
+        }
+        if (isset($request->filter_status)) {
+            $query->whereIn('status', $request->filter_status);
+        }
+        $banners = $query->paginate(6);
+
+        $banners->appends(['filter_is_local_page' => $request->filter_is_local_page]);
+        $banners->appends(['filter_status' => $request->filter_status]);
+
+        return view('admins.banner.index', compact('banners'));
     }
-    if (isset($request->filter_status)) {
-        $query->whereIn('status', $request->filter_status);
-    }
-    $banners = $query->paginate(6);
-
-    $banners->appends(['filter_is_local_page' => $request->filter_is_local_page]);
-    $banners->appends(['filter_status' => $request->filter_status]);
-
-    return view('admins.banner.index', compact('banners'));
-}
 
 }

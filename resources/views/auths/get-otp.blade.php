@@ -24,7 +24,7 @@
                     <form action="{{ route('auth.post-get-otp') }}" method="POST">
                         @csrf
                         <div class="mb-4 pt-4">
-                            <label class="font-medium" for="otp">OTP</label>
+                            <label class="font-medium" for="otp">OTP <span class="text-red-500">*</span></label>
                             <input type="text" name="otp" id="otp" value="{{ old('otp') }}"
                                 class="mt-2 mb-2 input" autofocus>
                             @error('otp')
@@ -34,13 +34,15 @@
                         <button class="mb-4 bg-red-600 flex items-center justify-center gap-4 button-red w-full">
                             Xác nhận OTP
                         </button>
-
                     </form>
+                    <div class="text-sm mb-3 text-center">
+                        <a href="{{ route('auth.forgot-password') }}" class="text-red-600">Quên mật khẩu</a>
+                    </div>
                 </div>
             </div>
             <div class="hidden md:block max-h-[629px]">
-                <img loading="lazy" class="w-full h-full object-cover" src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}"
-                    alt="">
+                <img loading="lazy" class="w-full h-full object-cover"
+                    src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}" alt="">
             </div>
         </div>
     </div>

@@ -3,84 +3,84 @@
 @section('content')
     {{ Breadcrumbs::render('admin.banners.create') }}
     <div class="p-4 mx-auto">
+        <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm mới banner</h3>
         <form action="{{ route('admin.banners.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="grid gap-4 mb-4 sm:grid-cols-2">
+            <div class="grid gap-4 mb-4 sm:grid-cols-3">
                 <div>
-                    <label for="url" class="block mb-2 text-base font-medium text-gray-900 ">Url</label>
+                    <label for="url" class="label-md">Url <span class="text-red-500">*</span></label>
                     <input type="text" name="url" id="name" value="{{ old('url') }}"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:border-primary-600 block w-full p-2.5">
-
+                        placeholder="VD: ladybugpizza.vn/banner/" class="input">
                     @error('url')
-                        <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Lỗi! </span>
-                            {{ $message }}</p>
+                        <p class="mt-2 text-sm text-red-600 ">
+                            {{ $message }}
+                        </p>
                     @enderror
                 </div>
                 <div>
-                    <label for="url" class="block mb-3 text-base font-medium text-gray-900 ">Đường dẫn trang</label>
-                    <div class="flex gap-x-3">
-
-                        <div class=" mb-4">
-                            <input id="" type="radio" name="is_local_page"
-                                class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300  rounded-full transition"
+                    <label class="label-md">Đường dẫn trang <span class="text-red-500">*</span></label>
+                    <div class="flex gap-3">
+                        <div class="mt-1">
+                            <input id="is_local_page" type="radio" name="is_local_page" class="input-radio"
                                 value="1">
-                            <label for="" class="ml-2 text-base cursor-pointer">
+                            <label for="is_local_page" class="ml-2 text-base cursor-pointer">
                                 Trang cục bộ
                             </label>
                         </div>
-                        <div>
-                            <input id="" type="radio" name="is_local_page"
-                                class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300  rounded-full transition"
+                        <div class="mt-1">
+                            <input id="external_page" type="radio" name="is_local_page" class="input-radio"
                                 value="2">
-                            <label for="" class="ml-2 text-base cursor-pointer">
+                            <label for="external_page" class="ml-2 text-base cursor-pointer">
                                 Trang ngoài
                             </label>
                         </div>
                     </div>
                     @error('is_local_page')
-                        <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Lỗi! </span>
-                            {{ $message }}</p>
+                        <p class="mt-2 text-sm text-red-600  ">
+                            {{ $message }}
+                        </p>
                     @enderror
                 </div>
-
                 <div>
-                    <label for="name" class="block mb-2 text-base font-medium text-gray-900">Ảnh banner</label>
-                    <input
-                        class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
-                        type="file" name="image" value="" id="imageInput" accept="image/*"
-                        onchange="previewImage(event)">
-                    @error('image')
-                        <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Lỗi! </span>
-                            {{ $message }}</p>
-                    @enderror
-                    <div class="mt-2">
-                        <div id="imagePreview" class="h-auto overflow-hidden relative rounded-md shadow-lg"
-                            style="display: none;">
-                            <img loading="lazy" id="currentImage"
-                                class="w-full h-full object-cover rounded-md transform transition-all duration-500"
-                                alt="Banner image">
+                    <label for="status" class="label-md">Trạng
+                        thái</label>
+                    <label class="inline-flex items-center cursor-pointer">
+                        <input type="checkbox" name="status" class="sr-only peer" value="1"
+                            {{ old('status') ? 'checked' : '' }}>
+                        <div
+                            class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
                         </div>
-                    </div>
+                        <span class="ms-3 text-sm font-medium text-gray-900">Hoạt
+                            động</span>
+                    </label>
                 </div>
-                <div>
-                    <label for="name" class="block mb-3 mt-1 text-base font-medium text-gray-900 ">Trạng thái</label>
-                    <div class="flex items-center">
-                        <label for="status-toggle" class="inline-flex relative items-center cursor-pointer">
-                            <input type="checkbox" id="status-toggle" name="status" class="sr-only peer" value="1">
-                            <div
-                                class="w-11 h-6 bg-gray-200 peer-focus:outline-none  rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-                            </div>
-
-                        </label>
+            </div>
+            <div>
+                <label for="name" class="label-md">Ảnh banner <span class="text-red-500">*</span></label>
+                <input
+                    class="mb-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+                    type="file" name="image" value="" id="imageInput" accept="image/*"
+                    onchange="previewImage(event)">
+                @error('image')
+                    <p class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </p>
+                @enderror
+                <div class="mt-2">
+                    <div id="imagePreview" class="h-auto overflow-hidden relative rounded-md shadow-lg"
+                        style="display: none;">
+                        <img loading="lazy" id="currentImage"
+                            class="w-full h-full object-cover rounded-md transform transition-all duration-500"
+                            alt="Banner image">
                     </div>
                 </div>
             </div>
             <div class="flex items-center space-x-4 mt-7">
-                <button type="submit" class=" rounded-lg button-blue">
-                    Lưu
+                <button type="submit" class="button-blue">
+                    Thêm banner
                 </button>
                 <a href="{{ route('admin.banners.index') }}">
-                    <button type="button" class="rounded-lg button-green">Quay Lại</button>
+                    <button type="button" class="button-gray">Quay Lại</button>
                 </a>
             </div>
         </form>

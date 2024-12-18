@@ -1,80 +1,74 @@
 @extends('layouts.admin')
-@section('title', 'Trang | Sửa')
+
+@section('title', 'Trang | Cập nhật')
+
 @section('content')
     {{ Breadcrumbs::render('admin.pages.edit') }}
-    <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
-        <div class="p-4 mx-auto">
-            <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm mới trang</h3>
-            <form action="{{ route('admin.pages.update', $page) }}" method="POST" enctype="multipart/form-data">
+    <div class="relative mt-5 overflow-hidden bg-white shadow sm:rounded-lg">
+        <div class="mx-auto p-4">
+            <h3 class="mb-4 text-lg font-bold text-gray-900">Cập nhật trang</h3>
+            <form action="{{ route('admin.pages.update', $page) }}" enctype="multipart/form-data" method="POST">
                 @csrf
                 @method('PUT')
-                <div class="grid gap-4 mb-4 sm:grid-cols-2">
-                    <div class="sm:col-span-2">
-                        <div class="grid gap-4 mb-4 sm:grid-cols-2">
-                            {{-- tieu de --}}
+                <div class="mb-4 grid gap-4 sm:grid-cols-3">
+                    <div class="sm:col-span-3">
+                        <div class="mb-4 grid gap-4 sm:grid-cols-3">
                             <div>
-                                <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Tiêu đề</label>
-                                <input type="text" name="title" id="title" placeholder="Tiêu đề"
-                                    value="{{ $page->title }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                <label class="label-md" for="title">Tiêu đề trang <span class="text-red-500">*</span></label>
+                                <input class="input" id="title" name="title" placeholder="VD: Giới thiệu" type="text" value="{{ $page->title }}">
                                 @error('title')
-                                    <p class="mt-2 text-sm text-red-600 ">
+                                    <p class="mt-2 text-sm text-red-600">
                                         {{ $message }}
                                     </p>
                                 @enderror
                             </div>
-                            {{-- đường dẫn --}}
                             <div>
-                                <label for="slug" class="block mb-2 text-sm font-medium text-gray-900 ">Đường
-                                    dẫn</label>
-                                <input type="text" name="slug" id="slug" placeholder="Đường dẫn"
-                                    value="{{ $page->slug }}" maxlength="15"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                <label class="label-md" for="slug">Đường dẫn trang <span class="text-red-500">*</span></label>
+                                <input class="input" id="slug" maxlength="15" name="slug" placeholder="VD: gioi-thieu" type="text" value="{{ $page->slug }}">
                                 @error('slug')
-                                    <p class="mt-2 text-sm text-red-600 ">
+                                    <p class="mt-2 text-sm text-red-600">
                                         {{ $message }}
                                     </p>
                                 @enderror
                             </div>
+                            @if ($page->type == 2)
+                                <div>
+                                    <label class="mb-4 block text-sm font-medium text-gray-900" for="status">Trạng thái</label>
+                                    <label class="inline-flex cursor-pointer items-center">
+                                        <input {{ old('status', $page->status) ? 'checked' : '' }} class="peer sr-only" name="status" type="checkbox" value="1">
+                                        <div class="peer relative h-6 w-11 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-0 rtl:peer-checked:after:-translate-x-full">
+                                        </div>
+                                        <span class="ms-3 text-sm font-medium text-gray-900">Hoạt động</span>
+                                    </label>
+                                    @error('status')
+                                        <p class="mt-2 text-sm text-red-600">
+                                            {{ $message }}
+                                        </p>
+                                    @enderror
+                                </div>
+                            @else
+                                <input hidden name="status" type="text" value="1">
+                            @endif
                         </div>
                     </div>
-                    {{-- Trạng thái --}}
-                    <div>
-                        <label for="status" class="block mb-4 text-sm font-medium text-gray-900">Trạng thái</label>
-                        <label class="inline-flex items-center cursor-pointer">
-                            <input type="checkbox" name="status" class="sr-only peer" value="1"
-                                {{ old('status', $page->status) ? 'checked' : '' }}>
-                            <div
-                                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
-                            </div>
-                            <span class="ms-3 text-sm font-medium text-gray-900">Hoạt động</span>
-                        </label>
-                        @error('status')
+                    <div class="sm:col-span-3">
+                        <label class="label-md" for="content">Nội dung <span class="text-red-500">*</span></label>
+                        <div class="mb-4 w-full rounded-lg border border-gray-200 bg-gray-50">
+                            <textarea id="wysiwygeditor" name="content">{{ $page->content }}</textarea>
+                        </div>
+                        @error('content')
                             <p class="mt-2 text-sm text-red-600">
                                 {{ $message }}
                             </p>
                         @enderror
                     </div>
-                    {{-- Noi dung --}}
-                    <div class="sm:col-span-2">
-                        <label for="content" class="block mb-2 text-sm font-medium text-gray-900">Nội dung</label>
-                        <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50">
-                            <textarea id="wysiwygeditor" name="content">{{ $page->content }}</textarea>
-                        </div>
-                        @error('content')
-                            <p class="mt-2 text-sm text-red-600 ">
-                                {{ $message }}
-                            </p>
-                        @enderror
-                    </div>
                 </div>
-                {{-- Submit or cancel --}}
-                <div class="flex items-center space-x-4 mt-5">
-                    <a href="{{ route('admin.pages.index') }}" class="button-gray">
+                <div class="mt-5 flex items-center space-x-4">
+                    <a class="button-gray" href="{{ route('admin.pages.index') }}">
                         Quay lại
                     </a>
-                    <button type="submit" class="button-blue">
-                        Cập nhật
+                    <button class="button-blue" type="submit">
+                        Cập nhật trang
                     </button>
                 </div>
             </form>
@@ -93,7 +87,7 @@
                             lượng</label>
                         <input type="number" name="quantity" value="{{ old('quantity') ?? 0 }}"
                             placeholder="Số lượng"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            class="input">
                         @error('quantity')
                             <p class="mt-2 text-sm text-red-600 ">
                                 {{ $message }}

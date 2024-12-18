@@ -10,7 +10,7 @@
             @csrf
             <div class="grid gap-4 mb-4 grid-cols-3">
                 <div class="col-span-3">
-                    <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Loại
+                    <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Loại
                         địa chỉ</label>
                     <input type="text" name="title" id="title" value="{{ old('title') }}" class="input"
                         placeholder="VD: Nhà riêng">
@@ -43,7 +43,7 @@
                     @enderror
                 </div>
                 <div class="col-span-3">
-                    <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Địa
+                    <label for="address" class="block mb-2 text-sm font-medium text-gray-900 ">Địa
                         chỉ
                         chi tiết</label>
                     <textarea type="text" name="address" id="address" value="{{ old('address') }}" class="text-area"

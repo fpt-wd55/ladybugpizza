@@ -25,14 +25,15 @@
                 <form action="{{ route('auth.post-recovery') }}" method="POST">
                     @csrf
                     <div class="mb-4">
-                        <label class="font-medium" for="password">Mật khẩu mới</label>
+                        <label class="font-medium" for="password">Mật khẩu mới <span class="text-red-500">*</span></label>
                         <input type="password" name="password" id="password" class="mt-2 input">
                         @error('password')
                             <p class="text-red-500 text-sm">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="mb-4">
-                        <label class="font-medium" for="password_confirmation">Nhập lại mật khẩu mới</label>
+                        <label class="font-medium" for="password_confirmation">Nhập lại mật khẩu mới <span
+                                class="text-red-500">*</span></label>
                         <input type="password" name="password_confirmation" id="password_confirmation" class="mt-2 input">
                         @error('password_confirmation')
                             <p class="text-red-500 text-sm">{{ $message }}</p>
@@ -42,10 +43,13 @@
                         Khôi phục mật khẩu
                     </button>
                 </form>
+                <div class="text-sm mb-3 text-center">
+                    <a href="{{ route('auth.get-otp') }}" class="text-red-600">Xác thực OTP</a>
+                </div>
             </div>
             <div class="hidden md:block max-h-[629px]">
-                <img loading="lazy" class="w-full h-full object-cover" src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}"
-                    alt="">
+                <img loading="lazy" class="w-full h-full object-cover"
+                    src=" {{ asset('storage/uploads/banners/auth_banner1.webp') }}" alt="">
             </div>
         </div>
     </div>

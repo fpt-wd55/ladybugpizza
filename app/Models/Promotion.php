@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Promotion extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -34,6 +35,12 @@ class Promotion extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    public function usageCount()
+    {
+        return $this->orders()->whereNotNull('promotion_id')->count();
+    }
+
 
     public function rank()
     {

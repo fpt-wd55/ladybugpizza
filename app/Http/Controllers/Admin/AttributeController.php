@@ -292,16 +292,16 @@ class AttributeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function deleteAttribute($id)
-    {
-        $attribute = Attribute::withTrashed()->find($id);
-
-        if ($attribute) {
-            $attribute->forceDelete();
-            return redirect()->back()->with('success', 'Xóa thuộc tính thành công');
-        }
-        return redirect()->back()->with('error', 'Xóa thuộc tính thất bại');
-    }
+//    public function deleteAttribute($id)
+//    {
+//        $attribute = Attribute::withTrashed()->find($id);
+//
+//        if ($attribute) {
+//            $attribute->forceDelete();
+//            return redirect()->back()->with('success', 'Xóa thuộc tính thành công');
+//        }
+//        return redirect()->back()->with('error', 'Xóa thuộc tính thất bại');
+//    }
 
     public function export()
     {

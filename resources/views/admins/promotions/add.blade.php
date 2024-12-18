@@ -1,152 +1,176 @@
 @extends('layouts.admin')
-@section('title', 'Thêm mới mã giảm giá')
+@section('title', 'Mã giảm giá | Thêm mới')
 
 @section('content')
     {{ Breadcrumbs::render('admin.promotions.create') }}
-    <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
-        <div class="p-4 mx-auto">
-            <h3 class="mb-4 text-lg font-bold text-gray-900 ">Thêm mã giảm giá</h3>
-            <form action="{{ route('admin.promotions.store') }}" class="w-full" method="post" enctype="multipart/form-data">
+    <div class="relative mt-5 overflow-hidden bg-white shadow sm:rounded-lg">
+        <div class="mx-auto p-4">
+            <h3 class="mb-4 text-lg font-bold text-gray-900">Thêm mã giảm giá</h3>
+            <form action="{{ route('admin.promotions.store') }}" class="w-full" enctype="multipart/form-data" method="post">
                 @csrf
-                <div class="w-full mb-2 grid grid-cols-3 gap-2">
-                    {{-- name --}}
+                <div class="mb-4 grid gap-4 sm:grid-cols-3">
                     <div>
-                        <label for="name" class="label-lg">Tên <span class="text-red-500">*</span></label>
-                        <input type="text" name="name" class="input h-10 mb-2" value="{{ old('name') }}" />
+                        <label class="label-md" for="name">Tên mã giảm giá <span class="text-red-500">*</span></label>
+                        <input class="input" name="name" placeholder="VD: Pizza yêu thích giảm 10%" type="text" value="{{ old('name') }}" />
                         @error('name')
-                            <span style="color: red ">{{ $message }}</span>
+                            <p class="mt-2 text-sm text-red-600">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
-                    {{-- description --}}
                     <div>
-                        <label for="points" class="label-lg">Điểm</label>
-                        <input type="number" name="points" class="input h-10 mb-2" value="{{ old('points') }}" />
+                        <label class="label-md" for="points">Điểm quy đổi</label>
+                        <input class="input" name="points" placeholder="VD: 50" type="number" value="{{ old('points') }}" />
                         @error('points')
-                            <span style="color: red ">{{ $message }}</span>
+                            <p class="mt-2 text-sm text-red-600">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
-                    {{-- discount_type --}}
                     <div>
-                        <label for="discount_type" class="label-lg">Loại giảm giá <span
-                                class="text-red-500">*</span></label>
-                        <select class="w-full h-10 mb-2 select" name="discount_type" id="discount_type">
+                        <label class="label-md" for="discount_type">Loại giảm giá <span class="text-red-500">*</span></label>
+                        <select class="select w-full" id="discount_type" name="discount_type">
                             <option value="">Chọn</option>
-                            <option value="1" {{ old('discount_type') == '1' ? 'selected' : '' }}>Giảm giá theo %
+                            <option {{ old('discount_type') == '1' ? 'selected' : '' }} value="1">Giảm giá theo %
                             </option>
-                            <option value="2" {{ old('discount_type') == '2' ? 'selected' : '' }}>Giảm giá theo số
+                            <option {{ old('discount_type') == '2' ? 'selected' : '' }} value="2">Giảm giá theo số
                                 tiền</option>
                         </select>
                         @error('discount_type')
-                            <span style="color: red ">{{ $message }}</span>
+                            <p class="mt-2 text-sm text-red-600">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
-                    {{-- discount_value --}}
+                </div>
+                <div class="mb-4 grid gap-4 sm:grid-cols-3">
                     <div>
-                        <label for="discount_value" class="label-lg">Giá trị giảm giá <span
-                                class="text-red-500">*</span></label>
-                        <input type="text" name="discount_value" class="input h-10 mb-2"
-                            value="{{ old('discount_value') }}" />
+                        <label class="label-md" for="discount_value">Giá trị giảm giá <span class="text-red-500">*</span></label>
+                        <input class="input" name="discount_value" placeholder="VD: 10" type="text" value="{{ old('discount_value') }}" />
                         @error('discount_value')
-                            <span style="color: red ">{{ $message }}</span>
+                            <p class="mt-2 text-sm text-red-600">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
-                    {{-- start_date --}}
                     <div>
-                        <label for="start_date" class="label-lg">Ngày bắt đầu <span class="text-red-500">*</span></label>
-                        <input type="datetime-local" name="start_date" class="input h-10 mb-2"
-                            value="{{ old('start_date') }}" />
+                        <label class="label-md" for="start_date">Ngày bắt đầu <span class="text-red-500">*</span></label>
+                        <input class="input" name="start_date" type="datetime-local" value="{{ old('start_date') }}" />
                         @error('start_date')
-                            <span style="color: red ">{{ $message }}</span>
+                            <p class="mt-2 text-sm text-red-600">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
-                    {{-- end_date --}}
                     <div>
-                        <label for="end_date" class="label-lg">Ngày kết thúc <span class="text-red-500">*</span></label>
-                        <input type="datetime-local" name="end_date" class="input h-10 mb-2"
-                            value="{{ old('end_date') }}" />
+                        <label class="label-md" for="end_date">Ngày kết thúc <span class="text-red-500">*</span></label>
+                        <input class="input" name="end_date" type="datetime-local" value="{{ old('end_date') }}" />
                         @error('end_date')
-                            <span style="color: red ">{{ $message }}</span>
+                            <p class="mt-2 text-sm text-red-600">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
-                    {{-- quantity --}}
+                </div>
+                <div class="mb-4 grid gap-4 sm:grid-cols-3">
                     <div>
-                        <label for="quantity" class="label-lg">Số lượng <span class="text-red-500">*</span></label>
-                        <input type="number" name="quantity" class="input h-10 mb-2" value="{{ old('quantity') }}" />
+                        <label class="label-md" for="quantity">Số lượng <span class="text-red-500">*</span></label>
+                        <input class="input" name="quantity" placeholder="VD: 14" type="number" value="{{ old('quantity') }}" />
                         @error('quantity')
-                            <span style="color: red ">{{ $message }}</span>
+                            <p class="mt-2 text-sm text-red-600">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
-                    {{-- min_order_total --}}
                     <div>
-                        <label for=" min_order_total" class="label-lg">Đơn hàng tối thiểu (₫)</label>
-                        <input type="text" name="min_order_total" class="input h-10 mb-2"
-                            value="{{ old('min_order_total') }}" />
+                        <label class="label-md" for=" min_order_total">Đơn hàng tối thiểu (₫)</label>
+                        <input class="input" name="min_order_total" placeholder="VD: 100000" type="text" value="{{ old('min_order_total') }}" />
                         @error('min_order_total')
-                            <span style="color: red ">{{ $message }}</span>
+                            <p class="mt-2 text-sm text-red-600">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
-                    {{-- max_discount --}}
                     <div>
-                        <label for="max_discount" class="label-lg">Giảm tối đa (₫)</label>
-                        <input type="text" name="max_discount" class="input h-10 mb-2"
-                            value="{{ old('max_discount') }}" />
+                        <label class="label-md" for="max_discount">Giảm tối đa (₫)</label>
+                        <input class="input" name="max_discount" placeholder="VD: 50000" type="text" value="{{ old('max_discount') }}" />
                         @error('max_discount')
-                            <span style="color: red ">{{ $message }}</span>
+                            <p class="mt-2 text-sm text-red-600">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
-                    {{-- status --}}
                     <div>
-                        <label for="name" class="block mb-2 text-base font-medium text-gray-900">Hoạt động</label>
-                        <div class="flex justify-start">
-                            <label for="status-toggle" class="inline-flex relative items-center cursor-pointer">
-                                <input type="hidden" name="status" value="2">
-                                <input type="checkbox" id="status-toggle" name="status" class="sr-only peer" value="1"
-                                    {{ old('status', $promotion->status ?? 1) == 1 ? 'checked' : '' }}>
-                                <div
-                                    class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-                                </div>
-                            </label>
-                        </div>
+                        <label class="mb-4 block text-sm font-medium text-gray-900" for="status">Trạng
+                            thái</label>
+                        <label class="inline-flex cursor-pointer items-center">
+                            <input {{ old('status') ? 'checked' : '' }} class="peer sr-only" name="status" type="checkbox" value="1">
+                            <div class="peer relative h-6 w-11 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-0 rtl:peer-checked:after:-translate-x-full">
+                            </div>
+                            <span class="ms-3 text-sm font-medium text-gray-900">Hoạt
+                                động</span>
+                        </label>
                         @error('status')
-                            <span style="color: red ">{{ $message }}</span>
+                            <p class="mt-2 text-sm text-red-600">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
-
-                    {{-- is_global --}}
                     <div>
-                        <label for="is_global" class="label-lg">Đối tượng áp dụng <span
-                                class="text-red-500">*</span></label>
-                        <select name="is_global" class="select">
+                        <label class="label-md" for="is_global">Đối tượng áp dụng <span class="text-red-500">*</span></label>
+                        <select class="select" name="is_global">
                             <option value="">Chọn</option>
-                            <option value="1"
-                                {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }}>
+                            <option {{ old('is_global', $promotion->is_global ?? '') == '1' ? 'selected' : '' }} value="1">
                                 Tất cả</option>
-                            <option value="2|1"
-                                {{ old('rank_id', $promotion->rank_id ?? '') == '1' ? 'selected' : '' }}>Rank đồng
+                            <option {{ old('rank_id', $promotion->rank_id ?? '') == '1' ? 'selected' : '' }} value="2|1">Rank
+                                đồng
                             </option>
-                            <option value="2|2"
-                                {{ old('rank_id', $promotion->rank_id ?? '') == '2' ? 'selected' : '' }}>Rank bạc
+                            <option {{ old('rank_id', $promotion->rank_id ?? '') == '2' ? 'selected' : '' }} value="2|2">Rank
+                                bạc
                             </option>
-                            <option value="2|3"
-                                {{ old('rank_id', $promotion->rank_id ?? '') == '3' ? 'selected' : '' }}>Rank vàng
+                            <option {{ old('rank_id', $promotion->rank_id ?? '') == '3' ? 'selected' : '' }} value="2|3">Rank
+                                vàng
                             </option>
-                            <option value="2|4"
-                                {{ old('rank_id', $promotion->rank_id ?? '') == '4' ? 'selected' : '' }}>Rank kim cương
+                            <option {{ old('rank_id', $promotion->rank_id ?? '') == '4' ? 'selected' : '' }} value="2|4">Rank
+                                kim cương
                             </option>
                         </select>
                         @error('is_global')
-                            <span style="color: red">{{ $message }}</span>
+                            <p class="mt-2 text-sm text-red-600">
+                                {{ $message }}
+                            </p>
                         @enderror
                     </div>
                 </div>
-                <div
-                    class="mt-14 flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                    <a href="{{ route('admin.promotions.index') }}" class="button-gray">Quay lại</a>
+                <div class="mt-14 flex flex-shrink-0 flex-col space-y-3 md:flex-row md:items-center md:space-x-3 md:space-y-0 lg:justify-end">
+                    <a class="button-gray" href="{{ route('admin.promotions.index') }}">Quay lại</a>
                     <button class="button-blue" type="submit">Thêm mã giảm giá</button>
                 </div>
             </form>
         </div>
     </div>
+
+    {{-- Ẩn số tiền tối đa khi loại giảm giá là giá trị tiền --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const discountType = document.getElementById('discount_type');
+            const maxDiscountInput = document.querySelector('input[name="max_discount"]');
+
+            const toggleMaxDiscount = () => {
+                if (discountType.value === '2') {
+                    maxDiscountInput.closest('div').style.display = 'none'; // Ẩn ô input
+                } else {
+                    maxDiscountInput.closest('div').style.display = ''; // Hiện ô input
+                }
+            };
+
+            // Lắng nghe sự kiện thay đổi dropdown
+            discountType.addEventListener('change', toggleMaxDiscount);
+
+            // Gọi hàm ngay từ đầu để kiểm tra trạng thái ban đầu
+            toggleMaxDiscount();
+        });
+    </script>
 @endsection

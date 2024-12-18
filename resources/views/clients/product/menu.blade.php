@@ -19,12 +19,8 @@
                     <p class="playwrite-gb-s-regular mb-8 text-2xl">Combo</p>
                     <div class="no-scrollbar flex w-full items-center gap-4 overflow-x-auto">
                         @foreach ($combos as $combo)
-                            <a href="{{ route('client.product.show', $combo->slug) }}"
-                                class="product-card relative flex w-full flex-shrink-0 overflow-hidden md:w-2/3">
-                                <img alt="" class="h-60 w-1/2 flex-shrink-0 object-cover" loading="lazy"
-                                    src="{{ asset('storage/uploads/combos/' . $combo->image) }}"
-                                    onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
-                                    class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
+                            <a class="product-card relative flex w-full flex-shrink-0 overflow-hidden md:w-2/3" href="{{ route('client.product.show', $combo->slug) }}">
+                                <img alt="" class="h-60 w-1/2 flex-shrink-0 object-cover" class="mr-3 h-8 w-8 rounded bg-slate-400 object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/combos/' . $combo->image) }}">
                                 <div class="p-4">
                                     <p class="mb-2 text-sm font-semibold md:text-base">{{ $combo->name }}</p>
                                     <ul class="list-disc space-y-1 ps-4 text-xs md:text-sm">
@@ -55,13 +51,8 @@
                         <div class="mb-16 grid grid-cols-2 gap-4 lg:grid-cols-3">
                             @foreach ($products as $product)
                                 @if ($product->category_id == $category->id)
-                                    <a class="product-card overflow-hidden md:flex"
-                                        href="{{ route('client.product.show', $product->slug) }}">
-                                        <img alt="{{ $product->image }}"
-                                            class="max-h-48 w-full flex-shrink-0 object-cover md:h-full md:w-1/3"
-                                            loading="lazy" src="{{ asset('storage/uploads/products/' . $product->image) }}"
-                                            onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
-                                            class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
+                                    <a class="product-card overflow-hidden md:flex" href="{{ route('client.product.show', $product->slug) }}">
+                                        <img alt="{{ $product->image }}" class="max-h-48 w-full flex-shrink-0 object-cover md:h-full md:w-1/3" class="mr-3 h-8 w-8 rounded bg-slate-400 object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $product->image) }}">
                                         <div class="p-2 text-sm">
                                             <p class="mb-2 font-semibold">{{ $product->name }}</p>
                                             <div class="mb-2 flex items-center gap-1">
@@ -73,14 +64,18 @@
                                                 </div>
                                                 <p>({{ $product->avg_rating }})</p>
                                             </div>
-                                            <p
-                                                class="{{ empty($product->description) ? 'min-h-12' : '' }} mb-4 line-clamp-2">
-                                                {!! $product->description !!}</p>
+                                            <div class="{{ empty($product->description) ? 'min-h-12' : '' }} mb-4 line-clamp-2">{!! $product->description !!}</div>
                                             <div class="bottom-4 flex items-center gap-3">
-                                                <p class="text-xs text-gray-500 line-through">
-                                                    {{ number_format($product->discount_price) }}₫
-                                                </p>
-                                                <p class="font-semibold">{{ number_format($product->price) }}₫</p>
+                                                @if ($product->discount_price == 0)
+                                                    <p class="font-semibold">{{ number_format($product->price) }}₫
+                                                    </p>
+                                                @else
+                                                    <p class="text-xs text-gray-500 line-through">
+                                                        {{ number_format($product->price) }}₫
+                                                    </p>
+                                                    <p class="font-semibold">{{ number_format($product->discount_price) }}₫
+                                                    </p>
+                                                @endif
                                             </div>
                                         </div>
                                     </a>

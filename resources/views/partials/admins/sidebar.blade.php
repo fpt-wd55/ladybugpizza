@@ -101,6 +101,13 @@
                 </a>
             </li>
             <li>
+                <a class="{{ request()->is('admin/opening-hours*') ? 'bg-gray-200' : '' }} group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
+                    href="{{ route('admin.opening-hours.index') }}">
+                    @svg('tabler-clock', 'text-gray-500')
+                    <span class="ml-3">Giờ mở cửa</span>
+                </a>
+            </li>
+            <li>
                 <a class="{{ request()->is('admin/banner*') ? 'bg-gray-200' : '' }} group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
                     href="{{ route('admin.banners.index') }}">
                     @svg('tabler-slideshow', 'text-gray-500')

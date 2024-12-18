@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Danh sách trang')
+@section('title', 'Trang')
 
 @section('content')
     {{ Breadcrumbs::render('admin.pages.index') }}
@@ -14,13 +14,13 @@
                 <div class="flex flex-shrink-0 flex-col space-y-3 md:flex-row md:items-center md:space-x-3 md:space-y-0 lg:justify-end">
                     <a class="button-blue" href="{{ route('admin.pages.create') }}">
                         @svg('tabler-plus', 'w-5 h-5 mr-2')
-                        Thêm mới trang
+                        Thêm trang
                     </a>
-                    <a class="flex items-center justify-center rounded-lg bg-red-700 px-4 py-2 text-sm text-white hover:bg-red-800 focus:ring-0" href="{{ route('admin.trash.pages') }}">
+                    <a class="button-red" href="{{ route('admin.trash.pages') }}">
                         @svg('tabler-trash', 'w-5 h-5 mr-2')
                         Thùng rác
                     </a>
-                    <a class="hover:text-primary-700 flex flex-shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-0" href="{{ route('admin.page.export') }}">
+                    <a class="button-light" href="{{ route('admin.page.export') }}">
                         @svg('tabler-file-export', 'w-4 h-4 mr-2')
                         Xuất dữ liệu
                     </a>
@@ -37,6 +37,7 @@
                         <th class="px-4 py-3" scope="col">Trang</th>
                         <th class="px-4 py-3" scope="col">Đường dẫn</th>
                         <th class="px-4 py-3" scope="col">Trạng thái</th>
+                        <th class="px-4 py-3" scope="col">Loại</th>
                         <th class="px-4 py-3" scope="col">
                             <span class="sr-only">Hành động</span>
                         </th>
@@ -51,7 +52,7 @@
                                 </div>
                             </td>
                             <td class="whitespace-nowrap px-4 py-2 uppercase text-gray-900">
-                                <a href="{{ route('admin.pages.edit', $page->id) }}">{{ $page->title }}</a>
+                                <a class="font-medium hover:text-red-600" href="{{ route('admin.pages.edit', $page->id) }}">{{ $page->title }}</a>
                             </td>
                             <td class="whitespace-nowrap px-4 py-2 text-gray-900"> {{ $page->slug }}</td>
                             <td class="whitespace-nowrap px-4 py-2 text-gray-900">
@@ -60,6 +61,9 @@
                                     </div>
                                     {{ $page->status == 1 ? 'Hoạt động' : 'Khóa' }}
                                 </div>
+                            </td>
+                            <td class="whitespace-nowrap px-4 py-2 text-gray-900">
+                                <span class="{{ $page->type == 1 ? 'badge-default' : 'badge-gray' }}">{{ $page->type == 1 ? 'Mặc định' : 'Khác' }}</span>
                             </td>
                             <td class="flex items-center justify-end px-4 py-3">
                                 <button class="inline-flex items-center rounded-lg p-0.5 text-center text-sm text-gray-500 hover:text-gray-800 focus:outline-none" data-dropdown-toggle="{{ $page->id }}-dropdown" id="{{ $page->id }}" type="button">
@@ -75,40 +79,45 @@
                                             <a class="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="{{ route('admin.pages.edit', $page->id) }}">Cập
                                                 nhật</a>
                                         </li>
-                                        <li>
-                                            <a class="block cursor-pointer px-4 py-2 text-sm text-red-500 hover:bg-gray-100" data-modal-target="delete-modal-{{ $page->id }}" data-modal-toggle="delete-modal-{{ $page->id }}" href="#">Xóa</a>
-                                        </li>
+                                        @if ($page->type == 2)
+                                            <li>
+                                                <a class="block cursor-pointer px-4 py-2 text-sm text-red-500 hover:bg-gray-100" data-modal-target="delete-modal-{{ $page->id }}" data-modal-toggle="delete-modal-{{ $page->id }}" href="#">Xóa</a>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                             </td>
                         </tr>
-                        {{-- delete modal --}}
-                        <div class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0" id="delete-modal-{{ $page->id }}" tabindex="-1">
-                            <div class="relative max-h-full w-full max-w-md p-4">
-                                <div class="relative rounded-lg bg-white shadow">
-                                    <button class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900" data-modal-hide="delete-modal-{{ $page->id }}" type="button">
-                                        @svg('tabler-x', 'w-4 h-4')
-                                        <span class="sr-only">Close modal</span>
-                                    </button>
-                                    <div class="p-4 text-center md:p-5">
-                                        <div class="flex justify-center">
-                                            @svg('tabler-trash', 'w-12 h-12 text-red-600 text-center mb-2')
-                                        </div>
-                                        <h3 class="mb-5 font-normal">Bạn có muốn xóa trang này không?</h3>
-                                        <form action="{{ route('admin.pages.destroy', $page->id) }}" method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button class="inline-flex items-center rounded-lg bg-red-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300" type="submit">
-                                                Xóa
-                                            </button>
-                                        </form>
 
-                                        <button class="ms-3 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100" data-modal-hide="delete-modal-{{ $page->id }}" type="button">Không</button>
+                        {{-- delete modal --}}
+                        @if ($page->type == 2)
+                            <div class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0" id="delete-modal-{{ $page->id }}" tabindex="-1">
+                                <div class="relative max-h-full w-full max-w-md p-4">
+                                    <div class="relative rounded-lg bg-white shadow">
+                                        <button class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900" data-modal-hide="delete-modal-{{ $page->id }}" type="button">
+                                            @svg('tabler-x', 'w-4 h-4')
+                                        </button>
+                                        <div class="p-4 text-center md:p-5">
+                                            <div class="flex justify-center">
+                                                @svg('tabler-trash', 'w-12 h-12 text-red-600 text-center mb-2')
+                                            </div>
+                                            <h3 class="mb-5 font-normal">Bạn có muốn xóa trang này không?</h3>
+                                            <form action="{{ route('admin.pages.destroy', $page->id) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button class="inline-flex items-center rounded-lg bg-red-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300" type="submit">
+                                                    Xóa
+                                                </button>
+                                            </form>
+
+                                            <button class="ms-3 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100" data-modal-hide="delete-modal-{{ $page->id }}" type="button">Không</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                         {{-- end delete modal --}}
+
                     @empty
                         <td class="py-4 text-center text-base" colspan="6">
                             <div class="flex h-80 w-full flex-col items-center justify-center rounded-lg bg-white p-6">

@@ -17,6 +17,8 @@ use App\Models\OrderItemAttribute;
 use App\Models\OrderItemTopping;
 use App\Models\PaymentMethod;
 use App\Models\Product;
+use App\Models\Promotion;
+use App\Models\PromotionUser;
 use App\Models\Topping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +31,9 @@ class CheckoutController extends Controller
 {
     public function checkout()
     {
+        if (session('promotion')) {
+            session()->forget('promotion');
+        }
         $cart = Cart::where('user_id', Auth::id())->first();
 
         if ($cart) {
@@ -90,6 +95,27 @@ class CheckoutController extends Controller
             }
         }
 
+        // Kiem tra ma giam gia
+
+        if (session('promotion')) {
+            $promotion = Promotion::find(session('promotion')['id']);
+
+            if (!$promotion || !$this->isValidPromotion($promotion) || ($promotion->quantity <= 0) || ($promotion->min_order_total > $cart->total)) {
+                return redirect()->route('client.order.index')->with('error', 'Thanh toán đơn hàng thất bại');
+                session()->forget('promotion');
+            }
+
+            if ($promotion->discount_type == 1) {
+                $discount = $cart->total * $promotion->discount_value / 100;
+            } else {
+                $discount = $promotion->discount_value;
+            }
+
+            if ($promotion->max_discount && $discount > $promotion->max_discount) {
+                $discount = $promotion->max_discount;
+            }
+        }
+
         $data = [
             'code' => 'LDB' . time(),
             'user_id' => Auth::id(),
@@ -97,7 +123,7 @@ class CheckoutController extends Controller
             'amount' => (int)$cart->total,
             'address_id' => $address->id,
             'order_status_id' => 1,
-            'discount_amount' => session('promotion') ? (int)session('promotion')['discount'] : (int)0,
+            'discount_amount' => session('promotion') ? (int)$discount : 0,
             'shipping_fee' => (int)30000,
             'notes' => $request->notes ?? null,
             'payment_method_id' => $request->payment_method_id,
@@ -159,6 +185,13 @@ class CheckoutController extends Controller
         }
     }
 
+    private function isValidPromotion($promotion)
+    {
+        $check = PromotionUser::where('promotion_id', $promotion->id)->where('user_id', Auth::id())->first();
+
+        return $check && $promotion->status == 1 && $promotion->start_date <= now() && $promotion->end_date >= now();
+    }
+
     private function createOrder($orderData)
     {
         $order = Order::create($orderData);
@@ -210,7 +243,15 @@ class CheckoutController extends Controller
             // Xóa sản phẩm khỏi giỏ hàng
             CartItem::where('cart_id', $cart->id)->delete();
 
-            session()->forget('promotion');
+            // Xóa mã giảm giá khỏi bảng promotion_users nếu tồn tại mã giảm giá
+            if (session('promotion')) {
+                $promotion = PromotionUser::where('promotion_id', session('promotion')['id'])->where('user_id', Auth::id())->first();
+                if ($promotion) {
+                    $promotion->delete();
+                }
+                session()->forget('promotion');
+            }
+
             session()->forget('orderData');
         }
 

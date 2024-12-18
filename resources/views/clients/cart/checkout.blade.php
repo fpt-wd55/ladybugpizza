@@ -64,11 +64,10 @@
                                     <p class="mb-4 font-bold">Địa chỉ nhận hàng</p>
                                     <div class="mb-4">
                                         <select class="input" id="old_address" name="old_address">
-                                            <option {{ old('old_address') ? 'selected' : '' }} value="-1">Chọn địa chỉ
+                                            <option selected value="-1">Chọn địa chỉ
                                             </option>
                                             @foreach ($addresses as $address)
-                                                <option value="{{ $address->id }}"
-                                                    {{ old('old_address') == $address->id ? 'selected' : '' }}>
+                                                <option value="{{ $address->id }}" >
                                                     {{ $address->title }}</option>
                                             @endforeach
                                         </select>
@@ -77,8 +76,7 @@
                                         <p class="mb-2 text-sm font-normal">Địa chỉ chi tiết:
                                         </p>
                                         <input class="input w-full" name="detail_address"
-                                            placeholder="VD: Số 4 ngõ 2 ngách 14 đường Cầu Diễn" type="text"
-                                            value="{{ old('detail_address') }}">
+                                            placeholder="VD: Số 4 ngõ 2 ngách 14 đường Cầu Diễn" type="text">
                                         @error('detail_address')
                                             <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
                                         @enderror

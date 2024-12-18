@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Thuộc tính | Thêm thuộc tính')
+@section('title', 'Thuộc tính | Thêm mới')
 @section('content')
     {{ Breadcrumbs::render('admin.attributes.create') }}
     <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
@@ -12,9 +12,8 @@
                         <div>
                             <label for="attribute_name" class="block mb-2 text-sm font-medium text-gray-900 ">Tên thuộc
                                 tính <span class="text-red-500">*</span></label>
-                            <input type="text" name="attribute_name" id="attribute_name" placeholder="Tên thuộc tính"
-                                value="{{ old('attribute_name') }}"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            <input type="text" name="attribute_name" id="attribute_name" placeholder="VD: Loại đế"
+                                value="{{ old('attribute_name') }}" class="input">
                             @error('attribute_name')
                                 <p class="mt-2 text-sm text-red-600 ">
                                     {{ $message }}
@@ -24,7 +23,7 @@
                         <div>
                             <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900 ">Danh mục <span
                                     class="text-red-500">*</span></label>
-                            <select class="w-full h-10 mb-2 select" name="category_id">
+                            <select class="select" name="category_id">
                                 <option selected disabled>Chọn danh mục</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}"
@@ -48,14 +47,9 @@
                                 <div
                                     class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
                                 </div>
-                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Hoạt
+                                <span class="ms-3 text-sm font-medium text-gray-900">Hoạt
                                     động</span>
                             </label>
-                            @error('status')
-                                <p class="mt-2 text-sm text-red-600 ">
-                                    {{ $message }}
-                                </p>
-                            @enderror
                         </div>
                     </div>
                     <div>
@@ -82,8 +76,7 @@
                                                         <input type="text"
                                                             name="stocks[{{ $key }}][attribute_value]"
                                                             placeholder="Tên giá trị"
-                                                            value="{{ $stock['attribute_value'] ?? '' }}"
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                                            value="{{ $stock['attribute_value'] ?? '' }}" class="input">
                                                         @error("stocks.{$key}.attribute_value")
                                                             <p class="mt-2 text-sm text-red-600 ">
                                                                 {{ $message }}
@@ -95,7 +88,7 @@
                                                             name="stocks[{{ $key }}][attribute_quantity]"
                                                             placeholder="Số lượng"
                                                             value="{{ $stock['attribute_quantity'] ?? '' }}"
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                                            class="input">
                                                         @error("stocks.{$key}.attribute_quantity")
                                                             <p class="mt-2 text-sm text-red-600 ">
                                                                 {{ $message }}
@@ -106,7 +99,7 @@
                                                         <div class="grid grid-cols-3">
                                                             <select
                                                                 name="stocks[{{ $key }}][attribute_type_price]"
-                                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:border-primary-600 block w-full p-2.5">
+                                                                class="select">
                                                                 <option value="1"
                                                                     {{ isset($stock['attribute_type_price']) && $stock['attribute_type_price'] == 1 ? 'selected' : '' }}>
                                                                     Theo giá tiền (₫)
@@ -144,24 +137,20 @@
                                             <div class="grid grid-cols-1 gap-3 md:grid-cols-7">
                                                 <div class="md:col-span-2">
                                                     <input type="text" name="stocks[0][attribute_value]"
-                                                        placeholder="Tên giá trị"
-                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                                        placeholder="Tên giá trị" class="input">
                                                 </div>
                                                 <div class="md:col-span-2">
                                                     <input type="number" name="stocks[0][attribute_quantity]"
-                                                        placeholder="Số lượng"
-                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                                        placeholder="Số lượng" class="input">
                                                 </div>
                                                 <div class="md:col-span-2">
                                                     <div class="grid grid-cols-3">
-                                                        <select name="stocks[0][attribute_type_price]"
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:border-primary-600 block w-full p-2.5">
+                                                        <select name="stocks[0][attribute_type_price]" class="select">
                                                             <option value="1">Theo giá tiền (₫)</option>
                                                             <option value="2" selected>Theo phần trăm (%)</option>
                                                         </select>
                                                         <input type="number" name="stocks[0][attribute_price]"
-                                                            class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-0 border focus:border-primary-600 border-gray-300 focus:ring-0 col-span-2"
-                                                            placeholder="Giá" />
+                                                            class="input col-span-2" placeholder="Giá" />
                                                     </div>
                                                 </div>
                                                 <div class="md:col-span-1">
@@ -208,22 +197,22 @@
                                 <div class="md:col-span-2">
                                     <input type="text" name="stocks[${i}][attribute_value]"
                                         placeholder="Tên giá trị"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                        class="input">
                                 </div>
                                 <div class="md:col-span-2">
                                     <input type="number" name="stocks[${i}][attribute_quantity]"
                                         placeholder="Số lượng"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                        class="input">
                                 </div>
                                 <div class="md:col-span-2">
                                     <div class="grid grid-cols-3">
                                         <select name="stocks[${i}][attribute_type_price]"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:border-primary-600 block w-full p-2.5">
+                                            class="select">
                                             <option value="1">Theo giá tiền (₫)</option>
                                             <option value="2" selected>Theo phần trăm (%)</option>
                                         </select>
                                         <input type="number" name="stocks[${i}][attribute_price]"
-                                            class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-0 border focus:border-primary-600 border-gray-300 focus:ring-0 col-span-2"
+                                            class="input col-span-2"
                                             placeholder="Giá" />
                                     </div>
                                 </div>

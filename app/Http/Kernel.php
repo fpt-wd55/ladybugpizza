@@ -53,6 +53,7 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $middlewareAliases = [
+        'check.cart.quantity' => \App\Http\Middleware\CheckCartQuantity::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
@@ -66,5 +67,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'auth.check' => \App\Http\Middleware\CheckUserLoggedIn::class,
+        'check_password_change' => \App\Http\Middleware\CheckPasswordChange::class,
+        'store.open' => \App\Http\Middleware\CheckStoreOpen::class,
     ];
 }

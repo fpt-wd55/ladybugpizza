@@ -17,11 +17,13 @@ class ToppingController extends Controller
         $toppings = Topping::latest('id')->paginate(10);
         return view('admins.toppings.index', compact('toppings', 'categories'));
     }
+
     public function create()
     {
         $categories = Category::all();
         return view('admins.toppings.add', compact('categories'));
     }
+
     public function store(ToppingRequest $request)
     {
         $data = $request->except('image');
@@ -50,11 +52,12 @@ class ToppingController extends Controller
             'categories' => $categories,
         ]);
     }
+
     public function update(ToppingRequest $request, Topping $topping)
     {
         $data = $request->except('image');
         $old_image = $topping->image;
-        // nếu chọn ảnh mới  
+        // nếu chọn ảnh mới
         if ($request->hasFile('image')) {
             $topping_image = $request->file('image');
             $topping_name = 'topping_' . pathinfo($topping_image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $topping_image->getClientOriginalExtension();
@@ -76,12 +79,14 @@ class ToppingController extends Controller
         }
         return redirect()->route('admin.toppings.edit', $topping->id)->with('error', 'Cập nhật thất bại');
     }
+
     // xóa mềm dữ liệu
     public function destroy(Topping $topping)
     {
         $topping->delete();
         return back()->with('success', 'Xóa thành công');
     }
+
     // thùng rác
     public function trashTopping()
     {
@@ -89,6 +94,7 @@ class ToppingController extends Controller
         $listTopping = Topping::onlyTrashed()->latest('id')->paginate(10);
         return view('admins.toppings.trash', compact('categories', 'listTopping'));
     }
+
     // khôi phục
     public function resTopping($id)
     {
@@ -97,18 +103,20 @@ class ToppingController extends Controller
 
         return back()->with('success', 'Khôi phục thành công');
     }
+
     // xóa vĩnh viễn
-    public function forceDestroy($id)
-    {
-        $topping = Topping::withTrashed()->find($id);
-        $old_image = $topping->image;
-        // xóa ảnh cũ
-        if ($old_image != null) {
-            unlink(storage_path('app/public/uploads/toppings/' . $old_image));
-        }
-        $topping->forceDelete();
-        return back()->with('success', 'Đã xóa vĩnh viễn!');
-    }
+//    public function forceDestroy($id)
+//    {
+//        $topping = Topping::withTrashed()->find($id);
+//        $old_image = $topping->image;
+//        // xóa ảnh cũ
+//        if ($old_image != null) {
+//            unlink(storage_path('app/public/uploads/toppings/' . $old_image));
+//        }
+//        $topping->forceDelete();
+//        return back()->with('success', 'Đã xóa vĩnh viễn!');
+//    }
+
     public function export()
     {
         $this->exportExcel(Topping::all(), 'danhsachtopping');

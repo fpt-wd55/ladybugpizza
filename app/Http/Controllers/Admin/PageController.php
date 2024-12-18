@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PageRequest;
 use App\Models\Page;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route as FacadesRoute;
 
 class PageController extends Controller
 {
@@ -31,14 +31,29 @@ class PageController extends Controller
      */
     public function store(PageRequest $request)
     {
+        if (!$this->checkSlug($request->input('slug'))) {
+            return redirect()->back()->with('error', 'Đường dẫn đã tồn tại trong hệ thống');
+        }
+
         Page::create([
             'title' => $request->input('title'),
             'slug' => $request->input('slug'),
-            'status' => $request->has('status') ? 1 : 0, // Đặt trạng thái thành 1 nếu checkbox được chọn, ngược lại là 0
+            'status' => $request->has('status') ? 1 : 0,
             'content' => $request->input('content'),
         ]);
         // Chuyển hướng về trang danh sách với thông báo thành công
         return redirect()->route('admin.pages.index')->with('success', 'Trang đã được tạo thành công.');
+    }
+
+    public function checkSlug($slug)
+    {
+        // Kiểm tra trong bảng `pages`
+        $existsInPages = Page::where('slug', $slug)->exists();
+
+        // Kiểm tra trong danh sách route
+        $existsInRoutes = collect(FacadesRoute::getRoutes())->pluck('uri')->contains($slug);
+
+        return !$existsInPages && !$existsInRoutes;
     }
 
     /**

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->foreignId('rank_id')->nullable()->constrained('membership_ranks')->onDelete('cascade');
             $table->integer('status')->default(1)->comment('1: active, 2: inactive');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

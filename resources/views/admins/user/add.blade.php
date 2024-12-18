@@ -9,13 +9,12 @@
                 @csrf
                 <div class="grid gap-4 mb-4">
                     <div class="sm:col-span-2">
-                        <div class="grid gap-4 mb-4 md:grid-cols-2 lg:grid-cols-3">
+                        <div class="grid gap-4 mb-2 md:grid-cols-2 lg:grid-cols-3">
                             <div>
-                                <label for="username" class="block mb-2 text-sm font-medium text-gray-900 ">Tên tài
+                                <label for="username" class="label-md">Tên tài
                                     khoản <span class="text-red-500">*</span></label>
-                                <input type="text" name="username" id="username" placeholder="Tên tài khoản"
-                                    value="{{ old('username') }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                <input type="text" name="username" id="username" placeholder="VD: ladybugpizza"
+                                    value="{{ old('username') }}" class="input">
                                 @error('username')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
@@ -23,11 +22,10 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 ">Họ và
+                                <label for="fullname" class="label-md">Họ và
                                     tên <span class="text-red-500">*</span></label>
-                                <input type="text" name="fullname" id="fullname" placeholder="Họ và tên"
-                                    value="{{ old('fullname') }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                <input type="text" name="fullname" id="fullname" placeholder="VD: Trần Văn A"
+                                    value="{{ old('fullname') }}" class="input">
                                 @error('fullname')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
@@ -35,11 +33,9 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Mật khẩu <span
-                                        class="text-red-500">*</span></label>
-                                <input type="password" name="password" id="password" placeholder="Mật khẩu"
-                                    value="{{ old('password') }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                <label for="password" class="label-md">Mật khẩu <span class="text-red-500">*</span></label>
+                                <input type="password" name="password" id="password" value="{{ old('password') }}"
+                                    class="input">
                                 @error('password')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
@@ -49,13 +45,11 @@
                         </div>
                     </div>
                     <div class="sm:col-span-2">
-                        <div class="grid gap-4 mb-4 md:grid-cols-2">
+                        <div class="grid gap-4 mb-2 md:grid-cols-2">
                             <div>
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email <span
-                                        class="text-red-500">*</span></label>
-                                <input type="text" name="email" id="email" placeholder="email@domain.com"
-                                    value="{{ old('email') }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                <label for="email" class="label-md">Email <span class="text-red-500">*</span></label>
+                                <input type="text" name="email" id="email" placeholder="VD: ladybugpizza@gmail.com"
+                                    value="{{ old('email') }}" class="input">
                                 @error('email')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
@@ -63,11 +57,10 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Số điện
+                                <label for="phone" class="label-md">Số điện
                                     thoại <span class="text-red-500">*</span></label>
-                                <input type="text" name="phone" id="phone" placeholder="0123456789"
-                                    value="{{ old('phone') }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                <input type="text" name="phone" id="phone" placeholder="VD: 0123456789"
+                                    value="{{ old('phone') }}" class="input">
                                 @error('phone')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
@@ -77,12 +70,12 @@
                         </div>
                     </div>
                     <div class="sm:col-span-2">
-                        <div class="grid gap-4 mb-4 md:grid-cols-2 lg:grid-cols-3">
+                        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                             <div>
-                                <label class="block mb-2 text-sm font-medium text-gray-900" for="file_input">Ảnh đại
+                                <label class="label-md for="file_input">Ảnh đại
                                     diện <span class="text-red-500">*</span></label>
                                 <input name="avatar"
-                                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
+                                    class="mt-2 block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 focus:outline-none"
                                     aria-describedby="file_input_help" id="file_input" type="file">
                                 @error('avatar')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -91,11 +84,10 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="date_of_birth" class="block mb-2 text-sm font-medium text-gray-900 ">Ngày
+                                <label for="date_of_birth" class="label-md">Ngày
                                     sinh <span class="text-red-500">*</span></label>
                                 <input type="date" name="date_of_birth" id="date_of_birth"
-                                    value="{{ old('date_of_birth') }}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                    value="{{ old('date_of_birth') }}" class="input">
                                 @error('date_of_birth')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
@@ -103,25 +95,22 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="gender" class="block mb-4 text-sm font-medium text-gray-900">Giới
+                                <label for="gender" class="label-md">Giới
                                     tính <span class="text-red-500">*</span></label>
-                                <div class="flex flex-wrap items-center">
+                                <div class="flex flex-wrap items-center mt-4">
                                     <div class="flex items-center mr-4">
                                         <input id="male" type="radio" value="1" name="gender"
-                                            {{ old('gender') == 1 ? 'checked' : '' }}
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0 focus:outline-none">
+                                            {{ old('gender') == 1 ? 'checked' : '' }} class="input-radio">
                                         <label for="male" class="ms-2 text-sm font-medium text-gray-900">Nam</label>
                                     </div>
                                     <div class="flex items-center mr-4">
                                         <input id="female" type="radio" value="2" name="gender"
-                                            {{ old('gender') == 2 ? 'checked' : '' }}
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0 focus:outline-none">
+                                            {{ old('gender') == 2 ? 'checked' : '' }} class="input-radio">
                                         <label for="female" class="ms-2 text-sm font-medium text-gray-900">Nữ</label>
                                     </div>
                                     <div class="flex items-center mr-4">
                                         <input id="orther" type="radio" value="3" name="gender"
-                                            {{ old('gender') == 3 ? 'checked' : '' }}
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0 focus:outline-none">
+                                            {{ old('gender') == 3 ? 'checked' : '' }} class="input-radio">
                                         <label for="orther" class="ms-2 text-sm font-medium text-gray-900">Khác</label>
                                     </div>
                                 </div>
@@ -134,7 +123,7 @@
                         </div>
                     </div>
                     <div class="sm:col-span-2">
-                        <div class="grid gap-4 mb-4 lg:grid-cols-3">
+                        <div class="grid gap-4 mb-2 lg:grid-cols-3">
                             <div>
                                 <label for="status" class="block mb-4 text-sm font-medium text-gray-900 ">Trạng
                                     thái</label>
@@ -144,7 +133,7 @@
                                     <div
                                         class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
                                     </div>
-                                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Hoạt
+                                    <span class="ms-3 text-sm font-medium text-gray-900">Hoạt
                                         động</span>
                                 </label>
                                 @error('status')
@@ -154,20 +143,18 @@
                                 @enderror
                             </div>
                             <div>
-                                <label class="block mb-3 text-sm font-medium text-gray-900 ">Vai
+                                <label class="label-md">Vai
                                     trò <span class="text-red-500">*</span></label>
                                 <div class="flex flex-wrap mb-2">
-                                    <div class="flex items-center mb-4 mr-4">
+                                    <div class="flex items-center my-3 mr-4">
                                         <input id="adminRole" type="radio" value="1" name="roleSelect"
-                                            {{ old('roleSelect') == 1 ? 'checked' : '' }}
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0 focus:outline-none">
+                                            {{ old('roleSelect') == 1 ? 'checked' : '' }} class="input-radio">
                                         <label for="adminRole" class="ms-2 text-sm font-medium text-gray-900">Quản trị
                                             viên</label>
                                     </div>
-                                    <div class="flex items-center mb-4 mr-4">
+                                    <div class="flex items-center my-3 mr-4">
                                         <input id="userRole" type="radio" value="2" name="roleSelect"
-                                            {{ old('roleSelect') == 2 ? 'checked' : '' }}
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-0 focus:outline-none">
+                                            {{ old('roleSelect') == 2 ? 'checked' : '' }} class="input-radio">
                                         <label for="userRole" class="ms-2 text-sm font-medium text-gray-900">Khách
                                             hàng</label>
                                     </div>
@@ -179,10 +166,9 @@
                                 @enderror
                             </div>
                             <div id="permissionSelect">
-                                <label for="category" class="block mb-2 text-sm font-medium text-gray-900 ">Phân
-                                    quyền</label>
-                                <select name="permissionSelect"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                <label for="category" class="label-md">Phân
+                                    quyền <span class="text-red-500">*</span></label>
+                                <select name="permissionSelect" class="select">
                                     <option selected disabled>Phân quyền</option>
                                     @foreach ($permissions as $permission)
                                         <option value="{{ $permission->id }}"
@@ -200,12 +186,11 @@
                         </div>
                     </div>
                     <div class="sm:col-span-2">
-                        <div class="grid gap-4 mb-4 sm:grid-cols-3">
+                        <div class="grid gap-4 sm:grid-cols-3">
                             <div>
-                                <label for="province" class="block mb-2 text-sm font-medium text-gray-900 ">Tỉnh/Thành
+                                <label for="province" class="label-md">Tỉnh/Thành
                                     <span class="text-red-500">*</span></label>
-                                <select id="province" name="province"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                <select id="province" name="province" class="select">
                                 </select>
                                 @error('province')
                                     <p class="mt-2 text-sm text-red-600 ">
@@ -214,10 +199,9 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="district" class="block mb-2 text-sm font-medium text-gray-900 ">Huyện/Tỉnh
+                                <label for="district" class="label-md">Huyện/Tỉnh
                                     <span class="text-red-500">*</span></label>
-                                <select id="district" name="district"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                <select id="district" name="district" class="select">
                                     <option value="">Chọn quận/huyện</option>
                                 </select>
                                 @error('district')
@@ -227,10 +211,9 @@
                                 @enderror
                             </div>
                             <div>
-                                <label for="ward" class="block mb-2 text-sm font-medium text-gray-900 ">Phường/Xã
+                                <label for="ward" class="label-md">Phường/Xã
                                     <span class="text-red-500">*</span></label>
-                                <select id="ward" name="ward"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                <select id="ward" name="ward" class="select">
                                     <option value="">Chọn phường/xã</option>
                                 </select>
                                 @error('ward')
@@ -242,11 +225,11 @@
                         </div>
                     </div>
                     <div class="sm:col-span-2">
-                        <label for="detail_address" class="block mb-2 text-sm font-medium text-gray-900 ">Địa chỉ chi
+                        <label for="detail_address" class="label-md">Địa chỉ chi
                             tiết <span class="text-red-500">*</span></label>
                         <input type="text" name="detail_address" id="detail_address"
                             placeholder="VD: Số 4 ngõ 2 ngách 14 đường Cầu Diễn" value="{{ old('detail_address') }}"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            class="input">
                         @error('detail_address')
                             <p class="mt-2 text-sm text-red-600 ">
                                 {{ $message }}

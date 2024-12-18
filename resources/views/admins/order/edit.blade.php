@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Cập nhật đơn hàng')
+@section('title', 'Đơn hàng | Cập nhật')
 
 @section('content')
     {{ Breadcrumbs::render('admin.orders.edit') }}
@@ -19,7 +19,8 @@
                             <label class="mb-2 block font-semibold" for="status">Trạng thái</label>
                             <select class="input" id="status" name="status">
                                 @foreach ($statuses as $status)
-                                    <option {{ $order->orderStatus->slug === $status->slug ? 'selected' : '' }}
+                                    <option
+                                        {{ old('status', $order->orderStatus->slug) === $status->slug ? 'selected' : '' }}
                                         value="{{ $status->slug }}"
                                         {{ in_array($order->orderStatus->slug, ['shipping', 'delivered', 'completed']) && $status->slug === 'cancelled' ? 'disabled' : '' }}
                                         {{ $order->orderStatus->id > $status->id ? 'disabled' : '' }}>
@@ -29,14 +30,14 @@
                             </select>
                         </div>
                         <div class="mb-4" id="cancelled_reason">
-                            <p class="mb-2 text-sm font-normal">Lý do hủy đơn: </p>
+                            <p class="mb-2 text-sm font-normal">Lý do hủy đơn: <span class="text-red-600">*</span> </p>
                             <textarea class="text-area" name="cancelled_reason" rows="4">{{ $order->cancelled_reason ?? null }}</textarea>
                             @error('cancelled_reason')
                                 <p class="pt-2 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="mt-6 flex justify-start gap-2">
-                            <button class="button-red" type="submit">Cập nhật</button>
+                            <button class="button-red" type="submit">Cập nhật đơn hàng</button>
                             <a class="button-gray" href="{{ route('admin.orders.index') }}">Quay lại</a>
                         </div>
                     </form>
@@ -127,7 +128,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             const statusSelect = document.getElementById('status');
             const permissionSelect = document.getElementById('cancelled_reason');
-            console.log(statusSelect);
 
             function toggleForm() {
                 if (statusSelect.value === 'cancelled') {
@@ -135,6 +135,10 @@
                 } else {
                     permissionSelect.style.display = 'none';
                 }
+
+                setTimeout(() => {
+                    permissionSelect.style.transition = 'all 0.5s';
+                }, 100);
             }
 
             statusSelect.addEventListener('change', function() {

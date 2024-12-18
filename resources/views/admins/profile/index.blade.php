@@ -15,7 +15,7 @@
                         <img id="avatar-preview" src="{{ asset('storage/uploads/avatars/' . $user->avatar) }}"
                             alt="User Avatar" class="w-10 h-10 object-cover rounded-full">
                     @else
-                        <img src="{{ asset('storage/uploads/avatars/user-default.png') }}"
+                        <img src="{{ asset('storage/uploads/avatars/user-default-1.png') }}"
                             class="w-10 h-10 object-cover rounded-full">
                     @endif
                     <input class="hidden" id="avatar" onchange="previewAvatar(event)" name="avatar" type="file">
@@ -34,36 +34,47 @@
                 <div class="mb-6">
                     <div class="grid grid-cols-3 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Tên tài khoản</label>
-                            <input type="text" name="username" value="{{ $user->username }}" class="input">
+                            <label for="username" for="username" class="block text-sm font-medium text-gray-700 mb-2">Tên
+                                tài khoản</label>
+                            <input type="text" id="username" name="username" value="{{ $user->username }}"
+                                class="input">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Họ và tên</label>
-                            <input type="text" name="fullname" value="{{ $user->fullname }}" class="input">
+                            <label for="fullname" class="block text-sm font-medium text-gray-700 mb-2">Họ và tên <span
+                                    class="text-red-500">*</span></label>
+                            <input type="text" id="fullname" name="fullname" value="{{ $user->fullname }}"
+                                placeholder="VD: Trần Văn A" class="input">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Số điện thoại</label>
-                            <input type="text" name="phone" value="{{ $user->phone }}" class="input">
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Số điện thoại <span
+                                    class="text-red-500">*</span></label>
+                            <input type="text" id="phone" name="phone" value="{{ $user->phone }}"
+                                placeholder="VD: 0123456789" class="input">
                         </div>
                     </div>
                 </div>
                 <!-- Email Section -->
                 <div class="mb-6 grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                        <input type="email" name="email" value="{{ old('email', $user->email) }}" class="input mb-2">
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email <span
+                                class="text-red-500">*</span></label>
+                        <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}"
+                            placeholder="VD: ladybugpizza@gmail.com" class="input mb-2">
                         @error('email')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh</label>
-                        <input class="input w-32" name="date_of_birth" type="date" value="{{ $user->date_of_birth }}">
+                        <label for="date_of_birth" class="block text-sm font-medium text-gray-700 mb-2">Ngày sinh <span
+                                class="text-red-500">*</span></label>
+                        <input class="input w-32" id="date_of_birth" name="date_of_birth" type="date"
+                            value="{{ $user->date_of_birth }}">
                     </div>
                 </div>
                 {{-- gioi tinh --}}
                 <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Giới tính</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Giới tính <span
+                            class="text-red-500">*</span></label>
                     <div class="flex items-center gap-4 text-sm">
                         <label for="male">
                             <input {{ $user->gender == 1 ? 'checked' : '' }} class="input-radio" id="male"
@@ -89,16 +100,17 @@
                 </div>
                 <div class="mb-6 grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Mật khẩu mới</label>
-                        <input type="password" class="input mb-2" name="new_password" placeholder="Nhập mật khẩu mới...">
+                        <label for="new_password" class="block text-sm font-medium text-gray-700 mb-2">Mật khẩu mới</label>
+                        <input type="password" id="new_password" class="input mb-2" name="new_password">
                         @error('new_password')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Xác nhận mật khẩu mới</label>
-                        <input class="input mb-2" name="confirm_password" type="password"
-                            placeholder="Xác nhận mật khẩu mới...">
+                        <label for="confirm_password" class="block text-sm font-medium text-gray-700 mb-2">Xác nhận mật
+                            khẩu
+                            mới</label>
+                        <input class="input mb-2" id="confirm_password" name="confirm_password" type="password">
                         @error('confirm_password')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -120,7 +132,6 @@
                                     class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
                                     data-modal-hide="update-modal-{{ $user->id }}">
                                     @svg('tabler-x', 'w-4 h-4')
-                                    <span class="sr-only">Close</span>
                                 </button>
                                 <div class="p-4 md:p-5 text-center">
                                     <div class="flex justify-center">

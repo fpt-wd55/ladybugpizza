@@ -3,79 +3,67 @@
 
 @section('content')
     {{ Breadcrumbs::render('admin.toppings.index') }}
-    <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
-        <div class="overflow-x-auto ">
-            <div
-                class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
-                <div class="flex items-center flex-1 space-x-4">
-                    <h2 class="font-medium text-gray-700 text-base">
+    <div class="relative mt-5 overflow-hidden bg-white shadow sm:rounded-lg">
+        <div class="overflow-x-auto">
+            <div class="flex flex-col space-y-3 px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:space-x-4 lg:space-y-0">
+                <div class="flex flex-1 items-center space-x-4">
+                    <h2 class="text-base font-medium text-gray-700">
                         Topping
                     </h2>
                 </div>
-                <div
-                    class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                    <a href="{{ route('admin.toppings.create') }}" class="button-blue">
+                <div class="flex flex-shrink-0 flex-col space-y-3 md:flex-row md:items-center md:space-x-3 md:space-y-0 lg:justify-end">
+                    <a class="button-blue" href="{{ route('admin.toppings.create') }}">
                         @svg('tabler-plus', 'w-5 h-5 mr-2')
-                        Thêm Topping
+                        Thêm topping
                     </a>
-                    <a href="{{ route('admin.trash-topping') }}" class="button-red">
+                    <a class="button-red" href="{{ route('admin.trash-topping') }}">
                         @svg('tabler-trash', 'w-5 h-5 mr-2')
                         Thùng rác
                     </a>
-                    <a href="{{ route('admin.toppings.export') }}"
-                        class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
+                    <a class="button-light" href="{{ route('admin.toppings.export') }}">
                         @svg('tabler-file-export', 'w-4 h-4 mr-2')
                         Xuất dữ liệu
                     </a>
                 </div>
             </div>
-            <div
-                class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4 border-t">
-                <div
-                    class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                    <div class="flex items-center space-x-3 w-full md:w-full">
-                        <form method="POST" action="{{ route('admin.toppings.bulkAction') }}">
+            <div class="flex flex-col space-y-3 border-t px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:space-x-4 lg:space-y-0">
+                <div class="flex flex-shrink-0 flex-col space-y-3 md:flex-row md:items-center md:space-x-3 md:space-y-0 lg:justify-end">
+                    <div class="flex w-full items-center space-x-3 md:w-full">
+                        <form action="{{ route('admin.toppings.bulkAction') }}" method="POST">
                             @csrf
-                            <input type="hidden" name="selected_ids" id="selectedIds" value="">
-                            <div id="actionButtons" class="hidden">
-                                <button type="submit" name="action" value="delete" class="button-red me-2">Xóa</button>
-                                <h2 class="font-medium text-gray-700 text-base italic items-center flex" id="selectedItems">
+                            <input id="selectedIds" name="selected_ids" type="hidden" value="">
+                            <div class="hidden" id="actionButtons">
+                                <button class="button-red me-2" name="action" type="submit" value="delete">Xóa</button>
+                                <h2 class="flex items-center text-base font-medium italic text-gray-700" id="selectedItems">
                                 </h2>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div
-                    class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                    <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.toppings.search') }}">
+                <div class="flex flex-shrink-0 flex-col space-y-3 md:flex-row md:items-center md:space-x-3 md:space-y-0 lg:justify-end">
+                    <form action="{{ route('admin.toppings.search') }}" class="flex w-full md:w-40 lg:w-64">
                         <div class="relative w-full">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
                                 @svg('tabler-search', 'w-5 h-5 text-gray-400')
                             </div>
-                            <input type="text" name="search" class="input ps-10" placeholder="Tìm kiếm..." />
+                            <input class="input ps-10" name="search" placeholder="Tìm kiếm..." type="text" />
                         </div>
                     </form>
-                    <div class="flex items-center w-full md:w-auto">
-                        <button data-modal-target="filterDropdown" data-modal-toggle="filterDropdown"
-                            class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
-                            type="button">
+                    <div class="flex w-full items-center md:w-auto">
+                        <button class="flex w-full items-center justify-center button-light" data-modal-target="filterDropdown" data-modal-toggle="filterDropdown" type="button">
                             @svg('tabler-filter-filled', 'w-5 h-5 me-2')
                             Bộ lọc
                         </button>
-                        <form action="{{ route('admin.toppings.filter') }}" method="get" id="filterDropdown"
-                            tabindex="-1" aria-hidden="true"
-                            class="fixed inset-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-modal md:h-full">
-                            <div class="relative w-full h-full max-w-2xl md:h-auto">
+                        <form action="{{ route('admin.toppings.filter') }}" aria-hidden="true" class="fixed inset-0 z-50 hidden h-modal w-full overflow-y-auto overflow-x-hidden p-4 md:h-full" id="filterDropdown" method="get" tabindex="-1">
+                            <div class="relative h-full w-full max-w-2xl md:h-auto">
                                 <!-- Modal content -->
-                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
+                                <div class="relative rounded-lg bg-white shadow">
                                     <!-- Modal header -->
-                                    <div class="flex items-start justify-between px-6 py-4 rounded-t">
-                                        <h3 class="text-lg font-semibold text-gray-500 dark:text-gray-400">
+                                    <div class="flex items-start justify-between rounded-t px-6 py-4">
+                                        <h3 class="text-lg font-semibold text-gray-500">
                                             Bộ lọc
                                         </h3>
-                                        <button type="button"
-                                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                            data-modal-toggle="filterDropdown">
+                                        <button class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900" data-modal-toggle="filterDropdown" type="button">
                                             @svg('tabler-x', 'w-5 h-5')
                                         </button>
                                     </div>
@@ -86,12 +74,8 @@
                                             <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
                                                 @foreach ($categories as $category)
                                                     <li class="flex items-center">
-                                                        <input id="admin" type="checkbox" name="filter_category[]"
-                                                            value="{{ $category->id }}"
-                                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                            @if (in_array($category->id, request()->input('filter_category', []))) checked @endif>
-                                                        <label for="admin"
-                                                            class="ml-2 text-sm font-medium text-gray-900">{{ $category->name }}</label>
+                                                        <input @if (in_array($category->id, request()->input('filter_category', []))) checked @endif class="text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" id="admin" name="filter_category[]" type="checkbox" value="{{ $category->id }}">
+                                                        <label class="ml-2 text-sm font-medium text-gray-900" for="admin">{{ $category->name }}</label>
                                                     </li>
                                                 @endforeach
                                             </div>
@@ -99,24 +83,18 @@
                                         <h6 class="my-3 text-sm font-medium text-gray-900">Giá</h6>
                                         <div class="flex items-center">
                                             <div>
-                                                <input name="filter_price_min" type="number"
-                                                    value="{{ request()->input('filter_price_min') }}"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                                    placeholder="1.000 đ">
+                                                <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 ps-3 text-sm text-gray-900 focus:ring-0" name="filter_price_min" placeholder="1.000 đ" type="number" value="{{ request()->input('filter_price_min') }}">
                                             </div>
                                             <span class="mx-4 text-gray-500">-</span>
                                             <div>
-                                                <input name="filter_price_max" type="number"
-                                                    value="{{ request()->input('filter_price_max') }}"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-0 block w-full ps-3 p-2"
-                                                    placeholder="100.000.000 đ">
+                                                <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 ps-3 text-sm text-gray-900 focus:ring-0" name="filter_price_max" placeholder="100.000.000 đ" type="number" value="{{ request()->input('filter_price_max') }}">
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Modal footer -->
-                                    <div class="flex items-center p-6 space-x-4 rounded-b dark:border-gray-600">
-                                        <button type="submit" class="button-red">
+                                    <div class="flex items-center space-x-4 rounded-b p-6">
+                                        <button class="button-red" type="submit">
                                             Lọc sản phẩm
                                         </button>
                                     </div>
@@ -127,21 +105,20 @@
                 </div>
             </div>
 
-            <table class="w-full text-sm text-left text-gray-500 ">
-                <thead class="text-gray-700 uppercase bg-gray-50 ">
+            <table class="w-full text-left text-sm text-gray-500">
+                <thead class="bg-gray-50 uppercase text-gray-700">
                     <tr>
-                        <th scope="col" class="p-4">
+                        <th class="p-4" scope="col">
                             <div class="flex items-center">
-                                <input id="table-checkbox-all" type="checkbox"
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                <input class="text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" id="table-checkbox-all" type="checkbox">
                             </div>
                         </th>
-                        <th scope="col" class="px-4 py-3">Tên</th>
-                        <th scope="col" class="px-4 py-3">Ảnh</th>
-                        <th scope="col" class="px-4 py-3">Giá</th>
-                        <th scope="col" class="px-4 py-3">Số lượng</th>
-                        <th scope="col" class="px-4 py-3">Danh mục</th>
-                        <th scope="col" class="px-4 py-3">
+                        <th class="px-4 py-3 text-left" scope="col">Tên</th>
+                        <th class="px-4 py-3 text-left" scope="col">Ảnh</th>
+                        <th class="px-4 py-3 text-center" scope="col">Giá</th>
+                        <th class="px-4 py-3 text-center" scope="col">Số lượng</th>
+                        <th class="px-4 py-3 text-center" scope="col">Danh mục</th>
+                        <th class="px-4 py-3" scope="col">
                             <span class="sr-only">Hành động </span>
                         </th>
                     </tr>
@@ -151,91 +128,79 @@
                         <tr class="border-b hover:bg-gray-100">
                             <td class="w-4 px-4 py-3">
                                 <div class="flex items-center">
-                                    <input id="table-item-checkbox-{{ $topping->id }}" type="checkbox"
-                                        onclick="event.stopPropagation()" value="{{ $topping->id }}"
-                                        class="table-item-checkbox w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0">
+                                    <input class="table-item-checkbox text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" id="table-item-checkbox-{{ $topping->id }}" onclick="event.stopPropagation()" type="checkbox" value="{{ $topping->id }}">
                                 </div>
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $topping->name }}</td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">
-                                <a class="shrink-0" data-fslightbox="gallery"
-                                    href="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
-                                    <img loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}"
-                                        class="img-sm img-circle object-cover">
+                            <td class="whitespace-nowrap px-4 py-2 text-left text-gray-900">
+                                <a class="hover:text-red-600 font-medium" href="{{ route('admin.toppings.edit', $topping) }}">
+                                    {{ $topping->name }}
                                 </a>
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ number_format($topping->price) }}₫
+                            <td class="whitespace-nowrap px-4 py-2 text-center text-gray-900">
+                                <a class="shrink-0" data-fslightbox="gallery" href="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
+                                    <img class="img-sm img-circle object-cover" loading="lazy" src="{{ asset('storage/uploads/toppings/' . $topping->image) }}">
+                                </a>
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap ">{{ $topping->quantity}}
+                            <td class="whitespace-nowrap px-4 py-2 text-center text-gray-900">
+                                {{ number_format($topping->price) }}₫
                             </td>
-                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                            <td class="whitespace-nowrap px-4 py-2 text-center text-gray-900">{{ $topping->quantity }}
+                            </td>
+                            <td class="whitespace-nowrap px-4 py-2 text-center text-gray-900">
                                 @foreach ($categories as $category)
                                     @if ($category->id == $topping->category_id)
                                         <span>{{ $category->name }}</span>
                                     @endif
                                 @endforeach
                             </td>
-                            <td class="px-4 py-3 flex items-center justify-end">
-                                <button id="{{ $topping->id }}" data-dropdown-toggle="{{ $topping->id }}-dropdown"
-                                    class="inline-flex items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none"
-                                    type="button">
+                            <td class="flex items-center justify-end px-4 py-3">
+                                <button class="inline-flex items-center rounded-lg p-0.5 text-center text-sm text-gray-500 hover:text-gray-800 focus:outline-none" data-dropdown-toggle="{{ $topping->id }}-dropdown" id="{{ $topping->id }}" type="button">
                                     @svg('tabler-dots', 'w-5 h-5')
                                 </button>
-                                <div id="{{ $topping->id }}-dropdown"
-                                    class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
-                                    <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $topping->id }}">
+                                <div class="z-10 hidden w-44 divide-y divide-gray-100 rounded bg-white shadow" id="{{ $topping->id }}-dropdown">
+                                    <ul aria-labelledby="{{ $topping->id }}" class="py-1 text-sm text-gray-700">
                                         <li>
-                                            <a href="{{ route('admin.toppings.edit', $topping) }}"
-                                                class="block py-2 px-4 hover:bg-gray-100">Cập nhật</a>
+                                            <a class="block px-4 py-2 hover:bg-gray-100" href="{{ route('admin.toppings.edit', $topping) }}">Cập nhật</a>
                                         </li>
                                     </ul>
                                     <div class="py-1">
-                                        <a href="#" data-modal-target="delete-modal-{{ $topping->id }}"
-                                            data-modal-toggle="delete-modal-{{ $topping->id }}"
-                                            class="cursor-pointer block py-2 px-4 text-sm text-red-500 hover:bg-gray-100">Xóa</a>
+                                        <a class="block cursor-pointer px-4 py-2 text-sm text-red-500 hover:bg-gray-100" data-modal-target="delete-modal-{{ $topping->id }}" data-modal-toggle="delete-modal-{{ $topping->id }}" href="#">Xóa</a>
                                     </div>
                                 </div>
                             </td>
                         </tr>
                         {{-- start modal --}}
-                        <div id="delete-modal-{{ $topping->id }}" tabindex="-1"
-                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                            <div class="relative p-4 w-full max-w-md max-h-full">
-                                <div class="relative bg-white rounded-lg shadow">
-                                    <button type="button"
-                                        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-                                        data-modal-hide="delete-modal-{{ $topping->id }}">
+                        <div class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0" id="delete-modal-{{ $topping->id }}" tabindex="-1">
+                            <div class="relative max-h-full w-full max-w-md p-4">
+                                <div class="relative rounded-lg bg-white shadow">
+                                    <button class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900" data-modal-hide="delete-modal-{{ $topping->id }}" type="button">
                                         @svg('tabler-x', 'w-4 h-4')
-                                        <span class="sr-only">Close modal</span>
                                     </button>
-                                    <div class="p-4 md:p-5 text-center">
+                                    <div class="p-4 text-center md:p-5">
                                         <div class="flex justify-center">
                                             @svg('tabler-trash', 'w-12 h-12 text-red-600 text-center mb-2')
                                         </div>
                                         <h3 class="mb-5 font-normal">Bạn có muốn xóa Topping này không?</h3>
 
-                                        <form action="{{ route('admin.toppings.destroy', $topping->id) }}"
-                                            method="POST">
+                                        <form action="{{ route('admin.toppings.destroy', $topping->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button type="submit"
-                                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                            <button class="inline-flex items-center rounded-lg bg-red-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300" type="submit">
                                                 Xóa
                                             </button>
                                         </form>
 
-                                        <button data-modal-hide="delete-modal-{{ $topping->id }}" type="button"
-                                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Không</button>
+                                        <button class="ms-3 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100" data-modal-hide="delete-modal-{{ $topping->id }}" type="button">Không</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         {{-- end modal --}}
                     @empty
-                        <td colspan="6" class="text-center py-4 text-base">
-                            <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                        <td class="py-4 text-center text-base" colspan="6">
+                            <div class="flex h-80 w-full flex-col items-center justify-center rounded-lg bg-white p-6">
                                 @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
-                                <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                                <p class="mt-4 text-sm text-gray-500">Dữ liệu trống</p>
                             </div>
                         </td>
                         <!-- Hiển thị "Trống" nếu không có dữ liệu -->

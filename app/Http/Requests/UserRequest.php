@@ -51,7 +51,7 @@ class UserRequest extends FormRequest
             'email' => 'sometimes|required|email|unique:users,email,' . $this->user->id,
             'phone' => 'sometimes|required|string|max:255|unique:users,phone,' . $this->user->id,
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'date_of_birth' => 'sometimes|required|date',
+            'date_of_birth' => 'required|date|before:today',
             'roleSelect' => 'sometimes|required|integer',
             'permissionSelect' => 'nullable|integer',
             'new_password' => 'nullable|min:8|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&]).{8,}$/',

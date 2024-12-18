@@ -23,6 +23,7 @@ class MembershipController extends Controller
             ->whereHas('user', function ($query) {
                 $query->where('role_id', 2);
             })
+            ->orderBy('points', 'desc')
             ->paginate(10);
         // Trả về view với dữ liệu memberships
         return view('admins.memberships.index', compact('memberships', 'ranks'));

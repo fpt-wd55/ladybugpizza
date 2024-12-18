@@ -40,7 +40,7 @@ class Order extends Model
 
     public function address()
     {
-        return $this->belongsTo(Address::class);
+        return $this->belongsTo(Address::class)->withTrashed();
     }
 
     public function orderStatus()
@@ -66,5 +66,10 @@ class Order extends Model
     public function evaluations()
     {
         return $this->hasMany(Evaluation::class);
+    }
+
+    public function total()
+    {
+        return $this->amount + $this->shipping_fee - $this->discount_amount;
     }
 }

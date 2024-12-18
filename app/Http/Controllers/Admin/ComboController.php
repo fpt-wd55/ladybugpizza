@@ -30,14 +30,13 @@ class ComboController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $image_name = trim(strtolower($request->sku)) . '_' . pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $image->getClientOriginalExtension();
-        }
-        else {
+        } else {
             $image_name = 'combo-placehoder.jpg';
         }
 
         $data = [
             'name' => trim($request->name),
-            'slug' => trim(strtolower($request->sku)) . '-' . Str::slug($request->name),
+            'slug' => Str::slug($request->name),
             'image' => $image_name,
             'description' => trim($request->description),
             'category_id' => 7,
@@ -51,7 +50,7 @@ class ComboController extends Controller
             'total_rating' => 0,
         ];
         if (Product::create($data)) {
-            if(isset($image)){
+            if (isset($image)) {
                 $image->storeAs('public/uploads/combos', $image_name);
             }
 
@@ -80,7 +79,7 @@ class ComboController extends Controller
 
         $data = [
             'name' => trim($request->name),
-            'slug' => trim(strtolower($request->sku)) . '-' . Str::slug($request->name),
+            'slug' => Str::slug($request->name),
             'image' => $image_name,
             'description' => trim($request->description),
             'category_id' => 7,
@@ -90,8 +89,8 @@ class ComboController extends Controller
             'sku' => trim(strtoupper($request->sku)),
             'status' => isset($request->status) ? $request->status : 2,
             'is_featured' => isset($request->is_featured) ? $request->is_featured : 2,
-            'avg_rating' => 0,
-            'total_rating' => 0,
+            'avg_rating' => $request->has('avg_rating') ? $request->avg_rating : $combo->avg_rating,
+            'total_rating' => $request->has('total_rating') ? $request->total_rating : $combo->total_rating,
         ];
 
         if ($combo->update($data)) {
@@ -118,13 +117,15 @@ class ComboController extends Controller
             return redirect()->back()->with('error', 'Xóa combo thất bại');
         }
     }
-    public function trashCombo(){
+    public function trashCombo()
+    {
         $categories = Category::where('status', 1)->get();
         $combos = Product::onlyTrashed()->where('category_id', 7)->orderBy('id', 'desc')->paginate(10);
         return view('admins.combo.trash', compact('combos', 'categories'));
     }
 
-    public function restoreCombo($id) {
+    public function restoreCombo($id)
+    {
         $combo = Product::withTrashed()->find($id);
 
         if ($combo->restore()) {
@@ -134,19 +135,20 @@ class ComboController extends Controller
         return redirect()->back()->with('error', 'Khôi phục combo thất bại');
     }
 
-    public function forceDelete($id) {
-        $combo = Product::withTrashed()->find($id);
-
-        if ($combo) {
-            if (file_exists(storage_path('app/public/uploads/combos/' . $combo->image))) {
-                unlink(storage_path('app/public/uploads/combos/' . $combo->image));
-            }
-            $combo->forceDelete();
-            return redirect()->back()->with('success', 'Xóa sản phẩm thành công');
-        }
-
-        return redirect()->back()->with('error', 'Xóa sản phẩm thất bại');
-    }
+//    public function forceDelete($id)
+//    {
+//        $combo = Product::withTrashed()->find($id);
+//
+//        if ($combo) {
+//            if (file_exists(storage_path('app/public/uploads/combos/' . $combo->image))) {
+//                unlink(storage_path('app/public/uploads/combos/' . $combo->image));
+//            }
+//            $combo->forceDelete();
+//            return redirect()->back()->with('success', 'Xóa sản phẩm thành công');
+//        }
+//
+//        return redirect()->back()->with('error', 'Xóa sản phẩm thất bại');
+//    }
 
     public function bulkAction(Request $request)
     {
@@ -184,7 +186,8 @@ class ComboController extends Controller
         return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $context = $request->input('context', 'index');
         $query = Product::orderBy('id', 'desc')
             ->where('category_id', 7)
@@ -213,7 +216,8 @@ class ComboController extends Controller
         return view('admins.combo.evaluation', compact('combo', 'evaluations'));
     }
 
-    public function evaluationUpdate(Request $request, Evaluation $evaluation){
+    public function evaluationUpdate(Request $request, Evaluation $evaluation)
+    {
         if ($evaluation) {
             $evaluation->update([
                 'status' => $request->status ? 1 : 2,
@@ -224,7 +228,8 @@ class ComboController extends Controller
         return redirect()->back()->with('error', 'Cập nhật đánh giá thất bại');
     }
 
-    public function filter(Request $request){
+    public function filter(Request $request)
+    {
         $query = Product::where('category_id', 7);
 
         if ($request->filled('filter_status')) {
@@ -241,7 +246,7 @@ class ComboController extends Controller
 
         if ($request->filled('filter_rating')) {
             $ratings = $request->input('filter_rating');
-            $query->where(function($query) use ($ratings) {
+            $query->where(function ($query) use ($ratings) {
                 foreach ($ratings as $rating) {
                     $query->orWhere('avg_rating', $rating);
                 }
@@ -263,5 +268,4 @@ class ComboController extends Controller
 
         return view('admins.combo.index', compact('combos'));
     }
-
 }
