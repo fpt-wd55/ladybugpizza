@@ -37,7 +37,9 @@ class HeaderController extends Controller
                 $cartItems = collect();
             }
             $countCartItems = $cartItems->count();
-            $countOrders = Order::where('user_id', Auth::id())->count();
+            $countOrders = Order::where('user_id', Auth::id())
+            ->whereNotIn('order_status_id', [5, 6])
+            ->count();
             return compact('pages', 'countFavorites', 'countCartItems', 'countOrders');
         }
     }

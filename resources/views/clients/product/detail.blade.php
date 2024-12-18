@@ -23,7 +23,7 @@
                                     @svg($i < $product->avg_rating ? 'tabler-star-filled' : 'tabler-star', 'icon-md text-red-500')
                                 @endfor
                             </div>
-                            <p>({{ $product->avg_rating }})</p>
+                            <p>({{ $product->evalutions->count() }})</p>
                         </div>
                         <p class="comfortable pe-8 text-sm">{!! $product->description !!}</p>
                     </div>
