@@ -26,7 +26,7 @@ class ComboRequest extends FormRequest
         'name' => 'required|string|max:255|unique:products,name,' . $comboId . ',id',
         'price' => 'required|numeric|min:0',
         'discount_price' => 'nullable|numeric|min:0|lte:price',
-        'image' => 'required|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+        'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         'quantity' => 'required|integer|min:0',
         'sku' => 'required|string|min:10|max:15|unique:products,sku,' . $comboId . ',id',
         'description' => 'required|string',
