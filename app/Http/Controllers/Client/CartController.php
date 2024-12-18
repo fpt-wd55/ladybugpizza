@@ -58,11 +58,20 @@ class CartController extends Controller
             ->where('status', 1)
             ->get();
 
+        $checkProductQuantity = $this->checkProductQuantity($product, $validated);
+        if ($checkProductQuantity !== true) {
+            return back()->with('error', $checkProductQuantity['error']);
+        }
+
         foreach ($cartItems as $cartItem) {
             $checkAttributes = $this->checkAttributes($cartItem, $validated, $attributes);
             $checkToppings = $this->checkToppings($cartItem, $validated);
 
             if ($checkAttributes && $checkToppings) {
+                $totalQuantity = $cart->items->sum('quantity');
+                if ($totalQuantity + $validated['quantity'] > 20) {
+                    return back()->with('error', 'Bạn chỉ được thanh toán tối đa 20 sản phẩm!');
+                }
                 $cartItem->quantity += $validated['quantity'];
                 $amount = $this->calculateItemPrice($product, $validated, $attributes);
                 $cartItem->price += $amount;
@@ -71,7 +80,7 @@ class CartController extends Controller
                 $cart->total = $cart->items->sum('price');
                 $cart->save();
 
-                return back()->with('success', 'Cập nhật sản phẩm trong giỏ hàng thành công!');
+                return back()->with('success', 'Thêm sản phẩm vào giỏ hàng thành công!');
             }
         }
 
@@ -153,7 +162,7 @@ class CartController extends Controller
     public function delete(CartItem $cartItem)
     {
         if ($cartItem->delete()) {
-            $cart = Cart::find(Auth::id());
+            $cart = Cart::where('user_id', Auth::id())->first();
             $this->updateCart($cart);
 
             return redirect()->route('client.cart.index')->with('success', 'Xóa sản phẩm khỏi giỏ hàng thành công');
@@ -192,10 +201,16 @@ class CartController extends Controller
             'quantity.min' => 'Số lượng phải lớn hơn hoặc bằng 1',
         ]);
 
+        if ($validatedData['quantity'] <= 0) {
+            return redirect()->route('client.cart.index')->with('error', 'Số lượng sản phẩm phải lớn hơn 0');
+        } else if ($validatedData['quantity'] > 20) {
+            return redirect()->route('client.cart.index')->with('error', 'Bạn chỉ được thanh toán tối đa 20 sản phẩm');
+        }
+
         $cartItem->quantity = $validatedData['quantity'];
         $cartItem->save();
 
-        $cart = Cart::find(Auth::id());
+        $cart = Cart::where('user_id', Auth::id())->first();
         $this->updateCart($cart);
 
         return redirect()->route('client.cart.index')->with('success', 'Cập nhật số lượng sản phẩm thành công');
@@ -240,5 +255,50 @@ class CartController extends Controller
 
         $cart->total = $cart->items->sum('price');
         $cart->save();
+    }
+
+    // Hàm kiểm tra số lượng sản phẩm trong kho
+    private function checkProductQuantity($product, $validated)
+    {
+        if ($validated['quantity'] <= 0) {
+            return ['error' => 'Số lượng sản phẩm phải lớn hơn 0'];
+        } else if ($validated['quantity'] > 20) {
+            return ['error' => 'Bạn chỉ được thanh toán tối đa 20 sản phẩm'];
+        }
+
+        if ($product->category->attributes->isNotEmpty()) {
+            $attributes = $product->category->attributes;
+            foreach ($attributes as $attribute) {
+                $attributeValue = AttributeValue::find($validated['attributes_' . $attribute->slug]);
+                if ($attributeValue->quantity <= 0) {
+                    return ['error' => $attributeValue->value . ' đã hết hàng'];
+                }
+                if ($validated['quantity'] > $attributeValue->quantity) {
+                    return ['error' => $attributeValue->value . ' chỉ còn ' . $attributeValue->quantity . ' sản phẩm'];
+                }
+            }
+        } else {
+            if ($product->quantity <= 0) {
+                return ['error' => $product->name . ' đã hết hàng'];
+            }
+            if ($validated['quantity'] > $product->quantity) {
+                return ['error' => $product->name . ' chỉ còn ' . $product->quantity . ' sản phẩm'];
+            }
+        }
+
+        // Check topping
+        if (isset($validated['toppings'])) {
+            foreach ($validated['toppings'] as $topping) {
+                $topping = Topping::find($topping);
+                if ($topping->quantity <= 0) {
+                    return ['error' => $topping->name . ' đã hết hàng'];
+                }
+                if ($validated['quantity'] > $topping->quantity) {
+                    return ['error' => $topping->name . ' chỉ còn ' . $topping->quantity . ' sản phẩm'];
+                }
+            }
+        }
+
+        return true;
     }
 }

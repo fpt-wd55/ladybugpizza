@@ -160,7 +160,9 @@
                                 <input
                                     class="w-6 border-0 bg-transparent p-0 text-center text-sm font-medium text-gray-800 focus:ring-0"
                                     min="1" name="quantity" style="appearance: textfield; -moz-appearance: textfield;"
-                                    type="number" value="1">
+                                    type="hidden" value="1" id="quantity">
+                                <p id="show_quantity"
+                                   class="w-6 border-0 bg-transparent p-0 text-center text-sm font-medium text-gray-800 focus:ring-0"></p>
                                 <button aria-label="Increase"
                                         class="size-6 inline-flex items-center justify-center gap-x-2 bg-white text-sm font-medium text-gray-800"
                                         id="increment" tabindex="-1" type="button">
@@ -212,13 +214,17 @@
             const decrementButton = document.getElementById('decrement');
             const incrementButton = document.getElementById('increment');
             const quantityInput = document.querySelector('input[name="quantity"]');
+            const showQuantity = document.getElementById('show_quantity');
+            showQuantity.innerText = quantityInput.value;
 
             // Thêm sự kiện click cho nút giảm
             decrementButton.addEventListener('click', () => {
                 let quantity = parseInt(quantityInput.value);
-                if (quantity > 1) { // Đảm bảo số lượng không nhỏ hơn 1
+                if (quantity > 1) {
+                    // Đảm bảo số lượng không nhỏ hơn 1
                     quantity -= 1;
                     quantityInput.value = quantity;
+                    showQuantity.innerText = quantity;
                 }
             });
 
@@ -227,6 +233,7 @@
                 let quantity = parseInt(quantityInput.value);
                 quantity += 1; // Tăng số lượng lên 1
                 quantityInput.value = quantity;
+                showQuantity.innerText = quantity;
             });
         </script>
     @endif
