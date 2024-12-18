@@ -39,7 +39,7 @@ class ProductRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
             'discount_price' => 'nullable|numeric|min:0|lte:price',
-            'quantity' => 'required_if:category_id,!=,null|integer|min:0',
+            'quantity' => 'required_if:category_id,!=,null|integer|min:0|max:9999',
             'sku' => 'required|string|min:10|max:15|unique:products,sku',
 
         ];
@@ -55,7 +55,7 @@ class ProductRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
             'discount_price' => 'nullable|numeric|min:0|lte:price',
-            'quantity' => 'required_if:category_id,!=,null|integer|min:0',
+            'quantity' => 'required_if:category_id,!=,null|integer|min:0|max:9999',
             'sku' => 'required|string|min:10|max:15|unique:products,sku,' . $productId,
         ];
     }
@@ -85,6 +85,7 @@ class ProductRequest extends FormRequest
             'quantity.required_if' => 'Vui lòng nhập số lượng sản phẩm',
             'quantity.integer' => 'Vui lòng nhập số lượng sản phẩm',
             'quantity.min' => 'Số lượng sản phẩm phải lớn hơn hoặc bằng 0',
+            'quantity.max' => 'Số lượng sản phẩm không được vượt quá 9999',
             'sku.required' => 'Vui lòng nhập SKU',
             'sku.string' => 'SKU phải là chuỗi',
             'sku.min' => 'SKU tối thiểu 10 ký tự',

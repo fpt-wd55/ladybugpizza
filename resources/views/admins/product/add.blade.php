@@ -13,21 +13,22 @@
                     <div class="sm:col-span-2">
                         <div class="flex items-center justify-center w-full mb-4 ">
                             <label for="dropzone-file"
-                                class="flex flex-col items-center justify-center w-full h-20 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                   class="flex flex-col items-center justify-center w-full h-20 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                     @svg('tabler-cloud-upload', 'w-8 h-8 text-gray-400 mb-2')
-                                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Nhấn để tải lên</span>
+                                    <p class="mb-2 text-sm text-gray-500"><span
+                                            class="font-semibold">Nhấn để tải lên</span>
                                         hoặc kéo thả
                                         vào đây
                                     </p>
                                 </div>
-                                <input id="dropzone-file" name="image" type="file" class="hidden" />
+                                <input id="dropzone-file" name="image" type="file" class="hidden"/>
                             </label>
                         </div>
                         @error('image')
-                            <p class="mt-2 text-sm text-red-600 ">
-                                {{ $message }}
-                            </p>
+                        <p class="mt-2 text-sm text-red-600 ">
+                            {{ $message }}
+                        </p>
                         @enderror
                     </div>
                     {{-- Thong tin co ban --}}
@@ -37,22 +38,22 @@
                                 <label for="name" class="label-md">Tên sản
                                     phẩm <span class="text-red-500">*</span></label>
                                 <input type="text" name="name" id="name" placeholder="VD: Pizza hải sản"
-                                    value="{{ old('name') }}" class="input">
+                                       value="{{ old('name') }}" class="input">
                                 @error('name')
-                                    <p class="mt-2 text-sm text-red-600 ">
-                                        {{ $message }}
-                                    </p>
+                                <p class="mt-2 text-sm text-red-600 ">
+                                    {{ $message }}
+                                </p>
                                 @enderror
                             </div>
                             <div>
                                 <label for="sku" class="block mb-2 text-sm font-medium text-gray-900 ">Mã sản
                                     phẩm <span class="text-red-500">*</span></label>
                                 <input type="text" name="sku" id="sku" placeholder="VD: YSU4247641"
-                                    value="{{ old('sku') }}" maxlength="15" class="input">
+                                       value="{{ old('sku') }}" maxlength="15" class="input">
                                 @error('sku')
-                                    <p class="mt-2 text-sm text-red-600 ">
-                                        {{ $message }}
-                                    </p>
+                                <p class="mt-2 text-sm text-red-600 ">
+                                    {{ $message }}
+                                </p>
                                 @enderror
                             </div>
                             <div>
@@ -60,19 +61,20 @@
                                     mục <span class="text-red-500">*</span></label>
                                 <select id="category_id" name="category_id" class="select">
                                     <option value="" {{ old('category_id') ? '' : 'selected' }} disabled>
-                                        Chọn danh mục</option>
+                                        Chọn danh mục
+                                    </option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
-                                            data-has-attribute="{{ count($category->attributes) }}"
+                                                data-has-attribute="{{ count($category->attributes) }}"
                                             {{ old('category_id') == $category->id ? 'selected' : '' }}>
                                             {{ $category->name }}
                                         </option>
                                     @endforeach
                                 </select>
                                 @error('category_id')
-                                    <p class="mt-2 text-sm text-red-600 ">
-                                        {{ $message }}
-                                    </p>
+                                <p class="mt-2 text-sm text-red-600 ">
+                                    {{ $message }}
+                                </p>
                                 @enderror
                             </div>
                         </div>
@@ -83,23 +85,25 @@
                             <div>
                                 <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá bán thường
                                     (₫) <span class="text-red-500">*</span></label>
-                                <input type="number" name="price" id="price" value="{{ old('price') }}"
-                                    placeholder="VD: 100000" class="input">
+                                <input type="number" name="price" id="price" value="{{ old('price') }}" min="0"
+                                       placeholder="VD: 100000" class="input">
                                 @error('price')
-                                    <p class="mt-2 text-sm text-red-600 ">
-                                        {{ $message }}
-                                    </p>
+                                <p class="mt-2 text-sm text-red-600 ">
+                                    {{ $message }}
+                                </p>
                                 @enderror
                             </div>
                             <div>
-                                <label for="discount_price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá khuyến
+                                <label for="discount_price" class="block mb-2 text-sm font-medium text-gray-900 ">Giá
+                                    khuyến
                                     mãi (₫) <span class="text-red-500">*</span></label>
                                 <input type="number" name="discount_price" id="discount_price" placeholder="VD: 80000"
-                                    value="{{ old('discount_price') }}" class="input">
+                                       min="0"
+                                       value="{{ old('discount_price') }}" class="input">
                                 @error('discount_price')
-                                    <p class="mt-2 text-sm text-red-600 ">
-                                        {{ $message }}
-                                    </p>
+                                <p class="mt-2 text-sm text-red-600 ">
+                                    {{ $message }}
+                                </p>
                                 @enderror
                             </div>
                             <div id="quantity"></div>
@@ -121,9 +125,9 @@
                                         động</span>
                                 </label>
                                 @error('status')
-                                    <p class="mt-2 text-sm text-red-600 ">
-                                        {{ $message }}
-                                    </p>
+                                <p class="mt-2 text-sm text-red-600 ">
+                                    {{ $message }}
+                                </p>
                                 @enderror
                             </div>
                             <div>
@@ -139,9 +143,9 @@
                                         bật</span>
                                 </label>
                                 @error('is_featured')
-                                    <p class="mt-2 text-sm text-red-600 ">
-                                        {{ $message }}
-                                    </p>
+                                <p class="mt-2 text-sm text-red-600 ">
+                                    {{ $message }}
+                                </p>
                                 @enderror
                             </div>
                         </div>
@@ -154,9 +158,9 @@
                             <textarea id="wysiwygeditor" name="description">{{ old('description') }}</textarea>
                         </div>
                         @error('description')
-                            <p class="mt-2 text-sm text-red-600 ">
-                                {{ $message }}
-                            </p>
+                        <p class="mt-2 text-sm text-red-600 ">
+                            {{ $message }}
+                        </p>
                         @enderror
                     </div>
                 </div>
@@ -175,7 +179,7 @@
 @endsection
 @section('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const category_id = document.getElementById('category_id');
             const quantity = document.getElementById('quantity');
             const checkHasAttribute = (hasAttribute) => {
@@ -185,13 +189,13 @@
                             lượng <span
                                 class="text-red-500">*</span></label>
                         <input type="number" name="quantity" value="{{ old('quantity') ?? 0 }}"
-                            placeholder="Số lượng"
+                            placeholder="Số lượng" min="0" max="9999"
                             class="input">
                         @error('quantity')
-                            <p class="mt-2 text-sm text-red-600 ">
-                                {{ $message }}
-                            </p>
-                        @enderror
+                    <p class="mt-2 text-sm text-red-600 ">
+{{ $message }}
+                    </p>
+@enderror
                     `;
                 } else {
                     quantity.innerHTML = '';
