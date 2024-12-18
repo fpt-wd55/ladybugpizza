@@ -2,61 +2,49 @@
 @section('title', 'Điểm thành viên')
 @section('content')
     {{ Breadcrumbs::render('admin.memberships.index') }}
-    <div class="mt-5 bg-white relative shadow sm:rounded-lg overflow-hidden">
-        <div
-            class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
-            <div class="flex items-center flex-1 space-x-4">
-                <h2 class="font-medium text-gray-700 text-base">
+    <div class="relative mt-5 overflow-hidden bg-white shadow sm:rounded-lg">
+        <div class="flex flex-col space-y-3 px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:space-x-4 lg:space-y-0">
+            <div class="flex flex-1 items-center space-x-4">
+                <h2 class="text-base font-medium text-gray-700">
                     Điểm thành viên
                 </h2>
             </div>
-            <div
-                class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <a href="{{ route('admin.memberships.export') }}"
-                    class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0">
+            <div class="flex flex-shrink-0 flex-col space-y-3 md:flex-row md:items-center md:space-x-3 md:space-y-0 lg:justify-end">
+                <a class="hover:text-primary-700 flex flex-shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-0" href="{{ route('admin.memberships.export') }}">
                     @svg('tabler-file-export', 'w-4 h-4 mr-2')
                     Xuất dữ liệu
                 </a>
             </div>
         </div>
-        <div
-            class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4 border-t">
-            <div
-                class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <div class="flex items-center space-x-3 w-full md:w-full">
+        <div class="flex flex-col space-y-3 border-t px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:space-x-4 lg:space-y-0">
+            <div class="flex flex-shrink-0 flex-col space-y-3 md:flex-row md:items-center md:space-x-3 md:space-y-0 lg:justify-end">
+                <div class="flex w-full items-center space-x-3 md:w-full">
                 </div>
             </div>
-            <div
-                class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                <form class="flex w-full md:w-40 lg:w-64" action="{{ route('admin.memberships.search') }}">
+            <div class="flex flex-shrink-0 flex-col space-y-3 md:flex-row md:items-center md:space-x-3 md:space-y-0 lg:justify-end">
+                <form action="{{ route('admin.memberships.search') }}" class="flex w-full md:w-40 lg:w-64">
                     <div class="relative w-full">
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
                             @svg('tabler-search', 'w-5 h-5 text-gray-400')
                         </div>
-                        <input type="text" name="search" class="input ps-10" placeholder="Tìm kiếm..." />
+                        <input class="input ps-10" name="search" placeholder="Tìm kiếm..." type="text" />
                     </div>
                 </form>
-                <div class="flex items-center w-full md:w-auto">
-                    <button data-modal-target="filterDropdown" data-modal-toggle="filterDropdown"
-                        class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-0"
-                        type="button">
+                <div class="flex w-full items-center md:w-auto">
+                    <button class="hover:text-primary-700 flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:outline-none focus:ring-0 md:w-auto" data-modal-target="filterDropdown" data-modal-toggle="filterDropdown" type="button">
                         @svg('tabler-filter-filled', 'w-5 h-5 me-2')
                         Bộ lọc
                     </button>
-                    <form action="{{ route('admin.memberships.filter') }}" method="get" id="filterDropdown" tabindex="-1"
-                        aria-hidden="true"
-                        class="fixed inset-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-modal md:h-full">
-                        <div class="relative w-full h-full max-w-2xl md:h-auto">
+                    <form action="{{ route('admin.memberships.filter') }}" aria-hidden="true" class="fixed inset-0 z-50 hidden h-modal w-full overflow-y-auto overflow-x-hidden p-4 md:h-full" id="filterDropdown" method="get" tabindex="-1">
+                        <div class="relative h-full w-full max-w-2xl md:h-auto">
                             <!-- Modal content -->
-                            <div class="relative bg-white rounded-lg shadow">
+                            <div class="relative rounded-lg bg-white shadow">
                                 <!-- Modal header -->
-                                <div class="flex items-start justify-between px-6 py-4 rounded-t">
+                                <div class="flex items-start justify-between rounded-t px-6 py-4">
                                     <h3 class="text-lg font-semibold text-gray-500">
                                         Bộ lọc
                                     </h3>
-                                    <button type="button"
-                                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                                        data-modal-toggle="filterDropdown">
+                                    <button class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900" data-modal-toggle="filterDropdown" type="button">
                                         @svg('tabler-x', 'w-5 h-5')
                                     </button>
                                 </div>
@@ -67,11 +55,8 @@
                                         <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
                                             @foreach ($ranks as $rank)
                                                 <li class="flex items-center">
-                                                    <input type="checkbox" name="filter_rank[]" value="{{ $rank->id }}"
-                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-0"
-                                                        @if (in_array($rank->id, request()->input('filter_rank', []))) checked @endif>
-                                                    <label for="admin"
-                                                        class="ml-2 text-sm font-medium text-gray-900">{{ $rank->name }}</label>
+                                                    <input @if (in_array($rank->id, request()->input('filter_rank', []))) checked @endif class="text-primary-600 h-4 w-4 rounded border-gray-300 bg-gray-100 focus:ring-0" name="filter_rank[]" type="checkbox" value="{{ $rank->id }}">
+                                                    <label class="ml-2 text-sm font-medium text-gray-900" for="admin">{{ $rank->name }}</label>
                                                 </li>
                                             @endforeach
                                         </div>
@@ -79,8 +64,8 @@
                                 </div>
 
                                 <!-- Modal footer -->
-                                <div class="flex items-center p-6 space-x-4 rounded-b">
-                                    <button type="submit" class="button-red">
+                                <div class="flex items-center space-x-4 rounded-b p-6">
+                                    <button class="button-red" type="submit">
                                         Lọc dữ liệu
                                     </button>
                                 </div>
@@ -91,14 +76,14 @@
             </div>
         </div>
         <div class="overflow-x-auto">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-gray-700 uppercase bg-gray-50">
+            <table class="w-full text-left text-sm text-gray-500">
+                <thead class="bg-gray-50 uppercase text-gray-700">
                     <tr>
-                        <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-xs md:text-sm">Tài khoản</th>
-                        <th scope="col" class="px-0 py-0 lg:py-3 text-xs md:text-sm">Họ và tên</th>
-                        <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-center text-xs md:text-sm">Thứ hạng
-                        </th>
-                        <th scope="col" class="md:px-0 md:py-0 lg:px-4 lg:py-3 text-xs md:text-sm">
+                        <th class="text-xs md:px-0 md:py-0 md:text-sm lg:px-4 lg:py-3" scope="col">Tài khoản</th>
+                        <th class="px-0 py-0 text-xs md:text-sm lg:py-3" scope="col">Họ và tên</th>
+                        <th class="text-center text-xs md:px-0 md:py-0 md:text-sm lg:px-4 lg:py-3" scope="col">Thứ hạng</th>
+                        <th class="px-0 py-0 text-xs md:text-sm lg:py-3" scope="col">Điểm</th>
+                        <th class="text-xs md:px-0 md:py-0 md:text-sm lg:px-4 lg:py-3" scope="col">
                             <span class="sr-only">Actions</span>
                         </th>
                     </tr>
@@ -107,44 +92,39 @@
                     {{-- star item --}}
                     @forelse ($memberships as $membership)
                         <tr class="border-b hover:bg-gray-100">
-                            <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap mt-3">
+                            <td class="mt-3 flex items-center whitespace-nowrap px-4 py-2 text-gray-900">
                                 <a class="shrink-0" href="{{ route('admin.memberships.edit', $membership) }}">
-                                    <img loading="lazy"
-                                        src="{{ asset('storage/uploads/avatars/' . $membership->user->avatar) }}"
-                                        class="img-circle img-sm lg:w-11 lg:h-11 mr-3 rounded border-2 hover:border-[#D30A0A] object-cover">
+                                    <img class="img-circle img-sm mr-3 rounded border-2 object-cover hover:border-[#D30A0A] lg:h-11 lg:w-11" loading="lazy" src="{{ asset('storage/uploads/avatars/' . $membership->user->avatar) }}">
                                 </a>
-                                <a href="{{ route('admin.memberships.edit', $membership) }}" class="hover:text-[#D30A0A]">
+                                <a class="hover:text-[#D30A0A]" href="{{ route('admin.memberships.edit', $membership) }}">
                                     <div class="grid grid-flow-row">
                                         <span class="md:text-xs lg:text-sm">{{ $membership->user->username }}</span>
-                                        <span class=" text-gray-500">{{ $membership->user->email }}</span>
+                                        <span class="text-gray-500">{{ $membership->user->email }}</span>
                                     </div>
                                 </a>
                             </td>
-                            <td class="text-gray-900 whitespace-nowrap">{{ $membership->user->fullname }}
-                            </td>
-                            <td class="lg:px-4 lg:py-2 text-gray-900 whitespace-nowrap ">
-                                <div class="flex flex-col items-center ">
-                                    <img loading="lazy"
-                                        src="{{ asset('storage/uploads/ranks/' . $membership->rank->icon) }}"
-                                        class="img-circle w-8 h-8 object-contain">
-                                    <p
-                                        class="uppercase text-xs md:text-sm md:font-medium lg:font-semibold {{ $membership->rank->color }}">
+                            <td class="whitespace-nowrap text-gray-900">{{ $membership->user->fullname }}</td>
+                            <td class="whitespace-nowrap text-gray-900 lg:px-4 lg:py-2">
+                                <div class="flex flex-col items-center">
+                                    <img class="img-circle h-8 w-8 object-contain" loading="lazy" src="{{ asset('storage/uploads/ranks/' . $membership->rank->icon) }}">
+                                    <p class="{{ $membership->rank->color }} text-xs uppercase hidden md:inline-block md:font-medium lg:font-semibold">
                                         {{ $membership->rank->name }}</p>
                                 </div>
                             </td>
+                            <td class="whitespace-nowrap text-gray-900">
+                                <p class="mb-2">Tổng điểm: <span class="badge-default">{{ $membership->total_spent }}</span></p>
+                                <p>Điểm còn lại: <span class="badge-gray">{{ $membership->points }}</span></p>
+                            </td>
+                            
 
-                            <td class="lg:px-4 lg:py-3 items-center ">
-                                <button id="{{ $membership->id }}" data-dropdown-toggle="{{ $membership->id }}-dropdown"
-                                    class="items-center p-0.5 text-sm text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none hidden md:block"
-                                    type="button">
+                            <td class="items-center lg:px-4 lg:py-3">
+                                <button class="hidden items-center rounded-lg p-0.5 text-center text-sm text-gray-500 hover:text-gray-800 focus:outline-none md:block" data-dropdown-toggle="{{ $membership->id }}-dropdown" id="{{ $membership->id }}" type="button">
                                     @svg('tabler-dots', 'w-5 h-5')
                                 </button>
-                                <div id="{{ $membership->id }}-dropdown"
-                                    class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">
-                                    <ul class="py-1 text-sm text-gray-700" aria-labelledby="{{ $membership->id }}">
+                                <div class="z-10 hidden w-44 divide-y divide-gray-100 rounded bg-white shadow" id="{{ $membership->id }}-dropdown">
+                                    <ul aria-labelledby="{{ $membership->id }}" class="py-1 text-sm text-gray-700">
                                         <li>
-                                            <a href="{{ route('admin.memberships.edit', $membership) }}"
-                                                class="block py-2 px-4 hover:bg-gray-100">Chi tiết</a>
+                                            <a class="block px-4 py-2 hover:bg-gray-100" href="{{ route('admin.memberships.edit', $membership) }}">Chi tiết</a>
                                         </li>
 
                                     </ul>
@@ -153,10 +133,10 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center py-4 text-base">
-                                <div class="flex flex-col items-center justify-center  p-6 rounded-lg bg-white w-full h-80">
+                            <td class="py-4 text-center text-base" colspan="5">
+                                <div class="flex h-80 w-full flex-col items-center justify-center rounded-lg bg-white p-6">
                                     @svg('tabler-folder-cancel', 'w-20 h-20 text-gray-400')
-                                    <p class="mt-4 text-gray-500 text-sm">Dữ liệu trống</p>
+                                    <p class="mt-4 text-sm text-gray-500">Dữ liệu trống</p>
                                 </div>
                             </td>
                         </tr>

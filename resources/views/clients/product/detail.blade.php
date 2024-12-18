@@ -122,7 +122,7 @@
         {{-- Add to card bar --}}
         <div class="sticky bottom-16 w-full border-t bg-white p-4 transition md:px-32 lg:bottom-0">
             <div class="grid grid-cols-3 items-center justify-between">
-                @if ($product->status != 1)
+                @if ($product->status != 1 || $product->category->deleted_at != null)
                     <div>
                         <p class="text-sm text-[#D30A0A]">Sản phẩm đã tạm ngưng kinh doanh</p>
                     </div>
