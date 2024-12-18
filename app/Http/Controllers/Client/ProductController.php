@@ -66,7 +66,10 @@ class ProductController extends Controller
 
         $toppings = Topping::where('category_id', $product->category->id)->get();
 
-        $evaluations = Evaluation::where('product_id', $product->id)->orderByDesc('created_at')->paginate(5);
+        $evaluations = Evaluation::where('product_id', $product->id)
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->paginate(5);
 
         return view('clients.product.detail', [
             'product' => $product,
@@ -76,7 +79,6 @@ class ProductController extends Controller
             'favorites' => $favorites
         ]);
     }
-
 
 
     /**

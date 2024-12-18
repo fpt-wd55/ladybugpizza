@@ -33,7 +33,7 @@ class OrderController extends Controller
 
         // get address order
         $orders->map(function ($order) {
-            $order->province =  Province::find($order->address->province);
+            $order->province = Province::find($order->address->province);
             $order->district = District::find($order->address->district);
             $order->ward = Ward::find($order->address->ward);
             return $order;
@@ -58,11 +58,11 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
-    {
-        $orders = Order::find($id);
-        return view('admins.order.detail', compact('orders'));
-    }
+//    public function show($id)
+//    {
+//        $orders = Order::find($id);
+//        return view('admins.order.detail', compact('orders'));
+//    }
 
     /**
      * Show the form for editing the specified resource.
@@ -73,8 +73,8 @@ class OrderController extends Controller
 
         $statuses = OrderStatus::get();
 
-        // get address order 
-        $order->province =  Province::find($order->address->province);
+        // get address order
+        $order->province = Province::find($order->address->province);
         $order->district = District::find($order->address->district);
         $order->ward = Ward::find($order->address->ward);
 
@@ -91,11 +91,11 @@ class OrderController extends Controller
         $statuses = OrderStatus::pluck('slug')->toArray();
 
         $request->validate([
-            'status' => ['required', 'string', Rule::in($statuses)], 
+            'status' => ['required', 'string', Rule::in($statuses)],
         ], [
             'status.required' => 'Trạng thái không được để trống.',
             'status.string' => 'Trạng thái không hợp lệ.',
-            'status.in' => 'Trạng thái không hợp lệ.', 
+            'status.in' => 'Trạng thái không hợp lệ.',
         ]);
 
         $newStatus = OrderStatus::where('slug', $request->status)->first();
@@ -132,7 +132,7 @@ class OrderController extends Controller
 
         $order->save();
 
-        // Gửi email câp nhật trạng thái 
+        // Gửi email câp nhật trạng thái
         $userSetting = $order->user->setting;
         if ($userSetting->email_order) {
             switch ($newStatus->slug) {
@@ -145,7 +145,7 @@ class OrderController extends Controller
                 case 'confirmed':
                     if ($currentStatus->slug != 'confirmed') {
                         // Lấy thông tin địa chỉ
-                        $order->province =  Province::find($order->address->province);
+                        $order->province = Province::find($order->address->province);
                         $order->district = District::find($order->address->district);
                         $order->ward = Ward::find($order->address->ward);
                         $subject = 'Đơn hàng #' . $order->code . ' đã được xác nhận';
@@ -182,7 +182,6 @@ class OrderController extends Controller
         }
 
 
-
         return redirect()->back()->with('success', 'Cập nhật đơn hàng thành công.');
     }
 
@@ -209,7 +208,7 @@ class OrderController extends Controller
 
         if (isset($request->filter_amount_max)) {
             $query->where('amount', '<=', $request->filter_amount_max);
-        } 
+        }
 
         if (isset($request->filter_date_min)) {
             $query->whereDate('created_at', '>=', $request->filter_date_min);
@@ -223,7 +222,7 @@ class OrderController extends Controller
 
         // get address order
         $orders->map(function ($order) {
-            $order->province =  Province::find($order->address->province);
+            $order->province = Province::find($order->address->province);
             $order->district = District::find($order->address->district);
             $order->ward = Ward::find($order->address->ward);
             return $order;

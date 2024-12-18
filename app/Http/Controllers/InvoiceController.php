@@ -22,24 +22,24 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::where('invoice_number', $invoiceNumber)->first();
         $order = Order::where('id', $invoice->order_id)->first();
-        $orderItems = OrderItem::where('order_id', $order->id)->get();
-        $user = User::where('id', $order->user_id)->first();
+//        $orderItems = OrderItem::where('order_id', $order->id)->get();
+//        $user = User::where('id', $order->user_id)->first();
 
-        foreach ($orderItems as $orderItem) {
-            $orderItem->attributes = OrderItemAttribute::where('order_item_id', $orderItem->id)->get();
-            $orderItem->toppings = OrderItemTopping::where('order_item_id', $orderItem->id)->get();
-        }
+//        foreach ($orderItems as $orderItem) {
+//            $orderItem->attributes = OrderItemAttribute::where('order_item_id', $orderItem->id)->get();
+//            $orderItem->toppings = OrderItemTopping::where('order_item_id', $orderItem->id)->get();
+//        }
 
-        // get address order 
-        $order->province =  Province::find($order->address->province);
+        // get address order
+        $order->province = Province::find($order->address->province);
         $order->district = District::find($order->address->district);
         $order->ward = Ward::find($order->address->ward);
 
         return view('shared.invoice', [
             'invoice' => $invoice,
             'order' => $order,
-            'user' => $user,
-            'orderItems' => $orderItems,
+//            'user' => $user,
+//            'orderItems' => $orderItems,
         ]);
     }
 }
