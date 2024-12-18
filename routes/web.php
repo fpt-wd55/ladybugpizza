@@ -159,6 +159,8 @@ Route::prefix('/admin')->middleware(['admin', 'check_password_change'])->name('a
     Route::get('/order/filter', [AdminOrderController::class, 'filter'])->name('orders.filter');
     Route::get('/order/search', [AdminOrderController::class, 'search'])->name('orders.search');
     Route::get('/order/export', [AdminOrderController::class, 'export'])->name('orders.export');
+    Route::get('/order/search', [AdminOrderController::class, 'search'])->name('order.search');
+    
     // Product
     Route::resource('/products', AdminProductController::class);
     Route::post('product/bulk-action', [AdminProductController::class, 'bulkAction'])->name('products.bulkAction');

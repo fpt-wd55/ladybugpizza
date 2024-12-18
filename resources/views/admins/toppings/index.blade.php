@@ -46,7 +46,7 @@
                             <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
                                 @svg('tabler-search', 'w-5 h-5 text-gray-400')
                             </div>
-                            <input class="input ps-10" name="search" placeholder="Tìm kiếm..." type="text" />
+                            <input class="input ps-10" name="search" placeholder="Tìm kiếm..." type="text" value="{{ old('search', request('search')) }}"/>
                         </div>
                     </form>
                     <div class="flex w-full items-center md:w-auto">
