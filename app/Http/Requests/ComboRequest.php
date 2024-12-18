@@ -19,20 +19,23 @@ class ComboRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array {
-    $comboId = $this->route('combo')->id ?? null;
+    public function rules(): array
+    {
+        $comboId = $this->route('combo')->id ?? null;
 
-    return [
-        'name' => 'required|string|max:255|unique:products,name,' . $comboId . ',id',
-        'price' => 'required|numeric|min:0',
-        'discount_price' => 'nullable|numeric|min:0|lte:price',
-        'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-        'quantity' => 'required|integer|min:0',
-        'sku' => 'required|string|min:10|max:15|unique:products,sku,' . $comboId . ',id',
-        'description' => 'required|string',
-    ];
-}
-    public function messages(): array {
+        return [
+            'name' => 'required|string|max:255|unique:products,name,' . $comboId . ',id',
+            'price' => 'required|numeric|min:0',
+            'discount_price' => 'nullable|numeric|min:0|lte:price',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'quantity' => 'required|integer|min:0|max:9999',
+            'sku' => 'required|string|min:10|max:15|unique:products,sku,' . $comboId . ',id',
+            'description' => 'required|string',
+        ];
+    }
+
+    public function messages(): array
+    {
         return [
             'name.required' => 'Vui lòng nhập tên combo',
             'name.string' => 'Tên combo phải là chuỗi',
@@ -50,6 +53,7 @@ class ComboRequest extends FormRequest
             'quantity.required' => 'Vui lòng nhập số lượng',
             'quantity.integer' => 'Số lượng phải là số nguyên',
             'quantity.min' => 'Số lượng không được nhỏ hơn 0',
+            'quantity.max' => 'Số lượng không được vượt quá 9999',
             'sku.required' => 'Vui lòng nhập mã sản phẩm',
             'sku.string' => 'Mã sản phẩm phải là chuỗi',
             'sku.min' => 'Mã sản phẩm không được nhỏ hơn 10 ký tự',
