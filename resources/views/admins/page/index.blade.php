@@ -12,6 +12,14 @@
                     </h2>
                 </div>
                 <div class="flex flex-shrink-0 flex-col space-y-3 md:flex-row md:items-center md:space-x-3 md:space-y-0 lg:justify-end">
+                    <form action="{{ route('admin.page.search') }}" class="flex w-full md:w-40 lg:w-64">
+                        <div class="relative w-full">
+                            <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
+                                @svg('tabler-search', 'w-5 h-5 text-gray-400')
+                            </div>
+                            <input class="input ps-10" name="search" placeholder="Tìm kiếm..." type="text" value="{{ old('search', request('search')) }}"/>
+                        </div>
+                    </form>
                     <a class="button-blue" href="{{ route('admin.pages.create') }}">
                         @svg('tabler-plus', 'w-5 h-5 mr-2')
                         Thêm trang

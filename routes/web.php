@@ -215,6 +215,7 @@ Route::prefix('/admin')->middleware(['admin', 'check_password_change'])->name('a
     Route::post('/banner/restore/{id}', [BannerController::class, 'trashRestore'])->name('trash.bannerRestore');
     Route::post('/banner/delete/{id}', [BannerController::class, 'trashForce'])->name('trash.bannerDelete');
     Route::get('/banner/filter', [BannerController::class, 'filter'])->name('banner.filter');
+    Route::get('/banner/search', [BannerController::class, 'search'])->name('banner.search');
 
     // Promotion
     Route::resource('/promotions', PromotionController::class);
@@ -245,6 +246,8 @@ Route::prefix('/admin')->middleware(['admin', 'check_password_change'])->name('a
     Route::get('/page/restore/{id}', [AdminPageController::class, 'resPage'])->name('resPage');
     Route::delete('/page/forceDestroy/{id}', [AdminPageController::class, 'forceDestroy'])->name('forceDestroy.pages');
     Route::get('/page/export', [AdminPageController::class, 'export'])->name('page.export');
+    Route::get('/page/search', [AdminPageController::class, 'search'])->name('page.search');
+
 });
 
 // Share route
