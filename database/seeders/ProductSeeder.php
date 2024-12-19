@@ -447,13 +447,6 @@ class ProductSeeder extends Seeder
             ],
             'combo' => [
                 [
-                    'name' => 'Combo 2 Pizza + Pepsi - Ăn thả ga - Giá siêu rẻ',
-                    'description' => 'Pizza Hải sản Pesto Xanh, Pizza Chay, Coca Classic Lon 320ml',
-                    'price' => 399000,
-                    'discount_price' => 200000,
-                    'quantity' => rand(50, 150),
-                ],
-                [
                     'name' => 'Combo Sương Sương',
                     'description' => 'Pizza Sicilian, Pizza Mật Ong Nóng, Fanta Hương Cam Lon 320ml',
                     'price' => 399000,
@@ -486,48 +479,6 @@ class ProductSeeder extends Seeder
                     'description' => 'Pizza Napoli Loại 2, Fanta Hương Cam Lon 320ml',
                     'price' => 300000,
                     'discount_price' => 15000,
-                    'quantity' => rand(50, 150),
-                ],
-                [
-                    'name' => 'Combo Siêu To Khổng Lồ',
-                    'description' => 'Pizza Napoli Loại 1, Pizza Nấm Truffle, Pizza 4 Cheese, Pizza Gập Calzone',
-                    'price' => 250000,
-                    'discount_price' => 25000,
-                    'quantity' => rand(50, 150),
-                ],
-                [
-                    'name' => 'Gia Đình Vui Vẻ - Cả Nhà Cùng Vui',
-                    'description' => 'Pizza Dăm Bông Parma, Pizza Cà Tím',
-                    'price' => 450000,
-                    'discount_price' => 45000,
-                    'quantity' => rand(50, 150),
-                ],
-                [
-                    'name' => 'Cặp Đôi Yêu Thương - Ăn Là Phải Có Đôi',
-                    'description' => 'Pizza Capricciosa, Fanta Hương Soda Kem Lon 320ml',
-                    'price' => 450000,
-                    'discount_price' => 45000,
-                    'quantity' => rand(50, 150),
-                ],
-                [
-                    'name' => 'Năng Lượng Ngập Tràn - Đầy Đủ Chất',
-                    'description' => 'Pizza Xúc Xích Đức, Fanta Hương Nho Lon 320ml',
-                    'price' => 250000,
-                    'discount_price' => 45000,
-                    'quantity' => rand(50, 150),
-                ],
-                [
-                    'name' => 'Ăn Vặt Cuối Tuần - Nhâm Nhi Cả Ngày',
-                    'description' => 'Pizza Napoli Loại 2, Fanta Hương Cam Lon 320ml',
-                    'price' => 450000,
-                    'discount_price' => 0,
-                    'quantity' => rand(50, 150),
-                ],
-                [
-                    'name' => 'Mua 1 Tặng 1 - Tiết Kiệm Nhân Đôi',
-                    'description' => 'Pizza 5 Cheese, Pizza Marinara, Pizza Nấm Truffle Hảo Hạng',
-                    'price' => 300000,
-                    'discount_price' => 0,
                     'quantity' => rand(50, 150),
                 ],
             ]

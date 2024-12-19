@@ -13,9 +13,9 @@ class BannerSeeder extends Seeder
      */
     public function run(): void
     { 
-        for ($i = 1; $i <= 8; $i++) {
+        for ($i = 1; $i <= 4; $i++) {
             Banner::create([
-                'image' => 'banner_' . $i . '.webp',
+                'image' => 'banner_' . $i . '.jpeg',
                 'url' => null
             ]);
         }

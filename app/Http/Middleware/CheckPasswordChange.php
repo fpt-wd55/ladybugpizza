@@ -26,7 +26,6 @@ class CheckPasswordChange
                 if (!Hash::check($plainPassword, $user->password)) {
                     $user->remember_token = null;
                     $user->save();
-
                     session()->invalidate();
                     session()->regenerateToken();
                     Auth::logout();
@@ -38,6 +37,7 @@ class CheckPasswordChange
             if ($user->status == 2) {
                 session()->invalidate();
                 session()->regenerateToken();
+                $user->remember_token = null;
                 Auth::logout();
 
                 return redirect()->route('client.home')->with('error', 'Tài khoản của bạn đã bị vô hiệu hóa. Vui lòng đăng nhập bằng một tài khoản khác');
