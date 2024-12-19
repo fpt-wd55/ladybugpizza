@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             OpeningHourSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
+            UserSettingSeeder::class,
             AddressSeeder::class,
             CartSeeder::class,
             LogSeeder::class,
@@ -28,7 +29,7 @@ class DatabaseSeeder extends Seeder
             MembershipRankSeeder::class,
             MembershipSeeder::class,
             OrderStatusSeeder::class,
-            ProductSeeder::class, 
+            ProductSeeder::class,
             ToppingSeeder::class,
             PromotionSeeder::class,
             PromotionUserSeeder::class,
@@ -37,7 +38,6 @@ class DatabaseSeeder extends Seeder
             EvaluationSeeder::class,
             InvoiceSeeder::class,
             FaqSeeder::class,
-            UserSettingSeeder::class,
         ]);
     }
 }
