@@ -52,9 +52,9 @@
                                     class="text-red-500">*</span></label>
                             <div class="flex gap-3">
                                 <a class="shrink-0" data-fslightbox="gallery"
-                                   href="{{ asset('storage/uploads/combos/' . $combo->image) }}">
+                                   href="{{ asset('storage/uploads/products/' . $combo->image) }}">
                                     <img loading="lazy" class="w-20 h-20 rounded-md object-cover"
-                                         src="{{ asset('storage/uploads/combos/' . $combo->image) }}"
+                                         src="{{ asset('storage/uploads/products/' . $combo->image) }}"
                                          onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'">
                                 </a>
                                 <div class="flex items-center justify-center w-full mb-4">

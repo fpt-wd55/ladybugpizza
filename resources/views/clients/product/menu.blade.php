@@ -20,12 +20,12 @@
                     <div class="no-scrollbar flex w-full items-center gap-4 overflow-x-auto">
                         @foreach ($combos as $combo)
                             <a class="product-card relative flex w-full flex-shrink-0 overflow-hidden md:w-2/3" href="{{ route('client.product.show', $combo->slug) }}">
-                                <img alt="" class="h-60 w-1/2 flex-shrink-0 object-cover" class="mr-3 h-8 w-8 rounded bg-slate-400 object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/combos/' . $combo->image) }}">
+                                <img alt="" class="h-60 w-1/2 flex-shrink-0 object-cover" class="mr-3 h-8 w-8 rounded bg-slate-400 object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $combo->image) }}">
                                 <div class="p-4">
                                     <p class="mb-2 text-sm font-semibold md:text-base">{{ $combo->name }}</p>
                                     <ul class="list-disc space-y-1 ps-4 text-xs md:text-sm">
                                         @foreach (explode(',', $combo->description) as $item)
-                                            <li>{{ trim($item) }}</li>
+                                            <li>{!! trim($item) !!}</li>
                                         @endforeach
                                     </ul>
                                     <div class="absolute bottom-4 right-5 flex items-center gap-3">

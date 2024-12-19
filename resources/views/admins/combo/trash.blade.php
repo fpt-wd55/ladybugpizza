@@ -75,8 +75,8 @@
                         </td>
                         <td class="flex items-center px-4 py-2 text-gray-900 whitespace-nowrap shrink-0">
                             <a class="shrink-0" data-fslightbox="gallery"
-                               href="{{ asset('storage/uploads/combos/' . $combo->image) }}">
-                                <img loading="lazy" src="{{ asset('storage/uploads/combos/' . $combo->image) }}"
+                               href="{{ asset('storage/uploads/products/' . $combo->image) }}">
+                                <img loading="lazy" src="{{ asset('storage/uploads/products/' . $combo->image) }}"
                                      onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
                                      class="w-8 h-8 mr-3 rounded bg-slate-400 object-cover">
                             </a>

@@ -164,8 +164,8 @@
                                 </div>
                             </td>
                             <td class="flex shrink-0 items-center whitespace-nowrap px-4 py-2 text-gray-900">
-                                <a class="shrink-0" data-fslightbox="gallery" href="{{ asset('storage/uploads/combos/' . $combo->image) }}">
-                                    <img class="mr-3 h-8 w-8 rounded bg-slate-400 object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/combos/' . $combo->image) }}">
+                                <a class="shrink-0" data-fslightbox="gallery" href="{{ asset('storage/uploads/products/' . $combo->image) }}">
+                                    <img class="mr-3 h-8 w-8 rounded bg-slate-400 object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $combo->image) }}">
                                 </a>
                                 <div class="grid grid-flow-row">
                                     <a class="text-sm hover:text-red-600" href="{{ route('admin.combos.edit', $combo) }}">{{ $combo->name }}</a>

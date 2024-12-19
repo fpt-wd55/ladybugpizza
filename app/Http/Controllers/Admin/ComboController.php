@@ -51,7 +51,7 @@ class ComboController extends Controller
         ];
         if (Product::create($data)) {
             if (isset($image)) {
-                $image->storeAs('public/uploads/combos', $image_name);
+                $image->storeAs('public/uploads/products', $image_name);
             }
 
             return redirect()->route('admin.combos.index')->with('success', 'Thêm combo thành công');
@@ -95,9 +95,9 @@ class ComboController extends Controller
 
         if ($combo->update($data)) {
             if ($request->hasFile('image')) {
-                $image->storeAs('public/uploads/combos', $image_name);
-                if (file_exists(storage_path('app/public/uploads/combos/' . $old_image))) {
-                    unlink(storage_path('app/public/uploads/combos/' . $old_image));
+                $image->storeAs('public/uploads/products', $image_name);
+                if (file_exists(storage_path('app/public/uploads/products/' . $old_image))) {
+                    unlink(storage_path('app/public/uploads/products/' . $old_image));
                 }
             }
 
@@ -165,8 +165,8 @@ class ComboController extends Controller
                 if ($forceCombo) {
                     if ($forceCombo->image != null) {
                         try {
-                            if (file_exists(storage_path('app/public/uploads/combos/' . $old_image))) {
-                                unlink(storage_path('app/public/uploads/combos/' . $old_image));
+                            if (file_exists(storage_path('app/public/uploads/products/' . $old_image))) {
+                                unlink(storage_path('app/public/uploads/products/' . $old_image));
                             }
                         } catch (\Exception $e) {
                             return redirect()->back()->with('error', 'Đã có lỗi xảy ra');
