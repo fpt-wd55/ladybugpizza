@@ -25,9 +25,12 @@
                             <a class="{{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }} inline-block rounded-t-lg border-b-2 pb-2"
                                href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }}
                             </a>
-                            <span class="badge-noti -top-2">
-                                {{ $status->orders_count > 0 ? $status->orders_count : 0 }}
-                            </span>
+                            {{--                            <span class="badge-noti -top-2">--}}
+                            {{--                                {{ $status->orders_count > 0 ? $status->orders_count : 0 }}--}}
+                            {{--                            </span>--}}
+                            @if($status->orders_count > 0)
+                                <span class="badge-noti -top-2"> {{$status->orders_count}} </span>
+                            @endif
                         </li>
                     @endforeach
                 </ul>

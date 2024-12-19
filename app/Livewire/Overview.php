@@ -12,15 +12,23 @@ class Overview extends Component
 {
     public function render()
     {
-        // Lấy tất cả các đơn hàng và tính tổng doanh thu
-        $totalRevenue = Order::all()->reduce(function ($carry, $order) {
-            return $carry + $order->total(); // Tính tổng doanh thu
-        }, 0);
+        // Lấy tất cả các đơn hàng và tính tổng doanh thu trong năm
+
+        $totalRevenue = Order::all()
+            ->where('order_status_id', 5)
+            ->where('created_at', '>=', now()->startOfYear())
+            ->reduce(function ($carry, $order) {
+                return $carry + $order->total(); // Tính tổng doanh thu
+            }, 0);
+
+        $countOrders = Order::all()
+            ->where('created_at', '>=', now()->startOfYear())
+            ->count();
 
         // Lấy số lượng của từng mô hình và tổng doanh thu
         $overview = collect([
             'totalRevenue' => $totalRevenue, // Đưa tổng doanh thu vào
-            'orders' => Order::count(),
+            'orders' => $countOrders, // Đưa số lượng đơn hàng vào
             'users' => User::count(),
             'products' => Product::count(),
             'categories' => Category::count(),
@@ -33,7 +41,6 @@ class Overview extends Component
                 'icon' => 'tabler-wallet',
                 'count' => number_format($overview['totalRevenue']) . ' VNĐ',
             ],
-
             [
                 'route' => route('admin.orders.index'),
                 'label' => 'Đơn hàng',
@@ -58,7 +65,7 @@ class Overview extends Component
                 'icon' => 'tabler-category',
                 'count' => $overview['categories'],
             ],
-            
+
         ];
 
         return view('livewire.overview', [
