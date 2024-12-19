@@ -32,7 +32,7 @@ class OrderSeeder extends Seeder
         $attributes = AttributeValue::all();
         $toppings = Topping::all();
 
-        $startDate = Carbon::create(2022, 1, 1);
+        $startDate = Carbon::create(2024, 1, 1);
         $currentDate = Carbon::now();
 
         $dates = [];
@@ -45,15 +45,15 @@ class OrderSeeder extends Seeder
         foreach ($dates as $dateValue) {
             $created_at = Carbon::parse($dateValue)->startOfDay();
             $updated_at = $created_at;
-            $dailyOrderCount = random_int(1, 15);
+            $dailyOrderCount = random_int(1, 10);
             for ($i = 1; $i <= $dailyOrderCount; $i++) {
                 $user = $users->random();
                 $address = Address::where('user_id', $user->id)->first();
                 $order_status_id = $orderStatuses->random()->id;
                 $canceled_at = $order_status_id == 5 ? $created_at : null;
                 $cancelled_reason = $order_status_id == 6 ? $faker->text : null;
-                Order::insert([
-                    'code' => 'LDB' . $faker->unique()->numberBetween(1000, 9999),
+                $order = Order::create([
+                    'code' => 'LDB' . $faker->unique()->numberBetween(1000000000, 9999999999),
                     'user_id' => $user->id,
                     'fullname' => $user->fullname,
                     'phone' => $user->phone,
@@ -72,12 +72,12 @@ class OrderSeeder extends Seeder
                     'created_at' => $created_at,
                     'updated_at' => $updated_at,
                 ]);
-                $orderItemCount = random_int(1, 5);
-                for ($j = 1; $j <= $orderItemCount; $j++) {
+
+                for ($j = 1; $j <= 3; $j++) {
                     $orderItem = OrderItem::create([
-                        'order_id' => $i,
+                        'order_id' => $order->id,
                         'product_id' => $products->random()->id,
-                        'quantity' => random_int(1, 5),
+                        'quantity' => random_int(1, 3),
                         'price' => random_int(100, 500) * 1000,
                         'created_at' => $created_at,
                         'updated_at' => $updated_at,
