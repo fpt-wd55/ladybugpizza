@@ -55,10 +55,10 @@ class CheckCartQuantity
                     }
                 }
             } else {
-                if ($product->quantity <= 0) {
+                if ($product->quantity != null && $product->quantity <= 0) {
                     return redirect()->route('client.cart.index')->with('error', $product->name . ' đã hết hàng');
                 }
-                if ($item->quantity > $product->quantity) {
+                if ($product->quantity != null && $item->quantity > $product->quantity) {
                     return redirect()->route('client.cart.index')->with('error', $product->name . ' chỉ còn ' . $product->quantity . ' sản phẩm');
                 }
             }
@@ -66,10 +66,10 @@ class CheckCartQuantity
             // Check topping
             if ($item->toppings->isNotEmpty()) {
                 foreach ($item->toppings as $topping) {
-                    if ($topping->quantity <= 0) {
+                    if ($topping->quantity != null && $topping->quantity <= 0) {
                         return redirect()->route('client.cart.index')->with('error', $product->name . ' - ' . $topping->name . ' đã hết hàng');
                     }
-                    if ($item->quantity > $topping->quantity) {
+                    if ($topping->quantity != null && $item->quantity > $topping->quantity) {
                         return redirect()->route('client.cart.index')->with('error', $product->name . ' - ' . $topping->name . ' chỉ còn ' . $topping->quantity . ' sản phẩm');
                     }
                 }

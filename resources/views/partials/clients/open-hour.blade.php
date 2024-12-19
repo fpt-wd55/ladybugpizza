@@ -40,8 +40,7 @@
         console.log(popupTimestamp);
         const currentTime = new Date().getTime();
 
-        // Kiểm tra nếu đã lưu thời gian và nó chưa quá 30 phút
-        if (!popupTimestamp || currentTime - popupTimestamp > 30 * 60 * 1000) {
+        if (!popupTimestamp || currentTime - popupTimestamp > 60 * 60 * 1000) {
             const response = await fetch('/api/is-open');
             const data = await response.json();
             if (!data.isOpen) {

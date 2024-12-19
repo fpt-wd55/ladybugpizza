@@ -278,10 +278,10 @@ class CartController extends Controller
                 }
             }
         } else {
-            if ($product->quantity <= 0) {
+            if ($product->quantity != null && $product->quantity <= 0) {
                 return ['error' => $product->name . ' đã hết hàng'];
             }
-            if ($validated['quantity'] > $product->quantity) {
+            if ($product->quantity != null && $validated['quantity'] > $product->quantity) {
                 return ['error' => $product->name . ' chỉ còn ' . $product->quantity . ' sản phẩm'];
             }
         }
@@ -290,10 +290,10 @@ class CartController extends Controller
         if (isset($validated['toppings'])) {
             foreach ($validated['toppings'] as $topping) {
                 $topping = Topping::find($topping);
-                if ($topping->quantity <= 0) {
+                if ($topping->quantity != null && $topping->quantity <= 0) {
                     return ['error' => $topping->name . ' đã hết hàng'];
                 }
-                if ($validated['quantity'] > $topping->quantity) {
+                if ($topping->quantity != null && $validated['quantity'] > $topping->quantity) {
                     return ['error' => $topping->name . ' chỉ còn ' . $topping->quantity . ' sản phẩm'];
                 }
             }
