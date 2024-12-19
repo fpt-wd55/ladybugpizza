@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             UserSettingSeeder::class,
+            BannerSeeder::class,
+            FaqSeeder::class,
             AddressSeeder::class,
             CartSeeder::class,
             LogSeeder::class,
@@ -34,10 +36,8 @@ class DatabaseSeeder extends Seeder
             PromotionSeeder::class,
             PromotionUserSeeder::class,
             OrderSeeder::class,
-            BannerSeeder::class,
             EvaluationSeeder::class,
             InvoiceSeeder::class,
-            FaqSeeder::class,
         ]);
     }
 }

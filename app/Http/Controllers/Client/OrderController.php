@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Vanthao03596\HCVN\Models\District;
 use Vanthao03596\HCVN\Models\Province;
 use App\Http\Requests\EvaluationRequest;
-use App\Mail\Order as MailOrder; 
+use App\Mail\Order as MailOrder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 
@@ -32,19 +32,20 @@ class OrderController extends Controller
         $redirectHome = $this->checkUser();
         if ($redirectHome) {
             return $redirectHome;
-        }
+        }   
+
         $status = $request->get('tab');
         $userId = Auth::id();
-        $orders = Order::when($status, function ($query, $status) {
-            return $query->whereHas('orderStatus', function ($q) use ($status) {
-                $q->where('slug', $status);
-            });
-        })
+        $orders = Order::query()
+            ->when($status, function ($query, $status) {
+                return $query->whereHas('orderStatus', function ($q) use ($status) {
+                    $q->where('slug', $status);
+                });
+            })
             ->where('user_id', $userId)
             ->orderByDesc('created_at')
-            ->get();
+            ->get(); 
 
-        // get address order
         $orders->map(function ($order) {
             $order->province =  Province::find($order->address->province);
             $order->district = District::find($order->address->district);
