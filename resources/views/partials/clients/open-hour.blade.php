@@ -1,5 +1,5 @@
 <div id="popup-open-hour"
-    class="hidden inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 w-full h-[calc(100%-1rem)] max-h-full">
+    class="hidden inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 w-full h-[calc(100%-1rem)] h-full">
     <div class="relative p-4 w-full max-w-5xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow">
@@ -40,7 +40,7 @@
         console.log(popupTimestamp);
         const currentTime = new Date().getTime();
 
-        // Kiểm tra nếu đã lưu thời gian và nó chưa quá 30 phút 
+        // Kiểm tra nếu đã lưu thời gian và nó chưa quá 30 phút
         if (!popupTimestamp || currentTime - popupTimestamp > 30 * 60 * 1000) {
             const response = await fetch('/api/is-open');
             const data = await response.json();
