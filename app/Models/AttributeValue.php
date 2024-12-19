@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AttributeValue extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'attribute_id',
@@ -33,7 +33,7 @@ class AttributeValue extends Model
         $priceProduct = $product->discount_price == 0 ? $product->price : $product->discount_price;
         return round(($this->price_type == 1 ? $this->price : ($this->price * $priceProduct) / 100) / 1000) * 1000;
     }
-    
+
     public function cartItemAttributes()
     {
         return $this->hasMany(CartItemAttribute::class);

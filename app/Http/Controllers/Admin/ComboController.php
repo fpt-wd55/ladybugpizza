@@ -107,16 +107,19 @@ class ComboController extends Controller
             return redirect()->back()->with('error', 'Cập nhật combo thất bại');
         }
     }
+
     public function destroy(Product $combo)
     {
         if ($combo->delete()) {
-
+            $combo->status = 2;
+            $combo->save();
             return redirect()->back()->with('success', 'Xóa combo thành công');
         } else {
 
             return redirect()->back()->with('error', 'Xóa combo thất bại');
         }
     }
+
     public function trashCombo()
     {
         $categories = Category::where('status', 1)->get();
@@ -156,6 +159,7 @@ class ComboController extends Controller
         $action = $request->input('action');
 
         if ($action == 'delete') {
+            Product::whereIn('id', $selectedIds)->update(['status' => 2]);
             Product::whereIn('id', $selectedIds)->delete();
             return redirect()->back()->with('success', 'Xóa combo thành công');
         } else if ($action == 'force_delete') {

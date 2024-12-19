@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('price')->nullable();
             $table->integer('price_type')->nullable()->comment('1: Fixed, 2: Percentage, Phần trăm tính theo giá trị của sản phẩm');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
