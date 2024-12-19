@@ -269,6 +269,8 @@ class AttributeController extends Controller
     public function destroy(Attribute $attribute)
     {
         $attribute->delete();
+        $attribute->status = 2;
+        $attribute->save();
         return redirect()->back()->with(['success' => 'Xóa thuộc tính thành công']);
     }
 
@@ -312,9 +314,5 @@ class AttributeController extends Controller
     public function export()
     {
         $this->exportExcel(Attribute::all(), 'danhsachthuoctinh');
-    }
-
-    public function bulkAction(Request $request)
-    {
     }
 }

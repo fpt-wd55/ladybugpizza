@@ -236,6 +236,7 @@ class ProductController extends Controller
         $action = $request->input('action');
 
         if ($action == 'delete') {
+            Product::whereIn('id', $selectedIds)->update(['status' => 2]);
             Product::whereIn('id', $selectedIds)->delete();
             return redirect()->back()->with('success', 'Xóa sản phẩm thành công');
         } else if ($action == 'force_delete') {

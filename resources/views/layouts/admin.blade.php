@@ -23,7 +23,7 @@
         href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Berkshire+Swash&family=Dancing+Script:wght@400..700&family=Vujahday+Script&display=swap"
         rel="stylesheet">
     {{-- TinyMCE --}}
-    <script src="https://cdn.tiny.cloud/1/{{ env('TINYMCE_KEY') }}/tinymce/7/tinymce.min.js"
+    <script src="https://cdn.tiny.cloud/1/dc4c0baezq9fir5yzl4mz7zy4jw5e7ffsoiwo2h4uk0j5d89/tinymce/7/tinymce.min.js"
             referrerpolicy="origin"></script>
     <script>
         tinymce.init({
