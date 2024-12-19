@@ -419,7 +419,6 @@ class CheckoutController extends Controller
     function sendPaymentConfirmationEmail($order)
     {
         $userSetting = UserSetting::where('user_id', $order->user_id)->first();
-        dd($userSetting);
         if ($userSetting->email_order) {
             // Lấy thông tin địa chỉ
             $order->province = Province::find($order->address->province);
