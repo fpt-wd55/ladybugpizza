@@ -33,7 +33,7 @@ class Product extends Model
         return $this->belongsTo(Category::class)->withTrashed();
     }
 
-    public function evalutions()
+    public function evaluations()
     {
         return $this->hasMany(Evaluation::class);
     }

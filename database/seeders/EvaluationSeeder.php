@@ -43,12 +43,13 @@ class EvaluationSeeder extends Seeder
             'Chưa hài lòng! Sản phẩm chất lượng tạm ổn, giá cả hợp lý, giao hàng chậm. Tôi không hài lòng với sản phẩm này.',
         ];
 
-        foreach ($products as $product) {
+        foreach ($products as $productId) {
             for ($i = 0; $i <= 5; $i++) {
                 $comment = $faker->randomElement($comments);
+
                 Evaluation::insert([
                     'user_id' => $users->random()->id,
-                    'product_id' => $product,
+                    'product_id' => $productId,
                     'order_id' => $orders->random()->id,
                     'rating' => rand(3, 5),
                     'comment' => $comment,
@@ -56,7 +57,8 @@ class EvaluationSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);
-                $product = Product::find($product);
+
+                $product = Product::find($productId);
                 $product->total_rating += 1;
                 $product->avg_rating = $product->total_rating / $product->evaluations->count();
                 $product->save();
