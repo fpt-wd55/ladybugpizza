@@ -77,7 +77,7 @@ class StatisticRevenueOne extends Component
                 'startDateStatisticRevenueOne.required' => 'Vui lòng chọn ngày bắt đầu',
                 'startDateStatisticRevenueOne.date' => 'Ngày bắt đầu không hợp lệ',
                 'endDateStatisticRevenueOne.required' => 'Vui lòng chọn ngày kết thúc',
-                'endDateStatisticRevenueOne.date' => 'Ngày kết thuc không hợp lệ',
+                'endDateStatisticRevenueOne.date' => 'Ngày kết thúc không hợp lệ',
                 'endDateStatisticRevenueOne.after_or_equal' => 'Ngày kết thúc phải nhỏ hơn hoặc bằng ngày bắt đầu',
             ]
         );
@@ -110,13 +110,14 @@ class StatisticRevenueOne extends Component
         foreach ($dataTimes as $time) {
             $query = DB::table('orders');
             if ($timeRange === 'year') {
-                $query->whereYear('completed_at', Carbon::parse($time)->year)
-                    ->whereMonth('completed_at', Carbon::parse($time)->month)
-                    ->groupBy(DB::raw('YEAR(completed_at), MONTH(completed_at)'));
+                $query->whereYear('created_at', Carbon::parse($time)->year)
+                    ->whereMonth('created_at', Carbon::parse($time)->month)
+                    ->groupBy(DB::raw('YEAR(created_at), MONTH(created_at)'));
             } else {
-                $query->whereDate('completed_at', $time)
-                    ->groupBy(DB::raw('DATE(completed_at)'));
+                $query->whereDate('created_at', $time)
+                    ->groupBy(DB::raw('DATE(created_at)'));
             }
+            $query->where('order_status_id', 5);
             $this->revenueDataStatisticRevenueOne[] = (int)$query->sum('amount');
             $this->orderDataStatisticRevenueOne[] = $query->count();
         }
