@@ -1,5 +1,5 @@
 <div id="popup-open-hour"
-    class="hidden inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 w-full h-[calc(100%-1rem)] max-h-full">
+    class="hidden inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 w-full h-[calc(100%-1rem)] h-full">
     <div class="relative p-4 w-full max-w-5xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow">

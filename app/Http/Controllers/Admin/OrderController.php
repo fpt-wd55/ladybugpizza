@@ -58,11 +58,11 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-//    public function show($id)
-//    {
-//        $orders = Order::find($id);
-//        return view('admins.order.detail', compact('orders'));
-//    }
+    //    public function show($id)
+    //    {
+    //        $orders = Order::find($id);
+    //        return view('admins.order.detail', compact('orders'));
+    //    }
 
     /**
      * Show the form for editing the specified resource.
@@ -239,4 +239,58 @@ class OrderController extends Controller
         $invoices = Invoice::all();
         return view('admins.order.index', compact('orders', 'invoices', 'orderStatuses', 'paymentMethods'));
     }
+
+    public function search(Request $request)
+    {
+        $status = $request->get('tab');
+        $search = $request->get('search'); 
+    
+        // Lọc đơn hàng theo trạng thái và tìm kiếm
+        $orders = Order::query()
+            ->when($status, function ($query, $status) {
+                // Lọc theo trạng thái đơn hàng
+                $query->whereHas('orderStatus', function ($query) use ($status) {
+                    $query->where('slug', $status);
+                });
+            })
+            ->when($search, function ($query) use ($search) {
+                // Tìm kiếm theo từ khóa
+                $query->where(function ($query) use ($search) {
+                    //tìm theo tổng số tiền
+                    $query->whereRaw("amount + shipping_fee - discount_amount LIKE ?", ['%' . $search . '%'])
+                          // Tìm theo các trường khác 
+                          ->orWhere('fullname', 'like', '%' . $search . '%') 
+                          ->orWhere('code', 'like', '%' . $search . '%')
+                          // tìm theo địa chỉ
+                          ->orWhereHas('address', function ($query) use ($search) {
+                              $query->where('detail_address', 'like', '%' . $search . '%') 
+                                    ->orWhere('province', 'like', '%' . $search . '%')
+                                    ->orWhere('district', 'like', '%' . $search . '%')
+                                    ->orWhere('ward', 'like', '%' . $search . '%');
+                          });
+                });
+            })
+            ->latest('id')
+            ->paginate(10); 
+        
+        // Thêm dữ liệu tỉnh, huyện, xã vào đơn hàng
+        $orders->map(function ($order) {
+            $order->province = Province::find($order->address->province);
+            $order->district = District::find($order->address->district);
+            $order->ward = Ward::find($order->address->ward);
+            return $order;
+        });
+    
+
+        $orderStatuses = OrderStatus::withCount(['orders'])->get();
+        $totalOrders = Order::count();
+        $paymentMethods = PaymentMethod::all();
+        $invoices = Invoice::all();
+        
+        // Trả về view với dữ liệu đã tìm kiếm
+        return view('admins.order.index', compact('orders', 'invoices', 'orderStatuses', 'paymentMethods', 'totalOrders'));
+    }
+    
+    
+    
 }
