@@ -10,8 +10,7 @@
             <div class="no-scrollbar mb-4 overflow-x-auto border-b border-gray-200 text-left text-sm">
                 <ul class="flex gap-2">
                     <li class="relative mx-4 me-6 mt-3 min-w-fit">
-                        <a class="{{ request()->routeIs('client.order.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A]' : 'border-transparent' }} inline-block rounded-t-lg border-b-2 pb-2"
-                           href="{{ route('client.order.index') }}">
+                        <a class="{{ request()->routeIs('client.order.index') && request('tab') === null ? 'border-[#D30A0A] text-[#D30A0A]' : 'border-transparent' }} inline-block rounded-t-lg border-b-2 pb-2" href="{{ route('client.order.index') }}">
                             Tất cả
                         </a>
                         @if ($orderStatuses->sum('orders_count') > 0)
@@ -22,8 +21,7 @@
                     </li>
                     @foreach ($orderStatuses as $status)
                         <li class="relative me-6 mt-3 min-w-fit">
-                            <a class="{{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }} inline-block rounded-t-lg border-b-2 pb-2"
-                               href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }}
+                            <a class="{{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }} inline-block rounded-t-lg border-b-2 pb-2" href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }}
                             </a>
                             {{--                            <span class="badge-noti -top-2">--}}
                             {{--                                {{ $status->orders_count > 0 ? $status->orders_count : 0 }}--}}
@@ -51,7 +49,8 @@
                             <dt class="text-sm text-gray-500">Ngày đặt hàng:
                             </dt>
                             <dd class="mt-1.5 text-base font-semibold text-gray-900">
-                                {{ $order->created_at }}</dd>
+                                {{ $order->created_at }}
+                            </dd>
                         </dl>
 
                         <dl class="w-1/2 sm:w-1/4 lg:w-auto lg:flex-1">
@@ -77,8 +76,7 @@
 
                                     $colorClass = $colorClasses[$order->orderStatus->color] ?? 'bg-gray-500';
                                 @endphp
-                                <span
-                                    class="{{ $colorClass }} me-2 mt-1.5 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white">
+                                <span class="{{ $colorClass }} me-2 mt-1.5 inline-flex shrink-0 items-center rounded px-2.5 py-0.5 text-xs font-medium text-white">
                                     {{ $order->orderStatus->name }}
                                 </span>
                             </dd>
@@ -86,16 +84,13 @@
 
                         <div class="grid w-full gap-2 sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end">
                             @if ($order->orderStatus->slug == 'waiting')
-                                <button class="button-red w-full" data-modal-target="cancelOrder-modal-{{ $order->id }}"
-                                        data-modal-toggle="cancelOrder-modal-{{ $order->id }}" type="button">Huỷ
+                                <button class="button-red w-full" data-modal-target="cancelOrder-modal-{{ $order->id }}" data-modal-toggle="cancelOrder-modal-{{ $order->id }}" type="button">Huỷ
                                     đơn hàng
                                 </button>
                             @endif
 
                             @if ($order->orderStatus->slug == 'delivered')
-                                <button class="button-red w-full"
-                                        data-modal-target="confirmReceived-modal-{{ $order->id }}"
-                                        data-modal-toggle="confirmReceived-modal-{{ $order->id }}" type="button">
+                                <button class="button-red w-full" data-modal-target="confirmReceived-modal-{{ $order->id }}" data-modal-toggle="confirmReceived-modal-{{ $order->id }}" type="button">
                                     Đã nhận hàng
                                 </button>
                             @endif
@@ -103,15 +98,11 @@
                             @if ($order->orderStatus->slug === 'completed')
                                 <div class="flex items-center gap-2">
                                     @if ($order->evaluations->isEmpty())
-                                        <button class="button-red w-full"
-                                                data-modal-target="reviewOrder-modal-{{ $order->id }}"
-                                                data-modal-toggle="reviewOrder-modal-{{ $order->id }}" type="button">
+                                        <button class="button-red w-full" data-modal-target="reviewOrder-modal-{{ $order->id }}" data-modal-toggle="reviewOrder-modal-{{ $order->id }}" type="button">
                                             @svg('tabler-star', 'w-4 h-4')
                                         </button>
                                     @endif
-                                    <a class="button-light w-full" target="_blank"
-                                       href="{{ route('invoices.show', $order->invoice->invoice_number) }}"
-                                       type="button">
+                                    <a class="button-light w-full" href="{{ route('invoices.show', $order->invoice->invoice_number) }}" target="_blank" type="button">
                                         @svg('tabler-file-invoice', 'w-4 h-4')
                                     </a>
                                 </div>
@@ -124,14 +115,10 @@
                     </div>
 
                     {{-- Đã nhận được hàng --}}
-                    <div
-                        class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0"
-                        id="confirmReceived-modal-{{ $order->id }}" tabindex="-1">
+                    <div class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0" id="confirmReceived-modal-{{ $order->id }}" tabindex="-1">
                         <div class="relative max-h-full w-full max-w-md p-4">
                             <div class="relative rounded-lg bg-white shadow">
-                                <button
-                                    class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
-                                    data-modal-hide="confirmReceived-modal-{{ $order->id }}" type="button">
+                                <button class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900" data-modal-hide="confirmReceived-modal-{{ $order->id }}" type="button">
                                     @svg('tabler-x', 'w-4 h-4')
                                 </button>
                                 <div class="p-10 text-center">
@@ -142,8 +129,7 @@
                                         Bạn có chắc chắn đã nhận được hàng?
                                     </h3>
 
-                                    <form action="{{ route('client.order.received', $order) }}"
-                                          class="flex items-center justify-center" method="POST">
+                                    <form action="{{ route('client.order.received', $order) }}" class="flex items-center justify-center" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <button class="button-red" type="submit">
@@ -156,15 +142,10 @@
                     </div>
 
                     {{-- Hủy đơn hàng --}}
-                    <div
-                        class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0"
-                        id="cancelOrder-modal-{{ $order->id }}" tabindex="-1">
-                        <div
-                            class="card max-h-sm md:max-h-sm lg:max-h-lg relative max-w-[350px] md:max-w-[500px] lg:max-w-lg">
+                    <div class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0" id="cancelOrder-modal-{{ $order->id }}" tabindex="-1">
+                        <div class="card max-h-sm md:max-h-sm lg:max-h-lg relative max-w-[350px] md:max-w-[500px] lg:max-w-lg">
                             <div class="relative rounded-lg bg-white shadow">
-                                <button
-                                    class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
-                                    data-modal-hide="cancelOrder-modal-{{ $order->id }}" type="button">
+                                <button class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900" data-modal-hide="cancelOrder-modal-{{ $order->id }}" type="button">
                                     @svg('tabler-x', 'w-4 h-4')
                                 </button>
                                 {{-- lý do hủy --}}
@@ -181,61 +162,40 @@
                                         @method('PUT')
 
                                         <div class="mb-2">
-                                            <input class="mr-1 text-[#D30A0A] focus:ring-0" name="cancelled_reason"
-                                                   onchange="toggleTextarea({{ $order->id }}, false)" type="radio"
-                                                   value="1">
+                                            <input class="mr-1 text-[#D30A0A] focus:ring-0" name="cancelled_reason" onchange="toggleTextarea({{ $order->id }}, false)" type="radio" value="1">
                                             <label class="text-sm">Muốn thay đổi địa chỉ giao hàng</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input class="mr-1 text-[#D30A0A] focus:ring-0" name="cancelled_reason"
-                                                   onchange="toggleTextarea({{ $order->id }}, false)" type="radio"
-                                                   value="2">
+                                            <input class="mr-1 text-[#D30A0A] focus:ring-0" name="cancelled_reason" onchange="toggleTextarea({{ $order->id }}, false)" type="radio" value="2">
                                             <label class="text-sm">Muốn nhập/thay đổi mã Voucher</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input class="mr-1 text-[#D30A0A] focus:ring-0" name="cancelled_reason"
-                                                   onchange="toggleTextarea({{ $order->id }}, false)" type="radio"
-                                                   value="3">
+                                            <input class="mr-1 text-[#D30A0A] focus:ring-0" name="cancelled_reason" onchange="toggleTextarea({{ $order->id }}, false)" type="radio" value="3">
                                             <label class="text-sm">Muốn thay đổi sản phẩm trong đơn hàng (size,
                                                 topping,...)</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input class="mr-1 text-[#D30A0A] focus:ring-0" name="cancelled_reason"
-                                                   onchange="toggleTextarea({{ $order->id }}, false)" type="radio"
-                                                   value="4">
+                                            <input class="mr-1 text-[#D30A0A] focus:ring-0" name="cancelled_reason" onchange="toggleTextarea({{ $order->id }}, false)" type="radio" value="4">
                                             <label class="text-sm">Thủ tục thanh toán quá rắc rối</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input class="mr-1 text-[#D30A0A] focus:ring-0" name="cancelled_reason"
-                                                   onchange="toggleTextarea({{ $order->id }}, false)" type="radio"
-                                                   value="5">
+                                            <input class="mr-1 text-[#D30A0A] focus:ring-0" name="cancelled_reason" onchange="toggleTextarea({{ $order->id }}, false)" type="radio" value="5">
                                             <label class="text-sm">Tìm thấy giá rẻ hơn ở chỗ khác</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input class="mr-1 text-[#D30A0A] focus:ring-0" name="cancelled_reason"
-                                                   onchange="toggleTextarea({{ $order->id }}, false)" type="radio"
-                                                   value="6">
+                                            <input class="mr-1 text-[#D30A0A] focus:ring-0" name="cancelled_reason" onchange="toggleTextarea({{ $order->id }}, false)" type="radio" value="6">
                                             <label class="text-sm">Đổi ý, không muốn mua nữa</label>
                                         </div>
                                         <div class="mb-2">
-                                            <input class="mr-1 text-[#D30A0A] focus:ring-0"
-                                                   id="otherReason-{{ $order->id }}" name="cancelled_reason"
-                                                   onchange="toggleTextarea({{ $order->id }}, true)" type="radio"
-                                                   value="7">
+                                            <input class="mr-1 text-[#D30A0A] focus:ring-0" id="otherReason-{{ $order->id }}" name="cancelled_reason" onchange="toggleTextarea({{ $order->id }}, true)" type="radio" value="7">
                                             <label class="text-sm" for="otherReason-{{ $order->id }}">Lý do khác
                                                 :</label>
                                             <div>
-                                                <textarea
-                                                    class="mt-2 w-full rounded-lg border-gray-200 shadow-sm sm:text-sm"
-                                                    disabled
-                                                    id="OrderNotes-{{ $order->id }}" name="reason"
-                                                    placeholder="Nhập lý do..." rows="4"></textarea>
+                                                <textarea class="mt-2 w-full rounded-lg border-gray-200 shadow-sm sm:text-sm" disabled id="OrderNotes-{{ $order->id }}" name="reason" placeholder="Nhập lý do..." rows="4"></textarea>
                                             </div>
                                         </div>
                                         <div class="mt-4 flex justify-between">
-                                            <button button class="button-gray"
-                                                    data-modal-hide="cancelOrder-modal-{{ $order->id }}"
-                                                    type="button">Không Phải Bây Giờ
+                                            <button button class="button-gray" data-modal-hide="cancelOrder-modal-{{ $order->id }}" type="button">Không Phải Bây Giờ
                                             </button>
                                             <button class="button-red" type="submit">Hủy Đơn Hàng</button>
                                         </div>
@@ -246,14 +206,10 @@
                     </div>
 
                     {{-- Đánh giá đơn hàng --}}
-                    <div
-                        class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0"
-                        id="reviewOrder-modal-{{ $order->id }}" tabindex="-1">
+                    <div class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full overflow-y-auto overflow-x-hidden p-4 md:inset-0" id="reviewOrder-modal-{{ $order->id }}" tabindex="-1">
                         <div class="card relative max-h-full w-full max-w-4xl">
                             <div class="relative rounded-lg bg-white">
-                                <button
-                                    class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
-                                    data-modal-hide="reviewOrder-modal-{{ $order->id }}" type="button">
+                                <button class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900" data-modal-hide="reviewOrder-modal-{{ $order->id }}" type="button">
                                     @svg('tabler-x', 'w-4 h-4')
                                 </button>
                                 <div class="rounded-lg bg-white p-5 shadow-md">
@@ -261,19 +217,14 @@
 
                                     <div class="grid grid-cols-1 gap-4">
                                         <!-- Hiển thị các sản phẩm sau khi đã nhóm -->
-                                        <form action="{{ route('client.order.evaluation', $order) }}"
-                                              enctype="multipart/form-data" method="POST">
+                                        <form action="{{ route('client.order.evaluation', $order) }}" enctype="multipart/form-data" method="POST">
                                             @csrf
                                             @foreach ($order->orderItems as $orderItem)
                                                 <div class="mb-4 rounded-lg border-2 border-gray-300 p-5">
                                                     <div class="product-card relative w-auto overflow-hidden text-sm">
                                                         <div class="flex w-full items-center justify-between">
                                                             <div class="flex gap-4">
-                                                                <img alt="" class="h-auto w-24 object-cover"
-                                                                     class="mr-3 h-8 w-8 rounded bg-slate-400 object-cover"
-                                                                     loading="lazy"
-                                                                     onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
-                                                                     src="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
+                                                                <img alt="" class="h-auto w-24 object-cover" class="mr-3 h-8 w-8 rounded bg-slate-400 object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
                                                                 <div class="py-2 text-left md:min-w-[300px]">
                                                                     <p class="mb-2 font-medium">
                                                                         {{ $orderItem->product->name }}
@@ -296,38 +247,28 @@
                                                     <div class="form-rating-{{ $orderItem->product->id }}">
                                                         {{-- Đánh giá sao --}}
                                                         @error('ratings.' . $orderItem->product->id)
-                                                        <p class="mt-3 text-center text-sm text-[#D30A0A]">
-                                                            {{ $message }}</p>
+                                                            <p class="mt-3 text-center text-sm text-[#D30A0A]">
+                                                                {{ $message }}
+                                                            </p>
                                                         @enderror
-                                                        <div class="my-3 flex items-center justify-center"
-                                                             id="rating-star-{{ $orderItem->product->id }}" F>
+                                                        <div F class="my-3 flex items-center justify-center" id="rating-star-{{ $orderItem->product->id }}">
                                                             <div class="rating-group inline-flex hover:text-[#D30A0A]">
                                                                 @for ($i = 1; $i <= 5; $i++)
-                                                                    <label aria-label="{{ $i }} star"
-                                                                           class="rating__label cursor-pointer p-1"
-                                                                           for="rating_{{ $orderItem->product->id }}_{{ $i }}">
-                                                                        <i
-                                                                            class="rating__icon--star pointer-events-none text-[#D30A0A] group-hover:text-[#D30A0A]">
+                                                                    <label aria-label="{{ $i }} star" class="rating__label cursor-pointer p-1" for="rating_{{ $orderItem->product->id }}_{{ $i }}">
+                                                                        <i class="rating__icon--star pointer-events-none text-[#D30A0A] group-hover:text-[#D30A0A]">
                                                                             @svg('tabler-star-filled', 'icon-lg')
                                                                         </i>
                                                                     </label>
-                                                                    <input @if ($i === 5) checked @endif
-                                                                    class="rating__input"
-                                                                           id="rating_{{ $orderItem->product->id }}_{{ $i }}"
-                                                                           name="ratings[{{ $orderItem->product->id }}]"
-                                                                           type="radio" value="{{ $i }}"/>
+                                                                    <input @if ($i === 5) checked @endif class="rating__input" id="rating_{{ $orderItem->product->id }}_{{ $i }}" name="ratings[{{ $orderItem->product->id }}]" type="radio" value="{{ $i }}" />
                                                                 @endfor
                                                             </div>
                                                         </div>
                                                         {{-- Comment --}}
                                                         <div class="mb-4">
-                                                            <textarea class="text-area resize-none text-sm"
-                                                                      name="comments[{{ $orderItem->product->id }}]"
-                                                                      placeholder="Viết đánh giá..."
-                                                                      rows="6"></textarea>
+                                                            <textarea class="text-area resize-none text-sm" name="comments[{{ $orderItem->product->id }}]" placeholder="Viết đánh giá..." rows="6"></textarea>
                                                             @error('comments.' . $orderItem->product->id)
-                                                            <p class="pt-2 text-sm text-[#D30A0A]">{{ $message }}
-                                                            </p>
+                                                                <p class="pt-2 text-sm text-[#D30A0A]">{{ $message }}
+                                                                </p>
                                                             @enderror
                                                         </div>
                                                     </div>
@@ -350,8 +291,7 @@
                         <hr class="my-4">
                         @if ($order->orderStatus->name === 'completed' && $order->invoice)
                             <div class="mb-4 flex">
-                                <a class="button-red"
-                                   href="{{ route('invoices.show', $order->invoice->invoice_number) }}">Xem hóa
+                                <a class="button-red" href="{{ route('invoices.show', $order->invoice->invoice_number) }}">Xem hóa
                                     đơn</a>
                             </div>
                         @endif
@@ -363,7 +303,8 @@
                                     <p>{{ $order->user->phone }}</p>
                                     <p>{{ $order->address->detail_address }}</p>
                                     <p>{{ $order->ward->name_with_type }}, {{ $order->district->name_with_type }},
-                                        {{ $order->province->name_with_type }}</p>
+                                        {{ $order->province->name_with_type }}
+                                    </p>
                                     @if ($order->notes)
                                         <p><strong>Ghi chú :</strong> {{ $order->notes }}</p>
                                     @endif
@@ -381,34 +322,31 @@
                                 @foreach ($order->orderItems as $orderItem)
                                     <a href="{{ route('client.product.show', $orderItem->product->slug) }}">
                                         <div class="product-card relative w-auto overflow-hidden">
-                                            <div class="flex w-full items-center justify-between">
-                                                <div class="flex gap-4">
-                                                    <img alt="" class="h-auto w-24 object-cover"
-                                                         class="mr-3 h-8 w-8 rounded bg-slate-400 object-cover"
-                                                         loading="lazy"
-                                                         onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
-                                                         src="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
-                                                    <div class="py-2 text-left md:min-w-[300px]">
-                                                        <p class="mb-2 font-medium">{{ $orderItem->product->name }}
-                                                            <span
-                                                                class="ps-2 text-[#D30A0A]">x{{ $orderItem->quantity }}</span>
-                                                        </p>
-                                                        <div class="mb-4 text-sm">
-                                                            @if ($orderItem->atrributeValues->count() > 0)
-                                                                <p>{{ $orderItem->atrributeValues->map->value->join(', ') }}
-                                                                </p>
-                                                            @endif
-                                                            @if ($orderItem->toppingValues->count() > 0)
-                                                                <p>Topping:
-                                                                    {{ $orderItem->toppingValues->map->name->join(', ') }}
-                                                                </p>
-                                                            @endif
+                                            <div class="flex h-24">
+                                                <img alt="" class="h-full w-24 bg-slate-400 object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
+                                                <div class="p-2 w-full">
+                                                    <div class="mb-2 flex items-center justify-between">
+                                                        <div class="flex items-center gap-2">
+                                                            <p class="font-medium">{{ $orderItem->product->name }}</p>
+                                                            <span class="text-red-600">x{{ $orderItem->quantity }}</span>
                                                         </div>
+                                                        <div>
+                                                            <p class="font-medium text-red-600">{{ number_format($orderItem->quantity * $orderItem->price) }}₫</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 text-sm">
+                                                        @if ($orderItem->atrributeValues->count() > 0)
+                                                            <p>{{ $orderItem->atrributeValues->map->value->join(', ') }}
+                                                            </p>
+                                                        @endif
+                                                        @if ($orderItem->toppingValues->count() > 0)
+                                                            <p>Topping:
+                                                                {{ $orderItem->toppingValues->map->name->join(', ') }}
+                                                            </p>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
-                                            <span
-                                                class="absolute bottom-0 right-0 p-2 font-medium text-[#D30A0A]">{{ number_format($orderItem->quantity * $orderItem->price) }}₫</span>
                                         </div>
                                     </a>
                                 @endforeach
