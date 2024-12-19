@@ -32,7 +32,7 @@ class OrderController extends Controller
         $redirectHome = $this->checkUser();
         if ($redirectHome) {
             return $redirectHome;
-        }   
+        }
 
         $status = $request->get('tab');
         $userId = Auth::id();
@@ -44,10 +44,10 @@ class OrderController extends Controller
             })
             ->where('user_id', $userId)
             ->orderByDesc('created_at')
-            ->get(); 
+            ->paginate(10);
 
         $orders->map(function ($order) {
-            $order->province =  Province::find($order->address->province);
+            $order->province = Province::find($order->address->province);
             $order->district = District::find($order->address->district);
             $order->ward = Ward::find($order->address->ward);
             return $order;
@@ -146,7 +146,7 @@ class OrderController extends Controller
         ];
         Invoice::create($dataInvoice);
 
-        // Gửi email cảm ơn 
+        // Gửi email cảm ơn
         $userSetting = $order->user->setting;
         if ($userSetting->email_order) {
             Mail::to($order->email)->send(new MailOrder($order, 'Cảm ơn bạn đã mua hàng tại cửa hàng chúng tôi', 'mails.orders.completed'));

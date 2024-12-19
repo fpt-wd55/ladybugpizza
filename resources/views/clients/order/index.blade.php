@@ -83,8 +83,10 @@
 
                         <div class="grid w-full gap-2 sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end">
                             @if ($order->orderStatus->slug == 'waiting')
-                                <button class="button-red w-full" data-modal-target="cancelOrder-modal-{{ $order->id }}" data-modal-toggle="cancelOrder-modal-{{ $order->id }}" type="button">Huỷ
-                                    đơn hàng</button>
+                                <button class="button-red w-full" data-modal-target="cancelOrder-modal-{{ $order->id }}"
+                                        data-modal-toggle="cancelOrder-modal-{{ $order->id }}" type="button">Huỷ
+                                    đơn hàng
+                                </button>
                             @endif
 
                             @if ($order->orderStatus->slug == 'delivered')
@@ -104,10 +106,10 @@
                                             @svg('tabler-star', 'w-4 h-4')
                                         </button>
                                     @endif
-                                    <a class="button-light w-full"
+                                    <a class="button-light w-full" target="_blank"
                                        href="{{ route('invoices.show', $order->invoice->invoice_number) }}"
                                        type="button">
-                                        @svg('tabler-printer', 'w-4 h-4')
+                                        @svg('tabler-file-invoice', 'w-4 h-4')
                                     </a>
                                 </div>
                             @endif
@@ -385,7 +387,9 @@
                                                          src="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
                                                     <div class="py-2 text-left md:min-w-[300px]">
                                                         <p class="mb-2 font-medium">{{ $orderItem->product->name }}
-                                                            <span class="ps-2 text-[#D30A0A]">x{{ $orderItem->quantity }}</span></p>
+                                                            <span
+                                                                class="ps-2 text-[#D30A0A]">x{{ $orderItem->quantity }}</span>
+                                                        </p>
                                                         <div class="mb-4 text-sm">
                                                             @if ($orderItem->atrributeValues->count() > 0)
                                                                 <p>{{ $orderItem->atrributeValues->map->value->join(', ') }}
@@ -456,7 +460,9 @@
                     <p class="text-center">Đơn hàng của bạn đang trống</p>
                 </div>
             @endforelse
-
+            <div class="p-4">
+                {{ $orders->onEachSide(1)->appends(request()->query())->links() }}
+            </div>
         </div>
     </div>
 
