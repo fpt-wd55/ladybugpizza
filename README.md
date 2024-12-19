@@ -71,7 +71,7 @@ npm run dev
 
 php artisan serve
 
-php schedule:work
+php artisan schedule:work
 ```
 
 9. Truy cập trang web:
