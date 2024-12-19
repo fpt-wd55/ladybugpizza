@@ -15,45 +15,35 @@ class StatisticProductTwo extends Component
 
     public function mount()
     {
-        $this->updateTopProduct('mostPurchased', 'month');
+        $this->updateTopProduct('mostPurchased', 'day');
         $this->nameSelectedTopProduct = 'Sản phẩm có lượt mua nhiều nhất';
         $this->selectedTopProduct = 'mostPurchased';
-        $this->selectedTimeTopProduct = 'month';
+        $this->selectedTimeTopProduct = 'day';
     }
 
     public function updateTopProduct($period, $time)
     {
         $timeRange = $this->getTimeRange($time);
         $this->selectedTopProduct = $period;
+        $this->topProducts = [];
         switch ($period) {
             case 'mostPurchased':
                 $this->nameSelectedTopProduct = 'Sản phẩm có lượt mua nhiều nhất';
-                $this->topProducts = Product::withCount('orderItems')
-                    ->whereDate('created_at', '>=', $timeRange[0])
-                    ->whereDate('created_at', '<=', $timeRange[1])
-                    ->orderBy('order_items_count', 'desc')
-                    ->limit(10)
-                    ->get();
-                break;
+                // Lấy ra 10 sản phẩm có "lượt mua" nhiều nhất trong khoảng thời gian đã chọn, điều kiện đơn hàng orders.status = đã hoàn thành
 
-            case 'mostInStock':
-                $this->nameSelectedTopProduct = 'Sản phẩm tồn kho nhiều nhất';
-                $datas = DB::table('products as p')
-                    ->leftJoin('categories as c', 'p.category_id', '=', 'c.id')
-                    ->leftJoin('attributes as a', 'a.category_id', '=', 'c.id')
-                    ->leftJoin('attribute_values as av', 'av.attribute_id', '=', 'a.id')
-                    ->select(
-                        'p.id',
-                        DB::raw('IFNULL(SUM(av.quantity), p.quantity) as total')
-                    )
-                    ->whereBetween('p.created_at', $timeRange)
-                    ->groupBy('p.id', 'p.quantity')
-                    ->orderBy('total', 'desc')
+                $datas = Product::join('order_items', 'products.id', '=', 'order_items.product_id')
+                    ->join('orders', 'order_items.order_id', '=', 'orders.id')
+                    ->where('orders.order_status_id', 5)
+                    ->whereBetween('orders.created_at', $timeRange)
+                    ->select('products.id', DB::raw('SUM(order_items.quantity) as total_quantity'))
+                    ->groupBy('products.id')
+                    ->orderByDesc('total_quantity')
                     ->limit(10)
                     ->get();
+//                dd($datas);
                 foreach ($datas as $data) {
                     $product = Product::find($data->id);
-                    $product->total_quantity = $data->total;
+                    $product->total_quantity = $data->total_quantity;
                     $this->topProducts[] = $product;
                 }
                 break;

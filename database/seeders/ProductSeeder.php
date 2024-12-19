@@ -55,7 +55,7 @@ class ProductSeeder extends Seeder
                     'price' => 45000,
                     'discount_price' => 0,
                     'quantity' => rand(50, 150),
-                ], 
+                ],
                 [
                     'name' => 'Tart Chocolate',
                     'description' => 'Bánh tart với vỏ giòn và nhân sô-cô-la đen mịn, một món tráng miệng hấp dẫn cho các dịp đặc biệt.',
@@ -241,7 +241,7 @@ class ProductSeeder extends Seeder
                     'price' => 200000,
                     'discount_price' => 65000,
                     'quantity' => null,
-                ], 
+                ],
                 [
                     'name' => 'Pizza Marinara',
                     'description' => 'Pizza Marinara mang hương vị biển cả tươi mới, với tôm, mực, và sò điệp trên lớp đế bánh giòn tan, phủ sốt cà chua ngọt chua hài hòa. Hương thơm của tỏi, dầu ô liu, và húng quế tươi làm tăng thêm sức hút cho món ăn này. Một lựa chọn tuyệt vời cho những tín đồ hải sản hoặc những dịp đặc biệt cùng gia đình và bạn bè.',
@@ -447,13 +447,6 @@ class ProductSeeder extends Seeder
             ],
             'combo' => [
                 [
-                    'name' => 'Combo 2 Pizza + Pepsi - Ăn thả ga - Giá siêu rẻ',
-                    'description' => 'Pizza Hải sản Pesto Xanh, Pizza Chay, Coca Classic Lon 320ml',
-                    'price' => 399000,
-                    'discount_price' => 200000,
-                    'quantity' => rand(50, 150),
-                ],
-                [
                     'name' => 'Combo Sương Sương',
                     'description' => 'Pizza Sicilian, Pizza Mật Ong Nóng, Fanta Hương Cam Lon 320ml',
                     'price' => 399000,
@@ -488,48 +481,6 @@ class ProductSeeder extends Seeder
                     'discount_price' => 15000,
                     'quantity' => rand(50, 150),
                 ],
-                [
-                    'name' => 'Combo Siêu To Khổng Lồ',
-                    'description' => 'Pizza Napoli Loại 1, Pizza Nấm Truffle, Pizza 4 Cheese, Pizza Gập Calzone',
-                    'price' => 250000,
-                    'discount_price' => 25000,
-                    'quantity' => rand(50, 150),
-                ],
-                [
-                    'name' => 'Gia Đình Vui Vẻ - Cả Nhà Cùng Vui',
-                    'description' => 'Pizza Dăm Bông Parma, Pizza Cà Tím',
-                    'price' => 450000,
-                    'discount_price' => 45000,
-                    'quantity' => rand(50, 150),
-                ],
-                [
-                    'name' => 'Cặp Đôi Yêu Thương - Ăn Là Phải Có Đôi',
-                    'description' => 'Pizza Capricciosa, Fanta Hương Soda Kem Lon 320ml',
-                    'price' => 450000,
-                    'discount_price' => 45000,
-                    'quantity' => rand(50, 150),
-                ],
-                [
-                    'name' => 'Năng Lượng Ngập Tràn - Đầy Đủ Chất',
-                    'description' => 'Pizza Xúc Xích Đức, Fanta Hương Nho Lon 320ml',
-                    'price' => 250000,
-                    'discount_price' => 45000,
-                    'quantity' => rand(50, 150),
-                ],
-                [
-                    'name' => 'Ăn Vặt Cuối Tuần - Nhâm Nhi Cả Ngày',
-                    'description' => 'Pizza Napoli Loại 2, Fanta Hương Cam Lon 320ml',
-                    'price' => 450000,
-                    'discount_price' => 0,
-                    'quantity' => rand(50, 150),
-                ],
-                [
-                    'name' => 'Mua 1 Tặng 1 - Tiết Kiệm Nhân Đôi',
-                    'description' => 'Pizza 5 Cheese, Pizza Marinara, Pizza Nấm Truffle Hảo Hạng',
-                    'price' => 300000,
-                    'discount_price' => 0,
-                    'quantity' => rand(50, 150),
-                ],
             ]
         ];
 
@@ -553,8 +504,8 @@ class ProductSeeder extends Seeder
                     'sku' => $sku,
                     'status' => 1,
                     'is_featured' => rand(0, 1),
-                    'avg_rating' => rand(1, 5),
-                    'total_rating' => rand(0, 100),
+                    'avg_rating' => 0,
+                    'total_rating' => 0,
                 ]);
             }
         }
