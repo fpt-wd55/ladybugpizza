@@ -19,10 +19,6 @@
                                         class="block px-4 py-2 hover:bg-gray-100">Sản phẩm có lượt mua nhiều nhất</a>
                                 </li>
                                 <li>
-                                    <a href="#" wire:click.prevent="updateSelection('product', 'mostInStock')"
-                                        class="block px-4 py-2 hover:bg-gray-100">Sản phẩm tồn kho nhiều nhất</a>
-                                </li>
-                                <li>
                                     <a href="#" wire:click.prevent="updateSelection('product', 'mostReviewed')"
                                         class="block px-4 py-2 hover:bg-gray-100">Sản phẩm có <strong>lượt</strong> đánh
                                         giá cao nhất</a>

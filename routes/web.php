@@ -45,7 +45,6 @@ use Vanthao03596\HCVN\Models\Ward;
 |
 */
 
-
 Route::prefix('/')->middleware('check_password_change')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('client.home');
     Route::get('/menu', [ProductController::class, 'menu'])->name('client.product.menu');
