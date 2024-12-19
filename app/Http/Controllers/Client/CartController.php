@@ -278,10 +278,10 @@ class CartController extends Controller
                 }
             }
         } else {
-            if ($product->quantity <= 0) {
+            if ($product->quantity != null && $product->quantity <= 0) {
                 return ['error' => $product->name . ' đã hết hàng'];
             }
-            if ($validated['quantity'] > $product->quantity) {
+            if ($product->quantity != null && $validated['quantity'] > $product->quantity) {
                 return ['error' => $product->name . ' chỉ còn ' . $product->quantity . ' sản phẩm'];
             }
         }
