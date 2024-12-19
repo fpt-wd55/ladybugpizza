@@ -25,9 +25,9 @@
                     <div class="relative h-56 overflow-hidden rounded-3xl md:h-[560px]">
                         <!-- Item 1 -->
                         @foreach ($banners as $banner)
-                            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                            <a class="hidden duration-700 ease-in-out" data-carousel-item href="{{ $banner->url ? url($banner->url) : '#' }}" {{ $banner->is_local_page == 2 ? 'target="_blank"' : '' }}>
                                 <img class="absolute left-1/2 top-1/2 block w-full -translate-x-1/2 -translate-y-1/2" src="{{ asset('storage/uploads/banners/' . $banner->image) }}">
-                            </div>
+                            </a>
                         @endforeach
                     </div>
                     <!-- Slider controls -->
@@ -118,7 +118,7 @@
                         <div class="">
                             <p class="font-semibold">Phục vụ cả ngày</p>
                             <p class="">Từ {{ $todayOpeningHour->open_time }} đến {{ $todayOpeningHour->close_time }} </p>
-                            <span onclick="showPopup()" class="text-red-600 text-sm hover:cursor-pointer hover:underline">Xem giờ mở cửa</span>
+                            <span class="text-sm text-red-600 hover:cursor-pointer hover:underline" onclick="showPopup()">Xem giờ mở cửa</span>
                             <p class="mb-8">Xin lưu ý rằng gọi món lần cuối là 30 phút trước giờ đóng cửa</p>
                         </div>
                     </div>
