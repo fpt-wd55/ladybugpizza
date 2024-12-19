@@ -32,7 +32,7 @@ class OrderSeeder extends Seeder
         $attributes = AttributeValue::all();
         $toppings = Topping::all();
 
-        $startDate = Carbon::create(2024, 1, 1);
+        $startDate = Carbon::create(2023, 1, 1);
         $currentDate = Carbon::now();
 
         $dates = [];

@@ -13,8 +13,8 @@ class OpeningHourController extends Controller
     public function index()
     {
         $openingHours = OpeningHour::all();
-        $startPeriod = Carbon::parse('05:00');
-        $endPeriod   = Carbon::parse('23:00');
+        $startPeriod = Carbon::parse('00:05');
+        $endPeriod   = Carbon::parse('23:55');
 
         $period = CarbonPeriod::create($startPeriod, '5 minutes', $endPeriod);
         $hours  = [];
