@@ -20,6 +20,7 @@ use App\Models\Product;
 use App\Models\Promotion;
 use App\Models\PromotionUser;
 use App\Models\Topping;
+use App\Models\UserSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -29,6 +30,9 @@ use Vanthao03596\HCVN\Models\Ward;
 
 class CheckoutController extends Controller
 {
+    private $vnp_TmnCode = 'AK72QHWH'; // Mã Website
+    private $vnp_HashSecret = 'SDRMIJ3OV1WDCATPVIMOVDA4LB7S1IQF';
+
     public function checkout()
     {
         if (session('promotion')) {
@@ -139,6 +143,7 @@ class CheckoutController extends Controller
 
         // Thanh toán
         if ($request->payment_method_id == 1) {
+            /*// Start Momo
             $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
             $partnerCode = 'MOMOBKUN20180529';
             $accessKey = 'klm05TvNBzhg7h7j';
@@ -175,6 +180,79 @@ class CheckoutController extends Controller
             $jsonResult = json_decode($result, true);  // decode json
 
             return redirect($jsonResult['payUrl']);
+            //End Momo*/
+
+            // get key from env
+            $vnp_TmnCode = $this->vnp_TmnCode;
+            $vnp_HashSecret = $this->vnp_HashSecret;
+            $vnp_Url = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html'; // URL thanh toán của VNPAY
+            $vnp_ReturnUrl = route('return_vnpay'); // URL nhận kết quả trả về
+
+            // Thông tin đơn hàng, thanh toán
+            $vnp_TxnRef = $data['code'];
+            $vnp_OrderInfo = 'Thanh toán đơn hàng ' . $data['code'];
+            $vnp_Amount = $data['amount'] + $data['shipping_fee'] - $data['discount_amount'];
+            $vnp_Locale = 'vn';
+            $vnp_BankCode = 'NCB';  // Mã ngân hàng
+
+            // Tạo input data để gửi sang VNPay server
+            $inputData = array(
+                "vnp_Version" => "2.1.0",
+                "vnp_TmnCode" => $vnp_TmnCode,
+                "vnp_Amount" => (int)$vnp_Amount * 100,
+                "vnp_Command" => "pay",
+                "vnp_CreateDate" => date('YmdHis'),
+                "vnp_CurrCode" => "VND",
+                "vnp_IpAddr" => $request->ip(),
+                "vnp_Locale" => $vnp_Locale,
+                "vnp_OrderInfo" => $vnp_OrderInfo,
+                "vnp_OrderType" => 'billpayment',
+                "vnp_ReturnUrl" => $vnp_ReturnUrl,
+                "vnp_TxnRef" => $vnp_TxnRef,
+            );
+
+            // Kiểm tra nếu mã ngân hàng đã được thiết lập và không rỗng
+            if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+                $inputData['vnp_BankCode'] = $vnp_BankCode;
+            }
+
+            // Kiểm tra nếu thông tin tỉnh/thành phố hóa đơn đã được thiết lập và không rỗng
+            if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+                $inputData['vnp_Bill_State'] = $vnp_Bill_State; // Gán thông tin tỉnh/thành phố hóa đơn vào mảng dữ liệu input
+            }
+
+            ksort($inputData);
+
+            $query = ""; // Biến lưu trữ chuỗi truy vấn (query string)
+            $i = 0; // Biến đếm để kiểm tra lần đầu tiên
+            $hashdata = ""; // Biến lưu trữ dữ liệu để tạo mã băm (hash data)
+
+            // Duyệt qua từng phần tử trong mảng dữ liệu input
+            foreach ($inputData as $key => $value) {
+                if ($i == 1) {
+                    // Nếu không phải lần đầu tiên, thêm ký tự '&' trước mỗi cặp key=value
+                    $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+                } else {
+                    // Nếu là lần đầu tiên, không thêm ký tự '&'
+                    $hashdata .= urlencode($key) . "=" . urlencode($value);
+                    $i = 1; // Đánh dấu đã qua lần đầu tiên
+                }
+                // Xây dựng chuỗi truy vấn
+                $query .= urlencode($key) . "=" . urlencode($value) . '&';
+            }
+
+            // Gán chuỗi truy vấn vào URL của VNPay
+            $vnp_Url = $vnp_Url . "?" . $query;
+
+            // Kiểm tra nếu chuỗi bí mật hash secret đã được thiết lập
+            if (isset($vnp_HashSecret)) {
+                // Tạo mã băm bảo mật (Secure Hash) bằng cách sử dụng thuật toán SHA-512 với hash secret
+                $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
+                // Thêm mã băm bảo mật vào URL để đảm bảo tính toàn vẹn của dữ liệu
+                $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+            }
+
+            return redirect($vnp_Url);
         } else {
             // Tạo đơn hàng
             $order = $this->createOrder(session('orderData'));
@@ -185,14 +263,48 @@ class CheckoutController extends Controller
         }
     }
 
-    private function isValidPromotion($promotion)
+    public function returnVnPay(Request $request)
+    {
+        $vnp_SecureHash = $request->vnp_SecureHash;
+        $inputData = $request->all();
+
+        unset($inputData['vnp_SecureHash']);
+        ksort($inputData);
+        $hashData = "";
+        foreach ($inputData as $key => $value) {
+            $hashData .= urlencode($key) . "=" . urlencode($value) . '&';
+        }
+        $hashData = rtrim($hashData, '&');
+
+        $secureHash = hash_hmac('sha512', $hashData, $this->vnp_HashSecret);
+
+        if ($secureHash === $vnp_SecureHash) {
+            if ($request->vnp_ResponseCode == '00') {
+                // Tạo đơn hàng
+                $order = $this->createOrder(session('orderData'));
+                // Gửi mail thông báo đặt hàng
+                $this->sendPaymentConfirmationEmail($order);
+
+                return redirect()->route('thank_you', $order->code);
+            } else {
+                return redirect()->route('client.order.index')->with('error', 'Thanh toán đơn hàng thất bại');
+            }
+        } else {
+            // Dữ liệu không hợp lệ
+            return redirect()->route('client.order.index')->with('error', 'Dữ liệu không hợp lệ');
+        }
+    }
+
+    private
+    function isValidPromotion($promotion)
     {
         $check = PromotionUser::where('promotion_id', $promotion->id)->where('user_id', Auth::id())->first();
 
         return $check && $promotion->status == 1 && $promotion->start_date <= now() && $promotion->end_date >= now();
     }
 
-    private function createOrder($orderData)
+    private
+    function createOrder($orderData)
     {
         $order = Order::create($orderData);
         if ($order) {
@@ -263,7 +375,8 @@ class CheckoutController extends Controller
         return $order;
     }
 
-    public function returnMomo(Request $request)
+    public
+    function returnMomo(Request $request)
     {
         // Kiểm tra nếu yêu cầu đến từ IPN (callback server)
         if ($request->has('transId')) {
@@ -288,7 +401,8 @@ class CheckoutController extends Controller
         return redirect()->route('client.order.index');
     }
 
-    public function thankYou($order)
+    public
+    function thankYou($order)
     {
         $order = Order::where('code', $order)->first();
         // Lấy thông tin địa chỉ
@@ -301,9 +415,11 @@ class CheckoutController extends Controller
         ]);
     }
 
-    private function sendPaymentConfirmationEmail($order)
+    private
+    function sendPaymentConfirmationEmail($order)
     {
-        $userSetting = $order->user->setting;
+        $userSetting = UserSetting::where('user_id', $order->user_id)->first();
+        dd($userSetting);
         if ($userSetting->email_order) {
             // Lấy thông tin địa chỉ
             $order->province = Province::find($order->address->province);
@@ -314,7 +430,8 @@ class CheckoutController extends Controller
         }
     }
 
-    public function execPostRequest($url, $data)
+    public
+    function execPostRequest($url, $data)
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");

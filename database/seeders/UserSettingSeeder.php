@@ -19,9 +19,9 @@ class UserSettingSeeder extends Seeder
         foreach ($users as $user) {
             UserSetting::create([
                 'user_id' => $user->id,
-                'email_order' => rand(0, 1),
-                'email_promotions' => rand(0, 1),
-                'email_security' => rand(0, 1), 
+                'email_order' => true,
+                'email_promotions' => true,
+                'email_security' => true,
             ]);
         }
     }

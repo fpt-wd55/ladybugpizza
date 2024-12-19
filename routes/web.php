@@ -60,6 +60,7 @@ Route::prefix('/')->middleware('check_password_change')->group(function () {
         Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout')->middleware('auth.check', 'store.open', 'check.cart.quantity');
         Route::post('/checkout', [CheckoutController::class, 'postCheckout'])->middleware('store.open')->name('post-checkout');
         Route::get('/return-momo', [CheckoutController::class, 'returnMomo'])->middleware('store.open')->name('return_momo');
+        Route::get('/return-vnpay', [CheckoutController::class, 'returnVnPay'])->middleware('store.open')->name('return_vnpay');
         Route::get('/thank-you/{order}', [CheckoutController::class, 'thankYou'])->middleware('store.open')->name('thank_you');
         // Đơn hàng
         Route::get('/order', [OrderController::class, 'index'])->name('client.order.index')->middleware('auth.check');
@@ -159,7 +160,7 @@ Route::prefix('/admin')->middleware(['admin', 'check_password_change'])->name('a
     Route::get('/order/search', [AdminOrderController::class, 'search'])->name('orders.search');
     Route::get('/order/export', [AdminOrderController::class, 'export'])->name('orders.export');
     Route::get('/order/search', [AdminOrderController::class, 'search'])->name('order.search');
-    
+
     // Product
     Route::resource('/products', AdminProductController::class);
     Route::post('product/bulk-action', [AdminProductController::class, 'bulkAction'])->name('products.bulkAction');
