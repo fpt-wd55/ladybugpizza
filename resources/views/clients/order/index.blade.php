@@ -80,7 +80,7 @@
                             </dd>
                         </dl>
 
-                        <div class="grid w-full gap-4 sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end">
+                        <div class="grid w-full gap-2 sm:grid-cols-2 lg:flex lg:w-64 lg:items-center lg:justify-end">
                             @if ($order->orderStatus->slug == 'waiting')
                                 <button class="button-red w-full" data-modal-target="cancelOrder-modal-{{ $order->id }}" data-modal-toggle="cancelOrder-modal-{{ $order->id }}" type="button">Huỷ
                                     đơn hàng</button>
@@ -92,14 +92,22 @@
                                 </button>
                             @endif
 
-                            @if ($order->orderStatus->slug === 'completed' && $order->evaluations->isEmpty())
-                                <button class="button-red w-full" data-modal-target="reviewOrder-modal-{{ $order->id }}" data-modal-toggle="reviewOrder-modal-{{ $order->id }}" type="button">Đánh
-                                    giá</button>
+                            @if ($order->orderStatus->slug === 'completed')
+                                <div class="flex items-center gap-2">
+                                    @if ($order->evaluations->isEmpty())
+                                        <button class="button-red w-full" data-modal-target="reviewOrder-modal-{{ $order->id }}" data-modal-toggle="reviewOrder-modal-{{ $order->id }}" type="button">
+                                            @svg('tabler-star', 'w-4 h-4')
+                                        </button>
+                                    @endif
+                                    <a class="button-light w-full" href="{{ route('invoices.show', $order->invoice->invoice_number) }}" type="button">
+                                        @svg('tabler-printer', 'w-4 h-4')
+                                    </a>
+                                    <button class="button-light" onclick="toggleAccordion({{ $order->id }})" type="button">
+                                        @svg('tabler-info-circle', 'w-4 h-4')
+                                    </button>
+                                </div>
                             @endif
 
-                            <button class="button-light" onclick="toggleAccordion({{ $order->id }})" type="button">
-                                @svg('tabler-info-circle', 'w-4 h-4')
-                            </button>
                         </div>
                     </div>
 

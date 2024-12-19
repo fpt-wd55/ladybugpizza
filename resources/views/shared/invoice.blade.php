@@ -39,17 +39,16 @@
 @endsection
 
 @section('content')
-    <div class="md:mx-24 lg:mx-32 min-h-screen p-4 md:p-8 transition">
+    <div class="min-h-screen p-4 transition md:mx-24 md:p-8 lg:mx-32">
         <div class="mb-8 flex items-center justify-between">
             <p class="title">Hoá đơn</p>
-            <button class="button-red" id="print" onclick="print()"
-                    data-invoice-number="{{ $invoice->invoice_number }}">
+            <button class="button-red" data-invoice-number="{{ $invoice->invoice_number }}" id="print" onclick="print()">
                 @svg('tabler-printer', 'icon-sm md:icon-md md:me-2')
                 <span class="hidden md:inline-block">In hoá đơn</span>
             </button>
         </div>
-        <div class="card p-4 md:p-8 text-sm" id="content-invoice">
-            <div class="flex justify-between mb-4 md:mb-8">
+        <div class="card p-4 text-sm md:p-8" id="content-invoice">
+            <div class="mb-4 flex justify-between md:mb-8">
                 <div>
                     <p class="title">LadybugPizza</p>
                     <div>
@@ -66,77 +65,84 @@
                             {{ $order->district->name_with_type }},
                             {{ $order->province->name_with_type }}</p>
                         <p>{{ $order->email }}</p>
+                        <p>{{ $order->phone ?? '' }}</p>
                     </div>
                 </div>
             </div>
-            <div class="mb-4 md:md-8">
-                <p class="title">Hoá đơn {{ $invoice->invoice_number }}</p>
+            <div class="md:md-8 mb-4">
+                <p class="title">Hoá đơn số #{{ $invoice->invoice_number }}</p>
+                <p class="title">Mã đơn hàng #{{ $invoice->order->code }}</p>
             </div>
             <div>
                 <table class="w-full">
                     <thead>
-                    <tr class="border-b">
-                        <th class="text-left title-sm">STT</th>
-                        <th class="text-left title-sm">Sản phẩm</th>
-                        <th class="text-right title-sm">Số lượng</th>
-                        <th class="text-right title-sm">Đơn giá</th>
-                        <th class="text-right title-sm">Tổng tiền</th>
-                    </tr>
+                        <tr class="border-b">
+                            <th class="font-medium text-left">STT</th>
+                            <th class="font-medium text-left">Sản phẩm</th>
+                            <th class="font-medium text-right">Số lượng</th>
+                            <th class="font-medium text-right">Đơn giá</th>
+                            <th class="font-medium text-right">Tổng tiền</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @foreach ($order->orderItems as $orderItem)
+                        @foreach ($order->orderItems as $orderItem)
+                            <tr class="border-b">
+                                <td class="py-3 text-left">
+                                    {{ $loop->iteration }}
+                                </td>
+                                <td class="py-3 text-left">
+                                    <p class="font-medium">{{ $orderItem->product->name }}</p>
+                                    @if ($orderItem->atrributeValues->count() > 0)
+                                        <p class="font-light">
+                                            {{ $orderItem->atrributeValues->map->value->join(', ') }}
+                                        </p>
+                                    @endif
+                                    @if ($orderItem->toppingValues->count() > 0)
+                                        <p class="font-light">Topping:
+                                            {{ $orderItem->toppingValues->map->name->join(', ') }}
+                                        </p>
+                                    @endif
+                                </td>
+                                <td class="py-3 text-right">{{ $orderItem->quantity }}</td>
+                                <td class="py-3 text-right">{{ number_format($orderItem->price) }}đ</td>
+                                <td class="py-3 text-right">
+                                    {{ number_format($orderItem->quantity * $orderItem->price) }}đ
+                                </td>
+                            </tr>
+                        @endforeach
                         <tr class="border-b">
-                            <td class="text-left py-3">
-                                {{ $loop->iteration }}
-                            </td>
-                            <td class="text-left py-3">
-                                <p class="font-medium">{{ $orderItem->product->name }}</p>
-                                @if ($orderItem->atrributeValues->count() > 0)
-                                    <p class="font-light">
-                                        {{ $orderItem->atrributeValues->map->value->join(', ') }}
-                                    </p>
-                                @endif
-                                @if ($orderItem->toppingValues->count() > 0)
-                                    <p class="font-light">Topping:
-                                        {{ $orderItem->toppingValues->map->name->join(', ') }}
-                                    </p>
-                                @endif
-                            </td>
-                            <td class="text-right py-3">{{$orderItem->quantity}}</td>
-                            <td class="text-right py-3">{{ number_format($orderItem->price) }}đ</td>
-                            <td class="text-right py-3">
-                                {{ number_format($orderItem->quantity * $orderItem->price) }}đ
+                            <td class="h-24"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="py-3 text-right font-semibold" colspan="4">Tạm tính</td>
+                            <td class="py-3 text-right">{{ number_format($order->amount) }}đ</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="py-3 text-right font-semibold" colspan="4">Phí vận chuyển</td>
+                            <td class="py-3 text-right">{{ number_format($order->shipping_fee) }}đ</td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="py-3 text-right font-semibold" colspan="4">Giảm giá</td>
+                            <td class="py-3 text-right">
+                                {{ number_format($order->discount_amount ? $order->discount_amount : '0') }}đ
                             </td>
                         </tr>
-                    @endforeach
-                    <tr class="border-b">
-                        <td colspan="4" class="text-right font-semibold py-3">Tạm tính</td>
-                        <td class="text-right py-3">{{ number_format($order->amount) }}đ</td>
-                    </tr>
-                    <tr class="border-b">
-                        <td colspan="4" class="text-right font-semibold py-3">Phí vận chuyển</td>
-                        <td class="text-right py-3">{{ number_format($order->shipping_fee) }}đ</td>
-                    </tr>
-                    <tr class="border-b">
-                        <td colspan="4" class="text-right font-semibold py-3">Giảm giá</td>
-                        <td class="text-right py-3">
-                            {{ number_format($order->discount_amount ? $order->discount_amount : '0') }}đ
-                        </td>
-                    </tr>
-                    <tr class="border-b">
-                        <td colspan="4" class="text-right font-semibold py-3 uppercase">Tổng thanh toán</td>
-                        <td class="text-right py-3">
-                            {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ
-                        </td>
-                    </tr>
-                    <tr class="border-b">
-                        <td colspan="4" class="text-right font-semibold py-3 uppercase">Phương thức thanh toán</td>
-                        <td class="text-right py-3">{{ $order->paymentMethod->name }}</td>
-                    </tr>
+                        <tr class="border-b">
+                            <td class="py-3 text-right font-semibold uppercase" colspan="4">Tổng thanh toán</td>
+                            <td class="py-3 text-right">
+                                {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}đ
+                            </td>
+                        </tr>
+                        <tr class="border-b">
+                            <td class="py-3 text-right font-semibold uppercase" colspan="4">Phương thức thanh toán</td>
+                            <td class="py-3 text-right">{{ $order->paymentMethod->name }}</td>
+                        </tr>
                     </tbody>
                 </table>
 
-                <p class="text-center mt-6">Cảm ơn bạn rất nhiều đã đặt hàng tại Ladybug Pizza. Chúng tôi mong được gặp
+                <p class="mt-6 text-center">Cảm ơn bạn rất nhiều đã đặt hàng tại Ladybug Pizza. Chúng tôi mong được gặp
                     lại
                     bạn một lần nữa!</p>
             </div>
@@ -145,7 +151,7 @@
 @endsection
 @section('scripts')
     <script>
-        document.getElementById('print').addEventListener('click', function () {
+        document.getElementById('print').addEventListener('click', function() {
             window.print();
         });
     </script>
