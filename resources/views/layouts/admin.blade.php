@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     {{-- OpenSan --}}
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-        rel="stylesheet">
+          rel="stylesheet">
     {{-- Dancing Script  --}}
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
     {{-- Berkshire Swash --}}
@@ -23,8 +23,8 @@
         href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Berkshire+Swash&family=Dancing+Script:wght@400..700&family=Vujahday+Script&display=swap"
         rel="stylesheet">
     {{-- TinyMCE --}}
-    <script src="https://cdn.tiny.cloud/1/fhgviozazrj18wrab525jywjt86ohk5druu29b5cplmf876w/tinymce/7/tinymce.min.js"
-        referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/{{ env('TINYMCE_KEY') }}/tinymce/7/tinymce.min.js"
+            referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: 'textarea#wysiwygeditor',
@@ -56,7 +56,7 @@
                 actionButtons.classList.toggle('justify-start', checkedItems.length > 0);
             };
 
-            checkboxTableAll.addEventListener("change", function() {
+            checkboxTableAll.addEventListener("change", function () {
                 checkboxTableItems.forEach((checkbox) => {
                     checkbox.checked = checkboxTableAll.checked;
                 });
@@ -73,29 +73,29 @@
 </head>
 
 <body class="text-sm">
-    {{-- header --}}
-    @include('partials.admins.header')
-    <div>
-        {{-- sidebar --}}
-        @include('partials.admins.sidebar')
+{{-- header --}}
+@include('partials.admins.header')
+<div>
+    {{-- sidebar --}}
+    @include('partials.admins.sidebar')
 
-        <div class="mt-20 sm:ml-64">
-            <div class="px-4">
-                {{-- Toast notification --}}
-                @include('partials.admins.toast-notification')
-                {{-- Content --}}
-                <div class="m-0 p-0">
-                    @yield('content')
-                    {{-- footer --}}
-                    @include('partials.admins.footer')
-                </div>
+    <div class="mt-20 sm:ml-64">
+        <div class="px-4">
+            {{-- Toast notification --}}
+            @include('partials.admins.toast-notification')
+            {{-- Content --}}
+            <div class="m-0 p-0">
+                @yield('content')
+                {{-- footer --}}
+                @include('partials.admins.footer')
             </div>
         </div>
     </div>
+</div>
 
-    @livewireScripts
-    @yield('scripts')
-    @stack('scripts')
+@livewireScripts
+@yield('scripts')
+@stack('scripts')
 </body>
 
 </html>

@@ -42,7 +42,7 @@
                     </div>
                     <div>
                         <label class="label-md" for="quantity">Số lượng <span class="text-red-500">*</span></label>
-                        <input class="input" id="quantity" name="quantity" placeholder="VD: 13" type="number" value="{{ old('quantity') }}" />
+                        <input class="input" id="quantity" name="quantity" placeholder="VD: 13" type="number" value="{{ old('quantity') }}" min="0" max="9999" />
                         @error('quantity')
                             <p class="mt-2 text-sm text-red-600">
                                 {{ $message }}
@@ -51,7 +51,7 @@
                     </div>
                     <div>
                         <label class="label-md" for="price">Giá <span class="text-red-500">*</span></label>
-                        <input class="input" id="price" name="price" placeholder="VD: 18000" type="number" value="{{ old('price') }}" />
+                        <input class="input" id="price" name="price" placeholder="VD: 18000" type="number" value="{{ old('price') }}" min="0" />
                         @error('price')
                             <p class="mt-2 text-sm text-red-600">
                                 {{ $message }}

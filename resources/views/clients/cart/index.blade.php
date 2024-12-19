@@ -29,7 +29,9 @@
                             <div class="product-card flex flex-shrink-0 items-center gap-4 overflow-hidden px-4 py-6">
                                 {{-- <input class="input-checkbox cart-item-select" name="next-request" type="checkbox"> --}}
                                 <div class="h-18 w-18">
-                                    <img class="img-md min-h-full min-w-full rounded object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $item->product->image) }}">
+                                    <img class="img-md min-h-full min-w-full rounded object-cover" loading="lazy"
+                                         onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'"
+                                         src="{{ asset('storage/uploads/products/' . $item->product->image) }}">
                                 </div>
                                 <div>
                                     <div class="mb-2 flex items-center gap-2">
@@ -59,22 +61,36 @@
                                     </p>
                                 </div>
 
-                                <div class="ms-auto flex flex-col-reverse items-center justify-center gap-4 lg:flex-row">
-                                    <div class="py-1text-right inline-block w-20 overflow-hidden rounded-md border border-gray-200 bg-white py-1 md:w-28">
-                                        <form action="{{ route('client.cart.update-cart-item', $item) }}" class="quantity-control flex items-center justify-between" method="post">
+                                <div
+                                    class="ms-auto flex flex-col-reverse items-center justify-center gap-4 lg:flex-row">
+                                    <div
+                                        class="py-1text-right inline-block w-20 overflow-hidden rounded-md border border-gray-200 bg-white py-1 md:w-28">
+                                        <form action="{{ route('client.cart.update-cart-item', $item) }}"
+                                              class="quantity-control flex items-center justify-between" method="post">
                                             @csrf
                                             @method('PUT')
-                                            <button aria-label="Decrease" class="size-6 inline-flex items-center justify-center gap-x-2 bg-white text-sm font-medium text-gray-800 disabled:text-gray-300" id="decrement" tabindex="-1" type="button">
+                                            <button aria-label="Decrease"
+                                                    class="size-6 inline-flex items-center justify-center gap-x-2 bg-white text-sm font-medium text-gray-800 disabled:text-gray-300"
+                                                    id="decrement" tabindex="-1" type="button">
                                                 @svg('tabler-minus', 'icon-sm')
                                             </button>
-                                            <input class="w-6 border-0 bg-transparent p-0 text-center text-sm font-medium text-gray-800 focus:ring-0" min="1" name="quantity" style="appearance: textfield; -moz-appearance: textfield;" type="number" value="{{ $item->quantity }}">
-                                            <button aria-label="Increase" class="size-6 inline-flex items-center justify-center gap-x-2 bg-white text-sm font-medium text-gray-800" id="increment" tabindex="-1" type="button">
+                                            <input
+                                                class="w-6 border-0 bg-transparent p-0 text-center text-sm font-medium text-gray-800 focus:ring-0"
+                                                min="1" name="quantity" id="quantity"
+                                                style="appearance: textfield; -moz-appearance: textfield;" type="hidden"
+                                                value="{{ $item->quantity }}">
+                                            <p id="show_quantity"
+                                               class="w-6 border-0 bg-transparent p-0 text-center text-sm font-medium text-gray-800 focus:ring-0"></p>
+                                            <button aria-label="Increase"
+                                                    class="size-6 inline-flex items-center justify-center gap-x-2 bg-white text-sm font-medium text-gray-800"
+                                                    id="increment" tabindex="-1" type="button">
                                                 @svg('tabler-plus', 'icon-sm')
                                             </button>
                                         </form>
                                     </div>
                                     <div class="mx-auto rounded-full text-xs font-medium text-gray-800">
-                                        <a data-modal-target="deleteCartItemModal-{{ $item->id }}" data-modal-toggle="deleteCartItemModal-{{ $item->id }}" href="#">
+                                        <a data-modal-target="deleteCartItemModal-{{ $item->id }}"
+                                           data-modal-toggle="deleteCartItemModal-{{ $item->id }}" href="#">
                                             @svg('tabler-trash', 'w-5 h-5 text-red-500')
                                         </a>
                                     </div>
@@ -82,7 +98,9 @@
                             </div>
 
                             {{-- Modal xoá sản phẩm --}}
-                            <div aria-hidden="true" class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full" id="deleteCartItemModal-{{ $item->id }}" tabindex="-1">
+                            <div aria-hidden="true"
+                                 class="fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full"
+                                 id="deleteCartItemModal-{{ $item->id }}" tabindex="-1">
                                 <div class="relative h-auto w-full max-w-md p-4">
                                     <div class="relative rounded-lg bg-white p-4 shadow sm:p-5">
                                         <div class="mb-8 flex flex-col items-center justify-center gap-4 text-sm">
@@ -90,12 +108,14 @@
                                             <p>Xác nhận xoá sản phẩm khỏi giỏ hàng</p>
                                         </div>
                                         <div class="flex items-center gap-4">
-                                            <form action="{{ route('client.product.delete-cart-item', $item) }}" class="w-full" method="post">
+                                            <form action="{{ route('client.product.delete-cart-item', $item) }}"
+                                                  class="w-full" method="post">
                                                 @csrf
                                                 @method('delete')
                                                 <button class="button-red w-full" type="submit">Xoá</button>
                                             </form>
-                                            <button class="button-dark w-full" data-modal-hide="deleteCartItemModal-{{ $item->id }}" type="button">
+                                            <button class="button-dark w-full"
+                                                    data-modal-hide="deleteCartItemModal-{{ $item->id }}" type="button">
                                                 Huỷ
                                             </button>
                                         </div>
@@ -120,6 +140,8 @@
             const decrementButton = control.querySelector('#decrement');
             const incrementButton = control.querySelector('#increment');
             const quantityInput = control.querySelector('input[name="quantity"]');
+            const showQuantity = control.querySelector('#show_quantity');
+            showQuantity.textContent = quantityInput.value;
 
             const form = control; // Lấy form cha để submit
 
@@ -139,6 +161,7 @@
                 if (quantity > 1) {
                     quantity -= 1;
                     quantityInput.value = quantity;
+                    showQuantity.textContent = quantity;
                     checkDecrementButton();
                     form.submit(); // Submit form
                 }
@@ -148,6 +171,7 @@
                 let quantity = parseInt(quantityInput.value);
                 quantity += 1;
                 quantityInput.value = quantity;
+                showQuantity.textContent = quantity;
                 checkDecrementButton();
                 form.submit(); // Submit form
             });

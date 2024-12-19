@@ -52,7 +52,7 @@ class AttributeController extends Controller
 
             foreach ($request->stocks as $key => $value) {
                 $stockRules["stocks.{$key}.attribute_value"] = 'required';
-                $stockRules["stocks.{$key}.attribute_quantity"] = 'nullable|numeric';
+                $stockRules["stocks.{$key}.attribute_quantity"] = 'nullable|numeric|min:0|max:9999';
                 $stockRules["stocks.{$key}.attribute_type_price"] = 'required|numeric';
                 $stockRules["stocks.{$key}.attribute_price"] = [
                     'required',
@@ -69,6 +69,8 @@ class AttributeController extends Controller
 
                 $stockMessages["stocks.{$key}.attribute_value.required"] = 'Vui lòng nhập giá trị thuộc tính cho sản phẩm';
                 $stockMessages["stocks.{$key}.attribute_quantity.numeric"] = 'Giá trị không hợp lệ';
+                $stockMessages["stocks.{$key}.attribute_quantity.min"] = 'Số lượng phải lớn hơn hoặc bằng 0';
+                $stockMessages["stocks.{$key}.attribute_quantity.max"] = 'Số lượng không được vượt quá 9999';
                 $stockMessages["stocks.{$key}.attribute_type_price.required"] = 'Vui lòng chọn loại giá';
                 $stockMessages["stocks.{$key}.attribute_type_price.numeric"] = 'Giá trị không hợp lệ';
                 $stockMessages["stocks.{$key}.attribute_price.required"] = 'Vui lòng nhập giá';
@@ -140,7 +142,7 @@ class AttributeController extends Controller
 
             foreach ($request->old_stocks as $key => $value) {
                 $oldStockRules["old_stocks.{$key}.attribute_value"] = 'required';
-                $oldStockRules["old_stocks.{$key}.attribute_quantity"] = 'nullable|numeric';
+                $oldStockRules["old_stocks.{$key}.attribute_quantity"] = 'nullable|numeric|min:0|max:9999';
                 $oldStockRules["old_stocks.{$key}.attribute_type_price"] = 'required|numeric';
                 $oldStockRules["old_stocks.{$key}.attribute_price"] = [
                     'required',
@@ -157,6 +159,8 @@ class AttributeController extends Controller
 
                 $oldStockMessages["old_stocks.{$key}.attribute_value.required"] = 'Vui lòng nhập giá trị thuộc tính cho sản phẩm';
                 $oldStockMessages["old_stocks.{$key}.attribute_quantity.numeric"] = 'Giá trị không hợp lệ';
+                $oldStockMessages["old_stocks.{$key}.attribute_quantity.min"] = 'Số lượng phải lớn hơn hoặc bằng 0';
+                $oldStockMessages["old_stocks.{$key}.attribute_quantity.max"] = 'Số lượng không được vượt quá 9999';
                 $oldStockMessages["old_stocks.{$key}.attribute_type_price.required"] = 'Vui lòng chọn loại giá';
                 $oldStockMessages["old_stocks.{$key}.attribute_type_price.numeric"] = 'Giá trị không hợp lệ';
                 $oldStockMessages["old_stocks.{$key}.attribute_price.required"] = 'Vui lòng nhập giá';
@@ -174,7 +178,7 @@ class AttributeController extends Controller
 
             foreach ($request->stocks as $key => $value) {
                 $stockRules["stocks.{$key}.attribute_value"] = 'required';
-                $stockRules["stocks.{$key}.attribute_quantity"] = 'nullable|numeric';
+                $stockRules["stocks.{$key}.attribute_quantity"] = 'nullable|numeric|min:0|max:9999';
                 $stockRules["stocks.{$key}.attribute_type_price"] = 'required|numeric';
                 $stockRules["stocks.{$key}.attribute_price"] = [
                     'required',
@@ -191,6 +195,8 @@ class AttributeController extends Controller
 
                 $stockMessages["stocks.{$key}.attribute_value.required"] = 'Vui lòng nhập giá trị thuộc tính cho sản phẩm';
                 $stockMessages["stocks.{$key}.attribute_quantity.numeric"] = 'Giá trị không hợp lệ';
+                $stockMessages["stocks.{$key}.attribute_quantity.min"] = 'Số lượng phải lớn hơn hoặc bằng 0';
+                $stockMessages["stocks.{$key}.attribute_quantity.max"] = 'Số lượng không được vượt quá 9999';
                 $stockMessages["stocks.{$key}.attribute_type_price.required"] = 'Vui lòng chọn loại giá';
                 $stockMessages["stocks.{$key}.attribute_type_price.numeric"] = 'Giá trị không hợp lệ';
                 $stockMessages["stocks.{$key}.attribute_price.required"] = 'Vui lòng nhập giá';
@@ -308,5 +314,7 @@ class AttributeController extends Controller
         $this->exportExcel(Attribute::all(), 'danhsachthuoctinh');
     }
 
-    public function bulkAction(Request $request) {}
+    public function bulkAction(Request $request)
+    {
+    }
 }
