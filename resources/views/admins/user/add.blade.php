@@ -72,11 +72,19 @@
                     <div class="sm:col-span-2">
                         <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                             <div>
-                                <label class="label-md for="file_input">Ảnh đại
+                                <label class="label-md" for="file_input">Ảnh đại
                                     diện <span class="text-red-500">*</span></label>
-                                <input name="avatar"
-                                    class="mt-2 block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 focus:outline-none"
-                                    aria-describedby="file_input_help" id="file_input" type="file">
+                                    <label for="dropzone-file"
+                                    class="flex flex-col items-center justify-center w-full h-10 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                        @svg('tabler-cloud-upload', 'w-5 h-5 text-gray-400')
+                                        <p class=" text-xs text-gray-500"><span class="font-semibold">Nhấn để tải lên</span>
+                                            hoặc kéo thả
+                                            vào đây
+                                        </p>
+                                    </div>
+                                    <input id="dropzone-file" name="avatar" type="file" class="hidden" />
+                                </label>
                                 @error('avatar')
                                     <p class="mt-2 text-sm text-red-600 ">
                                         {{ $message }}
