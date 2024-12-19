@@ -66,10 +66,10 @@ class CheckCartQuantity
             // Check topping
             if ($item->toppings->isNotEmpty()) {
                 foreach ($item->toppings as $topping) {
-                    if ($topping->quantity <= 0) {
+                    if ($topping->quantity != null && $topping->quantity <= 0) {
                         return redirect()->route('client.cart.index')->with('error', $product->name . ' - ' . $topping->name . ' đã hết hàng');
                     }
-                    if ($item->quantity > $topping->quantity) {
+                    if ($topping->quantity != null && $item->quantity > $topping->quantity) {
                         return redirect()->route('client.cart.index')->with('error', $product->name . ' - ' . $topping->name . ' chỉ còn ' . $topping->quantity . ' sản phẩm');
                     }
                 }

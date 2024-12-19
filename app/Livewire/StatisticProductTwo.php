@@ -29,7 +29,8 @@ class StatisticProductTwo extends Component
             case 'mostPurchased':
                 $this->nameSelectedTopProduct = 'Sản phẩm có lượt mua nhiều nhất';
                 $this->topProducts = Product::withCount('orderItems')
-                    ->whereBetween('created_at', $timeRange)
+                    ->whereDate('created_at', '>=', $timeRange[0])
+                    ->whereDate('created_at', '<=', $timeRange[1])
                     ->orderBy('order_items_count', 'desc')
                     ->limit(10)
                     ->get();
