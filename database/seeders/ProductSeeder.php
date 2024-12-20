@@ -504,8 +504,8 @@ class ProductSeeder extends Seeder
                     'sku' => $sku,
                     'status' => 1,
                     'is_featured' => rand(0, 1),
-                    'avg_rating' => 0,
-                    'total_rating' => 0,
+                    'avg_rating' => rand(3, 5),
+                    'total_rating' => rand(10, 100),
                 ]);
             }
         }
