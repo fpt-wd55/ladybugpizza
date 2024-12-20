@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\Address;
+use App\Models\Evaluation;
+use App\Models\Favorite;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,6 +35,7 @@ class UserController extends Controller
         $permissions = Role::where('id', '>', 2)->get();
         return view('admins.user.add', compact('permissions'));
     }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -109,10 +112,11 @@ class UserController extends Controller
         }
 
         $orders = $user->orders()->paginate(5);
-        $evaluations = $user->evaluations;
-        $favorites = null;
+        $countOrders = $user->orders()->count();
+        $evaluations = Evaluation::where('user_id', $user->id)->get();
+        $favorites = Favorite::where('user_id', $user->id)->get();
 
-        return view('admins.user.detail', compact('user', 'addresses', 'orders', 'evaluations', 'favorites'));
+        return view('admins.user.detail', compact('user', 'addresses', 'orders', 'evaluations', 'favorites', 'countOrders'));
     }
 
     /**
@@ -182,7 +186,6 @@ class UserController extends Controller
             'gender' => $validatedData['gender'],
             'status' => $validatedData['status'],
         ];
-
 
 
         if ($user->update($data)) {

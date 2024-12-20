@@ -6,11 +6,11 @@
     {{ Breadcrumbs::render('admin.users.show', $user) }}
     <div class="relative mt-5 overflow-hidden bg-white p-4 shadow sm:rounded-lg">
         <div>
-            <div class="grid grid-cols-2 gap-6 border-b border-gray-200 py-4 lg:grid-cols-4 xl:gap-16">
+            <div class="grid grid-cols-3 gap-6 border-b border-gray-200 py-4 lg:grid-cols-3 xl:gap-16">
                 <div>
                     <div class="flex">
                         @svg('tabler-shopping-cart', 'h-7 w-7 text-gray-400 mb-2')
-                        <span class="ms-2 flex items-center pb-2 text-lg font-bold text-gray-900">{{ count($orders) ?? 0 }}
+                        <span class="ms-2 flex items-center pb-2 text-lg font-bold text-gray-900">{{ $countOrders ?? 0 }}
                         </span>
                     </div>
                     <h3 class="mb-2 text-gray-500">Đơn hàng</h3>
@@ -26,32 +26,35 @@
                 <div>
                     <div class="flex">
                         @svg('tabler-heart', 'h-7 w-7 text-gray-400 mb-2')
-                        <span class="ms-2 flex items-center pb-2 text-lg font-bold text-gray-900">8
+                        <span class="ms-2 flex items-center pb-2 text-lg font-bold text-gray-900">{{ count($favorites) ?? 0 }}
                         </span>
                     </div>
                     <h3 class="mb-2 text-gray-500">Yêu thích</h3>
                 </div>
-                <div>
-                    <div class="flex">
-                        @svg('tabler-refresh', 'h-7 w-7 text-gray-400 mb-2')
-                        <span class="ms-2 flex items-center pb-2 text-lg font-bold text-gray-900">
-                            {{ count($orders->where('status', 4)) }}
-                        </span>
-                    </div>
-                    <h3 class="mb-2 text-gray-500">Trả hàng</h3>
-                </div>
+                {{--                <div>--}}
+                {{--                    <div class="flex">--}}
+                {{--                        @svg('tabler-refresh', 'h-7 w-7 text-gray-400 mb-2')--}}
+                {{--                        <span class="ms-2 flex items-center pb-2 text-lg font-bold text-gray-900">--}}
+                {{--                            {{ count($orders->where('status', 4)) }}--}}
+                {{--                        </span>--}}
+                {{--                    </div>--}}
+                {{--                    <h3 class="mb-2 text-gray-500">Trả hàng</h3>--}}
+                {{--                </div>--}}
             </div>
             <div class="py-4 md:py-8">
                 <div class="mb-4 grid gap-4 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-16">
                     <div class="space-y-4">
                         <div class="flex space-x-4">
                             <a class="me-2 shrink-0" data-fslightbox="gallery" href="{{ $user->avatar() }}">
-                                <img class="h-16 w-16 rounded-lg object-cover" loading="lazy" src="{{ $user->avatar() }}" />
+                                <img class="h-16 w-16 rounded-lg object-cover" loading="lazy"
+                                     src="{{ $user->avatar() }}"/>
                             </a>
                             <div>
                                 <div class="flex">
-                                    <span class="{{ $user->status == 1 ? 'text-green-500' : 'text-red-500' }} flex items-center">@svg('tabler-circle-filled', 'w-3 h-3')</span>
-                                    <span class="bg-primary-100 text-primary-800 inline-block rounded px-1 text-xs font-medium">
+                                    <span
+                                        class="{{ $user->status == 1 ? 'text-green-500' : 'text-red-500' }} flex items-center">@svg('tabler-circle-filled', 'w-3 h-3')</span>
+                                    <span
+                                        class="bg-primary-100 text-primary-800 inline-block rounded px-1 text-xs font-medium">
                                         {{ $user->username }}
                                     </span>
                                 </div>
@@ -72,7 +75,8 @@
                                         <span>•
                                             {{ $address->detail_address . ', ' . $address->ward->name_with_type . ', ' . $address->district->name_with_type . ', ' . $address->province->name_with_type }}
                                             @if ($address->is_default == 1)
-                                                <span class="me-2 inline-flex shrink-0 items-center rounded bg-red-100 px-2 py-0.5 text-xs font-medium text-[#D30A0A]">Mặc
+                                                <span
+                                                    class="me-2 inline-flex shrink-0 items-center rounded bg-red-100 px-2 py-0.5 text-xs font-medium text-[#D30A0A]">Mặc
                                                     định</span>
                                             @endif
                                         </span>
@@ -116,7 +120,8 @@
                         <dl>
                             <dt class="font-semibold text-gray-900">Trạng thái</dt>
                             <dd class="flex items-center py-1 text-gray-500">
-                                <div class="indicator {{ $user->status == 1 ? 'bg-green-700' : 'bg-red-700' }} inline-block rounded-full">
+                                <div
+                                    class="indicator {{ $user->status == 1 ? 'bg-green-700' : 'bg-red-700' }} inline-block rounded-full">
                                 </div>
                                 <span>{{ $user->status == 1 ? 'Hoạt động' : 'Khóa' }}</span>
                             </dd>
@@ -187,7 +192,8 @@
                         </dl>
 
                         <div class="w-full sm:flex sm:w-32 sm:items-center sm:justify-end sm:gap-4">
-                            <a class="hover:text-primary-700 flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:ring-0 md:w-auto" href="{{ route('admin.orders.edit', $order) }}">
+                            <a class="hover:text-primary-700 flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:z-10 focus:ring-0 md:w-auto"
+                               href="{{ route('admin.orders.edit', $order) }}">
                                 @svg('tabler-external-link', 'h-4 w-4 me-1.5')
                                 Chi tiết
                             </a>
