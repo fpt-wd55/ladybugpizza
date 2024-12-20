@@ -45,11 +45,11 @@
                             <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
                                 @svg('tabler-search', 'w-5 h-5 text-gray-400')
                             </div>
-                            <input class="input ps-10" name="search" placeholder="Tìm kiếm..." type="text" />
+                            <input class="input ps-10" name="search" placeholder="Tìm kiếm..." type="text" value="{{ old('search', request('search')) }}" />
                         </div>
                     </form>
                     <div class="flex w-full items-center md:w-auto">
-                        <button class="flex w-full items-center justify-center button-light" data-modal-target="filterDropdown" data-modal-toggle="filterDropdown" type="button">
+                        <button class="button-light flex w-full items-center justify-center" data-modal-target="filterDropdown" data-modal-toggle="filterDropdown" type="button">
                             @svg('tabler-filter-filled', 'w-5 h-5 me-2')
                             Bộ lọc
                         </button>
@@ -128,7 +128,7 @@
                                     </a>
                                 </td>
                                 <td class="px-4 py-3">
-                                    <a class="hover:text-red-600 font-medium" href="{{ route('admin.categories.edit', $item) }}">
+                                    <a class="font-medium hover:text-red-600" href="{{ route('admin.categories.edit', $item) }}">
                                         {{ $item->name }}
                                     </a>
                                 </td>
