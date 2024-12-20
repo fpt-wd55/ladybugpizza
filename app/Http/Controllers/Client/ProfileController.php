@@ -11,6 +11,7 @@ use App\Http\Requests\ChangeRequest;
 use App\Http\Requests\InactiveRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Mail\Auth as MailAuth;
+use App\Models\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -259,6 +260,15 @@ class ProfileController extends Controller
 					'user_id' => $user->id,
 					'promotion_id' => $promotion->id,
 				]);
+
+				// tạo log
+				if ($promotion->points > 0) {
+					Log::create([
+						'user_id' => Auth::id(),
+						'action' => 'exchange_points',
+						'description' => 'Đổi điểm thành công - ' . $promotion->points,
+					]);
+				}
 			});
 		} catch (\Exception $e) {
 			return back()->with('error', 'Đã có lỗi xảy ra.');
