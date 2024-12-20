@@ -26,7 +26,7 @@
                                 <span class="button-toggle"></span>
                             </label>
                         </div>
-                        <div class="mb-4 flex items-center justify-between">
+                        <!-- <div class="mb-4 flex items-center justify-between">
                             <p class="text-sm">Thông báo khuyến mãi và các sự kiện mới</p>
                             <label class="inline-flex items-center cursor-pointer">
                                 <input type="checkbox" name="email_promotions" value="1"
@@ -34,7 +34,7 @@
                                     onchange="this.form.submit()">
                                 <span class="button-toggle"></span>
                             </label>
-                        </div>
+                        </div> -->
                         <div class="mb-4 flex items-center justify-between">
                             <p class="text-sm">Thông báo về bảo mật và tài khoản</p>
                             <label class="inline-flex items-center cursor-pointer">
