@@ -57,4 +57,11 @@ class Product extends Model
     {
         return $this->hasMany(Favorite::class);
     }
+
+    protected static function booted()
+    {
+        static::deleted(function ($product) {
+            $product->unsearchable();
+        });
+    }
 }
