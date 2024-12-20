@@ -91,7 +91,7 @@
                                     <p class="flex justify-between">
                                         <span class="text-sm">{{ $orderItem->product->name }}<span
                                                 class="font-medium text-red-600 ps-2">x{{$orderItem->quantity}}</span></span>
-                                        <span class="font-medium">{{ number_format($orderItem->quantity * $orderItem->price) }}₫</span>
+                                        <span class="font-medium">{{ number_format($orderItem->price) }}₫</span>
                                     </p>
                                     <span class="text-sm text-gray-500">
                                         @if ($orderItem->atrributeValues->count() > 0)
@@ -125,7 +125,7 @@
                     <div class="flex items-center justify-between gap-32">
                         <p class="font-medium">Tổng tiền thanh toán</p>
                         <p class="font-medium">
-                            {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}₫</p>
+                            {{ number_format($order->total()) }}₫</p>
                     </div>
                 </div>
             </div>

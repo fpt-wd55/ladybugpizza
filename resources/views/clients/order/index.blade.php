@@ -23,11 +23,11 @@
                         <li class="relative me-6 mt-3 min-w-fit">
                             <a class="{{ request()->get('tab') === $status->slug ? 'border-[#D30A0A] text-[#D30A0A] ' : 'border-transparent' }} inline-block rounded-t-lg border-b-2 pb-2" href="{{ route('client.order.index', ['tab' => $status->slug]) }}">{{ $status->name }}
                             </a>
-                            {{--                            <span class="badge-noti -top-2">--}}
-                            {{--                                {{ $status->orders_count > 0 ? $status->orders_count : 0 }}--}}
-                            {{--                            </span>--}}
-                            @if($status->orders_count > 0)
-                                <span class="badge-noti -top-2"> {{$status->orders_count}} </span>
+                            {{--                            <span class="badge-noti -top-2"> --}}
+                            {{--                                {{ $status->orders_count > 0 ? $status->orders_count : 0 }} --}}
+                            {{--                            </span> --}}
+                            @if ($status->orders_count > 0)
+                                <span class="badge-noti -top-2"> {{ $status->orders_count }} </span>
                             @endif
                         </li>
                     @endforeach
@@ -324,14 +324,14 @@
                                         <div class="product-card relative w-auto overflow-hidden">
                                             <div class="flex h-24">
                                                 <img alt="" class="h-full w-24 bg-slate-400 object-cover" loading="lazy" onerror="this.src='{{ asset('storage/uploads/products/product-placehoder.jpg') }}'" src="{{ asset('storage/uploads/products/' . $orderItem->product->image) }}">
-                                                <div class="p-2 w-full">
+                                                <div class="w-full p-2">
                                                     <div class="mb-2 flex items-center justify-between">
                                                         <div class="flex items-center gap-2">
                                                             <p class="font-medium">{{ $orderItem->product->name }}</p>
                                                             <span class="text-red-600">x{{ $orderItem->quantity }}</span>
                                                         </div>
                                                         <div>
-                                                            <p class="font-medium text-red-600">{{ number_format($orderItem->quantity * $orderItem->price) }}₫</p>
+                                                            <p class="font-medium text-red-600">{{ number_format($orderItem->price) }}₫</p>
                                                         </div>
                                                     </div>
                                                     <div class="mb-4 text-sm">
@@ -378,7 +378,7 @@
                                         <div class="mb-4 flex items-center justify-between gap-32">
                                             <p class="text-start text-sm">Tổng tiền</p>
                                             <p class="text-end font-medium text-[#D30A0A]">
-                                                {{ number_format($order->amount + $order->shipping_fee - $order->discount_amount) }}
+                                                {{ number_format($order->total()) }}
                                                 ₫
                                             </p>
                                         </div>
