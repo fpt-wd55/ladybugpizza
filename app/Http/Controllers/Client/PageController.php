@@ -14,21 +14,23 @@ use Illuminate\Support\Facades\Mail;
 
 class PageController extends Controller
 {
-    public function dynamicPage(String $slug){ 
-        $page = Page::where('slug', $slug)->where('status', 1)->first(); 
+    public function dynamicPage(string $slug)
+    {
+        $page = Page::where('slug', $slug)->where('status', 1)->first();
 
-        if($page){
+        if ($page) {
             return view('clients.dynamic-page', compact('page'));
         }
         return view('shared.errors.404');
-    } 
+    }
 
-    public function render($page) {
+    public function render($page)
+    {
         $content = 'abc';
 
         return view('clients.dynamic-page', [
-            'page'=> $page,
-            'content'=> $content
+            'page' => $page,
+            'content' => $content
         ]);
     }
 
@@ -59,7 +61,9 @@ class PageController extends Controller
             'message' => $request->message,
         ];
 
-        Mail::to('trantrunghieu422@gmail.com')->send(new Contact($contactData));
+        $adminContactMail = env('ADMIN_CONTACT_MAIL', 'lv.thanh137@gmail.com');
+
+        Mail::to($adminContactMail)->send(new Contact($contactData));
 
         Mail::to($contactData['email'])->send(new ThankYou($contactData));
 
