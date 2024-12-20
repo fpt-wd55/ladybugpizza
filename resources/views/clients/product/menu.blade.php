@@ -56,13 +56,13 @@
                                         <div class="p-2 text-sm">
                                             <p class="mb-2 font-semibold">{{ $product->name }}</p>
                                             <div class="mb-2 flex items-center gap-1">
-                                                <p>{{ $product->avg_rating }}</p>
+                                                {{-- <p>{{ round($product->avg_rating) }}</p> --}}
                                                 <div class="flex items-center gap-1">
                                                     @for ($i = 0; $i < 5; $i++)
                                                         @svg($i < $product->avg_rating ? 'tabler-star-filled' : 'tabler-star', 'icon-sm text-red-500')
                                                     @endfor
                                                 </div>
-                                                <p>({{ $product->avg_rating }})</p>
+                                                <p>({{ $product->total_rating }})</p>
                                             </div>
                                             <div class="{{ empty($product->description) ? 'min-h-12' : '' }} mb-4 line-clamp-2">{!! $product->description !!}</div>
                                             <div class="bottom-4 flex items-center gap-3">

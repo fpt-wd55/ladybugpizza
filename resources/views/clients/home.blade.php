@@ -66,7 +66,7 @@
                                 <div class="p-2 text-sm">
                                     <p class="mb-2 font-semibold">{{ $product->name }}</p>
                                     <div class="mb-2 flex items-center gap-1">
-                                        <p>{{ $product->avg_rating }}</p>
+                                        <!-- <p>{{ $product->avg_rating }}</p> -->
                                         <div class="flex items-center gap-1">
                                             @for ($i = 0; $i < 5; $i++)
                                                 @if ($i < $product->avg_rating)
