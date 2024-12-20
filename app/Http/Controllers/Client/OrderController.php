@@ -22,6 +22,7 @@ use Vanthao03596\HCVN\Models\District;
 use Vanthao03596\HCVN\Models\Province;
 use App\Http\Requests\EvaluationRequest;
 use App\Mail\Order as MailOrder;
+use App\Models\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 
@@ -191,6 +192,14 @@ class OrderController extends Controller
         $membership = Membership::where('user_id', Auth::id())->first();
         $membership->points = $membership->points + $points;
         $membership->total_spent = $membership->total_spent + $points;
+
+        // Ghi log cộng điểm
+        Log::create([
+            'user_id' => Auth::id(),
+            'action' => 'receive_points',
+            'description' => 'Nhận điểm thành công + ' . $points,
+        ]);
+
         // Cập nhật rank
         $ranks = MembershipRank::all();
         $currentRank = $this->updateRank($ranks, $membership->total_spent);
