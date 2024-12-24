@@ -85,7 +85,7 @@ http://localhost:8000
 - **PH44316** - [Đỗ Hồng Quân](https://github.com/quandohong28)
 - **PH39393** - [Lê Văn Thành](https://github.com/Cactus137)
 - **PH40794** - [Nguyễn Hữu Duy](https://github.com/Huuduy2004)
-- **PH44302** - [Trần Chung Hiếu](https://github.com/hieukhocnhe)
+- **PH44302** - [Trần Chung Hiếu](https://github.com/chungh1eu)
 - **PH38029** - [Võ Hữu Tuấn](https://github.com/vohuutuan38)
 - **PH42110** - [Nguyễn Thị Huyền](https://github.com/Huyennguyen34)
 - **PH34774** - [Trần Thị Hà](https://github.com/hatt0904)
